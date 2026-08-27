@@ -1,0 +1,12674 @@
+/**
+ * Azure DevOps REST API client generated from Git 7.2-preview.
+ *
+ * This file is generated. Edit the OpenAPI normalizer or generator instead.
+ */
+
+import {
+  deepFreezeRestMetadata,
+  deepFreezeRestOperations,
+  type RestBinary,
+  type RestBody,
+  RestClient,
+  type RestClientOptions,
+  type RestGeneratedRequestOptions,
+  type RestInt64,
+  type RestJsonNumber,
+  type RestJsonValue,
+  type RestOperation,
+  type RestRequestValue,
+  type RestResponse,
+  type RestUndocumentedResponse,
+} from "../../../rest.ts";
+
+export const azureDevOpsServers = deepFreezeRestMetadata(["https://dev.azure.com"] as const);
+
+/** Provider-native OpenAPI security schemes retained as immutable metadata. */
+export const azureDevOpsSecuritySchemes = deepFreezeRestMetadata(
+  {
+    "accessToken": {
+      "type": "http",
+      "description":
+        "Personal access token. Use any value for the user name and the token as the password.",
+      "scheme": "basic",
+    },
+    "oauth2": {
+      "type": "oauth2",
+      "flows": {
+        "authorizationCode": {
+          "authorizationUrl":
+            "https://app.vssps.visualstudio.com/oauth2/authorize&response_type=Assertion",
+          "tokenUrl": "https://app.vssps.visualstudio.com/oauth2/token",
+          "scopes": {
+            "vso.code":
+              "Grants the ability to read source code and metadata about commits, changesets, branches, and other version control artifacts. Also grants the ability to search code and get notified about version control events via service hooks.",
+            "vso.code_manage":
+              "Grants the ability to read, update, and delete source code, access metadata about commits, changesets, branches, and other version control artifacts. Also grants the ability to create and manage code repositories, create and manage pull requests and code reviews, and to receive notifications about version control events via service hooks.",
+            "vso.code_write":
+              "Grants the ability to read, update, and delete source code, access metadata about commits, changesets, branches, and other version control artifacts. Also grants the ability to create and manage pull requests and code reviews and to receive notifications about version control events via service hooks.",
+            "vso.code_status":
+              "Grants the ability to read and write commit and pull request status.",
+            "vso.threads_full":
+              "Grants the ability to read and write to pull request comment threads.",
+          },
+        },
+      },
+    },
+  } as const,
+);
+
+export type AdvSecEnablementOptions = Record<string, unknown> & {
+  /**
+   * Enforces secret scanning job for a repo where AdvSec is already enabled.
+   */
+  "forceRepoSecretScanning"?: boolean;
+};
+
+export type AdvSecEnablementStatus = Record<string, unknown> & {
+  /**
+   * Enabled by VSID
+   */
+  "changedById"?: string;
+  /**
+   * Enabled changed on datetime
+   */
+  "changedOnDate"?: string;
+  /**
+   * True if Dependabot is enabled for the repository, false if it is disabled.
+   */
+  "dependabotEnabled"?: boolean;
+  /**
+   * True if Dependency Scanning injection is enabled for the repository, false if it is disabled.
+   */
+  "dependencyScanningInjectionEnabled"?: boolean;
+  /**
+   * Enabled status 0 disabled, 1 enabled, Null never explicitly set, always whatever project is, ya this should probably be an enum somewhere
+   */
+  "enabled"?: boolean;
+  /**
+   * ProjectId
+   */
+  "projectId"?: string;
+  /**
+   * RepositoryId
+   */
+  "repositoryId"?: string;
+};
+
+export type AdvSecEnablementUpdate = Record<string, unknown> & {
+  /**
+   * New Dependabot status.
+   */
+  "newDependabotStatus"?: boolean;
+  /**
+   * New Dependency Scanning injection enablement status.
+   */
+  "newDependencyScanningInjectionEnablementStatus"?: boolean;
+  /**
+   * New status
+   */
+  "newStatus"?: boolean;
+  "options"?: AdvSecEnablementOptions;
+  /**
+   * ProjectId
+   */
+  "projectId"?: string;
+  /**
+   * RepositoryId Actual RepositoryId to Modify or Magic Repository Id "FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF" for ALL Repositories for that project
+   */
+  "repositoryId"?: string;
+};
+
+export type AssociatedWorkItem = Record<string, unknown> & {
+  "assignedTo"?: string;
+  /**
+   * Id of associated the work item.
+   */
+  "id"?: number;
+  "state"?: string;
+  "title"?: string;
+  /**
+   * REST Url of the work item.
+   */
+  "url"?: string;
+  "webUrl"?: string;
+  "workItemType"?: string;
+};
+
+export type AsyncGitOperationNotification = Record<string, unknown> & {
+  "operationId"?: number;
+};
+
+export type AsyncRefOperationCommitLevelEventNotification =
+  & AsyncGitOperationNotification
+  & Record<string, unknown>
+  & {
+    "commitId"?: string;
+  };
+
+export type AsyncRefOperationCompletedNotification =
+  & AsyncGitOperationNotification
+  & Record<string, unknown>
+  & {
+    "newRefName"?: string;
+  };
+
+export type AsyncRefOperationConflictNotification =
+  & AsyncRefOperationCommitLevelEventNotification
+  & Record<string, unknown>;
+
+export type AsyncRefOperationGeneralFailureNotification =
+  & AsyncGitOperationNotification
+  & Record<string, unknown>;
+
+export type AsyncRefOperationProgressNotification =
+  & AsyncRefOperationCommitLevelEventNotification
+  & Record<string, unknown>
+  & {
+    "progress"?: RestJsonNumber;
+  };
+
+export type AsyncRefOperationTimeoutNotification =
+  & AsyncGitOperationNotification
+  & Record<string, unknown>;
+
+/**
+ * Meta data for a file attached to an artifact.
+ */
+export type Attachment = Record<string, unknown> & {
+  "_links"?: ReferenceLinks;
+  "author"?: IdentityRef;
+  /**
+   * Content hash of on-disk representation of file content. Its calculated by the server by using SHA1 hash function.
+   */
+  "contentHash"?: string;
+  /**
+   * The time the attachment was uploaded.
+   */
+  "createdDate"?: string;
+  /**
+   * The description of the attachment.
+   */
+  "description"?: string;
+  /**
+   * The display name of the attachment. Can't be null or empty.
+   */
+  "displayName"?: string;
+  /**
+   * Id of the attachment.
+   */
+  "id"?: number;
+  "properties"?: PropertiesCollection;
+  /**
+   * The url to download the content of the attachment.
+   */
+  "url"?: string;
+};
+
+/**
+ * Real time event (SignalR) for an auto-complete update on a pull request
+ */
+export type AutoCompleteUpdatedEvent = RealTimePullRequestEvent & Record<string, unknown>;
+
+/**
+ * Used by AdvSec to return billable committers.
+ */
+export type BillableCommitter = Record<string, unknown> & {
+  /**
+   * RepositoryId commit was pushed to.
+   */
+  "repoId"?: string;
+  /**
+   * Visual Studio ID /Team Foundation ID
+   */
+  "vsid"?: string;
+};
+
+export type BillableCommitterDetail = BillableCommitter & Record<string, unknown> & {
+  /**
+   * ID (SHA-1) of the commit.
+   */
+  "commitId"?: string;
+  /**
+   * Time reported by the commit.
+   */
+  "commitTime"?: string;
+  /**
+   * Committer email address after parsing.
+   */
+  "committerEmail"?: string;
+  /**
+   * DisplayName of the Pusher.
+   */
+  "displayName"?: string;
+  /**
+   * MailNickName of the Pusher.
+   */
+  "mailNickName"?: string;
+  /**
+   * Project Id commit was pushed to.
+   */
+  "projectId"?: string;
+  /**
+   * Project name commit was pushed to.
+   */
+  "projectName"?: string;
+  /**
+   * Push Id that contained the commit.
+   */
+  "pushId"?: number;
+  /**
+   * Time of the push that contained the commit.
+   */
+  "pushedTime"?: string;
+  /**
+   * Pusher Id for the push.
+   */
+  "pusherId"?: string;
+  /**
+   * Repository name commit was pushed to.
+   */
+  "repoName"?: string;
+  /**
+   * SamAccountName of the Pusher.
+   */
+  "samAccountName"?: string;
+};
+
+/**
+ * Used by AdvSec to estimate billable pushers for a Host or Project.
+ */
+export type BillablePusher = Record<string, unknown> & {
+  /**
+   * ProjectId that was pushed to.
+   */
+  "projectId"?: string;
+  /**
+   * RepositoryId that was pushed to.
+   */
+  "repoId"?: string;
+  /**
+   * Visual Studio ID /Team Foundation ID
+   */
+  "vsid"?: string;
+};
+
+/**
+ * Real time event (SignalR) for a source/target branch update on a pull request
+ */
+export type BranchUpdatedEvent = RealTimePullRequestEvent & Record<string, unknown> & {
+  /**
+   * If true, the source branch of the pull request was updated
+   */
+  "isSourceUpdate"?: boolean;
+};
+
+export type Change =
+  & Record<string, unknown>
+  & ({
+    /**
+     * The type of change that was made to the item.
+     */
+    "changeType"?:
+      | "add"
+      | "all"
+      | "branch"
+      | "delete"
+      | "edit"
+      | "encoding"
+      | "lock"
+      | "merge"
+      | "none"
+      | "property"
+      | "rename"
+      | "rollback"
+      | "sourceRename"
+      | "targetRename"
+      | "undelete";
+    /**
+     * Current version.
+     */
+    "item"?: string;
+    "newContent"?: ItemContent;
+    /**
+     * Path of the item on the server.
+     */
+    "sourceServerItem"?: string;
+    /**
+     * URL to retrieve the item.
+     */
+    "url"?: string;
+  });
+
+export type ChangeCountDictionary = Record<string, number> & Record<string, unknown>;
+
+export type ChangeList = Record<string, unknown> & {
+  "allChangesIncluded"?: boolean;
+  "changeCounts"?: Record<string, number>;
+  "changes"?: Array<Change>;
+  "comment"?: string;
+  "commentTruncated"?: boolean;
+  "creationDate"?: string;
+  "notes"?: Array<CheckinNote>;
+  "owner"?: string;
+  "ownerDisplayName"?: string;
+  "ownerId"?: string;
+  "sortDate"?: string;
+  "version"?: string;
+};
+
+/**
+ * Criteria used in a search for change lists
+ */
+export type ChangeListSearchCriteria = Record<string, unknown> & {
+  /**
+   * If provided, a version descriptor to compare against base
+   */
+  "compareVersion"?: string;
+  /**
+   * If true, don't include delete history entries
+   */
+  "excludeDeletes"?: boolean;
+  /**
+   * Whether or not to follow renames for the given item being queried
+   */
+  "followRenames"?: boolean;
+  /**
+   * If provided, only include history entries created after this date (string)
+   */
+  "fromDate"?: string;
+  /**
+   * If provided, a version descriptor for the earliest change list to include
+   */
+  "fromVersion"?: string;
+  /**
+   * Path of item to search under. If the itemPaths memebr is used then it will take precedence over this.
+   */
+  "itemPath"?: string;
+  /**
+   * List of item paths to search under. If this member is used then itemPath will be ignored.
+   */
+  "itemPaths"?: Array<string>;
+  /**
+   * Version of the items to search
+   */
+  "itemVersion"?: string;
+  /**
+   * Number of results to skip (used when clicking more...)
+   */
+  "skip"?: number;
+  /**
+   * If provided, only include history entries created before this date (string)
+   */
+  "toDate"?: string;
+  /**
+   * If provided, a version descriptor for the latest change list to include
+   */
+  "toVersion"?: string;
+  /**
+   * If provided, the maximum number of history entries to return
+   */
+  "top"?: number;
+  /**
+   * Alias or display name of user who made the changes
+   */
+  "user"?: string;
+};
+
+export type CheckinNote = Record<string, unknown> & {
+  "name"?: string;
+  "value"?: string;
+};
+
+/**
+ * Represents a comment which is one of potentially many in a comment thread.
+ */
+export type Comment =
+  & Record<string, unknown>
+  & ({
+    "_links"?: ReferenceLinks;
+    "author"?: IdentityRef;
+    /**
+     * The comment type at the time of creation.
+     */
+    "commentType"?: "codeChange" | "system" | "text" | "unknown";
+    /**
+     * The comment content.
+     */
+    "content"?: string;
+    /**
+     * The comment ID. IDs start at 1 and are unique to a pull request.
+     */
+    "id"?: RestInt64;
+    /**
+     * Whether or not this comment was soft-deleted.
+     */
+    "isDeleted"?: boolean;
+    /**
+     * The date the comment's content was last updated.
+     */
+    "lastContentUpdatedDate"?: string;
+    /**
+     * The date the comment was last updated.
+     */
+    "lastUpdatedDate"?: string;
+    /**
+     * The ID of the parent comment. This is used for replies.
+     */
+    "parentCommentId"?: RestInt64;
+    /**
+     * The date the comment was first published.
+     */
+    "publishedDate"?: string;
+    /**
+     * A list of the users who have liked this comment.
+     */
+    "usersLiked"?: Array<IdentityRef>;
+  });
+
+/**
+ * Comment iteration context is used to identify which diff was being viewed when the thread was created.
+ */
+export type CommentIterationContext = Record<string, unknown> & {
+  /**
+   * The iteration of the file on the left side of the diff when the thread was created. If this value is equal to SecondComparingIteration, then this version is the common commit between the source and target branches of the pull request.
+   */
+  "firstComparingIteration"?: RestInt64;
+  /**
+   * The iteration of the file on the right side of the diff when the thread was created.
+   */
+  "secondComparingIteration"?: RestInt64;
+};
+
+export type CommentPosition = Record<string, unknown> & {
+  /**
+   * The line number of a thread's position. Starts at 1.
+   */
+  "line"?: number;
+  /**
+   * The character offset of a thread's position inside of a line. Starts at 1.
+   */
+  "offset"?: number;
+};
+
+/**
+ * Represents a comment thread of a pull request. A thread contains meta data about the file it was left on along with one or more comments (an initial comment and the subsequent replies).
+ */
+export type CommentThread =
+  & Record<string, unknown>
+  & ({
+    "_links"?: ReferenceLinks;
+    /**
+     * A list of the comments.
+     */
+    "comments"?: Array<Comment>;
+    /**
+     * The comment thread id.
+     */
+    "id"?: number;
+    /**
+     * Set of identities related to this thread
+     */
+    "identities"?: Record<string, IdentityRef>;
+    /**
+     * Specify if the thread is deleted which happens when all comments are deleted.
+     */
+    "isDeleted"?: boolean;
+    /**
+     * The time this thread was last updated.
+     */
+    "lastUpdatedDate"?: string;
+    "properties"?: PropertiesCollection;
+    /**
+     * The time this thread was published.
+     */
+    "publishedDate"?: string;
+    /**
+     * The status of the comment thread.
+     */
+    "status"?: "active" | "byDesign" | "closed" | "fixed" | "pending" | "unknown" | "wontFix";
+    "threadContext"?: CommentThreadContext;
+  });
+
+export type CommentThreadContext = Record<string, unknown> & {
+  /**
+   * File path relative to the root of the repository. It's up to the client to use any path format.
+   */
+  "filePath"?: string;
+  "leftFileEnd"?: CommentPosition;
+  "leftFileStart"?: CommentPosition;
+  "rightFileEnd"?: CommentPosition;
+  "rightFileStart"?: CommentPosition;
+};
+
+/**
+ * Comment tracking criteria is used to identify which iteration context the thread has been tracked to (if any) along with some detail about the original position and filename.
+ */
+export type CommentTrackingCriteria = Record<string, unknown> & {
+  /**
+   * The iteration of the file on the left side of the diff that the thread will be tracked to. Threads were tracked if this is greater than 0.
+   */
+  "firstComparingIteration"?: number;
+  /**
+   * Original filepath the thread was created on before tracking. This will be different than the current thread filepath if the file in question was renamed in a later iteration.
+   */
+  "origFilePath"?: string;
+  "origLeftFileEnd"?: CommentPosition;
+  "origLeftFileStart"?: CommentPosition;
+  "origRightFileEnd"?: CommentPosition;
+  "origRightFileStart"?: CommentPosition;
+  /**
+   * The iteration of the file on the right side of the diff that the thread will be tracked to. Threads were tracked if this is greater than 0.
+   */
+  "secondComparingIteration"?: number;
+};
+
+/**
+ * Real time event (SignalR) for a completion errors on a pull request
+ */
+export type CompletionErrorsEvent = RealTimePullRequestEvent & Record<string, unknown> & {
+  /**
+   * The error message associated with the completion error
+   */
+  "errorMessage"?: string;
+};
+
+/**
+ * Request to create an Enterprise Live Migration.
+ */
+export type CreateMigrationRequest =
+  & Record<string, unknown>
+  & ({
+    /**
+     * Optional name of the agent pool to run the migration pipeline. When not specified, the pool is determined by region.
+     */
+    "agentPoolName"?: string;
+    "configOptions"?: ElmConfigOptions;
+    /**
+     * GitHub token (Device Flow or PAT with read:org scope) proving the identity of the migration owner.
+     */
+    "gitHubUserToken"?: string;
+    /**
+     * Optional. The ID of a GitHub Enterprise service connection to use for pipeline rewiring. May be supplied at create time or attached later via PUT /pipelines. When EnableAutoDiscoverPipelines is opted in but no connection is attached, auto-discovery and clone-definition creation no-op during sync, and cutover is blocked by the cutover-readiness check until a connection is attached.
+     */
+    "pipelineServiceConnectionId"?: string;
+    /**
+     * The UTC date/time representing when the cutover is to occur.
+     */
+    "scheduledCutoverDate"?: string;
+    /**
+     * Optional. ID of a GitHub Enterprise Server-typed service connection whose PAT has ELM API access on the target GHES instance.
+     */
+    "serviceEndpointId"?: string;
+    /**
+     * Optional. The set of pre-migration validation policies to skip.
+     */
+    "skipValidation"?:
+      | "activePullRequestCount"
+      | "agentPoolExists"
+      | "all"
+      | "boardsGitHubConnectionProvisioning"
+      | "maxFileSize"
+      | "maxPullRequestSize"
+      | "maxPushPackSize"
+      | "maxReferenceNameLength"
+      | "none"
+      | "pullRequestDeltaSize"
+      | "sourceRepositoryContainsLfsObjects"
+      | "sourceRepositoryNotReadOnly"
+      | "targetRepositoryDoesNotExist";
+    /**
+     * The GitHub login of the migration owner. Set by the server when GitHubUserToken is provided.
+     */
+    "targetOwnerUserId"?: string;
+    /**
+     * URL identifying the destination respository of migration.
+     */
+    "targetRepository"?: string;
+    /**
+     * True if the migration should only perform pre-migration validation.
+     */
+    "validateOnly"?: boolean;
+  });
+
+/**
+ * A failed or blocked resource from the GitHub migration, mapped back to ADO context.
+ */
+export type CutoverReviewItem = Record<string, unknown> & {
+  /**
+   * The error message from GitHub for this failed resource, if any.
+   */
+  "error"?: string;
+  /**
+   * The full URL to the ADO pull request.
+   */
+  "pullRequestUrl"?: string;
+  /**
+   * The node state: failed, blocked, or pending.
+   */
+  "state"?: string;
+  /**
+   * The resource type (e.g. pull_request, pull_request_comment).
+   */
+  "type"?: string;
+};
+
+/**
+ * Response from the GetCutoverReview API containing failed and blocked resource details.
+ */
+export type CutoverReviewResponse = Record<string, unknown> & {
+  "blockedCount"?: number;
+  "failedCount"?: number;
+  "pendingCount"?: number;
+  "requiresPipelineVerificationAcknowledgment"?: boolean;
+  "totalUnprocessedCount"?: number;
+  "unprocessedItems"?: Array<CutoverReviewItem>;
+};
+
+/**
+ * Real time event (SignalR) for a discussions update on a pull request
+ */
+export type DiscussionsUpdatedEvent = RealTimePullRequestEvent & Record<string, unknown>;
+
+/**
+ * Strongly-typed configuration options for an Enterprise Live Migration. Sent on <c>CreateMigrationRequest.ConfigOptions</c> and echoed back on <c>Migration.ConfigOptions</c>. All members are optional so the contract can grow additively.
+ */
+export type ElmConfigOptions = Record<string, unknown> & {
+  /**
+   * Enable auto-discovery of pipelines for the repository. When unset (default), pipelines must be submitted manually via the POST /pipelines API.
+   */
+  "enableAutoDiscoverPipelines"?: boolean;
+  /**
+   * Opt in to automatic Azure Boards GitHub connection provisioning on cutover. Disabled by default.
+   */
+  "enableBoardsGitHubConnection"?: boolean;
+  /**
+   * When <c>true</c>, branch policies will not be migrated to GitHub rulesets during cutover.
+   */
+  "skipBranchPolicyMigration"?: boolean;
+  /**
+   * When <c>true</c>, the source ADO repository will not be set to read-only (maintenance mode) during cutover.
+   */
+  "skipSourceRepoLockdown"?: boolean;
+  "skipValidation"?: ElmSkipValidationOptions;
+};
+
+/**
+ * Named-boolean form of <c>SkipValidationPolicy</c>. Setting a property to <c>true</c> tells the server to skip that pre-migration validation.
+ */
+export type ElmSkipValidationOptions = Record<string, unknown> & {
+  "activePullRequestCount"?: boolean;
+  "agentPoolExists"?: boolean;
+  /**
+   * When <c>true</c>, all validation policies are skipped. Equivalent to setting every other property to <c>true</c>. Never echoed back on responses — only the individual policy properties are populated.
+   */
+  "all"?: boolean;
+  "maxFileSize"?: boolean;
+  "maxPullRequestSize"?: boolean;
+  "maxPushPackSize"?: boolean;
+  "maxReferenceNameLength"?: boolean;
+  "pullRequestDeltaSize"?: boolean;
+  "sourceRepositoryContainsLfsObjects"?: boolean;
+  "targetRepositoryDoesNotExist"?: boolean;
+};
+
+export type FileContentMetadata = Record<string, unknown> & {
+  "contentType"?: string;
+  "encoding"?: number;
+  "extension"?: string;
+  "fileName"?: string;
+  "isBinary"?: boolean;
+  "isImage"?: boolean;
+  "vsLink"?: string;
+};
+
+/**
+ * Provides properties that describe file differences
+ */
+export type FileDiff = Record<string, unknown> & {
+  /**
+   * The collection of line diff blocks
+   */
+  "lineDiffBlocks"?: Array<LineDiffBlock>;
+  /**
+   * Original path of item if different from current path.
+   */
+  "originalPath"?: string;
+  /**
+   * Current path of item
+   */
+  "path"?: string;
+};
+
+/**
+ * Provides properties that describe detailed file differences including line content
+ */
+export type FileDiffDetail = Record<string, unknown> & {
+  /**
+   * The collection of detailed line diff blocks
+   */
+  "lineDiffBlocks"?: Array<LineDiffBlockDetail>;
+  /**
+   * Original path of item if different from current path.
+   */
+  "originalPath"?: string;
+  /**
+   * Current path of item
+   */
+  "path"?: string;
+};
+
+/**
+ * Provides parameters that describe inputs for the file diff
+ */
+export type FileDiffParams = Record<string, unknown> & {
+  /**
+   * Original path of the file
+   */
+  "originalPath"?: string;
+  /**
+   * Current path of the file
+   */
+  "path"?: string;
+};
+
+/**
+ * Provides properties that describe inputs for the file diffs
+ */
+export type FileDiffsCriteria = Record<string, unknown> & {
+  /**
+   * Commit ID of the base version
+   */
+  "baseVersionCommit"?: string;
+  /**
+   * List of parameters for each of the files for which we need to get the file diff
+   */
+  "fileDiffParams"?: Array<FileDiffParams>;
+  /**
+   * Commit ID of the target version
+   */
+  "targetVersionCommit"?: string;
+};
+
+/**
+ * Request to get accessible repositories based on permission.
+ */
+export type GetAccessibleRepositoriesRequest = Record<string, unknown> & {
+  /**
+   * Permission being requested, must be "viewAlert" "dismissAlert" "manage" "viewEnablement" "repoRead" or "repoContribute"
+   */
+  "permission"?: string;
+  /**
+   * List of repository IDs to check permissions for
+   */
+  "repositoryIds"?: Array<string>;
+};
+
+/**
+ * Response containing accessible repository IDs.
+ */
+export type GetAccessibleRepositoriesResponse = Record<string, unknown> & {
+  /**
+   * List of repository IDs where the user has the requested permission
+   */
+  "accessibleRepositoryIds"?: Array<string>;
+};
+
+/**
+ * A Git annotated tag.
+ */
+export type GitAnnotatedTag = Record<string, unknown> & {
+  /**
+   * The tagging Message
+   */
+  "message"?: string;
+  /**
+   * The name of the annotated tag.
+   */
+  "name"?: string;
+  /**
+   * The objectId (Sha1Id) of the tag.
+   */
+  "objectId"?: string;
+  "taggedBy"?: GitUserDate;
+  "taggedObject"?: GitObject;
+  "url"?: string;
+};
+
+export type GitAsyncRefOperation =
+  & Record<string, unknown>
+  & ({
+    "_links"?: ReferenceLinks;
+    "detailedStatus"?: GitAsyncRefOperationDetail;
+    "parameters"?: GitAsyncRefOperationParameters;
+    "status"?: "abandoned" | "completed" | "failed" | "inProgress" | "queued";
+    /**
+     * A URL that can be used to make further requests for status about the operation
+     */
+    "url"?: string;
+  });
+
+/**
+ * Information about the progress of a cherry pick or revert operation.
+ */
+export type GitAsyncRefOperationDetail =
+  & Record<string, unknown>
+  & ({
+    /**
+     * Indicates if there was a conflict generated when trying to cherry pick or revert the changes.
+     */
+    "conflict"?: boolean;
+    /**
+     * The current commit from the list of commits that are being cherry picked or reverted.
+     */
+    "currentCommitId"?: string;
+    /**
+     * Detailed information about why the cherry pick or revert failed to complete.
+     */
+    "failureMessage"?: string;
+    /**
+     * A number between 0 and 1 indicating the percent complete of the operation.
+     */
+    "progress"?: RestJsonNumber;
+    /**
+     * Provides a status code that indicates the reason the cherry pick or revert failed.
+     */
+    "status"?:
+      | "asyncOperationNotFound"
+      | "createBranchPermissionRequired"
+      | "emptyCommitterSignature"
+      | "gitObjectTooLarge"
+      | "invalidRefName"
+      | "none"
+      | "operationIndentityNotFound"
+      | "other"
+      | "refNameConflict"
+      | "targetBranchDeleted"
+      | "writePermissionRequired";
+    /**
+     * Indicates if the operation went beyond the maximum time allowed for a cherry pick or revert operation.
+     */
+    "timedout"?: boolean;
+  });
+
+/**
+ * Parameters that are provided in the request body when requesting to cherry pick or revert.
+ */
+export type GitAsyncRefOperationParameters = Record<string, unknown> & {
+  /**
+   * Proposed target branch name for the cherry pick or revert operation.
+   */
+  "generatedRefName"?: string;
+  /**
+   * The target branch for the cherry pick or revert operation.
+   */
+  "ontoRefName"?: string;
+  "repository"?: GitRepository;
+  "source"?: GitAsyncRefOperationSource;
+};
+
+/**
+ * GitAsyncRefOperationSource specifies the pull request or list of commits to use when making a cherry pick and revert operation request. Only one should be provided.
+ */
+export type GitAsyncRefOperationSource = Record<string, unknown> & {
+  /**
+   * A list of commits to cherry pick or revert
+   */
+  "commitList"?: Array<GitCommitRef>;
+  /**
+   * Id of the pull request to cherry pick or revert
+   */
+  "pullRequestId"?: number;
+};
+
+export type GitBaseVersionDescriptor =
+  & GitVersionDescriptor
+  & (
+    & Record<string, unknown>
+    & ({
+      /**
+       * Version string identifier (name of tag/branch, SHA1 of commit)
+       */
+      "baseVersion"?: string;
+      /**
+       * Version options - Specify additional modifiers to version (e.g Previous)
+       */
+      "baseVersionOptions"?: "firstParent" | "none" | "previousChange";
+      /**
+       * Version type (branch, tag, or commit). Determines how Id is interpreted
+       */
+      "baseVersionType"?: "branch" | "commit" | "tag";
+    })
+  );
+
+export type GitBlobRef = Record<string, unknown> & {
+  "_links"?: ReferenceLinks;
+  /**
+   * SHA1 hash of git object
+   */
+  "objectId"?: string;
+  /**
+   * Size of blob content (in bytes)
+   */
+  "size"?: RestInt64;
+  "url"?: string;
+};
+
+/**
+ * Ahead and behind counts for a particular ref.
+ */
+export type GitBranchStats = Record<string, unknown> & {
+  /**
+   * Number of commits ahead.
+   */
+  "aheadCount"?: number;
+  /**
+   * Number of commits behind.
+   */
+  "behindCount"?: number;
+  "commit"?: GitCommitRef;
+  /**
+   * True if this is the result for the base version.
+   */
+  "isBaseVersion"?: boolean;
+  /**
+   * Name of the ref.
+   */
+  "name"?: string;
+};
+
+export type GitChange = Change & Record<string, unknown> & {
+  /**
+   * ID of the change within the group of changes.
+   */
+  "changeId"?: number;
+  "newContentTemplate"?: GitTemplate;
+  /**
+   * Original path of item if different from current path.
+   */
+  "originalPath"?: string;
+};
+
+/**
+ * This object is returned from Cherry Pick operations and provides the id and status of the operation
+ */
+export type GitCherryPick = GitAsyncRefOperation & Record<string, unknown> & {
+  "cherryPickId"?: number;
+};
+
+export type GitCommit = GitCommitRef & Record<string, unknown> & {
+  "treeId"?: string;
+};
+
+export type GitCommitChanges = Record<string, unknown> & {
+  "changeCounts"?: ChangeCountDictionary;
+  "changes"?: Array<GitChange>;
+};
+
+export type GitCommitDiffs = Record<string, unknown> & {
+  "aheadCount"?: number;
+  "allChangesIncluded"?: boolean;
+  "baseCommit"?: string;
+  "behindCount"?: number;
+  "changeCounts"?: Record<string, number>;
+  "changes"?: Array<GitChange>;
+  "commonCommit"?: string;
+  "targetCommit"?: string;
+};
+
+/**
+ * Provides properties that describe a Git commit and associated metadata.
+ */
+export type GitCommitRef = Record<string, unknown> & {
+  "_links"?: ReferenceLinks;
+  "author"?: GitUserDate;
+  "changeCounts"?: ChangeCountDictionary;
+  /**
+   * An enumeration of the changes included with the commit.
+   */
+  "changes"?: Array<GitChange>;
+  /**
+   * Comment or message of the commit.
+   */
+  "comment"?: string;
+  /**
+   * Indicates if the comment is truncated from the full Git commit comment message.
+   */
+  "commentTruncated"?: boolean;
+  /**
+   * ID (SHA-1) of the commit.
+   */
+  "commitId"?: string;
+  /**
+   * Indicates that commit contains too many changes to be displayed
+   */
+  "commitTooManyChanges"?: boolean;
+  "committer"?: GitUserDate;
+  /**
+   * An enumeration of the parent commit IDs for this commit.
+   */
+  "parents"?: Array<string>;
+  "push"?: GitPushRef;
+  /**
+   * Remote URL path to the commit.
+   */
+  "remoteUrl"?: string;
+  /**
+   * A list of status metadata from services and extensions that may associate additional information to the commit.
+   */
+  "statuses"?: Array<GitStatus>;
+  /**
+   * REST URL for this resource.
+   */
+  "url"?: string;
+  /**
+   * A list of workitems associated with this commit.
+   */
+  "workItems"?: Array<ResourceRef>;
+};
+
+export type GitCommitToCreate = Record<string, unknown> & {
+  "baseRef"?: GitRef;
+  "comment"?: string;
+  "pathActions"?: Array<GitPathAction>;
+};
+
+export type GitConflict =
+  & Record<string, unknown>
+  & ({
+    "_links"?: ReferenceLinks;
+    "conflictId"?: number;
+    "conflictPath"?: string;
+    "conflictType"?:
+      | "addAdd"
+      | "addRename"
+      | "deleteEdit"
+      | "deleteRename"
+      | "directoryChild"
+      | "directoryFile"
+      | "editDelete"
+      | "editEdit"
+      | "fileDirectory"
+      | "none"
+      | "rename1to2"
+      | "rename2to1"
+      | "renameAdd"
+      | "renameDelete"
+      | "renameRename";
+    "mergeBaseCommit"?: GitCommitRef;
+    "mergeOrigin"?: GitMergeOriginRef;
+    "mergeSourceCommit"?: GitCommitRef;
+    "mergeTargetCommit"?: GitCommitRef;
+    "resolutionError"?:
+      | "invalidPath"
+      | "mergeContentNotFound"
+      | "none"
+      | "otherError"
+      | "pathInUse"
+      | "unknownAction"
+      | "unknownMergeType";
+    "resolutionStatus"?: "partiallyResolved" | "resolved" | "unresolved";
+    "resolvedBy"?: IdentityRef;
+    "resolvedDate"?: string;
+    "url"?: string;
+  });
+
+/**
+ * Data object for AddAdd conflict
+ */
+export type GitConflictAddAdd = GitConflict & Record<string, unknown> & {
+  "resolution"?: GitResolutionMergeContent;
+  "sourceBlob"?: GitBlobRef;
+  "targetBlob"?: GitBlobRef;
+};
+
+/**
+ * Data object for RenameAdd conflict
+ */
+export type GitConflictAddRename = GitConflict & Record<string, unknown> & {
+  "baseBlob"?: GitBlobRef;
+  "resolution"?: GitResolutionPathConflict;
+  "sourceBlob"?: GitBlobRef;
+  "targetBlob"?: GitBlobRef;
+  "targetOriginalPath"?: string;
+};
+
+/**
+ * Data object for EditDelete conflict
+ */
+export type GitConflictDeleteEdit = GitConflict & Record<string, unknown> & {
+  "baseBlob"?: GitBlobRef;
+  "resolution"?: GitResolutionPickOneAction;
+  "targetBlob"?: GitBlobRef;
+};
+
+/**
+ * Data object for RenameDelete conflict
+ */
+export type GitConflictDeleteRename = GitConflict & Record<string, unknown> & {
+  "baseBlob"?: GitBlobRef;
+  "resolution"?: GitResolutionPickOneAction;
+  "targetBlob"?: GitBlobRef;
+  "targetNewPath"?: string;
+};
+
+/**
+ * Data object for FileDirectory conflict
+ */
+export type GitConflictDirectoryFile = GitConflict & Record<string, unknown> & {
+  "resolution"?: GitResolutionPathConflict;
+  "sourceTree"?: GitTreeRef;
+  "targetBlob"?: GitBlobRef;
+};
+
+/**
+ * Data object for DeleteEdit conflict
+ */
+export type GitConflictEditDelete = GitConflict & Record<string, unknown> & {
+  "baseBlob"?: GitBlobRef;
+  "resolution"?: GitResolutionPickOneAction;
+  "sourceBlob"?: GitBlobRef;
+};
+
+/**
+ * Data object for EditEdit conflict
+ */
+export type GitConflictEditEdit = GitConflict & Record<string, unknown> & {
+  "baseBlob"?: GitBlobRef;
+  "resolution"?: GitResolutionMergeContent;
+  "sourceBlob"?: GitBlobRef;
+  "targetBlob"?: GitBlobRef;
+};
+
+/**
+ * Data object for DirectoryFile conflict
+ */
+export type GitConflictFileDirectory = GitConflict & Record<string, unknown> & {
+  "resolution"?: GitResolutionPathConflict;
+  "sourceBlob"?: GitBlobRef;
+  "targetTree"?: GitTreeRef;
+};
+
+/**
+ * Data object for Rename1to2 conflict
+ */
+export type GitConflictRename1to2 = GitConflict & Record<string, unknown> & {
+  "baseBlob"?: GitBlobRef;
+  "resolution"?: GitResolutionRename1to2;
+  "sourceBlob"?: GitBlobRef;
+  "sourceNewPath"?: string;
+  "targetBlob"?: GitBlobRef;
+  "targetNewPath"?: string;
+};
+
+/**
+ * Data object for Rename2to1 conflict
+ */
+export type GitConflictRename2to1 = GitConflict & Record<string, unknown> & {
+  "resolution"?: GitResolutionPathConflict;
+  "sourceNewBlob"?: GitBlobRef;
+  "sourceOriginalBlob"?: GitBlobRef;
+  "sourceOriginalPath"?: string;
+  "targetNewBlob"?: GitBlobRef;
+  "targetOriginalBlob"?: GitBlobRef;
+  "targetOriginalPath"?: string;
+};
+
+/**
+ * Data object for AddRename conflict
+ */
+export type GitConflictRenameAdd = GitConflict & Record<string, unknown> & {
+  "baseBlob"?: GitBlobRef;
+  "resolution"?: GitResolutionPathConflict;
+  "sourceBlob"?: GitBlobRef;
+  "sourceOriginalPath"?: string;
+  "targetBlob"?: GitBlobRef;
+};
+
+/**
+ * Data object for DeleteRename conflict
+ */
+export type GitConflictRenameDelete = GitConflict & Record<string, unknown> & {
+  "baseBlob"?: GitBlobRef;
+  "resolution"?: GitResolutionPickOneAction;
+  "sourceBlob"?: GitBlobRef;
+  "sourceNewPath"?: string;
+};
+
+/**
+ * Data object for RenameRename conflict
+ */
+export type GitConflictRenameRename = GitConflict & Record<string, unknown> & {
+  "baseBlob"?: GitBlobRef;
+  "originalPath"?: string;
+  "resolution"?: GitResolutionMergeContent;
+  "sourceBlob"?: GitBlobRef;
+  "targetBlob"?: GitBlobRef;
+};
+
+export type GitConflictUpdateResult =
+  & Record<string, unknown>
+  & ({
+    /**
+     * Conflict ID that was provided by input
+     */
+    "conflictId"?: number;
+    /**
+     * Reason for failing
+     */
+    "customMessage"?: string;
+    /**
+     * Status of the update on the server
+     */
+    "updateStatus"?:
+      | "badRequest"
+      | "invalidResolution"
+      | "notFound"
+      | "succeeded"
+      | "unsupportedConflictType";
+    "updatedConflict"?: GitConflict;
+  });
+
+export type GitDeletedRepository = Record<string, unknown> & {
+  "createdDate"?: string;
+  "deletedBy"?: IdentityRef;
+  "deletedDate"?: string;
+  "id"?: string;
+  "name"?: string;
+  "project"?: TeamProjectReference;
+};
+
+export type GitFilePathsCollection = Record<string, unknown> & {
+  "commitId"?: string;
+  "paths"?: Array<string>;
+  "url"?: string;
+};
+
+/**
+ * Status information about a requested fork operation.
+ */
+export type GitForkOperationStatusDetail = Record<string, unknown> & {
+  /**
+   * All valid steps for the forking process
+   */
+  "allSteps"?: Array<string>;
+  /**
+   * Index into AllSteps for the current step
+   */
+  "currentStep"?: number;
+  /**
+   * Error message if the operation failed.
+   */
+  "errorMessage"?: string;
+};
+
+/**
+ * Information about a fork ref.
+ */
+export type GitForkRef = GitRef & Record<string, unknown> & {
+  "repository"?: GitRepository;
+};
+
+/**
+ * Request to sync data between two forks.
+ */
+export type GitForkSyncRequest =
+  & Record<string, unknown>
+  & ({
+    "_links"?: ReferenceLinks;
+    "detailedStatus"?: GitForkOperationStatusDetail;
+    /**
+     * Unique identifier for the operation.
+     */
+    "operationId"?: number;
+    "source"?: GlobalGitRepositoryKey;
+    /**
+     * If supplied, the set of ref mappings to use when performing a "sync" or create. If missing, all refs will be synchronized.
+     */
+    "sourceToTargetRefs"?: Array<SourceToTargetRef>;
+    "status"?: "abandoned" | "completed" | "failed" | "inProgress" | "queued";
+  });
+
+/**
+ * Parameters for creating a fork request
+ */
+export type GitForkSyncRequestParameters = Record<string, unknown> & {
+  "source"?: GlobalGitRepositoryKey;
+  /**
+   * If supplied, the set of ref mappings to use when performing a "sync" or create. If missing, all refs will be synchronized.
+   */
+  "sourceToTargetRefs"?: Array<SourceToTargetRef>;
+};
+
+export type GitForkTeamProjectReference = Record<string, unknown> & TeamProjectReference;
+
+export type GitImportFailedEvent = Record<string, unknown> & {
+  "sourceRepositoryName"?: string;
+  "targetRepository"?: GitRepository;
+};
+
+/**
+ * Parameter for creating a git import request when source is Git version control
+ */
+export type GitImportGitSource = Record<string, unknown> & {
+  /**
+   * Tells if this is a sync request or not
+   */
+  "overwrite"?: boolean;
+  /**
+   * Url for the source repo
+   */
+  "url"?: string;
+};
+
+/**
+ * A request to import data from a remote source control system.
+ */
+export type GitImportRequest =
+  & Record<string, unknown>
+  & ({
+    "_links"?: ReferenceLinks;
+    "detailedStatus"?: GitImportStatusDetail;
+    /**
+     * The unique identifier for this import request.
+     */
+    "importRequestId"?: number;
+    "parameters"?: GitImportRequestParameters;
+    "repository"?: GitRepository;
+    /**
+     * Current status of the import.
+     */
+    "status"?: "abandoned" | "completed" | "failed" | "inProgress" | "queued";
+    /**
+     * A link back to this import request resource.
+     */
+    "url"?: string;
+  });
+
+/**
+ * Parameters for creating an import request
+ */
+export type GitImportRequestParameters = Record<string, unknown> & {
+  /**
+   * Option to delete service endpoint when import is done
+   */
+  "deleteServiceEndpointAfterImportIsDone"?: boolean;
+  "gitSource"?: GitImportGitSource;
+  /**
+   * Service Endpoint for connection to external endpoint
+   */
+  "serviceEndpointId"?: string;
+  "tfvcSource"?: GitImportTfvcSource;
+};
+
+/**
+ * Additional status information about an import request.
+ */
+export type GitImportStatusDetail = Record<string, unknown> & {
+  /**
+   * All valid steps for the import process
+   */
+  "allSteps"?: Array<string>;
+  /**
+   * Index into AllSteps for the current step
+   */
+  "currentStep"?: number;
+  /**
+   * Error message if the operation failed.
+   */
+  "errorMessage"?: string;
+};
+
+export type GitImportSucceededEvent = Record<string, unknown> & {
+  "sourceRepositoryName"?: string;
+  "targetRepository"?: GitRepository;
+};
+
+/**
+ * Parameter for creating a git import request when source is tfvc version control
+ */
+export type GitImportTfvcSource = Record<string, unknown> & {
+  /**
+   * Set true to import History, false otherwise
+   */
+  "importHistory"?: boolean;
+  /**
+   * Get history for last n days (max allowed value is 180 days)
+   */
+  "importHistoryDurationInDays"?: number;
+  /**
+   * Path which we want to import (this can be copied from Path Control in Explorer)
+   */
+  "path"?: string;
+};
+
+export type GitItem =
+  & ItemModel
+  & (
+    & Record<string, unknown>
+    & ({
+      /**
+       * SHA1 of commit item was fetched at
+       */
+      "commitId"?: string;
+      /**
+       * Type of object (Commit, Tree, Blob, Tag, ...)
+       */
+      "gitObjectType"?:
+        | "bad"
+        | "blob"
+        | "commit"
+        | "ext2"
+        | "ofsDelta"
+        | "refDelta"
+        | "tag"
+        | "tree";
+      "latestProcessedChange"?: GitCommitRef;
+      /**
+       * Git object id
+       */
+      "objectId"?: string;
+      /**
+       * Git object id
+       */
+      "originalObjectId"?: string;
+    })
+  );
+
+export type GitItemDescriptor =
+  & Record<string, unknown>
+  & ({
+    /**
+     * Path to item
+     */
+    "path"?: string;
+    /**
+     * Specifies whether to include children (OneLevel), all descendants (Full), or None
+     */
+    "recursionLevel"?: "full" | "none" | "oneLevel" | "oneLevelPlusNestedEmptyFolders";
+    /**
+     * Version string (interpretation based on VersionType defined in subclass
+     */
+    "version"?: string;
+    /**
+     * Version modifiers (e.g. previous)
+     */
+    "versionOptions"?: "firstParent" | "none" | "previousChange";
+    /**
+     * How to interpret version (branch,tag,commit)
+     */
+    "versionType"?: "branch" | "commit" | "tag";
+  });
+
+export type GitItemRequestData = Record<string, unknown> & {
+  /**
+   * Whether to include metadata for all items
+   */
+  "includeContentMetadata"?: boolean;
+  /**
+   * Whether to include the _links field on the shallow references
+   */
+  "includeLinks"?: boolean;
+  /**
+   * Collection of items to fetch, including path, version, and recursion level
+   */
+  "itemDescriptors"?: Array<GitItemDescriptor>;
+  /**
+   * Whether to include shallow ref to commit that last changed each item
+   */
+  "latestProcessedChange"?: boolean;
+};
+
+export type GitLastChangeItem = Record<string, unknown> & {
+  /**
+   * Gets or sets the commit Id this item was modified most recently for the provided version.
+   */
+  "commitId"?: string;
+  /**
+   * Gets or sets the path of the item.
+   */
+  "path"?: string;
+};
+
+export type GitLastChangeTreeItems = Record<string, unknown> & {
+  /**
+   * The list of commits referenced by Items, if they were requested.
+   */
+  "commits"?: Array<GitCommitRef>;
+  /**
+   * The last change of items.
+   */
+  "items"?: Array<GitLastChangeItem>;
+  /**
+   * The last explored time, in case the result is not comprehensive. Null otherwise.
+   */
+  "lastExploredTime"?: string;
+};
+
+export type GitMerge =
+  & GitMergeParameters
+  & (
+    & Record<string, unknown>
+    & ({
+      "_links"?: ReferenceLinks;
+      "detailedStatus"?: GitMergeOperationStatusDetail;
+      /**
+       * Unique identifier for the merge operation.
+       */
+      "mergeOperationId"?: number;
+      /**
+       * Status of the merge operation.
+       */
+      "status"?: "abandoned" | "completed" | "failed" | "inProgress" | "queued";
+    })
+  );
+
+/**
+ * Status information about a requested merge operation.
+ */
+export type GitMergeOperationStatusDetail = Record<string, unknown> & {
+  /**
+   * Error message if the operation failed.
+   */
+  "failureMessage"?: string;
+  /**
+   * The commitId of the resultant merge commit.
+   */
+  "mergeCommitId"?: string;
+};
+
+export type GitMergeOriginRef = Record<string, unknown> & {
+  "cherryPickId"?: number;
+  "pullRequestId"?: number;
+  "revertId"?: number;
+};
+
+/**
+ * Parameters required for performing git merge.
+ */
+export type GitMergeParameters = Record<string, unknown> & {
+  /**
+   * Comment or message of the commit.
+   */
+  "comment"?: string;
+  /**
+   * An enumeration of the parent commit IDs for the merge  commit.
+   */
+  "parents"?: Array<string>;
+};
+
+/**
+ * Git object identifier and type information.
+ */
+export type GitObject =
+  & Record<string, unknown>
+  & ({
+    /**
+     * Object Id (Sha1Id).
+     */
+    "objectId"?: string;
+    /**
+     * Type of object (Commit, Tree, Blob, Tag)
+     */
+    "objectType"?: "bad" | "blob" | "commit" | "ext2" | "ofsDelta" | "refDelta" | "tag" | "tree";
+  });
+
+export type GitPathAction =
+  & Record<string, unknown>
+  & ({
+    "action"?: "add" | "delete" | "edit" | "none" | "rename";
+    "base64Content"?: string;
+    "path"?: string;
+    "rawTextContent"?: string;
+    "targetPath"?: string;
+  });
+
+export type GitPathToItemsCollection = Record<string, unknown> & {
+  "items"?: Record<string, Array<GitItem>>;
+};
+
+export type GitPolicyConfigurationResponse = Record<string, unknown> & {
+  /**
+   * The HTTP client methods find the continuation token header in the response and populate this field.
+   */
+  "continuationToken"?: string;
+  "policyConfigurations"?: Array<PolicyConfiguration>;
+};
+
+/**
+ * Represents all the data associated with a pull request.
+ */
+export type GitPullRequest =
+  & Record<string, unknown>
+  & ({
+    "_links"?: ReferenceLinks;
+    /**
+     * A string which uniquely identifies this pull request. To generate an artifact ID for a pull request, use this template: ```vstfs:///Git/PullRequestId/{projectId}/{repositoryId}/{pullRequestId}```
+     */
+    "artifactId"?: string;
+    "autoCompleteSetBy"?: IdentityRef;
+    "closedBy"?: IdentityRef;
+    /**
+     * The date when the pull request was closed (completed, abandoned, or merged externally).
+     */
+    "closedDate"?: string;
+    /**
+     * The code review ID of the pull request. Used internally.
+     */
+    "codeReviewId"?: number;
+    /**
+     * The commits contained in the pull request.
+     */
+    "commits"?: Array<GitCommitRef>;
+    "completionOptions"?: GitPullRequestCompletionOptions;
+    /**
+     * The most recent date at which the pull request entered the queue to be completed. Used internally.
+     */
+    "completionQueueTime"?: string;
+    "createdBy"?: IdentityRef;
+    /**
+     * The date when the pull request was created.
+     */
+    "creationDate"?: string;
+    /**
+     * The description of the pull request.
+     */
+    "description"?: string;
+    "forkSource"?: GitForkRef;
+    /**
+     * Multiple mergebases warning
+     */
+    "hasMultipleMergeBases"?: boolean;
+    /**
+     * This optional parameter allows clients to use server-side dynamic choices for the target ref. Due to preexisting contracts, users _must_ specify a target ref, but this option will cause the server to ignore it and choose dynamically from the user's favorites (or the default branch).
+     */
+    "ignoreTargetRefAndChooseDynamically"?: boolean;
+    /**
+     * Draft / WIP pull request.
+     */
+    "isDraft"?: boolean;
+    /**
+     * The labels associated with the pull request.
+     */
+    "labels"?: Array<WebApiTagDefinition>;
+    "lastMergeCommit"?: GitCommitRef;
+    "lastMergeSourceCommit"?: GitCommitRef;
+    "lastMergeTargetCommit"?: GitCommitRef;
+    /**
+     * If set, pull request merge failed for this reason.
+     */
+    "mergeFailureMessage"?: string;
+    /**
+     * The type of failure (if any) of the pull request merge.
+     */
+    "mergeFailureType"?: "caseSensitive" | "none" | "objectTooLarge" | "unknown";
+    /**
+     * The ID of the job used to run the pull request merge. Used internally.
+     */
+    "mergeId"?: string;
+    "mergeOptions"?: GitPullRequestMergeOptions;
+    /**
+     * The current status of the pull request merge.
+     */
+    "mergeStatus"?:
+      | "conflicts"
+      | "failure"
+      | "notSet"
+      | "queued"
+      | "rejectedByPolicy"
+      | "succeeded";
+    /**
+     * The ID of the pull request.
+     */
+    "pullRequestId"?: number;
+    /**
+     * Used internally.
+     */
+    "remoteUrl"?: string;
+    "repository"?: GitRepository;
+    /**
+     * A list of reviewers on the pull request along with the state of their votes.
+     */
+    "reviewers"?: Array<IdentityRefWithVote>;
+    /**
+     * The name of the source branch of the pull request.
+     */
+    "sourceRefName"?: string;
+    /**
+     * The status of the pull request.
+     */
+    "status"?: "abandoned" | "active" | "all" | "completed" | "notSet";
+    /**
+     * If true, this pull request supports multiple iterations. Iteration support means individual pushes to the source branch of the pull request can be reviewed and comments left in one iteration will be tracked across future iterations.
+     */
+    "supportsIterations"?: boolean;
+    /**
+     * The name of the target branch of the pull request.
+     */
+    "targetRefName"?: string;
+    /**
+     * The title of the pull request.
+     */
+    "title"?: string;
+    /**
+     * Used internally.
+     */
+    "url"?: string;
+    /**
+     * Any work item references associated with this pull request.
+     */
+    "workItemRefs"?: Array<ResourceRef>;
+  });
+
+/**
+ * Change made in a pull request.
+ */
+export type GitPullRequestChange = GitChange & Record<string, unknown> & {
+  /**
+   * ID used to track files through multiple changes.
+   */
+  "changeTrackingId"?: number;
+};
+
+/**
+ * Represents a comment thread of a pull request. A thread contains meta data about the file it was left on (if any) along with one or more comments (an initial comment and the subsequent replies).
+ */
+export type GitPullRequestCommentThread = CommentThread & Record<string, unknown> & {
+  "pullRequestThreadContext"?: GitPullRequestCommentThreadContext;
+};
+
+/**
+ * Comment thread context contains details about what diffs were being viewed at the time of thread creation and whether or not the thread has been tracked from that original diff.
+ */
+export type GitPullRequestCommentThreadContext = Record<string, unknown> & {
+  /**
+   * Used to track a comment across iterations. This value can be found by looking at the iteration's changes list. Must be set for pull requests with iteration support. Otherwise, it's not required for 'legacy' pull requests.
+   */
+  "changeTrackingId"?: number;
+  "iterationContext"?: CommentIterationContext;
+  "trackingCriteria"?: CommentTrackingCriteria;
+};
+
+/**
+ * Preferences about how the pull request should be completed.
+ */
+export type GitPullRequestCompletionOptions =
+  & Record<string, unknown>
+  & ({
+    /**
+     * List of any policy configuration Id's which auto-complete should not wait for. Only applies to optional policies (isBlocking == false). Auto-complete always waits for required policies (isBlocking == true).
+     */
+    "autoCompleteIgnoreConfigIds"?: Array<number>;
+    /**
+     * If true, policies will be explicitly bypassed while the pull request is completed.
+     */
+    "bypassPolicy"?: boolean;
+    /**
+     * If policies are bypassed, this reason is stored as to why bypass was used.
+     */
+    "bypassReason"?: string;
+    /**
+     * If true, the source branch of the pull request will be deleted after completion.
+     */
+    "deleteSourceBranch"?: boolean;
+    /**
+     * If set, this will be used as the commit message of the merge commit.
+     */
+    "mergeCommitMessage"?: string;
+    /**
+     * Specify the strategy used to merge the pull request during completion. If MergeStrategy is not set to any value, the service selects the first merge strategy not prohibited by the target branch’s policy. If the limit merge type policy is not configured, the default is noFastForward unless the deprecated SquashMerge is true, in which case the default is squash. If an explicit value is provided for MergeStrategy, the SquashMerge property will be ignored.
+     */
+    "mergeStrategy"?: "noFastForward" | "rebase" | "rebaseMerge" | "squash";
+    /**
+     * SquashMerge is deprecated. You should explicitly set the value of MergeStrategy. This flag is only used when MergeStrategy is not specified and the target branch has no merge-strategy policy configured. In all other cases it is ignored.
+     */
+    "squashMerge"?: boolean;
+    /**
+     * If true, we will attempt to transition any work items linked to the pull request into the next logical state (i.e. Active -> Resolved)
+     */
+    "transitionWorkItems"?: boolean;
+    /**
+     * If true, the current completion attempt was triggered via auto-complete. Used internally.
+     */
+    "triggeredByAutoComplete"?: boolean;
+  });
+
+/**
+ * Collection of file diffs for a pull request.
+ */
+export type GitPullRequestFilesDiff = Record<string, unknown> & {
+  /**
+   * File diffs for all changed files in the pull request.
+   */
+  "fileDiffs"?: Array<FileDiffDetail>;
+  /**
+   * Description of the pull request.
+   */
+  "pullRequestDescription"?: string;
+  /**
+   * Title of the pull request.
+   */
+  "pullRequestTitle"?: string;
+};
+
+/**
+ * Provides properties that describe a Git pull request iteration. Iterations are created as a result of creating and pushing updates to a pull request.
+ */
+export type GitPullRequestIteration =
+  & Record<string, unknown>
+  & ({
+    "_links"?: ReferenceLinks;
+    "author"?: IdentityRef;
+    /**
+     * Changes included with the pull request iteration.
+     */
+    "changeList"?: Array<GitPullRequestChange>;
+    /**
+     * The commits included with the pull request iteration.
+     */
+    "commits"?: Array<GitCommitRef>;
+    "commonRefCommit"?: GitCommitRef;
+    /**
+     * The creation date of the pull request iteration.
+     */
+    "createdDate"?: string;
+    /**
+     * Description of the pull request iteration.
+     */
+    "description"?: string;
+    /**
+     * Indicates if the Commits property contains a truncated list of commits in this pull request iteration.
+     */
+    "hasMoreCommits"?: boolean;
+    /**
+     * ID of the pull request iteration. Iterations are created as a result of creating and pushing updates to a pull request.
+     */
+    "id"?: number;
+    /**
+     * If the iteration reason is Retarget, this is the refName of the new target
+     */
+    "newTargetRefName"?: string;
+    /**
+     * If the iteration reason is Retarget, this is the original target refName
+     */
+    "oldTargetRefName"?: string;
+    "push"?: GitPushRef;
+    /**
+     * The reason for which the pull request iteration was created.
+     */
+    "reason"?:
+      | "create"
+      | "forcePush"
+      | "push"
+      | "rebase"
+      | "resolveConflicts"
+      | "retarget"
+      | "unknown";
+    "sourceRefCommit"?: GitCommitRef;
+    "targetRefCommit"?: GitCommitRef;
+    /**
+     * The updated date of the pull request iteration.
+     */
+    "updatedDate"?: string;
+  });
+
+/**
+ * Collection of changes made in a pull request.
+ */
+export type GitPullRequestIterationChanges = Record<string, unknown> & {
+  /**
+   * Changes made in the iteration.
+   */
+  "changeEntries"?: Array<GitPullRequestChange>;
+  /**
+   * Value to specify as skip to get the next page of changes.  This will be zero if there are no more changes.
+   */
+  "nextSkip"?: number;
+  /**
+   * Value to specify as top to get the next page of changes.  This will be zero if there are no more changes.
+   */
+  "nextTop"?: number;
+};
+
+/**
+ * The options which are used when a pull request merge is created.
+ */
+export type GitPullRequestMergeOptions = Record<string, unknown> & {
+  /**
+   * If true, conflict resolutions applied during the merge will be put in separate commits to preserve authorship info for git blame, etc.
+   */
+  "conflictAuthorshipCommits"?: boolean;
+  /**
+   * If true, renames where there is more than one valid way to map the original file locations to renamed file locations will be treated as false positives and ignored.
+   */
+  "detectRenameFalsePositives"?: boolean;
+  /**
+   * If true, rename detection will not be performed during the merge.
+   */
+  "disableRenames"?: boolean;
+};
+
+/**
+ * A set of pull request queries and their results.
+ */
+export type GitPullRequestQuery = Record<string, unknown> & {
+  /**
+   * The queries to perform.
+   */
+  "queries"?: Array<GitPullRequestQueryInput>;
+  /**
+   * The results of the queries. This matches the QueryInputs list so Results[n] are the results of QueryInputs[n]. Each entry in the list is a dictionary of commit->pull requests.
+   */
+  "results"?: Array<Record<string, Array<GitPullRequest>>>;
+};
+
+/**
+ * Pull request query input parameters.
+ */
+export type GitPullRequestQueryInput =
+  & Record<string, unknown>
+  & ({
+    /**
+     * Options for including additional PR properties in the response.
+     */
+    "include"?: "labels" | "notSet";
+    /**
+     * The list of commit IDs to search for.
+     */
+    "items"?: Array<string>;
+    /**
+     * The type of query to perform.
+     */
+    "type"?: "commit" | "lastMergeCommit" | "notSet";
+  });
+
+export type GitPullRequestReviewFileContentInfo = Record<string, unknown> & {
+  "_links"?: ReferenceLinks;
+  /**
+   * The file change path.
+   */
+  "path"?: string;
+  /**
+   * Content hash of on-disk representation of file content. Its calculated by the client by using SHA1 hash function. Ensure that uploaded file has same encoding as in source control.
+   */
+  "shA1Hash"?: string;
+};
+
+/**
+ * Pull requests can be searched for matching this criteria.
+ */
+export type GitPullRequestSearchCriteria =
+  & Record<string, unknown>
+  & ({
+    /**
+     * If set, search for pull requests that were created by this identity.
+     */
+    "creatorId"?: string;
+    /**
+     * Whether to include the _links field on the shallow references
+     */
+    "includeLinks"?: boolean;
+    /**
+     * If set, filters pull requests that have labels matching the specified label names.
+     */
+    "labels"?: Array<string>;
+    /**
+     * If specified, filters pull requests that created/closed before this date based on the queryTimeRangeType specified.
+     */
+    "maxTime"?: string;
+    /**
+     * If specified, filters pull requests that created/closed after this date based on the queryTimeRangeType specified.
+     */
+    "minTime"?: string;
+    /**
+     * The type of time range which should be used for minTime and maxTime. Defaults to Created if unset.
+     */
+    "queryTimeRangeType"?: "closed" | "created";
+    /**
+     * If set, search for pull requests whose target branch is in this repository.
+     */
+    "repositoryId"?: string;
+    /**
+     * If set, search for pull requests that have this identity as a reviewer.
+     */
+    "reviewerId"?: string;
+    /**
+     * If set, search for pull requests from this branch.
+     */
+    "sourceRefName"?: string;
+    /**
+     * If set, search for pull requests whose source branch is in this repository.
+     */
+    "sourceRepositoryId"?: string;
+    /**
+     * If set, search for pull requests that are in this state. Defaults to Active if unset.
+     */
+    "status"?: "abandoned" | "active" | "all" | "completed" | "notSet";
+    /**
+     * The operator used for filtering by labels. Defaults to And if unset. When And is used, pull requests must have all specified labels. When Or is used, pull requests must have at least one of the specified labels.
+     */
+    "tagsFilterOperator"?: "and" | "or";
+    /**
+     * If set, search for pull requests into this branch.
+     */
+    "targetRefName"?: string;
+    /**
+     * If set, filters pull requests that contain the specified text in the title.
+     */
+    "title"?: string;
+  });
+
+/**
+ * This class contains the metadata of a service/extension posting pull request status. Status can be associated with a pull request or an iteration.
+ */
+export type GitPullRequestStatus = GitStatus & Record<string, unknown> & {
+  /**
+   * ID of the iteration to associate status with. Minimum value is 1.
+   */
+  "iterationId"?: number;
+  "properties"?: PropertiesCollection;
+};
+
+export type GitPush = GitPushRef & Record<string, unknown> & {
+  "commits"?: Array<GitCommitRef>;
+  "refUpdates"?: Array<GitRefUpdate>;
+  "repository"?: GitRepository;
+};
+
+export type GitPushEventData = Record<string, unknown> & {
+  "afterId"?: string;
+  "beforeId"?: string;
+  "branch"?: string;
+  "commits"?: Array<GitCommit>;
+  "repository"?: GitRepository;
+};
+
+export type GitPushRef = Record<string, unknown> & {
+  "_links"?: ReferenceLinks;
+  "date"?: string;
+  "pushId"?: number;
+  "pushedBy"?: IdentityRef;
+  "url"?: string;
+};
+
+export type GitPushSearchCriteria = Record<string, unknown> & {
+  "fromDate"?: string;
+  /**
+   * Whether to include the _links field on the shallow references
+   */
+  "includeLinks"?: boolean;
+  "includeRefUpdates"?: boolean;
+  "pusherId"?: string;
+  "refName"?: string;
+  "toDate"?: string;
+};
+
+export type GitQueryBranchStatsCriteria = Record<string, unknown> & {
+  "baseCommit"?: GitVersionDescriptor;
+  "targetCommits"?: Array<GitVersionDescriptor>;
+};
+
+export type GitQueryCommitsCriteria =
+  & Record<string, unknown>
+  & ({
+    /**
+     * Number of entries to skip
+     */
+    "$skip"?: number;
+    /**
+     * Maximum number of entries to retrieve
+     */
+    "$top"?: number;
+    /**
+     * Alias or display name of the author
+     */
+    "author"?: string;
+    "compareVersion"?: GitVersionDescriptor;
+    /**
+     * Only applies when an itemPath is specified. This determines whether to exclude delete entries of the specified path.
+     */
+    "excludeDeletes"?: boolean;
+    /**
+     * If provided, a lower bound for filtering commits alphabetically
+     */
+    "fromCommitId"?: string;
+    /**
+     * If provided, only include history entries created after this date (string)
+     */
+    "fromDate"?: string;
+    /**
+     * What Git history mode should be used. This only applies to the search criteria when Ids = null and an itemPath is specified.
+     */
+    "historyMode"?:
+      | "firstParent"
+      | "fullHistory"
+      | "fullHistorySimplifyMerges"
+      | "simplifiedHistory";
+    /**
+     * If provided, specifies the exact commit ids of the commits to fetch. May not be combined with other parameters.
+     */
+    "ids"?: Array<string>;
+    /**
+     * Whether to include the _links field on the shallow references
+     */
+    "includeLinks"?: boolean;
+    /**
+     * Whether to include the push information
+     */
+    "includePushData"?: boolean;
+    /**
+     * Whether to include the image Url for committers and authors
+     */
+    "includeUserImageUrl"?: boolean;
+    /**
+     * Whether to include linked work items
+     */
+    "includeWorkItems"?: boolean;
+    /**
+     * Path of item to search under
+     */
+    "itemPath"?: string;
+    "itemVersion"?: GitVersionDescriptor;
+    /**
+     * If enabled, this option will ignore the itemVersion and compareVersion parameters
+     */
+    "showOldestCommitsFirst"?: boolean;
+    /**
+     * If provided, an upper bound for filtering commits alphabetically
+     */
+    "toCommitId"?: string;
+    /**
+     * If provided, only include history entries created before this date (string)
+     */
+    "toDate"?: string;
+    /**
+     * Alias or display name of the committer
+     */
+    "user"?: string;
+  });
+
+export type GitQueryRefsCriteria =
+  & Record<string, unknown>
+  & ({
+    /**
+     * List of commit Ids to be searched
+     */
+    "commitIds"?: Array<string>;
+    /**
+     * List of complete or partial names for refs to be searched
+     */
+    "refNames"?: Array<string>;
+    /**
+     * Type of search on refNames, if provided
+     */
+    "searchType"?: "contains" | "exact" | "startsWith";
+  });
+
+export type GitRecycleBinRepositoryDetails = Record<string, unknown> & {
+  /**
+   * Setting to false will undo earlier deletion and restore the repository.
+   */
+  "deleted"?: boolean;
+};
+
+export type GitRef = Record<string, unknown> & {
+  "_links"?: ReferenceLinks;
+  "creator"?: IdentityRef;
+  "isLocked"?: boolean;
+  "isLockedBy"?: IdentityRef;
+  "name"?: string;
+  "objectId"?: string;
+  "peeledObjectId"?: string;
+  "statuses"?: Array<GitStatus>;
+  "url"?: string;
+};
+
+export type GitRefFavorite =
+  & Record<string, unknown>
+  & ({
+    "_links"?: ReferenceLinks;
+    "id"?: number;
+    "identityId"?: string;
+    "name"?: string;
+    "repositoryId"?: string;
+    "type"?: "folder" | "invalid" | "ref";
+    "url"?: string;
+  });
+
+export type GitRefUpdate = Record<string, unknown> & {
+  "isLocked"?: boolean;
+  "name"?: string;
+  "newObjectId"?: string;
+  "oldObjectId"?: string;
+  "repositoryId"?: string;
+};
+
+export type GitRefUpdateResult =
+  & Record<string, unknown>
+  & ({
+    /**
+     * Custom message for the result object For instance, Reason for failing.
+     */
+    "customMessage"?: string;
+    /**
+     * Whether the ref is locked or not
+     */
+    "isLocked"?: boolean;
+    /**
+     * Ref name
+     */
+    "name"?: string;
+    /**
+     * New object ID
+     */
+    "newObjectId"?: string;
+    /**
+     * Old object ID
+     */
+    "oldObjectId"?: string;
+    /**
+     * Name of the plugin that rejected the updated.
+     */
+    "rejectedBy"?: string;
+    /**
+     * Repository ID
+     */
+    "repositoryId"?: string;
+    /**
+     * True if the ref update succeeded, false otherwise
+     */
+    "success"?: boolean;
+    /**
+     * Status of the update from the TFS server.
+     */
+    "updateStatus"?:
+      | "createBranchPermissionRequired"
+      | "createTagPermissionRequired"
+      | "forcePushRequired"
+      | "invalidRefName"
+      | "locked"
+      | "manageNotePermissionRequired"
+      | "refNameConflict"
+      | "rejectedByPlugin"
+      | "rejectedByPolicy"
+      | "staleOldObjectId"
+      | "succeeded"
+      | "succeededCorruptRef"
+      | "succeededNonExistentRef"
+      | "unprocessed"
+      | "unresolvableToCommit"
+      | "writePermissionRequired";
+  });
+
+export type GitRepository = Record<string, unknown> & {
+  "_links"?: ReferenceLinks;
+  /**
+   * The timestamp when the repository was created.
+   */
+  "creationDate"?: string;
+  "defaultBranch"?: string;
+  "id"?: string;
+  /**
+   * True if the repository is disabled. False otherwise.
+   */
+  "isDisabled"?: boolean;
+  /**
+   * True if the repository was created as a fork.
+   */
+  "isFork"?: boolean;
+  /**
+   * True if the repository is in maintenance. False otherwise.
+   */
+  "isInMaintenance"?: boolean;
+  "name"?: string;
+  "parentRepository"?: GitRepositoryRef;
+  "project"?: TeamProjectReference;
+  "remoteUrl"?: string;
+  /**
+   * Compressed size (bytes) of the repository.
+   */
+  "size"?: RestInt64;
+  "sshUrl"?: string;
+  "url"?: string;
+  "validRemoteUrls"?: Array<string>;
+  "webUrl"?: string;
+};
+
+export type GitRepositoryCreateOptions = Record<string, unknown> & {
+  "name"?: string;
+  "parentRepository"?: GitRepositoryRef;
+  "project"?: TeamProjectReference;
+};
+
+export type GitRepositoryRef = Record<string, unknown> & {
+  "collection"?: TeamProjectCollectionReference;
+  "id"?: string;
+  /**
+   * True if the repository was created as a fork
+   */
+  "isFork"?: boolean;
+  "name"?: string;
+  "project"?: TeamProjectReference;
+  "remoteUrl"?: string;
+  "sshUrl"?: string;
+  "url"?: string;
+};
+
+export type GitRepositoryStats = Record<string, unknown> & {
+  "activePullRequestsCount"?: number;
+  "branchesCount"?: number;
+  "commitsCount"?: number;
+  "repositoryId"?: string;
+};
+
+export type GitResolution = Record<string, unknown> & {
+  "author"?: IdentityRef;
+};
+
+export type GitResolutionMergeContent =
+  & GitResolution
+  & (
+    & Record<string, unknown>
+    & ({
+      "mergeType"?:
+        | "autoMerged"
+        | "takeSourceContent"
+        | "takeTargetContent"
+        | "undecided"
+        | "userMerged";
+      "userMergedBlob"?: GitBlobRef;
+      "userMergedContent"?: Array<string>;
+    })
+  );
+
+export type GitResolutionPathConflict =
+  & GitResolution
+  & (
+    & Record<string, unknown>
+    & ({
+      "action"?:
+        | "keepSourceDeleteTarget"
+        | "keepSourceRenameTarget"
+        | "keepTargetDeleteSource"
+        | "keepTargetRenameSource"
+        | "undecided";
+      "renamePath"?: string;
+    })
+  );
+
+export type GitResolutionPickOneAction =
+  & GitResolution
+  & (
+    & Record<string, unknown>
+    & ({
+      "action"?: "pickSourceAction" | "pickTargetAction" | "undecided";
+    })
+  );
+
+export type GitResolutionRename1to2 =
+  & GitResolutionMergeContent
+  & (
+    & Record<string, unknown>
+    & ({
+      "action"?: "keepBothFiles" | "keepSourcePath" | "keepTargetPath" | "undecided";
+    })
+  );
+
+export type GitRevert = GitAsyncRefOperation & Record<string, unknown> & {
+  "revertId"?: number;
+};
+
+/**
+ * This class contains the metadata of a service/extension posting a status.
+ */
+export type GitStatus =
+  & Record<string, unknown>
+  & ({
+    "_links"?: ReferenceLinks;
+    "context"?: GitStatusContext;
+    "createdBy"?: IdentityRef;
+    /**
+     * Creation date and time of the status.
+     */
+    "creationDate"?: string;
+    /**
+     * Status description. Typically describes current state of the status.
+     */
+    "description"?: string;
+    /**
+     * Status identifier.
+     */
+    "id"?: number;
+    /**
+     * State of the status.
+     */
+    "state"?:
+      | "error"
+      | "failed"
+      | "notApplicable"
+      | "notSet"
+      | "partiallySucceeded"
+      | "pending"
+      | "succeeded";
+    /**
+     * URL with status details.
+     */
+    "targetUrl"?: string;
+    /**
+     * Last update date and time of the status.
+     */
+    "updatedDate"?: string;
+  });
+
+/**
+ * Status context that uniquely identifies the status.
+ */
+export type GitStatusContext = Record<string, unknown> & {
+  /**
+   * Genre of the status. Typically name of the service/tool generating the status, can be empty.
+   */
+  "genre"?: string;
+  /**
+   * Name identifier of the status, cannot be null or empty.
+   */
+  "name"?: string;
+};
+
+/**
+ * An object describing the git suggestion.  Git suggestions are currently limited to suggested pull requests.
+ */
+export type GitSuggestion = Record<string, unknown> & {
+  /**
+   * Specific properties describing the suggestion.
+   */
+  "properties"?: Record<string, Record<string, unknown>>;
+  /**
+   * The type of suggestion (e.g. pull request).
+   */
+  "type"?: string;
+};
+
+export type GitTargetVersionDescriptor =
+  & GitVersionDescriptor
+  & (
+    & Record<string, unknown>
+    & ({
+      /**
+       * Version string identifier (name of tag/branch, SHA1 of commit)
+       */
+      "targetVersion"?: string;
+      /**
+       * Version options - Specify additional modifiers to version (e.g Previous)
+       */
+      "targetVersionOptions"?: "firstParent" | "none" | "previousChange";
+      /**
+       * Version type (branch, tag, or commit). Determines how Id is interpreted
+       */
+      "targetVersionType"?: "branch" | "commit" | "tag";
+    })
+  );
+
+export type GitTemplate = Record<string, unknown> & {
+  /**
+   * Name of the Template
+   */
+  "name"?: string;
+  /**
+   * Type of the Template
+   */
+  "type"?: string;
+};
+
+export type GitTreeDiff = Record<string, unknown> & {
+  /**
+   * ObjectId of the base tree of this diff.
+   */
+  "baseTreeId"?: string;
+  /**
+   * List of tree entries that differ between the base and target tree.  Renames and object type changes are returned as a delete for the old object and add for the new object.  If a continuation token is returned in the response header, some tree entries are yet to be processed and may yield more diff entries. If the continuation token is not returned all the diff entries have been included in this response.
+   */
+  "diffEntries"?: Array<GitTreeDiffEntry>;
+  /**
+   * ObjectId of the target tree of this diff.
+   */
+  "targetTreeId"?: string;
+  /**
+   * REST Url to this resource.
+   */
+  "url"?: string;
+};
+
+export type GitTreeDiffEntry =
+  & Record<string, unknown>
+  & ({
+    /**
+     * SHA1 hash of the object in the base tree, if it exists. Will be null in case of adds.
+     */
+    "baseObjectId"?: string;
+    /**
+     * Type of change that affected this entry.
+     */
+    "changeType"?:
+      | "add"
+      | "all"
+      | "branch"
+      | "delete"
+      | "edit"
+      | "encoding"
+      | "lock"
+      | "merge"
+      | "none"
+      | "property"
+      | "rename"
+      | "rollback"
+      | "sourceRename"
+      | "targetRename"
+      | "undelete";
+    /**
+     * Object type of the tree entry. Blob, Tree or Commit("submodule")
+     */
+    "objectType"?: "bad" | "blob" | "commit" | "ext2" | "ofsDelta" | "refDelta" | "tag" | "tree";
+    /**
+     * Relative path in base and target trees.
+     */
+    "path"?: string;
+    /**
+     * SHA1 hash of the object in the target tree, if it exists. Will be null in case of deletes.
+     */
+    "targetObjectId"?: string;
+  });
+
+export type GitTreeDiffResponse = Record<string, unknown> & {
+  /**
+   * The HTTP client methods find the continuation token header in the response and populate this field.
+   */
+  "continuationToken"?: Array<string>;
+  "treeDiff"?: GitTreeDiff;
+};
+
+export type GitTreeEntryRef =
+  & Record<string, unknown>
+  & ({
+    /**
+     * Blob or tree
+     */
+    "gitObjectType"?: "bad" | "blob" | "commit" | "ext2" | "ofsDelta" | "refDelta" | "tag" | "tree";
+    /**
+     * Mode represented as octal string
+     */
+    "mode"?: string;
+    /**
+     * SHA1 hash of git object
+     */
+    "objectId"?: string;
+    /**
+     * Path relative to parent tree object
+     */
+    "relativePath"?: string;
+    /**
+     * Size of content
+     */
+    "size"?: RestInt64;
+    /**
+     * url to retrieve tree or blob
+     */
+    "url"?: string;
+  });
+
+export type GitTreeRef = Record<string, unknown> & {
+  "_links"?: ReferenceLinks;
+  /**
+   * SHA1 hash of git object
+   */
+  "objectId"?: string;
+  /**
+   * Sum of sizes of all children
+   */
+  "size"?: RestInt64;
+  /**
+   * Blobs and trees under this tree
+   */
+  "treeEntries"?: Array<GitTreeEntryRef>;
+  /**
+   * Url to tree
+   */
+  "url"?: string;
+};
+
+/**
+ * User info and date for Git operations.
+ */
+export type GitUserDate = Record<string, unknown> & {
+  /**
+   * Date of the Git operation.
+   */
+  "date"?: string;
+  /**
+   * Email address of the user performing the Git operation.
+   */
+  "email"?: string;
+  /**
+   * Url for the user's avatar.
+   */
+  "imageUrl"?: string;
+  /**
+   * Name of the user performing the Git operation.
+   */
+  "name"?: string;
+};
+
+export type GitVersionDescriptor =
+  & Record<string, unknown>
+  & ({
+    /**
+     * Version string identifier (name of tag/branch, SHA1 of commit)
+     */
+    "version"?: string;
+    /**
+     * Version options - Specify additional modifiers to version (e.g Previous)
+     */
+    "versionOptions"?: "firstParent" | "none" | "previousChange";
+    /**
+     * Version type (branch, tag, or commit). Determines how Id is interpreted
+     */
+    "versionType"?: "branch" | "commit" | "tag";
+  });
+
+/**
+ * Globally unique key for a repository.
+ */
+export type GlobalGitRepositoryKey = Record<string, unknown> & {
+  /**
+   * Team Project Collection ID of the collection for the repository.
+   */
+  "collectionId"?: string;
+  /**
+   * Team Project ID of the project for the repository.
+   */
+  "projectId"?: string;
+  /**
+   * ID of the repository.
+   */
+  "repositoryId"?: string;
+};
+
+export type GraphSubjectBase = Record<string, unknown> & {
+  "_links"?: ReferenceLinks;
+  /**
+   * The descriptor is the primary way to reference the graph subject while the system is running. This field will uniquely identify the same graph subject across both Accounts and Organizations.
+   */
+  "descriptor"?: string;
+  /**
+   * This is the non-unique display name of the graph subject. To change this field, you must alter its value in the source provider.
+   */
+  "displayName"?: string;
+  /**
+   * This url is the full route to the source resource of this graph subject.
+   */
+  "url"?: string;
+};
+
+export type HistoryEntry =
+  & Record<string, unknown>
+  & ({
+    "changeList"?: ChangeList;
+    /**
+     * The change made to the item from this change list (only relevant for File history, not folders)
+     */
+    "itemChangeType"?:
+      | "add"
+      | "all"
+      | "branch"
+      | "delete"
+      | "edit"
+      | "encoding"
+      | "lock"
+      | "merge"
+      | "none"
+      | "property"
+      | "rename"
+      | "rollback"
+      | "sourceRename"
+      | "targetRename"
+      | "undelete";
+    /**
+     * The path of the item at this point in history (only relevant for File history, not folders)
+     */
+    "serverItem"?: string;
+  });
+
+export type IdentityRef = GraphSubjectBase & Record<string, unknown> & {
+  /**
+   * Deprecated - Can be retrieved by querying the Graph user referenced in the "self" entry of the IdentityRef "_links" dictionary
+   */
+  "directoryAlias"?: string;
+  "id"?: string;
+  /**
+   * Deprecated - Available in the "avatar" entry of the IdentityRef "_links" dictionary
+   */
+  "imageUrl"?: string;
+  /**
+   * Deprecated - Can be retrieved by querying the Graph membership state referenced in the "membershipState" entry of the GraphUser "_links" dictionary
+   */
+  "inactive"?: boolean;
+  /**
+   * Deprecated - Can be inferred from the subject type of the descriptor (Descriptor.IsAadUserType/Descriptor.IsAadGroupType)
+   */
+  "isAadIdentity"?: boolean;
+  /**
+   * Deprecated - Can be inferred from the subject type of the descriptor (Descriptor.IsGroupType)
+   */
+  "isContainer"?: boolean;
+  "isDeletedInOrigin"?: boolean;
+  /**
+   * Deprecated - not in use in most preexisting implementations of ToIdentityRef
+   */
+  "profileUrl"?: string;
+  /**
+   * Deprecated - use Domain+PrincipalName instead
+   */
+  "uniqueName"?: string;
+};
+
+/**
+ * Identity information including a vote on a pull request.
+ */
+export type IdentityRefWithVote = IdentityRef & Record<string, unknown> & {
+  /**
+   * Indicates if this reviewer has declined to review this pull request.
+   */
+  "hasDeclined"?: boolean;
+  /**
+   * Indicates if this reviewer is flagged for attention on this pull request.
+   */
+  "isFlagged"?: boolean;
+  /**
+   * Indicates if this approve vote should still be handled even though vote didn't change.
+   */
+  "isReapprove"?: boolean;
+  /**
+   * Indicates if this is a required reviewer for this pull request. <br /> Branches can have policies that require particular reviewers are required for pull requests.
+   */
+  "isRequired"?: boolean;
+  /**
+   * URL to retrieve information about this identity
+   */
+  "reviewerUrl"?: string;
+  /**
+   * Vote on a pull request:<br /> 10 - approved 5 - approved with suggestions 0 - no vote -5 - waiting for author -10 - rejected
+   */
+  "vote"?: RestInt64;
+  /**
+   * Groups or teams that this reviewer contributed to. <br /> Groups and teams can be reviewers on pull requests but can not vote directly.  When a member of the group or team votes, that vote is rolled up into the group or team vote.  VotedFor is a list of such votes.
+   */
+  "votedFor"?: Array<IdentityRefWithVote>;
+};
+
+export type ImportRepositoryValidation = Record<string, unknown> & {
+  "gitSource"?: GitImportGitSource;
+  "password"?: string;
+  "tfvcSource"?: GitImportTfvcSource;
+  "username"?: string;
+};
+
+export type IncludedGitCommit = Record<string, unknown> & {
+  "commitId"?: string;
+  "commitTime"?: string;
+  "parentCommitIds"?: Array<string>;
+  "repositoryId"?: string;
+};
+
+/**
+ * Real time event (SignalR) for IsDraft update on a pull request
+ */
+export type IsDraftUpdatedEvent = RealTimePullRequestEvent & Record<string, unknown>;
+
+export type ItemContent =
+  & Record<string, unknown>
+  & ({
+    "content"?: string;
+    "contentType"?: "base64Encoded" | "rawText";
+  });
+
+/**
+ * Optional details to include when returning an item model
+ */
+export type ItemDetailsOptions =
+  & Record<string, unknown>
+  & ({
+    /**
+     * If true, include metadata about the file type
+     */
+    "includeContentMetadata"?: boolean;
+    /**
+     * Specifies whether to include children (OneLevel), all descendants (Full) or None for folder items
+     */
+    "recursionLevel"?: "full" | "none" | "oneLevel" | "oneLevelPlusNestedEmptyFolders";
+  });
+
+export type ItemModel = Record<string, unknown> & {
+  "_links"?: ReferenceLinks;
+  "content"?: string;
+  "contentMetadata"?: FileContentMetadata;
+  "isFolder"?: boolean;
+  "isSymLink"?: boolean;
+  "path"?: string;
+  "url"?: string;
+};
+
+/**
+ * The JSON model for JSON Patch Operations
+ */
+export type JsonPatchDocument = Array<JsonPatchOperation> & Record<string, unknown>;
+
+/**
+ * The JSON model for a JSON Patch operation
+ */
+export type JsonPatchOperation =
+  & Record<string, unknown>
+  & ({
+    /**
+     * The path to copy from for the Move/Copy operation.
+     */
+    "from"?: string;
+    /**
+     * The patch operation
+     */
+    "op"?: "add" | "copy" | "move" | "remove" | "replace" | "test";
+    /**
+     * The path for the operation. In the case of an array, a zero based index can be used to specify the position in the array (e.g. /biscuits/0/name). The "-" character can be used instead of an index to insert at the end of the array (e.g. /biscuits/-).
+     */
+    "path"?: string;
+    /**
+     * The value for the operation. This is either a primitive or a JToken.
+     */
+    "value"?: Record<string, unknown>;
+  });
+
+/**
+ * Real time event (SignalR) for updated labels on a pull request
+ */
+export type LabelsUpdatedEvent = RealTimePullRequestEvent & Record<string, unknown>;
+
+/**
+ * The class to represent the line diff block
+ */
+export type LineDiffBlock =
+  & Record<string, unknown>
+  & ({
+    /**
+     * Type of change that was made to the block.
+     */
+    "changeType"?: "add" | "delete" | "edit" | "none";
+    /**
+     * Line number where this block starts in modified file.
+     */
+    "modifiedLineNumberStart"?: number;
+    /**
+     * Count of lines in this block in modified file.
+     */
+    "modifiedLinesCount"?: number;
+    /**
+     * Line number where this block starts in original file.
+     */
+    "originalLineNumberStart"?: number;
+    /**
+     * Count of lines in this block in original file.
+     */
+    "originalLinesCount"?: number;
+  });
+
+/**
+ * The class to represent a detailed line diff block with line content
+ */
+export type LineDiffBlockDetail =
+  & Record<string, unknown>
+  & ({
+    /**
+     * Type of change that was made to the block.
+     */
+    "changeType"?: "add" | "delete" | "edit" | "none";
+    /**
+     * Line number where this block starts in modified file.
+     */
+    "modifiedLineNumberStart"?: number;
+    /**
+     * Modified lines of content in this block.
+     */
+    "modifiedLines"?: Array<string>;
+    /**
+     * Count of lines in this block in modified file.
+     */
+    "modifiedLinesCount"?: number;
+    /**
+     * Line number where this block starts in original file.
+     */
+    "originalLineNumberStart"?: number;
+    /**
+     * Original lines of content in this block.
+     */
+    "originalLines"?: Array<string>;
+    /**
+     * Count of lines in this block in original file.
+     */
+    "originalLinesCount"?: number;
+  });
+
+/**
+ * Real time event (SignalR) for a merge completed on a pull request
+ */
+export type MergeCompletedEvent = RealTimePullRequestEvent & Record<string, unknown>;
+
+/**
+ * An Enterprise Live Migration
+ */
+export type Migration =
+  & Record<string, unknown>
+  & ({
+    /**
+     * The name of the agent pool used to run the migration pipeline.
+     */
+    "agentPoolName"?: string;
+    "changedBy"?: IdentityRef;
+    /**
+     * The UTC date/time this migration was last changed.
+     */
+    "changedDate"?: string;
+    /**
+     * The UTC date/time of the last successful code synchronization pass.
+     */
+    "codeSyncDate"?: string;
+    "configOptions"?: ElmConfigOptions;
+    "createdBy"?: IdentityRef;
+    /**
+     * The UTC date/time this migration was created.
+     */
+    "createdDate"?: string;
+    /**
+     * The error that caused this migration to fail.
+     */
+    "errorMessage"?: string;
+    /**
+     * The UTC date/time of the last successful pull request synchronization pass.
+     */
+    "pullRequestSyncDate"?: string;
+    /**
+     * RepositoryId
+     */
+    "repositoryId"?: string;
+    /**
+     * The UTC date/time representing when the cutover is to occur.
+     */
+    "scheduledCutoverDate"?: string;
+    /**
+     * The ID of the GitHub Enterprise Server service connection that holds the PAT used to authenticate against the target GitHub Enterprise Server.
+     */
+    "serviceEndpointId"?: string;
+    /**
+     * The pre-migration validation policies that are being skipped.
+     */
+    "skipValidation"?:
+      | "activePullRequestCount"
+      | "agentPoolExists"
+      | "all"
+      | "boardsGitHubConnectionProvisioning"
+      | "maxFileSize"
+      | "maxPullRequestSize"
+      | "maxPushPackSize"
+      | "maxReferenceNameLength"
+      | "none"
+      | "pullRequestDeltaSize"
+      | "sourceRepositoryContainsLfsObjects"
+      | "sourceRepositoryNotReadOnly"
+      | "targetRepositoryDoesNotExist";
+    /**
+     * The current stage of the migration (Queued, Validation, Synchronization, Cutover, Migrated).
+     */
+    "stage"?:
+      | "cutover"
+      | "degraded"
+      | "migrated"
+      | "queued"
+      | "readyForCutover"
+      | "reviewForCutover"
+      | "synchronization"
+      | "validation";
+    /**
+     * If the migration is 'active', 'complete', or 'failed'.
+     */
+    "status"?: "active" | "completed" | "failed" | "paused";
+    /**
+     * The ID of the user that will end up owning the migrated repository.
+     */
+    "targetOwnerUserId"?: string;
+    /**
+     * URL identifying the destination respository of migration.
+     */
+    "targetRepository"?: string;
+    /**
+     * True if the migration should only perform pre-migration validation.
+     */
+    "validateOnly"?: boolean;
+    /**
+     * A list of any issues found during pre-migration checks.
+     */
+    "validationIssues"?: Array<string>;
+  });
+
+/**
+ * A classification finding for a pipeline. Each finding represents a characteristic that makes the pipeline complex (e.g., cross-repo references, multi-checkout). A pipeline with zero findings is Simple.
+ */
+export type PipelineClassificationFinding = Record<string, unknown> & {
+  /**
+   * External repositories involved in the finding, if any.
+   */
+  "affectedRepositories"?: Array<string>;
+  /**
+   * User-facing description of the issue.
+   */
+  "description"?: string;
+  /**
+   * Short stable identifier for the rule that produced this finding.
+   */
+  "ruleName"?: string;
+};
+
+/**
+ * Represents the rewiring state of a single pipeline within a migration.
+ */
+export type PipelineRewireEntry =
+  & Record<string, unknown>
+  & ({
+    /**
+     * True if the user has acknowledged this pipeline (e.g., confirmed a complex pipeline has been manually fixed). Acknowledged pipelines do not block cutover.
+     */
+    "acknowledged"?: boolean;
+    /**
+     * The classification of the pipeline.
+     */
+    "classification"?:
+      | "crossProject"
+      | "crossRepoTemplates"
+      | "multiRepoCheckout"
+      | "sameRepoTemplates"
+      | "separatePipelineRepo"
+      | "simple"
+      | "unknown";
+    /**
+     * The build definition ID of the clone pipeline, if one has been created.
+     */
+    "cloneDefinitionId"?: number;
+    /**
+     * The YAML filename of the clone on the elm/migrations branch (for complex cases only).
+     */
+    "cloneYamlFile"?: string;
+    /**
+     * The build definition ID of the pipeline.
+     */
+    "definitionId"?: number;
+    /**
+     * Error message if the pipeline rewiring failed.
+     */
+    "errorMessage"?: string;
+    /**
+     * Classification findings that describe why this pipeline is complex. Empty for Simple pipelines.
+     */
+    "findings"?: Array<PipelineClassificationFinding>;
+    /**
+     * The name of the pipeline definition.
+     */
+    "name"?: string;
+    /**
+     * The folder path of the pipeline definition.
+     */
+    "path"?: string;
+    /**
+     * The project ID containing this pipeline.
+     */
+    "projectId"?: string;
+    /**
+     * The project name containing this pipeline.
+     */
+    "projectName"?: string;
+    /**
+     * List of repositories referenced by this pipeline that need mappings. Populated when Status is "needsMappings".
+     */
+    "requiredMappings"?: Array<RepositoryReference>;
+    /**
+     * The current rewiring status.
+     */
+    "status"?:
+      | "awaitingCodeSync"
+      | "classifying"
+      | "cloneCreated"
+      | "failed"
+      | "needsMappings"
+      | "pending"
+      | "preCheckFailed"
+      | "preCheckPassed"
+      | "rewired"
+      | "swapComplete";
+    /**
+     * The YAML filename used by the pipeline definition.
+     */
+    "yamlFilename"?: string;
+  });
+
+/**
+ * Response containing the pipeline rewiring configuration and status for a migration.
+ */
+export type PipelineRewireResponse = Record<string, unknown> & {
+  /**
+   * The list of pipelines and their rewiring status.
+   */
+  "pipelines"?: Array<PipelineRewireEntry>;
+  /**
+   * The GitHub Enterprise service connection ID used for pipeline clones.
+   */
+  "serviceConnectionId"?: string;
+};
+
+/**
+ * The full policy configuration with settings.
+ */
+export type PolicyConfiguration = Record<string, unknown> & {
+  "_links"?: ReferenceLinks;
+  "createdBy"?: IdentityRef;
+  /**
+   * The date and time when the policy was created.
+   */
+  "createdDate"?: string;
+  /**
+   * Indicates whether the policy is blocking.
+   */
+  "isBlocking"?: boolean;
+  /**
+   * Indicates whether the policy has been (soft) deleted.
+   */
+  "isDeleted"?: boolean;
+  /**
+   * Indicates whether the policy is enabled.
+   */
+  "isEnabled"?: boolean;
+  /**
+   * If set, this policy requires "Manage Enterprise Policies" permission to create, edit, or delete.
+   */
+  "isEnterpriseManaged"?: boolean;
+  /**
+   * The policy configuration settings.
+   */
+  "settings"?: string;
+} & VersionedPolicyConfigurationRef;
+
+/**
+ * Policy configuration reference.
+ */
+export type PolicyConfigurationRef = Record<string, unknown> & {
+  /**
+   * The policy configuration ID.
+   */
+  "id"?: number;
+  "type"?: PolicyTypeRef;
+  /**
+   * The URL where the policy configuration can be retrieved.
+   */
+  "url"?: string;
+};
+
+/**
+ * Real time event (SignalR) for a policy evaluation update on a pull request
+ */
+export type PolicyEvaluationUpdatedEvent = RealTimePullRequestEvent & Record<string, unknown>;
+
+/**
+ * Policy type reference.
+ */
+export type PolicyTypeRef = Record<string, unknown> & {
+  /**
+   * Display name of the policy type.
+   */
+  "displayName"?: string;
+  /**
+   * The policy type ID.
+   */
+  "id"?: string;
+  /**
+   * The URL where the policy type can be retrieved.
+   */
+  "url"?: string;
+};
+
+/**
+ * The class represents a property bag as a collection of key-value pairs. Values of all primitive types (any type with a `TypeCode != TypeCode.Object`) except for `DBNull` are accepted. Values of type Byte[], Int32, Double, DateType and String preserve their type, other primitives are retuned as a String. Byte[] expected as base64 encoded string.
+ */
+export type PropertiesCollection = Record<string, unknown> & {
+  /**
+   * The count of properties in the collection.
+   */
+  "count"?: number;
+  "item"?: Record<string, unknown>;
+  /**
+   * The set of keys in the collection.
+   */
+  "keys"?: Array<string>;
+  /**
+   * The set of values in the collection.
+   */
+  "values"?: Array<string>;
+};
+
+/**
+ * Real time event (SignalR) for pull request creation
+ */
+export type PullRequestCreatedEvent = RealTimePullRequestEvent & Record<string, unknown>;
+
+/**
+ * Initial config contract sent to extensions creating tabs on the pull request page
+ */
+export type PullRequestTabExtensionConfig = Record<string, unknown> & {
+  "pullRequestId"?: number;
+  "repositoryId"?: string;
+};
+
+/**
+ * Base contract for a real time pull request event (SignalR)
+ */
+export type RealTimePullRequestEvent = Record<string, unknown> & {
+  /**
+   * The id of this event. Can be used to track send/receive state between client and server.
+   */
+  "eventId"?: string;
+  /**
+   * The id of the pull request this event was generated for.
+   */
+  "pullRequestId"?: number;
+};
+
+/**
+ * The class to represent a collection of REST reference links.
+ */
+export type ReferenceLinks = Record<string, unknown> & {
+  /**
+   * The readonly view of the links.  Because Reference links are readonly, we only want to expose them as read only.
+   */
+  "links"?: Record<string, Record<string, unknown>>;
+};
+
+/**
+ * Maps an AzDO repository to its GitHub counterpart for cross-repo pipeline rewiring. Used when a pipeline references templates or resources from another AzDO repo that has been (or will be) migrated to GitHub.
+ */
+export type RepositoryMapping = Record<string, unknown> & {
+  /**
+   * The AzDO repository GUID of the source repository.
+   */
+  "sourceRepositoryId"?: string;
+  /**
+   * The GitHub target repository in "owner/repo" format.
+   */
+  "targetRepository"?: string;
+};
+
+/**
+ * Describes a repository referenced by a pipeline that may need a mapping for cross-repo rewiring. Surfaced in RequiredMappings when the pipeline status is NeedsMappings.
+ */
+export type RepositoryReference = Record<string, unknown> & {
+  /**
+   * The AzDO repository GUID, if resolvable.
+   */
+  "repositoryId"?: string;
+  /**
+   * The repository name as referenced in the YAML (e.g. "MyProject/TemplatesRepo").
+   */
+  "repositoryName"?: string;
+  /**
+   * The repository type as declared in the YAML (e.g. "git", "github").
+   */
+  "repositoryType"?: string;
+};
+
+export type ResourceRef = Record<string, unknown> & {
+  "id"?: string;
+  "url"?: string;
+};
+
+/**
+ * Real time event (SignalR) for when the target branch of a pull request is changed
+ */
+export type RetargetEvent = RealTimePullRequestEvent & Record<string, unknown>;
+
+/**
+ * Real time event (SignalR) for a reviewer vote update on a pull request
+ */
+export type ReviewerVoteUpdatedEvent = RealTimePullRequestEvent & Record<string, unknown>;
+
+/**
+ * Real time event (SignalR) for an update to reviewers on a pull request
+ */
+export type ReviewersUpdatedEvent = RealTimePullRequestEvent & Record<string, unknown>;
+
+/**
+ * Real time event (SignalR) for reviewer votes being reset on a pull request
+ */
+export type ReviewersVotesResetEvent = RealTimePullRequestEvent & Record<string, unknown>;
+
+/**
+ * Context used while sharing a pull request.
+ */
+export type ShareNotificationContext = Record<string, unknown> & {
+  /**
+   * Optional user note or message.
+   */
+  "message"?: string;
+  /**
+   * Identities of users who will receive a share notification.
+   */
+  "receivers"?: Array<IdentityRef>;
+};
+
+export type SourceToTargetRef = Record<string, unknown> & {
+  /**
+   * The source ref to copy. For example, refs/heads/master.
+   */
+  "sourceRef"?: string;
+  /**
+   * The target ref to update. For example, refs/heads/master.
+   */
+  "targetRef"?: string;
+};
+
+/**
+ * Real time event (SignalR) for an added status on a pull request
+ */
+export type StatusAddedEvent = RealTimePullRequestEvent & Record<string, unknown>;
+
+/**
+ * Real time event (SignalR) for a status update on a pull request
+ */
+export type StatusUpdatedEvent = RealTimePullRequestEvent & Record<string, unknown>;
+
+/**
+ * Real time event (SignalR) for deleted statuses on a pull request
+ */
+export type StatusesDeletedEvent = RealTimePullRequestEvent & Record<string, unknown>;
+
+/**
+ * Request to submit pipelines for rewiring as part of an Enterprise Live Migration.
+ */
+export type SubmitPipelinesRequest = Record<string, unknown> & {
+  /**
+   * The build definition IDs of the pipelines to rewire.
+   */
+  "pipelineIds"?: Array<number>;
+  /**
+   * Optional mappings for cross-repo references. When a pipeline's YAML references another AzDO repository (via resources.repositories), this mapping tells us which GitHub repository it corresponds to. Not required for simple pipelines.
+   */
+  "repositoryMappings"?: Array<RepositoryMapping>;
+  /**
+   * The ID of the GitHub service connection to use for the rewired pipelines. This must be a project-scoped service connection with access to the target GitHub org. This is separate from the migration-level ServiceEndpointId.
+   */
+  "serviceConnectionId"?: string;
+};
+
+/**
+ * Represents a Supported IDE entity.
+ */
+export type SupportedIde =
+  & Record<string, unknown>
+  & ({
+    /**
+     * The download URL for the IDE.
+     */
+    "downloadUrl"?: string;
+    /**
+     * The type of the IDE.
+     */
+    "ideType"?:
+      | "androidStudio"
+      | "appCode"
+      | "cLion"
+      | "dataGrip"
+      | "eclipse"
+      | "intelliJ"
+      | "mps"
+      | "phpStorm"
+      | "pyCharm"
+      | "rubyMine"
+      | "tower"
+      | "unknown"
+      | "visualStudio"
+      | "vsCode"
+      | "webStorm";
+    /**
+     * The name of the IDE.
+     */
+    "name"?: string;
+    /**
+     * The URL to open the protocol handler for the IDE.
+     */
+    "protocolHandlerUrl"?: string;
+    /**
+     * A list of SupportedPlatforms.
+     */
+    "supportedPlatforms"?: Array<string>;
+  });
+
+/**
+ * Reference object for a TeamProjectCollection.
+ */
+export type TeamProjectCollectionReference = Record<string, unknown> & {
+  /**
+   * Collection avatar Url.
+   */
+  "avatarUrl"?: string;
+  /**
+   * Collection Id.
+   */
+  "id"?: string;
+  /**
+   * Collection Name.
+   */
+  "name"?: string;
+  /**
+   * Collection REST Url.
+   */
+  "url"?: string;
+};
+
+/**
+ * Represents a shallow reference to a TeamProject.
+ */
+export type TeamProjectReference =
+  & Record<string, unknown>
+  & ({
+    /**
+     * Project abbreviation.
+     */
+    "abbreviation"?: string;
+    /**
+     * Url to default team identity image.
+     */
+    "defaultTeamImageUrl"?: string;
+    /**
+     * The project's description (if any).
+     */
+    "description"?: string;
+    /**
+     * Project identifier.
+     */
+    "id"?: string;
+    /**
+     * Project last update time.
+     */
+    "lastUpdateTime"?: string;
+    /**
+     * Project name.
+     */
+    "name"?: string;
+    /**
+     * Project revision.
+     */
+    "revision"?: RestInt64;
+    /**
+     * Project state.
+     */
+    "state"?: "all" | "createPending" | "deleted" | "deleting" | "new" | "unchanged" | "wellFormed";
+    /**
+     * Url to the full version of the object.
+     */
+    "url"?: string;
+    /**
+     * Project visibility.
+     */
+    "visibility"?: "private" | "public";
+  });
+
+/**
+ * Class representing a branch object.
+ */
+export type TfvcBranch = Record<string, unknown> & {
+  /**
+   * List of children for the branch.
+   */
+  "children"?: Array<TfvcBranch>;
+  /**
+   * List of branch mappings.
+   */
+  "mappings"?: Array<TfvcBranchMapping>;
+  "parent"?: TfvcShallowBranchRef;
+  /**
+   * List of paths of the related branches.
+   */
+  "relatedBranches"?: Array<TfvcShallowBranchRef>;
+} & TfvcBranchRef;
+
+/**
+ * A branch mapping.
+ */
+export type TfvcBranchMapping = Record<string, unknown> & {
+  /**
+   * Depth of the branch.
+   */
+  "depth"?: string;
+  /**
+   * Server item for the branch.
+   */
+  "serverItem"?: string;
+  /**
+   * Type of the branch.
+   */
+  "type"?: string;
+};
+
+/**
+ * Metadata for a branchref.
+ */
+export type TfvcBranchRef = Record<string, unknown> & {
+  "_links"?: ReferenceLinks;
+  /**
+   * Creation date of the branch.
+   */
+  "createdDate"?: string;
+  /**
+   * Branch description.
+   */
+  "description"?: string;
+  /**
+   * Is the branch deleted?
+   */
+  "isDeleted"?: boolean;
+  "owner"?: IdentityRef;
+  /**
+   * URL to retrieve the item.
+   */
+  "url"?: string;
+} & TfvcShallowBranchRef;
+
+/**
+ * A change.
+ */
+export type TfvcChange = Change & Record<string, unknown> & {
+  /**
+   * List of merge sources in case of rename or branch creation.
+   */
+  "mergeSources"?: Array<TfvcMergeSource>;
+  /**
+   * Version at which a (shelved) change was pended against
+   */
+  "pendingVersion"?: number;
+};
+
+/**
+ * A collection of changes.
+ */
+export type TfvcChangeset = Record<string, unknown> & {
+  /**
+   * Changeset Account Id also known as Organization Id.
+   */
+  "accountId"?: string;
+  /**
+   * List of associated changes.
+   */
+  "changes"?: Array<TfvcChange>;
+  /**
+   * List of Checkin Notes for the changeset.
+   */
+  "checkinNotes"?: Array<CheckinNote>;
+  /**
+   * Changeset collection Id.
+   */
+  "collectionId"?: string;
+  /**
+   * True if more changes are available.
+   */
+  "hasMoreChanges"?: boolean;
+  "policyOverride"?: TfvcPolicyOverrideInfo;
+  /**
+   * Team Project Ids for the changeset.
+   */
+  "teamProjectIds"?: Array<string>;
+  /**
+   * List of work items associated with the changeset.
+   */
+  "workItems"?: Array<AssociatedWorkItem>;
+} & TfvcChangesetRef;
+
+/**
+ * Metadata for a changeset.
+ */
+export type TfvcChangesetRef = Record<string, unknown> & {
+  "_links"?: ReferenceLinks;
+  "author"?: IdentityRef;
+  /**
+   * Changeset Id.
+   */
+  "changesetId"?: number;
+  "checkedInBy"?: IdentityRef;
+  /**
+   * Comment for the changeset.
+   */
+  "comment"?: string;
+  /**
+   * Was the Comment result truncated?
+   */
+  "commentTruncated"?: boolean;
+  /**
+   * Creation date of the changeset.
+   */
+  "createdDate"?: string;
+  /**
+   * URL to retrieve the item.
+   */
+  "url"?: string;
+};
+
+/**
+ * Criteria used in a search for change lists.
+ */
+export type TfvcChangesetSearchCriteria = Record<string, unknown> & {
+  /**
+   * Alias or display name of user who made the changes.
+   */
+  "author"?: string;
+  /**
+   * Whether or not to follow renames for the given item being queried.
+   */
+  "followRenames"?: boolean;
+  /**
+   * If provided, only include changesets created after this date (string).
+   */
+  "fromDate"?: string;
+  /**
+   * If provided, only include changesets after this changesetID.
+   */
+  "fromId"?: number;
+  /**
+   * Whether to include the _links field on the shallow references.
+   */
+  "includeLinks"?: boolean;
+  /**
+   * Path of item to search under.
+   */
+  "itemPath"?: string;
+  "mappings"?: Array<TfvcMappingFilter>;
+  /**
+   * If provided, only include changesets created before this date (string).
+   */
+  "toDate"?: string;
+  /**
+   * If provided, a version descriptor for the latest change list to include.
+   */
+  "toId"?: number;
+};
+
+/**
+ * Request body for Get batched changesets.
+ */
+export type TfvcChangesetsRequestData = Record<string, unknown> & {
+  /**
+   * List of changeset Ids.
+   */
+  "changesetIds"?: Array<number>;
+  /**
+   * Max length of the comment.
+   */
+  "commentLength"?: number;
+  /**
+   * Whether to include the _links field on the shallow references
+   */
+  "includeLinks"?: boolean;
+};
+
+export type TfvcCheckinEventData = Record<string, unknown> & {
+  "changeset"?: TfvcChangeset;
+  "project"?: TeamProjectReference;
+};
+
+export type TfvcHistoryEntry = HistoryEntry & Record<string, unknown> & {
+  /**
+   * The encoding of the item at this point in history (only relevant for File history, not folders)
+   */
+  "encoding"?: number;
+  /**
+   * The file id of the item at this point in history (only relevant for File history, not folders)
+   */
+  "fileId"?: number;
+};
+
+/**
+ * Metadata for an item.
+ */
+export type TfvcItem = ItemModel & Record<string, unknown> & {
+  /**
+   * Item changed datetime.
+   */
+  "changeDate"?: string;
+  /**
+   * Greater than 0 if item is deleted.
+   */
+  "deletionId"?: number;
+  /**
+   * File encoding from database, -1 represents binary.
+   */
+  "encoding"?: number;
+  /**
+   * MD5 hash as a base 64 string, applies to files only.
+   */
+  "hashValue"?: string;
+  /**
+   * True if item is a branch.
+   */
+  "isBranch"?: boolean;
+  /**
+   * True if there is a change pending.
+   */
+  "isPendingChange"?: boolean;
+  /**
+   * The size of the file, if applicable.
+   */
+  "size"?: RestInt64;
+  /**
+   * Changeset version Id.
+   */
+  "version"?: number;
+};
+
+/**
+ * Item path and Version descriptor properties
+ */
+export type TfvcItemDescriptor =
+  & Record<string, unknown>
+  & ({
+    /**
+     * Item path.
+     */
+    "path"?: string;
+    /**
+     * Defaults to OneLevel.
+     */
+    "recursionLevel"?: "full" | "none" | "oneLevel" | "oneLevelPlusNestedEmptyFolders";
+    /**
+     * Specify the desired version, can be null or empty string only if VersionType is latest or tip.
+     */
+    "version"?: string;
+    /**
+     * Defaults to None.
+     */
+    "versionOption"?: "none" | "previous" | "useRename";
+    /**
+     * Defaults to Latest.
+     */
+    "versionType"?:
+      | "change"
+      | "changeset"
+      | "date"
+      | "latest"
+      | "mergeSource"
+      | "none"
+      | "shelveset"
+      | "tip";
+  });
+
+/**
+ * Metadata for an item including the previous hash value for files.
+ */
+export type TfvcItemPreviousHash = Record<string, unknown> & {
+  /**
+   * MD5 hash as a base 64 string, applies to files only.
+   */
+  "previousHashValue"?: string;
+} & TfvcItem;
+
+/**
+ * Request body used by Get Items Batch
+ */
+export type TfvcItemRequestData = Record<string, unknown> & {
+  /**
+   * If true, include metadata about the file type
+   */
+  "includeContentMetadata"?: boolean;
+  /**
+   * Whether to include the _links field on the shallow references
+   */
+  "includeLinks"?: boolean;
+  "itemDescriptors"?: Array<TfvcItemDescriptor>;
+};
+
+/**
+ * Metadata for a label.
+ */
+export type TfvcLabel = Record<string, unknown> & {
+  /**
+   * List of items.
+   */
+  "items"?: Array<TfvcItem>;
+} & TfvcLabelRef;
+
+/**
+ * Metadata for a Label.
+ */
+export type TfvcLabelRef = Record<string, unknown> & {
+  "_links"?: ReferenceLinks;
+  /**
+   * Label description.
+   */
+  "description"?: string;
+  /**
+   * Label Id.
+   */
+  "id"?: number;
+  /**
+   * Label scope.
+   */
+  "labelScope"?: string;
+  /**
+   * Last modified datetime for the label.
+   */
+  "modifiedDate"?: string;
+  /**
+   * Label name.
+   */
+  "name"?: string;
+  "owner"?: IdentityRef;
+  /**
+   * Label Url.
+   */
+  "url"?: string;
+};
+
+export type TfvcLabelRequestData = Record<string, unknown> & {
+  /**
+   * Whether to include the _links field on the shallow references
+   */
+  "includeLinks"?: boolean;
+  "itemLabelFilter"?: string;
+  "labelScope"?: string;
+  "maxItemCount"?: number;
+  "name"?: string;
+  "owner"?: string;
+};
+
+/**
+ * MappingFilter can be used to include or exclude specific paths.
+ */
+export type TfvcMappingFilter = Record<string, unknown> & {
+  /**
+   * True if ServerPath should be excluded.
+   */
+  "exclude"?: boolean;
+  /**
+   * Path to be included or excluded.
+   */
+  "serverPath"?: string;
+};
+
+export type TfvcMergeSource = Record<string, unknown> & {
+  /**
+   * Indicates if this a rename source. If false, it is a merge source.
+   */
+  "isRename"?: boolean;
+  /**
+   * The server item of the merge source.
+   */
+  "serverItem"?: string;
+  /**
+   * Start of the version range.
+   */
+  "versionFrom"?: number;
+  /**
+   * End of the version range.
+   */
+  "versionTo"?: number;
+};
+
+/**
+ * Policy failure information.
+ */
+export type TfvcPolicyFailureInfo = Record<string, unknown> & {
+  /**
+   * Policy failure message.
+   */
+  "message"?: string;
+  /**
+   * Name of the policy that failed.
+   */
+  "policyName"?: string;
+};
+
+/**
+ * Information on the policy override.
+ */
+export type TfvcPolicyOverrideInfo = Record<string, unknown> & {
+  /**
+   * Overidden policy comment.
+   */
+  "comment"?: string;
+  /**
+   * Information on the failed policy that was overridden.
+   */
+  "policyFailures"?: Array<TfvcPolicyFailureInfo>;
+};
+
+/**
+ * This is the shallow branchref class.
+ */
+export type TfvcShallowBranchRef = Record<string, unknown> & {
+  /**
+   * Path for the branch.
+   */
+  "path"?: string;
+};
+
+/**
+ * Metadata for a shelveset.
+ */
+export type TfvcShelveset = Record<string, unknown> & {
+  /**
+   * List of changes.
+   */
+  "changes"?: Array<TfvcChange>;
+  /**
+   * List of checkin notes.
+   */
+  "notes"?: Array<CheckinNote>;
+  "policyOverride"?: TfvcPolicyOverrideInfo;
+  /**
+   * List of associated workitems.
+   */
+  "workItems"?: Array<AssociatedWorkItem>;
+} & TfvcShelvesetRef;
+
+/**
+ * Metadata for a shallow shelveset.
+ */
+export type TfvcShelvesetRef = Record<string, unknown> & {
+  "_links"?: ReferenceLinks;
+  /**
+   * Shelveset comment.
+   */
+  "comment"?: string;
+  /**
+   * Shelveset comment truncated as applicable.
+   */
+  "commentTruncated"?: boolean;
+  /**
+   * Shelveset create date.
+   */
+  "createdDate"?: string;
+  /**
+   * Shelveset Id.
+   */
+  "id"?: string;
+  /**
+   * Shelveset name.
+   */
+  "name"?: string;
+  "owner"?: IdentityRef;
+  /**
+   * Shelveset Url.
+   */
+  "url"?: string;
+};
+
+export type TfvcShelvesetRequestData = Record<string, unknown> & {
+  /**
+   * Whether to include policyOverride and notes Only applies when requesting a single deep shelveset
+   */
+  "includeDetails"?: boolean;
+  /**
+   * Whether to include the _links field on the shallow references. Does not apply when requesting a single deep shelveset object. Links will always be included in the deep shelveset.
+   */
+  "includeLinks"?: boolean;
+  /**
+   * Whether to include workItems
+   */
+  "includeWorkItems"?: boolean;
+  /**
+   * Max number of changes to include
+   */
+  "maxChangeCount"?: number;
+  /**
+   * Max length of comment
+   */
+  "maxCommentLength"?: number;
+  /**
+   * Shelveset name
+   */
+  "name"?: string;
+  /**
+   * Owner's ID. Could be a name or a guid.
+   */
+  "owner"?: string;
+};
+
+export type TfvcStatistics = Record<string, unknown> & {
+  /**
+   * Id of the last changeset the stats are based on.
+   */
+  "changesetId"?: number;
+  /**
+   * Count of files at the requested scope.
+   */
+  "fileCountTotal"?: RestInt64;
+};
+
+/**
+ * Version descriptor properties.
+ */
+export type TfvcVersionDescriptor =
+  & Record<string, unknown>
+  & ({
+    /**
+     * Version object.
+     */
+    "version"?: string;
+    "versionOption"?: "none" | "previous" | "useRename";
+    "versionType"?:
+      | "change"
+      | "changeset"
+      | "date"
+      | "latest"
+      | "mergeSource"
+      | "none"
+      | "shelveset"
+      | "tip";
+  });
+
+/**
+ * Real time event (SignalR) for a title/description update on a pull request
+ */
+export type TitleDescriptionUpdatedEvent = RealTimePullRequestEvent & Record<string, unknown>;
+
+/**
+ * Request to update an Enterprise Live Migration.
+ */
+export type UpdateMigrationRequest =
+  & Record<string, unknown>
+  & ({
+    /**
+     * The number of failed and blocked resources the user has reviewed and accepted. Required when approving cutover for a migration in the ReviewForCutover stage. Must match the current total failure count; rejected if the count has changed. Set to int.MaxValue to accept all failures (requires AllowBlanketCutoverApproval feature flag).
+     */
+    "cutoverFailureAcceptedCount"?: number;
+    /**
+     * Set to true to acknowledge that all rewired pipelines have been verified. Required for cutover when RequiresPipelineVerificationAcknowledgment is true. Independent of CutoverFailureAcceptedCount.
+     */
+    "pipelinesVerified"?: boolean;
+    /**
+     * The UTC date/time representing when the cutover is to occur.
+     */
+    "scheduledCutoverDate"?: string;
+    /**
+     * The status requested for the migration. Allowed values are "Active" and "Paused".
+     */
+    "statusRequested"?: "active" | "completed" | "failed" | "paused";
+    /**
+     * True if the migration should only perform pre-migration validation.
+     */
+    "validateOnly"?: boolean;
+  });
+
+/**
+ * Request to update the pipeline rewiring configuration for a migration. All fields are optional — only provided fields are applied.
+ */
+export type UpdatePipelinesRequest = Record<string, unknown> & {
+  /**
+   * Pipeline definition IDs to acknowledge. Acknowledged pipelines (including complex or failed ones) do not block cutover.
+   */
+  "acknowledgePipelineIds"?: Array<number>;
+  /**
+   * Pipeline definition IDs to add to the rewiring selection.
+   */
+  "addPipelineIds"?: Array<number>;
+  /**
+   * Pipeline definition IDs to remove from the rewiring selection. If a clone exists for a removed pipeline, it will be deleted.
+   */
+  "removePipelineIds"?: Array<number>;
+  /**
+   * Repository mappings to add or update. Merged by SourceRepositoryId — if a mapping for the same source repo already exists, it is replaced.
+   */
+  "repositoryMappings"?: Array<RepositoryMapping>;
+  /**
+   * Pipeline definition IDs to retry. Matching entries in Failed status are reset so the next sync cycle retries them. One-shot: the reset happens immediately and the IDs are not persisted.
+   */
+  "retryFailedPipelineIds"?: Array<number>;
+  /**
+   * Updated GitHub service connection ID.
+   */
+  "serviceConnectionId"?: string;
+};
+
+export type UpdateRefsRequest =
+  & Record<string, unknown>
+  & ({
+    "refUpdateRequests"?: Array<GitRefUpdate>;
+    "updateMode"?: "allOrNone" | "bestEffort";
+  });
+
+export type VersionControlProjectInfo =
+  & Record<string, unknown>
+  & ({
+    "defaultSourceControlType"?: "git" | "tfvc";
+    "project"?: TeamProjectReference;
+    "supportsGit"?: boolean;
+    "supportsTFVC"?: boolean;
+  });
+
+/**
+ * A particular revision for a policy configuration.
+ */
+export type VersionedPolicyConfigurationRef = PolicyConfigurationRef & Record<string, unknown> & {
+  /**
+   * The policy configuration revision ID.
+   */
+  "revision"?: number;
+};
+
+/**
+ * This class is used to serialize collections as a single JSON object on the wire.
+ */
+export type VssJsonCollectionWrapper = Record<string, unknown> & {
+  /**
+   * The serialized item.
+   */
+  "value"?: string;
+} & VssJsonCollectionWrapperBase;
+
+export type VssJsonCollectionWrapperBase = Record<string, unknown> & {
+  /**
+   * The number of serialized items.
+   */
+  "count"?: number;
+};
+
+/**
+ * The representation of data needed to create a tag definition which is sent across the wire.
+ */
+export type WebApiCreateTagRequestData = Record<string, unknown> & {
+  /**
+   * Name of the tag definition that will be created.
+   */
+  "name"?: string;
+};
+
+/**
+ * The representation of a tag definition which is sent across the wire.
+ */
+export type WebApiTagDefinition = Record<string, unknown> & {
+  /**
+   * Whether or not the tag definition is active.
+   */
+  "active"?: boolean;
+  /**
+   * ID of the tag definition.
+   */
+  "id"?: string;
+  /**
+   * The name of the tag definition.
+   */
+  "name"?: string;
+  /**
+   * Resource URL for the Tag Definition.
+   */
+  "url"?: string;
+};
+
+export type AnnotatedTagsCreateInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID or name of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+  /**
+   * Object containing details of tag to be created.
+   */
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<GitAnnotatedTag>>>;
+};
+
+export type AnnotatedTagsCreateResponse =
+  | RestResponse<200, RestJsonValue<GitAnnotatedTag>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type AnnotatedTagsGetInput = {
+  path: {
+    /**
+     * ObjectId (Sha1Id) of tag to get.
+     */
+    "objectId": string;
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID or name of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type AnnotatedTagsGetResponse =
+  | RestResponse<200, RestJsonValue<GitAnnotatedTag>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type BlobsGetBlobInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The name or ID of the repository.
+     */
+    "repositoryId": string;
+    /**
+     * SHA1 hash of the file. You can get the SHA1 of a file using the "Git/Items/Get Item" endpoint.
+     */
+    "sha1": string;
+  };
+  query: {
+    /**
+     * Options: json, zip, text, octetstream. If not set, defaults to the MIME type set in the Accept header.
+     */
+    "$format"?: string;
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * If true, prompt for a download rather than rendering in a browser. Note: this value defaults to true if $format is zip
+     */
+    "download"?: boolean;
+    /**
+     * Provide a fileName to use for a download.
+     */
+    "fileName"?: string;
+    /**
+     * If true, try to resolve a blob to its LFS contents, if it's an LFS pointer file. Only compatible with octet-stream Accept headers or $format types
+     */
+    "resolveLfs"?: boolean;
+  };
+};
+
+export type BlobsGetBlobResponse =
+  | RestResponse<200, RestJsonValue<GitBlobRef>, "application/json", true>
+  | RestResponse<200, globalThis.Blob, "application/octet-stream", true>
+  | RestResponse<200, globalThis.Blob, "application/zip", true>
+  | RestUndocumentedResponse;
+
+export type BlobsGetBlobsZipInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The name or ID of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+    "filename"?: string;
+  };
+  /**
+   * Blob IDs (SHA1 hashes) to be returned in the zip file.
+   */
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<Array<string>>>>;
+};
+
+export type BlobsGetBlobsZipResponse =
+  | RestResponse<200, globalThis.Blob, "application/zip", true>
+  | RestUndocumentedResponse;
+
+export type CherryPicksCreateInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+  };
+  body: RestBody<
+    "application/json",
+    RestJsonValue<RestRequestValue<GitAsyncRefOperationParameters>>
+  >;
+};
+
+export type CherryPicksCreateResponse =
+  | RestResponse<200, RestJsonValue<GitCherryPick>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type CherryPicksGetCherryPickInput = {
+  path: {
+    /**
+     * ID of the cherry pick.
+     */
+    "cherryPickId": number;
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type CherryPicksGetCherryPickResponse =
+  | RestResponse<200, RestJsonValue<GitCherryPick>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type CherryPicksGetCherryPickForRefNameInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * The GitAsyncRefOperationParameters generatedRefName used for the cherry pick operation.
+     */
+    "refName": string;
+  };
+};
+
+export type CherryPicksGetCherryPickForRefNameResponse =
+  | RestResponse<200, RestJsonValue<GitCherryPick>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type CommitsGetInput = {
+  path: {
+    /**
+     * The id of the commit.
+     */
+    "commitId": string;
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The id or friendly name of the repository. To use the friendly name, projectId must also be specified.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * The number of changes to include in the result.
+     */
+    "changeCount"?: number;
+  };
+};
+
+export type CommitsGetResponse =
+  | RestResponse<200, RestJsonValue<GitCommit>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type CommitsGetChangesInput = {
+  path: {
+    /**
+     * The id of the commit.
+     */
+    "commitId": string;
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The id or friendly name of the repository. To use the friendly name, projectId must also be specified.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * The number of changes to skip.
+     */
+    "skip"?: number;
+    /**
+     * The maximum number of changes to return.
+     */
+    "top"?: number;
+  };
+};
+
+export type CommitsGetChangesResponse =
+  | RestResponse<200, RestJsonValue<GitCommitChanges>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type CommitsGetCommitsInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The id or friendly name of the repository. To use the friendly name, projectId must also be specified.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * Number of entries to skip
+     */
+    "searchCriteria.$skip"?: number;
+    /**
+     * Maximum number of entries to retrieve
+     */
+    "searchCriteria.$top"?: number;
+    /**
+     * Alias or display name of the author
+     */
+    "searchCriteria.author"?: string;
+    /**
+     * Version string identifier (name of tag/branch, SHA1 of commit)
+     */
+    "searchCriteria.compareVersion.version"?: string;
+    /**
+     * Version options - Specify additional modifiers to version (e.g Previous)
+     */
+    "searchCriteria.compareVersion.versionOptions"?: "firstParent" | "none" | "previousChange";
+    /**
+     * Version type (branch, tag, or commit). Determines how Id is interpreted
+     */
+    "searchCriteria.compareVersion.versionType"?: "branch" | "commit" | "tag";
+    /**
+     * Only applies when an itemPath is specified. This determines whether to exclude delete entries of the specified path.
+     */
+    "searchCriteria.excludeDeletes"?: boolean;
+    /**
+     * If provided, a lower bound for filtering commits alphabetically
+     */
+    "searchCriteria.fromCommitId"?: string;
+    /**
+     * If provided, only include history entries created after this date (string)
+     */
+    "searchCriteria.fromDate"?: string;
+    /**
+     * What Git history mode should be used. This only applies to the search criteria when Ids = null and an itemPath is specified.
+     */
+    "searchCriteria.historyMode"?:
+      | "firstParent"
+      | "fullHistory"
+      | "fullHistorySimplifyMerges"
+      | "simplifiedHistory";
+    /**
+     * If provided, specifies the exact commit ids of the commits to fetch. May not be combined with other parameters.
+     */
+    "searchCriteria.ids"?: Array<string>;
+    /**
+     * Whether to include the _links field on the shallow references
+     */
+    "searchCriteria.includeLinks"?: boolean;
+    /**
+     * Whether to include the push information
+     */
+    "searchCriteria.includePushData"?: boolean;
+    /**
+     * Whether to include the image Url for committers and authors
+     */
+    "searchCriteria.includeUserImageUrl"?: boolean;
+    /**
+     * Whether to include linked work items
+     */
+    "searchCriteria.includeWorkItems"?: boolean;
+    /**
+     * Path of item to search under
+     */
+    "searchCriteria.itemPath"?: string;
+    /**
+     * Version string identifier (name of tag/branch, SHA1 of commit)
+     */
+    "searchCriteria.itemVersion.version"?: string;
+    /**
+     * Version options - Specify additional modifiers to version (e.g Previous)
+     */
+    "searchCriteria.itemVersion.versionOptions"?: "firstParent" | "none" | "previousChange";
+    /**
+     * Version type (branch, tag, or commit). Determines how Id is interpreted
+     */
+    "searchCriteria.itemVersion.versionType"?: "branch" | "commit" | "tag";
+    /**
+     * If enabled, this option will ignore the itemVersion and compareVersion parameters
+     */
+    "searchCriteria.showOldestCommitsFirst"?: boolean;
+    /**
+     * If provided, an upper bound for filtering commits alphabetically
+     */
+    "searchCriteria.toCommitId"?: string;
+    /**
+     * If provided, only include history entries created before this date (string)
+     */
+    "searchCriteria.toDate"?: string;
+    /**
+     * Alias or display name of the committer
+     */
+    "searchCriteria.user"?: string;
+  };
+};
+
+export type CommitsGetCommitsResponse =
+  | RestResponse<200, RestJsonValue<Array<GitCommitRef>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type CommitsGetCommitsBatchInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The name or ID of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Number of commits to skip. The value cannot exceed 3,000,000.
+     */
+    "$skip"?: number;
+    /**
+     * Maximum number of commits to return. The value cannot exceed 50,000.
+     */
+    "$top"?: number;
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * True to include additional commit status information.
+     */
+    "includeStatuses"?: boolean;
+  };
+  /**
+   * Search options
+   */
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<GitQueryCommitsCriteria>>>;
+};
+
+export type CommitsGetCommitsBatchResponse =
+  | RestResponse<200, RestJsonValue<Array<GitCommitRef>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type CommitsGetPushCommitsInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The id or friendly name of the repository. To use the friendly name, projectId must also be specified.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * Set to false to avoid including REST Url links for resources. Defaults to true.
+     */
+    "includeLinks"?: boolean;
+    /**
+     * The id of the push.
+     */
+    "pushId": number;
+    /**
+     * The number of commits to skip.
+     */
+    "skip"?: number;
+    /**
+     * The maximum number of commits to return ("get the top x commits").
+     */
+    "top"?: number;
+  };
+};
+
+export type CommitsGetPushCommitsResponse =
+  | RestResponse<200, RestJsonValue<Array<GitCommitRef>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type DiffsGetInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The name or ID of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Number of changes to skip
+     */
+    "$skip"?: number;
+    /**
+     * Maximum number of changes to return. Defaults to 100.
+     */
+    "$top"?: number;
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * Version string identifier (name of tag/branch, SHA1 of commit)
+     */
+    "baseVersion"?: string;
+    /**
+     * Version options - Specify additional modifiers to version (e.g Previous)
+     */
+    "baseVersionOptions"?: "firstParent" | "none" | "previousChange";
+    /**
+     * Version type (branch, tag, or commit). Determines how Id is interpreted
+     */
+    "baseVersionType"?: "branch" | "commit" | "tag";
+    /**
+     * If true, diff between common and target commits. If false, diff between base and target commits.
+     */
+    "diffCommonCommit"?: boolean;
+    /**
+     * Version string identifier (name of tag/branch, SHA1 of commit)
+     */
+    "targetVersion"?: string;
+    /**
+     * Version options - Specify additional modifiers to version (e.g Previous)
+     */
+    "targetVersionOptions"?: "firstParent" | "none" | "previousChange";
+    /**
+     * Version type (branch, tag, or commit). Determines how Id is interpreted
+     */
+    "targetVersionType"?: "branch" | "commit" | "tag";
+  };
+};
+
+export type DiffsGetResponse =
+  | RestResponse<200, RestJsonValue<GitCommitDiffs>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type ForksCreateForkSyncRequestInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The name or ID of the repository.
+     */
+    "repositoryNameOrId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * True to include links
+     */
+    "includeLinks"?: boolean;
+  };
+  /**
+   * Source repository and ref mapping.
+   */
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<GitForkSyncRequestParameters>>>;
+};
+
+export type ForksCreateForkSyncRequestResponse =
+  | RestResponse<200, RestJsonValue<GitForkSyncRequest>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type ForksGetForkSyncRequestInput = {
+  path: {
+    /**
+     * OperationId of the sync request.
+     */
+    "forkSyncOperationId": number;
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The name or ID of the repository.
+     */
+    "repositoryNameOrId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * True to include links.
+     */
+    "includeLinks"?: boolean;
+  };
+};
+
+export type ForksGetForkSyncRequestResponse =
+  | RestResponse<200, RestJsonValue<GitForkSyncRequest>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type ForksGetForkSyncRequestsInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The name or ID of the repository.
+     */
+    "repositoryNameOrId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * True to include abandoned requests.
+     */
+    "includeAbandoned"?: boolean;
+    /**
+     * True to include links.
+     */
+    "includeLinks"?: boolean;
+  };
+};
+
+export type ForksGetForkSyncRequestsResponse =
+  | RestResponse<200, RestJsonValue<Array<GitForkSyncRequest>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type ForksListInput = {
+  path: {
+    /**
+     * Team project collection ID.
+     */
+    "collectionId": string;
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The name or ID of the repository.
+     */
+    "repositoryNameOrId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * True to include links.
+     */
+    "includeLinks"?: boolean;
+  };
+};
+
+export type ForksListResponse =
+  | RestResponse<200, RestJsonValue<Array<GitRepositoryRef>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type ImportRequestsCreateInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The name or ID of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+  /**
+   * The import request to create.
+   */
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<GitImportRequest>>>;
+};
+
+export type ImportRequestsCreateResponse =
+  | RestResponse<200, RestJsonValue<GitImportRequest>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type ImportRequestsGetInput = {
+  path: {
+    /**
+     * The unique identifier for the import request.
+     */
+    "importRequestId": number;
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The name or ID of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type ImportRequestsGetResponse =
+  | RestResponse<200, RestJsonValue<GitImportRequest>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type ImportRequestsQueryInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The name or ID of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * True to include abandoned import requests in the results.
+     */
+    "includeAbandoned"?: boolean;
+  };
+};
+
+export type ImportRequestsQueryResponse =
+  | RestResponse<200, RestJsonValue<Array<GitImportRequest>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type ImportRequestsUpdateInput = {
+  path: {
+    /**
+     * The unique identifier for the import request to update.
+     */
+    "importRequestId": number;
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The name or ID of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+  /**
+   * The updated version of the import request. Currently, the only change allowed is setting the Status to Queued or Abandoned.
+   */
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<GitImportRequest>>>;
+};
+
+export type ImportRequestsUpdateResponse =
+  | RestResponse<200, RestJsonValue<GitImportRequest>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type ItemsGetInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The name or ID of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * If specified, this overrides the HTTP Accept request header to return either 'json' or 'zip'. If $format is specified, then api-version should also be specified as a query parameter.
+     */
+    "$format"?: string;
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * Set to true to download the response as a file.  Default is false.
+     */
+    "download"?: boolean;
+    /**
+     * Set to true to include item content when requesting json.  Default is false.
+     */
+    "includeContent"?: boolean;
+    /**
+     * Set to true to include content metadata.  Default is false.
+     */
+    "includeContentMetadata"?: boolean;
+    /**
+     * Set to true to include the latest changes.  Default is false.
+     */
+    "latestProcessedChange"?: boolean;
+    /**
+     * The item path.
+     */
+    "path": string;
+    /**
+     * The recursion level of this request. The default is 'none', no recursion.
+     */
+    "recursionLevel"?: "full" | "none" | "oneLevel" | "oneLevelPlusNestedEmptyFolders";
+    /**
+     * Set to true to resolve Git LFS pointer files to return actual content from Git LFS.  Default is false.
+     */
+    "resolveLfs"?: boolean;
+    /**
+     * Set to true to sanitize an svg file and return it as image. Useful only if requested for svg file. Default is false.
+     */
+    "sanitize"?: boolean;
+    /**
+     * The path scope.  The default is null.
+     */
+    "scopePath"?: string;
+    /**
+     * Version string identifier (name of tag/branch, SHA1 of commit)
+     */
+    "versionDescriptor.version"?: string;
+    /**
+     * Version options - Specify additional modifiers to version (e.g Previous)
+     */
+    "versionDescriptor.versionOptions"?: "firstParent" | "none" | "previousChange";
+    /**
+     * Version type (branch, tag, or commit). Determines how Id is interpreted
+     */
+    "versionDescriptor.versionType"?: "branch" | "commit" | "tag";
+  };
+};
+
+export type ItemsGetResponse =
+  | RestResponse<200, RestJsonValue<GitItem>, "application/json", true>
+  | RestResponse<200, string, "text/plain", true>
+  | RestResponse<200, globalThis.Blob, "application/octet-stream", true>
+  | RestResponse<200, globalThis.Blob, "application/zip", true>
+  | RestUndocumentedResponse;
+
+export type ItemsGetItemsBatchInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The name or ID of the repository
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+  /**
+   * Request data attributes: ItemDescriptors, IncludeContentMetadata, LatestProcessedChange, IncludeLinks. ItemDescriptors: Collection of items to fetch, including path, version, and recursion level. IncludeContentMetadata: Whether to include metadata for all items LatestProcessedChange: Whether to include shallow ref to commit that last changed each item. IncludeLinks: Whether to include the _links field on the shallow references.
+   */
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<GitItemRequestData>>>;
+};
+
+export type ItemsGetItemsBatchResponse =
+  | RestResponse<200, RestJsonValue<Array<Array<unknown>>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type ItemsListInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The name or ID of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * If specified, this overrides the HTTP Accept request header to return either 'json' or 'zip'. If $format is specified, then api-version should also be specified as a query parameter.
+     */
+    "$format"?: string;
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * Set to true to download the response as a file.  Default is false.
+     */
+    "download"?: boolean;
+    /**
+     * Set to true to include content metadata.  Default is false.
+     */
+    "includeContentMetadata"?: boolean;
+    /**
+     * Set to true to include links to items.  Default is false.
+     */
+    "includeLinks"?: boolean;
+    /**
+     * Set to true to include the latest changes.  Default is false.
+     */
+    "latestProcessedChange"?: boolean;
+    /**
+     * The recursion level of this request. The default is 'none', no recursion.
+     */
+    "recursionLevel"?: "full" | "none" | "oneLevel" | "oneLevelPlusNestedEmptyFolders";
+    /**
+     * The path scope.  The default is null.
+     */
+    "scopePath"?: string;
+    /**
+     * Version string identifier (name of tag/branch, SHA1 of commit)
+     */
+    "versionDescriptor.version"?: string;
+    /**
+     * Version options - Specify additional modifiers to version (e.g Previous)
+     */
+    "versionDescriptor.versionOptions"?: "firstParent" | "none" | "previousChange";
+    /**
+     * Version type (branch, tag, or commit). Determines how Id is interpreted
+     */
+    "versionDescriptor.versionType"?: "branch" | "commit" | "tag";
+    /**
+     * Set to true to keep the file permissions for unix (and POSIX) systems like executables and symlinks
+     */
+    "zipForUnix"?: boolean;
+  };
+};
+
+export type ItemsListResponse =
+  | RestResponse<200, RestJsonValue<Array<GitItem>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type MergeBasesListInput = {
+  path: {
+    /**
+     * First commit, usually the tip of the target branch of the potential merge.
+     */
+    "commitId": string;
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID or name of the local repository.
+     */
+    "repositoryNameOrId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * The collection ID where otherCommitId lives.
+     */
+    "otherCollectionId"?: string;
+    /**
+     * Other commit, usually the tip of the source branch of the potential merge.
+     */
+    "otherCommitId": string;
+    /**
+     * The repository ID where otherCommitId lives.
+     */
+    "otherRepositoryId"?: string;
+  };
+};
+
+export type MergeBasesListResponse =
+  | RestResponse<200, RestJsonValue<Array<GitCommitRef>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type MergesCreateInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The name or ID of the repository.
+     */
+    "repositoryNameOrId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * True to include links
+     */
+    "includeLinks"?: boolean;
+  };
+  /**
+   * Parents commitIds and merge commit messsage.
+   */
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<GitMergeParameters>>>;
+};
+
+export type MergesCreateResponse =
+  | RestResponse<200, RestJsonValue<GitMerge>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type MergesGetInput = {
+  path: {
+    /**
+     * OperationId of the merge request.
+     */
+    "mergeOperationId": number;
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The name or ID of the repository.
+     */
+    "repositoryNameOrId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * True to include links
+     */
+    "includeLinks"?: boolean;
+  };
+};
+
+export type MergesGetResponse =
+  | RestResponse<200, RestJsonValue<GitMerge>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PolicyConfigurationsGetInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+  };
+  query: {
+    /**
+     * The maximum number of policy configurations to return in a single response - useful for limiting result size when dealing with projects that have many policies.
+     */
+    "$top"?: number;
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * A token returned in the x-ms-continuationtoken response header from a previous request when not all results were returned - use this token to retrieve the next page of results in the dataset.
+     */
+    "continuationToken"?: string;
+    /**
+     * The type ID of a specific policy to filter by (e.g., "Minimum number of reviewers" or "File size restriction") - when specified, returns only policies of this particular type rather than all policy types.
+     */
+    "policyType"?: string;
+    /**
+     * The branch reference to query policies for (e.g., "refs/heads/main" for a specific branch or "~all" to get all policies affecting any branch in the repository) - determines which branch-specific policies are included in the results.
+     */
+    "refName"?: string;
+    /**
+     * The unique identifier of a specific repository to query policies for - when provided, returns policies that apply to this repository including inherited project-level policies.
+     */
+    "repositoryId"?: string;
+  };
+};
+
+export type PolicyConfigurationsGetResponse =
+  | RestResponse<
+    200,
+    RestJsonValue<Array<PolicyConfiguration>>,
+    "application/json",
+    true,
+    { readonly "x-ms-continuationtoken"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type PullRequestAttachmentsCreateInput = {
+  path: {
+    /**
+     * The name of the file.
+     */
+    "fileName": string;
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request’s target branch.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+  /**
+   * Stream to upload
+   */
+  body: RestBody<"application/octet-stream", RestBinary>;
+};
+
+export type PullRequestAttachmentsCreateResponse =
+  | RestResponse<201, RestJsonValue<Attachment>, "application/json", true>
+  | RestResponse<202, RestJsonValue<Attachment>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestAttachmentsDeleteInput = {
+  path: {
+    /**
+     * The name of the attachment to delete.
+     */
+    "fileName": string;
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request’s target branch.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type PullRequestAttachmentsDeleteResponse =
+  | RestResponse<200, undefined, undefined, true>
+  | RestUndocumentedResponse;
+
+export type PullRequestAttachmentsGetInput = {
+  path: {
+    /**
+     * The name of the attachment.
+     */
+    "fileName": string;
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request’s target branch.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type PullRequestAttachmentsGetResponse =
+  | RestResponse<200, globalThis.Blob, "application/octet-stream", true>
+  | RestResponse<200, globalThis.Blob, "application/zip", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestAttachmentsListInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request’s target branch.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type PullRequestAttachmentsListResponse =
+  | RestResponse<200, RestJsonValue<Array<Attachment>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestCommentLikesCreateInput = {
+  path: {
+    /**
+     * The ID of the comment.
+     */
+    "commentId": number;
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request's target branch.
+     */
+    "repositoryId": string;
+    /**
+     * The ID of the thread that contains the comment.
+     */
+    "threadId": number;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type PullRequestCommentLikesCreateResponse =
+  | RestResponse<200, undefined, undefined, true>
+  | RestUndocumentedResponse;
+
+export type PullRequestCommentLikesDeleteInput = {
+  path: {
+    /**
+     * The ID of the comment.
+     */
+    "commentId": number;
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request's target branch.
+     */
+    "repositoryId": string;
+    /**
+     * The ID of the thread that contains the comment.
+     */
+    "threadId": number;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type PullRequestCommentLikesDeleteResponse =
+  | RestResponse<200, undefined, undefined, true>
+  | RestUndocumentedResponse;
+
+export type PullRequestCommentLikesListInput = {
+  path: {
+    /**
+     * The ID of the comment.
+     */
+    "commentId": number;
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request's target branch.
+     */
+    "repositoryId": string;
+    /**
+     * The ID of the thread that contains the comment.
+     */
+    "threadId": number;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type PullRequestCommentLikesListResponse =
+  | RestResponse<200, RestJsonValue<Array<IdentityRef>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestCommitsGetPullRequestCommitsInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * ID or name of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Maximum number of commits to return.
+     */
+    "$top"?: number;
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * The continuation token used for pagination.
+     */
+    "continuationToken"?: string;
+  };
+};
+
+export type PullRequestCommitsGetPullRequestCommitsResponse =
+  | RestResponse<200, RestJsonValue<Array<GitCommitRef>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestCommitsGetPullRequestIterationCommitsInput = {
+  path: {
+    /**
+     * ID of the iteration from which to get the commits.
+     */
+    "iterationId": number;
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * ID or name of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * Number of commits to skip.
+     */
+    "skip"?: number;
+    /**
+     * Maximum number of commits to return. The maximum number of commits that can be returned per batch is 500.
+     */
+    "top"?: number;
+  };
+};
+
+export type PullRequestCommitsGetPullRequestIterationCommitsResponse =
+  | RestResponse<200, RestJsonValue<Array<GitCommitRef>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestIterationChangesGetInput = {
+  path: {
+    /**
+     * ID of the pull request iteration. <br /> Iteration one is the head of the source branch at the time the pull request is created and subsequent iterations are created when there are pushes to the source branch. Allowed values are between 1 and the maximum iteration on this pull request.
+     */
+    "iterationId": number;
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request's target branch.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * ID of the pull request iteration to compare against.  The default value is zero which indicates the comparison is made against the common commit between the source and target branches
+     */
+    "$compareTo"?: number;
+    /**
+     * Optional. The number of changes to ignore.  For example, to retrieve changes 101-150, set top 50 and skip to 100.
+     */
+    "$skip"?: number;
+    /**
+     * Optional. The number of changes to retrieve.  The default value is 100 and the maximum value is 2000.
+     */
+    "$top"?: number;
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type PullRequestIterationChangesGetResponse =
+  | RestResponse<200, RestJsonValue<GitPullRequestIterationChanges>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestIterationStatusesCreateInput = {
+  path: {
+    /**
+     * ID of the pull request iteration.
+     */
+    "iterationId": number;
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request’s target branch.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+  };
+  /**
+   * Pull request status to create.
+   */
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<GitPullRequestStatus>>>;
+};
+
+export type PullRequestIterationStatusesCreateResponse =
+  | RestResponse<200, RestJsonValue<GitPullRequestStatus>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestIterationStatusesDeleteInput = {
+  path: {
+    /**
+     * ID of the pull request iteration.
+     */
+    "iterationId": number;
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request’s target branch.
+     */
+    "repositoryId": string;
+    /**
+     * ID of the pull request status.
+     */
+    "statusId": number;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type PullRequestIterationStatusesDeleteResponse =
+  | RestResponse<200, undefined, undefined, true>
+  | RestUndocumentedResponse;
+
+export type PullRequestIterationStatusesGetInput = {
+  path: {
+    /**
+     * ID of the pull request iteration.
+     */
+    "iterationId": number;
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request’s target branch.
+     */
+    "repositoryId": string;
+    /**
+     * ID of the pull request status.
+     */
+    "statusId": number;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type PullRequestIterationStatusesGetResponse =
+  | RestResponse<200, RestJsonValue<GitPullRequestStatus>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestIterationStatusesListInput = {
+  path: {
+    /**
+     * ID of the pull request iteration.
+     */
+    "iterationId": number;
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request’s target branch.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type PullRequestIterationStatusesListResponse =
+  | RestResponse<200, RestJsonValue<Array<GitPullRequestStatus>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestIterationStatusesUpdateInput = {
+  path: {
+    /**
+     * ID of the pull request iteration.
+     */
+    "iterationId": number;
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request’s target branch.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+  };
+  /**
+   * Operations to apply to the pull request statuses in JSON Patch format.
+   */
+  body: RestBody<"application/json-patch+json", RestJsonValue<RestRequestValue<JsonPatchDocument>>>;
+};
+
+export type PullRequestIterationStatusesUpdateResponse =
+  | RestResponse<200, undefined, undefined, true>
+  | RestUndocumentedResponse;
+
+export type PullRequestIterationsGetInput = {
+  path: {
+    /**
+     * ID of the pull request iteration to return.
+     */
+    "iterationId": number;
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * ID or name of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type PullRequestIterationsGetResponse =
+  | RestResponse<200, RestJsonValue<GitPullRequestIteration>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestIterationsListInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * ID or name of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * If true, include the commits associated with each iteration in the response.
+     */
+    "includeCommits"?: boolean;
+  };
+};
+
+export type PullRequestIterationsListResponse =
+  | RestResponse<200, RestJsonValue<Array<GitPullRequestIteration>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestLabelsCreateInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request’s target branch.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * Project ID or project name.
+     */
+    "projectId"?: string;
+  };
+  /**
+   * Label to assign to the pull request.
+   */
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<WebApiCreateTagRequestData>>>;
+};
+
+export type PullRequestLabelsCreateResponse =
+  | RestResponse<200, RestJsonValue<WebApiTagDefinition>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestLabelsDeleteInput = {
+  path: {
+    /**
+     * The name or ID of the label requested.
+     */
+    "labelIdOrName": string;
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request’s target branch.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * Project ID or project name.
+     */
+    "projectId"?: string;
+  };
+};
+
+export type PullRequestLabelsDeleteResponse =
+  | RestResponse<200, undefined, undefined, true>
+  | RestUndocumentedResponse;
+
+export type PullRequestLabelsGetInput = {
+  path: {
+    /**
+     * The name or ID of the label requested.
+     */
+    "labelIdOrName": string;
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request’s target branch.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * Project ID or project name.
+     */
+    "projectId"?: string;
+  };
+};
+
+export type PullRequestLabelsGetResponse =
+  | RestResponse<200, RestJsonValue<WebApiTagDefinition>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestLabelsListInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request’s target branch.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * Project ID or project name.
+     */
+    "projectId"?: string;
+  };
+};
+
+export type PullRequestLabelsListResponse =
+  | RestResponse<200, RestJsonValue<Array<WebApiTagDefinition>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestPropertiesListInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request’s target branch.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type PullRequestPropertiesListResponse =
+  | RestResponse<200, RestJsonValue<PropertiesCollection>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestPropertiesUpdateInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request’s target branch.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+  /**
+   * Properties to add, replace or remove in JSON Patch format.
+   */
+  body: RestBody<"application/json-patch+json", RestJsonValue<RestRequestValue<JsonPatchDocument>>>;
+};
+
+export type PullRequestPropertiesUpdateResponse =
+  | RestResponse<200, RestJsonValue<PropertiesCollection>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestQueryGetInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+  /**
+   * The list of queries to perform.
+   */
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<GitPullRequestQuery>>>;
+};
+
+export type PullRequestQueryGetResponse =
+  | RestResponse<200, RestJsonValue<GitPullRequestQuery>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestReviewersCreatePullRequestReviewerInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request's target branch.
+     */
+    "repositoryId": string;
+    /**
+     * ID of the reviewer.
+     */
+    "reviewerId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+  /**
+   * Reviewer's vote.<br />If the reviewer's ID is included here, it must match the reviewerID parameter.<br />Reviewers can set their own vote with this method.  When adding other reviewers, vote must be set to zero.
+   */
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<IdentityRefWithVote>>>;
+};
+
+export type PullRequestReviewersCreatePullRequestReviewerResponse =
+  | RestResponse<200, RestJsonValue<IdentityRefWithVote>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestReviewersCreatePullRequestReviewersInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request's target branch.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+  /**
+   * Reviewers to add to the pull request.
+   */
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<Array<IdentityRef>>>>;
+};
+
+export type PullRequestReviewersCreatePullRequestReviewersResponse =
+  | RestResponse<200, RestJsonValue<Array<IdentityRefWithVote>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestReviewersCreateUnmaterializedPullRequestReviewerInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request's target branch.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+  /**
+   * Reviewer to add to the pull request.
+   */
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<IdentityRefWithVote>>>;
+};
+
+export type PullRequestReviewersCreateUnmaterializedPullRequestReviewerResponse =
+  | RestResponse<200, RestJsonValue<IdentityRefWithVote>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestReviewersDeleteInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request's target branch.
+     */
+    "repositoryId": string;
+    /**
+     * ID of the reviewer to remove.
+     */
+    "reviewerId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type PullRequestReviewersDeleteResponse =
+  | RestResponse<200, undefined, undefined, true>
+  | RestUndocumentedResponse;
+
+export type PullRequestReviewersGetInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request's target branch.
+     */
+    "repositoryId": string;
+    /**
+     * ID of the reviewer.
+     */
+    "reviewerId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type PullRequestReviewersGetResponse =
+  | RestResponse<200, RestJsonValue<IdentityRefWithVote>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestReviewersListInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request's target branch.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type PullRequestReviewersListResponse =
+  | RestResponse<200, RestJsonValue<Array<IdentityRefWithVote>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestReviewersUpdatePullRequestReviewerInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request's target branch.
+     */
+    "repositoryId": string;
+    /**
+     * ID of the reviewer.
+     */
+    "reviewerId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+  /**
+   * Reviewer data.<br />If the reviewer's ID is included here, it must match the reviewerID parameter.
+   */
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<IdentityRefWithVote>>>;
+};
+
+export type PullRequestReviewersUpdatePullRequestReviewerResponse =
+  | RestResponse<200, RestJsonValue<IdentityRefWithVote>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestReviewersUpdatePullRequestReviewersInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request's target branch.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+  /**
+   * IDs of the reviewers whose votes will be reset to zero
+   */
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<Array<IdentityRefWithVote>>>>;
+};
+
+export type PullRequestReviewersUpdatePullRequestReviewersResponse =
+  | RestResponse<200, undefined, undefined, true>
+  | RestUndocumentedResponse;
+
+export type PullRequestShareSharePullRequestInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * ID of the git repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<ShareNotificationContext>>>;
+};
+
+export type PullRequestShareSharePullRequestResponse =
+  | RestResponse<200, undefined, undefined, true>
+  | RestUndocumentedResponse;
+
+export type PullRequestStatusesCreateInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request’s target branch.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+  };
+  /**
+   * Pull request status to create.
+   */
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<GitPullRequestStatus>>>;
+};
+
+export type PullRequestStatusesCreateResponse =
+  | RestResponse<200, RestJsonValue<GitPullRequestStatus>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestStatusesDeleteInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request’s target branch.
+     */
+    "repositoryId": string;
+    /**
+     * ID of the pull request status.
+     */
+    "statusId": number;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type PullRequestStatusesDeleteResponse =
+  | RestResponse<200, undefined, undefined, true>
+  | RestUndocumentedResponse;
+
+export type PullRequestStatusesGetInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request’s target branch.
+     */
+    "repositoryId": string;
+    /**
+     * ID of the pull request status.
+     */
+    "statusId": number;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type PullRequestStatusesGetResponse =
+  | RestResponse<200, RestJsonValue<GitPullRequestStatus>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestStatusesListInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request’s target branch.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type PullRequestStatusesListResponse =
+  | RestResponse<200, RestJsonValue<Array<GitPullRequestStatus>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestStatusesUpdateInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request’s target branch.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+  };
+  /**
+   * Operations to apply to the pull request statuses in JSON Patch format.
+   */
+  body: RestBody<"application/json-patch+json", RestJsonValue<RestRequestValue<JsonPatchDocument>>>;
+};
+
+export type PullRequestStatusesUpdateResponse =
+  | RestResponse<200, undefined, undefined, true>
+  | RestUndocumentedResponse;
+
+export type PullRequestThreadCommentsCreateInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request's target branch.
+     */
+    "repositoryId": string;
+    /**
+     * ID of the thread that the desired comment is in.
+     */
+    "threadId": number;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+  /**
+   * The comment to create. Comments can be up to 150,000 characters.
+   */
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<Comment>>>;
+};
+
+export type PullRequestThreadCommentsCreateResponse =
+  | RestResponse<200, RestJsonValue<Comment>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestThreadCommentsDeleteInput = {
+  path: {
+    /**
+     * ID of the comment.
+     */
+    "commentId": number;
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request's target branch.
+     */
+    "repositoryId": string;
+    /**
+     * ID of the thread that the desired comment is in.
+     */
+    "threadId": number;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type PullRequestThreadCommentsDeleteResponse =
+  | RestResponse<200, undefined, undefined, true>
+  | RestUndocumentedResponse;
+
+export type PullRequestThreadCommentsGetInput = {
+  path: {
+    /**
+     * ID of the comment.
+     */
+    "commentId": number;
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request's target branch.
+     */
+    "repositoryId": string;
+    /**
+     * ID of the thread that the desired comment is in.
+     */
+    "threadId": number;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type PullRequestThreadCommentsGetResponse =
+  | RestResponse<200, RestJsonValue<Comment>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestThreadCommentsListInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request's target branch.
+     */
+    "repositoryId": string;
+    /**
+     * ID of the thread.
+     */
+    "threadId": number;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type PullRequestThreadCommentsListResponse =
+  | RestResponse<200, RestJsonValue<Array<Comment>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestThreadCommentsUpdateInput = {
+  path: {
+    /**
+     * ID of the comment to update.
+     */
+    "commentId": number;
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request's target branch.
+     */
+    "repositoryId": string;
+    /**
+     * ID of the thread that the desired comment is in.
+     */
+    "threadId": number;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+  /**
+   * The comment content that should be updated. Comments can be up to 150,000 characters.
+   */
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<Comment>>>;
+};
+
+export type PullRequestThreadCommentsUpdateResponse =
+  | RestResponse<200, RestJsonValue<Comment>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestThreadsCreateInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * Repository ID of the pull request's target branch.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+  /**
+   * The thread to create. Thread must contain at least one comment.
+   */
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<GitPullRequestCommentThread>>>;
+};
+
+export type PullRequestThreadsCreateResponse =
+  | RestResponse<200, RestJsonValue<GitPullRequestCommentThread>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestThreadsGetInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request's target branch.
+     */
+    "repositoryId": string;
+    /**
+     * ID of the thread.
+     */
+    "threadId": number;
+  };
+  query: {
+    /**
+     * If specified, thread position will be tracked using this iteration as the left side of the diff.
+     */
+    "$baseIteration"?: number;
+    /**
+     * If specified, thread position will be tracked using this iteration as the right side of the diff.
+     */
+    "$iteration"?: number;
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type PullRequestThreadsGetResponse =
+  | RestResponse<200, RestJsonValue<GitPullRequestCommentThread>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestThreadsListInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request's target branch.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * If specified, thread positions will be tracked using this iteration as the left side of the diff.
+     */
+    "$baseIteration"?: number;
+    /**
+     * If specified, thread positions will be tracked using this iteration as the right side of the diff.
+     */
+    "$iteration"?: number;
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type PullRequestThreadsListResponse =
+  | RestResponse<200, RestJsonValue<Array<GitPullRequestCommentThread>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestThreadsUpdateInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request's target branch.
+     */
+    "repositoryId": string;
+    /**
+     * ID of the thread to update.
+     */
+    "threadId": number;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+  /**
+   * The thread content that should be updated.
+   */
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<GitPullRequestCommentThread>>>;
+};
+
+export type PullRequestThreadsUpdateResponse =
+  | RestResponse<200, RestJsonValue<GitPullRequestCommentThread>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestWorkItemsListInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request.
+     */
+    "pullRequestId": number;
+    /**
+     * ID or name of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type PullRequestWorkItemsListResponse =
+  | RestResponse<200, RestJsonValue<Array<ResourceRef>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestsCreateInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The repository ID of the pull request's target branch.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * If true, subsequent pushes to the pull request will be individually reviewable. Set this to false for large pull requests for performance reasons if this functionality is not needed.
+     */
+    "supportsIterations"?: boolean;
+  };
+  /**
+   * The pull request to create.
+   */
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<GitPullRequest>>>;
+};
+
+export type PullRequestsCreateResponse =
+  | RestResponse<200, RestJsonValue<GitPullRequest>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestsGetPullRequestInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The ID of the pull request to retrieve.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request's target branch.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Not used.
+     */
+    "$skip"?: number;
+    /**
+     * Not used.
+     */
+    "$top"?: number;
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * If true, the pull request will be returned with the associated commits.
+     */
+    "includeCommits"?: boolean;
+    /**
+     * If true, the pull request will be returned with the associated work item references.
+     */
+    "includeWorkItemRefs"?: boolean;
+    /**
+     * Not used.
+     */
+    "maxCommentLength"?: number;
+  };
+};
+
+export type PullRequestsGetPullRequestResponse =
+  | RestResponse<200, RestJsonValue<GitPullRequest>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestsGetPullRequestByIdInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The ID of the pull request to retrieve.
+     */
+    "pullRequestId": number;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type PullRequestsGetPullRequestByIdResponse =
+  | RestResponse<200, RestJsonValue<GitPullRequest>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestsGetPullRequestsInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The repository ID of the pull request's target branch.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * The number of pull requests to ignore. For example, to retrieve results 101-150, set top to 50 and skip to 100.
+     */
+    "$skip"?: number;
+    /**
+     * The number of pull requests to retrieve.
+     */
+    "$top"?: number;
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * Not used.
+     */
+    "maxCommentLength"?: number;
+    /**
+     * If set, search for pull requests that were created by this identity.
+     */
+    "searchCriteria.creatorId"?: string;
+    /**
+     * Whether to include the _links field on the shallow references
+     */
+    "searchCriteria.includeLinks"?: boolean;
+    /**
+     * If set, filters pull requests that have labels matching the specified label names.
+     */
+    "searchCriteria.labels"?: Array<string>;
+    /**
+     * If specified, filters pull requests that created/closed before this date based on the queryTimeRangeType specified.
+     */
+    "searchCriteria.maxTime"?: string;
+    /**
+     * If specified, filters pull requests that created/closed after this date based on the queryTimeRangeType specified.
+     */
+    "searchCriteria.minTime"?: string;
+    /**
+     * The type of time range which should be used for minTime and maxTime. Defaults to Created if unset.
+     */
+    "searchCriteria.queryTimeRangeType"?: "closed" | "created";
+    /**
+     * If set, search for pull requests whose target branch is in this repository.
+     */
+    "searchCriteria.repositoryId"?: string;
+    /**
+     * If set, search for pull requests that have this identity as a reviewer.
+     */
+    "searchCriteria.reviewerId"?: string;
+    /**
+     * If set, search for pull requests from this branch.
+     */
+    "searchCriteria.sourceRefName"?: string;
+    /**
+     * If set, search for pull requests whose source branch is in this repository.
+     */
+    "searchCriteria.sourceRepositoryId"?: string;
+    /**
+     * If set, search for pull requests that are in this state. Defaults to Active if unset.
+     */
+    "searchCriteria.status"?: "abandoned" | "active" | "all" | "completed" | "notSet";
+    /**
+     * The operator used for filtering by labels. Defaults to And if unset. When And is used, pull requests must have all specified labels. When Or is used, pull requests must have at least one of the specified labels.
+     */
+    "searchCriteria.tagsFilterOperator"?: "and" | "or";
+    /**
+     * If set, search for pull requests into this branch.
+     */
+    "searchCriteria.targetRefName"?: string;
+    /**
+     * If set, filters pull requests that contain the specified text in the title.
+     */
+    "searchCriteria.title"?: string;
+  };
+};
+
+export type PullRequestsGetPullRequestsResponse =
+  | RestResponse<200, RestJsonValue<Array<GitPullRequest>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestsGetPullRequestsByProjectInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+  };
+  query: {
+    /**
+     * The number of pull requests to ignore. For example, to retrieve results 101-150, set top to 50 and skip to 100.
+     */
+    "$skip"?: number;
+    /**
+     * The number of pull requests to retrieve.
+     */
+    "$top"?: number;
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * Not used.
+     */
+    "maxCommentLength"?: number;
+    /**
+     * If set, search for pull requests that were created by this identity.
+     */
+    "searchCriteria.creatorId"?: string;
+    /**
+     * Whether to include the _links field on the shallow references
+     */
+    "searchCriteria.includeLinks"?: boolean;
+    /**
+     * If set, filters pull requests that have labels matching the specified label names.
+     */
+    "searchCriteria.labels"?: Array<string>;
+    /**
+     * If specified, filters pull requests that created/closed before this date based on the queryTimeRangeType specified.
+     */
+    "searchCriteria.maxTime"?: string;
+    /**
+     * If specified, filters pull requests that created/closed after this date based on the queryTimeRangeType specified.
+     */
+    "searchCriteria.minTime"?: string;
+    /**
+     * The type of time range which should be used for minTime and maxTime. Defaults to Created if unset.
+     */
+    "searchCriteria.queryTimeRangeType"?: "closed" | "created";
+    /**
+     * If set, search for pull requests whose target branch is in this repository.
+     */
+    "searchCriteria.repositoryId"?: string;
+    /**
+     * If set, search for pull requests that have this identity as a reviewer.
+     */
+    "searchCriteria.reviewerId"?: string;
+    /**
+     * If set, search for pull requests from this branch.
+     */
+    "searchCriteria.sourceRefName"?: string;
+    /**
+     * If set, search for pull requests whose source branch is in this repository.
+     */
+    "searchCriteria.sourceRepositoryId"?: string;
+    /**
+     * If set, search for pull requests that are in this state. Defaults to Active if unset.
+     */
+    "searchCriteria.status"?: "abandoned" | "active" | "all" | "completed" | "notSet";
+    /**
+     * The operator used for filtering by labels. Defaults to And if unset. When And is used, pull requests must have all specified labels. When Or is used, pull requests must have at least one of the specified labels.
+     */
+    "searchCriteria.tagsFilterOperator"?: "and" | "or";
+    /**
+     * If set, search for pull requests into this branch.
+     */
+    "searchCriteria.targetRefName"?: string;
+    /**
+     * If set, filters pull requests that contain the specified text in the title.
+     */
+    "searchCriteria.title"?: string;
+  };
+};
+
+export type PullRequestsGetPullRequestsByProjectResponse =
+  | RestResponse<200, RestJsonValue<Array<GitPullRequest>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PullRequestsUpdateInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the pull request to update.
+     */
+    "pullRequestId": number;
+    /**
+     * The repository ID of the pull request's target branch.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+  };
+  /**
+   * The pull request content that should be updated.
+   */
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<GitPullRequest>>>;
+};
+
+export type PullRequestsUpdateResponse =
+  | RestResponse<200, RestJsonValue<GitPullRequest>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PushesCreateInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The name or ID of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.3' to use this version of the api.
+     */
+    "api-version": string;
+  };
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<GitPush>>>;
+};
+
+export type PushesCreateResponse =
+  | RestResponse<200, RestJsonValue<GitPush>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PushesGetInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the push.
+     */
+    "pushId": number;
+    /**
+     * The name or ID of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.3' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * The number of commits to include in the result.
+     */
+    "includeCommits"?: number;
+    /**
+     * If true, include the list of refs that were updated by the push.
+     */
+    "includeRefUpdates"?: boolean;
+  };
+};
+
+export type PushesGetResponse =
+  | RestResponse<200, RestJsonValue<GitPush>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type PushesListInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The name or ID of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Number of pushes to skip.
+     */
+    "$skip"?: number;
+    /**
+     * Number of pushes to return.
+     */
+    "$top"?: number;
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.3' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * Search criteria attributes: fromDate, toDate, pusherId, refName, includeRefUpdates or includeLinks. fromDate: Start date to search from. toDate: End date to search to. pusherId: Identity of the person who submitted the push. refName: Branch name to consider. includeRefUpdates: If true, include the list of refs that were updated by the push. includeLinks: Whether to include the _links field on the shallow references.
+     */
+    "searchCriteria.fromDate"?: string;
+    /**
+     * Whether to include the _links field on the shallow references
+     */
+    "searchCriteria.includeLinks"?: boolean;
+    /**
+     * Search criteria attributes: fromDate, toDate, pusherId, refName, includeRefUpdates or includeLinks. fromDate: Start date to search from. toDate: End date to search to. pusherId: Identity of the person who submitted the push. refName: Branch name to consider. includeRefUpdates: If true, include the list of refs that were updated by the push. includeLinks: Whether to include the _links field on the shallow references.
+     */
+    "searchCriteria.includeRefUpdates"?: boolean;
+    /**
+     * Search criteria attributes: fromDate, toDate, pusherId, refName, includeRefUpdates or includeLinks. fromDate: Start date to search from. toDate: End date to search to. pusherId: Identity of the person who submitted the push. refName: Branch name to consider. includeRefUpdates: If true, include the list of refs that were updated by the push. includeLinks: Whether to include the _links field on the shallow references.
+     */
+    "searchCriteria.pusherId"?: string;
+    /**
+     * Search criteria attributes: fromDate, toDate, pusherId, refName, includeRefUpdates or includeLinks. fromDate: Start date to search from. toDate: End date to search to. pusherId: Identity of the person who submitted the push. refName: Branch name to consider. includeRefUpdates: If true, include the list of refs that were updated by the push. includeLinks: Whether to include the _links field on the shallow references.
+     */
+    "searchCriteria.refName"?: string;
+    /**
+     * Search criteria attributes: fromDate, toDate, pusherId, refName, includeRefUpdates or includeLinks. fromDate: Start date to search from. toDate: End date to search to. pusherId: Identity of the person who submitted the push. refName: Branch name to consider. includeRefUpdates: If true, include the list of refs that were updated by the push. includeLinks: Whether to include the _links field on the shallow references.
+     */
+    "searchCriteria.toDate"?: string;
+  };
+};
+
+export type PushesListResponse =
+  | RestResponse<200, RestJsonValue<Array<GitPush>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type RefsFavoritesCreateInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+  /**
+   * The ref favorite to create.
+   */
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<GitRefFavorite>>>;
+};
+
+export type RefsFavoritesCreateResponse =
+  | RestResponse<200, RestJsonValue<GitRefFavorite>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type RefsFavoritesDeleteInput = {
+  path: {
+    /**
+     * The Id of the ref favorite to delete.
+     */
+    "favoriteId": number;
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type RefsFavoritesDeleteResponse =
+  | RestResponse<200, undefined, undefined, true>
+  | RestUndocumentedResponse;
+
+export type RefsFavoritesForProjectListInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+    "identityId"?: string;
+  };
+};
+
+export type RefsFavoritesForProjectListResponse =
+  | RestResponse<200, RestJsonValue<Array<GitRefFavorite>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type RefsFavoritesGetInput = {
+  path: {
+    /**
+     * The Id of the requested ref favorite.
+     */
+    "favoriteId": number;
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type RefsFavoritesGetResponse =
+  | RestResponse<200, RestJsonValue<GitRefFavorite>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type RefsFavoritesListInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * The id of the identity whose favorites are to be retrieved. If null, the requesting identity is used.
+     */
+    "identityId"?: string;
+    /**
+     * The id of the repository.
+     */
+    "repositoryId"?: string;
+  };
+};
+
+export type RefsFavoritesListResponse =
+  | RestResponse<200, RestJsonValue<Array<GitRefFavorite>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type RefsListInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The name or ID of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * [optional] Maximum number of refs to return. It cannot be bigger than 1000. If it is not provided but continuationToken is, top will default to 100.
+     */
+    "$top"?: number;
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * The continuation token used for pagination.
+     */
+    "continuationToken"?: string;
+    /**
+     * [optional] A filter to apply to the refs (starts with).
+     */
+    "filter"?: string;
+    /**
+     * [optional] A filter to apply to the refs (contains).
+     */
+    "filterContains"?: string;
+    /**
+     * [optional] Specifies if referenceLinks should be included in the result. default is false.
+     */
+    "includeLinks"?: boolean;
+    /**
+     * [optional] Includes only branches that the user owns, the branches the user favorites, and the default branch. The default value is false. Cannot be combined with the filter parameter.
+     */
+    "includeMyBranches"?: boolean;
+    /**
+     * [optional] Includes up to the first 1000 commit statuses for each ref. The default value is false.
+     */
+    "includeStatuses"?: boolean;
+    /**
+     * [optional] Includes target branches defined by patterns in pull_request_targets.yml.
+     */
+    "includeTargetBranches"?: boolean;
+    /**
+     * [optional] True to include only the tip commit status for each ref. This option requires `includeStatuses` to be true. The default value is false.
+     */
+    "latestStatusesOnly"?: boolean;
+    /**
+     * [optional] Annotated tags will populate the PeeledObjectId property. default is false.
+     */
+    "peelTags"?: boolean;
+  };
+};
+
+export type RefsListResponse =
+  | RestResponse<200, RestJsonValue<Array<GitRef>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type RefsUpdateRefInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The name or ID of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * The name of the branch to lock/unlock
+     */
+    "filter": string;
+    /**
+     * ID or name of the team project. Optional if specifying an ID for repository.
+     */
+    "projectId"?: string;
+  };
+  /**
+   * The ref update action (lock/unlock) to perform
+   */
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<GitRefUpdate>>>;
+};
+
+export type RefsUpdateRefResponse =
+  | RestResponse<200, RestJsonValue<GitRef>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type RefsUpdateRefsInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The name or ID of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * ID or name of the team project. Optional if specifying an ID for repository.
+     */
+    "projectId"?: string;
+  };
+  /**
+   * List of ref updates to attempt to perform
+   */
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<Array<GitRefUpdate>>>>;
+};
+
+export type RefsUpdateRefsResponse =
+  | RestResponse<200, RestJsonValue<Array<GitRefUpdateResult>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type RepositoriesCreateInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * [optional] Specify the source refs to use while creating a fork repo
+     */
+    "sourceRef"?: string;
+  };
+  /**
+   * Specify the repo name, team project and/or parent repository. Team project information can be omitted from gitRepositoryToCreate if the request is project-scoped (i.e., includes project Id).
+   */
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<GitRepositoryCreateOptions>>>;
+};
+
+export type RepositoriesCreateResponse =
+  | RestResponse<201, RestJsonValue<GitRepository>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type RepositoriesDeleteInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The ID of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type RepositoriesDeleteResponse =
+  | RestResponse<200, undefined, undefined, true>
+  | RestUndocumentedResponse;
+
+export type RepositoriesDeleteRepositoryFromRecycleBinInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The ID of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type RepositoriesDeleteRepositoryFromRecycleBinResponse =
+  | RestResponse<200, undefined, undefined, true>
+  | RestUndocumentedResponse;
+
+export type RepositoriesGetDeletedRepositoriesInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type RepositoriesGetDeletedRepositoriesResponse =
+  | RestResponse<200, RestJsonValue<Array<GitDeletedRepository>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type RepositoriesGetRecycleBinRepositoriesInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type RepositoriesGetRecycleBinRepositoriesResponse =
+  | RestResponse<200, RestJsonValue<Array<GitDeletedRepository>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type RepositoriesGetRepositoryInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The name or ID of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type RepositoriesGetRepositoryResponse =
+  | RestResponse<200, RestJsonValue<GitRepository>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type RepositoriesGetRepositoryWithParentInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The name or ID of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * True to include parent repository. Only available in authenticated calls.
+     */
+    "includeParent": boolean;
+  };
+};
+
+export type RepositoriesGetRepositoryWithParentResponse =
+  | RestResponse<200, RestJsonValue<GitRepository>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type RepositoriesListInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * [optional] True to include all remote URLs. The default value is false.
+     */
+    "includeAllUrls"?: boolean;
+    /**
+     * [optional] True to include hidden repositories. The default value is false.
+     */
+    "includeHidden"?: boolean;
+    /**
+     * [optional] True to include reference links. The default value is false.
+     */
+    "includeLinks"?: boolean;
+  };
+};
+
+export type RepositoriesListResponse =
+  | RestResponse<200, RestJsonValue<Array<GitRepository>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type RepositoriesRestoreRepositoryFromRecycleBinInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The ID of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+  };
+  body: RestBody<
+    "application/json",
+    RestJsonValue<RestRequestValue<GitRecycleBinRepositoryDetails>>
+  >;
+};
+
+export type RepositoriesRestoreRepositoryFromRecycleBinResponse =
+  | RestResponse<200, RestJsonValue<GitRepository>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type RepositoriesUpdateInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The ID of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+  };
+  /**
+   * Specify a new repo name or a new default branch of the repository
+   */
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<GitRepository>>>;
+};
+
+export type RepositoriesUpdateResponse =
+  | RestResponse<200, RestJsonValue<GitRepository>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type RevertsCreateInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+  };
+  body: RestBody<
+    "application/json",
+    RestJsonValue<RestRequestValue<GitAsyncRefOperationParameters>>
+  >;
+};
+
+export type RevertsCreateResponse =
+  | RestResponse<200, RestJsonValue<GitRevert>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type RevertsGetRevertInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the repository.
+     */
+    "repositoryId": string;
+    /**
+     * ID of the revert operation.
+     */
+    "revertId": number;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+  };
+};
+
+export type RevertsGetRevertResponse =
+  | RestResponse<200, RestJsonValue<GitRevert>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type RevertsGetRevertForRefNameInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * The GitAsyncRefOperationParameters generatedRefName used for the revert operation.
+     */
+    "refName": string;
+  };
+};
+
+export type RevertsGetRevertForRefNameResponse =
+  | RestResponse<200, RestJsonValue<GitRevert>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type StatsGetInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The name or ID of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * Version string identifier (name of tag/branch, SHA1 of commit)
+     */
+    "baseVersionDescriptor.version"?: string;
+    /**
+     * Version options - Specify additional modifiers to version (e.g Previous)
+     */
+    "baseVersionDescriptor.versionOptions"?: "firstParent" | "none" | "previousChange";
+    /**
+     * Version type (branch, tag, or commit). Determines how Id is interpreted
+     */
+    "baseVersionDescriptor.versionType"?: "branch" | "commit" | "tag";
+    /**
+     * Name of the branch.
+     */
+    "name": string;
+  };
+};
+
+export type StatsGetResponse =
+  | RestResponse<200, RestJsonValue<GitBranchStats>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type StatsListInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * The name or ID of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * Version string identifier (name of tag/branch, SHA1 of commit)
+     */
+    "baseVersionDescriptor.version"?: string;
+    /**
+     * Version options - Specify additional modifiers to version (e.g Previous)
+     */
+    "baseVersionDescriptor.versionOptions"?: "firstParent" | "none" | "previousChange";
+    /**
+     * Version type (branch, tag, or commit). Determines how Id is interpreted
+     */
+    "baseVersionDescriptor.versionType"?: "branch" | "commit" | "tag";
+  };
+};
+
+export type StatsListResponse =
+  | RestResponse<200, RestJsonValue<Array<GitBranchStats>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type StatusesCreateInput = {
+  path: {
+    /**
+     * ID of the Git commit.
+     */
+    "commitId": string;
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+  };
+  /**
+   * Git commit status object to create.
+   */
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<GitStatus>>>;
+};
+
+export type StatusesCreateResponse =
+  | RestResponse<200, RestJsonValue<GitStatus>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type StatusesListInput = {
+  path: {
+    /**
+     * ID of the Git commit.
+     */
+    "commitId": string;
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.2' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * The flag indicates whether to get only latest statuses grouped by `Context.Name` and `Context.Genre`.
+     */
+    "latestOnly"?: boolean;
+    /**
+     * Optional. The number of statuses to ignore. Default is 0. For example, to retrieve results 101-150, set top to 50 and skip to 100.
+     */
+    "skip"?: number;
+    /**
+     * Optional. The number of statuses to retrieve. Default is 1000.
+     */
+    "top"?: number;
+  };
+};
+
+export type StatusesListResponse =
+  | RestResponse<200, RestJsonValue<Array<GitStatus>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type SuggestionsListInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * ID of the git repository.
+     */
+    "repositoryId": string;
+  };
+  query: {
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * If true, prefer the compare branch over the default branch as target branch for pull requests.
+     */
+    "preferCompareBranch"?: boolean;
+  };
+};
+
+export type SuggestionsListResponse =
+  | RestResponse<200, RestJsonValue<Array<GitSuggestion>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type TreesGetInput = {
+  path: {
+    /**
+     * The name of the Azure DevOps organization.
+     */
+    "organization": string;
+    /**
+     * Project ID or project name
+     */
+    "project": string;
+    /**
+     * Repository Id.
+     */
+    "repositoryId": string;
+    /**
+     * SHA1 hash of the tree object.
+     */
+    "sha1": string;
+  };
+  query: {
+    /**
+     * Use "zip". Defaults to the MIME type set in the Accept header.
+     */
+    "$format"?: string;
+    /**
+     * Version of the API to use.  This should be set to '7.2-preview.1' to use this version of the api.
+     */
+    "api-version": string;
+    /**
+     * Name to use if a .zip file is returned. Default is the object ID.
+     */
+    "fileName"?: string;
+    /**
+     * Project Id.
+     */
+    "projectId"?: string;
+    /**
+     * Search recursively. Include trees underneath this tree. Default is false.
+     */
+    "recursive"?: boolean;
+  };
+};
+
+export type TreesGetResponse =
+  | RestResponse<200, RestJsonValue<GitTreeRef>, "application/json", true>
+  | RestResponse<200, globalThis.Blob, "application/zip", true>
+  | RestUndocumentedResponse;
+
+/** Deterministic operation metadata for raw transport access and higher-level adapters. */
+export const azureDevOpsOperations = deepFreezeRestOperations(
+  {
+    annotatedTagsCreate: {
+      id: "Annotated Tags_Create",
+      method: "POST",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/annotatedtags",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code_manage"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    annotatedTagsGet: {
+      id: "Annotated Tags_Get",
+      method: "GET",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/annotatedtags/{objectId}",
+      pathParameters: [{ "name": "objectId" }, { "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    blobsGetBlob: {
+      id: "Blobs_Get Blob",
+      method: "GET",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/blobs/{sha1}",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }, { "name": "sha1" }],
+      queryParameters: [
+        { "name": "$format", "style": "form", "explode": true },
+        { "name": "api-version", "style": "form", "explode": true },
+        { "name": "download", "style": "form", "explode": true },
+        { "name": "fileName", "style": "form", "explode": true },
+        { "name": "resolveLfs", "style": "form", "explode": true },
+      ],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json", "application/octet-stream", "application/zip"],
+        "decoders": {
+          "application/json": "json",
+          "application/octet-stream": "binary",
+          "application/zip": "binary",
+        },
+      }],
+    },
+    blobsGetBlobsZip: {
+      id: "Blobs_Get Blobs Zip",
+      method: "POST",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/blobs",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }, {
+        "name": "filename",
+        "style": "form",
+        "explode": true,
+      }],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/zip"],
+        "decoders": { "application/zip": "binary" },
+      }],
+    },
+    cherryPicksCreate: {
+      id: "Cherry Picks_Create",
+      method: "POST",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/cherryPicks",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code_manage"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    cherryPicksGetCherryPick: {
+      id: "Cherry Picks_Get Cherry Pick",
+      method: "GET",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/cherryPicks/{cherryPickId}",
+      pathParameters: [{ "name": "cherryPickId" }, { "name": "organization" }, {
+        "name": "project",
+      }, { "name": "repositoryId" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    cherryPicksGetCherryPickForRefName: {
+      id: "Cherry Picks_Get Cherry Pick For Ref Name",
+      method: "GET",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/cherryPicks",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }, {
+        "name": "refName",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    commitsGet: {
+      id: "Commits_Get",
+      method: "GET",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/commits/{commitId}",
+      pathParameters: [{ "name": "commitId" }, { "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }, {
+        "name": "changeCount",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    commitsGetChanges: {
+      id: "Commits_Get Changes",
+      method: "GET",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/commits/{commitId}/changes",
+      pathParameters: [{ "name": "commitId" }, { "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }, {
+        "name": "skip",
+        "style": "form",
+        "explode": true,
+      }, { "name": "top", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    commitsGetCommits: {
+      id: "Commits_Get Commits",
+      method: "GET",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/commits",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [
+        { "name": "api-version", "style": "form", "explode": true },
+        { "name": "searchCriteria.$skip", "style": "form", "explode": true },
+        { "name": "searchCriteria.$top", "style": "form", "explode": true },
+        { "name": "searchCriteria.author", "style": "form", "explode": true },
+        { "name": "searchCriteria.compareVersion.version", "style": "form", "explode": true },
+        {
+          "name": "searchCriteria.compareVersion.versionOptions",
+          "style": "form",
+          "explode": true,
+        },
+        { "name": "searchCriteria.compareVersion.versionType", "style": "form", "explode": true },
+        { "name": "searchCriteria.excludeDeletes", "style": "form", "explode": true },
+        { "name": "searchCriteria.fromCommitId", "style": "form", "explode": true },
+        { "name": "searchCriteria.fromDate", "style": "form", "explode": true },
+        { "name": "searchCriteria.historyMode", "style": "form", "explode": true },
+        { "name": "searchCriteria.ids", "style": "form", "explode": false },
+        { "name": "searchCriteria.includeLinks", "style": "form", "explode": true },
+        { "name": "searchCriteria.includePushData", "style": "form", "explode": true },
+        { "name": "searchCriteria.includeUserImageUrl", "style": "form", "explode": true },
+        { "name": "searchCriteria.includeWorkItems", "style": "form", "explode": true },
+        { "name": "searchCriteria.itemPath", "style": "form", "explode": true },
+        { "name": "searchCriteria.itemVersion.version", "style": "form", "explode": true },
+        { "name": "searchCriteria.itemVersion.versionOptions", "style": "form", "explode": true },
+        { "name": "searchCriteria.itemVersion.versionType", "style": "form", "explode": true },
+        { "name": "searchCriteria.showOldestCommitsFirst", "style": "form", "explode": true },
+        { "name": "searchCriteria.toCommitId", "style": "form", "explode": true },
+        { "name": "searchCriteria.toDate", "style": "form", "explode": true },
+        { "name": "searchCriteria.user", "style": "form", "explode": true },
+      ],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    commitsGetCommitsBatch: {
+      id: "Commits_Get Commits Batch",
+      method: "POST",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/commitsbatch",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [
+        { "name": "$skip", "style": "form", "explode": true },
+        { "name": "$top", "style": "form", "explode": true },
+        { "name": "api-version", "style": "form", "explode": true },
+        { "name": "includeStatuses", "style": "form", "explode": true },
+      ],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    commitsGetPushCommits: {
+      id: "Commits_Get Push Commits",
+      method: "GET",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/commits",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [
+        { "name": "api-version", "style": "form", "explode": true },
+        { "name": "includeLinks", "style": "form", "explode": true },
+        { "name": "pushId", "style": "form", "explode": true },
+        { "name": "skip", "style": "form", "explode": true },
+        { "name": "top", "style": "form", "explode": true },
+      ],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    diffsGet: {
+      id: "Diffs_Get",
+      method: "GET",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/diffs/commits",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [
+        { "name": "$skip", "style": "form", "explode": true },
+        { "name": "$top", "style": "form", "explode": true },
+        { "name": "api-version", "style": "form", "explode": true },
+        { "name": "baseVersion", "style": "form", "explode": true },
+        { "name": "baseVersionOptions", "style": "form", "explode": true },
+        { "name": "baseVersionType", "style": "form", "explode": true },
+        { "name": "diffCommonCommit", "style": "form", "explode": true },
+        { "name": "targetVersion", "style": "form", "explode": true },
+        { "name": "targetVersionOptions", "style": "form", "explode": true },
+        { "name": "targetVersionType", "style": "form", "explode": true },
+      ],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    forksCreateForkSyncRequest: {
+      id: "Forks_Create fork sync request",
+      method: "POST",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryNameOrId}/forkSyncRequests",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryNameOrId",
+      }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }, {
+        "name": "includeLinks",
+        "style": "form",
+        "explode": true,
+      }],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code_write"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    forksGetForkSyncRequest: {
+      id: "Forks_Get fork sync request",
+      method: "GET",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryNameOrId}/forkSyncRequests/{forkSyncOperationId}",
+      pathParameters: [{ "name": "forkSyncOperationId" }, { "name": "organization" }, {
+        "name": "project",
+      }, { "name": "repositoryNameOrId" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }, {
+        "name": "includeLinks",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    forksGetForkSyncRequests: {
+      id: "Forks_Get Fork Sync Requests",
+      method: "GET",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryNameOrId}/forkSyncRequests",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryNameOrId",
+      }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }, {
+        "name": "includeAbandoned",
+        "style": "form",
+        "explode": true,
+      }, { "name": "includeLinks", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    forksList: {
+      id: "Forks_List",
+      method: "GET",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryNameOrId}/forks/{collectionId}",
+      pathParameters: [{ "name": "collectionId" }, { "name": "organization" }, {
+        "name": "project",
+      }, { "name": "repositoryNameOrId" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }, {
+        "name": "includeLinks",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    importRequestsCreate: {
+      id: "Import Requests_Create",
+      method: "POST",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/importRequests",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code_manage"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    importRequestsGet: {
+      id: "Import Requests_Get",
+      method: "GET",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/importRequests/{importRequestId}",
+      pathParameters: [{ "name": "importRequestId" }, { "name": "organization" }, {
+        "name": "project",
+      }, { "name": "repositoryId" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    importRequestsQuery: {
+      id: "Import Requests_Query",
+      method: "GET",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/importRequests",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }, {
+        "name": "includeAbandoned",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    importRequestsUpdate: {
+      id: "Import Requests_Update",
+      method: "PATCH",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/importRequests/{importRequestId}",
+      pathParameters: [{ "name": "importRequestId" }, { "name": "organization" }, {
+        "name": "project",
+      }, { "name": "repositoryId" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code_manage"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    itemsGet: {
+      id: "Items_Get",
+      method: "GET",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/items",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [
+        { "name": "$format", "style": "form", "explode": true },
+        { "name": "api-version", "style": "form", "explode": true },
+        { "name": "download", "style": "form", "explode": true },
+        { "name": "includeContent", "style": "form", "explode": true },
+        { "name": "includeContentMetadata", "style": "form", "explode": true },
+        { "name": "latestProcessedChange", "style": "form", "explode": true },
+        { "name": "path", "style": "form", "explode": true },
+        { "name": "recursionLevel", "style": "form", "explode": true },
+        { "name": "resolveLfs", "style": "form", "explode": true },
+        { "name": "sanitize", "style": "form", "explode": true },
+        { "name": "scopePath", "style": "form", "explode": true },
+        { "name": "versionDescriptor.version", "style": "form", "explode": true },
+        { "name": "versionDescriptor.versionOptions", "style": "form", "explode": true },
+        { "name": "versionDescriptor.versionType", "style": "form", "explode": true },
+      ],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": [
+          "application/json",
+          "text/plain",
+          "application/octet-stream",
+          "application/zip",
+        ],
+        "decoders": {
+          "application/json": "json",
+          "text/plain": "text",
+          "application/octet-stream": "binary",
+          "application/zip": "binary",
+        },
+      }],
+    },
+    itemsGetItemsBatch: {
+      id: "Items_Get Items Batch",
+      method: "POST",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/itemsbatch",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    itemsList: {
+      id: "Items_List",
+      method: "GET",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/items",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [
+        { "name": "$format", "style": "form", "explode": true },
+        { "name": "api-version", "style": "form", "explode": true },
+        { "name": "download", "style": "form", "explode": true },
+        { "name": "includeContentMetadata", "style": "form", "explode": true },
+        { "name": "includeLinks", "style": "form", "explode": true },
+        { "name": "latestProcessedChange", "style": "form", "explode": true },
+        { "name": "recursionLevel", "style": "form", "explode": true },
+        { "name": "scopePath", "style": "form", "explode": true },
+        { "name": "versionDescriptor.version", "style": "form", "explode": true },
+        { "name": "versionDescriptor.versionOptions", "style": "form", "explode": true },
+        { "name": "versionDescriptor.versionType", "style": "form", "explode": true },
+        { "name": "zipForUnix", "style": "form", "explode": true },
+      ],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    mergeBasesList: {
+      id: "Merge Bases_List",
+      method: "GET",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryNameOrId}/commits/{commitId}/mergebases",
+      pathParameters: [{ "name": "commitId" }, { "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryNameOrId",
+      }],
+      queryParameters: [
+        { "name": "api-version", "style": "form", "explode": true },
+        { "name": "otherCollectionId", "style": "form", "explode": true },
+        { "name": "otherCommitId", "style": "form", "explode": true },
+        { "name": "otherRepositoryId", "style": "form", "explode": true },
+      ],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    mergesCreate: {
+      id: "Merges_Create",
+      method: "POST",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryNameOrId}/merges",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryNameOrId",
+      }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }, {
+        "name": "includeLinks",
+        "style": "form",
+        "explode": true,
+      }],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code_manage"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    mergesGet: {
+      id: "Merges_Get",
+      method: "GET",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryNameOrId}/merges/{mergeOperationId}",
+      pathParameters: [{ "name": "mergeOperationId" }, { "name": "organization" }, {
+        "name": "project",
+      }, { "name": "repositoryNameOrId" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }, {
+        "name": "includeLinks",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    policyConfigurationsGet: {
+      id: "Policy Configurations_Get",
+      method: "GET",
+      path: "/{organization}/{project}/_apis/git/policy/configurations",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }],
+      queryParameters: [
+        { "name": "$top", "style": "form", "explode": true },
+        { "name": "api-version", "style": "form", "explode": true },
+        { "name": "continuationToken", "style": "form", "explode": true },
+        { "name": "policyType", "style": "form", "explode": true },
+        { "name": "refName", "style": "form", "explode": true },
+        { "name": "repositoryId", "style": "form", "explode": true },
+      ],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+        "headers": ["x-ms-continuationtoken"],
+      }],
+    },
+    pullRequestAttachmentsCreate: {
+      id: "Pull Request Attachments_Create",
+      method: "POST",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/attachments/{fileName}",
+      pathParameters: [{ "name": "fileName" }, { "name": "organization" }, { "name": "project" }, {
+        "name": "pullRequestId",
+      }, { "name": "repositoryId" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      requestMediaTypes: ["application/octet-stream"],
+      security: [{ "oauth2": ["vso.code_write"] }],
+      responses: [{
+        "status": 201,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, {
+        "status": 202,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestAttachmentsDelete: {
+      id: "Pull Request Attachments_Delete",
+      method: "DELETE",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/attachments/{fileName}",
+      pathParameters: [{ "name": "fileName" }, { "name": "organization" }, { "name": "project" }, {
+        "name": "pullRequestId",
+      }, { "name": "repositoryId" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code_write"] }],
+      responses: [{ "status": 200, "mediaTypes": [] }],
+    },
+    pullRequestAttachmentsGet: {
+      id: "Pull Request Attachments_Get",
+      method: "GET",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/attachments/{fileName}",
+      pathParameters: [{ "name": "fileName" }, { "name": "organization" }, { "name": "project" }, {
+        "name": "pullRequestId",
+      }, { "name": "repositoryId" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/octet-stream", "application/zip"],
+        "decoders": { "application/octet-stream": "binary", "application/zip": "binary" },
+      }],
+    },
+    pullRequestAttachmentsList: {
+      id: "Pull Request Attachments_List",
+      method: "GET",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/attachments",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "pullRequestId",
+      }, { "name": "repositoryId" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestCommentLikesCreate: {
+      id: "Pull Request Comment Likes_Create",
+      method: "POST",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads/{threadId}/comments/{commentId}/likes",
+      pathParameters: [
+        { "name": "commentId" },
+        { "name": "organization" },
+        { "name": "project" },
+        { "name": "pullRequestId" },
+        { "name": "repositoryId" },
+        { "name": "threadId" },
+      ],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code_write", "vso.threads_full"] }],
+      responses: [{ "status": 200, "mediaTypes": [] }],
+    },
+    pullRequestCommentLikesDelete: {
+      id: "Pull Request Comment Likes_Delete",
+      method: "DELETE",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads/{threadId}/comments/{commentId}/likes",
+      pathParameters: [
+        { "name": "commentId" },
+        { "name": "organization" },
+        { "name": "project" },
+        { "name": "pullRequestId" },
+        { "name": "repositoryId" },
+        { "name": "threadId" },
+      ],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code_write", "vso.threads_full"] }],
+      responses: [{ "status": 200, "mediaTypes": [] }],
+    },
+    pullRequestCommentLikesList: {
+      id: "Pull Request Comment Likes_List",
+      method: "GET",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads/{threadId}/comments/{commentId}/likes",
+      pathParameters: [
+        { "name": "commentId" },
+        { "name": "organization" },
+        { "name": "project" },
+        { "name": "pullRequestId" },
+        { "name": "repositoryId" },
+        { "name": "threadId" },
+      ],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code", "vso.threads_full"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestCommitsGetPullRequestCommits: {
+      id: "Pull Request Commits_Get Pull Request Commits",
+      method: "GET",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/commits",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "pullRequestId",
+      }, { "name": "repositoryId" }],
+      queryParameters: [{ "name": "$top", "style": "form", "explode": true }, {
+        "name": "api-version",
+        "style": "form",
+        "explode": true,
+      }, { "name": "continuationToken", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestCommitsGetPullRequestIterationCommits: {
+      id: "Pull Request Commits_Get Pull Request Iteration Commits",
+      method: "GET",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/iterations/{iterationId}/commits",
+      pathParameters: [
+        { "name": "iterationId" },
+        { "name": "organization" },
+        { "name": "project" },
+        { "name": "pullRequestId" },
+        { "name": "repositoryId" },
+      ],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }, {
+        "name": "skip",
+        "style": "form",
+        "explode": true,
+      }, { "name": "top", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestIterationChangesGet: {
+      id: "Pull Request Iteration Changes_Get",
+      method: "GET",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/iterations/{iterationId}/changes",
+      pathParameters: [
+        { "name": "iterationId" },
+        { "name": "organization" },
+        { "name": "project" },
+        { "name": "pullRequestId" },
+        { "name": "repositoryId" },
+      ],
+      queryParameters: [
+        { "name": "$compareTo", "style": "form", "explode": true },
+        { "name": "$skip", "style": "form", "explode": true },
+        { "name": "$top", "style": "form", "explode": true },
+        { "name": "api-version", "style": "form", "explode": true },
+      ],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestIterationStatusesCreate: {
+      id: "Pull Request Iteration Statuses_Create",
+      method: "POST",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/iterations/{iterationId}/statuses",
+      pathParameters: [
+        { "name": "iterationId" },
+        { "name": "organization" },
+        { "name": "project" },
+        { "name": "pullRequestId" },
+        { "name": "repositoryId" },
+      ],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code_status", "vso.code_write"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestIterationStatusesDelete: {
+      id: "Pull Request Iteration Statuses_Delete",
+      method: "DELETE",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/iterations/{iterationId}/statuses/{statusId}",
+      pathParameters: [
+        { "name": "iterationId" },
+        { "name": "organization" },
+        { "name": "project" },
+        { "name": "pullRequestId" },
+        { "name": "repositoryId" },
+        { "name": "statusId" },
+      ],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code_status", "vso.code_write"] }],
+      responses: [{ "status": 200, "mediaTypes": [] }],
+    },
+    pullRequestIterationStatusesGet: {
+      id: "Pull Request Iteration Statuses_Get",
+      method: "GET",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/iterations/{iterationId}/statuses/{statusId}",
+      pathParameters: [
+        { "name": "iterationId" },
+        { "name": "organization" },
+        { "name": "project" },
+        { "name": "pullRequestId" },
+        { "name": "repositoryId" },
+        { "name": "statusId" },
+      ],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code", "vso.code_status"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestIterationStatusesList: {
+      id: "Pull Request Iteration Statuses_List",
+      method: "GET",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/iterations/{iterationId}/statuses",
+      pathParameters: [
+        { "name": "iterationId" },
+        { "name": "organization" },
+        { "name": "project" },
+        { "name": "pullRequestId" },
+        { "name": "repositoryId" },
+      ],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code", "vso.code_status"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestIterationStatusesUpdate: {
+      id: "Pull Request Iteration Statuses_Update",
+      method: "PATCH",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/iterations/{iterationId}/statuses",
+      pathParameters: [
+        { "name": "iterationId" },
+        { "name": "organization" },
+        { "name": "project" },
+        { "name": "pullRequestId" },
+        { "name": "repositoryId" },
+      ],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      requestMediaTypes: ["application/json-patch+json"],
+      security: [{ "oauth2": ["vso.code_status", "vso.code_write"] }],
+      responses: [{ "status": 200, "mediaTypes": [] }],
+    },
+    pullRequestIterationsGet: {
+      id: "Pull Request Iterations_Get",
+      method: "GET",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/iterations/{iterationId}",
+      pathParameters: [
+        { "name": "iterationId" },
+        { "name": "organization" },
+        { "name": "project" },
+        { "name": "pullRequestId" },
+        { "name": "repositoryId" },
+      ],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestIterationsList: {
+      id: "Pull Request Iterations_List",
+      method: "GET",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/iterations",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "pullRequestId",
+      }, { "name": "repositoryId" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }, {
+        "name": "includeCommits",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestLabelsCreate: {
+      id: "Pull Request Labels_Create",
+      method: "POST",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/labels",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "pullRequestId",
+      }, { "name": "repositoryId" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }, {
+        "name": "projectId",
+        "style": "form",
+        "explode": true,
+      }],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code_write"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestLabelsDelete: {
+      id: "Pull Request Labels_Delete",
+      method: "DELETE",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/labels/{labelIdOrName}",
+      pathParameters: [
+        { "name": "labelIdOrName" },
+        { "name": "organization" },
+        { "name": "project" },
+        { "name": "pullRequestId" },
+        { "name": "repositoryId" },
+      ],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }, {
+        "name": "projectId",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [{ "oauth2": ["vso.code_write"] }],
+      responses: [{ "status": 200, "mediaTypes": [] }],
+    },
+    pullRequestLabelsGet: {
+      id: "Pull Request Labels_Get",
+      method: "GET",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/labels/{labelIdOrName}",
+      pathParameters: [
+        { "name": "labelIdOrName" },
+        { "name": "organization" },
+        { "name": "project" },
+        { "name": "pullRequestId" },
+        { "name": "repositoryId" },
+      ],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }, {
+        "name": "projectId",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestLabelsList: {
+      id: "Pull Request Labels_List",
+      method: "GET",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/labels",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "pullRequestId",
+      }, { "name": "repositoryId" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }, {
+        "name": "projectId",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestPropertiesList: {
+      id: "Pull Request Properties_List",
+      method: "GET",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/properties",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "pullRequestId",
+      }, { "name": "repositoryId" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestPropertiesUpdate: {
+      id: "Pull Request Properties_Update",
+      method: "PATCH",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/properties",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "pullRequestId",
+      }, { "name": "repositoryId" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      requestMediaTypes: ["application/json-patch+json"],
+      security: [{ "oauth2": ["vso.code_write"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestQueryGet: {
+      id: "Pull Request Query_Get",
+      method: "POST",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullrequestquery",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestReviewersCreatePullRequestReviewer: {
+      id: "Pull Request Reviewers_Create Pull Request Reviewer",
+      method: "PUT",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/reviewers/{reviewerId}",
+      pathParameters: [
+        { "name": "organization" },
+        { "name": "project" },
+        { "name": "pullRequestId" },
+        { "name": "repositoryId" },
+        { "name": "reviewerId" },
+      ],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code_write"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestReviewersCreatePullRequestReviewers: {
+      id: "Pull Request Reviewers_Create Pull Request Reviewers",
+      method: "POST",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/reviewers",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "pullRequestId",
+      }, { "name": "repositoryId" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code_write"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestReviewersCreateUnmaterializedPullRequestReviewer: {
+      id: "Pull Request Reviewers_Create Unmaterialized Pull Request Reviewer",
+      method: "PUT",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/reviewers",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "pullRequestId",
+      }, { "name": "repositoryId" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code_write"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestReviewersDelete: {
+      id: "Pull Request Reviewers_Delete",
+      method: "DELETE",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/reviewers/{reviewerId}",
+      pathParameters: [
+        { "name": "organization" },
+        { "name": "project" },
+        { "name": "pullRequestId" },
+        { "name": "repositoryId" },
+        { "name": "reviewerId" },
+      ],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code_write"] }],
+      responses: [{ "status": 200, "mediaTypes": [] }],
+    },
+    pullRequestReviewersGet: {
+      id: "Pull Request Reviewers_Get",
+      method: "GET",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/reviewers/{reviewerId}",
+      pathParameters: [
+        { "name": "organization" },
+        { "name": "project" },
+        { "name": "pullRequestId" },
+        { "name": "repositoryId" },
+        { "name": "reviewerId" },
+      ],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestReviewersList: {
+      id: "Pull Request Reviewers_List",
+      method: "GET",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/reviewers",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "pullRequestId",
+      }, { "name": "repositoryId" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestReviewersUpdatePullRequestReviewer: {
+      id: "Pull Request Reviewers_Update Pull Request Reviewer",
+      method: "PATCH",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/reviewers/{reviewerId}",
+      pathParameters: [
+        { "name": "organization" },
+        { "name": "project" },
+        { "name": "pullRequestId" },
+        { "name": "repositoryId" },
+        { "name": "reviewerId" },
+      ],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code_write"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestReviewersUpdatePullRequestReviewers: {
+      id: "Pull Request Reviewers_Update Pull Request Reviewers",
+      method: "PATCH",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/reviewers",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "pullRequestId",
+      }, { "name": "repositoryId" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code_write"] }],
+      responses: [{ "status": 200, "mediaTypes": [] }],
+    },
+    pullRequestShareSharePullRequest: {
+      id: "Pull Request Share_Share Pull Request",
+      method: "POST",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/share",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "pullRequestId",
+      }, { "name": "repositoryId" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code_write"] }],
+      responses: [{ "status": 200, "mediaTypes": [] }],
+    },
+    pullRequestStatusesCreate: {
+      id: "Pull Request Statuses_Create",
+      method: "POST",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/statuses",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "pullRequestId",
+      }, { "name": "repositoryId" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code_status", "vso.code_write"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestStatusesDelete: {
+      id: "Pull Request Statuses_Delete",
+      method: "DELETE",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/statuses/{statusId}",
+      pathParameters: [
+        { "name": "organization" },
+        { "name": "project" },
+        { "name": "pullRequestId" },
+        { "name": "repositoryId" },
+        { "name": "statusId" },
+      ],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code_status", "vso.code_write"] }],
+      responses: [{ "status": 200, "mediaTypes": [] }],
+    },
+    pullRequestStatusesGet: {
+      id: "Pull Request Statuses_Get",
+      method: "GET",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/statuses/{statusId}",
+      pathParameters: [
+        { "name": "organization" },
+        { "name": "project" },
+        { "name": "pullRequestId" },
+        { "name": "repositoryId" },
+        { "name": "statusId" },
+      ],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code", "vso.code_status"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestStatusesList: {
+      id: "Pull Request Statuses_List",
+      method: "GET",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/statuses",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "pullRequestId",
+      }, { "name": "repositoryId" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code", "vso.code_status"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestStatusesUpdate: {
+      id: "Pull Request Statuses_Update",
+      method: "PATCH",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/statuses",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "pullRequestId",
+      }, { "name": "repositoryId" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      requestMediaTypes: ["application/json-patch+json"],
+      security: [{ "oauth2": ["vso.code_status", "vso.code_write"] }],
+      responses: [{ "status": 200, "mediaTypes": [] }],
+    },
+    pullRequestThreadCommentsCreate: {
+      id: "Pull Request Thread Comments_Create",
+      method: "POST",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads/{threadId}/comments",
+      pathParameters: [
+        { "name": "organization" },
+        { "name": "project" },
+        { "name": "pullRequestId" },
+        { "name": "repositoryId" },
+        { "name": "threadId" },
+      ],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code_write", "vso.threads_full"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestThreadCommentsDelete: {
+      id: "Pull Request Thread Comments_Delete",
+      method: "DELETE",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads/{threadId}/comments/{commentId}",
+      pathParameters: [
+        { "name": "commentId" },
+        { "name": "organization" },
+        { "name": "project" },
+        { "name": "pullRequestId" },
+        { "name": "repositoryId" },
+        { "name": "threadId" },
+      ],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code_write", "vso.threads_full"] }],
+      responses: [{ "status": 200, "mediaTypes": [] }],
+    },
+    pullRequestThreadCommentsGet: {
+      id: "Pull Request Thread Comments_Get",
+      method: "GET",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads/{threadId}/comments/{commentId}",
+      pathParameters: [
+        { "name": "commentId" },
+        { "name": "organization" },
+        { "name": "project" },
+        { "name": "pullRequestId" },
+        { "name": "repositoryId" },
+        { "name": "threadId" },
+      ],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code", "vso.threads_full"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestThreadCommentsList: {
+      id: "Pull Request Thread Comments_List",
+      method: "GET",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads/{threadId}/comments",
+      pathParameters: [
+        { "name": "organization" },
+        { "name": "project" },
+        { "name": "pullRequestId" },
+        { "name": "repositoryId" },
+        { "name": "threadId" },
+      ],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code", "vso.threads_full"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestThreadCommentsUpdate: {
+      id: "Pull Request Thread Comments_Update",
+      method: "PATCH",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads/{threadId}/comments/{commentId}",
+      pathParameters: [
+        { "name": "commentId" },
+        { "name": "organization" },
+        { "name": "project" },
+        { "name": "pullRequestId" },
+        { "name": "repositoryId" },
+        { "name": "threadId" },
+      ],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code_write", "vso.threads_full"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestThreadsCreate: {
+      id: "Pull Request Threads_Create",
+      method: "POST",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "pullRequestId",
+      }, { "name": "repositoryId" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code_write", "vso.threads_full"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestThreadsGet: {
+      id: "Pull Request Threads_Get",
+      method: "GET",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads/{threadId}",
+      pathParameters: [
+        { "name": "organization" },
+        { "name": "project" },
+        { "name": "pullRequestId" },
+        { "name": "repositoryId" },
+        { "name": "threadId" },
+      ],
+      queryParameters: [{ "name": "$baseIteration", "style": "form", "explode": true }, {
+        "name": "$iteration",
+        "style": "form",
+        "explode": true,
+      }, { "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code", "vso.threads_full"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestThreadsList: {
+      id: "Pull Request Threads_List",
+      method: "GET",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "pullRequestId",
+      }, { "name": "repositoryId" }],
+      queryParameters: [{ "name": "$baseIteration", "style": "form", "explode": true }, {
+        "name": "$iteration",
+        "style": "form",
+        "explode": true,
+      }, { "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code", "vso.threads_full"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestThreadsUpdate: {
+      id: "Pull Request Threads_Update",
+      method: "PATCH",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads/{threadId}",
+      pathParameters: [
+        { "name": "organization" },
+        { "name": "project" },
+        { "name": "pullRequestId" },
+        { "name": "repositoryId" },
+        { "name": "threadId" },
+      ],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code_write", "vso.threads_full"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestWorkItemsList: {
+      id: "Pull Request Work Items_List",
+      method: "GET",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/workitems",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "pullRequestId",
+      }, { "name": "repositoryId" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestsCreate: {
+      id: "Pull Requests_Create",
+      method: "POST",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullrequests",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }, {
+        "name": "supportsIterations",
+        "style": "form",
+        "explode": true,
+      }],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code_write"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestsGetPullRequest: {
+      id: "Pull Requests_Get Pull Request",
+      method: "GET",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullrequests/{pullRequestId}",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "pullRequestId",
+      }, { "name": "repositoryId" }],
+      queryParameters: [
+        { "name": "$skip", "style": "form", "explode": true },
+        { "name": "$top", "style": "form", "explode": true },
+        { "name": "api-version", "style": "form", "explode": true },
+        { "name": "includeCommits", "style": "form", "explode": true },
+        { "name": "includeWorkItemRefs", "style": "form", "explode": true },
+        { "name": "maxCommentLength", "style": "form", "explode": true },
+      ],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestsGetPullRequestById: {
+      id: "Pull Requests_Get Pull Request By Id",
+      method: "GET",
+      path: "/{organization}/{project}/_apis/git/pullrequests/{pullRequestId}",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "pullRequestId",
+      }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestsGetPullRequests: {
+      id: "Pull Requests_Get Pull Requests",
+      method: "GET",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullrequests",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [
+        { "name": "$skip", "style": "form", "explode": true },
+        { "name": "$top", "style": "form", "explode": true },
+        { "name": "api-version", "style": "form", "explode": true },
+        { "name": "maxCommentLength", "style": "form", "explode": true },
+        { "name": "searchCriteria.creatorId", "style": "form", "explode": true },
+        { "name": "searchCriteria.includeLinks", "style": "form", "explode": true },
+        { "name": "searchCriteria.labels", "style": "form", "explode": false },
+        { "name": "searchCriteria.maxTime", "style": "form", "explode": true },
+        { "name": "searchCriteria.minTime", "style": "form", "explode": true },
+        { "name": "searchCriteria.queryTimeRangeType", "style": "form", "explode": true },
+        { "name": "searchCriteria.repositoryId", "style": "form", "explode": true },
+        { "name": "searchCriteria.reviewerId", "style": "form", "explode": true },
+        { "name": "searchCriteria.sourceRefName", "style": "form", "explode": true },
+        { "name": "searchCriteria.sourceRepositoryId", "style": "form", "explode": true },
+        { "name": "searchCriteria.status", "style": "form", "explode": true },
+        { "name": "searchCriteria.tagsFilterOperator", "style": "form", "explode": true },
+        { "name": "searchCriteria.targetRefName", "style": "form", "explode": true },
+        { "name": "searchCriteria.title", "style": "form", "explode": true },
+      ],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestsGetPullRequestsByProject: {
+      id: "Pull Requests_Get Pull Requests By Project",
+      method: "GET",
+      path: "/{organization}/{project}/_apis/git/pullrequests",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }],
+      queryParameters: [
+        { "name": "$skip", "style": "form", "explode": true },
+        { "name": "$top", "style": "form", "explode": true },
+        { "name": "api-version", "style": "form", "explode": true },
+        { "name": "maxCommentLength", "style": "form", "explode": true },
+        { "name": "searchCriteria.creatorId", "style": "form", "explode": true },
+        { "name": "searchCriteria.includeLinks", "style": "form", "explode": true },
+        { "name": "searchCriteria.labels", "style": "form", "explode": false },
+        { "name": "searchCriteria.maxTime", "style": "form", "explode": true },
+        { "name": "searchCriteria.minTime", "style": "form", "explode": true },
+        { "name": "searchCriteria.queryTimeRangeType", "style": "form", "explode": true },
+        { "name": "searchCriteria.repositoryId", "style": "form", "explode": true },
+        { "name": "searchCriteria.reviewerId", "style": "form", "explode": true },
+        { "name": "searchCriteria.sourceRefName", "style": "form", "explode": true },
+        { "name": "searchCriteria.sourceRepositoryId", "style": "form", "explode": true },
+        { "name": "searchCriteria.status", "style": "form", "explode": true },
+        { "name": "searchCriteria.tagsFilterOperator", "style": "form", "explode": true },
+        { "name": "searchCriteria.targetRefName", "style": "form", "explode": true },
+        { "name": "searchCriteria.title", "style": "form", "explode": true },
+      ],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pullRequestsUpdate: {
+      id: "Pull Requests_Update",
+      method: "PATCH",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullrequests/{pullRequestId}",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "pullRequestId",
+      }, { "name": "repositoryId" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code_write"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pushesCreate: {
+      id: "Pushes_Create",
+      method: "POST",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pushes",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code_write"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pushesGet: {
+      id: "Pushes_Get",
+      method: "GET",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pushes/{pushId}",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, { "name": "pushId" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }, {
+        "name": "includeCommits",
+        "style": "form",
+        "explode": true,
+      }, { "name": "includeRefUpdates", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    pushesList: {
+      id: "Pushes_List",
+      method: "GET",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pushes",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [
+        { "name": "$skip", "style": "form", "explode": true },
+        { "name": "$top", "style": "form", "explode": true },
+        { "name": "api-version", "style": "form", "explode": true },
+        { "name": "searchCriteria.fromDate", "style": "form", "explode": true },
+        { "name": "searchCriteria.includeLinks", "style": "form", "explode": true },
+        { "name": "searchCriteria.includeRefUpdates", "style": "form", "explode": true },
+        { "name": "searchCriteria.pusherId", "style": "form", "explode": true },
+        { "name": "searchCriteria.refName", "style": "form", "explode": true },
+        { "name": "searchCriteria.toDate", "style": "form", "explode": true },
+      ],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    refsFavoritesCreate: {
+      id: "Refs Favorites_Create",
+      method: "POST",
+      path: "/{organization}/{project}/_apis/git/favorites/refs",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    refsFavoritesDelete: {
+      id: "Refs Favorites_Delete",
+      method: "DELETE",
+      path: "/{organization}/{project}/_apis/git/favorites/refs/{favoriteId}",
+      pathParameters: [{ "name": "favoriteId" }, { "name": "organization" }, { "name": "project" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{ "status": 200, "mediaTypes": [] }],
+    },
+    refsFavoritesForProjectList: {
+      id: "Refs Favorites For Project_List",
+      method: "GET",
+      path: "/{organization}/{project}/_apis/git/favorites/refsForProject",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }, {
+        "name": "identityId",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    refsFavoritesGet: {
+      id: "Refs Favorites_Get",
+      method: "GET",
+      path: "/{organization}/{project}/_apis/git/favorites/refs/{favoriteId}",
+      pathParameters: [{ "name": "favoriteId" }, { "name": "organization" }, { "name": "project" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    refsFavoritesList: {
+      id: "Refs Favorites_List",
+      method: "GET",
+      path: "/{organization}/{project}/_apis/git/favorites/refs",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }, {
+        "name": "identityId",
+        "style": "form",
+        "explode": true,
+      }, { "name": "repositoryId", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    refsList: {
+      id: "Refs_List",
+      method: "GET",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/refs",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [
+        { "name": "$top", "style": "form", "explode": true },
+        { "name": "api-version", "style": "form", "explode": true },
+        { "name": "continuationToken", "style": "form", "explode": true },
+        { "name": "filter", "style": "form", "explode": true },
+        { "name": "filterContains", "style": "form", "explode": true },
+        { "name": "includeLinks", "style": "form", "explode": true },
+        { "name": "includeMyBranches", "style": "form", "explode": true },
+        { "name": "includeStatuses", "style": "form", "explode": true },
+        { "name": "includeTargetBranches", "style": "form", "explode": true },
+        { "name": "latestStatusesOnly", "style": "form", "explode": true },
+        { "name": "peelTags", "style": "form", "explode": true },
+      ],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    refsUpdateRef: {
+      id: "Refs_Update Ref",
+      method: "PATCH",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/refs",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }, {
+        "name": "filter",
+        "style": "form",
+        "explode": true,
+      }, { "name": "projectId", "style": "form", "explode": true }],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code_write"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    refsUpdateRefs: {
+      id: "Refs_Update Refs",
+      method: "POST",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/refs",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }, {
+        "name": "projectId",
+        "style": "form",
+        "explode": true,
+      }],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code_write"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    repositoriesCreate: {
+      id: "Repositories_Create",
+      method: "POST",
+      path: "/{organization}/{project}/_apis/git/repositories",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }, {
+        "name": "sourceRef",
+        "style": "form",
+        "explode": true,
+      }],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code_manage"] }],
+      responses: [{
+        "status": 201,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    repositoriesDelete: {
+      id: "Repositories_Delete",
+      method: "DELETE",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code_manage"] }],
+      responses: [{ "status": 200, "mediaTypes": [] }],
+    },
+    repositoriesDeleteRepositoryFromRecycleBin: {
+      id: "Repositories_Delete Repository From Recycle Bin",
+      method: "DELETE",
+      path: "/{organization}/{project}/_apis/git/recycleBin/repositories/{repositoryId}",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code_manage"] }],
+      responses: [{ "status": 200, "mediaTypes": [] }],
+    },
+    repositoriesGetDeletedRepositories: {
+      id: "Repositories_Get Deleted Repositories",
+      method: "GET",
+      path: "/{organization}/{project}/_apis/git/deletedrepositories",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    repositoriesGetRecycleBinRepositories: {
+      id: "Repositories_Get Recycle Bin Repositories",
+      method: "GET",
+      path: "/{organization}/{project}/_apis/git/recycleBin/repositories",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    repositoriesGetRepository: {
+      id: "Repositories_Get Repository",
+      method: "GET",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    repositoriesGetRepositoryWithParent: {
+      id: "Repositories_Get Repository With Parent",
+      method: "GET",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }, {
+        "name": "includeParent",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    repositoriesList: {
+      id: "Repositories_List",
+      method: "GET",
+      path: "/{organization}/{project}/_apis/git/repositories",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }],
+      queryParameters: [
+        { "name": "api-version", "style": "form", "explode": true },
+        { "name": "includeAllUrls", "style": "form", "explode": true },
+        { "name": "includeHidden", "style": "form", "explode": true },
+        { "name": "includeLinks", "style": "form", "explode": true },
+      ],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    repositoriesRestoreRepositoryFromRecycleBin: {
+      id: "Repositories_Restore Repository From Recycle Bin",
+      method: "PATCH",
+      path: "/{organization}/{project}/_apis/git/recycleBin/repositories/{repositoryId}",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code_manage"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    repositoriesUpdate: {
+      id: "Repositories_Update",
+      method: "PATCH",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code_manage"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    revertsCreate: {
+      id: "Reverts_Create",
+      method: "POST",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/reverts",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code_manage"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    revertsGetRevert: {
+      id: "Reverts_Get Revert",
+      method: "GET",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/reverts/{revertId}",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }, { "name": "revertId" }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    revertsGetRevertForRefName: {
+      id: "Reverts_Get Revert For Ref Name",
+      method: "GET",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/reverts",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }, {
+        "name": "refName",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    statsGet: {
+      id: "Stats_Get",
+      method: "GET",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/stats/branches",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [
+        { "name": "api-version", "style": "form", "explode": true },
+        { "name": "baseVersionDescriptor.version", "style": "form", "explode": true },
+        { "name": "baseVersionDescriptor.versionOptions", "style": "form", "explode": true },
+        { "name": "baseVersionDescriptor.versionType", "style": "form", "explode": true },
+        { "name": "name", "style": "form", "explode": true },
+      ],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    statsList: {
+      id: "Stats_List",
+      method: "GET",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/stats/branches",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [
+        { "name": "api-version", "style": "form", "explode": true },
+        { "name": "baseVersionDescriptor.version", "style": "form", "explode": true },
+        { "name": "baseVersionDescriptor.versionOptions", "style": "form", "explode": true },
+        { "name": "baseVersionDescriptor.versionType", "style": "form", "explode": true },
+      ],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    statusesCreate: {
+      id: "Statuses_Create",
+      method: "POST",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/commits/{commitId}/statuses",
+      pathParameters: [{ "name": "commitId" }, { "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }],
+      requestMediaTypes: ["application/json"],
+      security: [{ "oauth2": ["vso.code_status", "vso.code_write"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    statusesList: {
+      id: "Statuses_List",
+      method: "GET",
+      path:
+        "/{organization}/{project}/_apis/git/repositories/{repositoryId}/commits/{commitId}/statuses",
+      pathParameters: [{ "name": "commitId" }, { "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [
+        { "name": "api-version", "style": "form", "explode": true },
+        { "name": "latestOnly", "style": "form", "explode": true },
+        { "name": "skip", "style": "form", "explode": true },
+        { "name": "top", "style": "form", "explode": true },
+      ],
+      security: [{ "oauth2": ["vso.code", "vso.code_status"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    suggestionsList: {
+      id: "Suggestions_List",
+      method: "GET",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/suggestions",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }],
+      queryParameters: [{ "name": "api-version", "style": "form", "explode": true }, {
+        "name": "preferCompareBranch",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    treesGet: {
+      id: "Trees_Get",
+      method: "GET",
+      path: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/trees/{sha1}",
+      pathParameters: [{ "name": "organization" }, { "name": "project" }, {
+        "name": "repositoryId",
+      }, { "name": "sha1" }],
+      queryParameters: [
+        { "name": "$format", "style": "form", "explode": true },
+        { "name": "api-version", "style": "form", "explode": true },
+        { "name": "fileName", "style": "form", "explode": true },
+        { "name": "projectId", "style": "form", "explode": true },
+        { "name": "recursive", "style": "form", "explode": true },
+      ],
+      security: [{ "oauth2": ["vso.code"] }],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json", "application/zip"],
+        "decoders": { "application/json": "json", "application/zip": "binary" },
+      }],
+    },
+  } as const satisfies Readonly<Record<string, RestOperation>>,
+);
+
+/** Native-Fetch Azure DevOps REST client. */
+export class AzureDevOpsRestClient {
+  static get servers(): typeof azureDevOpsServers {
+    return azureDevOpsServers;
+  }
+
+  static get securitySchemes(): typeof azureDevOpsSecuritySchemes {
+    return azureDevOpsSecuritySchemes;
+  }
+
+  /** Shared transport and raw-request escape hatch. */
+  readonly rest: RestClient;
+
+  constructor(options: RestClientOptions | RestClient) {
+    this.rest = options instanceof RestClient ? options : new RestClient(options);
+  }
+
+  /**
+   * Create an annotated tag.
+   *
+   * Repositories have both a name and an identifier. Identifiers are globally unique, but several projects
+   * may contain a repository of the same name. You don't need to include the project if you specify a
+   * repository by ID. However, if you specify a repository by name, you must also specify the project (by name or ID).
+   *
+   * @operationId Annotated Tags_Create
+   * @category Annotated Tags
+   */
+  annotatedTagsCreate(
+    input: AnnotatedTagsCreateInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<AnnotatedTagsCreateResponse> {
+    return this.rest.request<AnnotatedTagsCreateResponse>(
+      azureDevOpsOperations.annotatedTagsCreate,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get an annotated tag.
+   *
+   * Repositories have both a name and an identifier. Identifiers are globally unique, but several projects
+   * may contain a repository of the same name. You don't need to include the project if you specify a
+   * repository by ID. However, if you specify a repository by name, you must also specify the project (by name or ID).
+   *
+   * @operationId Annotated Tags_Get
+   * @category Annotated Tags
+   */
+  annotatedTagsGet(
+    input: AnnotatedTagsGetInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<AnnotatedTagsGetResponse> {
+    return this.rest.request<AnnotatedTagsGetResponse>(
+      azureDevOpsOperations.annotatedTagsGet,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a single blob.
+   *
+   * Repositories have both a name and an identifier. Identifiers are globally unique,
+   * but several projects may contain a repository of the same name. You don't need to include
+   * the project if you specify a repository by ID. However, if you specify a repository by name,
+   * you must also specify the project (by name or ID).
+   *
+   * @operationId Blobs_Get Blob
+   * @category Blobs
+   */
+  blobsGetBlob(
+    input: BlobsGetBlobInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<BlobsGetBlobResponse> {
+    return this.rest.request<BlobsGetBlobResponse>(
+      azureDevOpsOperations.blobsGetBlob,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Gets one or more blobs in a zip file download.
+   *
+   * @operationId Blobs_Get Blobs Zip
+   * @category Blobs
+   */
+  blobsGetBlobsZip(
+    input: BlobsGetBlobsZipInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<BlobsGetBlobsZipResponse> {
+    return this.rest.request<BlobsGetBlobsZipResponse>(
+      azureDevOpsOperations.blobsGetBlobsZip,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Cherry pick a specific commit or commits that are associated to a pull request into a new branch.
+   *
+   * @operationId Cherry Picks_Create
+   * @category Cherry Picks
+   */
+  cherryPicksCreate(
+    input: CherryPicksCreateInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<CherryPicksCreateResponse> {
+    return this.rest.request<CherryPicksCreateResponse>(
+      azureDevOpsOperations.cherryPicksCreate,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieve information about a cherry pick operation by cherry pick Id.
+   *
+   * @operationId Cherry Picks_Get Cherry Pick
+   * @category Cherry Picks
+   */
+  cherryPicksGetCherryPick(
+    input: CherryPicksGetCherryPickInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<CherryPicksGetCherryPickResponse> {
+    return this.rest.request<CherryPicksGetCherryPickResponse>(
+      azureDevOpsOperations.cherryPicksGetCherryPick,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieve information about a cherry pick operation for a specific branch. This operation is expensive due to the underlying object structure, so this API only looks at the 1000 most recent cherry pick operations.
+   *
+   * @operationId Cherry Picks_Get Cherry Pick For Ref Name
+   * @category Cherry Picks
+   */
+  cherryPicksGetCherryPickForRefName(
+    input: CherryPicksGetCherryPickForRefNameInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<CherryPicksGetCherryPickForRefNameResponse> {
+    return this.rest.request<CherryPicksGetCherryPickForRefNameResponse>(
+      azureDevOpsOperations.cherryPicksGetCherryPickForRefName,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieve a particular commit.
+   *
+   * @operationId Commits_Get
+   * @category Commits
+   */
+  commitsGet(
+    input: CommitsGetInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<CommitsGetResponse> {
+    return this.rest.request<CommitsGetResponse>(azureDevOpsOperations.commitsGet, input, options);
+  }
+
+  /**
+   * Retrieve changes for a particular commit.
+   *
+   * @operationId Commits_Get Changes
+   * @category Commits
+   */
+  commitsGetChanges(
+    input: CommitsGetChangesInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<CommitsGetChangesResponse> {
+    return this.rest.request<CommitsGetChangesResponse>(
+      azureDevOpsOperations.commitsGetChanges,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieve git commits for a project
+   *
+   * Parameters that use the searchCriteria prefix in their name can be specified without it as query parameters, e.g. searchCriteria.$top -> $top
+   *
+   * @operationId Commits_Get Commits
+   * @category Commits
+   */
+  commitsGetCommits(
+    input: CommitsGetCommitsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<CommitsGetCommitsResponse> {
+    return this.rest.request<CommitsGetCommitsResponse>(
+      azureDevOpsOperations.commitsGetCommits,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieve git commits for a project matching the search criteria
+   *
+   * @operationId Commits_Get Commits Batch
+   * @category Commits
+   */
+  commitsGetCommitsBatch(
+    input: CommitsGetCommitsBatchInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<CommitsGetCommitsBatchResponse> {
+    return this.rest.request<CommitsGetCommitsBatchResponse>(
+      azureDevOpsOperations.commitsGetCommitsBatch,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieve a list of commits associated with a particular push.
+   *
+   * @operationId Commits_Get Push Commits
+   * @category Commits
+   */
+  commitsGetPushCommits(
+    input: CommitsGetPushCommitsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<CommitsGetPushCommitsResponse> {
+    return this.rest.request<CommitsGetPushCommitsResponse>(
+      azureDevOpsOperations.commitsGetPushCommits,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Find the closest common commit (the merge base) between base and target commits, and get the diff between either the base and target commits or common and target commits.
+   *
+   * @operationId Diffs_Get
+   * @category Diffs
+   */
+  diffsGet(
+    input: DiffsGetInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<DiffsGetResponse> {
+    return this.rest.request<DiffsGetResponse>(azureDevOpsOperations.diffsGet, input, options);
+  }
+
+  /**
+   * Request that another repository's refs be fetched into this one. It syncs two existing forks. To create a fork, please see the <a href="https://docs.microsoft.com/en-us/rest/api/vsts/git/repositories/create?view=azure-devops-rest-5.1"> repositories endpoint</a>
+   *
+   * @operationId Forks_Create fork sync request
+   * @category Forks
+   */
+  forksCreateForkSyncRequest(
+    input: ForksCreateForkSyncRequestInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<ForksCreateForkSyncRequestResponse> {
+    return this.rest.request<ForksCreateForkSyncRequestResponse>(
+      azureDevOpsOperations.forksCreateForkSyncRequest,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a specific fork sync operation's details.
+   *
+   * @operationId Forks_Get fork sync request
+   * @category Forks
+   */
+  forksGetForkSyncRequest(
+    input: ForksGetForkSyncRequestInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<ForksGetForkSyncRequestResponse> {
+    return this.rest.request<ForksGetForkSyncRequestResponse>(
+      azureDevOpsOperations.forksGetForkSyncRequest,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieve all requested fork sync operations on this repository.
+   *
+   * @operationId Forks_Get Fork Sync Requests
+   * @category Forks
+   */
+  forksGetForkSyncRequests(
+    input: ForksGetForkSyncRequestsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<ForksGetForkSyncRequestsResponse> {
+    return this.rest.request<ForksGetForkSyncRequestsResponse>(
+      azureDevOpsOperations.forksGetForkSyncRequests,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieve all forks of a repository in the collection.
+   *
+   * @operationId Forks_List
+   * @category Forks
+   */
+  forksList(
+    input: ForksListInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<ForksListResponse> {
+    return this.rest.request<ForksListResponse>(azureDevOpsOperations.forksList, input, options);
+  }
+
+  /**
+   * Create an import request.
+   *
+   * @operationId Import Requests_Create
+   * @category Import Requests
+   */
+  importRequestsCreate(
+    input: ImportRequestsCreateInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<ImportRequestsCreateResponse> {
+    return this.rest.request<ImportRequestsCreateResponse>(
+      azureDevOpsOperations.importRequestsCreate,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieve a particular import request.
+   *
+   * @operationId Import Requests_Get
+   * @category Import Requests
+   */
+  importRequestsGet(
+    input: ImportRequestsGetInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<ImportRequestsGetResponse> {
+    return this.rest.request<ImportRequestsGetResponse>(
+      azureDevOpsOperations.importRequestsGet,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieve import requests for a repository.
+   *
+   * @operationId Import Requests_Query
+   * @category Import Requests
+   */
+  importRequestsQuery(
+    input: ImportRequestsQueryInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<ImportRequestsQueryResponse> {
+    return this.rest.request<ImportRequestsQueryResponse>(
+      azureDevOpsOperations.importRequestsQuery,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retry or abandon a failed import request.
+   *
+   * There can only be one active import request associated with a repository. Marking a failed import request abandoned makes it inactive.
+   *
+   * @operationId Import Requests_Update
+   * @category Import Requests
+   */
+  importRequestsUpdate(
+    input: ImportRequestsUpdateInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<ImportRequestsUpdateResponse> {
+    return this.rest.request<ImportRequestsUpdateResponse>(
+      azureDevOpsOperations.importRequestsUpdate,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get Item Metadata and/or Content for a single item. The download parameter is to indicate whether the content should be available as a download or just sent as a stream in the response. Doesn't apply to zipped content, which is always returned as a download.
+   *
+   * @operationId Items_Get
+   * @category Items
+   */
+  itemsGet(
+    input: ItemsGetInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<ItemsGetResponse> {
+    return this.rest.request<ItemsGetResponse>(azureDevOpsOperations.itemsGet, input, options);
+  }
+
+  /**
+   * Retrieves a batch of items in a repo / project for a given list of paths or a long path
+   *
+   * @operationId Items_Get Items Batch
+   * @category Items
+   */
+  itemsGetItemsBatch(
+    input: ItemsGetItemsBatchInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<ItemsGetItemsBatchResponse> {
+    return this.rest.request<ItemsGetItemsBatchResponse>(
+      azureDevOpsOperations.itemsGetItemsBatch,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get Item Metadata and/or Content for a collection of items. The download parameter is to indicate whether the content should be available as a download or just sent as a stream in the response. Doesn't apply to zipped content which is always returned as a download.
+   *
+   * @operationId Items_List
+   * @category Items
+   */
+  itemsList(
+    input: ItemsListInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<ItemsListResponse> {
+    return this.rest.request<ItemsListResponse>(azureDevOpsOperations.itemsList, input, options);
+  }
+
+  /**
+   * Find the merge bases of two commits, optionally across forks. If otherRepositoryId is not specified, the merge bases will only be calculated within the context of the local repositoryNameOrId.
+   *
+   * @operationId Merge Bases_List
+   * @category Merge Bases
+   */
+  mergeBasesList(
+    input: MergeBasesListInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<MergeBasesListResponse> {
+    return this.rest.request<MergeBasesListResponse>(
+      azureDevOpsOperations.mergeBasesList,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Request a git merge operation. Currently we support merging only 2 commits.
+   *
+   * @operationId Merges_Create
+   * @category Merges
+   */
+  mergesCreate(
+    input: MergesCreateInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<MergesCreateResponse> {
+    return this.rest.request<MergesCreateResponse>(
+      azureDevOpsOperations.mergesCreate,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a specific merge operation's details.
+   *
+   * @operationId Merges_Get
+   * @category Merges
+   */
+  mergesGet(
+    input: MergesGetInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<MergesGetResponse> {
+    return this.rest.request<MergesGetResponse>(azureDevOpsOperations.mergesGet, input, options);
+  }
+
+  /**
+   * Retrieve a list of policy configurations by a given set of scope/filtering criteria.
+   *
+   * Azure Repos uses two types of policies to protect your code:
+   *
+   *  **Repository policies (push policies)** check every push to your repository. They validate things like file size limits, path restrictions, or commit requirements.  When someone pushes code that violates these rules, the push gets rejected - no matter which branch they're pushing to.
+   *
+   *  **Branch policies (PR policies)** protect specific branches by requiring pull requests.  When you set a branch policy on `main`, for example, nobody can push directly to `main` anymore. They must create a pull request instead, which can then require reviews, builds, or other checks to pass first.
+   *
+   *  ## How Policies Work with Your Project Structure
+   *
+   *  Both types of policies can be defined at different levels in your project hierarchy.  A policy defined at the project level affects all repositories in that project.  A policy defined at the repository level affects just that repository. A branch policy can even be defined at the project level to protect all branches with the same name - like protecting all `main` branches across your entire project with one policy.
+   *
+   *  ### Branch Patterns and Wildcards
+   *
+   *  Branches in Git follow a folder-like structure. You might have branches like:
+   *
+   *  - `refs/heads/main`
+   *  - `refs/heads/releases/1.0.0`
+   *  - `refs/heads/releases/2.0.0`
+   *  - `refs/heads/features/new-login`
+   *
+   *  You can create policies for specific branches or for groups of branches using wildcards. When you create a policy for `refs/heads/releases/*`, it protects all branches in the `releases` "folder" - both the ones that exist now and any new release branches you create later.  This pattern matching works recursively, so `refs/heads/releases/*` also covers branches like `refs/heads/releases/v1/hotfix`.
+   *
+   *  This helps you set up consistent protection without creating the same policy over and over. For example, you can require two reviewers for all release branches with just one policy.
+   *
+   *  ## Understanding Policy Inheritance
+   *
+   *  When you query for policies, this endpoint shows you what policies are actually enforcing rules at your specified scope. This includes policies inherited from higher levels. For example, if you query for policies on a specific branch, you get:
+   *
+   *  - Branch policies for that exact branch
+   *  - Branch policies with wildcards that match your branch
+   *  - Repository policies for that repo
+   *  - Any applicable project-level policies
+   *
+   *  Everything that protects that branch shows up in your results.
+   *
+   *  ## How to Query for Policies
+   *
+   *  The `repositoryId` and `refName` parameters let you focus on specific parts of your project. Here's what you get with different combinations:
+   *
+   *  **Both `repositoryId` and `refName` specified:**
+   *
+   *  - When `refName` is a specific branch name: You see all policies affecting that specific branch.  This includes exact branch policies, wildcard branch policies that match, repository policies for that repo, and any project-level policies.
+   *  - When `refName` is `~all`: You see every policy that affects any branch in that repository. This special value gives you the same results as if you called this API once for every single branch in the repo and then combined all the results (removing duplicates). You get all branch-specific policies, all wildcard policies, all repository policies, and all inherited project-level policies that apply to this repository.  This helps you see the complete picture of what protects all your branches without making multiple API calls.
+   *
+   *  **Only `repositoryId` specified:** You see policies that apply to the repository as a whole - repository policies and inherited project-level repository policies. Branch policies aren't included because they don't affect the whole repository.
+   *
+   *  **Neither parameter specified:** You see only project-level repository policies. Branch policies defined at the project level aren't included, even though they exist at the project level. This happens because branch policies need a branch context to be meaningful - without specifying a repository or branch name, the API only returns policies that apply to repositories as a whole.
+   *
+   *  **Only `refName` specified:** You see project-level branch policies for branches with that name (like all `main` branch policies defined at project level), plus project-level repository policies.
+   *
+   *  You can add the `policyType` parameter to filter for a specific type of policy, such as "Minimum number of reviewers" or "File size restriction". This parameter accepts the policy type ID and filters the results to show only that specific policy type.
+   *
+   *  ## Common Scenarios
+   *
+   *  - **"What protects my main branch?"** - Use `repositoryId` + `refName=refs/heads/main`
+   *  - **"What protects all my release branches?"** - Use `repositoryId` + `refName=refs/heads/releases/*`
+   *  - **"Show me every policy that affects any branch in this repository"** - Use `repositoryId` + `refName=~all`
+   *  - **"What repository policies apply to this repo?"** - Use `repositoryId` only
+   *  - **"What file size limits apply to this repository?"** - Use `repositoryId` with the `policyType` for file size restrictions
+   *  - **"What project-wide repository policies do we have?"** - Don't specify `repositoryId` or `refName`
+   *  - **"Which policies apply to develop branches across all repositories?"** - Use `refName=refs/heads/develop`
+   *
+   * @operationId Policy Configurations_Get
+   * @category Policy Configurations
+   */
+  policyConfigurationsGet(
+    input: PolicyConfigurationsGetInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PolicyConfigurationsGetResponse> {
+    return this.rest.request<PolicyConfigurationsGetResponse>(
+      azureDevOpsOperations.policyConfigurationsGet,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Attach a new file to a pull request.
+   *
+   * @operationId Pull Request Attachments_Create
+   * @category Pull Request Attachments
+   */
+  pullRequestAttachmentsCreate(
+    input: PullRequestAttachmentsCreateInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestAttachmentsCreateResponse> {
+    return this.rest.request<PullRequestAttachmentsCreateResponse>(
+      azureDevOpsOperations.pullRequestAttachmentsCreate,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a pull request attachment.
+   *
+   * @operationId Pull Request Attachments_Delete
+   * @category Pull Request Attachments
+   */
+  pullRequestAttachmentsDelete(
+    input: PullRequestAttachmentsDeleteInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestAttachmentsDeleteResponse> {
+    return this.rest.request<PullRequestAttachmentsDeleteResponse>(
+      azureDevOpsOperations.pullRequestAttachmentsDelete,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get the file content of a pull request attachment.
+   *
+   * @operationId Pull Request Attachments_Get
+   * @category Pull Request Attachments
+   */
+  pullRequestAttachmentsGet(
+    input: PullRequestAttachmentsGetInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestAttachmentsGetResponse> {
+    return this.rest.request<PullRequestAttachmentsGetResponse>(
+      azureDevOpsOperations.pullRequestAttachmentsGet,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a list of files attached to a given pull request.
+   *
+   * @operationId Pull Request Attachments_List
+   * @category Pull Request Attachments
+   */
+  pullRequestAttachmentsList(
+    input: PullRequestAttachmentsListInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestAttachmentsListResponse> {
+    return this.rest.request<PullRequestAttachmentsListResponse>(
+      azureDevOpsOperations.pullRequestAttachmentsList,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Add a like on a comment.
+   *
+   * @operationId Pull Request Comment Likes_Create
+   * @category Pull Request Comment Likes
+   */
+  pullRequestCommentLikesCreate(
+    input: PullRequestCommentLikesCreateInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestCommentLikesCreateResponse> {
+    return this.rest.request<PullRequestCommentLikesCreateResponse>(
+      azureDevOpsOperations.pullRequestCommentLikesCreate,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a like on a comment.
+   *
+   * @operationId Pull Request Comment Likes_Delete
+   * @category Pull Request Comment Likes
+   */
+  pullRequestCommentLikesDelete(
+    input: PullRequestCommentLikesDeleteInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestCommentLikesDeleteResponse> {
+    return this.rest.request<PullRequestCommentLikesDeleteResponse>(
+      azureDevOpsOperations.pullRequestCommentLikesDelete,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get likes for a comment.
+   *
+   * @operationId Pull Request Comment Likes_List
+   * @category Pull Request Comment Likes
+   */
+  pullRequestCommentLikesList(
+    input: PullRequestCommentLikesListInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestCommentLikesListResponse> {
+    return this.rest.request<PullRequestCommentLikesListResponse>(
+      azureDevOpsOperations.pullRequestCommentLikesList,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get the commits for the specified pull request.
+   *
+   * @operationId Pull Request Commits_Get Pull Request Commits
+   * @category Pull Request Commits
+   */
+  pullRequestCommitsGetPullRequestCommits(
+    input: PullRequestCommitsGetPullRequestCommitsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestCommitsGetPullRequestCommitsResponse> {
+    return this.rest.request<PullRequestCommitsGetPullRequestCommitsResponse>(
+      azureDevOpsOperations.pullRequestCommitsGetPullRequestCommits,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get the commits for the specified iteration of a pull request.
+   *
+   * @operationId Pull Request Commits_Get Pull Request Iteration Commits
+   * @category Pull Request Commits
+   */
+  pullRequestCommitsGetPullRequestIterationCommits(
+    input: PullRequestCommitsGetPullRequestIterationCommitsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestCommitsGetPullRequestIterationCommitsResponse> {
+    return this.rest.request<PullRequestCommitsGetPullRequestIterationCommitsResponse>(
+      azureDevOpsOperations.pullRequestCommitsGetPullRequestIterationCommits,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieve the changes made in a pull request between two iterations.
+   *
+   * @operationId Pull Request Iteration Changes_Get
+   * @category Pull Request Iteration Changes
+   */
+  pullRequestIterationChangesGet(
+    input: PullRequestIterationChangesGetInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestIterationChangesGetResponse> {
+    return this.rest.request<PullRequestIterationChangesGetResponse>(
+      azureDevOpsOperations.pullRequestIterationChangesGet,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create a pull request status on the iteration. This operation will have the same result as Create status on pull request with specified iteration ID in the request body.
+   *
+   * The only required field for the status is `Context.Name` that uniquely identifies the status.
+   * Note that `iterationId` in the request body is optional since `iterationId` can be specified in the URL.
+   * A conflict between `iterationId` in the URL and `iterationId` in the request body will result in status code 400.
+   *
+   * @operationId Pull Request Iteration Statuses_Create
+   * @category Pull Request Iteration Statuses
+   */
+  pullRequestIterationStatusesCreate(
+    input: PullRequestIterationStatusesCreateInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestIterationStatusesCreateResponse> {
+    return this.rest.request<PullRequestIterationStatusesCreateResponse>(
+      azureDevOpsOperations.pullRequestIterationStatusesCreate,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete pull request iteration status.
+   *
+   * You can remove multiple statuses in one call by using Update operation.
+   *
+   * @operationId Pull Request Iteration Statuses_Delete
+   * @category Pull Request Iteration Statuses
+   */
+  pullRequestIterationStatusesDelete(
+    input: PullRequestIterationStatusesDeleteInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestIterationStatusesDeleteResponse> {
+    return this.rest.request<PullRequestIterationStatusesDeleteResponse>(
+      azureDevOpsOperations.pullRequestIterationStatusesDelete,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get the specific pull request iteration status by ID. The status ID is unique within the pull request across all iterations.
+   *
+   * @operationId Pull Request Iteration Statuses_Get
+   * @category Pull Request Iteration Statuses
+   */
+  pullRequestIterationStatusesGet(
+    input: PullRequestIterationStatusesGetInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestIterationStatusesGetResponse> {
+    return this.rest.request<PullRequestIterationStatusesGetResponse>(
+      azureDevOpsOperations.pullRequestIterationStatusesGet,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get all the statuses associated with a pull request iteration.
+   *
+   * @operationId Pull Request Iteration Statuses_List
+   * @category Pull Request Iteration Statuses
+   */
+  pullRequestIterationStatusesList(
+    input: PullRequestIterationStatusesListInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestIterationStatusesListResponse> {
+    return this.rest.request<PullRequestIterationStatusesListResponse>(
+      azureDevOpsOperations.pullRequestIterationStatusesList,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Update pull request iteration statuses collection. The only supported operation type is `remove`.
+   *
+   * This operation allows to delete multiple statuses in one call.
+   * The path of the `remove` operation should refer to the ID of the pull request status.
+   * For example `path="/1"` refers to the pull request status with ID 1.
+   *
+   * @operationId Pull Request Iteration Statuses_Update
+   * @category Pull Request Iteration Statuses
+   */
+  pullRequestIterationStatusesUpdate(
+    input: PullRequestIterationStatusesUpdateInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestIterationStatusesUpdateResponse> {
+    return this.rest.request<PullRequestIterationStatusesUpdateResponse>(
+      azureDevOpsOperations.pullRequestIterationStatusesUpdate,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get the specified iteration for a pull request.
+   *
+   * @operationId Pull Request Iterations_Get
+   * @category Pull Request Iterations
+   */
+  pullRequestIterationsGet(
+    input: PullRequestIterationsGetInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestIterationsGetResponse> {
+    return this.rest.request<PullRequestIterationsGetResponse>(
+      azureDevOpsOperations.pullRequestIterationsGet,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get the list of iterations for the specified pull request.
+   *
+   * @operationId Pull Request Iterations_List
+   * @category Pull Request Iterations
+   */
+  pullRequestIterationsList(
+    input: PullRequestIterationsListInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestIterationsListResponse> {
+    return this.rest.request<PullRequestIterationsListResponse>(
+      azureDevOpsOperations.pullRequestIterationsList,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create a tag (if that does not exists yet) and add that as a label (tag) for a specified pull request. The only required field is the name of the new label (tag).
+   *
+   * @operationId Pull Request Labels_Create
+   * @category Pull Request Labels
+   */
+  pullRequestLabelsCreate(
+    input: PullRequestLabelsCreateInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestLabelsCreateResponse> {
+    return this.rest.request<PullRequestLabelsCreateResponse>(
+      azureDevOpsOperations.pullRequestLabelsCreate,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Removes a label (tag) from the set of those assigned to the pull request. The tag itself will not be deleted.
+   *
+   * @operationId Pull Request Labels_Delete
+   * @category Pull Request Labels
+   */
+  pullRequestLabelsDelete(
+    input: PullRequestLabelsDeleteInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestLabelsDeleteResponse> {
+    return this.rest.request<PullRequestLabelsDeleteResponse>(
+      azureDevOpsOperations.pullRequestLabelsDelete,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieves a single label (tag) that has been assigned to a pull request.
+   *
+   * @operationId Pull Request Labels_Get
+   * @category Pull Request Labels
+   */
+  pullRequestLabelsGet(
+    input: PullRequestLabelsGetInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestLabelsGetResponse> {
+    return this.rest.request<PullRequestLabelsGetResponse>(
+      azureDevOpsOperations.pullRequestLabelsGet,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get all the labels (tags) assigned to a pull request.
+   *
+   * @operationId Pull Request Labels_List
+   * @category Pull Request Labels
+   */
+  pullRequestLabelsList(
+    input: PullRequestLabelsListInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestLabelsListResponse> {
+    return this.rest.request<PullRequestLabelsListResponse>(
+      azureDevOpsOperations.pullRequestLabelsList,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get external properties of the pull request.
+   *
+   * @operationId Pull Request Properties_List
+   * @category Pull Request Properties
+   */
+  pullRequestPropertiesList(
+    input: PullRequestPropertiesListInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestPropertiesListResponse> {
+    return this.rest.request<PullRequestPropertiesListResponse>(
+      azureDevOpsOperations.pullRequestPropertiesList,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create or update pull request external properties. The patch operation can be `add`, `replace` or `remove`. For `add` operation, the path can be empty. If the path is empty, the value must be a list of key value pairs. For `replace` operation, the path cannot be empty. If the path does not exist, the property will be added to the collection. For `remove` operation, the path cannot be empty. If the path does not exist, no action will be performed.
+   *
+   * @operationId Pull Request Properties_Update
+   * @category Pull Request Properties
+   */
+  pullRequestPropertiesUpdate(
+    input: PullRequestPropertiesUpdateInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestPropertiesUpdateResponse> {
+    return this.rest.request<PullRequestPropertiesUpdateResponse>(
+      azureDevOpsOperations.pullRequestPropertiesUpdate,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * This API is used to find what pull requests are related to a given commit.  It can be used to either find the pull request that created a particular merge commit or it can be used to find all pull requests that have ever merged a particular commit.  The input is a list of queries which each contain a list of commits. For each commit that you search against, you will get back a dictionary of commit -> pull requests.
+   *
+   * @operationId Pull Request Query_Get
+   * @category Pull Request Query
+   */
+  pullRequestQueryGet(
+    input: PullRequestQueryGetInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestQueryGetResponse> {
+    return this.rest.request<PullRequestQueryGetResponse>(
+      azureDevOpsOperations.pullRequestQueryGet,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Add a reviewer to a pull request or cast a vote.
+   *
+   * @operationId Pull Request Reviewers_Create Pull Request Reviewer
+   * @category Pull Request Reviewers
+   */
+  pullRequestReviewersCreatePullRequestReviewer(
+    input: PullRequestReviewersCreatePullRequestReviewerInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestReviewersCreatePullRequestReviewerResponse> {
+    return this.rest.request<PullRequestReviewersCreatePullRequestReviewerResponse>(
+      azureDevOpsOperations.pullRequestReviewersCreatePullRequestReviewer,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Add reviewers to a pull request.
+   *
+   * @operationId Pull Request Reviewers_Create Pull Request Reviewers
+   * @category Pull Request Reviewers
+   */
+  pullRequestReviewersCreatePullRequestReviewers(
+    input: PullRequestReviewersCreatePullRequestReviewersInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestReviewersCreatePullRequestReviewersResponse> {
+    return this.rest.request<PullRequestReviewersCreatePullRequestReviewersResponse>(
+      azureDevOpsOperations.pullRequestReviewersCreatePullRequestReviewers,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Add an unmaterialized identity to the reviewers of a pull request.
+   *
+   * @operationId Pull Request Reviewers_Create Unmaterialized Pull Request Reviewer
+   * @category Pull Request Reviewers
+   */
+  pullRequestReviewersCreateUnmaterializedPullRequestReviewer(
+    input: PullRequestReviewersCreateUnmaterializedPullRequestReviewerInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestReviewersCreateUnmaterializedPullRequestReviewerResponse> {
+    return this.rest.request<PullRequestReviewersCreateUnmaterializedPullRequestReviewerResponse>(
+      azureDevOpsOperations.pullRequestReviewersCreateUnmaterializedPullRequestReviewer,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Remove a reviewer from a pull request.
+   *
+   * @operationId Pull Request Reviewers_Delete
+   * @category Pull Request Reviewers
+   */
+  pullRequestReviewersDelete(
+    input: PullRequestReviewersDeleteInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestReviewersDeleteResponse> {
+    return this.rest.request<PullRequestReviewersDeleteResponse>(
+      azureDevOpsOperations.pullRequestReviewersDelete,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieve information about a particular reviewer on a pull request
+   *
+   * @operationId Pull Request Reviewers_Get
+   * @category Pull Request Reviewers
+   */
+  pullRequestReviewersGet(
+    input: PullRequestReviewersGetInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestReviewersGetResponse> {
+    return this.rest.request<PullRequestReviewersGetResponse>(
+      azureDevOpsOperations.pullRequestReviewersGet,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieve the reviewers for a pull request
+   *
+   * @operationId Pull Request Reviewers_List
+   * @category Pull Request Reviewers
+   */
+  pullRequestReviewersList(
+    input: PullRequestReviewersListInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestReviewersListResponse> {
+    return this.rest.request<PullRequestReviewersListResponse>(
+      azureDevOpsOperations.pullRequestReviewersList,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Edit a reviewer entry. These fields are patchable: isFlagged, hasDeclined
+   *
+   * @operationId Pull Request Reviewers_Update Pull Request Reviewer
+   * @category Pull Request Reviewers
+   */
+  pullRequestReviewersUpdatePullRequestReviewer(
+    input: PullRequestReviewersUpdatePullRequestReviewerInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestReviewersUpdatePullRequestReviewerResponse> {
+    return this.rest.request<PullRequestReviewersUpdatePullRequestReviewerResponse>(
+      azureDevOpsOperations.pullRequestReviewersUpdatePullRequestReviewer,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Reset the votes of multiple reviewers on a pull request.  NOTE: This endpoint only supports updating votes, but does not support updating required reviewers (use policy) or display names.
+   *
+   * @operationId Pull Request Reviewers_Update Pull Request Reviewers
+   * @category Pull Request Reviewers
+   */
+  pullRequestReviewersUpdatePullRequestReviewers(
+    input: PullRequestReviewersUpdatePullRequestReviewersInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestReviewersUpdatePullRequestReviewersResponse> {
+    return this.rest.request<PullRequestReviewersUpdatePullRequestReviewersResponse>(
+      azureDevOpsOperations.pullRequestReviewersUpdatePullRequestReviewers,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Sends an e-mail notification about a specific pull request to a set of recipients
+   *
+   * @operationId Pull Request Share_Share Pull Request
+   * @category Pull Request Share
+   */
+  pullRequestShareSharePullRequest(
+    input: PullRequestShareSharePullRequestInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestShareSharePullRequestResponse> {
+    return this.rest.request<PullRequestShareSharePullRequestResponse>(
+      azureDevOpsOperations.pullRequestShareSharePullRequest,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create a pull request status.
+   *
+   * The only required field for the status is `Context.Name` that uniquely identifies the status.
+   * Note that you can specify iterationId in the request body to post the status on the iteration.
+   *
+   * @operationId Pull Request Statuses_Create
+   * @category Pull Request Statuses
+   */
+  pullRequestStatusesCreate(
+    input: PullRequestStatusesCreateInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestStatusesCreateResponse> {
+    return this.rest.request<PullRequestStatusesCreateResponse>(
+      azureDevOpsOperations.pullRequestStatusesCreate,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete pull request status.
+   *
+   * You can remove multiple statuses in one call by using Update operation.
+   *
+   * @operationId Pull Request Statuses_Delete
+   * @category Pull Request Statuses
+   */
+  pullRequestStatusesDelete(
+    input: PullRequestStatusesDeleteInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestStatusesDeleteResponse> {
+    return this.rest.request<PullRequestStatusesDeleteResponse>(
+      azureDevOpsOperations.pullRequestStatusesDelete,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get the specific pull request status by ID. The status ID is unique within the pull request across all iterations.
+   *
+   * @operationId Pull Request Statuses_Get
+   * @category Pull Request Statuses
+   */
+  pullRequestStatusesGet(
+    input: PullRequestStatusesGetInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestStatusesGetResponse> {
+    return this.rest.request<PullRequestStatusesGetResponse>(
+      azureDevOpsOperations.pullRequestStatusesGet,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get all the statuses associated with a pull request.
+   *
+   * @operationId Pull Request Statuses_List
+   * @category Pull Request Statuses
+   */
+  pullRequestStatusesList(
+    input: PullRequestStatusesListInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestStatusesListResponse> {
+    return this.rest.request<PullRequestStatusesListResponse>(
+      azureDevOpsOperations.pullRequestStatusesList,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Update pull request statuses collection. The only supported operation type is `remove`.
+   *
+   * This operation allows to delete multiple statuses in one call.
+   * The path of the `remove` operation should refer to the ID of the pull request status.
+   * For example `path="/1"` refers to the pull request status with ID 1.
+   *
+   * @operationId Pull Request Statuses_Update
+   * @category Pull Request Statuses
+   */
+  pullRequestStatusesUpdate(
+    input: PullRequestStatusesUpdateInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestStatusesUpdateResponse> {
+    return this.rest.request<PullRequestStatusesUpdateResponse>(
+      azureDevOpsOperations.pullRequestStatusesUpdate,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create a comment on a specific thread in a pull request (up to 500 comments can be created per thread).
+   *
+   * @operationId Pull Request Thread Comments_Create
+   * @category Pull Request Thread Comments
+   */
+  pullRequestThreadCommentsCreate(
+    input: PullRequestThreadCommentsCreateInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestThreadCommentsCreateResponse> {
+    return this.rest.request<PullRequestThreadCommentsCreateResponse>(
+      azureDevOpsOperations.pullRequestThreadCommentsCreate,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a comment associated with a specific thread in a pull request.
+   *
+   * @operationId Pull Request Thread Comments_Delete
+   * @category Pull Request Thread Comments
+   */
+  pullRequestThreadCommentsDelete(
+    input: PullRequestThreadCommentsDeleteInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestThreadCommentsDeleteResponse> {
+    return this.rest.request<PullRequestThreadCommentsDeleteResponse>(
+      azureDevOpsOperations.pullRequestThreadCommentsDelete,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieve a comment associated with a specific thread in a pull request.
+   *
+   * @operationId Pull Request Thread Comments_Get
+   * @category Pull Request Thread Comments
+   */
+  pullRequestThreadCommentsGet(
+    input: PullRequestThreadCommentsGetInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestThreadCommentsGetResponse> {
+    return this.rest.request<PullRequestThreadCommentsGetResponse>(
+      azureDevOpsOperations.pullRequestThreadCommentsGet,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieve all comments associated with a specific thread in a pull request.
+   *
+   * @operationId Pull Request Thread Comments_List
+   * @category Pull Request Thread Comments
+   */
+  pullRequestThreadCommentsList(
+    input: PullRequestThreadCommentsListInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestThreadCommentsListResponse> {
+    return this.rest.request<PullRequestThreadCommentsListResponse>(
+      azureDevOpsOperations.pullRequestThreadCommentsList,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Update a comment associated with a specific thread in a pull request.
+   *
+   * @operationId Pull Request Thread Comments_Update
+   * @category Pull Request Thread Comments
+   */
+  pullRequestThreadCommentsUpdate(
+    input: PullRequestThreadCommentsUpdateInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestThreadCommentsUpdateResponse> {
+    return this.rest.request<PullRequestThreadCommentsUpdateResponse>(
+      azureDevOpsOperations.pullRequestThreadCommentsUpdate,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create a thread in a pull request.
+   *
+   * @operationId Pull Request Threads_Create
+   * @category Pull Request Threads
+   */
+  pullRequestThreadsCreate(
+    input: PullRequestThreadsCreateInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestThreadsCreateResponse> {
+    return this.rest.request<PullRequestThreadsCreateResponse>(
+      azureDevOpsOperations.pullRequestThreadsCreate,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieve a thread in a pull request.
+   *
+   * @operationId Pull Request Threads_Get
+   * @category Pull Request Threads
+   */
+  pullRequestThreadsGet(
+    input: PullRequestThreadsGetInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestThreadsGetResponse> {
+    return this.rest.request<PullRequestThreadsGetResponse>(
+      azureDevOpsOperations.pullRequestThreadsGet,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieve all threads in a pull request.
+   *
+   * @operationId Pull Request Threads_List
+   * @category Pull Request Threads
+   */
+  pullRequestThreadsList(
+    input: PullRequestThreadsListInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestThreadsListResponse> {
+    return this.rest.request<PullRequestThreadsListResponse>(
+      azureDevOpsOperations.pullRequestThreadsList,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Update a thread in a pull request.
+   *
+   * @operationId Pull Request Threads_Update
+   * @category Pull Request Threads
+   */
+  pullRequestThreadsUpdate(
+    input: PullRequestThreadsUpdateInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestThreadsUpdateResponse> {
+    return this.rest.request<PullRequestThreadsUpdateResponse>(
+      azureDevOpsOperations.pullRequestThreadsUpdate,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieve a list of work items associated with a pull request.
+   *
+   * @operationId Pull Request Work Items_List
+   * @category Pull Request Work Items
+   */
+  pullRequestWorkItemsList(
+    input: PullRequestWorkItemsListInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestWorkItemsListResponse> {
+    return this.rest.request<PullRequestWorkItemsListResponse>(
+      azureDevOpsOperations.pullRequestWorkItemsList,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create a pull request.
+   *
+   * @operationId Pull Requests_Create
+   * @category Pull Requests
+   */
+  pullRequestsCreate(
+    input: PullRequestsCreateInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestsCreateResponse> {
+    return this.rest.request<PullRequestsCreateResponse>(
+      azureDevOpsOperations.pullRequestsCreate,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieve a pull request.
+   *
+   * @operationId Pull Requests_Get Pull Request
+   * @category Pull Requests
+   */
+  pullRequestsGetPullRequest(
+    input: PullRequestsGetPullRequestInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestsGetPullRequestResponse> {
+    return this.rest.request<PullRequestsGetPullRequestResponse>(
+      azureDevOpsOperations.pullRequestsGetPullRequest,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieve a pull request.
+   *
+   * @operationId Pull Requests_Get Pull Request By Id
+   * @category Pull Requests
+   */
+  pullRequestsGetPullRequestById(
+    input: PullRequestsGetPullRequestByIdInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestsGetPullRequestByIdResponse> {
+    return this.rest.request<PullRequestsGetPullRequestByIdResponse>(
+      azureDevOpsOperations.pullRequestsGetPullRequestById,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieve all pull requests matching a specified criteria.
+   *
+   * Please note that description field will be truncated up to 400 symbols in the result.
+   *
+   * @operationId Pull Requests_Get Pull Requests
+   * @category Pull Requests
+   */
+  pullRequestsGetPullRequests(
+    input: PullRequestsGetPullRequestsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestsGetPullRequestsResponse> {
+    return this.rest.request<PullRequestsGetPullRequestsResponse>(
+      azureDevOpsOperations.pullRequestsGetPullRequests,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieve all pull requests matching a specified criteria.
+   *
+   * Please note that description field will be truncated up to 400 symbols in the result.
+   *
+   * @operationId Pull Requests_Get Pull Requests By Project
+   * @category Pull Requests
+   */
+  pullRequestsGetPullRequestsByProject(
+    input: PullRequestsGetPullRequestsByProjectInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestsGetPullRequestsByProjectResponse> {
+    return this.rest.request<PullRequestsGetPullRequestsByProjectResponse>(
+      azureDevOpsOperations.pullRequestsGetPullRequestsByProject,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Update a pull request
+   *
+   * These are the properties that can be updated with the API:
+   *  - Status
+   *  - Title
+   *  - Description (up to 4000 characters)
+   *  - CompletionOptions
+   *  - MergeOptions
+   *  - AutoCompleteSetBy.Id
+   *  - TargetRefName (when the PR retargeting feature is enabled)
+   *  Attempting to update other properties outside of this list will either cause the server to throw an `InvalidArgumentValueException`,
+   *  or to silently ignore the update.
+   *
+   * @operationId Pull Requests_Update
+   * @category Pull Requests
+   */
+  pullRequestsUpdate(
+    input: PullRequestsUpdateInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PullRequestsUpdateResponse> {
+    return this.rest.request<PullRequestsUpdateResponse>(
+      azureDevOpsOperations.pullRequestsUpdate,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Push changes to the repository.
+   *
+   * @operationId Pushes_Create
+   * @category Pushes
+   */
+  pushesCreate(
+    input: PushesCreateInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PushesCreateResponse> {
+    return this.rest.request<PushesCreateResponse>(
+      azureDevOpsOperations.pushesCreate,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieves a particular push.
+   *
+   * @operationId Pushes_Get
+   * @category Pushes
+   */
+  pushesGet(
+    input: PushesGetInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PushesGetResponse> {
+    return this.rest.request<PushesGetResponse>(azureDevOpsOperations.pushesGet, input, options);
+  }
+
+  /**
+   * Retrieves pushes associated with the specified repository.
+   *
+   * @operationId Pushes_List
+   * @category Pushes
+   */
+  pushesList(
+    input: PushesListInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PushesListResponse> {
+    return this.rest.request<PushesListResponse>(azureDevOpsOperations.pushesList, input, options);
+  }
+
+  /**
+   * Creates a ref favorite
+   *
+   * @operationId Refs Favorites_Create
+   * @category Refs Favorites
+   */
+  refsFavoritesCreate(
+    input: RefsFavoritesCreateInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RefsFavoritesCreateResponse> {
+    return this.rest.request<RefsFavoritesCreateResponse>(
+      azureDevOpsOperations.refsFavoritesCreate,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Deletes the refs favorite specified
+   *
+   * @operationId Refs Favorites_Delete
+   * @category Refs Favorites
+   */
+  refsFavoritesDelete(
+    input: RefsFavoritesDeleteInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RefsFavoritesDeleteResponse> {
+    return this.rest.request<RefsFavoritesDeleteResponse>(
+      azureDevOpsOperations.refsFavoritesDelete,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * @operationId Refs Favorites For Project_List
+   * @category Refs Favorites For Project
+   */
+  refsFavoritesForProjectList(
+    input: RefsFavoritesForProjectListInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RefsFavoritesForProjectListResponse> {
+    return this.rest.request<RefsFavoritesForProjectListResponse>(
+      azureDevOpsOperations.refsFavoritesForProjectList,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Gets the refs favorite for a favorite Id.
+   *
+   * @operationId Refs Favorites_Get
+   * @category Refs Favorites
+   */
+  refsFavoritesGet(
+    input: RefsFavoritesGetInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RefsFavoritesGetResponse> {
+    return this.rest.request<RefsFavoritesGetResponse>(
+      azureDevOpsOperations.refsFavoritesGet,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Gets the refs favorites for a repo and an identity.
+   *
+   * @operationId Refs Favorites_List
+   * @category Refs Favorites
+   */
+  refsFavoritesList(
+    input: RefsFavoritesListInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RefsFavoritesListResponse> {
+    return this.rest.request<RefsFavoritesListResponse>(
+      azureDevOpsOperations.refsFavoritesList,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Queries the provided repository for its refs and returns them.
+   *
+   * @operationId Refs_List
+   * @category Refs
+   */
+  refsList(
+    input: RefsListInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RefsListResponse> {
+    return this.rest.request<RefsListResponse>(azureDevOpsOperations.refsList, input, options);
+  }
+
+  /**
+   * Lock or Unlock a branch.
+   *
+   * @operationId Refs_Update Ref
+   * @category Refs
+   */
+  refsUpdateRef(
+    input: RefsUpdateRefInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RefsUpdateRefResponse> {
+    return this.rest.request<RefsUpdateRefResponse>(
+      azureDevOpsOperations.refsUpdateRef,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Creating, updating, or deleting refs(branches).
+   *
+   * Updating a ref means making it point at a different commit than it used to. You must specify both the old and new commit to avoid race conditions.
+   *
+   * @operationId Refs_Update Refs
+   * @category Refs
+   */
+  refsUpdateRefs(
+    input: RefsUpdateRefsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RefsUpdateRefsResponse> {
+    return this.rest.request<RefsUpdateRefsResponse>(
+      azureDevOpsOperations.refsUpdateRefs,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create a git repository in a team project.
+   *
+   * @operationId Repositories_Create
+   * @category Repositories
+   */
+  repositoriesCreate(
+    input: RepositoriesCreateInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepositoriesCreateResponse> {
+    return this.rest.request<RepositoriesCreateResponse>(
+      azureDevOpsOperations.repositoriesCreate,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a git repository
+   *
+   * @operationId Repositories_Delete
+   * @category Repositories
+   */
+  repositoriesDelete(
+    input: RepositoriesDeleteInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepositoriesDeleteResponse> {
+    return this.rest.request<RepositoriesDeleteResponse>(
+      azureDevOpsOperations.repositoriesDelete,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Destroy (hard delete) a soft-deleted Git repository.
+   *
+   * @operationId Repositories_Delete Repository From Recycle Bin
+   * @category Repositories
+   */
+  repositoriesDeleteRepositoryFromRecycleBin(
+    input: RepositoriesDeleteRepositoryFromRecycleBinInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepositoriesDeleteRepositoryFromRecycleBinResponse> {
+    return this.rest.request<RepositoriesDeleteRepositoryFromRecycleBinResponse>(
+      azureDevOpsOperations.repositoriesDeleteRepositoryFromRecycleBin,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieve deleted git repositories.
+   *
+   * @operationId Repositories_Get Deleted Repositories
+   * @category Repositories
+   */
+  repositoriesGetDeletedRepositories(
+    input: RepositoriesGetDeletedRepositoriesInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepositoriesGetDeletedRepositoriesResponse> {
+    return this.rest.request<RepositoriesGetDeletedRepositoriesResponse>(
+      azureDevOpsOperations.repositoriesGetDeletedRepositories,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieve soft-deleted git repositories from the recycle bin.
+   *
+   * @operationId Repositories_Get Recycle Bin Repositories
+   * @category Repositories
+   */
+  repositoriesGetRecycleBinRepositories(
+    input: RepositoriesGetRecycleBinRepositoriesInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepositoriesGetRecycleBinRepositoriesResponse> {
+    return this.rest.request<RepositoriesGetRecycleBinRepositoriesResponse>(
+      azureDevOpsOperations.repositoriesGetRecycleBinRepositories,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieve a git repository.
+   *
+   * @operationId Repositories_Get Repository
+   * @category Repositories
+   */
+  repositoriesGetRepository(
+    input: RepositoriesGetRepositoryInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepositoriesGetRepositoryResponse> {
+    return this.rest.request<RepositoriesGetRepositoryResponse>(
+      azureDevOpsOperations.repositoriesGetRepository,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieve a git repository.
+   *
+   * @operationId Repositories_Get Repository With Parent
+   * @category Repositories
+   */
+  repositoriesGetRepositoryWithParent(
+    input: RepositoriesGetRepositoryWithParentInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepositoriesGetRepositoryWithParentResponse> {
+    return this.rest.request<RepositoriesGetRepositoryWithParentResponse>(
+      azureDevOpsOperations.repositoriesGetRepositoryWithParent,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieve git repositories.
+   *
+   * @operationId Repositories_List
+   * @category Repositories
+   */
+  repositoriesList(
+    input: RepositoriesListInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepositoriesListResponse> {
+    return this.rest.request<RepositoriesListResponse>(
+      azureDevOpsOperations.repositoriesList,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Recover a soft-deleted Git repository. Recently deleted repositories go into a soft-delete state for a period of time before they are hard deleted and become unrecoverable.
+   *
+   * @operationId Repositories_Restore Repository From Recycle Bin
+   * @category Repositories
+   */
+  repositoriesRestoreRepositoryFromRecycleBin(
+    input: RepositoriesRestoreRepositoryFromRecycleBinInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepositoriesRestoreRepositoryFromRecycleBinResponse> {
+    return this.rest.request<RepositoriesRestoreRepositoryFromRecycleBinResponse>(
+      azureDevOpsOperations.repositoriesRestoreRepositoryFromRecycleBin,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Updates the Git repository with either a new repo name or a new default branch.
+   *
+   * @operationId Repositories_Update
+   * @category Repositories
+   */
+  repositoriesUpdate(
+    input: RepositoriesUpdateInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepositoriesUpdateResponse> {
+    return this.rest.request<RepositoriesUpdateResponse>(
+      azureDevOpsOperations.repositoriesUpdate,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Starts the operation to create a new branch which reverts changes introduced by either a specific commit or commits that are associated to a pull request.
+   *
+   * @operationId Reverts_Create
+   * @category Reverts
+   */
+  revertsCreate(
+    input: RevertsCreateInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RevertsCreateResponse> {
+    return this.rest.request<RevertsCreateResponse>(
+      azureDevOpsOperations.revertsCreate,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieve information about a revert operation by revert Id.
+   *
+   * @operationId Reverts_Get Revert
+   * @category Reverts
+   */
+  revertsGetRevert(
+    input: RevertsGetRevertInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RevertsGetRevertResponse> {
+    return this.rest.request<RevertsGetRevertResponse>(
+      azureDevOpsOperations.revertsGetRevert,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieve information about a revert operation for a specific branch.
+   *
+   * @operationId Reverts_Get Revert For Ref Name
+   * @category Reverts
+   */
+  revertsGetRevertForRefName(
+    input: RevertsGetRevertForRefNameInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RevertsGetRevertForRefNameResponse> {
+    return this.rest.request<RevertsGetRevertForRefNameResponse>(
+      azureDevOpsOperations.revertsGetRevertForRefName,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieve statistics about a single branch.
+   *
+   * @operationId Stats_Get
+   * @category Stats
+   */
+  statsGet(
+    input: StatsGetInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<StatsGetResponse> {
+    return this.rest.request<StatsGetResponse>(azureDevOpsOperations.statsGet, input, options);
+  }
+
+  /**
+   * Retrieve statistics about all branches within a repository.
+   *
+   * @operationId Stats_List
+   * @category Stats
+   */
+  statsList(
+    input: StatsListInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<StatsListResponse> {
+    return this.rest.request<StatsListResponse>(azureDevOpsOperations.statsList, input, options);
+  }
+
+  /**
+   * Create Git commit status.
+   *
+   * @operationId Statuses_Create
+   * @category Statuses
+   */
+  statusesCreate(
+    input: StatusesCreateInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<StatusesCreateResponse> {
+    return this.rest.request<StatusesCreateResponse>(
+      azureDevOpsOperations.statusesCreate,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get statuses associated with the Git commit.
+   *
+   * @operationId Statuses_List
+   * @category Statuses
+   */
+  statusesList(
+    input: StatusesListInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<StatusesListResponse> {
+    return this.rest.request<StatusesListResponse>(
+      azureDevOpsOperations.statusesList,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieve a pull request suggestion for a particular repository or team project.
+   *
+   * @operationId Suggestions_List
+   * @category Suggestions
+   */
+  suggestionsList(
+    input: SuggestionsListInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<SuggestionsListResponse> {
+    return this.rest.request<SuggestionsListResponse>(
+      azureDevOpsOperations.suggestionsList,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * The Tree endpoint returns the collection of objects underneath the specified tree. Trees are folders in a Git repository.
+   *
+   * Repositories have both a name and an identifier. Identifiers are globally unique, but several projects may contain a repository of the same name. You don't need to include the project if you specify a repository by ID. However, if you specify a repository by name, you must also specify the project (by name or ID.
+   *
+   * @operationId Trees_Get
+   * @category Trees
+   */
+  treesGet(
+    input: TreesGetInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<TreesGetResponse> {
+    return this.rest.request<TreesGetResponse>(azureDevOpsOperations.treesGet, input, options);
+  }
+}
+
+Object.defineProperties(AzureDevOpsRestClient, {
+  servers: { configurable: false },
+  securitySchemes: { configurable: false },
+});

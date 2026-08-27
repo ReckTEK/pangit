@@ -1,0 +1,33 @@
+{
+  "provider": "gitea",
+  "version": "1.27.2",
+  "kind": "real-http-e2e",
+  "passed": true,
+  "endpoints": {
+    "operations": 482,
+    "passed": 482,
+    "positive": 479,
+    "negativeOnly": 3,
+    "missing": 0,
+    "failedCases": 0,
+    "cases": 543,
+    "requests": 575
+  },
+  "sourceCoverage": {
+    "lines": {
+      "total": 14974,
+      "covered": 14968,
+      "percent": 99.96
+    },
+    "branches": {
+      "total": 2,
+      "covered": 2,
+      "percent": 100
+    },
+    "functions": {
+      "total": 486,
+      "covered": 484,
+      "percent": 99.59
+    }
+  }
+}

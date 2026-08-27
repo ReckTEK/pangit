@@ -29,6 +29,8 @@ type RawSpecManifest = {
       kind: "release" | "live";
       upstream: string;
       selected: string;
+      client: typeof apiSpecProviders[ApiSpecProvider]["client"];
+      testing?: { manifest: string };
       versions: Record<
         string,
         {
@@ -39,6 +41,13 @@ type RawSpecManifest = {
           destination: string;
           bytes: number;
           sha256: string;
+          artifacts: {
+            normalized: string;
+            client: string;
+            tests: string;
+            results: string;
+            compose: string;
+          };
         }
       >;
     }
@@ -140,6 +149,13 @@ function createRawSpecManifest(fetchedSpecs: FetchedApiSpec[]): RawSpecManifest 
         destination: `codegen/specs/raw/${getVersionedRawApiSpecFileName(provider, version)}`,
         bytes: fetched.bytes,
         sha256: fetched.sha256,
+        artifacts: {
+          normalized: `codegen/specs/normalized/${provider}/${version}.json`,
+          client: `src/generated/${provider}/${version}/client.ts`,
+          tests: `src/generated/${provider}/${version}/tests`,
+          results: `docs/test-results/${provider}/${version}`,
+          compose: `src/generated/${provider}/${version}/tests/compose.yaml`,
+        },
       };
     }
     manifest.providers[provider] = {
@@ -147,6 +163,8 @@ function createRawSpecManifest(fetchedSpecs: FetchedApiSpec[]): RawSpecManifest 
       kind: providerSource.kind,
       upstream: providerSource.upstream,
       selected: providerSource.selected,
+      client: providerSource.client,
+      ...(providerSource.testing ? { testing: providerSource.testing } : {}),
       versions,
     };
   }
@@ -190,5 +208,29 @@ export async function fetchApiSpecs(fetcher: typeof fetch = fetch): Promise<void
 }
 
 if (import.meta.main) {
-  await fetchApiSpecs();
+  if (Deno.args.includes("--manifest-only")) {
+    const specs: FetchedApiSpec[] = [];
+    for (const provider of getApiSpecProviders()) {
+      for (const version of getApiSpecVersions(provider)) {
+        const body = await Deno.readTextFile(
+          new URL(getVersionedRawApiSpecFileName(provider, version), rawSpecsDirectory),
+        );
+        specs.push({
+          provider,
+          version,
+          format: apiSpecProviders[provider].format,
+          source: apiSpecProviders[provider].versions[version],
+          body,
+          bytes: textEncoder.encode(body).byteLength,
+          sha256: await sha256(body),
+        });
+      }
+    }
+    await Deno.writeTextFile(
+      new URL("manifest.json", rawSpecsDirectory),
+      `${JSON.stringify(createRawSpecManifest(specs), null, 2)}\n`,
+    );
+  } else {
+    await fetchApiSpecs();
+  }
 }

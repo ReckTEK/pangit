@@ -1,5 +1,12 @@
 {
   "gitea": {
+    "client": {
+      "className": "GiteaRestClient",
+      "displayName": "Gitea",
+      "namespaceName": "GiteaApi",
+      "variablePrefix": "gitea"
+    },
+    "testing": { "manifest": "codegen/tests/maps/gitea.json" },
     "name": "Gitea",
     "kind": "release",
     "format": "json",
@@ -21,6 +28,12 @@
     }
   },
   "github": {
+    "client": {
+      "className": "GitHubRestClient",
+      "displayName": "GitHub",
+      "namespaceName": "GitHubApi",
+      "variablePrefix": "gitHub"
+    },
     "name": "GitHub",
     "kind": "live",
     "format": "yaml",
@@ -33,6 +46,12 @@
     }
   },
   "codeberg": {
+    "client": {
+      "className": "CodebergRestClient",
+      "displayName": "Codeberg",
+      "namespaceName": "CodebergApi",
+      "variablePrefix": "codeberg"
+    },
     "name": "Codeberg (Forgejo)",
     "kind": "live",
     "format": "json",
@@ -45,6 +64,12 @@
     }
   },
   "gitlab": {
+    "client": {
+      "className": "GitLabRestClient",
+      "displayName": "GitLab",
+      "namespaceName": "GitLabApi",
+      "variablePrefix": "gitLab"
+    },
     "name": "GitLab",
     "kind": "release",
     "format": "yaml",
@@ -62,6 +87,12 @@
     }
   },
   "bitbucket": {
+    "client": {
+      "className": "BitbucketRestClient",
+      "displayName": "Bitbucket",
+      "namespaceName": "BitbucketApi",
+      "variablePrefix": "bitbucket"
+    },
     "name": "Bitbucket Cloud",
     "kind": "live",
     "format": "json",
@@ -74,6 +105,12 @@
     }
   },
   "azure-devops": {
+    "client": {
+      "className": "AzureDevOpsRestClient",
+      "displayName": "Azure DevOps",
+      "namespaceName": "AzureDevOpsApi",
+      "variablePrefix": "azureDevOps"
+    },
     "name": "Azure DevOps Git",
     "kind": "live",
     "format": "json",

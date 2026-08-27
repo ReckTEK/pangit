@@ -1,16 +1,13 @@
 import {
-  type ApiSpecProvider,
   apiSpecProviders,
-  apiSpecSources,
   getApiSpecProviders,
   getApiSpecVersions,
-  getRawApiSpecFileName,
   getVersionedRawApiSpecFileName,
 } from "./sources.ts";
 import { providerNormalizers } from "./normalizers/mod.ts";
 
 Deno.test("every API specification source has one normalizer", () => {
-  const sources = Object.keys(apiSpecSources).sort();
+  const sources = getApiSpecProviders();
   const normalizers = Object.keys(providerNormalizers).sort();
 
   if (JSON.stringify(sources) !== JSON.stringify(normalizers)) {
@@ -19,17 +16,6 @@ Deno.test("every API specification source has one normalizer", () => {
         JSON.stringify(sources)
       }`,
     );
-  }
-});
-
-Deno.test("raw API specification filenames preserve source formats", () => {
-  for (const provider of Object.keys(apiSpecSources) as ApiSpecProvider[]) {
-    const expected = `${provider}.${apiSpecSources[provider].format}`;
-    const actual = getRawApiSpecFileName(provider);
-
-    if (actual !== expected) {
-      throw new Error(`Expected ${expected}, received ${actual}`);
-    }
   }
 });
 

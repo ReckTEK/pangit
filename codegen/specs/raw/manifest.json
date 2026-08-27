@@ -6,6 +6,12 @@
       "kind": "live",
       "upstream": "https://github.com/MicrosoftDocs/vsts-rest-api-specs",
       "selected": "latest",
+      "client": {
+        "className": "AzureDevOpsRestClient",
+        "displayName": "Azure DevOps",
+        "namespaceName": "AzureDevOpsApi",
+        "variablePrefix": "azureDevOps"
+      },
       "versions": {
         "latest": {
           "containerImage": null,
@@ -14,7 +20,14 @@
           "format": "json",
           "destination": "codegen/specs/raw/azure-devops/latest.json",
           "bytes": 590222,
-          "sha256": "sha256:7e7b5bd1af4b486a1af498c78150ca1083b7c6d621671bde26967406e3d75d6d"
+          "sha256": "sha256:7e7b5bd1af4b486a1af498c78150ca1083b7c6d621671bde26967406e3d75d6d",
+          "artifacts": {
+            "normalized": "codegen/specs/normalized/azure-devops/latest.json",
+            "client": "src/generated/azure-devops/latest/client.ts",
+            "tests": "src/generated/azure-devops/latest/tests",
+            "results": "docs/test-results/azure-devops/latest",
+            "compose": "src/generated/azure-devops/latest/tests/compose.yaml"
+          }
         }
       }
     },
@@ -23,6 +36,12 @@
       "kind": "live",
       "upstream": "https://developer.atlassian.com/cloud/bitbucket",
       "selected": "latest",
+      "client": {
+        "className": "BitbucketRestClient",
+        "displayName": "Bitbucket",
+        "namespaceName": "BitbucketApi",
+        "variablePrefix": "bitbucket"
+      },
       "versions": {
         "latest": {
           "containerImage": null,
@@ -31,7 +50,14 @@
           "format": "json",
           "destination": "codegen/specs/raw/bitbucket/latest.json",
           "bytes": 1359673,
-          "sha256": "sha256:3dbfe6a80143511a287e58c21a193d3551ab5d41e8b60e65c1ae121b7000dec3"
+          "sha256": "sha256:3dbfe6a80143511a287e58c21a193d3551ab5d41e8b60e65c1ae121b7000dec3",
+          "artifacts": {
+            "normalized": "codegen/specs/normalized/bitbucket/latest.json",
+            "client": "src/generated/bitbucket/latest/client.ts",
+            "tests": "src/generated/bitbucket/latest/tests",
+            "results": "docs/test-results/bitbucket/latest",
+            "compose": "src/generated/bitbucket/latest/tests/compose.yaml"
+          }
         }
       }
     },
@@ -40,6 +66,12 @@
       "kind": "live",
       "upstream": "https://codeberg.org",
       "selected": "latest",
+      "client": {
+        "className": "CodebergRestClient",
+        "displayName": "Codeberg",
+        "namespaceName": "CodebergApi",
+        "variablePrefix": "codeberg"
+      },
       "versions": {
         "latest": {
           "containerImage": null,
@@ -48,7 +80,14 @@
           "format": "json",
           "destination": "codegen/specs/raw/codeberg/latest.json",
           "bytes": 853956,
-          "sha256": "sha256:bb988ce779fbd7c332391d5abd93b0e6080e12a233945a756aa85093759ad56a"
+          "sha256": "sha256:bb988ce779fbd7c332391d5abd93b0e6080e12a233945a756aa85093759ad56a",
+          "artifacts": {
+            "normalized": "codegen/specs/normalized/codeberg/latest.json",
+            "client": "src/generated/codeberg/latest/client.ts",
+            "tests": "src/generated/codeberg/latest/tests",
+            "results": "docs/test-results/codeberg/latest",
+            "compose": "src/generated/codeberg/latest/tests/compose.yaml"
+          }
         }
       }
     },
@@ -57,6 +96,15 @@
       "kind": "release",
       "upstream": "https://github.com/go-gitea/gitea",
       "selected": "1.27.2",
+      "client": {
+        "className": "GiteaRestClient",
+        "displayName": "Gitea",
+        "namespaceName": "GiteaApi",
+        "variablePrefix": "gitea"
+      },
+      "testing": {
+        "manifest": "codegen/tests/maps/gitea.json"
+      },
       "versions": {
         "1.26.4": {
           "containerImage": "docker.gitea.com/gitea:1.26.4",
@@ -65,7 +113,14 @@
           "format": "json",
           "destination": "codegen/specs/raw/gitea/1.26.4.json",
           "bytes": 839152,
-          "sha256": "sha256:0b69d8398ae3557ff8480c55ee3abebd21131ddac39c23621264a69f13cd893d"
+          "sha256": "sha256:0b69d8398ae3557ff8480c55ee3abebd21131ddac39c23621264a69f13cd893d",
+          "artifacts": {
+            "normalized": "codegen/specs/normalized/gitea/1.26.4.json",
+            "client": "src/generated/gitea/1.26.4/client.ts",
+            "tests": "src/generated/gitea/1.26.4/tests",
+            "results": "docs/test-results/gitea/1.26.4",
+            "compose": "src/generated/gitea/1.26.4/tests/compose.yaml"
+          }
         },
         "1.27.2": {
           "containerImage": "docker.gitea.com/gitea:1.27.2",
@@ -74,7 +129,14 @@
           "format": "json",
           "destination": "codegen/specs/raw/gitea/1.27.2.json",
           "bytes": 952215,
-          "sha256": "sha256:0f5a90ebce4a7efff9e338a8944894283c14757d759b28fab4940c461cf2f120"
+          "sha256": "sha256:0f5a90ebce4a7efff9e338a8944894283c14757d759b28fab4940c461cf2f120",
+          "artifacts": {
+            "normalized": "codegen/specs/normalized/gitea/1.27.2.json",
+            "client": "src/generated/gitea/1.27.2/client.ts",
+            "tests": "src/generated/gitea/1.27.2/tests",
+            "results": "docs/test-results/gitea/1.27.2",
+            "compose": "src/generated/gitea/1.27.2/tests/compose.yaml"
+          }
         }
       }
     },
@@ -83,6 +145,12 @@
       "kind": "live",
       "upstream": "https://github.com/github/rest-api-description",
       "selected": "latest",
+      "client": {
+        "className": "GitHubRestClient",
+        "displayName": "GitHub",
+        "namespaceName": "GitHubApi",
+        "variablePrefix": "gitHub"
+      },
       "versions": {
         "latest": {
           "containerImage": null,
@@ -90,8 +158,15 @@
           "source": "https://raw.githubusercontent.com/github/rest-api-description/main/descriptions/api.github.com/api.github.com.yaml",
           "format": "yaml",
           "destination": "codegen/specs/raw/github/latest.yaml",
-          "bytes": 9838440,
-          "sha256": "sha256:557d8b4431220134577d36d7c82d370d5e4e899cc86bf2c249e3710ba9ab1c91"
+          "bytes": 9838785,
+          "sha256": "sha256:10471725f0abd9c275d2b61bf93bb8f86242ccc2aba427f83e265b0c037e3b7f",
+          "artifacts": {
+            "normalized": "codegen/specs/normalized/github/latest.json",
+            "client": "src/generated/github/latest/client.ts",
+            "tests": "src/generated/github/latest/tests",
+            "results": "docs/test-results/github/latest",
+            "compose": "src/generated/github/latest/tests/compose.yaml"
+          }
         }
       }
     },
@@ -100,6 +175,12 @@
       "kind": "release",
       "upstream": "https://gitlab.com/gitlab-org/gitlab",
       "selected": "19.3.1",
+      "client": {
+        "className": "GitLabRestClient",
+        "displayName": "GitLab",
+        "namespaceName": "GitLabApi",
+        "variablePrefix": "gitLab"
+      },
       "versions": {
         "18.11.11": {
           "containerImage": null,
@@ -108,7 +189,14 @@
           "format": "yaml",
           "destination": "codegen/specs/raw/gitlab/18.11.11.yaml",
           "bytes": 2254700,
-          "sha256": "sha256:4ec241f083a00372d2eb1629b2cac0b1877463e453d2a961c31057a99206ed4a"
+          "sha256": "sha256:4ec241f083a00372d2eb1629b2cac0b1877463e453d2a961c31057a99206ed4a",
+          "artifacts": {
+            "normalized": "codegen/specs/normalized/gitlab/18.11.11.json",
+            "client": "src/generated/gitlab/18.11.11/client.ts",
+            "tests": "src/generated/gitlab/18.11.11/tests",
+            "results": "docs/test-results/gitlab/18.11.11",
+            "compose": "src/generated/gitlab/18.11.11/tests/compose.yaml"
+          }
         },
         "19.3.1": {
           "containerImage": null,
@@ -117,7 +205,14 @@
           "format": "yaml",
           "destination": "codegen/specs/raw/gitlab/19.3.1.yaml",
           "bytes": 2441347,
-          "sha256": "sha256:17a1d86d6d6da7255f71ad9828c4378a16e48b505f0959896cc0f23e9fd5ee17"
+          "sha256": "sha256:17a1d86d6d6da7255f71ad9828c4378a16e48b505f0959896cc0f23e9fd5ee17",
+          "artifacts": {
+            "normalized": "codegen/specs/normalized/gitlab/19.3.1.json",
+            "client": "src/generated/gitlab/19.3.1/client.ts",
+            "tests": "src/generated/gitlab/19.3.1/tests",
+            "results": "docs/test-results/gitlab/19.3.1",
+            "compose": "src/generated/gitlab/19.3.1/tests/compose.yaml"
+          }
         }
       }
     }

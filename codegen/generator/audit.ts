@@ -5,7 +5,6 @@ import {
   type JsonObject,
   objectEntries,
   type OpenApiDocument,
-  parseOpenApiDocument,
   resolveLocalReference,
 } from "./openapi.ts";
 import {
@@ -23,16 +22,6 @@ export {
   reviewedRequestMediaPolicy,
   reviewedResponseMediaPolicy,
 } from "./media_oracle.ts";
-
-const defaultNormalizedSpecsDirectory = new URL("../specs/normalized/", import.meta.url);
-export const auditedRestClientProviders = [
-  "azure-devops",
-  "bitbucket",
-  "codeberg",
-  "gitea",
-  "github",
-  "gitlab",
-] as const;
 
 /**
  * Deterministic use-site diagnostics for one normalized OpenAPI document.
@@ -195,14 +184,6 @@ export type OpenApiDocumentAudit = {
   responseMedia: OpenApiResponseMediaBranch[];
   defaultNoContentResponses: OpenApiDefaultNoContentResponseBranch[];
 };
-
-export type OpenApiReviewedAudit = {
-  summary: OpenApiAuditMetrics;
-  diagnostics: OpenApiDiagnosticEntry[];
-};
-
-export type OpenApiCorpusAudit = Record<string, OpenApiDocumentAudit>;
-export type OpenApiReviewedCorpusAudit = Record<string, OpenApiReviewedAudit>;
 
 type OperationUse = {
   collectionName: string;
@@ -506,33 +487,6 @@ export function auditOpenApiDocument(
     responseMedia: responseMedia.toSorted(compareMediaBranches),
     defaultNoContentResponses: defaultNoContentResponses.toSorted(compareMediaBranches),
   };
-}
-
-/** Read and audit the complete expected normalized provider corpus in stable provider order. */
-export async function auditNormalizedCorpus(
-  directory: URL = defaultNormalizedSpecsDirectory,
-): Promise<OpenApiCorpusAudit> {
-  const result: OpenApiCorpusAudit = {};
-  for (const provider of auditedRestClientProviders) {
-    result[provider] = auditOpenApiDocument(
-      parseOpenApiDocument(
-        await Deno.readTextFile(new URL(`${provider}.json`, directory)),
-        provider,
-      ),
-      provider,
-    );
-  }
-  return result;
-}
-
-/** Project the reviewed, baseline-controlled summaries and exact diagnostic use sites. */
-export function reviewedAuditSnapshot(corpus: OpenApiCorpusAudit): OpenApiReviewedCorpusAudit {
-  return Object.fromEntries(
-    Object.entries(corpus).map(([provider, audit]) => [provider, {
-      summary: audit.summary,
-      diagnostics: audit.diagnostics,
-    }]),
-  );
 }
 
 function emptyMetrics(): OpenApiAuditMetrics {
@@ -1063,8 +1017,4 @@ function walkObjects(
   for (const [name, entry] of Object.entries(object)) {
     walkObjects(entry, `${pointer}/${pointerToken(name)}`, visit);
   }
-}
-
-if (import.meta.main) {
-  console.log(JSON.stringify(reviewedAuditSnapshot(await auditNormalizedCorpus()), null, 2));
 }

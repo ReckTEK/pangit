@@ -1,57 +1,32 @@
-# @branch-press/git
+# Branch Press Git
 
-Deno-first REST clients for Azure DevOps, Bitbucket, Codeberg, Gitea, GitHub, and GitLab.
+Type-safe REST clients generated from OpenAPI specs for Gitea, GitLab, GitHub, Codeberg (Forgejo),
+Bitbucket Cloud, and Azure DevOps Git. `loadRestClient(provider, version, options)` dynamically
+loads only the selected client, with provider and version types inferred.
 
-Each provider client is generated deterministically from a normalized OpenAPI 3.0.3 document. The
-shared runtime uses Deno's native Fetch, URL, Headers, AbortSignal, FormData, Blob, and Web Streams
-APIs with no runtime HTTP dependency.
+## Development
 
-## Use a generated client
+- `deno task generate` — download specs, normalize them, generate clients and E2E sandbox assets,
+  and update the results below from saved reports. Requires report snapshots; never runs containers.
+- `deno task e2e` — run generated Gitea suites against fresh Docker Compose environments, save
+  reports to `docs/test-results/<provider>/<version>/`, then remove run containers, networks, and
+  volumes.
+- `deno task check` — type-check source and codegen.
+- `deno task test` — run generator and shared-transport tests.
 
-```ts
-import { GitHubRestClient, isRestSuccess } from "@branch-press/git";
+## Test results
 
-const github = new GitHubRestClient({
-  baseUrl: "https://api.github.com",
-  headers: () => ({
-    accept: "application/vnd.github+json",
-    authorization: `Bearer ${Deno.env.get("GITHUB_TOKEN")}`,
-  }),
-});
+Saved real-container results. Run `deno task e2e`, then `deno task generate` to refresh this table.
 
-const response = await github.reposGetContent({
-  path: { owner: "octocat", repo: "Hello-World", path: "README" },
-});
+<!-- BEGIN GENERATED TEST RESULTS -->
 
-if (isRestSuccess(response)) {
-  console.log(response.body);
-}
-```
+| Provider | Version                                             | Result | Cases | Endpoints | Negative-only | Client lines |
+| :------- | :-------------------------------------------------- | :----: | ----: | --------: | ------------: | -----------: |
+| gitea    | [1.26.4](docs/test-results/gitea/1.26.4/index.html) |  Pass  |   532 | 471 / 471 |             3 |       99.96% |
+| gitea    | [1.27.2](docs/test-results/gitea/1.27.2/index.html) |  Pass  |   543 | 482 / 482 |             3 |       99.96% |
 
-Generated methods return status- and media-type-discriminated response unions together with the
-native `Response`. Provider-scoped model and operation exports are available through
-`AzureDevOpsApi`, `BitbucketApi`, `CodebergApi`, `GiteaApi`, `GitHubApi`, and `GitLabApi`.
+Endpoints count operations with passing checks, including expected errors. Negative-only operations
+have no successful-response test. Coverage measures generated client source, not server code or all
+API behaviors.
 
-The generated [REST client capability graph](docs/rest-client-capability-matrix.md) compares all
-3,821 methods, reviewed cross-provider mappings, rejected false equivalents, and provider-specific
-surfaces.
-
-Use `client.rest.fetch(...)` for a raw native `Response`, or call
-`client.rest.request(GitHubApi.gitHubOperations.reposGetContent, ...)` when an upstream endpoint
-needs a lower-level escape hatch.
-
-## Build provider API documents
-
-```sh
-deno task codegen
-```
-
-The codegen task downloads the current REST API descriptions for Gitea, GitHub, Codeberg, GitLab,
-Bitbucket Cloud, and Azure DevOps Git into `codegen/specs/raw`. Provider-specific normalizers then
-write consistent OpenAPI 3.0.3 JSON documents into `codegen/specs/normalized`. The client generator
-then writes one client file per provider into `src/generated` and rebuilds the capability graph.
-
-Run `deno task fetch`, `deno task normalize`, or `deno task generate` separately when only one stage
-is needed. Run `deno task graph` to rebuild only the comparison document or `deno task graph:check`
-to verify it is current. “Latest” follows the providers' maintained default branches or live API
-document; it is intentionally not a reproducible version pin.
+<!-- END GENERATED TEST RESULTS -->

@@ -1,0 +1,15 @@
+runner:
+  file: /data/.runner
+  capacity: 1
+  fetch_interval: 100ms
+  fetch_interval_max: 100ms
+  log_report_interval: 100ms
+  log_report_max_latency: 50ms
+  labels: [sandbox:host]
+cache:
+  enabled: false
+host:
+  workdir_parent: /data/workspaces
+metrics:
+  enabled: true
+  addr: ':9101'

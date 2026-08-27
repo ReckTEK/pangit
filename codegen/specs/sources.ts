@@ -17,12 +17,14 @@ export type ApiSpecProviderSource = {
   format: ApiSpecFormat;
   selected: string;
   upstream: string;
+  client: {
+    className: string;
+    displayName: string;
+    namespaceName: string;
+    variablePrefix: string;
+  };
+  testing?: { manifest: string };
   versions: Record<string, ApiSpecVersionSource>;
-};
-
-export type ApiSpecSource = ApiSpecVersionSource & {
-  name: string;
-  format: ApiSpecFormat;
 };
 
 export type ApiSpecProvider = keyof typeof configuredProviders;
@@ -136,19 +138,7 @@ function validateProviderMap(
 validateProviderMap(configuredProviders);
 
 /** Authoritative provider, version, source, and selection map. */
-export const apiSpecProviders = configuredProviders;
-
-/** Selected sources retained for existing normalization and generation code. */
-export const apiSpecSources = Object.fromEntries(
-  Object.entries(apiSpecProviders).map(([provider, source]) => [
-    provider,
-    {
-      name: source.name,
-      format: source.format,
-      ...source.versions[source.selected],
-    },
-  ]),
-) as Record<ApiSpecProvider, ApiSpecSource>;
+export const apiSpecProviders: Record<ApiSpecProvider, ApiSpecProviderSource> = configuredProviders;
 
 function compareVersions(left: string, right: string): number {
   const leftParts = left.split(".").map(Number);
@@ -169,14 +159,6 @@ export function getApiSpecProviders(): ApiSpecProvider[] {
 
 export function getApiSpecVersions(provider: ApiSpecProvider): string[] {
   return Object.keys(apiSpecProviders[provider].versions).sort(compareVersions);
-}
-
-export function getSelectedApiSpecVersion(provider: ApiSpecProvider): string {
-  return apiSpecProviders[provider].selected;
-}
-
-export function getRawApiSpecFileName(provider: ApiSpecProvider): string {
-  return `${provider}.${apiSpecProviders[provider].format}`;
 }
 
 export function getVersionedRawApiSpecFileName(

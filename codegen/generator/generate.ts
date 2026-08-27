@@ -14,6 +14,7 @@ import {
   resolveObject,
 } from "./openapi.ts";
 import { SchemaRenderer, union } from "./schema.ts";
+import { apiSpecProviders } from "../specs/sources.ts";
 
 const defaultNormalizedSpecsDirectory = new URL("../specs/normalized/", import.meta.url);
 const defaultSpecManifestFile = new URL("../specs/raw/manifest.json", import.meta.url);
@@ -21,44 +22,9 @@ const defaultGeneratedClientsDirectory = new URL("../../src/generated/", import.
 const denoConfiguration = new URL("../../deno.json", import.meta.url);
 const defaultPublicNamesFile = new URL("./public-names.json", import.meta.url);
 
-const providerNames: Readonly<Record<string, ProviderNames>> = {
-  "azure-devops": {
-    className: "AzureDevOpsRestClient",
-    displayName: "Azure DevOps",
-    namespaceName: "AzureDevOpsApi",
-    variablePrefix: "azureDevOps",
-  },
-  bitbucket: {
-    className: "BitbucketRestClient",
-    displayName: "Bitbucket",
-    namespaceName: "BitbucketApi",
-    variablePrefix: "bitbucket",
-  },
-  codeberg: {
-    className: "CodebergRestClient",
-    displayName: "Codeberg",
-    namespaceName: "CodebergApi",
-    variablePrefix: "codeberg",
-  },
-  gitea: {
-    className: "GiteaRestClient",
-    displayName: "Gitea",
-    namespaceName: "GiteaApi",
-    variablePrefix: "gitea",
-  },
-  github: {
-    className: "GitHubRestClient",
-    displayName: "GitHub",
-    namespaceName: "GitHubApi",
-    variablePrefix: "gitHub",
-  },
-  gitlab: {
-    className: "GitLabRestClient",
-    displayName: "GitLab",
-    namespaceName: "GitLabApi",
-    variablePrefix: "gitLab",
-  },
-};
+const providerNames: Readonly<Record<string, ProviderNames>> = Object.fromEntries(
+  Object.entries(apiSpecProviders).map(([provider, source]) => [provider, source.client]),
+);
 
 /** Providers required for a complete checked generation. */
 export const expectedRestClientProviders = Object.freeze(
@@ -174,12 +140,17 @@ type RenderProviderClientOptions = {
   captureNames?: (names: ProviderPublicNames) => void;
   lockedNames?: ProviderPublicNames;
   restModulePath?: string;
+  names?: ProviderNames;
 };
 
 type RestClientSpecManifest = {
   providers: Record<string, {
     selected: string;
-    versions: Record<string, { destination: string }>;
+    client: ProviderNames;
+    versions: Record<
+      string,
+      { destination: string; artifacts: { client: string; normalized: string; tests: string } }
+    >;
   }>;
   schemaVersion: 1;
 };
@@ -210,20 +181,25 @@ export async function generateRestClients(
   for (const provider of providers) {
     const providerManifest = manifest.providers[provider];
     for (const version of Object.keys(providerManifest.versions).toSorted(compareText)) {
+      const artifacts = providerManifest.versions[version].artifacts;
       const document = parseOpenApiDocument(
         await Deno.readTextFile(
-          new URL(`${provider}/${version}.json`, normalizedSpecsDirectory),
+          new URL(
+            artifacts.normalized.replace(/^codegen\/specs\/normalized\//, ""),
+            normalizedSpecsDirectory,
+          ),
         ),
         `${provider} ${version}`,
       );
       rendered.set(
-        `${provider}/${version}.ts`,
+        artifacts.client.replace(/^src\/generated\//, ""),
         renderProviderClient(provider, document, {
+          names: providerManifest.client,
           captureNames: version === providerManifest.selected
             ? (names) => capturedProviders[provider] = names
             : undefined,
           lockedNames: lockedNames.providers[provider],
-          restModulePath: "../../rest.ts",
+          restModulePath: "../../../rest.ts",
         }),
       );
     }
@@ -257,7 +233,7 @@ export async function generateRestClients(
       console.log(JSON.stringify({
         provider,
         version,
-        destination: `src/generated/${provider}/${version}.ts`,
+        destination: manifest.providers[provider].versions[version].artifacts.client,
         mode: options.check ? "checked" : "written",
       }));
     }
@@ -314,15 +290,26 @@ async function readSpecManifest(file: URL): Promise<RestClientSpecManifest> {
     if (selected === undefined || versions === undefined || !(selected in versions)) {
       throw new Error(`Invalid API specification manifest provider ${provider}`);
     }
-    const parsedVersions: Record<string, { destination: string }> = {};
+    const client = asObject(providerManifest?.client) as ProviderNames | undefined;
+    if (client === undefined) throw new Error(`Missing client naming manifest for ${provider}`);
+    const parsedVersions: RestClientSpecManifest["providers"][string]["versions"] = {};
     for (const [version, versionValue] of objectEntries(versions)) {
       const destination = asString(asObject(versionValue)?.destination);
       if (destination === undefined) {
         throw new Error(`Invalid API specification manifest version ${provider} ${version}`);
       }
-      parsedVersions[version] = { destination };
+      const artifacts = asObject(asObject(versionValue)?.artifacts) as {
+        client: string;
+        normalized: string;
+        tests: string;
+      } | undefined;
+      if (
+        artifacts === undefined || !artifacts.client?.startsWith("src/generated/") ||
+        !artifacts.normalized?.startsWith("codegen/specs/normalized/")
+      ) throw new Error(`Missing generated artifact paths for ${provider} ${version}`);
+      parsedVersions[version] = { destination, artifacts };
     }
-    parsedProviders[provider] = { selected, versions: parsedVersions };
+    parsedProviders[provider] = { selected, client, versions: parsedVersions };
   }
   return { schemaVersion: 1, providers: parsedProviders };
 }
@@ -332,7 +319,7 @@ export function renderProviderClient(
   document: OpenApiDocument,
   options: RenderProviderClientOptions = {},
 ): string {
-  const names = namesForProvider(provider);
+  const names = options.names ?? namesForProvider(provider);
   const operations = collectOperations(document);
   const operationNames = allocateOperationNames(
     operations,
@@ -1344,19 +1331,29 @@ function renderGeneratedModule(manifest: RestClientSpecManifest): string {
     ]),
   );
   const typeMap = providers.map((provider) => {
-    const className = namesForProvider(provider).className;
+    const className = manifest.providers[provider].client.className;
     const entries = versions[provider].map((version) =>
       `    ${JSON.stringify(version)}: import(${
-        JSON.stringify(`./${provider}/${version}.ts`)
+        JSON.stringify(
+          manifest.providers[provider].versions[version].artifacts.client.replace(
+            /^src\/generated\//,
+            "./",
+          ),
+        )
       }).${className};`
     );
     return `  ${JSON.stringify(provider)}: {\n${entries.join("\n")}\n  };`;
   });
   const loaders = providers.map((provider) => {
-    const className = namesForProvider(provider).className;
+    const className = manifest.providers[provider].client.className;
     const entries = versions[provider].map((version) =>
       `    ${JSON.stringify(version)}: async (options) => new (await import(${
-        JSON.stringify(`./${provider}/${version}.ts`)
+        JSON.stringify(
+          manifest.providers[provider].versions[version].artifacts.client.replace(
+            /^src\/generated\//,
+            "./",
+          ),
+        )
       })).${className}(options),`
     );
     return `  ${JSON.stringify(provider)}: {\n${entries.join("\n")}\n  },`;
@@ -1565,7 +1562,7 @@ function assertPublicNamesCurrent(
 ): void {
   if (JSON.stringify(expected) === JSON.stringify(actual)) return;
   throw new Error(
-    "Generated public names differ from codegen/generator/public-names.json; review the API change and run the explicit public-name update task",
+    "Generated public names differ from codegen/generator/public-names.json; review the API change, then use codegen/generator/generate.ts --update-public-names",
   );
 }
 
@@ -1673,6 +1670,15 @@ export async function replaceGeneratedDirectory(
       await Deno.writeTextFile(manifestStage, options.manifest.source, { createNew: true });
     }
     await (options.validate ?? typeCheckGeneratedDirectory)(stage);
+    // Client regeneration owns client files; retain colocated E2E artifacts for surviving versions.
+    for (const name of sources.keys()) {
+      if (!name.endsWith("/client.ts")) continue;
+      const testsPath = name.slice(0, -"client.ts".length) + "tests/";
+      const currentTests = new URL(testsPath, directory);
+      if (await pathExists(currentTests)) {
+        await copyGeneratedTests(currentTests, new URL(testsPath, stage));
+      }
+    }
 
     let movedCurrent = false;
     let movedStage = false;
@@ -1786,6 +1792,7 @@ async function generatedSourceNames(directory: URL, prefix = ""): Promise<string
   for await (const entry of Deno.readDir(directory)) entries.push(entry);
   for (const entry of entries.toSorted((left, right) => compareText(left.name, right.name))) {
     const name = `${prefix}${entry.name}`;
+    if (entry.isDirectory && entry.name === "tests") continue;
     if (entry.isDirectory) {
       names.push(...await generatedSourceNames(new URL(`${entry.name}/`, directory), `${name}/`));
     } else if (entry.isFile && entry.name.endsWith(".ts")) {
@@ -1793,6 +1800,20 @@ async function generatedSourceNames(directory: URL, prefix = ""): Promise<string
     }
   }
   return names;
+}
+
+async function copyGeneratedTests(source: URL, destination: URL): Promise<void> {
+  await Deno.mkdir(destination, { recursive: true });
+  for await (const entry of Deno.readDir(source)) {
+    if (entry.isDirectory) {
+      await copyGeneratedTests(
+        new URL(`${entry.name}/`, source),
+        new URL(`${entry.name}/`, destination),
+      );
+    } else if (entry.isFile) {
+      await Deno.copyFile(new URL(entry.name, source), new URL(entry.name, destination));
+    }
+  }
 }
 
 async function pathExists(path: URL): Promise<boolean> {

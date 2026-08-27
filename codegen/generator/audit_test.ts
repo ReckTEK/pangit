@@ -1,10 +1,4 @@
-import baseline from "./audit-baseline.json" with { type: "json" };
-import {
-  auditNormalizedCorpus,
-  auditOpenApiDocument,
-  type OpenApiDiagnosticEntry,
-  reviewedAuditSnapshot,
-} from "./audit.ts";
+import { auditOpenApiDocument, type OpenApiDiagnosticEntry } from "./audit.ts";
 import { parseOpenApiDocument } from "./openapi.ts";
 
 Deno.test("audit semantics retain exact unsupported and lossy use sites", () => {
@@ -375,15 +369,6 @@ Deno.test("audit records exact optional path-group policies without treating esc
       ],
     ],
   );
-});
-
-Deno.test("normalized OpenAPI corpus matches exact reviewed diagnostic baseline", async () => {
-  const corpus = await auditNormalizedCorpus();
-  assertEquals(reviewedAuditSnapshot(corpus), baseline);
-  for (const audit of Object.values(corpus)) {
-    assertEquals(audit.requestMedia.length, audit.summary.requestMediaBranches);
-    assertEquals(audit.responseMedia.length, audit.summary.responseMediaBranches);
-  }
 });
 
 function compareDiagnostics(
