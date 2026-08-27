@@ -25,7 +25,7 @@
             "normalized": "codegen/specs/normalized/azure-devops/latest.json",
             "client": "src/generated/azure-devops/latest/client.ts",
             "tests": "src/generated/azure-devops/latest/tests",
-            "results": "docs/test-results/azure-devops/latest",
+            "results": "src/generated/azure-devops/latest/tests/results",
             "compose": "src/generated/azure-devops/latest/tests/compose.yaml"
           }
         }
@@ -55,7 +55,7 @@
             "normalized": "codegen/specs/normalized/bitbucket/latest.json",
             "client": "src/generated/bitbucket/latest/client.ts",
             "tests": "src/generated/bitbucket/latest/tests",
-            "results": "docs/test-results/bitbucket/latest",
+            "results": "src/generated/bitbucket/latest/tests/results",
             "compose": "src/generated/bitbucket/latest/tests/compose.yaml"
           }
         }
@@ -80,12 +80,12 @@
           "format": "json",
           "destination": "codegen/specs/raw/codeberg/latest.json",
           "bytes": 853956,
-          "sha256": "sha256:bb988ce779fbd7c332391d5abd93b0e6080e12a233945a756aa85093759ad56a",
+          "sha256": "sha256:6461eaacfe2b90caed995d1ca8d6743d056104b7d2cc8cc0a73c0b61a6c97fa5",
           "artifacts": {
             "normalized": "codegen/specs/normalized/codeberg/latest.json",
             "client": "src/generated/codeberg/latest/client.ts",
             "tests": "src/generated/codeberg/latest/tests",
-            "results": "docs/test-results/codeberg/latest",
+            "results": "src/generated/codeberg/latest/tests/results",
             "compose": "src/generated/codeberg/latest/tests/compose.yaml"
           }
         }
@@ -118,7 +118,7 @@
             "normalized": "codegen/specs/normalized/gitea/1.26.4.json",
             "client": "src/generated/gitea/1.26.4/client.ts",
             "tests": "src/generated/gitea/1.26.4/tests",
-            "results": "docs/test-results/gitea/1.26.4",
+            "results": "src/generated/gitea/1.26.4/tests/results",
             "compose": "src/generated/gitea/1.26.4/tests/compose.yaml"
           }
         },
@@ -134,7 +134,7 @@
             "normalized": "codegen/specs/normalized/gitea/1.27.2.json",
             "client": "src/generated/gitea/1.27.2/client.ts",
             "tests": "src/generated/gitea/1.27.2/tests",
-            "results": "docs/test-results/gitea/1.27.2",
+            "results": "src/generated/gitea/1.27.2/tests/results",
             "compose": "src/generated/gitea/1.27.2/tests/compose.yaml"
           }
         }
@@ -164,7 +164,7 @@
             "normalized": "codegen/specs/normalized/github/latest.json",
             "client": "src/generated/github/latest/client.ts",
             "tests": "src/generated/github/latest/tests",
-            "results": "docs/test-results/github/latest",
+            "results": "src/generated/github/latest/tests/results",
             "compose": "src/generated/github/latest/tests/compose.yaml"
           }
         }
@@ -194,7 +194,7 @@
             "normalized": "codegen/specs/normalized/gitlab/18.11.11.json",
             "client": "src/generated/gitlab/18.11.11/client.ts",
             "tests": "src/generated/gitlab/18.11.11/tests",
-            "results": "docs/test-results/gitlab/18.11.11",
+            "results": "src/generated/gitlab/18.11.11/tests/results",
             "compose": "src/generated/gitlab/18.11.11/tests/compose.yaml"
           }
         },
@@ -210,7 +210,7 @@
             "normalized": "codegen/specs/normalized/gitlab/19.3.1.json",
             "client": "src/generated/gitlab/19.3.1/client.ts",
             "tests": "src/generated/gitlab/19.3.1/tests",
-            "results": "docs/test-results/gitlab/19.3.1",
+            "results": "src/generated/gitlab/19.3.1/tests/results",
             "compose": "src/generated/gitlab/19.3.1/tests/compose.yaml"
           }
         }

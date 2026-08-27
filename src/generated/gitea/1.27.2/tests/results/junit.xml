@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="deno test" tests="544" failures="0" errors="0" time="11.846">
+<testsuites name="deno test" tests="544" failures="0" errors="0" time="10.007">
     <testsuite name="./e2e_test.ts" tests="1" disabled="0" errors="0" failures="0">
-        <testcase name="gitea 1.27.2 real API E2E" classname="./e2e_test.ts" time="11.827" line="5" col="6">
+        <testcase name="gitea 1.27.2 real API E2E" classname="./e2e_test.ts" time="9.986" line="5" col="6">
         </testcase>
     </testsuite>
     <testsuite name="./runtime.ts" tests="543" disabled="0" errors="0" failures="0">
-        <testcase name="gitea 1.27.2 real API E2E &gt; sandbox identity and fixtures: getVersion" classname="./runtime.ts" time="0.013" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; sandbox identity and fixtures: getVersion" classname="./runtime.ts" time="0.012" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; sandbox identity and fixtures: userGetCurrent" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; sandbox identity and fixtures: userGetCurrent" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; sandbox identity and fixtures: adminEditUser" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; sandbox identity and fixtures: adminCreateUser" classname="./runtime.ts" time="0.018" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; sandbox identity and fixtures: adminCreateUser" classname="./runtime.ts" time="0.017" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; sandbox identity and fixtures: userCreateToken" classname="./runtime.ts" time="0.015" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; sandbox identity and fixtures: createCurrentUserRepo" classname="./runtime.ts" time="0.125" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; sandbox identity and fixtures: createCurrentUserRepo" classname="./runtime.ts" time="0.129" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; sandbox identity and fixtures: repoEdit" classname="./runtime.ts" time="0.006" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; sandbox identity and fixtures: repoEdit" classname="./runtime.ts" time="0.007" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; sandbox identity and fixtures: repoGetBranch" classname="./runtime.ts" time="0.009" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; sandbox identity and fixtures: orgCreate" classname="./runtime.ts" time="0.007" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; sandbox identity and fixtures: createOrgRepo" classname="./runtime.ts" time="0.126" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; sandbox identity and fixtures: createOrgRepo" classname="./runtime.ts" time="0.127" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; instance and current-user read APIs: adminCronList" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; instance and current-user read APIs: adminGetAllEmails" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; instance and current-user read APIs: adminSearchEmails" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; instance and current-user read APIs: adminSearchEmails" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; instance and current-user read APIs: adminGetAllOrgs" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
@@ -43,7 +43,7 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; instance and current-user read APIs: listLicenseTemplates" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; instance and current-user read APIs: getGeneralAPISettings" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; instance and current-user read APIs: getGeneralAPISettings" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; instance and current-user read APIs: getGeneralAttachmentSettings" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
@@ -55,13 +55,13 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; instance and current-user read APIs: notifyGetList" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; instance and current-user read APIs: notifyNewAvailable" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; instance and current-user read APIs: notifyNewAvailable" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; instance and current-user read APIs: userCurrentListFollowers" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; instance and current-user read APIs: userCurrentListFollowing" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; instance and current-user read APIs: userCurrentListGPGKeys" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; instance and current-user read APIs: userCurrentListGPGKeys" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; instance and current-user read APIs: userCurrentListKeys" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
@@ -69,15 +69,15 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; instance and current-user read APIs: orgListCurrentUserOrgs" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; instance and current-user read APIs: userCurrentListRepos" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; instance and current-user read APIs: userCurrentListRepos" classname="./runtime.ts" time="0.005" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; instance and current-user read APIs: userCurrentListStarred" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; instance and current-user read APIs: userCurrentListStarred" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; instance and current-user read APIs: userGetStopWatches" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; instance and current-user read APIs: userCurrentListSubscriptions" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; instance and current-user read APIs: userListTeams" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; instance and current-user read APIs: userListTeams" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; instance and current-user read APIs: userCurrentTrackedTimes" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
@@ -93,7 +93,7 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; instance and current-user read APIs: userListHooks" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; instance and current-user read APIs: getGitignoreTemplateInfo" classname="./runtime.ts" time="0.002" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; instance and current-user read APIs: getGitignoreTemplateInfo" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; instance and current-user read APIs: getLicenseTemplateInfo" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
@@ -111,51 +111,51 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoGet" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoGetAssignees" classname="./runtime.ts" time="0.005" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoGetAssignees" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoListActivityFeeds" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoListBranchProtection" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoListBranchProtection" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoListBranches" classname="./runtime.ts" time="0.006" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoListBranches" classname="./runtime.ts" time="0.005" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoListCollaborators" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoGetAllCommits" classname="./runtime.ts" time="0.008" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoGetAllCommits" classname="./runtime.ts" time="0.007" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoGetContentsList" classname="./runtime.ts" time="0.008" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoGetContentsList" classname="./runtime.ts" time="0.007" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: listForks" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoListAllGitRefs" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoListHooks" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoListHooks" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoListGitHooks" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoListGitHooks" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoGetIssueConfig" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoValidateIssueConfig" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoValidateIssueConfig" classname="./runtime.ts" time="0.005" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoGetIssueTemplates" classname="./runtime.ts" time="0.005" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoGetIssueTemplates" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: issueListIssues" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: issueListIssues" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: issueGetRepoComments" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoListPinnedIssues" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoListPinnedIssues" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoListKeys" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: issueListLabels" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: issueListLabels" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoGetLanguages" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoGetLanguages" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoGetLicenses" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: issueGetMilestonesList" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: issueGetMilestonesList" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoNewPinAllowed" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoNewPinAllowed" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: notifyGetRepoList" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
@@ -167,13 +167,13 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoListReleases" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoGetReviewers" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoGetReviewers" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoListStargazers" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoListStargazers" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoListSubscribers" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoListTagProtection" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoListTagProtection" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoListTags" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
@@ -185,11 +185,11 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: listWorkflowJobs" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: getRepoRunners" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: getRepoRunners" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: getWorkflowRuns" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: getWorkflowRuns" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoListActionsSecrets" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoListActionsSecrets" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: getRepoVariablesList" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
@@ -197,37 +197,37 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: ListActionTasks" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoGetByID" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoGetByID" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoGetCombinedStatusByRef" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoGetCombinedStatusByRef" classname="./runtime.ts" time="0.005" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoListStatusesByRef" classname="./runtime.ts" time="0.005" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoListStatusesByRef" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoListGitRefs" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoListGitRefs" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoGetContents" classname="./runtime.ts" time="0.005" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoGetContents" classname="./runtime.ts" time="0.006" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoGetRawFile" classname="./runtime.ts" time="0.005" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoGetRawFileOrLFS" classname="./runtime.ts" time="0.005" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoGetRawFileOrLFS" classname="./runtime.ts" time="0.006" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoGetArchive" classname="./runtime.ts" time="0.006" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoGetArchive" classname="./runtime.ts" time="0.005" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoGetSingleCommit" classname="./runtime.ts" time="0.006" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoGetSingleCommit" classname="./runtime.ts" time="0.007" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: GetTree" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: GetBlob" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: GetBlob" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoDownloadCommitDiffOrPatch" classname="./runtime.ts" time="0.006" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoDownloadCommitDiffOrPatch" classname="./runtime.ts" time="0.005" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoListStatuses" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoListStatuses" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoCreateStatus" classname="./runtime.ts" time="0.008" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoCreateStatus" classname="./runtime.ts" time="0.007" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: notifyReadRepoList" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoSearch" classname="./runtime.ts" time="0.005" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoSearch" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: issueSearchIssues" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
@@ -237,27 +237,27 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoGetFileContents" classname="./runtime.ts" time="0.005" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoGetFileContentsPost" classname="./runtime.ts" time="0.006" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository read APIs: repoGetFileContentsPost" classname="./runtime.ts" time="0.005" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; social and permissions: repoAddCollaborator" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; social and permissions: repoAddCollaborator" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; social and permissions: repoCheckCollaborator" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; social and permissions: repoCheckCollaborator" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; social and permissions: repoGetRepoPermissions" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; social and permissions: repoGetRepoPermissions" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; social and permissions: repoCheckAssignee" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; social and permissions: repoCheckAssignee" classname="./runtime.ts" time="0.006" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; social and permissions: userCurrentPutFollow" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; social and permissions: userCurrentPutFollow" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; social and permissions: userCurrentCheckFollowing" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; social and permissions: userCheckFollowing" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; social and permissions: userCheckFollowing" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; social and permissions: userCurrentDeleteFollow" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; social and permissions: userCurrentPutStar" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; social and permissions: userCurrentCheckStarring" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; social and permissions: userCurrentCheckStarring" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; social and permissions: userCurrentDeleteStar" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
@@ -287,9 +287,9 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; social and permissions: userListStarred" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; social and permissions: userListSubscriptions" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; social and permissions: userListSubscriptions" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; social and permissions: userBlockUser" classname="./runtime.ts" time="0.006" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; social and permissions: userBlockUser" classname="./runtime.ts" time="0.005" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; social and permissions: userCheckUserBlock" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
@@ -299,13 +299,13 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgGet" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgListActivityFeeds" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgListActivityFeeds" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgListHooks" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgListHooks" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgListLabels" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgListMembers" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgListMembers" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgListPublicMembers" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
@@ -313,9 +313,9 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgListTeams" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: teamSearch" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: teamSearch" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: organizationListBlocks" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: organizationListBlocks" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: getOrgWorkflowJobs" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
@@ -325,7 +325,7 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgListActionsSecrets" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: getOrgVariablesList" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: getOrgVariablesList" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgEdit" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
@@ -335,9 +335,9 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgIsPublicMember" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgConcealMember" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgConcealMember" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgGetUserPermissions" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgGetUserPermissions" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: organizationBlockUser" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
@@ -345,41 +345,41 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: organizationUnblockUser" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgCreateTeam" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgCreateTeam" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgGetTeam" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgGetTeam" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgEditTeam" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgEditTeam" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgAddTeamMember" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgListTeamMembers" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgListTeamMembers" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgListTeamMember" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgListTeamMember" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgAddTeamRepository" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgListTeamRepos" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgListTeamRepo" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgListTeamRepo" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgListTeamActivityFeeds" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgListTeamActivityFeeds" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: repoListTeams" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: repoListTeams" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: repoCheckTeam" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: repoDeleteTeam" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: repoDeleteTeam" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: repoAddTeam" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgRemoveTeamRepository" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgRemoveTeamRepository" classname="./runtime.ts" time="0.005" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgRemoveTeamMember" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; organization APIs: orgDeleteTeam" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; user Actions configuration: userCreateRunnerRegistrationToken" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; user Actions configuration: userCreateRunnerRegistrationToken" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; user Actions configuration: getUserVariablesList" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
@@ -395,15 +395,15 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; user Actions configuration: updateUserSecret" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; user Actions configuration: deleteUserSecret" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; user Actions configuration: deleteUserSecret" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; org Actions configuration: orgCreateRunnerRegistrationToken" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; org Actions configuration: orgCreateRunnerRegistrationToken" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; org Actions configuration: getOrgVariablesList" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; org Actions configuration: orgListActionsSecrets" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; org Actions configuration: createOrgVariable" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; org Actions configuration: createOrgVariable" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; org Actions configuration: getOrgVariable" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
@@ -419,7 +419,7 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repo Actions configuration: repoCreateRunnerRegistrationToken" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repo Actions configuration: getRepoVariablesList" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repo Actions configuration: getRepoVariablesList" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repo Actions configuration: repoListActionsSecrets" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
@@ -429,9 +429,9 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repo Actions configuration: updateRepoVariable" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repo Actions configuration: getRepoVariable" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repo Actions configuration: getRepoVariable" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repo Actions configuration: deleteRepoVariable" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repo Actions configuration: deleteRepoVariable" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repo Actions configuration: updateRepoSecret" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
@@ -439,35 +439,35 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; Actions instance and user reads: listAdminWorkflowJobs" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; Actions instance and user reads: getAdminRunners" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; Actions instance and user reads: getAdminRunners" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; Actions instance and user reads: listAdminWorkflowRuns" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; Actions instance and user reads: listAdminWorkflowRuns" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; Actions instance and user reads: getUserWorkflowJobs" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; Actions instance and user reads: getUserRunners" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; Actions instance and user reads: getUserWorkflowRuns" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; Actions instance and user reads: getUserWorkflowRuns" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; Actions instance and user reads: adminCreateRunnerRegistrationToken" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue label CRUD: issueCreateLabel" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue label CRUD: issueCreateLabel" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; issue label CRUD: issueListLabels" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; issue label CRUD: issueGetLabel" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue label CRUD: issueEditLabel" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue label CRUD: issueEditLabel" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; org label CRUD: orgCreateLabel" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; org label CRUD: orgCreateLabel" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; org label CRUD: orgListLabels" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; org label CRUD: orgListLabels" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; org label CRUD: orgGetLabel" classname="./runtime.ts" time="0.005" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; org label CRUD: orgGetLabel" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; org label CRUD: orgEditLabel" classname="./runtime.ts" time="0.005" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; org label CRUD: orgEditLabel" classname="./runtime.ts" time="0.006" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; milestone CRUD: issueCreateMilestone" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; milestone CRUD: issueCreateMilestone" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; milestone CRUD: issueGetMilestonesList" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
@@ -475,63 +475,63 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; milestone CRUD: issueEditMilestone" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueCreateIssue" classname="./runtime.ts" time="0.011" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueCreateIssue" classname="./runtime.ts" time="0.012" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueCreateIssue" classname="./runtime.ts" time="0.008" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueCreateIssue" classname="./runtime.ts" time="0.007" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueGetIssue" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueGetIssue" classname="./runtime.ts" time="0.005" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueGetComments" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueGetComments" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueGetCommentsAndTimeline" classname="./runtime.ts" time="0.008" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueGetCommentsAndTimeline" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueGetLabels" classname="./runtime.ts" time="0.005" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueGetLabels" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueListBlocks" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueListBlocks" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueListIssueDependencies" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueGetIssueReactions" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueGetIssueReactions" classname="./runtime.ts" time="0.005" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueSubscriptions" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueSubscriptions" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueTrackedTimes" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueTrackedTimes" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueListIssueAttachments" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueEditIssue" classname="./runtime.ts" time="0.007" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueEditIssue" classname="./runtime.ts" time="0.008" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueAddAssignees" classname="./runtime.ts" time="0.007" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueAddAssignees" classname="./runtime.ts" time="0.008" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueCheckAssignee" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueCheckAssignee" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueRemoveAssignees" classname="./runtime.ts" time="0.007" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueRemoveAssignees" classname="./runtime.ts" time="0.008" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueEditIssueDeadline" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueClearLabels" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueClearLabels" classname="./runtime.ts" time="0.005" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueAddLabel" classname="./runtime.ts" time="0.006" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueAddLabel" classname="./runtime.ts" time="0.008" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueReplaceLabels" classname="./runtime.ts" time="0.005" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueReplaceLabels" classname="./runtime.ts" time="0.006" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueRemoveLabel" classname="./runtime.ts" time="0.006" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issuePostIssueReaction" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issuePostIssueReaction" classname="./runtime.ts" time="0.005" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueDeleteIssueReaction" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueAddTime" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueAddTime" classname="./runtime.ts" time="0.005" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: userTrackedTimes" classname="./runtime.ts" time="0.005" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: userTrackedTimes" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueDeleteTime" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueDeleteTime" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueStartStopWatch" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueStopStopWatch" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueStartStopWatch" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueStartStopWatch" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueDeleteStopWatch" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
@@ -547,11 +547,11 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueLockIssue" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueUnlockIssue" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueUnlockIssue" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueAddSubscription" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueAddSubscription" classname="./runtime.ts" time="0.006" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueCheckSubscription" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueCheckSubscription" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueDeleteSubscription" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
@@ -561,51 +561,51 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueCreateIssueBlocking" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueRemoveIssueBlocking" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue lifecycle: issueRemoveIssueBlocking" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; issue comments and attachments: issueCreateComment" classname="./runtime.ts" time="0.007" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; issue comments and attachments: issueGetComment" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue comments and attachments: issueEditComment" classname="./runtime.ts" time="0.009" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue comments and attachments: issueEditComment" classname="./runtime.ts" time="0.008" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue comments and attachments: issueEditCommentDeprecated" classname="./runtime.ts" time="0.008" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue comments and attachments: issueEditCommentDeprecated" classname="./runtime.ts" time="0.009" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; issue comments and attachments: issuePostCommentReaction" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue comments and attachments: issueGetCommentReactions" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue comments and attachments: issueGetCommentReactions" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; issue comments and attachments: issueDeleteCommentReaction" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue comments and attachments: issueCreateIssueAttachment" classname="./runtime.ts" time="0.009" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue comments and attachments: issueCreateIssueAttachment" classname="./runtime.ts" time="0.010" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; issue comments and attachments: issueGetIssueAttachment" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue comments and attachments: issueEditIssueAttachment" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue comments and attachments: issueEditIssueAttachment" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue comments and attachments: issueDeleteIssueAttachment" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue comments and attachments: issueDeleteIssueAttachment" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; issue comments and attachments: issueCreateIssueCommentAttachment" classname="./runtime.ts" time="0.009" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue comments and attachments: issueListIssueCommentAttachments" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue comments and attachments: issueListIssueCommentAttachments" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; issue comments and attachments: issueGetIssueCommentAttachment" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue comments and attachments: issueEditIssueCommentAttachment" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue comments and attachments: issueEditIssueCommentAttachment" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; issue comments and attachments: issueDeleteIssueCommentAttachment" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue comments and attachments: issueDeleteCommentDeprecated" classname="./runtime.ts" time="0.008" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue comments and attachments: issueDeleteCommentDeprecated" classname="./runtime.ts" time="0.009" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue comments and attachments: issueCreateComment" classname="./runtime.ts" time="0.008" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue comments and attachments: issueCreateComment" classname="./runtime.ts" time="0.007" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; issue comments and attachments: issueDeleteComment" classname="./runtime.ts" time="0.008" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; issue comments and attachments: issueDeleteComment" classname="./runtime.ts" time="0.007" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; admin webhook CRUD: adminCreateHook" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; admin webhook CRUD: adminCreateHook" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; admin webhook CRUD: adminGetHook" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; admin webhook CRUD: adminEditHook" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; admin webhook CRUD: adminEditHook" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; admin webhook CRUD: adminDeleteHook" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
@@ -613,13 +613,13 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; org webhook CRUD: orgGetHook" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; org webhook CRUD: orgEditHook" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; org webhook CRUD: orgEditHook" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; org webhook CRUD: orgDeleteHook" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; org webhook CRUD: orgDeleteHook" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repo webhook CRUD: repoCreateHook" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repo webhook CRUD: repoGetHook" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repo webhook CRUD: repoGetHook" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repo webhook CRUD: repoEditHook" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
@@ -633,37 +633,37 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; user webhook CRUD: userEditHook" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; user webhook CRUD: userDeleteHook" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; user webhook CRUD: userDeleteHook" classname="./runtime.ts" time="0.002" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoCreateFile" classname="./runtime.ts" time="0.126" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoCreateFile" classname="./runtime.ts" time="0.130" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoGetEditorConfig" classname="./runtime.ts" time="0.006" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoGetEditorConfig" classname="./runtime.ts" time="0.005" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoCreateFile" classname="./runtime.ts" time="0.139" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoCreateFile" classname="./runtime.ts" time="0.133" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoUpdateFile" classname="./runtime.ts" time="0.123" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoDeleteFile" classname="./runtime.ts" time="0.120" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoDeleteFile" classname="./runtime.ts" time="0.121" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoChangeFiles" classname="./runtime.ts" time="0.124" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoChangeFiles" classname="./runtime.ts" time="0.125" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoApplyDiffPatch" classname="./runtime.ts" time="0.117" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoApplyDiffPatch" classname="./runtime.ts" time="0.122" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoCreateBranch" classname="./runtime.ts" time="0.109" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoCreateBranch" classname="./runtime.ts" time="0.119" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: wait for created branch" classname="./runtime.ts" time="0.005" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoUpdateBranch" classname="./runtime.ts" time="0.117" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoUpdateBranch" classname="./runtime.ts" time="0.120" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoRenameBranch" classname="./runtime.ts" time="0.008" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoRenameBranch" classname="./runtime.ts" time="0.009" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoCompareDiff" classname="./runtime.ts" time="0.017" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoCompareDiff" classname="./runtime.ts" time="0.018" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoDeleteBranch" classname="./runtime.ts" time="0.006" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoCreateBranchProtection" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoGetBranchProtection" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoGetBranchProtection" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoEditBranchProtection" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
@@ -671,11 +671,11 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoDeleteBranchProtection" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoCreateTagProtection" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoCreateTagProtection" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoGetTagProtection" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoGetTagProtection" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoEditTagProtection" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoEditTagProtection" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoDeleteTagProtection" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
@@ -683,31 +683,31 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoGetTag" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: GetAnnotatedTag" classname="./runtime.ts" time="0.005" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: GetAnnotatedTag" classname="./runtime.ts" time="0.006" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoDeleteTag" classname="./runtime.ts" time="0.006" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoDeleteTag" classname="./runtime.ts" time="0.007" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoGetGitHook" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoEditGitHook" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoDeleteGitHook" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; git file and branch lifecycle: repoDeleteGitHook" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; release and binary attachment lifecycle: repoCreateRelease" classname="./runtime.ts" time="0.017" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; release and binary attachment lifecycle: repoCreateRelease" classname="./runtime.ts" time="0.013" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; release and binary attachment lifecycle: repoGetLatestRelease" classname="./runtime.ts" time="0.005" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; release and binary attachment lifecycle: repoGetLatestRelease" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; release and binary attachment lifecycle: repoGetReleaseByTag" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; release and binary attachment lifecycle: repoGetRelease" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; release and binary attachment lifecycle: repoGetRelease" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; release and binary attachment lifecycle: repoEditRelease" classname="./runtime.ts" time="0.008" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; release and binary attachment lifecycle: repoEditRelease" classname="./runtime.ts" time="0.009" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; release and binary attachment lifecycle: repoCreateReleaseAttachment" classname="./runtime.ts" time="0.005" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; release and binary attachment lifecycle: repoCreateReleaseAttachment" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; release and binary attachment lifecycle: repoListReleaseAttachments" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; release and binary attachment lifecycle: repoGetReleaseAttachment" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; release and binary attachment lifecycle: repoGetReleaseAttachment" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; release and binary attachment lifecycle: repoEditReleaseAttachment" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
@@ -719,25 +719,25 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; release and binary attachment lifecycle: repoDeleteReleaseByTag" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; wiki and topics: repoCreateWikiPage" classname="./runtime.ts" time="0.120" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; wiki and topics: repoCreateWikiPage" classname="./runtime.ts" time="0.124" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; wiki and topics: repoGetWikiPage" classname="./runtime.ts" time="0.006" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; wiki and topics: repoGetWikiPages" classname="./runtime.ts" time="0.006" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; wiki and topics: repoGetWikiPages" classname="./runtime.ts" time="0.005" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; wiki and topics: repoGetWikiPageRevisions" classname="./runtime.ts" time="0.006" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; wiki and topics: repoEditWikiPage" classname="./runtime.ts" time="0.120" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; wiki and topics: repoEditWikiPage" classname="./runtime.ts" time="0.130" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; wiki and topics: repoDeleteWikiPage" classname="./runtime.ts" time="0.115" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; wiki and topics: repoDeleteWikiPage" classname="./runtime.ts" time="0.125" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; wiki and topics: repoUpdateTopics" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; wiki and topics: repoAddTopic" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; wiki and topics: repoAddTopic" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; wiki and topics: repoListTopics" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; wiki and topics: repoListTopics" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; wiki and topics: repoDeleteTopic" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; wiki and topics: repoDeleteTopic" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; SSH key CRUD: userCurrentPostKey" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
@@ -757,21 +757,21 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; GPG key lifecycle: getVerificationToken" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; GPG key lifecycle: userCurrentPostGPGKey" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; GPG key lifecycle: userCurrentPostGPGKey" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; GPG key lifecycle: userCurrentGetGPGKey" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; GPG key lifecycle: userVerifyGPGKey" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; GPG key lifecycle: userCurrentDeleteGPGKey" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; GPG key lifecycle: userCurrentDeleteGPGKey" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; GPG key lifecycle: repoSigningKey" classname="./runtime.ts" time="0.006" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; GPG key lifecycle: repoSigningKey" classname="./runtime.ts" time="0.007" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; GPG key lifecycle: getSigningKey" classname="./runtime.ts" time="0.006" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; OAuth email avatar and API tokens: userCreateOAuth2Application" classname="./runtime.ts" time="0.040" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; OAuth email avatar and API tokens: userGetOAuth2Application" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; OAuth email avatar and API tokens: userGetOAuth2Application" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; OAuth email avatar and API tokens: userUpdateOAuth2Application" classname="./runtime.ts" time="0.040" line="146" col="50">
         </testcase>
@@ -779,9 +779,9 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; OAuth email avatar and API tokens: userAddEmail" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; OAuth email avatar and API tokens: userDeleteEmail" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; OAuth email avatar and API tokens: userDeleteEmail" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; OAuth email avatar and API tokens: userUpdateAvatar" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; OAuth email avatar and API tokens: userUpdateAvatar" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; OAuth email avatar and API tokens: userDeleteAvatar" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
@@ -801,25 +801,25 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; OAuth email avatar and API tokens: deleteCurrentToken" classname="./runtime.ts" time="0.005" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; OAuth email avatar and API tokens: userCreateToken" classname="./runtime.ts" time="0.014" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; OAuth email avatar and API tokens: userCreateToken" classname="./runtime.ts" time="0.015" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; OAuth email avatar and API tokens: userDeleteAccessToken" classname="./runtime.ts" time="0.013" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; OAuth email avatar and API tokens: userDeleteAccessToken" classname="./runtime.ts" time="0.012" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoAddCollaborator" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoAddCollaborator" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoCreateBranch" classname="./runtime.ts" time="0.114" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoCreateBranch" classname="./runtime.ts" time="0.117" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: wait for created branch" classname="./runtime.ts" time="0.006" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: wait for created branch" classname="./runtime.ts" time="0.005" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoCreateFile" classname="./runtime.ts" time="0.122" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoCreateFile" classname="./runtime.ts" time="0.121" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoCreatePullRequest" classname="./runtime.ts" time="0.128" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoCreatePullRequest" classname="./runtime.ts" time="0.132" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoGetPullRequest" classname="./runtime.ts" time="0.008" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoGetPullRequest" classname="./runtime.ts" time="0.043" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoGetPullRequestByBaseHead" classname="./runtime.ts" time="0.007" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoGetPullRequestByBaseHead" classname="./runtime.ts" time="0.010" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoEditPullRequest" classname="./runtime.ts" time="0.016" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoEditPullRequest" classname="./runtime.ts" time="0.018" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoGetPullRequestCommits" classname="./runtime.ts" time="0.009" line="146" col="50">
         </testcase>
@@ -829,13 +829,13 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoCreatePullReviewRequests" classname="./runtime.ts" time="0.013" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoDeletePullReviewRequests" classname="./runtime.ts" time="0.011" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoDeletePullReviewRequests" classname="./runtime.ts" time="0.012" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoListPullReviews" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoListPullReviews" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoCreatePullReview" classname="./runtime.ts" time="0.011" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoCreatePullReview" classname="./runtime.ts" time="0.010" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoGetPullReview" classname="./runtime.ts" time="0.005" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoGetPullReview" classname="./runtime.ts" time="0.006" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoGetPullReviewComments" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
@@ -847,47 +847,47 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoSubmitPullReview" classname="./runtime.ts" time="0.016" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoDismissPullReview" classname="./runtime.ts" time="0.008" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoDismissPullReview" classname="./runtime.ts" time="0.009" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoUnDismissPullReview" classname="./runtime.ts" time="0.006" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoUnDismissPullReview" classname="./runtime.ts" time="0.009" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoCreateFile" classname="./runtime.ts" time="0.120" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoCreateFile" classname="./runtime.ts" time="0.129" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoUpdatePullRequest" classname="./runtime.ts" time="0.241" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoUpdatePullRequest" classname="./runtime.ts" time="0.244" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoGetPullRequest" classname="./runtime.ts" time="2.094" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoGetPullRequest" classname="./runtime.ts" time="1.132" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoDeletePullReview" classname="./runtime.ts" time="0.006" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoCreateBranchProtection" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoCreateBranchProtection" classname="./runtime.ts" time="0.005" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: wait for merge readiness" classname="./runtime.ts" time="0.636" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: wait for merge readiness" classname="./runtime.ts" time="0.848" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoMergePullRequest" classname="./runtime.ts" time="0.007" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoMergePullRequest" classname="./runtime.ts" time="0.008" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoCancelScheduledAutoMerge" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoDeleteBranchProtection" classname="./runtime.ts" time="0.007" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoDeleteBranchProtection" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: wait for merge readiness" classname="./runtime.ts" time="0.428" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoMergePullRequest" classname="./runtime.ts" time="0.149" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoMergePullRequest" classname="./runtime.ts" time="0.148" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoPullRequestIsMerged" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoPullRequestIsMerged" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoGetPullRequest" classname="./runtime.ts" time="0.008" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoGetPullRequest" classname="./runtime.ts" time="0.007" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; pull-request lifecycle: repoGetCommitPullRequest" classname="./runtime.ts" time="0.008" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; package lifecycle: listPackageVersions" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; package lifecycle: getLatestPackageVersion" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; package lifecycle: getLatestPackageVersion" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; package lifecycle: getPackage" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; package lifecycle: getPackage" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; package lifecycle: listPackageFiles" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; package lifecycle: listPackageFiles" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; package lifecycle: linkPackage" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; package lifecycle: linkPackage" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; package lifecycle: unlinkPackage" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
@@ -895,47 +895,47 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; package lifecycle: deletePackage" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: createFork" classname="./runtime.ts" time="0.016" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: createFork" classname="./runtime.ts" time="0.017" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: repoGet" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: repoGet" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: repoCreateFile" classname="./runtime.ts" time="0.125" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: repoMergeUpstream" classname="./runtime.ts" time="0.114" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: repoMergeUpstream" classname="./runtime.ts" time="0.116" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: repoMigrate" classname="./runtime.ts" time="0.026" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: repoGet" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: repoGet" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: repoMirrorSync" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: createCurrentUserRepo" classname="./runtime.ts" time="0.008" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: repoAddPushMirror" classname="./runtime.ts" time="0.016" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: repoAddPushMirror" classname="./runtime.ts" time="0.017" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: repoGetPushMirrorByRemoteName" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: repoPushMirrorSync" classname="./runtime.ts" time="0.237" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: repoPushMirrorSync" classname="./runtime.ts" time="0.238" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: repoGet" classname="./runtime.ts" time="1.564" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: repoGet" classname="./runtime.ts" time="0.316" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: repoDeletePushMirror" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: createCurrentUserRepo" classname="./runtime.ts" time="0.121" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: createCurrentUserRepo" classname="./runtime.ts" time="0.124" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: generateRepo" classname="./runtime.ts" time="0.127" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: generateRepo" classname="./runtime.ts" time="0.125" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: repoGet" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: repoGet" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: repoDelete" classname="./runtime.ts" time="0.006" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: repoDelete" classname="./runtime.ts" time="0.007" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: createCurrentUserRepo" classname="./runtime.ts" time="0.125" line="146" col="50">
-        </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: repoTransfer" classname="./runtime.ts" time="0.006" line="146" col="50">
-        </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: rejectRepoTransfer" classname="./runtime.ts" time="0.005" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: createCurrentUserRepo" classname="./runtime.ts" time="0.126" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: repoTransfer" classname="./runtime.ts" time="0.006" line="146" col="50">
+        </testcase>
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: rejectRepoTransfer" classname="./runtime.ts" time="0.004" line="146" col="50">
+        </testcase>
+        <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: repoTransfer" classname="./runtime.ts" time="0.005" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; repository fork migration mirror template and transfer: acceptRepoTransfer" classname="./runtime.ts" time="0.005" line="146" col="50">
         </testcase>
@@ -953,25 +953,25 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; runner registration and management: deleteAdminRunner" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; runner registration and management: orgCreateRunnerRegistrationToken" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; runner registration and management: orgCreateRunnerRegistrationToken" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; runner registration and management: $fixture/registerOrg" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; runner registration and management: getOrgRunner" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; runner registration and management: updateOrgRunner" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; runner registration and management: updateOrgRunner" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; runner registration and management: deleteOrgRunner" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; runner registration and management: deleteOrgRunner" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; runner registration and management: repoCreateRunnerRegistrationToken" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; runner registration and management: repoCreateRunnerRegistrationToken" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; runner registration and management: $fixture/registerRepo" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; runner registration and management: getRepoRunner" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; runner registration and management: getRepoRunner" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; runner registration and management: updateRepoRunner" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; runner registration and management: updateRepoRunner" classname="./runtime.ts" time="0.005" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; runner registration and management: deleteRepoRunner" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; runner registration and management: deleteRepoRunner" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; runner registration and management: userCreateRunnerRegistrationToken" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
@@ -979,19 +979,19 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; runner registration and management: getUserRunner" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; runner registration and management: updateUserRunner" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; runner registration and management: updateUserRunner" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; runner registration and management: deleteUserRunner" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: repoCreateFile" classname="./runtime.ts" time="0.121" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: repoCreateFile" classname="./runtime.ts" time="0.130" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: ActionsGetWorkflow" classname="./runtime.ts" time="0.006" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: ActionsDisableWorkflow" classname="./runtime.ts" time="0.006" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: ActionsDisableWorkflow" classname="./runtime.ts" time="0.005" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: ActionsEnableWorkflow" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: ActionsEnableWorkflow" classname="./runtime.ts" time="0.006" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: ActionsDispatchWorkflow" classname="./runtime.ts" time="0.014" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: ActionsDispatchWorkflow" classname="./runtime.ts" time="0.015" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: getWorkflowRuns" classname="./runtime.ts" time="0.005" line="146" col="50">
         </testcase>
@@ -999,29 +999,29 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: getWorkflowRunAttempt" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: getArtifactsOfRun" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: getArtifactsOfRun" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: listWorkflowRunJobs" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: listWorkflowRunAttemptJobs" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: listWorkflowRunAttemptJobs" classname="./runtime.ts" time="0.005" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: ActionsListWorkflowRuns" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: ActionsListWorkflowRuns" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: getWorkflowJob" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: getWorkflowJob" classname="./runtime.ts" time="0.006" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: GetWorkflowRun" classname="./runtime.ts" time="0.260" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: GetWorkflowRun" classname="./runtime.ts" time="0.264" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: getArtifacts" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: getArtifacts" classname="./runtime.ts" time="0.005" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: getArtifact" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: downloadArtifact" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: downloadArtifact" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: deleteArtifact" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: deleteArtifact" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: downloadActionsRunJobLogs" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: rerunWorkflowJob" classname="./runtime.ts" time="0.014" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: rerunWorkflowJob" classname="./runtime.ts" time="0.017" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: GetWorkflowRun" classname="./runtime.ts" time="0.260" line="146" col="50">
         </testcase>
@@ -1029,17 +1029,17 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: GetWorkflowRun" classname="./runtime.ts" time="0.261" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: rerunFailedWorkflowRun" classname="./runtime.ts" time="0.013" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: rerunFailedWorkflowRun" classname="./runtime.ts" time="0.014" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: GetWorkflowRun" classname="./runtime.ts" time="0.261" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: GetWorkflowRun" classname="./runtime.ts" time="0.260" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; workflow lifecycle: deleteActionRun" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; notification lifecycle: issueCreateComment" classname="./runtime.ts" time="0.010" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; notification lifecycle: issueCreateComment" classname="./runtime.ts" time="0.011" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; notification lifecycle: notifyGetList" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; notification lifecycle: notifyGetThread" classname="./runtime.ts" time="0.005" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; notification lifecycle: notifyGetThread" classname="./runtime.ts" time="0.006" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; notification lifecycle: notifyReadThread" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
@@ -1047,21 +1047,21 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; secondary resources and administrative cleanup: repoGet" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; secondary resources and administrative cleanup: adminDeleteUnadoptedRepository" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; secondary resources and administrative cleanup: adminDeleteUnadoptedRepository" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; secondary resources and administrative cleanup: adminCronRun" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; secondary resources and administrative cleanup: adminCronRun" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; secondary resources and administrative cleanup: adminCreateRepo" classname="./runtime.ts" time="0.130" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; secondary resources and administrative cleanup: adminCreateRepo" classname="./runtime.ts" time="0.122" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; secondary resources and administrative cleanup: adminCreateOrg" classname="./runtime.ts" time="0.006" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; secondary resources and administrative cleanup: createOrgRepoDeprecated" classname="./runtime.ts" time="0.128" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; secondary resources and administrative cleanup: createOrgRepoDeprecated" classname="./runtime.ts" time="0.125" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; secondary resources and administrative cleanup: adminAddUserBadges" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; secondary resources and administrative cleanup: adminAddUserBadges" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; secondary resources and administrative cleanup: adminListUserBadges" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; secondary resources and administrative cleanup: adminListUserBadges" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; secondary resources and administrative cleanup: adminDeleteUserBadges" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; secondary resources and administrative cleanup: adminDeleteUserBadges" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; secondary resources and administrative cleanup: orgDeleteMember" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
@@ -1069,27 +1069,27 @@
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; secondary resources and administrative cleanup: adminRenameUser" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; secondary resources and administrative cleanup: renameOrg" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; secondary resources and administrative cleanup: renameOrg" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; secondary resources and administrative cleanup: orgDeleteRepos" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; secondary resources and administrative cleanup: orgDelete" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; secondary resources and administrative cleanup: issueDelete" classname="./runtime.ts" time="0.005" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; secondary resources and administrative cleanup: issueDelete" classname="./runtime.ts" time="0.006" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; secondary resources and administrative cleanup: issueDeleteLabel" classname="./runtime.ts" time="0.004" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; secondary resources and administrative cleanup: issueDeleteLabel" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; secondary resources and administrative cleanup: orgDeleteLabel" classname="./runtime.ts" time="0.003" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; secondary resources and administrative cleanup: issueDeleteMilestone" classname="./runtime.ts" time="0.003" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; secondary resources and administrative cleanup: issueDeleteMilestone" classname="./runtime.ts" time="0.004" line="146" col="50">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; secondary resources and administrative cleanup: adminDeleteUser" classname="./runtime.ts" time="0.006" line="146" col="50">
+        <testcase name="gitea 1.27.2 real API E2E &gt; secondary resources and administrative cleanup: adminDeleteUser" classname="./runtime.ts" time="0.007" line="146" col="50">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; negative: existing commit without a Git note returns not found" classname="./runtime.ts" time="0.004" line="148" col="56">
         </testcase>
         <testcase name="gitea 1.27.2 real API E2E &gt; negative: repoSigningKeySSH: missing resource contract" classname="./runtime.ts" time="0.007" line="148" col="56">
         </testcase>
-        <testcase name="gitea 1.27.2 real API E2E &gt; negative: getSigningKeySSH: missing resource contract" classname="./runtime.ts" time="0.005" line="148" col="56">
+        <testcase name="gitea 1.27.2 real API E2E &gt; negative: getSigningKeySSH: missing resource contract" classname="./runtime.ts" time="0.006" line="148" col="56">
         </testcase>
     </testsuite>
 </testsuites>

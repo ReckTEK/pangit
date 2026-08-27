@@ -1,10 +1,11 @@
 import { bold, cyan, dim, green, red, setColorEnabled } from "@std/fmt/colors";
+import { cleanGeneratedArtifacts } from "./results.ts";
 
 const root = new URL("../", import.meta.url);
 const phases = [
   {
     title: "Clean generated artifacts",
-    detail: "Remove src/generated; leave docs/test-results untouched",
+    detail: "Rebuild generated artifacts; preserve every tests/results directory",
     script: null,
     permissions: [],
   },
@@ -44,17 +45,29 @@ const phases = [
     ],
   },
   {
+    title: "Publish Markdown reports",
+    detail: "Convert saved raw E2E evidence into docs/test-results Markdown",
+    script: "codegen/reports/generate.ts",
+    permissions: [
+      "--allow-read=src/generated,docs/test-results",
+      "--allow-write=docs/test-results",
+      "--allow-run=deno",
+    ],
+  },
+  {
     title: "Update README test results",
-    detail: "Render saved docs/test-results summaries; do not execute tests",
+    detail: "Summarize saved raw results and link the published Markdown reports",
     script: "codegen/readme.ts",
-    permissions: ["--allow-read=README.md,docs/test-results", "--allow-write=README.md"],
+    permissions: ["--allow-read=README.md,src/generated", "--allow-write=README.md"],
   },
 ] as const;
 
 async function generate(): Promise<void> {
   setColorEnabled(Deno.stdout.isTerminal() && !Deno.noColor);
   console.log(
-    `\n${bold(cyan("Generate"))} ${dim("specifications → clients → E2E assets → README")}\n`,
+    `\n${bold(cyan("Generate"))} ${
+      dim("specifications → clients → E2E assets → reports → README")
+    }\n`,
   );
   const decoder = new TextDecoder();
   const started = performance.now();
@@ -65,11 +78,7 @@ async function generate(): Promise<void> {
     const phaseStarted = performance.now();
     try {
       if (phase.script === null) {
-        try {
-          await Deno.remove(new URL("src/generated/", root), { recursive: true });
-        } catch (error) {
-          if (!(error instanceof Deno.errors.NotFound)) throw error;
-        }
+        await cleanGeneratedArtifacts(new URL("src/generated/", root));
       } else {
         const result = await new Deno.Command(Deno.execPath(), {
           args: ["run", ...phase.permissions, phase.script],

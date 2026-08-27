@@ -1,5 +1,5 @@
 /**
- * Codeberg REST API client generated from Forgejo API 16.0.0-dev-714-11075108+gitea-1.22.0.
+ * Codeberg REST API client generated from Forgejo API 16.0.0-dev-712-d6a6972c+gitea-1.22.0.
  *
  * This documentation describes the Forgejo API.
  *

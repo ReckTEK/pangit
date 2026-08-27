@@ -30,12 +30,16 @@ function summary(provider = "gitea", version = "1.0.0") {
       failedCases: 0,
       cases: 3,
     },
-    sourceCoverage: { lines: { total: 100, covered: 95, percent: 95 } },
+    sourceCoverage: {
+      lines: { total: 100, covered: 95, percent: 95 },
+      branches: { total: 2, covered: 2, percent: 100 },
+      functions: { total: 5, covered: 5, percent: 100 },
+    },
   };
 }
 
 async function snapshot(root: URL, provider = "gitea", version = "1.0.0"): Promise<URL> {
-  const path = new URL(`docs/test-results/${provider}/${version}/`, root);
+  const path = new URL(`src/generated/${provider}/${version}/tests/results/`, root);
   await Deno.mkdir(path, { recursive: true });
   await Deno.writeTextFile(
     new URL("summary.json", path),
@@ -84,7 +88,7 @@ Deno.test("README results are ordered, repeatable, and preserve human content wi
       const [provider, version] of [["gitea", "1.0.0"], ["gitea", "1.1.0"], ["zeta", "latest"]]
     ) {
       assert(
-        first.includes(`[${version}](docs/test-results/${provider}/${version}/index.html)`),
+        first.includes(`[${version}](docs/test-results/${provider}/${version}/test-result.md)`),
         `Missing relative full-report link for ${provider}/${version}`,
       );
     }
@@ -117,12 +121,15 @@ Deno.test("README results are ordered, repeatable, and preserve human content wi
 Deno.test("README generation rejects missing reports without changing the README", async () => {
   await withFixture(async (root) => {
     await rejectsUnchanged(root, "Run deno task e2e");
-    await Deno.mkdir(new URL("docs/test-results/", root), { recursive: true });
-    await rejectsUnchanged(root, "No report snapshots found");
-    await Deno.mkdir(new URL("docs/test-results/gitea/", root));
-    await rejectsUnchanged(root, "No report snapshots for gitea");
-    await Deno.mkdir(new URL("docs/test-results/gitea/1.0.0/", root));
-    await rejectsUnchanged(root, "Cannot read docs/test-results/gitea/1.0.0/summary.json");
+    await Deno.mkdir(new URL("src/generated/", root), { recursive: true });
+    await rejectsUnchanged(root, "No raw report snapshots found");
+    await Deno.mkdir(new URL("src/generated/gitea/1.0.0/tests/results/", root), {
+      recursive: true,
+    });
+    await rejectsUnchanged(
+      root,
+      "Cannot read src/generated/gitea/1.0.0/tests/results/summary.json",
+    );
   });
 });
 
@@ -146,7 +153,10 @@ Deno.test("README generation rejects invalid summaries", async () => {
       await rejectsUnchanged(root, "Invalid report summary");
     }
     await Deno.writeTextFile(new URL("summary.json", path), "invalid JSON");
-    await rejectsUnchanged(root, "Cannot read docs/test-results/gitea/1.0.0/summary.json");
+    await rejectsUnchanged(
+      root,
+      "Cannot read src/generated/gitea/1.0.0/tests/results/summary.json",
+    );
   });
 });
 

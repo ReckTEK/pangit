@@ -11,7 +11,7 @@
     "missing": 0,
     "failedCases": 0,
     "cases": 532,
-    "requests": 563
+    "requests": 551
   },
   "sourceCoverage": {
     "lines": {

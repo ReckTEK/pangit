@@ -124,8 +124,13 @@ export async function runGeneratedClientTests(): Promise<void> {
           if (errors.length) throw new Error(`Compose cleanup failed: ${errors.join("; ")}`);
         };
         try {
-          if (!results.pathname.startsWith(new URL("docs/test-results/", root).pathname)) {
-            throw new Error("E2E results must be documentation-owned; run deno task generate");
+          if (
+            results.href !==
+              new URL(`src/generated/${provider}/${version}/tests/results/`, root).href
+          ) {
+            throw new Error(
+              "E2E results must be beside the generated client tests; run deno task generate",
+            );
           }
           const output = await docker(
             [...composeArgs, "config", "--format", "json"],

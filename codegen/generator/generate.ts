@@ -15,6 +15,7 @@ import {
 } from "./openapi.ts";
 import { SchemaRenderer, union } from "./schema.ts";
 import { apiSpecProviders } from "../specs/sources.ts";
+import { rawResultDirectories } from "../results.ts";
 
 const defaultNormalizedSpecsDirectory = new URL("../specs/normalized/", import.meta.url);
 const defaultSpecManifestFile = new URL("../specs/raw/manifest.json", import.meta.url);
@@ -1679,6 +1680,11 @@ export async function replaceGeneratedDirectory(
         await copyGeneratedTests(currentTests, new URL(testsPath, stage));
       }
     }
+    // Retired versions lose generated code, but their recorded results remain owned evidence.
+    for (const result of await rawResultDirectories(directory)) {
+      const destination = new URL(`${result.provider}/${result.version}/tests/results/`, stage);
+      if (!(await pathExists(destination))) await copyGeneratedTests(result.directory, destination);
+    }
 
     let movedCurrent = false;
     let movedStage = false;
@@ -1811,7 +1817,11 @@ async function copyGeneratedTests(source: URL, destination: URL): Promise<void> 
         new URL(`${entry.name}/`, destination),
       );
     } else if (entry.isFile) {
-      await Deno.copyFile(new URL(entry.name, source), new URL(entry.name, destination));
+      const input = new URL(entry.name, source);
+      const output = new URL(entry.name, destination);
+      const info = await Deno.stat(input);
+      await Deno.copyFile(input, output);
+      if (info.atime && info.mtime) await Deno.utime(output, info.atime, info.mtime);
     }
   }
 }

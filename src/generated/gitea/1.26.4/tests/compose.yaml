@@ -102,7 +102,7 @@ services:
     volumes:
       - '../../../../../:/workspace:ro'
       - './.auth:/sandbox-auth:ro'
-      - '../../../../../docs/test-results/gitea/1.26.4:/results'
+      - '../../../../../src/generated/gitea/1.26.4/tests/results:/results'
     depends_on:
       gitea:
         condition: service_healthy

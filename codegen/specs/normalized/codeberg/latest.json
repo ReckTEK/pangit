@@ -7,7 +7,7 @@
       "name": "This file is distributed under the MIT license for the purpose of interoperability",
       "url": "http://opensource.org/licenses/MIT"
     },
-    "version": "16.0.0-dev-714-11075108+gitea-1.22.0"
+    "version": "16.0.0-dev-712-d6a6972c+gitea-1.22.0"
   },
   "paths": {
     "/actions/run": {

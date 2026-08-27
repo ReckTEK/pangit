@@ -153,7 +153,7 @@ function createRawSpecManifest(fetchedSpecs: FetchedApiSpec[]): RawSpecManifest 
           normalized: `codegen/specs/normalized/${provider}/${version}.json`,
           client: `src/generated/${provider}/${version}/client.ts`,
           tests: `src/generated/${provider}/${version}/tests`,
-          results: `docs/test-results/${provider}/${version}`,
+          results: `src/generated/${provider}/${version}/tests/results`,
           compose: `src/generated/${provider}/${version}/tests/compose.yaml`,
         },
       };
