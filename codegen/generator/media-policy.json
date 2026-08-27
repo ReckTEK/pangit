@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "mediaTypes": {
+    "application/json": {
+      "request": { "family": "json", "policy": "standard-json" },
+      "response": { "decoder": "json", "bodyFamily": "json", "policy": "standard-json" }
+    },
+    "application/json-patch+json": {
+      "request": { "family": "json", "policy": "standard-json" }
+    },
+    "application/octet-stream": {
+      "request": { "family": "binary", "policy": "opaque-binary" },
+      "response": { "decoder": "binary", "bodyFamily": "blob", "policy": "opaque-binary" }
+    },
+    "application/octocat-stream": {
+      "response": {
+        "decoder": "text",
+        "bodyFamily": "string",
+        "policy": "schema-text",
+        "requiresTextSchema": true
+      }
+    },
+    "application/sarif+json": {
+      "response": { "decoder": "json", "bodyFamily": "json", "policy": "standard-json" }
+    },
+    "application/scim+json": {
+      "response": { "decoder": "json", "bodyFamily": "json", "policy": "standard-json" }
+    },
+    "application/vnd.github.diff": {
+      "response": {
+        "decoder": "text",
+        "bodyFamily": "string",
+        "policy": "schema-text",
+        "requiresTextSchema": true
+      }
+    },
+    "application/vnd.github.object": {
+      "request": { "family": "binary", "policy": "response-only-provider-json" },
+      "response": {
+        "decoder": "json",
+        "bodyFamily": "json",
+        "policy": "github-object-json"
+      }
+    },
+    "application/vnd.github.patch": {
+      "response": {
+        "decoder": "text",
+        "bodyFamily": "string",
+        "policy": "schema-text",
+        "requiresTextSchema": true
+      }
+    },
+    "application/vnd.github.sha": {
+      "response": {
+        "decoder": "text",
+        "bodyFamily": "string",
+        "policy": "schema-text",
+        "requiresTextSchema": true
+      }
+    },
+    "application/vnd.github.v3.star+json": {
+      "response": { "decoder": "json", "bodyFamily": "json", "policy": "standard-json" }
+    },
+    "application/x-tar": {
+      "response": { "decoder": "binary", "bodyFamily": "blob", "policy": "opaque-binary" }
+    },
+    "application/x-www-form-urlencoded": {
+      "request": { "family": "form", "policy": "url-encoded-form" }
+    },
+    "application/zip": {
+      "response": { "decoder": "binary", "bodyFamily": "blob", "policy": "opaque-binary" }
+    },
+    "multipart/form-data": {
+      "request": { "family": "form", "policy": "multipart-form" },
+      "response": { "decoder": "binary", "bodyFamily": "blob", "policy": "opaque-multipart" }
+    },
+    "multipart/related": {
+      "response": { "decoder": "binary", "bodyFamily": "blob", "policy": "opaque-multipart" }
+    },
+    "text/html": {
+      "response": { "decoder": "text", "bodyFamily": "string", "policy": "standard-text" }
+    },
+    "text/plain": {
+      "request": { "family": "text", "policy": "standard-text" },
+      "response": { "decoder": "text", "bodyFamily": "string", "policy": "standard-text" }
+    },
+    "text/x-markdown": {
+      "request": { "family": "text", "policy": "standard-text" }
+    }
+  }
+}

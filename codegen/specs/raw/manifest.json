@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "providers": {
+    "azure-devops": {
+      "name": "Azure DevOps Git",
+      "kind": "live",
+      "upstream": "https://github.com/MicrosoftDocs/vsts-rest-api-specs",
+      "selected": "latest",
+      "versions": {
+        "latest": {
+          "containerImage": null,
+          "ref": null,
+          "source": "https://raw.githubusercontent.com/MicrosoftDocs/vsts-rest-api-specs/master/specification/git/7.2/git.json",
+          "format": "json",
+          "destination": "codegen/specs/raw/azure-devops/latest.json",
+          "bytes": 590222,
+          "sha256": "sha256:7e7b5bd1af4b486a1af498c78150ca1083b7c6d621671bde26967406e3d75d6d"
+        }
+      }
+    },
+    "bitbucket": {
+      "name": "Bitbucket Cloud",
+      "kind": "live",
+      "upstream": "https://developer.atlassian.com/cloud/bitbucket",
+      "selected": "latest",
+      "versions": {
+        "latest": {
+          "containerImage": null,
+          "ref": null,
+          "source": "https://dac-static.atlassian.com/cloud/bitbucket/swagger.v3.json",
+          "format": "json",
+          "destination": "codegen/specs/raw/bitbucket/latest.json",
+          "bytes": 1359673,
+          "sha256": "sha256:3dbfe6a80143511a287e58c21a193d3551ab5d41e8b60e65c1ae121b7000dec3"
+        }
+      }
+    },
+    "codeberg": {
+      "name": "Codeberg (Forgejo)",
+      "kind": "live",
+      "upstream": "https://codeberg.org",
+      "selected": "latest",
+      "versions": {
+        "latest": {
+          "containerImage": null,
+          "ref": null,
+          "source": "https://codeberg.org/swagger.v1.json",
+          "format": "json",
+          "destination": "codegen/specs/raw/codeberg/latest.json",
+          "bytes": 853956,
+          "sha256": "sha256:bb988ce779fbd7c332391d5abd93b0e6080e12a233945a756aa85093759ad56a"
+        }
+      }
+    },
+    "gitea": {
+      "name": "Gitea",
+      "kind": "release",
+      "upstream": "https://github.com/go-gitea/gitea",
+      "selected": "1.27.2",
+      "versions": {
+        "1.26.4": {
+          "containerImage": "docker.gitea.com/gitea:1.26.4",
+          "ref": "v1.26.4",
+          "source": "https://raw.githubusercontent.com/go-gitea/gitea/v1.26.4/templates/swagger/v1_json.tmpl",
+          "format": "json",
+          "destination": "codegen/specs/raw/gitea/1.26.4.json",
+          "bytes": 839152,
+          "sha256": "sha256:0b69d8398ae3557ff8480c55ee3abebd21131ddac39c23621264a69f13cd893d"
+        },
+        "1.27.2": {
+          "containerImage": "docker.gitea.com/gitea:1.27.2",
+          "ref": "v1.27.2",
+          "source": "https://raw.githubusercontent.com/go-gitea/gitea/v1.27.2/templates/swagger/v1_openapi3_json.tmpl",
+          "format": "json",
+          "destination": "codegen/specs/raw/gitea/1.27.2.json",
+          "bytes": 952215,
+          "sha256": "sha256:0f5a90ebce4a7efff9e338a8944894283c14757d759b28fab4940c461cf2f120"
+        }
+      }
+    },
+    "github": {
+      "name": "GitHub",
+      "kind": "live",
+      "upstream": "https://github.com/github/rest-api-description",
+      "selected": "latest",
+      "versions": {
+        "latest": {
+          "containerImage": null,
+          "ref": null,
+          "source": "https://raw.githubusercontent.com/github/rest-api-description/main/descriptions/api.github.com/api.github.com.yaml",
+          "format": "yaml",
+          "destination": "codegen/specs/raw/github/latest.yaml",
+          "bytes": 9838440,
+          "sha256": "sha256:557d8b4431220134577d36d7c82d370d5e4e899cc86bf2c249e3710ba9ab1c91"
+        }
+      }
+    },
+    "gitlab": {
+      "name": "GitLab",
+      "kind": "release",
+      "upstream": "https://gitlab.com/gitlab-org/gitlab",
+      "selected": "19.3.1",
+      "versions": {
+        "18.11.11": {
+          "containerImage": null,
+          "ref": "v18.11.11-ee",
+          "source": "https://gitlab.com/gitlab-org/gitlab/-/raw/v18.11.11-ee/doc/api/openapi/openapi_v2.yaml",
+          "format": "yaml",
+          "destination": "codegen/specs/raw/gitlab/18.11.11.yaml",
+          "bytes": 2254700,
+          "sha256": "sha256:4ec241f083a00372d2eb1629b2cac0b1877463e453d2a961c31057a99206ed4a"
+        },
+        "19.3.1": {
+          "containerImage": null,
+          "ref": "v19.3.1-ee",
+          "source": "https://gitlab.com/gitlab-org/gitlab/-/raw/v19.3.1-ee/doc/api/openapi/openapi_v2.yaml",
+          "format": "yaml",
+          "destination": "codegen/specs/raw/gitlab/19.3.1.yaml",
+          "bytes": 2441347,
+          "sha256": "sha256:17a1d86d6d6da7255f71ad9828c4378a16e48b505f0959896cc0f23e9fd5ee17"
+        }
+      }
+    }
+  }
+}

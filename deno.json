@@ -1,0 +1,29 @@
+{
+  "tasks": {
+    "check": "deno check mod.ts codegen/specs/fetch.ts codegen/specs/sources.ts codegen/specs/normalizers/mod.ts codegen/generator/generate.ts codegen/graph/generate.ts",
+    "update-specs": "deno run --allow-net --allow-write=codegen/specs/raw codegen/specs/fetch.ts && deno run --allow-read=codegen/specs/raw --allow-write=codegen/specs/normalized --allow-env=NODE_DISABLE_COLORS codegen/specs/normalizers/mod.ts",
+    "generate-sandboxes": "deno run --allow-read=codegen/specs/raw/manifest.json,codegen/docker/templates,tests/docker --allow-write=tests/docker codegen/docker/generate.ts",
+    "generate": "deno run --allow-read=codegen/specs/normalized,codegen/specs/raw/manifest.json,src,codegen/generator/public-names.json --allow-write=src --allow-run=deno codegen/generator/generate.ts",
+    "generate:check": "deno run --allow-read=codegen/specs/normalized,codegen/specs/raw/manifest.json,src,codegen/generator/public-names.json --allow-write=src --allow-run=deno codegen/generator/generate.ts --check",
+    "names:update": "deno run --allow-read=codegen/specs/normalized,codegen/specs/raw/manifest.json,src,codegen/generator --allow-write=src,codegen/generator --allow-run=deno codegen/generator/generate.ts --update-public-names",
+    "graph": "deno run --allow-read=codegen/specs/normalized --allow-write=docs codegen/graph/generate.ts",
+    "graph:check": "deno run --allow-read=codegen/specs/normalized,docs codegen/graph/generate.ts --check",
+    "codegen": "deno task update-specs && deno task generate && deno task graph",
+    "fmt": "deno fmt",
+    "lint": "deno lint mod.ts src codegen/generator codegen/graph codegen/specs/*.ts codegen/specs/normalizers",
+    "test": "deno test --allow-env=NODE_DISABLE_COLORS --allow-read=. --allow-write --allow-run=deno codegen src package"
+  },
+  "imports": {
+    "@std/yaml": "jsr:@std/yaml@1.0.10",
+    "openapi-types": "npm:openapi-types@12.1.3",
+    "swagger2openapi": "npm:swagger2openapi@7.0.8"
+  },
+  "fmt": {
+    "exclude": [
+      "codegen/specs/normalized/**",
+      "codegen/specs/raw/**",
+      "docs/rest-client-capability-matrix.md"
+    ],
+    "lineWidth": 100
+  }
+}

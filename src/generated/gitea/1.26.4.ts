@@ -1,0 +1,36405 @@
+/**
+ * Gitea REST API client generated from Gitea API 1.26.4.
+ *
+ * This documentation describes the Gitea API.
+ *
+ * This file is generated. Edit the OpenAPI normalizer or generator instead.
+ */
+
+import {
+  deepFreezeRestMetadata,
+  deepFreezeRestOperations,
+  type RestBinary,
+  type RestBody,
+  RestClient,
+  type RestClientOptions,
+  type RestGeneratedRequestOptions,
+  type RestInt64,
+  type RestJsonValue,
+  type RestOperation,
+  type RestRequestValue,
+  type RestResponse,
+  type RestUndocumentedResponse,
+} from "../../rest.ts";
+
+export const giteaServers = deepFreezeRestMetadata(["/api/v1"] as const);
+
+/** Provider-native OpenAPI security schemes retained as immutable metadata. */
+export const giteaSecuritySchemes = deepFreezeRestMetadata(
+  {
+    "AccessToken": {
+      "description":
+        "This authentication option is deprecated for removal in Gitea 1.23. Please use AuthorizationHeaderToken instead.",
+      "type": "apiKey",
+      "name": "access_token",
+      "in": "query",
+    },
+    "AuthorizationHeaderToken": {
+      "description": 'API tokens must be prepended with "token" followed by a space.',
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+    },
+    "BasicAuth": { "type": "http", "scheme": "basic" },
+    "SudoHeader": {
+      "description":
+        "Sudo API request as the user provided as the key. Admin privileges are required.",
+      "type": "apiKey",
+      "name": "Sudo",
+      "in": "header",
+    },
+    "SudoParam": {
+      "description":
+        "Sudo API request as the user provided as the key. Admin privileges are required.",
+      "type": "apiKey",
+      "name": "sudo",
+      "in": "query",
+    },
+    "TOTPHeader": {
+      "description":
+        "Must be used in combination with BasicAuth if two-factor authentication is enabled.",
+      "type": "apiKey",
+      "name": "X-GITEA-OTP",
+      "in": "header",
+    },
+    "Token": {
+      "description":
+        "This authentication option is deprecated for removal in Gitea 1.23. Please use AuthorizationHeaderToken instead.",
+      "type": "apiKey",
+      "name": "token",
+      "in": "query",
+    },
+  } as const,
+);
+
+/**
+ * APIError is an api error with a message
+ */
+export type ApiError = Record<string, unknown> & {
+  /**
+   * Message contains the error description
+   */
+  "message"?: string;
+  /**
+   * URL contains the documentation URL for this error
+   */
+  "url"?: string;
+};
+
+/**
+ * AccessToken represents an API access token.
+ */
+export type AccessToken = Record<string, unknown> & {
+  /**
+   * The timestamp when the token was created
+   */
+  "created_at"?: string;
+  /**
+   * The unique identifier of the access token
+   */
+  "id"?: RestInt64;
+  /**
+   * The timestamp when the token was last used
+   */
+  "last_used_at"?: string;
+  /**
+   * The name of the access token
+   */
+  "name"?: string;
+  /**
+   * The scopes granted to this access token
+   */
+  "scopes"?: Array<string>;
+  /**
+   * The SHA1 hash of the access token
+   */
+  "sha1"?: string;
+  /**
+   * The last eight characters of the token
+   */
+  "token_last_eight"?: string;
+};
+
+/**
+ * ActionArtifact represents a ActionArtifact
+ */
+export type ActionArtifact = Record<string, unknown> & {
+  "archive_download_url"?: string;
+  "created_at"?: string;
+  "expired"?: boolean;
+  "expires_at"?: string;
+  "id"?: RestInt64;
+  "name"?: string;
+  "size_in_bytes"?: RestInt64;
+  "updated_at"?: string;
+  "url"?: string;
+  "workflow_run"?: ActionWorkflowRun;
+};
+
+/**
+ * ActionArtifactsResponse returns ActionArtifacts
+ */
+export type ActionArtifactsResponse = Record<string, unknown> & {
+  "artifacts"?: Array<ActionArtifact>;
+  "total_count"?: RestInt64;
+};
+
+/**
+ * ActionRunner represents a Runner
+ */
+export type ActionRunner = Record<string, unknown> & {
+  "busy"?: boolean;
+  "disabled"?: boolean;
+  "ephemeral"?: boolean;
+  "id"?: RestInt64;
+  "labels"?: Array<ActionRunnerLabel>;
+  "name"?: string;
+  "status"?: string;
+};
+
+/**
+ * ActionRunnerLabel represents a Runner Label
+ */
+export type ActionRunnerLabel = Record<string, unknown> & {
+  "id"?: RestInt64;
+  "name"?: string;
+  "type"?: string;
+};
+
+/**
+ * ActionRunnersResponse returns Runners
+ */
+export type ActionRunnersResponse = Record<string, unknown> & {
+  "runners"?: Array<ActionRunner>;
+  "total_count"?: RestInt64;
+};
+
+/**
+ * ActionTask represents a ActionTask
+ */
+export type ActionTask = Record<string, unknown> & {
+  "created_at"?: string;
+  /**
+   * DisplayTitle is the display title for the workflow run
+   */
+  "display_title"?: string;
+  /**
+   * Event is the type of event that triggered the workflow
+   */
+  "event"?: string;
+  /**
+   * HeadBranch is the branch that triggered the workflow
+   */
+  "head_branch"?: string;
+  /**
+   * HeadSHA is the commit SHA that triggered the workflow
+   */
+  "head_sha"?: string;
+  /**
+   * ID is the unique identifier for the action task
+   */
+  "id"?: RestInt64;
+  /**
+   * Name is the name of the workflow
+   */
+  "name"?: string;
+  /**
+   * RunNumber is the sequential number of the workflow run
+   */
+  "run_number"?: RestInt64;
+  "run_started_at"?: string;
+  /**
+   * Status indicates the current status of the workflow run
+   */
+  "status"?: string;
+  "updated_at"?: string;
+  /**
+   * URL is the API URL for this workflow run
+   */
+  "url"?: string;
+  /**
+   * WorkflowID is the identifier of the workflow
+   */
+  "workflow_id"?: string;
+};
+
+/**
+ * ActionTaskResponse returns a ActionTask
+ */
+export type ActionTaskResponse = Record<string, unknown> & {
+  /**
+   * TotalCount is the total number of workflow runs
+   */
+  "total_count"?: RestInt64;
+  /**
+   * Entries contains the list of workflow runs
+   */
+  "workflow_runs"?: Array<ActionTask>;
+};
+
+/**
+ * ActionVariable return value of the query API
+ */
+export type ActionVariable = Record<string, unknown> & {
+  /**
+   * the value of the variable
+   */
+  "data"?: string;
+  /**
+   * the description of the variable
+   */
+  "description"?: string;
+  /**
+   * the name of the variable
+   */
+  "name"?: string;
+  /**
+   * the owner to which the variable belongs
+   */
+  "owner_id"?: RestInt64;
+  /**
+   * the repository to which the variable belongs
+   */
+  "repo_id"?: RestInt64;
+};
+
+/**
+ * ActionWorkflow represents a ActionWorkflow
+ */
+export type ActionWorkflow = Record<string, unknown> & {
+  /**
+   * BadgeURL is the URL for the workflow badge
+   */
+  "badge_url"?: string;
+  "created_at"?: string;
+  "deleted_at"?: string;
+  /**
+   * HTMLURL is the web URL for viewing the workflow
+   */
+  "html_url"?: string;
+  /**
+   * ID is the unique identifier for the workflow
+   */
+  "id"?: string;
+  /**
+   * Name is the name of the workflow
+   */
+  "name"?: string;
+  /**
+   * Path is the file path of the workflow
+   */
+  "path"?: string;
+  /**
+   * State indicates if the workflow is active or disabled
+   */
+  "state"?: string;
+  "updated_at"?: string;
+  /**
+   * URL is the API URL for this workflow
+   */
+  "url"?: string;
+};
+
+/**
+ * ActionWorkflowJob represents a WorkflowJob
+ */
+export type ActionWorkflowJob = Record<string, unknown> & {
+  "completed_at"?: string;
+  "conclusion"?: string;
+  "created_at"?: string;
+  "head_branch"?: string;
+  "head_sha"?: string;
+  "html_url"?: string;
+  "id"?: RestInt64;
+  "labels"?: Array<string>;
+  "name"?: string;
+  "run_attempt"?: RestInt64;
+  "run_id"?: RestInt64;
+  "run_url"?: string;
+  "runner_id"?: RestInt64;
+  "runner_name"?: string;
+  "started_at"?: string;
+  "status"?: string;
+  "steps"?: Array<ActionWorkflowStep>;
+  "url"?: string;
+};
+
+/**
+ * ActionWorkflowJobsResponse returns ActionWorkflowJobs
+ */
+export type ActionWorkflowJobsResponse = Record<string, unknown> & {
+  "jobs"?: Array<ActionWorkflowJob>;
+  "total_count"?: RestInt64;
+};
+
+/**
+ * ActionWorkflowResponse returns a ActionWorkflow
+ */
+export type ActionWorkflowResponse = Record<string, unknown> & {
+  "total_count"?: RestInt64;
+  "workflows"?: Array<ActionWorkflow>;
+};
+
+/**
+ * ActionWorkflowRun represents a WorkflowRun
+ */
+export type ActionWorkflowRun = Record<string, unknown> & {
+  "actor"?: User;
+  "completed_at"?: string;
+  "conclusion"?: string;
+  "display_title"?: string;
+  "event"?: string;
+  "head_branch"?: string;
+  "head_repository"?: Repository;
+  "head_sha"?: string;
+  "html_url"?: string;
+  "id"?: RestInt64;
+  "path"?: string;
+  "repository"?: Repository;
+  "repository_id"?: RestInt64;
+  "run_attempt"?: RestInt64;
+  "run_number"?: RestInt64;
+  "started_at"?: string;
+  "status"?: string;
+  "trigger_actor"?: User;
+  "url"?: string;
+};
+
+/**
+ * ActionWorkflowRunsResponse returns ActionWorkflowRuns
+ */
+export type ActionWorkflowRunsResponse = Record<string, unknown> & {
+  "total_count"?: RestInt64;
+  "workflow_runs"?: Array<ActionWorkflowRun>;
+};
+
+/**
+ * ActionWorkflowStep represents a step of a WorkflowJob
+ */
+export type ActionWorkflowStep = Record<string, unknown> & {
+  "completed_at"?: string;
+  "conclusion"?: string;
+  "name"?: string;
+  "number"?: RestInt64;
+  "started_at"?: string;
+  "status"?: string;
+};
+
+export type Activity =
+  & Record<string, unknown>
+  & ({
+    "act_user"?: User;
+    /**
+     * The ID of the user who performed the action
+     */
+    "act_user_id"?: RestInt64;
+    "comment"?: Comment;
+    /**
+     * The ID of the comment associated with the activity (if applicable)
+     */
+    "comment_id"?: RestInt64;
+    /**
+     * Additional content or details about the activity
+     */
+    "content"?: string;
+    /**
+     * The date and time when the activity occurred
+     */
+    "created"?: string;
+    /**
+     * The unique identifier of the activity
+     */
+    "id"?: RestInt64;
+    /**
+     * Whether this activity is from a private repository
+     */
+    "is_private"?: boolean;
+    /**
+     * the type of action
+     */
+    "op_type"?:
+      | "approve_pull_request"
+      | "auto_merge_pull_request"
+      | "close_issue"
+      | "close_pull_request"
+      | "comment_issue"
+      | "comment_pull"
+      | "commit_repo"
+      | "create_issue"
+      | "create_pull_request"
+      | "create_repo"
+      | "delete_branch"
+      | "delete_tag"
+      | "merge_pull_request"
+      | "mirror_sync_create"
+      | "mirror_sync_delete"
+      | "mirror_sync_push"
+      | "publish_release"
+      | "pull_request_ready_for_review"
+      | "pull_review_dismissed"
+      | "push_tag"
+      | "reject_pull_request"
+      | "rename_repo"
+      | "reopen_issue"
+      | "reopen_pull_request"
+      | "star_repo"
+      | "transfer_repo"
+      | "watch_repo";
+    /**
+     * The name of the git reference (branch/tag) associated with the activity
+     */
+    "ref_name"?: string;
+    "repo"?: Repository;
+    /**
+     * The ID of the repository associated with the activity
+     */
+    "repo_id"?: RestInt64;
+    /**
+     * The ID of the user who receives/sees this activity
+     */
+    "user_id"?: RestInt64;
+  });
+
+/**
+ * AddCollaboratorOption options when adding a user as a collaborator of a repository
+ */
+export type AddCollaboratorOption =
+  & Record<string, unknown>
+  & ({
+    "permission"?: "admin" | "read" | "write";
+  });
+
+/**
+ * AddTimeOption options for adding time to an issue
+ */
+export type AddTimeOption = Record<string, unknown> & {
+  "created"?: string;
+  /**
+   * time in seconds
+   */
+  "time": RestInt64;
+  /**
+   * username of the user who spent the time working on the issue (optional)
+   */
+  "user_name"?: string;
+};
+
+/**
+ * AnnotatedTag represents an annotated tag
+ */
+export type AnnotatedTag = Record<string, unknown> & {
+  /**
+   * The message associated with the annotated tag
+   */
+  "message"?: string;
+  "object"?: AnnotatedTagObject;
+  /**
+   * The SHA hash of the annotated tag
+   */
+  "sha"?: string;
+  /**
+   * The name of the annotated tag
+   */
+  "tag"?: string;
+  "tagger"?: CommitUser;
+  /**
+   * The URL to access the annotated tag
+   */
+  "url"?: string;
+  "verification"?: PayloadCommitVerification;
+};
+
+/**
+ * AnnotatedTagObject contains meta information of the tag object
+ */
+export type AnnotatedTagObject = Record<string, unknown> & {
+  /**
+   * The SHA hash of the tagged object
+   */
+  "sha"?: string;
+  /**
+   * The type of the tagged object (e.g., commit, tree)
+   */
+  "type"?: string;
+  /**
+   * The URL to access the tagged object
+   */
+  "url"?: string;
+};
+
+/**
+ * ApplyDiffPatchFileOptions options for applying a diff patch
+ * Note: `author` and `committer` are optional (if only one is given, it will be used for the other, otherwise the authenticated user will be used)
+ */
+export type ApplyDiffPatchFileOptions = Record<string, unknown> & {
+  "author"?: Identity;
+  /**
+   * branch (optional) is the base branch for the changes. If not supplied, the default branch is used
+   */
+  "branch"?: string;
+  "committer"?: Identity;
+  "content": string;
+  "dates"?: CommitDateOptions;
+  /**
+   * force_push (optional) will do a force-push if the new branch already exists
+   */
+  "force_push"?: boolean;
+  /**
+   * message (optional) is the commit message of the changes. If not supplied, a default message will be used
+   */
+  "message"?: string;
+  /**
+   * new_branch (optional) will make a new branch from base branch for the changes. If not supplied, the changes will be committed to the base branch
+   */
+  "new_branch"?: string;
+  /**
+   * Add a Signed-off-by trailer by the committer at the end of the commit log message.
+   */
+  "signoff"?: boolean;
+};
+
+/**
+ * Attachment a generic attachment
+ */
+export type Attachment = Record<string, unknown> & {
+  /**
+   * DownloadURL is the URL to download the attachment
+   */
+  "browser_download_url"?: string;
+  "created_at"?: string;
+  /**
+   * DownloadCount is the number of times the attachment has been downloaded
+   */
+  "download_count"?: RestInt64;
+  /**
+   * ID is the unique identifier for the attachment
+   */
+  "id"?: RestInt64;
+  /**
+   * Name is the filename of the attachment
+   */
+  "name"?: string;
+  /**
+   * Size is the file size in bytes
+   */
+  "size"?: RestInt64;
+  /**
+   * UUID is the unique identifier for the attachment file
+   */
+  "uuid"?: string;
+};
+
+/**
+ * Badge represents a user badge
+ */
+export type Badge = Record<string, unknown> & {
+  "description"?: string;
+  "id"?: RestInt64;
+  "image_url"?: string;
+  "slug"?: string;
+};
+
+/**
+ * Branch represents a repository branch
+ */
+export type Branch = Record<string, unknown> & {
+  "commit"?: PayloadCommit;
+  /**
+   * EffectiveBranchProtectionName is the name of the effective branch protection rule
+   */
+  "effective_branch_protection_name"?: string;
+  /**
+   * EnableStatusCheck indicates if status checks are enabled
+   */
+  "enable_status_check"?: boolean;
+  /**
+   * Name is the branch name
+   */
+  "name"?: string;
+  /**
+   * Protected indicates if the branch is protected
+   */
+  "protected"?: boolean;
+  /**
+   * RequiredApprovals is the number of required approvals for pull requests
+   */
+  "required_approvals"?: RestInt64;
+  /**
+   * StatusCheckContexts contains the list of required status check contexts
+   */
+  "status_check_contexts"?: Array<string>;
+  /**
+   * UserCanMerge indicates if the current user can merge to this branch
+   */
+  "user_can_merge"?: boolean;
+  /**
+   * UserCanPush indicates if the current user can push to this branch
+   */
+  "user_can_push"?: boolean;
+};
+
+/**
+ * BranchProtection represents a branch protection for a repository
+ */
+export type BranchProtection = Record<string, unknown> & {
+  "approvals_whitelist_teams"?: Array<string>;
+  "approvals_whitelist_username"?: Array<string>;
+  "block_admin_merge_override"?: boolean;
+  "block_on_official_review_requests"?: boolean;
+  "block_on_outdated_branch"?: boolean;
+  "block_on_rejected_reviews"?: boolean;
+  /**
+   * Deprecated: true
+   */
+  "branch_name"?: string;
+  "created_at"?: string;
+  "dismiss_stale_approvals"?: boolean;
+  "enable_approvals_whitelist"?: boolean;
+  "enable_force_push"?: boolean;
+  "enable_force_push_allowlist"?: boolean;
+  "enable_merge_whitelist"?: boolean;
+  "enable_push"?: boolean;
+  "enable_push_whitelist"?: boolean;
+  "enable_status_check"?: boolean;
+  "force_push_allowlist_deploy_keys"?: boolean;
+  "force_push_allowlist_teams"?: Array<string>;
+  "force_push_allowlist_usernames"?: Array<string>;
+  "ignore_stale_approvals"?: boolean;
+  "merge_whitelist_teams"?: Array<string>;
+  "merge_whitelist_usernames"?: Array<string>;
+  /**
+   * Priority is the priority of this branch protection rule
+   */
+  "priority"?: RestInt64;
+  "protected_file_patterns"?: string;
+  "push_whitelist_deploy_keys"?: boolean;
+  "push_whitelist_teams"?: Array<string>;
+  "push_whitelist_usernames"?: Array<string>;
+  "require_signed_commits"?: boolean;
+  "required_approvals"?: RestInt64;
+  /**
+   * RuleName is the name of the branch protection rule
+   */
+  "rule_name"?: string;
+  "status_check_contexts"?: Array<string>;
+  "unprotected_file_patterns"?: string;
+  "updated_at"?: string;
+};
+
+/**
+ * ChangeFileOperation for creating, updating or deleting a file
+ */
+export type ChangeFileOperation =
+  & Record<string, unknown>
+  & ({
+    /**
+     * new or updated file content, it must be base64 encoded
+     */
+    "content"?: string;
+    /**
+     * old path of the file to move
+     */
+    "from_path"?: string;
+    /**
+     * indicates what to do with the file: "create" for creating a new file, "update" for updating an existing file,
+     * "upload" for creating or updating a file, "rename" for renaming a file, and "delete" for deleting an existing file.
+     */
+    "operation": "create" | "delete" | "rename" | "update" | "upload";
+    /**
+     * path to the existing or new file
+     */
+    "path": string;
+    /**
+     * the blob ID (SHA) for the file that already exists, required for changing existing files
+     */
+    "sha"?: string;
+  });
+
+/**
+ * ChangeFilesOptions options for creating, updating or deleting multiple files
+ * Note: `author` and `committer` are optional (if only one is given, it will be used for the other, otherwise the authenticated user will be used)
+ */
+export type ChangeFilesOptions = Record<string, unknown> & {
+  "author"?: Identity;
+  /**
+   * branch (optional) is the base branch for the changes. If not supplied, the default branch is used
+   */
+  "branch"?: string;
+  "committer"?: Identity;
+  "dates"?: CommitDateOptions;
+  /**
+   * list of file operations
+   */
+  "files": Array<ChangeFileOperation>;
+  /**
+   * force_push (optional) will do a force-push if the new branch already exists
+   */
+  "force_push"?: boolean;
+  /**
+   * message (optional) is the commit message of the changes. If not supplied, a default message will be used
+   */
+  "message"?: string;
+  /**
+   * new_branch (optional) will make a new branch from base branch for the changes. If not supplied, the changes will be committed to the base branch
+   */
+  "new_branch"?: string;
+  /**
+   * Add a Signed-off-by trailer by the committer at the end of the commit log message.
+   */
+  "signoff"?: boolean;
+};
+
+/**
+ * ChangedFile store information about files affected by the pull request
+ */
+export type ChangedFile = Record<string, unknown> & {
+  /**
+   * The number of lines added to the file
+   */
+  "additions"?: RestInt64;
+  /**
+   * The total number of changes to the file
+   */
+  "changes"?: RestInt64;
+  /**
+   * The API URL to get the file contents
+   */
+  "contents_url"?: string;
+  /**
+   * The number of lines deleted from the file
+   */
+  "deletions"?: RestInt64;
+  /**
+   * The name of the changed file
+   */
+  "filename"?: string;
+  /**
+   * The HTML URL to view the file changes
+   */
+  "html_url"?: string;
+  /**
+   * The previous filename if the file was renamed
+   */
+  "previous_filename"?: string;
+  /**
+   * The raw URL to download the file
+   */
+  "raw_url"?: string;
+  /**
+   * The status of the file change (added, modified, deleted, etc.)
+   */
+  "status"?: string;
+};
+
+/**
+ * CombinedStatus holds the combined state of several statuses for a single commit
+ */
+export type CombinedStatus =
+  & Record<string, unknown>
+  & ({
+    /**
+     * CommitURL is the API URL for the commit
+     */
+    "commit_url"?: string;
+    "repository"?: Repository;
+    /**
+     * SHA is the commit SHA this status applies to
+     */
+    "sha"?: string;
+    /**
+     * State is the overall combined status state
+     * pending CommitStatusPending  CommitStatusPending is for when the CommitStatus is Pending
+     * success CommitStatusSuccess  CommitStatusSuccess is for when the CommitStatus is Success
+     * error CommitStatusError  CommitStatusError is for when the CommitStatus is Error
+     * failure CommitStatusFailure  CommitStatusFailure is for when the CommitStatus is Failure
+     * warning CommitStatusWarning  CommitStatusWarning is for when the CommitStatus is Warning
+     * skipped CommitStatusSkipped  CommitStatusSkipped is for when CommitStatus is Skipped
+     */
+    "state"?: "error" | "failure" | "pending" | "skipped" | "success" | "warning";
+    /**
+     * Statuses contains all individual commit statuses
+     */
+    "statuses"?: Array<CommitStatus>;
+    /**
+     * TotalCount is the total number of statuses
+     */
+    "total_count"?: RestInt64;
+    /**
+     * URL is the API URL for this combined status
+     */
+    "url"?: string;
+  });
+
+/**
+ * Comment represents a comment on a commit or issue
+ */
+export type Comment = Record<string, unknown> & {
+  /**
+   * Attachments contains files attached to the comment
+   */
+  "assets"?: Array<Attachment>;
+  /**
+   * Body contains the comment text content
+   */
+  "body"?: string;
+  "created_at"?: string;
+  /**
+   * HTMLURL is the web URL for viewing the comment
+   */
+  "html_url"?: string;
+  /**
+   * ID is the unique identifier for the comment
+   */
+  "id"?: RestInt64;
+  /**
+   * IssueURL is the API URL for the issue
+   */
+  "issue_url"?: string;
+  /**
+   * OriginalAuthor is the original author name (for imported comments)
+   */
+  "original_author"?: string;
+  /**
+   * OriginalAuthorID is the original author ID (for imported comments)
+   */
+  "original_author_id"?: RestInt64;
+  /**
+   * PRURL is the API URL for the pull request (if applicable)
+   */
+  "pull_request_url"?: string;
+  "updated_at"?: string;
+  "user"?: User;
+};
+
+/**
+ * Commit contains information generated from a Git commit.
+ */
+export type Commit = Record<string, unknown> & {
+  "author"?: User;
+  "commit"?: RepoCommit;
+  "committer"?: User;
+  "created"?: string;
+  /**
+   * Files contains information about files affected by the commit
+   */
+  "files"?: Array<CommitAffectedFiles>;
+  /**
+   * HTMLURL is the web URL for viewing the commit
+   */
+  "html_url"?: string;
+  /**
+   * Parents contains the parent commit information
+   */
+  "parents"?: Array<CommitMeta>;
+  /**
+   * SHA is the commit SHA hash
+   */
+  "sha"?: string;
+  "stats"?: CommitStats;
+  /**
+   * URL is the API URL for the commit
+   */
+  "url"?: string;
+};
+
+/**
+ * CommitAffectedFiles store information about files affected by the commit
+ */
+export type CommitAffectedFiles = Record<string, unknown> & {
+  /**
+   * Filename is the path of the affected file
+   */
+  "filename"?: string;
+  /**
+   * Status indicates how the file was affected (added, modified, deleted)
+   */
+  "status"?: string;
+};
+
+/**
+ * CommitDateOptions store dates for GIT_AUTHOR_DATE and GIT_COMMITTER_DATE
+ */
+export type CommitDateOptions = Record<string, unknown> & {
+  "author"?: string;
+  "committer"?: string;
+};
+
+/**
+ * CommitMeta contains meta information of a commit in terms of API.
+ */
+export type CommitMeta = Record<string, unknown> & {
+  "created"?: string;
+  /**
+   * SHA is the commit SHA hash
+   */
+  "sha"?: string;
+  /**
+   * URL is the API URL for the commit
+   */
+  "url"?: string;
+};
+
+/**
+ * CommitStats is statistics for a RepoCommit
+ */
+export type CommitStats = Record<string, unknown> & {
+  /**
+   * Additions is the number of lines added
+   */
+  "additions"?: RestInt64;
+  /**
+   * Deletions is the number of lines deleted
+   */
+  "deletions"?: RestInt64;
+  /**
+   * Total is the total number of lines changed
+   */
+  "total"?: RestInt64;
+};
+
+/**
+ * CommitStatus holds a single status of a single Commit
+ */
+export type CommitStatus =
+  & Record<string, unknown>
+  & ({
+    /**
+     * Context is the unique context identifier for the status
+     */
+    "context"?: string;
+    "created_at"?: string;
+    "creator"?: User;
+    /**
+     * Description provides a brief description of the status
+     */
+    "description"?: string;
+    /**
+     * ID is the unique identifier for the commit status
+     */
+    "id"?: RestInt64;
+    /**
+     * State represents the status state (pending, success, error, failure)
+     * pending CommitStatusPending  CommitStatusPending is for when the CommitStatus is Pending
+     * success CommitStatusSuccess  CommitStatusSuccess is for when the CommitStatus is Success
+     * error CommitStatusError  CommitStatusError is for when the CommitStatus is Error
+     * failure CommitStatusFailure  CommitStatusFailure is for when the CommitStatus is Failure
+     * warning CommitStatusWarning  CommitStatusWarning is for when the CommitStatus is Warning
+     * skipped CommitStatusSkipped  CommitStatusSkipped is for when CommitStatus is Skipped
+     */
+    "status"?: "error" | "failure" | "pending" | "skipped" | "success" | "warning";
+    /**
+     * TargetURL is the URL to link to for more details
+     */
+    "target_url"?: string;
+    "updated_at"?: string;
+    /**
+     * URL is the API URL for this status
+     */
+    "url"?: string;
+  });
+
+/**
+ * CommitUser contains information of a user in the context of a commit.
+ */
+export type CommitUser = Record<string, unknown> & {
+  /**
+   * Date is the commit date in string format
+   */
+  "date"?: string;
+  "email"?: string;
+  /**
+   * Name is the person's name
+   */
+  "name"?: string;
+};
+
+/**
+ * Compare represents a comparison between two commits.
+ */
+export type Compare = Record<string, unknown> & {
+  "commits"?: Array<Commit>;
+  "total_commits"?: RestInt64;
+};
+
+export type ContentsExtResponse = Record<string, unknown> & {
+  /**
+   * DirContents contains directory listing when the path represents a directory
+   */
+  "dir_contents"?: Array<ContentsResponse>;
+  "file_contents"?: ContentsResponse;
+};
+
+/**
+ * ContentsResponse contains information about a repo's entry's (dir, file, symlink, submodule) metadata and content
+ */
+export type ContentsResponse = Record<string, unknown> & {
+  "_links"?: FileLinksResponse;
+  /**
+   * `content` is populated when `type` is `file`, otherwise null
+   */
+  "content"?: string;
+  /**
+   * DownloadURL is the direct download URL for this file
+   */
+  "download_url"?: string;
+  /**
+   * `encoding` is populated when `type` is `file`, otherwise null
+   */
+  "encoding"?: string;
+  /**
+   * GitURL is the Git API URL for this blob or tree
+   */
+  "git_url"?: string;
+  /**
+   * HTMLURL is the web URL for this file or directory
+   */
+  "html_url"?: string;
+  "last_author_date"?: string;
+  /**
+   * LastCommitMessage is the message of the last commit that affected this file
+   */
+  "last_commit_message"?: string;
+  /**
+   * LastCommitSHA is the SHA of the last commit that affected this file
+   */
+  "last_commit_sha"?: string;
+  "last_committer_date"?: string;
+  /**
+   * LfsOid is the Git LFS object ID if this file is stored in LFS
+   */
+  "lfs_oid"?: string;
+  /**
+   * LfsSize is the file size if this file is stored in LFS
+   */
+  "lfs_size"?: RestInt64;
+  /**
+   * Name is the file or directory name
+   */
+  "name"?: string;
+  /**
+   * Path is the full path to the file or directory
+   */
+  "path"?: string;
+  /**
+   * SHA is the Git blob or tree SHA
+   */
+  "sha"?: string;
+  /**
+   * Size is the file size in bytes
+   */
+  "size"?: RestInt64;
+  /**
+   * `submodule_git_url` is populated when `type` is `submodule`, otherwise null
+   */
+  "submodule_git_url"?: string;
+  /**
+   * `target` is populated when `type` is `symlink`, otherwise null
+   */
+  "target"?: string;
+  /**
+   * `type` will be `file`, `dir`, `symlink`, or `submodule`
+   */
+  "type"?: string;
+  /**
+   * URL is the API URL for this file or directory
+   */
+  "url"?: string;
+};
+
+/**
+ * CreateAccessTokenOption options when create access token
+ */
+export type CreateAccessTokenOption = Record<string, unknown> & {
+  "name": string;
+  "scopes"?: Array<string>;
+};
+
+/**
+ * CreateActionWorkflowDispatch represents the payload for triggering a workflow dispatch event
+ */
+export type CreateActionWorkflowDispatch = Record<string, unknown> & {
+  "inputs"?: Record<string, string>;
+  "ref": string;
+};
+
+/**
+ * CreateBranchProtectionOption options for creating a branch protection
+ */
+export type CreateBranchProtectionOption = Record<string, unknown> & {
+  "approvals_whitelist_teams"?: Array<string>;
+  "approvals_whitelist_username"?: Array<string>;
+  "block_admin_merge_override"?: boolean;
+  "block_on_official_review_requests"?: boolean;
+  "block_on_outdated_branch"?: boolean;
+  "block_on_rejected_reviews"?: boolean;
+  /**
+   * Deprecated: true
+   */
+  "branch_name"?: string;
+  "dismiss_stale_approvals"?: boolean;
+  "enable_approvals_whitelist"?: boolean;
+  "enable_force_push"?: boolean;
+  "enable_force_push_allowlist"?: boolean;
+  "enable_merge_whitelist"?: boolean;
+  "enable_push"?: boolean;
+  "enable_push_whitelist"?: boolean;
+  "enable_status_check"?: boolean;
+  "force_push_allowlist_deploy_keys"?: boolean;
+  "force_push_allowlist_teams"?: Array<string>;
+  "force_push_allowlist_usernames"?: Array<string>;
+  "ignore_stale_approvals"?: boolean;
+  "merge_whitelist_teams"?: Array<string>;
+  "merge_whitelist_usernames"?: Array<string>;
+  "priority"?: RestInt64;
+  "protected_file_patterns"?: string;
+  "push_whitelist_deploy_keys"?: boolean;
+  "push_whitelist_teams"?: Array<string>;
+  "push_whitelist_usernames"?: Array<string>;
+  "require_signed_commits"?: boolean;
+  "required_approvals"?: RestInt64;
+  "rule_name"?: string;
+  "status_check_contexts"?: Array<string>;
+  "unprotected_file_patterns"?: string;
+};
+
+/**
+ * CreateBranchRepoOption options when creating a branch in a repository
+ */
+export type CreateBranchRepoOption = Record<string, unknown> & {
+  /**
+   * Name of the branch to create
+   */
+  "new_branch_name": string;
+  /**
+   * Deprecated: true
+   * Name of the old branch to create from
+   */
+  "old_branch_name"?: string;
+  /**
+   * Name of the old branch/tag/commit to create from
+   */
+  "old_ref_name"?: string;
+};
+
+/**
+ * CreateEmailOption options when creating email addresses
+ */
+export type CreateEmailOption = Record<string, unknown> & {
+  /**
+   * email addresses to add
+   */
+  "emails"?: Array<string>;
+};
+
+/**
+ * CreateFileOptions options for creating a file
+ * Note: `author` and `committer` are optional (if only one is given, it will be used for the other, otherwise the authenticated user will be used)
+ */
+export type CreateFileOptions = Record<string, unknown> & {
+  "author"?: Identity;
+  /**
+   * branch (optional) is the base branch for the changes. If not supplied, the default branch is used
+   */
+  "branch"?: string;
+  "committer"?: Identity;
+  /**
+   * content must be base64 encoded
+   */
+  "content": string;
+  "dates"?: CommitDateOptions;
+  /**
+   * force_push (optional) will do a force-push if the new branch already exists
+   */
+  "force_push"?: boolean;
+  /**
+   * message (optional) is the commit message of the changes. If not supplied, a default message will be used
+   */
+  "message"?: string;
+  /**
+   * new_branch (optional) will make a new branch from base branch for the changes. If not supplied, the changes will be committed to the base branch
+   */
+  "new_branch"?: string;
+  /**
+   * Add a Signed-off-by trailer by the committer at the end of the commit log message.
+   */
+  "signoff"?: boolean;
+};
+
+/**
+ * CreateForkOption options for creating a fork
+ */
+export type CreateForkOption = Record<string, unknown> & {
+  /**
+   * name of the forked repository
+   */
+  "name"?: string;
+  /**
+   * organization name, if forking into an organization
+   */
+  "organization"?: string;
+};
+
+/**
+ * CreateGPGKeyOption options create user GPG key
+ */
+export type CreateGpgKeyOption = Record<string, unknown> & {
+  /**
+   * An armored GPG key to add
+   */
+  "armored_public_key": string;
+  /**
+   * An optional armored signature for the GPG key
+   */
+  "armored_signature"?: string;
+};
+
+/**
+ * CreateHookOption options when create a hook
+ */
+export type CreateHookOption =
+  & Record<string, unknown>
+  & ({
+    "active"?: boolean;
+    /**
+     * Authorization header to include in webhook requests
+     */
+    "authorization_header"?: string;
+    /**
+     * Branch filter pattern to determine which branches trigger the webhook
+     */
+    "branch_filter"?: string;
+    "config": CreateHookOptionConfig;
+    /**
+     * List of events that will trigger this webhook
+     */
+    "events"?: Array<string>;
+    /**
+     * Optional human-readable name for the webhook
+     */
+    "name"?: string;
+    "type":
+      | "dingtalk"
+      | "discord"
+      | "feishu"
+      | "gitea"
+      | "gogs"
+      | "msteams"
+      | "packagist"
+      | "slack"
+      | "telegram"
+      | "wechatwork";
+  });
+
+/**
+ * CreateHookOptionConfig has all config options in it
+ * required are "content_type" and "url" Required
+ */
+export type CreateHookOptionConfig = Record<string, string>;
+
+/**
+ * CreateIssueCommentOption options for creating a comment on an issue
+ */
+export type CreateIssueCommentOption = Record<string, unknown> & {
+  "body": string;
+};
+
+/**
+ * CreateIssueOption options to create one issue
+ */
+export type CreateIssueOption = Record<string, unknown> & {
+  /**
+   * deprecated
+   */
+  "assignee"?: string;
+  "assignees"?: Array<string>;
+  "body"?: string;
+  "closed"?: boolean;
+  "due_date"?: string;
+  /**
+   * list of label ids
+   */
+  "labels"?: Array<RestInt64>;
+  /**
+   * milestone id
+   */
+  "milestone"?: RestInt64;
+  "ref"?: string;
+  "title": string;
+};
+
+/**
+ * CreateKeyOption options when creating a key
+ */
+export type CreateKeyOption = Record<string, unknown> & {
+  /**
+   * An armored SSH key to add
+   */
+  "key": string;
+  /**
+   * Describe if the key has only read access or read/write
+   */
+  "read_only"?: boolean;
+  /**
+   * Title of the key to add
+   */
+  "title": string;
+};
+
+/**
+ * CreateLabelOption options for creating a label
+ */
+export type CreateLabelOption = Record<string, unknown> & {
+  "color": string;
+  /**
+   * Description provides additional context about the label's purpose
+   */
+  "description"?: string;
+  "exclusive"?: boolean;
+  "is_archived"?: boolean;
+  "name": string;
+};
+
+/**
+ * CreateMilestoneOption options for creating a milestone
+ */
+export type CreateMilestoneOption =
+  & Record<string, unknown>
+  & ({
+    /**
+     * Description provides details about the milestone
+     */
+    "description"?: string;
+    "due_on"?: string;
+    "state"?: "closed" | "open";
+    /**
+     * Title is the title of the new milestone
+     */
+    "title"?: string;
+  });
+
+/**
+ * CreateOAuth2ApplicationOptions holds options to create an oauth2 application
+ */
+export type CreateOAuth2ApplicationOptions = Record<string, unknown> & {
+  /**
+   * Whether the client is confidential
+   */
+  "confidential_client"?: boolean;
+  /**
+   * The name of the OAuth2 application
+   */
+  "name"?: string;
+  /**
+   * The list of allowed redirect URIs
+   */
+  "redirect_uris"?: Array<string>;
+  /**
+   * Whether to skip secondary authorization
+   */
+  "skip_secondary_authorization"?: boolean;
+};
+
+/**
+ * CreateOrUpdateSecretOption options when creating or updating secret
+ */
+export type CreateOrUpdateSecretOption = Record<string, unknown> & {
+  /**
+   * Data of the secret to update
+   */
+  "data": string;
+  /**
+   * Description of the secret to update
+   */
+  "description"?: string;
+};
+
+/**
+ * CreateOrgOption options for creating an organization
+ */
+export type CreateOrgOption =
+  & Record<string, unknown>
+  & ({
+    /**
+     * The description of the organization
+     */
+    "description"?: string;
+    /**
+     * The email address of the organization
+     */
+    "email"?: string;
+    /**
+     * The full display name of the organization
+     */
+    "full_name"?: string;
+    /**
+     * The location of the organization
+     */
+    "location"?: string;
+    /**
+     * Whether repository administrators can change team access
+     */
+    "repo_admin_change_team_access"?: boolean;
+    /**
+     * username of the organization
+     */
+    "username": string;
+    /**
+     * possible values are `public` (default), `limited` or `private`
+     */
+    "visibility"?: "limited" | "private" | "public";
+    /**
+     * The website URL of the organization
+     */
+    "website"?: string;
+  });
+
+/**
+ * CreatePullRequestOption options when creating a pull request
+ */
+export type CreatePullRequestOption = Record<string, unknown> & {
+  /**
+   * Whether maintainers can edit the pull request
+   */
+  "allow_maintainer_edit"?: boolean;
+  /**
+   * The primary assignee username
+   */
+  "assignee"?: string;
+  /**
+   * The list of assignee usernames
+   */
+  "assignees"?: Array<string>;
+  /**
+   * The base branch for the pull request
+   */
+  "base"?: string;
+  /**
+   * The description body of the pull request
+   */
+  "body"?: string;
+  "due_date"?: string;
+  /**
+   * The head branch for the pull request, it could be a branch name on the base repository or
+   * a form like `<username>:<branch>` which refers to the user's fork repository's branch.
+   */
+  "head"?: string;
+  /**
+   * The list of label IDs to assign to the pull request
+   */
+  "labels"?: Array<RestInt64>;
+  /**
+   * The milestone ID to assign to the pull request
+   */
+  "milestone"?: RestInt64;
+  /**
+   * The list of reviewer usernames
+   */
+  "reviewers"?: Array<string>;
+  /**
+   * The list of team reviewer names
+   */
+  "team_reviewers"?: Array<string>;
+  /**
+   * The title of the pull request
+   */
+  "title"?: string;
+};
+
+/**
+ * CreatePullReviewComment represent a review comment for creation api
+ */
+export type CreatePullReviewComment = Record<string, unknown> & {
+  "body"?: string;
+  /**
+   * if comment to new file line or 0
+   */
+  "new_position"?: RestInt64;
+  /**
+   * if comment to old file line or 0
+   */
+  "old_position"?: RestInt64;
+  /**
+   * the tree path
+   */
+  "path"?: string;
+};
+
+/**
+ * CreatePullReviewOptions are options to create a pull request review
+ */
+export type CreatePullReviewOptions =
+  & Record<string, unknown>
+  & ({
+    "body"?: string;
+    "comments"?: Array<CreatePullReviewComment>;
+    "commit_id"?: string;
+    "event"?: "APPROVED" | "COMMENT" | "PENDING" | "REQUEST_CHANGES" | "REQUEST_REVIEW";
+  });
+
+/**
+ * CreatePushMirrorOption represents need information to create a push mirror of a repository.
+ */
+export type CreatePushMirrorOption = Record<string, unknown> & {
+  /**
+   * The sync interval for automatic updates
+   */
+  "interval"?: string;
+  /**
+   * The remote repository URL to push to
+   */
+  "remote_address"?: string;
+  /**
+   * The password for authentication with the remote repository
+   */
+  "remote_password"?: string;
+  /**
+   * The username for authentication with the remote repository
+   */
+  "remote_username"?: string;
+  /**
+   * Whether to sync on every commit
+   */
+  "sync_on_commit"?: boolean;
+};
+
+/**
+ * CreateReleaseOption options when creating a release
+ */
+export type CreateReleaseOption = Record<string, unknown> & {
+  /**
+   * The release notes or description
+   */
+  "body"?: string;
+  /**
+   * Whether to create the release as a draft
+   */
+  "draft"?: boolean;
+  /**
+   * The display title of the release
+   */
+  "name"?: string;
+  /**
+   * Whether to mark the release as a prerelease
+   */
+  "prerelease"?: boolean;
+  /**
+   * The message for the git tag
+   */
+  "tag_message"?: string;
+  "tag_name": string;
+  /**
+   * The target commitish for the release
+   */
+  "target_commitish"?: string;
+};
+
+/**
+ * CreateRepoOption options when creating repository
+ */
+export type CreateRepoOption =
+  & Record<string, unknown>
+  & ({
+    /**
+     * Whether the repository should be auto-initialized?
+     */
+    "auto_init"?: boolean;
+    /**
+     * DefaultBranch of the repository (used when initializes and in template)
+     */
+    "default_branch"?: string;
+    /**
+     * Description of the repository to create
+     */
+    "description"?: string;
+    /**
+     * Gitignores to use
+     */
+    "gitignores"?: string;
+    /**
+     * Label-Set to use
+     */
+    "issue_labels"?: string;
+    /**
+     * License to use
+     */
+    "license"?: string;
+    /**
+     * Name of the repository to create
+     */
+    "name": string;
+    /**
+     * ObjectFormatName of the underlying git repository, empty string for default (sha1)
+     */
+    "object_format_name"?: "sha1" | "sha256";
+    /**
+     * Whether the repository is private
+     */
+    "private"?: boolean;
+    /**
+     * Readme of the repository to create
+     */
+    "readme"?: string;
+    /**
+     * Whether the repository is template
+     */
+    "template"?: boolean;
+    /**
+     * TrustModel of the repository
+     */
+    "trust_model"?: "collaborator" | "collaboratorcommitter" | "committer" | "default";
+  });
+
+/**
+ * CreateStatusOption holds the information needed to create a new CommitStatus for a Commit
+ */
+export type CreateStatusOption =
+  & Record<string, unknown>
+  & ({
+    /**
+     * Context is the unique context identifier for the status
+     */
+    "context"?: string;
+    /**
+     * Description provides a brief description of the status
+     */
+    "description"?: string;
+    /**
+     * State represents the status state to set (pending, success, error, failure)
+     * pending CommitStatusPending  CommitStatusPending is for when the CommitStatus is Pending
+     * success CommitStatusSuccess  CommitStatusSuccess is for when the CommitStatus is Success
+     * error CommitStatusError  CommitStatusError is for when the CommitStatus is Error
+     * failure CommitStatusFailure  CommitStatusFailure is for when the CommitStatus is Failure
+     * warning CommitStatusWarning  CommitStatusWarning is for when the CommitStatus is Warning
+     * skipped CommitStatusSkipped  CommitStatusSkipped is for when CommitStatus is Skipped
+     */
+    "state"?: "error" | "failure" | "pending" | "skipped" | "success" | "warning";
+    /**
+     * TargetURL is the URL to link to for more details
+     */
+    "target_url"?: string;
+  });
+
+/**
+ * CreateTagOption options when creating a tag
+ */
+export type CreateTagOption = Record<string, unknown> & {
+  /**
+   * The message to associate with the tag
+   */
+  "message"?: string;
+  "tag_name": string;
+  /**
+   * The target commit SHA or branch name for the tag
+   */
+  "target"?: string;
+};
+
+/**
+ * CreateTagProtectionOption options for creating a tag protection
+ */
+export type CreateTagProtectionOption = Record<string, unknown> & {
+  /**
+   * The pattern to match tag names for protection
+   */
+  "name_pattern"?: string;
+  /**
+   * List of team names allowed to create/delete protected tags
+   */
+  "whitelist_teams"?: Array<string>;
+  /**
+   * List of usernames allowed to create/delete protected tags
+   */
+  "whitelist_usernames"?: Array<string>;
+};
+
+/**
+ * CreateTeamOption options for creating a team
+ */
+export type CreateTeamOption =
+  & Record<string, unknown>
+  & ({
+    /**
+     * Whether the team can create repositories in the organization
+     */
+    "can_create_org_repo"?: boolean;
+    /**
+     * The description of the team
+     */
+    "description"?: string;
+    /**
+     * Whether the team has access to all repositories in the organization
+     */
+    "includes_all_repositories"?: boolean;
+    "name": string;
+    "permission"?: "admin" | "read" | "write";
+    "units"?: Array<string>;
+    "units_map"?: Record<string, string>;
+  });
+
+/**
+ * CreateUserOption create user options
+ */
+export type CreateUserOption = Record<string, unknown> & {
+  /**
+   * For explicitly setting the user creation timestamp. Useful when users are
+   * migrated from other systems. When omitted, the user's creation timestamp
+   * will be set to "now".
+   */
+  "created_at"?: string;
+  "email": string;
+  /**
+   * The full display name of the user
+   */
+  "full_name"?: string;
+  /**
+   * identifier of the user, provided by the external authenticator (if configured)
+   */
+  "login_name"?: string;
+  /**
+   * Whether the user must change password on first login
+   */
+  "must_change_password"?: boolean;
+  /**
+   * The plain text password for the user
+   */
+  "password"?: string;
+  /**
+   * Whether the user has restricted access privileges
+   */
+  "restricted"?: boolean;
+  /**
+   * Whether to send welcome notification email to the user
+   */
+  "send_notify"?: boolean;
+  /**
+   * The authentication source ID to associate with the user
+   */
+  "source_id"?: RestInt64;
+  /**
+   * username of the user
+   */
+  "username": string;
+  /**
+   * User visibility level: public, limited, or private
+   */
+  "visibility"?: string;
+};
+
+/**
+ * CreateVariableOption the option when creating variable
+ */
+export type CreateVariableOption = Record<string, unknown> & {
+  /**
+   * Description of the variable to create
+   */
+  "description"?: string;
+  /**
+   * Value of the variable to create
+   */
+  "value": string;
+};
+
+/**
+ * CreateWikiPageOptions form for creating wiki
+ */
+export type CreateWikiPageOptions = Record<string, unknown> & {
+  /**
+   * content must be base64 encoded
+   */
+  "content_base64"?: string;
+  /**
+   * optional commit message summarizing the change
+   */
+  "message"?: string;
+  /**
+   * page title. leave empty to keep unchanged
+   */
+  "title"?: string;
+};
+
+/**
+ * Cron represents a Cron task
+ */
+export type Cron = Record<string, unknown> & {
+  /**
+   * The total number of times this cron task has been executed
+   */
+  "exec_times"?: RestInt64;
+  /**
+   * The name of the cron task
+   */
+  "name"?: string;
+  /**
+   * The next scheduled execution time
+   */
+  "next"?: string;
+  /**
+   * The previous execution time
+   */
+  "prev"?: string;
+  /**
+   * The cron schedule expression (e.g., "0 0 * * *")
+   */
+  "schedule"?: string;
+};
+
+/**
+ * DeleteEmailOption options when deleting email addresses
+ */
+export type DeleteEmailOption = Record<string, unknown> & {
+  /**
+   * email addresses to delete
+   */
+  "emails"?: Array<string>;
+};
+
+/**
+ * DeleteFileOptions options for deleting a file
+ * Note: `author` and `committer` are optional (if only one is given, it will be used for the other, otherwise the authenticated user will be used)
+ */
+export type DeleteFileOptions = Record<string, unknown> & {
+  "author"?: Identity;
+  /**
+   * branch (optional) is the base branch for the changes. If not supplied, the default branch is used
+   */
+  "branch"?: string;
+  "committer"?: Identity;
+  "dates"?: CommitDateOptions;
+  /**
+   * force_push (optional) will do a force-push if the new branch already exists
+   */
+  "force_push"?: boolean;
+  /**
+   * message (optional) is the commit message of the changes. If not supplied, a default message will be used
+   */
+  "message"?: string;
+  /**
+   * new_branch (optional) will make a new branch from base branch for the changes. If not supplied, the changes will be committed to the base branch
+   */
+  "new_branch"?: string;
+  /**
+   * the blob ID (SHA) for the file to delete
+   */
+  "sha": string;
+  /**
+   * Add a Signed-off-by trailer by the committer at the end of the commit log message.
+   */
+  "signoff"?: boolean;
+};
+
+/**
+ * DeployKey a deploy key
+ */
+export type DeployKey = Record<string, unknown> & {
+  "created_at"?: string;
+  /**
+   * Fingerprint is the key's fingerprint
+   */
+  "fingerprint"?: string;
+  /**
+   * ID is the unique identifier for the deploy key
+   */
+  "id"?: RestInt64;
+  /**
+   * Key contains the actual SSH key content
+   */
+  "key"?: string;
+  /**
+   * KeyID is the associated public key ID
+   */
+  "key_id"?: RestInt64;
+  /**
+   * ReadOnly indicates if the key has read-only access
+   */
+  "read_only"?: boolean;
+  "repository"?: Repository;
+  /**
+   * Title is the human-readable name for the key
+   */
+  "title"?: string;
+  /**
+   * URL is the API URL for this deploy key
+   */
+  "url"?: string;
+};
+
+/**
+ * DismissPullReviewOptions are options to dismiss a pull request review
+ */
+export type DismissPullReviewOptions = Record<string, unknown> & {
+  "message"?: string;
+  "priors"?: boolean;
+};
+
+/**
+ * EditActionRunnerOption represents the editable fields for a runner.
+ */
+export type EditActionRunnerOption = Record<string, unknown> & {
+  "disabled": boolean;
+};
+
+/**
+ * EditAttachmentOptions options for editing attachments
+ */
+export type EditAttachmentOptions = Record<string, unknown> & {
+  /**
+   * Name is the new filename for the attachment
+   */
+  "name"?: string;
+};
+
+/**
+ * EditBranchProtectionOption options for editing a branch protection
+ */
+export type EditBranchProtectionOption = Record<string, unknown> & {
+  "approvals_whitelist_teams"?: Array<string>;
+  "approvals_whitelist_username"?: Array<string>;
+  "block_admin_merge_override"?: boolean;
+  "block_on_official_review_requests"?: boolean;
+  "block_on_outdated_branch"?: boolean;
+  "block_on_rejected_reviews"?: boolean;
+  "dismiss_stale_approvals"?: boolean;
+  "enable_approvals_whitelist"?: boolean;
+  "enable_force_push"?: boolean;
+  "enable_force_push_allowlist"?: boolean;
+  "enable_merge_whitelist"?: boolean;
+  "enable_push"?: boolean;
+  "enable_push_whitelist"?: boolean;
+  "enable_status_check"?: boolean;
+  "force_push_allowlist_deploy_keys"?: boolean;
+  "force_push_allowlist_teams"?: Array<string>;
+  "force_push_allowlist_usernames"?: Array<string>;
+  "ignore_stale_approvals"?: boolean;
+  "merge_whitelist_teams"?: Array<string>;
+  "merge_whitelist_usernames"?: Array<string>;
+  "priority"?: RestInt64;
+  "protected_file_patterns"?: string;
+  "push_whitelist_deploy_keys"?: boolean;
+  "push_whitelist_teams"?: Array<string>;
+  "push_whitelist_usernames"?: Array<string>;
+  "require_signed_commits"?: boolean;
+  "required_approvals"?: RestInt64;
+  "status_check_contexts"?: Array<string>;
+  "unprotected_file_patterns"?: string;
+};
+
+/**
+ * EditDeadlineOption options for creating a deadline
+ */
+export type EditDeadlineOption = Record<string, unknown> & {
+  "due_date": string;
+};
+
+/**
+ * EditGitHookOption options when modifying one Git hook
+ */
+export type EditGitHookOption = Record<string, unknown> & {
+  /**
+   * Content is the new script content for the hook
+   */
+  "content"?: string;
+};
+
+/**
+ * EditHookOption options when modify one hook
+ */
+export type EditHookOption = Record<string, unknown> & {
+  /**
+   * Whether the webhook is active and will be triggered
+   */
+  "active"?: boolean;
+  /**
+   * Authorization header to include in webhook requests
+   */
+  "authorization_header"?: string;
+  /**
+   * Branch filter pattern to determine which branches trigger the webhook
+   */
+  "branch_filter"?: string;
+  /**
+   * Configuration settings for the webhook
+   */
+  "config"?: Record<string, string>;
+  /**
+   * List of events that trigger this webhook
+   */
+  "events"?: Array<string>;
+  /**
+   * Optional human-readable name
+   */
+  "name"?: string;
+};
+
+/**
+ * EditIssueCommentOption options for editing a comment
+ */
+export type EditIssueCommentOption = Record<string, unknown> & {
+  "body": string;
+};
+
+/**
+ * EditIssueOption options for editing an issue
+ */
+export type EditIssueOption = Record<string, unknown> & {
+  /**
+   * deprecated
+   */
+  "assignee"?: string;
+  "assignees"?: Array<string>;
+  "body"?: string;
+  /**
+   * The current version of the issue content to detect conflicts during editing
+   */
+  "content_version"?: RestInt64;
+  "due_date"?: string;
+  "milestone"?: RestInt64;
+  "ref"?: string;
+  "state"?: string;
+  "title"?: string;
+  "unset_due_date"?: boolean;
+};
+
+/**
+ * EditLabelOption options for editing a label
+ */
+export type EditLabelOption = Record<string, unknown> & {
+  "color"?: string;
+  /**
+   * Description provides additional context about the label's purpose
+   */
+  "description"?: string;
+  "exclusive"?: boolean;
+  "is_archived"?: boolean;
+  /**
+   * Name is the new display name for the label
+   */
+  "name"?: string;
+};
+
+/**
+ * EditMilestoneOption options for editing a milestone
+ */
+export type EditMilestoneOption =
+  & Record<string, unknown>
+  & ({
+    /**
+     * Description provides updated details about the milestone
+     */
+    "description"?: string;
+    /**
+     * Deadline is the updated due date for the milestone
+     */
+    "due_on"?: string;
+    /**
+     * State indicates the updated state of the milestone
+     */
+    "state"?: "closed" | "open";
+    /**
+     * Title is the updated title of the milestone
+     */
+    "title"?: string;
+  });
+
+/**
+ * EditOrgOption options for editing an organization
+ */
+export type EditOrgOption =
+  & Record<string, unknown>
+  & ({
+    /**
+     * The description of the organization
+     */
+    "description"?: string;
+    /**
+     * The email address of the organization; use empty string to clear
+     */
+    "email"?: string;
+    /**
+     * The full display name of the organization
+     */
+    "full_name"?: string;
+    /**
+     * The location of the organization
+     */
+    "location"?: string;
+    /**
+     * Whether repository administrators can change team access
+     */
+    "repo_admin_change_team_access"?: boolean;
+    /**
+     * possible values are `public`, `limited` or `private`
+     */
+    "visibility"?: "limited" | "private" | "public";
+    /**
+     * The website URL of the organization
+     */
+    "website"?: string;
+  });
+
+/**
+ * EditPullRequestOption options when modify pull request
+ */
+export type EditPullRequestOption = Record<string, unknown> & {
+  /**
+   * Whether to allow maintainer edits
+   */
+  "allow_maintainer_edit"?: boolean;
+  /**
+   * The new primary assignee username
+   */
+  "assignee"?: string;
+  /**
+   * The new list of assignee usernames
+   */
+  "assignees"?: Array<string>;
+  /**
+   * The new base branch for the pull request
+   */
+  "base"?: string;
+  /**
+   * The new description body for the pull request
+   */
+  "body"?: string;
+  /**
+   * The current version of the pull request content to detect conflicts during editing
+   */
+  "content_version"?: RestInt64;
+  "due_date"?: string;
+  /**
+   * The new list of label IDs for the pull request
+   */
+  "labels"?: Array<RestInt64>;
+  /**
+   * The new milestone ID for the pull request
+   */
+  "milestone"?: RestInt64;
+  /**
+   * The new state for the pull request
+   */
+  "state"?: string;
+  /**
+   * The new title for the pull request
+   */
+  "title"?: string;
+  /**
+   * Whether to remove the current deadline
+   */
+  "unset_due_date"?: boolean;
+};
+
+/**
+ * EditReactionOption contain the reaction type
+ */
+export type EditReactionOption = Record<string, unknown> & {
+  /**
+   * The reaction content (e.g., emoji or reaction type)
+   */
+  "content"?: string;
+};
+
+/**
+ * EditReleaseOption options when editing a release
+ */
+export type EditReleaseOption = Record<string, unknown> & {
+  /**
+   * The new release notes or description
+   */
+  "body"?: string;
+  /**
+   * Whether to change the draft status
+   */
+  "draft"?: boolean;
+  /**
+   * The new display title of the release
+   */
+  "name"?: string;
+  /**
+   * Whether to change the prerelease status
+   */
+  "prerelease"?: boolean;
+  /**
+   * The new name of the git tag
+   */
+  "tag_name"?: string;
+  /**
+   * The new target commitish for the release
+   */
+  "target_commitish"?: string;
+};
+
+/**
+ * EditRepoOption options when editing a repository's properties
+ */
+export type EditRepoOption = Record<string, unknown> & {
+  /**
+   * either `true` to allow fast-forward-only merging pull requests, or `false` to prevent fast-forward-only merging.
+   */
+  "allow_fast_forward_only_merge"?: boolean;
+  /**
+   * either `true` to allow mark pr as merged manually, or `false` to prevent it.
+   */
+  "allow_manual_merge"?: boolean;
+  /**
+   * either `true` to allow merging pull requests with a merge commit, or `false` to prevent merging pull requests with merge commits.
+   */
+  "allow_merge_commits"?: boolean;
+  /**
+   * either `true` to allow rebase-merging pull requests, or `false` to prevent rebase-merging.
+   */
+  "allow_rebase"?: boolean;
+  /**
+   * either `true` to allow rebase with explicit merge commits (--no-ff), or `false` to prevent rebase with explicit merge commits.
+   */
+  "allow_rebase_explicit"?: boolean;
+  /**
+   * either `true` to allow updating pull request branch by rebase, or `false` to prevent it.
+   */
+  "allow_rebase_update"?: boolean;
+  /**
+   * either `true` to allow squash-merging pull requests, or `false` to prevent squash-merging.
+   */
+  "allow_squash_merge"?: boolean;
+  /**
+   * set to `true` to archive this repository.
+   */
+  "archived"?: boolean;
+  /**
+   * either `true` to enable AutodetectManualMerge, or `false` to prevent it. Note: In some special cases, misjudgments can occur.
+   */
+  "autodetect_manual_merge"?: boolean;
+  /**
+   * set to `true` to allow edits from maintainers by default
+   */
+  "default_allow_maintainer_edit"?: boolean;
+  /**
+   * sets the default branch for this repository.
+   */
+  "default_branch"?: string;
+  /**
+   * set to `true` to delete pr branch after merge by default
+   */
+  "default_delete_branch_after_merge"?: boolean;
+  /**
+   * set to a merge style to be used by this repository: "merge", "rebase", "rebase-merge", "squash", or "fast-forward-only".
+   */
+  "default_merge_style"?: string;
+  /**
+   * a short description of the repository.
+   */
+  "description"?: string;
+  /**
+   * enable prune - remove obsolete remote-tracking references when mirroring
+   */
+  "enable_prune"?: boolean;
+  "external_tracker"?: ExternalTracker;
+  "external_wiki"?: ExternalWiki;
+  /**
+   * either `true` to enable actions unit, or `false` to disable them.
+   */
+  "has_actions"?: boolean;
+  /**
+   * either `true` to enable code for this repository or `false` to disable it.
+   */
+  "has_code"?: boolean;
+  /**
+   * either `true` to enable issues for this repository or `false` to disable them.
+   */
+  "has_issues"?: boolean;
+  /**
+   * either `true` to enable packages unit, or `false` to disable them.
+   */
+  "has_packages"?: boolean;
+  /**
+   * either `true` to enable project unit, or `false` to disable them.
+   */
+  "has_projects"?: boolean;
+  /**
+   * either `true` to allow pull requests, or `false` to prevent pull request.
+   */
+  "has_pull_requests"?: boolean;
+  /**
+   * either `true` to enable releases unit, or `false` to disable them.
+   */
+  "has_releases"?: boolean;
+  /**
+   * either `true` to enable the wiki for this repository or `false` to disable it.
+   */
+  "has_wiki"?: boolean;
+  /**
+   * either `true` to ignore whitespace for conflicts, or `false` to not ignore whitespace.
+   */
+  "ignore_whitespace_conflicts"?: boolean;
+  "internal_tracker"?: InternalTracker;
+  /**
+   * set to a string like `8h30m0s` to set the mirror interval time
+   */
+  "mirror_interval"?: string;
+  /**
+   * name of the repository
+   */
+  "name"?: string;
+  /**
+   * either `true` to make the repository private or `false` to make it public.
+   * Note: you will get a 422 error if the organization restricts changing repository visibility to organization
+   * owners and a non-owner tries to change the value of private.
+   */
+  "private"?: boolean;
+  /**
+   * `repo` to only allow repo-level projects, `owner` to only allow owner projects, `all` to allow both.
+   */
+  "projects_mode"?: string;
+  /**
+   * either `true` to make this repository a template or `false` to make it a normal repository
+   */
+  "template"?: boolean;
+  /**
+   * a URL with more information about the repository.
+   */
+  "website"?: string;
+};
+
+/**
+ * EditTagProtectionOption options for editing a tag protection
+ */
+export type EditTagProtectionOption = Record<string, unknown> & {
+  /**
+   * The pattern to match tag names for protection
+   */
+  "name_pattern"?: string;
+  /**
+   * List of team names allowed to create/delete protected tags
+   */
+  "whitelist_teams"?: Array<string>;
+  /**
+   * List of usernames allowed to create/delete protected tags
+   */
+  "whitelist_usernames"?: Array<string>;
+};
+
+/**
+ * EditTeamOption options for editing a team
+ */
+export type EditTeamOption =
+  & Record<string, unknown>
+  & ({
+    /**
+     * Whether the team can create repositories in the organization
+     */
+    "can_create_org_repo"?: boolean;
+    /**
+     * The description of the team
+     */
+    "description"?: string;
+    /**
+     * Whether the team has access to all repositories in the organization
+     */
+    "includes_all_repositories"?: boolean;
+    "name": string;
+    "permission"?: "admin" | "read" | "write";
+    "units"?: Array<string>;
+    "units_map"?: Record<string, string>;
+  });
+
+/**
+ * EditUserOption edit user options
+ */
+export type EditUserOption = Record<string, unknown> & {
+  /**
+   * Whether the user account is active
+   */
+  "active"?: boolean;
+  /**
+   * Whether the user has administrator privileges
+   */
+  "admin"?: boolean;
+  /**
+   * Whether the user can create organizations
+   */
+  "allow_create_organization"?: boolean;
+  /**
+   * Whether the user can use Git hooks
+   */
+  "allow_git_hook"?: boolean;
+  /**
+   * Whether the user can import local repositories
+   */
+  "allow_import_local"?: boolean;
+  /**
+   * The user's personal description or bio
+   */
+  "description"?: string;
+  "email"?: string;
+  /**
+   * The full display name of the user
+   */
+  "full_name"?: string;
+  /**
+   * The user's location or address
+   */
+  "location"?: string;
+  /**
+   * identifier of the user, provided by the external authenticator (if configured)
+   */
+  "login_name": string;
+  /**
+   * Maximum number of repositories the user can create
+   */
+  "max_repo_creation"?: RestInt64;
+  /**
+   * Whether the user must change password on next login
+   */
+  "must_change_password"?: boolean;
+  /**
+   * The plain text password for the user
+   */
+  "password"?: string;
+  /**
+   * Whether the user is prohibited from logging in
+   */
+  "prohibit_login"?: boolean;
+  /**
+   * Whether the user has restricted access privileges
+   */
+  "restricted"?: boolean;
+  "source_id": RestInt64;
+  /**
+   * User visibility level: public, limited, or private
+   */
+  "visibility"?: string;
+  /**
+   * The user's personal website URL
+   */
+  "website"?: string;
+};
+
+/**
+ * Email an email address belonging to a user
+ */
+export type Email = Record<string, unknown> & {
+  "email"?: string;
+  /**
+   * Whether this is the primary email address
+   */
+  "primary"?: boolean;
+  /**
+   * The unique identifier of the user who owns this email
+   */
+  "user_id"?: RestInt64;
+  /**
+   * username of the user
+   */
+  "username"?: string;
+  /**
+   * Whether the email address has been verified
+   */
+  "verified"?: boolean;
+};
+
+/**
+ * ExternalTracker represents settings for external tracker
+ */
+export type ExternalTracker = Record<string, unknown> & {
+  /**
+   * External Issue Tracker URL Format. Use the placeholders {user}, {repo} and {index} for the username, repository name and issue index.
+   */
+  "external_tracker_format"?: string;
+  /**
+   * External Issue Tracker issue regular expression
+   */
+  "external_tracker_regexp_pattern"?: string;
+  /**
+   * External Issue Tracker Number Format, either `numeric`, `alphanumeric`, or `regexp`
+   */
+  "external_tracker_style"?: string;
+  /**
+   * URL of external issue tracker.
+   */
+  "external_tracker_url"?: string;
+};
+
+/**
+ * ExternalWiki represents setting for external wiki
+ */
+export type ExternalWiki = Record<string, unknown> & {
+  /**
+   * URL of external wiki.
+   */
+  "external_wiki_url"?: string;
+};
+
+/**
+ * FileCommitResponse contains information generated from a Git commit for a repo's file.
+ */
+export type FileCommitResponse = Record<string, unknown> & {
+  "author"?: CommitUser;
+  "committer"?: CommitUser;
+  "created"?: string;
+  /**
+   * HTMLURL is the web URL for viewing this commit
+   */
+  "html_url"?: string;
+  /**
+   * Message is the commit message
+   */
+  "message"?: string;
+  /**
+   * Parents contains parent commit metadata
+   */
+  "parents"?: Array<CommitMeta>;
+  /**
+   * SHA is the commit SHA hash
+   */
+  "sha"?: string;
+  "tree"?: CommitMeta;
+  /**
+   * URL is the API URL for the commit
+   */
+  "url"?: string;
+};
+
+/**
+ * FileDeleteResponse contains information about a repo's file that was deleted
+ */
+export type FileDeleteResponse = Record<string, unknown> & {
+  "commit"?: FileCommitResponse;
+  /**
+   * Content is always null for delete operations
+   */
+  "content"?: unknown;
+  "verification"?: PayloadCommitVerification;
+};
+
+/**
+ * FileLinksResponse contains the links for a repo's file
+ */
+export type FileLinksResponse = Record<string, unknown> & {
+  /**
+   * GitURL is the Git API URL for this file
+   */
+  "git"?: string;
+  /**
+   * HTMLURL is the web URL for this file
+   */
+  "html"?: string;
+  /**
+   * Self is the API URL for this file
+   */
+  "self"?: string;
+};
+
+/**
+ * FileResponse contains information about a repo's file
+ */
+export type FileResponse = Record<string, unknown> & {
+  "commit"?: FileCommitResponse;
+  "content"?: ContentsResponse;
+  "verification"?: PayloadCommitVerification;
+};
+
+/**
+ * FilesResponse contains information about multiple files from a repo
+ */
+export type FilesResponse = Record<string, unknown> & {
+  "commit"?: FileCommitResponse;
+  /**
+   * Files contains the list of file contents and metadata
+   */
+  "files"?: Array<ContentsResponse>;
+  "verification"?: PayloadCommitVerification;
+};
+
+/**
+ * GPGKey a user GPG key to sign commit and tag in repository
+ */
+export type GpgKey = Record<string, unknown> & {
+  /**
+   * Whether the key can be used for certification
+   */
+  "can_certify"?: boolean;
+  /**
+   * Whether the key can be used for encrypting communications
+   */
+  "can_encrypt_comms"?: boolean;
+  /**
+   * Whether the key can be used for encrypting storage
+   */
+  "can_encrypt_storage"?: boolean;
+  /**
+   * Whether the key can be used for signing
+   */
+  "can_sign"?: boolean;
+  "created_at"?: string;
+  /**
+   * List of email addresses associated with this GPG key
+   */
+  "emails"?: Array<GpgKeyEmail>;
+  "expires_at"?: string;
+  /**
+   * The unique identifier of the GPG key
+   */
+  "id"?: RestInt64;
+  /**
+   * The key ID of the GPG key
+   */
+  "key_id"?: string;
+  /**
+   * The primary key ID of the GPG key
+   */
+  "primary_key_id"?: string;
+  /**
+   * The public key content in armored format
+   */
+  "public_key"?: string;
+  /**
+   * List of subkeys of this GPG key
+   */
+  "subkeys"?: Array<GpgKey>;
+  /**
+   * Whether the GPG key has been verified
+   */
+  "verified"?: boolean;
+};
+
+/**
+ * GPGKeyEmail an email attached to a GPGKey
+ */
+export type GpgKeyEmail = Record<string, unknown> & {
+  /**
+   * The email address associated with the GPG key
+   */
+  "email"?: string;
+  /**
+   * Whether the email address has been verified
+   */
+  "verified"?: boolean;
+};
+
+/**
+ * GeneralAPISettings contains global api settings exposed by it
+ */
+export type GeneralApiSettings = Record<string, unknown> & {
+  /**
+   * DefaultGitTreesPerPage is the default number of Git tree items per page
+   */
+  "default_git_trees_per_page"?: RestInt64;
+  /**
+   * DefaultMaxBlobSize is the default maximum blob size for API responses
+   */
+  "default_max_blob_size"?: RestInt64;
+  /**
+   * DefaultMaxResponseSize is the default maximum response size
+   */
+  "default_max_response_size"?: RestInt64;
+  /**
+   * DefaultPagingNum is the default number of items per page
+   */
+  "default_paging_num"?: RestInt64;
+  /**
+   * MaxResponseItems is the maximum number of items returned in API responses
+   */
+  "max_response_items"?: RestInt64;
+};
+
+/**
+ * GeneralAttachmentSettings contains global Attachment settings exposed by API
+ */
+export type GeneralAttachmentSettings = Record<string, unknown> & {
+  /**
+   * AllowedTypes contains the allowed file types for attachments
+   */
+  "allowed_types"?: string;
+  /**
+   * Enabled indicates if file attachments are enabled
+   */
+  "enabled"?: boolean;
+  /**
+   * MaxFiles is the maximum number of files per attachment
+   */
+  "max_files"?: RestInt64;
+  /**
+   * MaxSize is the maximum size for individual attachments
+   */
+  "max_size"?: RestInt64;
+};
+
+/**
+ * GeneralRepoSettings contains global repository settings exposed by API
+ */
+export type GeneralRepoSettings = Record<string, unknown> & {
+  /**
+   * HTTPGitDisabled indicates if HTTP Git operations are disabled
+   */
+  "http_git_disabled"?: boolean;
+  /**
+   * LFSDisabled indicates if Git LFS support is disabled
+   */
+  "lfs_disabled"?: boolean;
+  /**
+   * MigrationsDisabled indicates if repository migrations are disabled
+   */
+  "migrations_disabled"?: boolean;
+  /**
+   * MirrorsDisabled indicates if repository mirroring is disabled
+   */
+  "mirrors_disabled"?: boolean;
+  /**
+   * StarsDisabled indicates if repository starring is disabled
+   */
+  "stars_disabled"?: boolean;
+  /**
+   * TimeTrackingDisabled indicates if time tracking is disabled
+   */
+  "time_tracking_disabled"?: boolean;
+};
+
+/**
+ * GeneralUISettings contains global ui settings exposed by API
+ */
+export type GeneralUiSettings = Record<string, unknown> & {
+  /**
+   * AllowedReactions contains the list of allowed emoji reactions
+   */
+  "allowed_reactions"?: Array<string>;
+  /**
+   * CustomEmojis contains the list of custom emojis
+   */
+  "custom_emojis"?: Array<string>;
+  /**
+   * DefaultTheme is the default UI theme
+   */
+  "default_theme"?: string;
+};
+
+/**
+ * GenerateRepoOption options when creating a repository using a template
+ */
+export type GenerateRepoOption = Record<string, unknown> & {
+  /**
+   * include avatar of the template repo
+   */
+  "avatar"?: boolean;
+  /**
+   * Default branch of the new repository
+   */
+  "default_branch"?: string;
+  /**
+   * Description of the repository to create
+   */
+  "description"?: string;
+  /**
+   * include git content of default branch in template repo
+   */
+  "git_content"?: boolean;
+  /**
+   * include git hooks in template repo
+   */
+  "git_hooks"?: boolean;
+  /**
+   * include labels in template repo
+   */
+  "labels"?: boolean;
+  "name": string;
+  /**
+   * the organization's name or individual user's name who will own the new repository
+   */
+  "owner": string;
+  /**
+   * Whether the repository is private
+   */
+  "private"?: boolean;
+  /**
+   * include protected branches in template repo
+   */
+  "protected_branch"?: boolean;
+  /**
+   * include topics in template repo
+   */
+  "topics"?: boolean;
+  /**
+   * include webhooks in template repo
+   */
+  "webhooks"?: boolean;
+};
+
+/**
+ * GetFilesOptions options for retrieving metadate and content of multiple files
+ */
+export type GetFilesOptions = Record<string, unknown> & {
+  /**
+   * Files is the list of file paths to retrieve
+   */
+  "files"?: Array<string>;
+};
+
+/**
+ * GitBlobResponse represents a git blob
+ */
+export type GitBlobResponse = Record<string, unknown> & {
+  /**
+   * The content of the git blob (may be base64 encoded)
+   */
+  "content"?: string;
+  /**
+   * The encoding used for the content (e.g., "base64")
+   */
+  "encoding"?: string;
+  /**
+   * The LFS object ID if this blob is stored in LFS
+   */
+  "lfs_oid"?: string;
+  /**
+   * The size of the LFS object if this blob is stored in LFS
+   */
+  "lfs_size"?: RestInt64;
+  /**
+   * The SHA hash of the git blob
+   */
+  "sha"?: string;
+  /**
+   * The size of the git blob in bytes
+   */
+  "size"?: RestInt64;
+  /**
+   * The URL to access this git blob
+   */
+  "url"?: string;
+};
+
+/**
+ * GitEntry represents a git tree
+ */
+export type GitEntry = Record<string, unknown> & {
+  /**
+   * Mode is the file mode (permissions)
+   */
+  "mode"?: string;
+  /**
+   * Path is the file or directory path
+   */
+  "path"?: string;
+  /**
+   * SHA is the Git object SHA
+   */
+  "sha"?: string;
+  /**
+   * Size is the file size in bytes
+   */
+  "size"?: RestInt64;
+  /**
+   * Type indicates if this is a file, directory, or symlink
+   */
+  "type"?: string;
+  /**
+   * URL is the API URL for this tree entry
+   */
+  "url"?: string;
+};
+
+/**
+ * GitHook represents a Git repository hook
+ */
+export type GitHook = Record<string, unknown> & {
+  /**
+   * Content contains the script content of the hook
+   */
+  "content"?: string;
+  /**
+   * IsActive indicates if the hook is active
+   */
+  "is_active"?: boolean;
+  /**
+   * Name is the name of the Git hook
+   */
+  "name"?: string;
+};
+
+/**
+ * GitObject represents a Git object.
+ */
+export type GitObject = Record<string, unknown> & {
+  /**
+   * The SHA hash of the Git object
+   */
+  "sha"?: string;
+  /**
+   * The type of the Git object (e.g., commit, tag, tree, blob)
+   */
+  "type"?: string;
+  /**
+   * The URL to access this Git object
+   */
+  "url"?: string;
+};
+
+/**
+ * GitTreeResponse returns a git tree
+ */
+export type GitTreeResponse = Record<string, unknown> & {
+  /**
+   * Page is the current page number for pagination
+   */
+  "page"?: RestInt64;
+  /**
+   * SHA is the tree object SHA
+   */
+  "sha"?: string;
+  /**
+   * TotalCount is the total number of entries in the tree
+   */
+  "total_count"?: RestInt64;
+  /**
+   * Entries contains the tree entries (files and directories)
+   */
+  "tree"?: Array<GitEntry>;
+  /**
+   * Truncated indicates if the response was truncated due to size
+   */
+  "truncated"?: boolean;
+  /**
+   * URL is the API URL for this tree
+   */
+  "url"?: string;
+};
+
+/**
+ * GitignoreTemplateInfo name and text of a gitignore template
+ */
+export type GitignoreTemplateInfo = Record<string, unknown> & {
+  /**
+   * Name is the name of the gitignore template
+   */
+  "name"?: string;
+  /**
+   * Source contains the content of the gitignore template
+   */
+  "source"?: string;
+};
+
+/**
+ * Hook a hook is a web hook when one repository changed
+ */
+export type Hook = Record<string, unknown> & {
+  /**
+   * Whether the webhook is active and will be triggered
+   */
+  "active"?: boolean;
+  /**
+   * Authorization header to include in webhook requests
+   */
+  "authorization_header"?: string;
+  /**
+   * Branch filter pattern to determine which branches trigger the webhook
+   */
+  "branch_filter"?: string;
+  /**
+   * Configuration settings for the webhook
+   */
+  "config"?: Record<string, string>;
+  "created_at"?: string;
+  /**
+   * List of events that trigger this webhook
+   */
+  "events"?: Array<string>;
+  /**
+   * The unique identifier of the webhook
+   */
+  "id"?: RestInt64;
+  /**
+   * Optional human-readable name for the webhook
+   */
+  "name"?: string;
+  /**
+   * The type of the webhook (e.g., gitea, slack, discord)
+   */
+  "type"?: string;
+  "updated_at"?: string;
+};
+
+/**
+ * Identity for a person's identity like an author or committer
+ */
+export type Identity = Record<string, unknown> & {
+  "email"?: string;
+  /**
+   * Name is the person's name
+   */
+  "name"?: string;
+};
+
+/**
+ * InternalTracker represents settings for internal tracker
+ */
+export type InternalTracker = Record<string, unknown> & {
+  /**
+   * Let only contributors track time (Built-in issue tracker)
+   */
+  "allow_only_contributors_to_track_time"?: boolean;
+  /**
+   * Enable dependencies for issues and pull requests (Built-in issue tracker)
+   */
+  "enable_issue_dependencies"?: boolean;
+  /**
+   * Enable time tracking (Built-in issue tracker)
+   */
+  "enable_time_tracker"?: boolean;
+};
+
+/**
+ * Issue represents an issue in a repository
+ */
+export type Issue =
+  & Record<string, unknown>
+  & ({
+    "assets"?: Array<Attachment>;
+    "assignee"?: User;
+    "assignees"?: Array<User>;
+    "body"?: string;
+    "closed_at"?: string;
+    "comments"?: RestInt64;
+    /**
+     * The version of the issue content for optimistic locking
+     */
+    "content_version"?: RestInt64;
+    "created_at"?: string;
+    "due_date"?: string;
+    "html_url"?: string;
+    "id"?: RestInt64;
+    "is_locked"?: boolean;
+    "labels"?: Array<Label>;
+    "milestone"?: Milestone;
+    "number"?: RestInt64;
+    "original_author"?: string;
+    "original_author_id"?: RestInt64;
+    "pin_order"?: RestInt64;
+    "pull_request"?: PullRequestMeta;
+    "ref"?: string;
+    "repository"?: RepositoryMeta;
+    "state"?: "closed" | "open";
+    "time_estimate"?: RestInt64;
+    "title"?: string;
+    "updated_at"?: string;
+    "url"?: string;
+    "user"?: User;
+  });
+
+export type IssueConfig = Record<string, unknown> & {
+  "blank_issues_enabled"?: boolean;
+  "contact_links"?: Array<IssueConfigContactLink>;
+};
+
+export type IssueConfigContactLink = Record<string, unknown> & {
+  "about"?: string;
+  "name"?: string;
+  "url"?: string;
+};
+
+export type IssueConfigValidation = Record<string, unknown> & {
+  "message"?: string;
+  "valid"?: boolean;
+};
+
+/**
+ * IssueDeadline represents an issue deadline
+ */
+export type IssueDeadline = Record<string, unknown> & {
+  "due_date"?: string;
+};
+
+/**
+ * IssueFormField represents a form field
+ */
+export type IssueFormField =
+  & Record<string, unknown>
+  & ({
+    "attributes"?: Record<string, unknown>;
+    "id"?: string;
+    "type"?: "checkboxes" | "dropdown" | "input" | "markdown" | "textarea";
+    "validations"?: Record<string, unknown>;
+    "visible"?: Array<"content" | "form">;
+  });
+
+/**
+ * IssueLabelsOption a collection of labels
+ */
+export type IssueLabelsOption = Record<string, unknown> & {
+  /**
+   * Labels can be a list of integers representing label IDs
+   * or a list of strings representing label names
+   */
+  "labels"?: Array<unknown>;
+};
+
+/**
+ * IssueMeta basic issue information
+ */
+export type IssueMeta = Record<string, unknown> & {
+  "index"?: RestInt64;
+  /**
+   * owner of the issue's repo
+   */
+  "owner"?: string;
+  "repo"?: string;
+};
+
+/**
+ * IssueTemplate represents an issue template for a repository
+ */
+export type IssueTemplate = Record<string, unknown> & {
+  "about"?: string;
+  "assignees"?: IssueTemplateStringSlice;
+  "body"?: Array<IssueFormField>;
+  "content"?: string;
+  "file_name"?: string;
+  "labels"?: IssueTemplateStringSlice;
+  "name"?: string;
+  "ref"?: string;
+  "title"?: string;
+};
+
+export type IssueTemplateStringSlice = Array<string>;
+
+/**
+ * Label a label to an issue or a pr
+ */
+export type Label = Record<string, unknown> & {
+  "color"?: string;
+  /**
+   * Description provides additional context about the label's purpose
+   */
+  "description"?: string;
+  "exclusive"?: boolean;
+  /**
+   * ID is the unique identifier for the label
+   */
+  "id"?: RestInt64;
+  "is_archived"?: boolean;
+  /**
+   * Name is the display name of the label
+   */
+  "name"?: string;
+  /**
+   * URL is the API endpoint for accessing this label
+   */
+  "url"?: string;
+};
+
+/**
+ * LabelTemplate info of a Label template
+ */
+export type LabelTemplate = Record<string, unknown> & {
+  "color"?: string;
+  /**
+   * Description provides additional context about the label template's purpose
+   */
+  "description"?: string;
+  "exclusive"?: boolean;
+  /**
+   * Name is the display name of the label template
+   */
+  "name"?: string;
+};
+
+/**
+ * LicensesInfo contains information about a License
+ */
+export type LicenseTemplateInfo = Record<string, unknown> & {
+  /**
+   * Body contains the full text of the license
+   */
+  "body"?: string;
+  /**
+   * Implementation contains license implementation details
+   */
+  "implementation"?: string;
+  /**
+   * Key is the unique identifier for the license template
+   */
+  "key"?: string;
+  /**
+   * Name is the display name of the license
+   */
+  "name"?: string;
+  /**
+   * URL is the reference URL for the license
+   */
+  "url"?: string;
+};
+
+/**
+ * LicensesListEntry is used for the API
+ */
+export type LicensesTemplateListEntry = Record<string, unknown> & {
+  /**
+   * Key is the unique identifier for the license template
+   */
+  "key"?: string;
+  /**
+   * Name is the display name of the license
+   */
+  "name"?: string;
+  /**
+   * URL is the reference URL for the license
+   */
+  "url"?: string;
+};
+
+/**
+ * LockIssueOption options to lock an issue
+ */
+export type LockIssueOption = Record<string, unknown> & {
+  "lock_reason"?: string;
+};
+
+/**
+ * MarkdownOption markdown options
+ */
+export type MarkdownOption = Record<string, unknown> & {
+  /**
+   * URL path for rendering issue, media and file links
+   * Expected format: /subpath/{user}/{repo}/src/{branch, commit, tag}/{identifier/path}/{file/dir}
+   *
+   * in: body
+   */
+  "Context"?: string;
+  /**
+   * Mode to render (markdown, comment, wiki, file)
+   *
+   * in: body
+   */
+  "Mode"?: string;
+  /**
+   * Text markdown to render
+   *
+   * in: body
+   */
+  "Text"?: string;
+  /**
+   * Is it a wiki page? (use mode=wiki instead)
+   *
+   * Deprecated: true
+   * in: body
+   */
+  "Wiki"?: boolean;
+};
+
+/**
+ * MarkupOption markup options
+ */
+export type MarkupOption = Record<string, unknown> & {
+  /**
+   * URL path for rendering issue, media and file links
+   * Expected format: /subpath/{user}/{repo}/src/{branch, commit, tag}/{identifier/path}/{file/dir}
+   *
+   * in: body
+   */
+  "Context"?: string;
+  /**
+   * File path for detecting extension in file mode
+   *
+   * in: body
+   */
+  "FilePath"?: string;
+  /**
+   * Mode to render (markdown, comment, wiki, file)
+   *
+   * in: body
+   */
+  "Mode"?: string;
+  /**
+   * Text markup to render
+   *
+   * in: body
+   */
+  "Text"?: string;
+  /**
+   * Is it a wiki page? (use mode=wiki instead)
+   *
+   * Deprecated: true
+   * in: body
+   */
+  "Wiki"?: boolean;
+};
+
+/**
+ * MergePullRequestForm form for merging Pull Request
+ */
+export type MergePullRequestOption =
+  & Record<string, unknown>
+  & ({
+    "delete_branch_after_merge"?: boolean;
+    "do": "fast-forward-only" | "manually-merged" | "merge" | "rebase" | "rebase-merge" | "squash";
+    "force_merge"?: boolean;
+    "head_commit_id"?: string;
+    "merge_commit_id"?: string;
+    "merge_message_field"?: string;
+    "merge_title_field"?: string;
+    "merge_when_checks_succeed"?: boolean;
+  });
+
+export type MergeUpstreamRequest = Record<string, unknown> & {
+  "branch"?: string;
+  "ff_only"?: boolean;
+};
+
+export type MergeUpstreamResponse = Record<string, unknown> & {
+  "merge_type"?: string;
+};
+
+/**
+ * MigrateRepoOptions options for migrating repository's
+ * this is used to interact with api v1
+ */
+export type MigrateRepoOptions =
+  & Record<string, unknown>
+  & ({
+    "auth_password"?: string;
+    "auth_token"?: string;
+    "auth_username"?: string;
+    "aws_access_key_id"?: string;
+    "aws_secret_access_key"?: string;
+    "clone_addr": string;
+    "description"?: string;
+    "issues"?: boolean;
+    "labels"?: boolean;
+    "lfs"?: boolean;
+    "lfs_endpoint"?: string;
+    "milestones"?: boolean;
+    "mirror"?: boolean;
+    "mirror_interval"?: string;
+    "private"?: boolean;
+    "pull_requests"?: boolean;
+    "releases"?: boolean;
+    "repo_name": string;
+    /**
+     * the organization's name or individual user's name who will own the migrated repository
+     */
+    "repo_owner"?: string;
+    "service"?:
+      | "codebase"
+      | "codecommit"
+      | "git"
+      | "gitbucket"
+      | "gitea"
+      | "github"
+      | "gitlab"
+      | "gogs"
+      | "onedev";
+    /**
+     * deprecated (only for backwards compatibility, use repo_owner instead)
+     */
+    "uid"?: RestInt64;
+    "wiki"?: boolean;
+  });
+
+/**
+ * Milestone milestone is a collection of issues on one repository
+ */
+export type Milestone =
+  & Record<string, unknown>
+  & ({
+    "closed_at"?: string;
+    /**
+     * ClosedIssues is the number of closed issues in this milestone
+     */
+    "closed_issues"?: RestInt64;
+    "created_at"?: string;
+    /**
+     * Description provides details about the milestone
+     */
+    "description"?: string;
+    "due_on"?: string;
+    /**
+     * ID is the unique identifier for the milestone
+     */
+    "id"?: RestInt64;
+    /**
+     * OpenIssues is the number of open issues in this milestone
+     */
+    "open_issues"?: RestInt64;
+    /**
+     * State indicates if the milestone is open or closed
+     * open StateOpen  StateOpen pr is opened
+     * closed StateClosed  StateClosed pr is closed
+     */
+    "state"?: "closed" | "open";
+    /**
+     * Title is the title of the milestone
+     */
+    "title"?: string;
+    "updated_at"?: string;
+  });
+
+/**
+ * NewIssuePinsAllowed represents an API response that says if new Issue Pins are allowed
+ */
+export type NewIssuePinsAllowed = Record<string, unknown> & {
+  "issues"?: boolean;
+  "pull_requests"?: boolean;
+};
+
+/**
+ * NodeInfo contains standardized way of exposing metadata about a server running one of the distributed social networks
+ */
+export type NodeInfo = Record<string, unknown> & {
+  /**
+   * Metadata contains free form key value pairs for software specific values
+   */
+  "metadata"?: Record<string, unknown>;
+  /**
+   * OpenRegistrations indicates if new user registrations are accepted
+   */
+  "openRegistrations"?: boolean;
+  /**
+   * Protocols lists the protocols supported by this server
+   */
+  "protocols"?: Array<string>;
+  "services"?: NodeInfoServices;
+  "software"?: NodeInfoSoftware;
+  "usage"?: NodeInfoUsage;
+  /**
+   * Version specifies the schema version
+   */
+  "version"?: string;
+};
+
+/**
+ * NodeInfoServices contains the third party sites this server can connect to via their application API
+ */
+export type NodeInfoServices = Record<string, unknown> & {
+  /**
+   * Inbound lists services that can deliver content to this server
+   */
+  "inbound"?: Array<string>;
+  /**
+   * Outbound lists services this server can deliver content to
+   */
+  "outbound"?: Array<string>;
+};
+
+/**
+ * NodeInfoSoftware contains Metadata about server software in use
+ */
+export type NodeInfoSoftware = Record<string, unknown> & {
+  /**
+   * Homepage is the URL to the homepage of this server software
+   */
+  "homepage"?: string;
+  /**
+   * Name is the canonical name of this server software
+   */
+  "name"?: string;
+  /**
+   * Repository is the URL to the source code repository
+   */
+  "repository"?: string;
+  /**
+   * Version is the version of this server software
+   */
+  "version"?: string;
+};
+
+/**
+ * NodeInfoUsage contains usage statistics for this server
+ */
+export type NodeInfoUsage = Record<string, unknown> & {
+  /**
+   * LocalComments is the total amount of comments made by users local to this server
+   */
+  "localComments"?: RestInt64;
+  /**
+   * LocalPosts is the total amount of posts made by users local to this server
+   */
+  "localPosts"?: RestInt64;
+  "users"?: NodeInfoUsageUsers;
+};
+
+/**
+ * NodeInfoUsageUsers contains statistics about the users of this server
+ */
+export type NodeInfoUsageUsers = Record<string, unknown> & {
+  /**
+   * ActiveHalfyear is the amount of users that signed in at least once in the last 180 days
+   */
+  "activeHalfyear"?: RestInt64;
+  /**
+   * ActiveMonth is the amount of users that signed in at least once in the last 30 days
+   */
+  "activeMonth"?: RestInt64;
+  /**
+   * Total is the total amount of users on this server
+   */
+  "total"?: RestInt64;
+};
+
+/**
+ * Note contains information related to a git note
+ */
+export type Note = Record<string, unknown> & {
+  "commit"?: Commit;
+  /**
+   * The content message of the git note
+   */
+  "message"?: string;
+};
+
+/**
+ * NotificationCount number of unread notifications
+ */
+export type NotificationCount = Record<string, unknown> & {
+  /**
+   * New is the number of unread notifications
+   */
+  "new"?: RestInt64;
+};
+
+/**
+ * NotificationSubject contains the notification subject (Issue/Pull/Commit)
+ */
+export type NotificationSubject =
+  & Record<string, unknown>
+  & ({
+    /**
+     * HTMLURL is the web URL for the notification subject
+     */
+    "html_url"?: string;
+    /**
+     * LatestCommentHTMLURL is the web URL for the latest comment
+     */
+    "latest_comment_html_url"?: string;
+    /**
+     * LatestCommentURL is the API URL for the latest comment
+     */
+    "latest_comment_url"?: string;
+    /**
+     * State indicates the current state of the notification subject
+     * open NotifySubjectStateOpen  NotifySubjectStateOpen is an open subject
+     * closed NotifySubjectStateClosed  NotifySubjectStateClosed is a closed subject
+     * merged NotifySubjectStateMerged  NotifySubjectStateMerged is a merged pull request
+     */
+    "state"?: "closed" | "merged" | "open";
+    /**
+     * Title is the title of the notification subject
+     */
+    "title"?: string;
+    /**
+     * Type indicates the type of the notification subject
+     * Issue NotifySubjectIssue  NotifySubjectIssue an issue is subject of an notification
+     * Pull NotifySubjectPull  NotifySubjectPull an pull is subject of an notification
+     * Commit NotifySubjectCommit  NotifySubjectCommit an commit is subject of an notification
+     * Repository NotifySubjectRepository  NotifySubjectRepository an repository is subject of an notification
+     */
+    "type"?: "Commit" | "Issue" | "Pull" | "Repository";
+    /**
+     * URL is the API URL for the notification subject
+     */
+    "url"?: string;
+  });
+
+/**
+ * NotificationThread expose Notification on API
+ */
+export type NotificationThread = Record<string, unknown> & {
+  /**
+   * ID is the unique identifier for the notification thread
+   */
+  "id"?: RestInt64;
+  /**
+   * Pinned indicates if the notification is pinned
+   */
+  "pinned"?: boolean;
+  "repository"?: Repository;
+  "subject"?: NotificationSubject;
+  /**
+   * Unread indicates if the notification has been read
+   */
+  "unread"?: boolean;
+  /**
+   * UpdatedAt is the time when the notification was last updated
+   */
+  "updated_at"?: string;
+  /**
+   * URL is the API URL for this notification thread
+   */
+  "url"?: string;
+};
+
+/**
+ * OAuth2Application represents an OAuth2 application.
+ */
+export type OAuth2Application = Record<string, unknown> & {
+  /**
+   * The client ID of the OAuth2 application
+   */
+  "client_id"?: string;
+  /**
+   * The client secret of the OAuth2 application
+   */
+  "client_secret"?: string;
+  /**
+   * Whether the client is confidential
+   */
+  "confidential_client"?: boolean;
+  /**
+   * The timestamp when the application was created
+   */
+  "created"?: string;
+  /**
+   * The unique identifier of the OAuth2 application
+   */
+  "id"?: RestInt64;
+  /**
+   * The name of the OAuth2 application
+   */
+  "name"?: string;
+  /**
+   * The list of allowed redirect URIs
+   */
+  "redirect_uris"?: Array<string>;
+  /**
+   * Whether to skip secondary authorization
+   */
+  "skip_secondary_authorization"?: boolean;
+};
+
+/**
+ * Organization represents an organization
+ */
+export type Organization = Record<string, unknown> & {
+  /**
+   * The URL of the organization's avatar
+   */
+  "avatar_url"?: string;
+  /**
+   * The description of the organization
+   */
+  "description"?: string;
+  /**
+   * The email address of the organization
+   */
+  "email"?: string;
+  /**
+   * The full display name of the organization
+   */
+  "full_name"?: string;
+  /**
+   * The unique identifier of the organization
+   */
+  "id"?: RestInt64;
+  /**
+   * The location of the organization
+   */
+  "location"?: string;
+  /**
+   * The name of the organization
+   */
+  "name"?: string;
+  /**
+   * Whether repository administrators can change team access
+   */
+  "repo_admin_change_team_access"?: boolean;
+  /**
+   * username of the organization
+   * deprecated
+   */
+  "username"?: string;
+  /**
+   * The visibility level of the organization (public, limited, private)
+   */
+  "visibility"?: string;
+  /**
+   * The website URL of the organization
+   */
+  "website"?: string;
+};
+
+/**
+ * OrganizationPermissions list different users permissions on an organization
+ */
+export type OrganizationPermissions = Record<string, unknown> & {
+  /**
+   * Whether the user can create repositories in the organization
+   */
+  "can_create_repository"?: boolean;
+  /**
+   * Whether the user can read the organization
+   */
+  "can_read"?: boolean;
+  /**
+   * Whether the user can write to the organization
+   */
+  "can_write"?: boolean;
+  /**
+   * Whether the user is an admin of the organization
+   */
+  "is_admin"?: boolean;
+  /**
+   * Whether the user is an owner of the organization
+   */
+  "is_owner"?: boolean;
+};
+
+/**
+ * PRBranchInfo information about a branch
+ */
+export type PrBranchInfo = Record<string, unknown> & {
+  /**
+   * The display name of the branch
+   */
+  "label"?: string;
+  /**
+   * The git reference of the branch
+   */
+  "ref"?: string;
+  "repo"?: Repository;
+  /**
+   * The unique identifier of the repository
+   */
+  "repo_id"?: RestInt64;
+  /**
+   * The commit SHA of the branch head
+   */
+  "sha"?: string;
+};
+
+/**
+ * Package represents a package
+ */
+export type PackageType = Record<string, unknown> & {
+  "created_at"?: string;
+  "creator"?: User;
+  /**
+   * The HTML URL to view the package
+   */
+  "html_url"?: string;
+  /**
+   * The unique identifier of the package
+   */
+  "id"?: RestInt64;
+  /**
+   * The name of the package
+   */
+  "name"?: string;
+  "owner"?: User;
+  "repository"?: Repository;
+  /**
+   * The type of the package (e.g., npm, maven, docker)
+   */
+  "type"?: string;
+  /**
+   * The version of the package
+   */
+  "version"?: string;
+};
+
+/**
+ * PackageFile represents a package file
+ */
+export type PackageFile = Record<string, unknown> & {
+  /**
+   * The unique identifier of the package file
+   */
+  "id"?: RestInt64;
+  /**
+   * The MD5 hash of the package file
+   */
+  "md5"?: string;
+  /**
+   * The name of the package file
+   */
+  "name"?: string;
+  /**
+   * The SHA1 hash of the package file
+   */
+  "sha1"?: string;
+  /**
+   * The SHA256 hash of the package file
+   */
+  "sha256"?: string;
+  /**
+   * The SHA512 hash of the package file
+   */
+  "sha512"?: string;
+  /**
+   * The size of the package file in bytes
+   */
+  "size"?: RestInt64;
+};
+
+/**
+ * PayloadCommit represents a commit
+ */
+export type PayloadCommit = Record<string, unknown> & {
+  /**
+   * List of files added in this commit
+   */
+  "added"?: Array<string>;
+  "author"?: PayloadUser;
+  "committer"?: PayloadUser;
+  /**
+   * sha1 hash of the commit
+   */
+  "id"?: string;
+  /**
+   * The commit message
+   */
+  "message"?: string;
+  /**
+   * List of files modified in this commit
+   */
+  "modified"?: Array<string>;
+  /**
+   * List of files removed in this commit
+   */
+  "removed"?: Array<string>;
+  "timestamp"?: string;
+  /**
+   * The URL to view this commit
+   */
+  "url"?: string;
+  "verification"?: PayloadCommitVerification;
+};
+
+/**
+ * PayloadCommitVerification represents the GPG verification of a commit
+ */
+export type PayloadCommitVerification = Record<string, unknown> & {
+  /**
+   * The signed payload content
+   */
+  "payload"?: string;
+  /**
+   * The reason for the verification status
+   */
+  "reason"?: string;
+  /**
+   * The GPG signature of the commit
+   */
+  "signature"?: string;
+  "signer"?: PayloadUser;
+  /**
+   * Whether the commit signature is verified
+   */
+  "verified"?: boolean;
+};
+
+/**
+ * PayloadUser represents the author or committer of a commit
+ */
+export type PayloadUser = Record<string, unknown> & {
+  "email"?: string;
+  /**
+   * Full name of the commit author
+   */
+  "name"?: string;
+  /**
+   * username of the user
+   */
+  "username"?: string;
+};
+
+/**
+ * Permission represents a set of permissions
+ */
+export type Permission = Record<string, unknown> & {
+  "admin"?: boolean;
+  "pull"?: boolean;
+  "push"?: boolean;
+};
+
+/**
+ * PublicKey publickey is a user key to push code to repository
+ */
+export type PublicKey = Record<string, unknown> & {
+  "created_at"?: string;
+  /**
+   * Fingerprint is the key's fingerprint
+   */
+  "fingerprint"?: string;
+  /**
+   * ID is the unique identifier for the public key
+   */
+  "id"?: RestInt64;
+  /**
+   * Key contains the actual SSH public key content
+   */
+  "key"?: string;
+  /**
+   * KeyType indicates the type of the SSH key
+   */
+  "key_type"?: string;
+  /**
+   * Updated is the time when the key was last used
+   */
+  "last_used_at"?: string;
+  /**
+   * ReadOnly indicates if the key has read-only access
+   */
+  "read_only"?: boolean;
+  /**
+   * Title is the human-readable name for the key
+   */
+  "title"?: string;
+  /**
+   * URL is the API URL for this key
+   */
+  "url"?: string;
+  "user"?: User;
+};
+
+/**
+ * PullRequest represents a pull request
+ */
+export type PullRequest =
+  & Record<string, unknown>
+  & ({
+    /**
+     * The number of lines added in the pull request
+     */
+    "additions"?: RestInt64;
+    /**
+     * Whether maintainers can edit the pull request
+     */
+    "allow_maintainer_edit"?: boolean;
+    "assignee"?: User;
+    /**
+     * The list of users assigned to the pull request
+     */
+    "assignees"?: Array<User>;
+    "base"?: PrBranchInfo;
+    /**
+     * The description body of the pull request
+     */
+    "body"?: string;
+    /**
+     * The number of files changed in the pull request
+     */
+    "changed_files"?: RestInt64;
+    "closed_at"?: string;
+    /**
+     * The number of comments on the pull request
+     */
+    "comments"?: RestInt64;
+    /**
+     * The version of the pull request content for optimistic locking
+     */
+    "content_version"?: RestInt64;
+    "created_at"?: string;
+    /**
+     * The number of lines deleted in the pull request
+     */
+    "deletions"?: RestInt64;
+    /**
+     * The URL to download the diff patch
+     */
+    "diff_url"?: string;
+    /**
+     * Whether the pull request is a draft
+     */
+    "draft"?: boolean;
+    "due_date"?: string;
+    "head"?: PrBranchInfo;
+    /**
+     * The HTML URL to view the pull request
+     */
+    "html_url"?: string;
+    /**
+     * The unique identifier of the pull request
+     */
+    "id"?: RestInt64;
+    /**
+     * Whether the pull request conversation is locked
+     */
+    "is_locked"?: boolean;
+    /**
+     * The labels attached to the pull request
+     */
+    "labels"?: Array<Label>;
+    /**
+     * The merge base commit SHA
+     */
+    "merge_base"?: string;
+    /**
+     * The SHA of the merge commit
+     */
+    "merge_commit_sha"?: string;
+    /**
+     * Whether the pull request can be merged
+     */
+    "mergeable"?: boolean;
+    /**
+     * Whether the pull request has been merged
+     */
+    "merged"?: boolean;
+    "merged_at"?: string;
+    "merged_by"?: User;
+    "milestone"?: Milestone;
+    /**
+     * The pull request number
+     */
+    "number"?: RestInt64;
+    /**
+     * The URL to download the patch file
+     */
+    "patch_url"?: string;
+    /**
+     * The pin order for the pull request
+     */
+    "pin_order"?: RestInt64;
+    /**
+     * The users requested to review the pull request
+     */
+    "requested_reviewers"?: Array<User>;
+    /**
+     * The teams requested to review the pull request
+     */
+    "requested_reviewers_teams"?: Array<Team>;
+    /**
+     * number of review comments made on the diff of a PR review (not including comments on commits or issues in a PR)
+     */
+    "review_comments"?: RestInt64;
+    /**
+     * The current state of the pull request
+     * open StateOpen  StateOpen pr is opened
+     * closed StateClosed  StateClosed pr is closed
+     */
+    "state"?: "closed" | "open";
+    /**
+     * The title of the pull request
+     */
+    "title"?: string;
+    "updated_at"?: string;
+    /**
+     * The API URL of the pull request
+     */
+    "url"?: string;
+    "user"?: User;
+  });
+
+/**
+ * PullRequestMeta PR info if an issue is a PR
+ */
+export type PullRequestMeta = Record<string, unknown> & {
+  "draft"?: boolean;
+  "html_url"?: string;
+  "merged"?: boolean;
+  "merged_at"?: string;
+};
+
+/**
+ * PullReview represents a pull request review
+ */
+export type PullReview =
+  & Record<string, unknown>
+  & ({
+    "body"?: string;
+    "comments_count"?: RestInt64;
+    "commit_id"?: string;
+    "dismissed"?: boolean;
+    /**
+     * HTMLURL is the web URL for viewing the review
+     */
+    "html_url"?: string;
+    "id"?: RestInt64;
+    "official"?: boolean;
+    /**
+     * HTMLPullURL is the web URL for the pull request
+     */
+    "pull_request_url"?: string;
+    "stale"?: boolean;
+    "state"?: "APPROVED" | "COMMENT" | "PENDING" | "REQUEST_CHANGES" | "REQUEST_REVIEW";
+    "submitted_at"?: string;
+    "team"?: Team;
+    "updated_at"?: string;
+    "user"?: User;
+  });
+
+/**
+ * PullReviewComment represents a comment on a pull request review
+ */
+export type PullReviewComment = Record<string, unknown> & {
+  "body"?: string;
+  "commit_id"?: string;
+  "created_at"?: string;
+  "diff_hunk"?: string;
+  "html_url"?: string;
+  "id"?: RestInt64;
+  "original_commit_id"?: string;
+  "original_position"?: RestInt64;
+  "path"?: string;
+  "position"?: RestInt64;
+  "pull_request_review_id"?: RestInt64;
+  "pull_request_url"?: string;
+  "resolver"?: User;
+  "updated_at"?: string;
+  "user"?: User;
+};
+
+/**
+ * PullReviewRequestOptions are options to add or remove pull request review requests
+ */
+export type PullReviewRequestOptions = Record<string, unknown> & {
+  "reviewers"?: Array<string>;
+  "team_reviewers"?: Array<string>;
+};
+
+/**
+ * PushMirror represents information of a push mirror
+ */
+export type PushMirror = Record<string, unknown> & {
+  "created"?: string;
+  /**
+   * The sync interval for automatic updates
+   */
+  "interval"?: string;
+  /**
+   * The last error message encountered during sync
+   */
+  "last_error"?: string;
+  "last_update"?: string;
+  /**
+   * The remote repository URL being mirrored to
+   */
+  "remote_address"?: string;
+  /**
+   * The name of the remote in the git configuration
+   */
+  "remote_name"?: string;
+  /**
+   * The name of the source repository
+   */
+  "repo_name"?: string;
+  /**
+   * Whether to sync on every commit
+   */
+  "sync_on_commit"?: boolean;
+};
+
+/**
+ * Reaction contain one reaction
+ */
+export type Reaction = Record<string, unknown> & {
+  /**
+   * The reaction content (e.g., emoji or reaction type)
+   */
+  "content"?: string;
+  "created_at"?: string;
+  "user"?: User;
+};
+
+/**
+ * Reference represents a Git reference.
+ */
+export type Reference = Record<string, unknown> & {
+  "object"?: GitObject;
+  /**
+   * The name of the Git reference (e.g., refs/heads/main)
+   */
+  "ref"?: string;
+  /**
+   * The URL to access this Git reference
+   */
+  "url"?: string;
+};
+
+/**
+ * Release represents a repository release
+ */
+export type Release = Record<string, unknown> & {
+  /**
+   * The files attached to the release
+   */
+  "assets"?: Array<Attachment>;
+  "author"?: User;
+  /**
+   * The release notes or description
+   */
+  "body"?: string;
+  "created_at"?: string;
+  /**
+   * Whether the release is a draft
+   */
+  "draft"?: boolean;
+  /**
+   * The HTML URL to view the release
+   */
+  "html_url"?: string;
+  /**
+   * The unique identifier of the release
+   */
+  "id"?: RestInt64;
+  /**
+   * The display title of the release
+   */
+  "name"?: string;
+  /**
+   * Whether the release is a prerelease
+   */
+  "prerelease"?: boolean;
+  "published_at"?: string;
+  /**
+   * The name of the git tag associated with the release
+   */
+  "tag_name"?: string;
+  /**
+   * The URL to download the tarball archive
+   */
+  "tarball_url"?: string;
+  /**
+   * The target commitish for the release
+   */
+  "target_commitish"?: string;
+  /**
+   * The URL template for uploading release assets
+   */
+  "upload_url"?: string;
+  /**
+   * The API URL of the release
+   */
+  "url"?: string;
+  /**
+   * The URL to download the zip archive
+   */
+  "zipball_url"?: string;
+};
+
+/**
+ * RenameBranchRepoOption options when renaming a branch in a repository
+ */
+export type RenameBranchRepoOption = Record<string, unknown> & {
+  /**
+   * New branch name
+   */
+  "name": string;
+};
+
+/**
+ * RenameOrgOption options when renaming an organization
+ */
+export type RenameOrgOption = Record<string, unknown> & {
+  /**
+   * New username for this org. This name cannot be in use yet by any other user.
+   */
+  "new_name": string;
+};
+
+/**
+ * RenameUserOption options when renaming a user
+ */
+export type RenameUserOption = Record<string, unknown> & {
+  /**
+   * New username for this user. This name cannot be in use yet by any other user.
+   */
+  "new_username": string;
+};
+
+/**
+ * RepoCollaboratorPermission to get repository permission for a collaborator
+ */
+export type RepoCollaboratorPermission = Record<string, unknown> & {
+  /**
+   * Permission level of the collaborator
+   */
+  "permission"?: string;
+  /**
+   * RoleName is the name of the permission role
+   */
+  "role_name"?: string;
+  "user"?: User;
+};
+
+/**
+ * RepoCommit contains information of a commit in the context of a repository.
+ */
+export type RepoCommit = Record<string, unknown> & {
+  "author"?: CommitUser;
+  "committer"?: CommitUser;
+  /**
+   * Message is the commit message
+   */
+  "message"?: string;
+  "tree"?: CommitMeta;
+  /**
+   * URL is the API URL for the commit
+   */
+  "url"?: string;
+  "verification"?: PayloadCommitVerification;
+};
+
+/**
+ * RepoTopicOptions a collection of repo topic names
+ */
+export type RepoTopicOptions = Record<string, unknown> & {
+  /**
+   * list of topic names
+   */
+  "topics"?: Array<string>;
+};
+
+/**
+ * RepoTransfer represents a pending repo transfer
+ */
+export type RepoTransfer = Record<string, unknown> & {
+  "doer"?: User;
+  "recipient"?: User;
+  "teams"?: Array<Team>;
+};
+
+/**
+ * Repository represents a repository
+ */
+export type Repository =
+  & Record<string, unknown>
+  & ({
+    "allow_fast_forward_only_merge"?: boolean;
+    "allow_manual_merge"?: boolean;
+    "allow_merge_commits"?: boolean;
+    "allow_rebase"?: boolean;
+    "allow_rebase_explicit"?: boolean;
+    "allow_rebase_update"?: boolean;
+    "allow_squash_merge"?: boolean;
+    "archived"?: boolean;
+    "archived_at"?: string;
+    "autodetect_manual_merge"?: boolean;
+    "avatar_url"?: string;
+    "branch_count"?: RestInt64;
+    "clone_url"?: string;
+    "created_at"?: string;
+    "default_allow_maintainer_edit"?: boolean;
+    "default_branch"?: string;
+    "default_delete_branch_after_merge"?: boolean;
+    "default_merge_style"?: string;
+    "default_target_branch"?: string;
+    "description"?: string;
+    "empty"?: boolean;
+    "external_tracker"?: ExternalTracker;
+    "external_wiki"?: ExternalWiki;
+    "fork"?: boolean;
+    "forks_count"?: RestInt64;
+    "full_name"?: string;
+    "has_actions"?: boolean;
+    "has_code"?: boolean;
+    "has_issues"?: boolean;
+    "has_packages"?: boolean;
+    "has_projects"?: boolean;
+    "has_pull_requests"?: boolean;
+    "has_releases"?: boolean;
+    "has_wiki"?: boolean;
+    "html_url"?: string;
+    "id"?: RestInt64;
+    "ignore_whitespace_conflicts"?: boolean;
+    "internal"?: boolean;
+    "internal_tracker"?: InternalTracker;
+    "language"?: string;
+    "languages_url"?: string;
+    "licenses"?: Array<string>;
+    "link"?: string;
+    "mirror"?: boolean;
+    "mirror_interval"?: string;
+    "mirror_updated"?: string;
+    "name"?: string;
+    /**
+     * ObjectFormatName of the underlying git repository
+     */
+    "object_format_name"?: "sha1" | "sha256";
+    "open_issues_count"?: RestInt64;
+    "open_pr_counter"?: RestInt64;
+    "original_url"?: string;
+    "owner"?: User;
+    "parent"?: Repository;
+    "permissions"?: Permission;
+    "private"?: boolean;
+    "projects_mode"?: string;
+    "release_counter"?: RestInt64;
+    "repo_transfer"?: RepoTransfer;
+    "size"?: RestInt64;
+    "ssh_url"?: string;
+    "stars_count"?: RestInt64;
+    "template"?: boolean;
+    "topics"?: Array<string>;
+    "updated_at"?: string;
+    "url"?: string;
+    "watchers_count"?: RestInt64;
+    "website"?: string;
+  });
+
+/**
+ * RepositoryMeta basic repository information
+ */
+export type RepositoryMeta = Record<string, unknown> & {
+  "full_name"?: string;
+  "id"?: RestInt64;
+  "name"?: string;
+  "owner"?: string;
+};
+
+/**
+ * RunDetails returns workflow_dispatch runid and url
+ */
+export type RunDetails = Record<string, unknown> & {
+  "html_url"?: string;
+  "run_url"?: string;
+  "workflow_run_id"?: RestInt64;
+};
+
+/**
+ * SearchResults results of a successful search
+ */
+export type SearchResults = Record<string, unknown> & {
+  /**
+   * Data contains the repository search results
+   */
+  "data"?: Array<Repository>;
+  /**
+   * OK indicates if the search was successful
+   */
+  "ok"?: boolean;
+};
+
+/**
+ * Secret represents a secret
+ */
+export type Secret = Record<string, unknown> & {
+  "created_at"?: string;
+  /**
+   * the secret's description
+   */
+  "description"?: string;
+  /**
+   * the secret's name
+   */
+  "name"?: string;
+};
+
+/**
+ * ServerVersion wraps the version of the server
+ */
+export type ServerVersion = Record<string, unknown> & {
+  /**
+   * Version is the server version string
+   */
+  "version"?: string;
+};
+
+/**
+ * StopWatch represent a running stopwatch
+ */
+export type StopWatch = Record<string, unknown> & {
+  "created"?: string;
+  /**
+   * Duration is a human-readable duration string
+   */
+  "duration"?: string;
+  /**
+   * IssueIndex is the index number of the associated issue
+   */
+  "issue_index"?: RestInt64;
+  /**
+   * IssueTitle is the title of the associated issue
+   */
+  "issue_title"?: string;
+  /**
+   * RepoName is the name of the repository
+   */
+  "repo_name"?: string;
+  /**
+   * RepoOwnerName is the name of the repository owner
+   */
+  "repo_owner_name"?: string;
+  /**
+   * Seconds is the total elapsed time in seconds
+   */
+  "seconds"?: RestInt64;
+};
+
+/**
+ * SubmitPullReviewOptions are options to submit a pending pull request review
+ */
+export type SubmitPullReviewOptions =
+  & Record<string, unknown>
+  & ({
+    "body"?: string;
+    "event"?: "APPROVED" | "COMMENT" | "PENDING" | "REQUEST_CHANGES" | "REQUEST_REVIEW";
+  });
+
+/**
+ * Tag represents a repository tag
+ */
+export type Tag = Record<string, unknown> & {
+  "commit"?: CommitMeta;
+  /**
+   * The ID (SHA) of the tag
+   */
+  "id"?: string;
+  /**
+   * The message associated with the tag
+   */
+  "message"?: string;
+  /**
+   * The name of the tag
+   */
+  "name"?: string;
+  /**
+   * The URL to download the tarball archive
+   */
+  "tarball_url"?: string;
+  /**
+   * The URL to download the zipball archive
+   */
+  "zipball_url"?: string;
+};
+
+/**
+ * TagProtection represents a tag protection
+ */
+export type TagProtection = Record<string, unknown> & {
+  "created_at"?: string;
+  /**
+   * The unique identifier of the tag protection
+   */
+  "id"?: RestInt64;
+  /**
+   * The pattern to match tag names for protection
+   */
+  "name_pattern"?: string;
+  "updated_at"?: string;
+  /**
+   * List of team names allowed to create/delete protected tags
+   */
+  "whitelist_teams"?: Array<string>;
+  /**
+   * List of usernames allowed to create/delete protected tags
+   */
+  "whitelist_usernames"?: Array<string>;
+};
+
+/**
+ * Team represents a team in an organization
+ */
+export type Team =
+  & Record<string, unknown>
+  & ({
+    /**
+     * Whether the team can create repositories in the organization
+     */
+    "can_create_org_repo"?: boolean;
+    /**
+     * The description of the team
+     */
+    "description"?: string;
+    /**
+     * The unique identifier of the team
+     */
+    "id"?: RestInt64;
+    /**
+     * Whether the team has access to all repositories in the organization
+     */
+    "includes_all_repositories"?: boolean;
+    /**
+     * The name of the team
+     */
+    "name"?: string;
+    "organization"?: Organization;
+    "permission"?: "admin" | "none" | "owner" | "read" | "write";
+    "units"?: Array<string>;
+    "units_map"?: Record<string, string>;
+  });
+
+/**
+ * TimeStamp defines a timestamp
+ */
+export type TimeStamp = RestInt64;
+
+/**
+ * TimelineComment represents a timeline comment (comment of any type) on a commit or issue
+ */
+export type TimelineComment = Record<string, unknown> & {
+  "assignee"?: User;
+  "assignee_team"?: Team;
+  /**
+   * Body contains the timeline event content
+   */
+  "body"?: string;
+  "created_at"?: string;
+  "dependent_issue"?: Issue;
+  /**
+   * HTMLURL is the web URL for viewing the comment
+   */
+  "html_url"?: string;
+  /**
+   * ID is the unique identifier for the timeline comment
+   */
+  "id"?: RestInt64;
+  /**
+   * IssueURL is the API URL for the issue
+   */
+  "issue_url"?: string;
+  "label"?: Label;
+  "milestone"?: Milestone;
+  "new_ref"?: string;
+  "new_title"?: string;
+  "old_milestone"?: Milestone;
+  "old_project_id"?: RestInt64;
+  "old_ref"?: string;
+  "old_title"?: string;
+  "project_id"?: RestInt64;
+  /**
+   * PRURL is the API URL for the pull request (if applicable)
+   */
+  "pull_request_url"?: string;
+  "ref_action"?: string;
+  "ref_comment"?: Comment;
+  /**
+   * commit SHA where issue/PR was referenced
+   */
+  "ref_commit_sha"?: string;
+  "ref_issue"?: Issue;
+  /**
+   * whether the assignees were removed or added
+   */
+  "removed_assignee"?: boolean;
+  "resolve_doer"?: User;
+  "review_id"?: RestInt64;
+  "tracked_time"?: TrackedTime;
+  /**
+   * Type indicates the type of timeline event
+   */
+  "type"?: string;
+  "updated_at"?: string;
+  "user"?: User;
+};
+
+/**
+ * TopicName a list of repo topic names
+ */
+export type TopicName = Record<string, unknown> & {
+  /**
+   * List of topic names
+   */
+  "topics"?: Array<string>;
+};
+
+/**
+ * TopicResponse for returning topics
+ */
+export type TopicResponse = Record<string, unknown> & {
+  /**
+   * The date and time when the topic was created
+   */
+  "created"?: string;
+  /**
+   * The unique identifier of the topic
+   */
+  "id"?: RestInt64;
+  /**
+   * The number of repositories using this topic
+   */
+  "repo_count"?: RestInt64;
+  /**
+   * The name of the topic
+   */
+  "topic_name"?: string;
+  /**
+   * The date and time when the topic was last updated
+   */
+  "updated"?: string;
+};
+
+/**
+ * TrackedTime worked time for an issue / pr
+ */
+export type TrackedTime = Record<string, unknown> & {
+  "created"?: string;
+  /**
+   * ID is the unique identifier for the tracked time entry
+   */
+  "id"?: RestInt64;
+  "issue"?: Issue;
+  /**
+   * deprecated (only for backwards compatibility)
+   */
+  "issue_id"?: RestInt64;
+  /**
+   * Time in seconds
+   */
+  "time"?: RestInt64;
+  /**
+   * deprecated (only for backwards compatibility)
+   */
+  "user_id"?: RestInt64;
+  /**
+   * username of the user
+   */
+  "user_name"?: string;
+};
+
+/**
+ * TransferRepoOption options when transfer a repository's ownership
+ */
+export type TransferRepoOption = Record<string, unknown> & {
+  "new_owner": string;
+  /**
+   * ID of the team or teams to add to the repository. Teams can only be added to organization-owned repositories.
+   */
+  "team_ids"?: Array<RestInt64>;
+};
+
+/**
+ * UpdateBranchProtectionPriories a list to update the branch protection rule priorities
+ */
+export type UpdateBranchProtectionPriories = Record<string, unknown> & {
+  "ids"?: Array<RestInt64>;
+};
+
+/**
+ * UpdateBranchRepoOption options when updating a branch reference in a repository
+ */
+export type UpdateBranchRepoOption = Record<string, unknown> & {
+  /**
+   * Force update even if the change is not a fast-forward
+   */
+  "force"?: boolean;
+  /**
+   * New commit SHA (or any ref) the branch should point to
+   */
+  "new_commit_id": string;
+  /**
+   * Expected old commit SHA of the branch; if provided it must match the current tip
+   */
+  "old_commit_id"?: string;
+};
+
+/**
+ * UpdateFileOptions options for updating or creating a file
+ * Note: `author` and `committer` are optional (if only one is given, it will be used for the other, otherwise the authenticated user will be used)
+ */
+export type UpdateFileOptions = Record<string, unknown> & {
+  "author"?: Identity;
+  /**
+   * branch (optional) is the base branch for the changes. If not supplied, the default branch is used
+   */
+  "branch"?: string;
+  "committer"?: Identity;
+  /**
+   * content must be base64 encoded
+   */
+  "content": string;
+  "dates"?: CommitDateOptions;
+  /**
+   * force_push (optional) will do a force-push if the new branch already exists
+   */
+  "force_push"?: boolean;
+  /**
+   * from_path (optional) is the path of the original file which will be moved/renamed to the path in the URL
+   */
+  "from_path"?: string;
+  /**
+   * message (optional) is the commit message of the changes. If not supplied, a default message will be used
+   */
+  "message"?: string;
+  /**
+   * new_branch (optional) will make a new branch from base branch for the changes. If not supplied, the changes will be committed to the base branch
+   */
+  "new_branch"?: string;
+  /**
+   * the blob ID (SHA) for the file that already exists to update, or leave it empty to create a new file
+   */
+  "sha"?: string;
+  /**
+   * Add a Signed-off-by trailer by the committer at the end of the commit log message.
+   */
+  "signoff"?: boolean;
+};
+
+/**
+ * UpdateRepoAvatarUserOption options when updating the repo avatar
+ */
+export type UpdateRepoAvatarOption = Record<string, unknown> & {
+  /**
+   * image must be base64 encoded
+   */
+  "image"?: string;
+};
+
+/**
+ * UpdateUserAvatarUserOption options when updating the user avatar
+ */
+export type UpdateUserAvatarOption = Record<string, unknown> & {
+  /**
+   * image must be base64 encoded
+   */
+  "image"?: string;
+};
+
+/**
+ * UpdateVariableOption the option when updating variable
+ */
+export type UpdateVariableOption = Record<string, unknown> & {
+  /**
+   * Description of the variable to update
+   */
+  "description"?: string;
+  /**
+   * New name for the variable. If the field is empty, the variable name won't be updated.
+   */
+  "name"?: string;
+  /**
+   * Value of the variable to update
+   */
+  "value": string;
+};
+
+/**
+ * User represents a user
+ */
+export type User = Record<string, unknown> & {
+  /**
+   * Is user active
+   */
+  "active"?: boolean;
+  /**
+   * URL to the user's avatar
+   */
+  "avatar_url"?: string;
+  "created"?: string;
+  /**
+   * the user's description
+   */
+  "description"?: string;
+  "email"?: string;
+  /**
+   * user counts
+   */
+  "followers_count"?: RestInt64;
+  "following_count"?: RestInt64;
+  /**
+   * the user's full name
+   */
+  "full_name"?: string;
+  /**
+   * URL to the user's gitea page
+   */
+  "html_url"?: string;
+  /**
+   * the user's id
+   */
+  "id"?: RestInt64;
+  /**
+   * Is the user an administrator
+   */
+  "is_admin"?: boolean;
+  /**
+   * User locale
+   */
+  "language"?: string;
+  "last_login"?: string;
+  /**
+   * the user's location
+   */
+  "location"?: string;
+  /**
+   * login of the user, same as `username`
+   */
+  "login"?: string;
+  /**
+   * identifier of the user, provided by the external authenticator (if configured)
+   */
+  "login_name"?: string;
+  /**
+   * Is user login prohibited
+   */
+  "prohibit_login"?: boolean;
+  /**
+   * Is user restricted
+   */
+  "restricted"?: boolean;
+  /**
+   * The ID of the user's Authentication Source
+   */
+  "source_id"?: RestInt64;
+  "starred_repos_count"?: RestInt64;
+  /**
+   * User visibility level option: public, limited, private
+   */
+  "visibility"?: string;
+  /**
+   * the user's website
+   */
+  "website"?: string;
+};
+
+/**
+ * UserBadgeOption options for link between users and badges
+ */
+export type UserBadgeOption = Record<string, unknown> & {
+  "badge_slugs"?: Array<string>;
+};
+
+/**
+ * UserHeatmapData represents the data needed to create a heatmap
+ */
+export type UserHeatmapData = Record<string, unknown> & {
+  "contributions"?: RestInt64;
+  "timestamp"?: TimeStamp;
+};
+
+/**
+ * UserSettings represents user settings
+ */
+export type UserSettings = Record<string, unknown> & {
+  "description"?: string;
+  "diff_view_style"?: string;
+  "full_name"?: string;
+  "hide_activity"?: boolean;
+  /**
+   * Privacy
+   */
+  "hide_email"?: boolean;
+  "language"?: string;
+  "location"?: string;
+  "theme"?: string;
+  "website"?: string;
+};
+
+/**
+ * UserSettingsOptions represents options to change user settings
+ */
+export type UserSettingsOptions = Record<string, unknown> & {
+  "description"?: string;
+  "diff_view_style"?: string;
+  "full_name"?: string;
+  "hide_activity"?: boolean;
+  /**
+   * Privacy
+   */
+  "hide_email"?: boolean;
+  "language"?: string;
+  "location"?: string;
+  "theme"?: string;
+  "website"?: string;
+};
+
+/**
+ * WatchInfo represents an API watch status of one repository
+ */
+export type WatchInfo = Record<string, unknown> & {
+  /**
+   * The timestamp when the watch status was created
+   */
+  "created_at"?: string;
+  /**
+   * Whether notifications for the repository are ignored
+   */
+  "ignored"?: boolean;
+  /**
+   * The reason for the current watch status
+   */
+  "reason"?: unknown;
+  /**
+   * The URL of the repository being watched
+   */
+  "repository_url"?: string;
+  /**
+   * Whether the repository is being watched for notifications
+   */
+  "subscribed"?: boolean;
+  /**
+   * The URL for managing the watch status
+   */
+  "url"?: string;
+};
+
+/**
+ * WikiCommit page commit/revision
+ */
+export type WikiCommit = Record<string, unknown> & {
+  "author"?: CommitUser;
+  "commiter"?: CommitUser;
+  /**
+   * The commit message
+   */
+  "message"?: string;
+  /**
+   * The commit SHA hash
+   */
+  "sha"?: string;
+};
+
+/**
+ * WikiCommitList commit/revision list
+ */
+export type WikiCommitList = Record<string, unknown> & {
+  /**
+   * The list of wiki commits
+   */
+  "commits"?: Array<WikiCommit>;
+  /**
+   * The total count of commits
+   */
+  "count"?: RestInt64;
+};
+
+/**
+ * WikiPage a wiki page
+ */
+export type WikiPage = Record<string, unknown> & {
+  /**
+   * The number of commits that modified this page
+   */
+  "commit_count"?: RestInt64;
+  /**
+   * Page content, base64 encoded
+   */
+  "content_base64"?: string;
+  /**
+   * The footer content for the wiki page
+   */
+  "footer"?: string;
+  /**
+   * The HTML URL to view the wiki page
+   */
+  "html_url"?: string;
+  "last_commit"?: WikiCommit;
+  /**
+   * The sidebar content for the wiki page
+   */
+  "sidebar"?: string;
+  /**
+   * The sub URL path for the wiki page
+   */
+  "sub_url"?: string;
+  /**
+   * The title of the wiki page
+   */
+  "title"?: string;
+};
+
+/**
+ * WikiPageMetaData wiki page meta information
+ */
+export type WikiPageMetaData = Record<string, unknown> & {
+  /**
+   * The HTML URL to view the wiki page
+   */
+  "html_url"?: string;
+  "last_commit"?: WikiCommit;
+  /**
+   * The sub URL path for the wiki page
+   */
+  "sub_url"?: string;
+  /**
+   * The title of the wiki page
+   */
+  "title"?: string;
+};
+
+export type AcceptRepoTransferInput = {
+  path: {
+    /**
+     * owner of the repo to transfer
+     */
+    "owner": string;
+    /**
+     * name of the repo to transfer
+     */
+    "repo": string;
+  };
+};
+
+export type AcceptRepoTransferResponse =
+  | RestResponse<202, RestJsonValue<Repository>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type ActionsDisableWorkflowInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+    /**
+     * id of the workflow
+     */
+    "workflow_id": string;
+  };
+};
+
+export type ActionsDisableWorkflowResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type ActionsDispatchWorkflowInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+    /**
+     * id of the workflow
+     */
+    "workflow_id": string;
+  };
+  query?: {
+    /**
+     * Whether the response should include the workflow run ID and URLs.
+     */
+    "return_run_details"?: boolean;
+  };
+  body?: RestBody<
+    "application/json",
+    RestJsonValue<RestRequestValue<CreateActionWorkflowDispatch>>
+  >;
+};
+
+export type ActionsDispatchWorkflowResponse =
+  | RestResponse<200, RestJsonValue<RunDetails>, "application/json", true>
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type ActionsEnableWorkflowInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+    /**
+     * id of the workflow
+     */
+    "workflow_id": string;
+  };
+};
+
+export type ActionsEnableWorkflowResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<409, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type ActionsGetWorkflowInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+    /**
+     * id of the workflow
+     */
+    "workflow_id": string;
+  };
+};
+
+export type ActionsGetWorkflowResponse =
+  | RestResponse<200, RestJsonValue<ActionWorkflow>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    500,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type ActionsListRepositoryWorkflowsInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type ActionsListRepositoryWorkflowsResponse =
+  | RestResponse<200, RestJsonValue<ActionWorkflowResponse>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    500,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type AdminAddUserBadgesInput = {
+  path: {
+    /**
+     * username of the user to whom a badge is to be added
+     */
+    "username": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<UserBadgeOption>>>;
+};
+
+export type AdminAddUserBadgesResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type AdminAdoptRepositoryInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type AdminAdoptRepositoryResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type AdminCreateHookInput = {
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateHookOption>>>;
+};
+
+export type AdminCreateHookResponse =
+  | RestResponse<201, RestJsonValue<Hook>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type AdminCreateOrgInput = {
+  path: {
+    /**
+     * username of the user who will own the created organization
+     */
+    "username": string;
+  };
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateOrgOption>>>;
+};
+
+export type AdminCreateOrgResponse =
+  | RestResponse<201, RestJsonValue<Organization>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type AdminCreatePublicKeyInput = {
+  path: {
+    /**
+     * username of the user who is to receive a public key
+     */
+    "username": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateKeyOption>>>;
+};
+
+export type AdminCreatePublicKeyResponse =
+  | RestResponse<201, RestJsonValue<PublicKey>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type AdminCreateRepoInput = {
+  path: {
+    /**
+     * username of the user who will own the created repository
+     */
+    "username": string;
+  };
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateRepoOption>>>;
+};
+
+export type AdminCreateRepoResponse =
+  | RestResponse<201, RestJsonValue<Repository>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    409,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type AdminCreateRunnerRegistrationTokenInput = Record<string, never>;
+
+export type AdminCreateRunnerRegistrationTokenResponse =
+  | RestResponse<200, undefined, undefined, true, { readonly "token"?: string }>
+  | RestUndocumentedResponse;
+
+export type AdminCreateUserInput = {
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateUserOption>>>;
+};
+
+export type AdminCreateUserResponse =
+  | RestResponse<201, RestJsonValue<User>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type AdminCronListInput = {
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type AdminCronListResponse =
+  | RestResponse<200, RestJsonValue<Array<Cron>>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type AdminCronRunInput = {
+  path: {
+    /**
+     * task to run
+     */
+    "task": string;
+  };
+};
+
+export type AdminCronRunResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type AdminDeleteHookInput = {
+  path: {
+    /**
+     * id of the hook to delete
+     */
+    "id": RestInt64;
+  };
+};
+
+export type AdminDeleteHookResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestUndocumentedResponse;
+
+export type AdminDeleteUnadoptedRepositoryInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type AdminDeleteUnadoptedRepositoryResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type AdminDeleteUserInput = {
+  path: {
+    /**
+     * username of the user to delete
+     */
+    "username": string;
+  };
+  query?: {
+    /**
+     * purge the user from the system completely
+     */
+    "purge"?: boolean;
+  };
+};
+
+export type AdminDeleteUserResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type AdminDeleteUserBadgesInput = {
+  path: {
+    /**
+     * username of the user whose badge is to be deleted
+     */
+    "username": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<UserBadgeOption>>>;
+};
+
+export type AdminDeleteUserBadgesResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type AdminDeleteUserPublicKeyInput = {
+  path: {
+    /**
+     * id of the key to delete
+     */
+    "id": RestInt64;
+    /**
+     * username of the user whose public key is to be deleted
+     */
+    "username": string;
+  };
+};
+
+export type AdminDeleteUserPublicKeyResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type AdminEditHookInput = {
+  path: {
+    /**
+     * id of the hook to update
+     */
+    "id": RestInt64;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<EditHookOption>>>;
+};
+
+export type AdminEditHookResponse =
+  | RestResponse<200, RestJsonValue<Hook>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type AdminEditUserInput = {
+  path: {
+    /**
+     * username of the user whose data is to be edited
+     */
+    "username": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<EditUserOption>>>;
+};
+
+export type AdminEditUserResponse =
+  | RestResponse<200, RestJsonValue<User>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type AdminGetAllEmailsInput = {
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type AdminGetAllEmailsResponse =
+  | RestResponse<200, RestJsonValue<Array<Email>>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type AdminGetAllOrgsInput = {
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type AdminGetAllOrgsResponse =
+  | RestResponse<200, RestJsonValue<Array<Organization>>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type AdminGetHookInput = {
+  path: {
+    /**
+     * id of the hook to get
+     */
+    "id": RestInt64;
+  };
+};
+
+export type AdminGetHookResponse =
+  | RestResponse<200, RestJsonValue<Hook>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type AdminListHooksInput = {
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * system, default or both kinds of webhooks
+     */
+    "type"?: "all" | "default" | "system";
+  };
+};
+
+export type AdminListHooksResponse =
+  | RestResponse<200, RestJsonValue<Array<Hook>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type AdminListUserBadgesInput = {
+  path: {
+    /**
+     * username of the user whose badges are to be listed
+     */
+    "username": string;
+  };
+};
+
+export type AdminListUserBadgesResponse =
+  | RestResponse<200, RestJsonValue<Array<Badge>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type AdminRenameUserInput = {
+  path: {
+    /**
+     * current username of the user
+     */
+    "username": string;
+  };
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<RenameUserOption>>>;
+};
+
+export type AdminRenameUserResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type AdminSearchEmailsInput = {
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * keyword
+     */
+    "q"?: string;
+  };
+};
+
+export type AdminSearchEmailsResponse =
+  | RestResponse<200, RestJsonValue<Array<Email>>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type AdminSearchUsersInput = {
+  query?: {
+    /**
+     * filter 2FA enabled users
+     */
+    "is_2fa_enabled"?: boolean;
+    /**
+     * filter active users
+     */
+    "is_active"?: boolean;
+    /**
+     * filter admin users
+     */
+    "is_admin"?: boolean;
+    /**
+     * filter login prohibited users
+     */
+    "is_prohibit_login"?: boolean;
+    /**
+     * filter restricted users
+     */
+    "is_restricted"?: boolean;
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * identifier of the user, provided by the external authenticator
+     */
+    "login_name"?: string;
+    /**
+     * sort order, either "asc" (ascending) or "desc" (descending). Default is "asc", ignored if "sort" is not specified.
+     */
+    "order"?: string;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * search term (username, full name, email)
+     */
+    "q"?: string;
+    /**
+     * sort users by attribute. Supported values are "name", "created", "updated" and "id". Default is "name"
+     */
+    "sort"?: string;
+    /**
+     * ID of the user's login source to search for
+     */
+    "source_id"?: RestInt64;
+    /**
+     * visibility filter. Supported values are "public", "limited" and "private".
+     */
+    "visibility"?: string;
+  };
+};
+
+export type AdminSearchUsersResponse =
+  | RestResponse<200, RestJsonValue<Array<User>>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type AdminUnadoptedListInput = {
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * pattern of repositories to search for
+     */
+    "pattern"?: string;
+  };
+};
+
+export type AdminUnadoptedListResponse =
+  | RestResponse<200, RestJsonValue<Array<string>>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type CreateCurrentUserRepoInput = {
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateRepoOption>>>;
+};
+
+export type CreateCurrentUserRepoResponse =
+  | RestResponse<201, RestJsonValue<Repository>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<409, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type CreateForkInput = {
+  path: {
+    /**
+     * owner of the repo to fork
+     */
+    "owner": string;
+    /**
+     * name of the repo to fork
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateForkOption>>>;
+};
+
+export type CreateForkResponse =
+  | RestResponse<202, RestJsonValue<Repository>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<409, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type CreateOrgRepoInput = {
+  path: {
+    /**
+     * name of organization
+     */
+    "org": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateRepoOption>>>;
+};
+
+export type CreateOrgRepoResponse =
+  | RestResponse<201, RestJsonValue<Repository>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type CreateOrgRepoDeprecatedInput = {
+  path: {
+    /**
+     * name of organization
+     */
+    "org": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateRepoOption>>>;
+};
+
+export type CreateOrgRepoDeprecatedResponse =
+  | RestResponse<201, RestJsonValue<Repository>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type CreateOrgVariableInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+    /**
+     * name of the variable
+     */
+    "variablename": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateVariableOption>>>;
+};
+
+export type CreateOrgVariableResponse =
+  | RestResponse<201, undefined, undefined, true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<409, undefined, undefined, false>
+  | RestResponse<
+    500,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type CreateRepoVariableInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repository
+     */
+    "repo": string;
+    /**
+     * name of the variable
+     */
+    "variablename": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateVariableOption>>>;
+};
+
+export type CreateRepoVariableResponse =
+  | RestResponse<201, undefined, undefined, true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<409, undefined, undefined, false>
+  | RestResponse<
+    500,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type CreateUserVariableInput = {
+  path: {
+    /**
+     * name of the variable
+     */
+    "variablename": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateVariableOption>>>;
+};
+
+export type CreateUserVariableResponse =
+  | RestResponse<201, undefined, undefined, true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<409, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type DeleteActionRunInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repository
+     */
+    "repo": string;
+    /**
+     * runid of the workflow run
+     */
+    "run": RestInt64;
+  };
+};
+
+export type DeleteActionRunResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type DeleteAdminRunnerInput = {
+  path: {
+    /**
+     * id of the runner
+     */
+    "runner_id": string;
+  };
+};
+
+export type DeleteAdminRunnerResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type DeleteArtifactInput = {
+  path: {
+    /**
+     * id of the artifact
+     */
+    "artifact_id": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repository
+     */
+    "repo": string;
+  };
+};
+
+export type DeleteArtifactResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type DeleteOrgRunnerInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+    /**
+     * id of the runner
+     */
+    "runner_id": string;
+  };
+};
+
+export type DeleteOrgRunnerResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type DeleteOrgSecretInput = {
+  path: {
+    /**
+     * name of organization
+     */
+    "org": string;
+    /**
+     * name of the secret
+     */
+    "secretname": string;
+  };
+};
+
+export type DeleteOrgSecretResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type DeleteOrgVariableInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+    /**
+     * name of the variable
+     */
+    "variablename": string;
+  };
+};
+
+export type DeleteOrgVariableResponse =
+  | RestResponse<200, RestJsonValue<ActionVariable>, "application/json", true>
+  | RestResponse<201, undefined, undefined, true>
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type DeletePackageInput = {
+  path: {
+    /**
+     * name of the package
+     */
+    "name": string;
+    /**
+     * owner of the package
+     */
+    "owner": string;
+    /**
+     * type of the package
+     */
+    "type": string;
+  };
+};
+
+export type DeletePackageResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type DeletePackageVersionInput = {
+  path: {
+    /**
+     * name of the package
+     */
+    "name": string;
+    /**
+     * owner of the package
+     */
+    "owner": string;
+    /**
+     * type of the package
+     */
+    "type": string;
+    /**
+     * version of the package
+     */
+    "version": string;
+  };
+};
+
+export type DeletePackageVersionResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type DeleteRepoRunnerInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+    /**
+     * id of the runner
+     */
+    "runner_id": string;
+  };
+};
+
+export type DeleteRepoRunnerResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type DeleteRepoSecretInput = {
+  path: {
+    /**
+     * owner of the repository
+     */
+    "owner": string;
+    /**
+     * name of the repository
+     */
+    "repo": string;
+    /**
+     * name of the secret
+     */
+    "secretname": string;
+  };
+};
+
+export type DeleteRepoSecretResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type DeleteRepoVariableInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repository
+     */
+    "repo": string;
+    /**
+     * name of the variable
+     */
+    "variablename": string;
+  };
+};
+
+export type DeleteRepoVariableResponse =
+  | RestResponse<200, RestJsonValue<ActionVariable>, "application/json", true>
+  | RestResponse<201, undefined, undefined, true>
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type DeleteUserRunnerInput = {
+  path: {
+    /**
+     * id of the runner
+     */
+    "runner_id": string;
+  };
+};
+
+export type DeleteUserRunnerResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type DeleteUserSecretInput = {
+  path: {
+    /**
+     * name of the secret
+     */
+    "secretname": string;
+  };
+};
+
+export type DeleteUserSecretResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type DeleteUserVariableInput = {
+  path: {
+    /**
+     * name of the variable
+     */
+    "variablename": string;
+  };
+};
+
+export type DeleteUserVariableResponse =
+  | RestResponse<201, undefined, undefined, true>
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type DownloadActionsRunJobLogsInput = {
+  path: {
+    /**
+     * id of the job
+     */
+    "job_id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repository
+     */
+    "repo": string;
+  };
+};
+
+export type DownloadActionsRunJobLogsResponse =
+  | RestResponse<200, undefined, undefined, true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type DownloadArtifactInput = {
+  path: {
+    /**
+     * id of the artifact
+     */
+    "artifact_id": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repository
+     */
+    "repo": string;
+  };
+};
+
+export type DownloadArtifactResponse =
+  | RestResponse<302, undefined, undefined, false>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type GenerateRepoInput = {
+  path: {
+    /**
+     * owner of the template repository
+     */
+    "template_owner": string;
+    /**
+     * name of the template repository
+     */
+    "template_repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<GenerateRepoOption>>>;
+};
+
+export type GenerateRepoResponse =
+  | RestResponse<201, RestJsonValue<Repository>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<409, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type GetAdminRunnerInput = {
+  path: {
+    /**
+     * id of the runner
+     */
+    "runner_id": string;
+  };
+};
+
+export type GetAdminRunnerResponse =
+  | RestResponse<200, RestJsonValue<ActionRunner>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type GetAdminRunnersInput = {
+  query?: {
+    /**
+     * filter by disabled status (true or false)
+     */
+    "disabled"?: boolean;
+  };
+};
+
+export type GetAdminRunnersResponse =
+  | RestResponse<200, RestJsonValue<ActionRunnersResponse>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type GetAnnotatedTagInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+    /**
+     * sha of the tag. The Git tags API only supports annotated tag objects, not lightweight tags.
+     */
+    "sha": string;
+  };
+};
+
+export type GetAnnotatedTagResponse =
+  | RestResponse<200, RestJsonValue<AnnotatedTag>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type GetArtifactInput = {
+  path: {
+    /**
+     * id of the artifact
+     */
+    "artifact_id": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repository
+     */
+    "repo": string;
+  };
+};
+
+export type GetArtifactResponse =
+  | RestResponse<200, RestJsonValue<ActionArtifact>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type GetArtifactsInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repository
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * name of the artifact
+     */
+    "name"?: string;
+  };
+};
+
+export type GetArtifactsResponse =
+  | RestResponse<200, RestJsonValue<ActionArtifactsResponse>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type GetArtifactsOfRunInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repository
+     */
+    "repo": string;
+    /**
+     * runid of the workflow run
+     */
+    "run": RestInt64;
+  };
+  query?: {
+    /**
+     * name of the artifact
+     */
+    "name"?: string;
+  };
+};
+
+export type GetArtifactsOfRunResponse =
+  | RestResponse<200, RestJsonValue<ActionArtifactsResponse>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type GetBlobInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+    /**
+     * sha of the commit
+     */
+    "sha": string;
+  };
+};
+
+export type GetBlobResponse =
+  | RestResponse<200, RestJsonValue<GitBlobResponse>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type GetGeneralApiSettingsInput = Record<string, never>;
+
+export type GetGeneralApiSettingsResponse =
+  | RestResponse<200, RestJsonValue<GeneralApiSettings>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type GetGeneralAttachmentSettingsInput = Record<string, never>;
+
+export type GetGeneralAttachmentSettingsResponse =
+  | RestResponse<200, RestJsonValue<GeneralAttachmentSettings>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type GetGeneralRepositorySettingsInput = Record<string, never>;
+
+export type GetGeneralRepositorySettingsResponse =
+  | RestResponse<200, RestJsonValue<GeneralRepoSettings>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type GetGeneralUiSettingsInput = Record<string, never>;
+
+export type GetGeneralUiSettingsResponse =
+  | RestResponse<200, RestJsonValue<GeneralUiSettings>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type GetGitignoreTemplateInfoInput = {
+  path: {
+    /**
+     * name of the template
+     */
+    "name": string;
+  };
+};
+
+export type GetGitignoreTemplateInfoResponse =
+  | RestResponse<200, RestJsonValue<GitignoreTemplateInfo>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type GetLabelTemplateInfoInput = {
+  path: {
+    /**
+     * name of the template
+     */
+    "name": string;
+  };
+};
+
+export type GetLabelTemplateInfoResponse =
+  | RestResponse<200, RestJsonValue<Array<LabelTemplate>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type GetLatestPackageVersionInput = {
+  path: {
+    /**
+     * name of the package
+     */
+    "name": string;
+    /**
+     * owner of the package
+     */
+    "owner": string;
+    /**
+     * type of the package
+     */
+    "type": string;
+  };
+};
+
+export type GetLatestPackageVersionResponse =
+  | RestResponse<200, RestJsonValue<PackageType>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type GetLicenseTemplateInfoInput = {
+  path: {
+    /**
+     * name of the license
+     */
+    "name": string;
+  };
+};
+
+export type GetLicenseTemplateInfoResponse =
+  | RestResponse<200, RestJsonValue<LicenseTemplateInfo>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type GetOrgRunnerInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+    /**
+     * id of the runner
+     */
+    "runner_id": string;
+  };
+};
+
+export type GetOrgRunnerResponse =
+  | RestResponse<200, RestJsonValue<ActionRunner>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type GetOrgRunnersInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+  };
+  query?: {
+    /**
+     * filter by disabled status (true or false)
+     */
+    "disabled"?: boolean;
+  };
+};
+
+export type GetOrgRunnersResponse =
+  | RestResponse<200, RestJsonValue<ActionRunnersResponse>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type GetOrgVariableInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+    /**
+     * name of the variable
+     */
+    "variablename": string;
+  };
+};
+
+export type GetOrgVariableResponse =
+  | RestResponse<200, RestJsonValue<ActionVariable>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type GetOrgVariablesListInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type GetOrgVariablesListResponse =
+  | RestResponse<200, RestJsonValue<Array<ActionVariable>>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type GetOrgWorkflowJobsInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * workflow status (pending, queued, in_progress, failure, success, skipped)
+     */
+    "status"?: string;
+  };
+};
+
+export type GetOrgWorkflowJobsResponse =
+  | RestResponse<200, RestJsonValue<ActionWorkflowJobsResponse>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type GetOrgWorkflowRunsInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+  };
+  query?: {
+    /**
+     * triggered by user
+     */
+    "actor"?: string;
+    /**
+     * workflow branch
+     */
+    "branch"?: string;
+    /**
+     * workflow event name
+     */
+    "event"?: string;
+    /**
+     * triggering sha of the workflow run
+     */
+    "head_sha"?: string;
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * workflow status (pending, queued, in_progress, failure, success, skipped)
+     */
+    "status"?: string;
+  };
+};
+
+export type GetOrgWorkflowRunsResponse =
+  | RestResponse<200, RestJsonValue<ActionWorkflowRunsResponse>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type GetPackageInput = {
+  path: {
+    /**
+     * name of the package
+     */
+    "name": string;
+    /**
+     * owner of the package
+     */
+    "owner": string;
+    /**
+     * type of the package
+     */
+    "type": string;
+    /**
+     * version of the package
+     */
+    "version": string;
+  };
+};
+
+export type GetPackageResponse =
+  | RestResponse<200, RestJsonValue<PackageType>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type GetRepoRunnerInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+    /**
+     * id of the runner
+     */
+    "runner_id": string;
+  };
+};
+
+export type GetRepoRunnerResponse =
+  | RestResponse<200, RestJsonValue<ActionRunner>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type GetRepoRunnersInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * filter by disabled status (true or false)
+     */
+    "disabled"?: boolean;
+  };
+};
+
+export type GetRepoRunnersResponse =
+  | RestResponse<200, RestJsonValue<ActionRunnersResponse>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type GetRepoVariableInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repository
+     */
+    "repo": string;
+    /**
+     * name of the variable
+     */
+    "variablename": string;
+  };
+};
+
+export type GetRepoVariableResponse =
+  | RestResponse<200, RestJsonValue<ActionVariable>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type GetRepoVariablesListInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repository
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type GetRepoVariablesListResponse =
+  | RestResponse<200, RestJsonValue<Array<ActionVariable>>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type GetSigningKeyInput = Record<string, never>;
+
+export type GetSigningKeyResponse =
+  | RestResponse<200, string, "text/plain", true>
+  | RestUndocumentedResponse;
+
+export type GetSigningKeySshInput = Record<string, never>;
+
+export type GetSigningKeySshResponse =
+  | RestResponse<200, string, "text/plain", true>
+  | RestUndocumentedResponse;
+
+export type GetTreeInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+    /**
+     * sha of the commit
+     */
+    "sha": string;
+  };
+  query?: {
+    /**
+     * page number; the 'truncated' field in the response will be true if there are still more items after this page, false if the last page
+     */
+    "page"?: RestInt64;
+    /**
+     * number of items per page
+     */
+    "per_page"?: RestInt64;
+    /**
+     * show all directories and files
+     */
+    "recursive"?: boolean;
+  };
+};
+
+export type GetTreeResponse =
+  | RestResponse<200, RestJsonValue<GitTreeResponse>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type GetUserRunnerInput = {
+  path: {
+    /**
+     * id of the runner
+     */
+    "runner_id": string;
+  };
+};
+
+export type GetUserRunnerResponse =
+  | RestResponse<200, RestJsonValue<ActionRunner>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type GetUserRunnersInput = {
+  query?: {
+    /**
+     * filter by disabled status (true or false)
+     */
+    "disabled"?: boolean;
+  };
+};
+
+export type GetUserRunnersResponse =
+  | RestResponse<200, RestJsonValue<ActionRunnersResponse>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type GetUserSettingsInput = Record<string, never>;
+
+export type GetUserSettingsResponse =
+  | RestResponse<200, RestJsonValue<Array<UserSettings>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type GetUserVariableInput = {
+  path: {
+    /**
+     * name of the variable
+     */
+    "variablename": string;
+  };
+};
+
+export type GetUserVariableResponse =
+  | RestResponse<200, RestJsonValue<ActionVariable>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type GetUserVariablesListInput = {
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type GetUserVariablesListResponse =
+  | RestResponse<200, RestJsonValue<Array<ActionVariable>>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type GetUserWorkflowJobsInput = {
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * workflow status (pending, queued, in_progress, failure, success, skipped)
+     */
+    "status"?: string;
+  };
+};
+
+export type GetUserWorkflowJobsResponse =
+  | RestResponse<200, RestJsonValue<ActionWorkflowJobsResponse>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type GetUserWorkflowRunsInput = {
+  query?: {
+    /**
+     * triggered by user
+     */
+    "actor"?: string;
+    /**
+     * workflow branch
+     */
+    "branch"?: string;
+    /**
+     * workflow event name
+     */
+    "event"?: string;
+    /**
+     * triggering sha of the workflow run
+     */
+    "head_sha"?: string;
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * workflow status (pending, queued, in_progress, failure, success, skipped)
+     */
+    "status"?: string;
+  };
+};
+
+export type GetUserWorkflowRunsResponse =
+  | RestResponse<200, RestJsonValue<ActionWorkflowRunsResponse>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type GetVerificationTokenInput = Record<string, never>;
+
+export type GetVerificationTokenResponse =
+  | RestResponse<200, RestJsonValue<string>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type GetVersionInput = Record<string, never>;
+
+export type GetVersionResponse =
+  | RestResponse<200, RestJsonValue<ServerVersion>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type GetWorkflowJobInput = {
+  path: {
+    /**
+     * id of the job
+     */
+    "job_id": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repository
+     */
+    "repo": string;
+  };
+};
+
+export type GetWorkflowJobResponse =
+  | RestResponse<200, RestJsonValue<ActionWorkflowJob>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type GetWorkflowRunInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repository
+     */
+    "repo": string;
+    /**
+     * id of the run
+     */
+    "run": RestInt64;
+  };
+};
+
+export type GetWorkflowRunResponse =
+  | RestResponse<200, RestJsonValue<ActionWorkflowRun>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type GetWorkflowRunsInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repository
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * triggered by user
+     */
+    "actor"?: string;
+    /**
+     * workflow branch
+     */
+    "branch"?: string;
+    /**
+     * workflow event name
+     */
+    "event"?: string;
+    /**
+     * triggering sha of the workflow run
+     */
+    "head_sha"?: string;
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * workflow status (pending, queued, in_progress, failure, success, skipped)
+     */
+    "status"?: string;
+  };
+};
+
+export type GetWorkflowRunsResponse =
+  | RestResponse<200, RestJsonValue<ActionWorkflowRunsResponse>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueAddLabelInput = {
+  path: {
+    /**
+     * index of the issue
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<IssueLabelsOption>>>;
+};
+
+export type IssueAddLabelResponse =
+  | RestResponse<200, RestJsonValue<Array<Label>>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueAddSubscriptionInput = {
+  path: {
+    /**
+     * index of the issue
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+    /**
+     * username of the user to subscribe the issue to
+     */
+    "user": string;
+  };
+};
+
+export type IssueAddSubscriptionResponse =
+  | RestResponse<200, undefined, undefined, true>
+  | RestResponse<201, undefined, undefined, true>
+  | RestResponse<304, undefined, undefined, false>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueAddTimeInput = {
+  path: {
+    /**
+     * index of the issue
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<AddTimeOption>>>;
+};
+
+export type IssueAddTimeResponse =
+  | RestResponse<200, RestJsonValue<TrackedTime>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueCheckSubscriptionInput = {
+  path: {
+    /**
+     * index of the issue
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type IssueCheckSubscriptionResponse =
+  | RestResponse<200, RestJsonValue<WatchInfo>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueClearLabelsInput = {
+  path: {
+    /**
+     * index of the issue
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type IssueClearLabelsResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueCreateCommentInput = {
+  path: {
+    /**
+     * index of the issue
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateIssueCommentOption>>>;
+};
+
+export type IssueCreateCommentResponse =
+  | RestResponse<201, RestJsonValue<Comment>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    423,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type IssueCreateIssueInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateIssueOption>>>;
+};
+
+export type IssueCreateIssueResponse =
+  | RestResponse<201, RestJsonValue<Issue>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    412,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    423,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type IssueCreateIssueAttachmentInput = {
+  path: {
+    /**
+     * index of the issue
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * name of the attachment
+     */
+    "name"?: string;
+  };
+  body: RestBody<
+    "multipart/form-data",
+    RestRequestValue<
+      Record<string, unknown> & {
+        /**
+         * attachment to upload
+         */
+        "attachment": RestBinary;
+      }
+    >
+  >;
+};
+
+export type IssueCreateIssueAttachmentResponse =
+  | RestResponse<201, RestJsonValue<Attachment>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    404,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    413,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    423,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type IssueCreateIssueBlockingInput = {
+  path: {
+    /**
+     * index of the issue
+     */
+    "index": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<IssueMeta>>>;
+};
+
+export type IssueCreateIssueBlockingResponse =
+  | RestResponse<201, RestJsonValue<Issue>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueCreateIssueCommentAttachmentInput = {
+  path: {
+    /**
+     * id of the comment
+     */
+    "id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * name of the attachment
+     */
+    "name"?: string;
+  };
+  body: RestBody<
+    "multipart/form-data",
+    RestRequestValue<
+      Record<string, unknown> & {
+        /**
+         * attachment to upload
+         */
+        "attachment": RestBinary;
+      }
+    >
+  >;
+};
+
+export type IssueCreateIssueCommentAttachmentResponse =
+  | RestResponse<201, RestJsonValue<Attachment>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    404,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    413,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    423,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type IssueCreateIssueDependenciesInput = {
+  path: {
+    /**
+     * index of the issue
+     */
+    "index": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<IssueMeta>>>;
+};
+
+export type IssueCreateIssueDependenciesResponse =
+  | RestResponse<201, RestJsonValue<Issue>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    423,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type IssueCreateLabelInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateLabelOption>>>;
+};
+
+export type IssueCreateLabelResponse =
+  | RestResponse<201, RestJsonValue<Label>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type IssueCreateMilestoneInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateMilestoneOption>>>;
+};
+
+export type IssueCreateMilestoneResponse =
+  | RestResponse<201, RestJsonValue<Milestone>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueDeleteInput = {
+  path: {
+    /**
+     * index of issue to delete
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type IssueDeleteResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueDeleteCommentInput = {
+  path: {
+    /**
+     * id of comment to delete
+     */
+    "id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type IssueDeleteCommentResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueDeleteCommentDeprecatedInput = {
+  path: {
+    /**
+     * id of comment to delete
+     */
+    "id": RestInt64;
+    /**
+     * this parameter is ignored
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type IssueDeleteCommentDeprecatedResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueDeleteCommentReactionInput = {
+  path: {
+    /**
+     * id of the comment to edit
+     */
+    "id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<EditReactionOption>>>;
+};
+
+export type IssueDeleteCommentReactionResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueDeleteIssueAttachmentInput = {
+  path: {
+    /**
+     * id of the attachment to delete
+     */
+    "attachment_id": RestInt64;
+    /**
+     * index of the issue
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type IssueDeleteIssueAttachmentResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    404,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    423,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type IssueDeleteIssueCommentAttachmentInput = {
+  path: {
+    /**
+     * id of the attachment to delete
+     */
+    "attachment_id": RestInt64;
+    /**
+     * id of the comment
+     */
+    "id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type IssueDeleteIssueCommentAttachmentResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    404,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    423,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type IssueDeleteIssueReactionInput = {
+  path: {
+    /**
+     * index of the issue
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<EditReactionOption>>>;
+};
+
+export type IssueDeleteIssueReactionResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueDeleteLabelInput = {
+  path: {
+    /**
+     * id of the label to delete
+     */
+    "id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type IssueDeleteLabelResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueDeleteMilestoneInput = {
+  path: {
+    /**
+     * the milestone to delete, identified by ID and if not available by name
+     */
+    "id": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type IssueDeleteMilestoneResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueDeleteStopWatchInput = {
+  path: {
+    /**
+     * index of the issue to stop the stopwatch on
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type IssueDeleteStopWatchResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<403, undefined, undefined, false>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<409, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueDeleteSubscriptionInput = {
+  path: {
+    /**
+     * index of the issue
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+    /**
+     * username of the user to unsubscribe from an issue
+     */
+    "user": string;
+  };
+};
+
+export type IssueDeleteSubscriptionResponse =
+  | RestResponse<200, undefined, undefined, true>
+  | RestResponse<201, undefined, undefined, true>
+  | RestResponse<304, undefined, undefined, false>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueDeleteTimeInput = {
+  path: {
+    /**
+     * id of time to delete
+     */
+    "id": RestInt64;
+    /**
+     * index of the issue
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type IssueDeleteTimeResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueEditCommentInput = {
+  path: {
+    /**
+     * id of the comment to edit
+     */
+    "id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<EditIssueCommentOption>>>;
+};
+
+export type IssueEditCommentResponse =
+  | RestResponse<200, RestJsonValue<Comment>, "application/json", true>
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    423,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type IssueEditCommentDeprecatedInput = {
+  path: {
+    /**
+     * id of the comment to edit
+     */
+    "id": RestInt64;
+    /**
+     * this parameter is ignored
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<EditIssueCommentOption>>>;
+};
+
+export type IssueEditCommentDeprecatedResponse =
+  | RestResponse<200, RestJsonValue<Comment>, "application/json", true>
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueEditIssueInput = {
+  path: {
+    /**
+     * index of the issue to edit
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<EditIssueOption>>>;
+};
+
+export type IssueEditIssueResponse =
+  | RestResponse<201, RestJsonValue<Issue>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    412,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type IssueEditIssueAttachmentInput = {
+  path: {
+    /**
+     * id of the attachment to edit
+     */
+    "attachment_id": RestInt64;
+    /**
+     * index of the issue
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<EditAttachmentOptions>>>;
+};
+
+export type IssueEditIssueAttachmentResponse =
+  | RestResponse<201, RestJsonValue<Attachment>, "application/json", true>
+  | RestResponse<
+    404,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    423,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type IssueEditIssueCommentAttachmentInput = {
+  path: {
+    /**
+     * id of the attachment to edit
+     */
+    "attachment_id": RestInt64;
+    /**
+     * id of the comment
+     */
+    "id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<EditAttachmentOptions>>>;
+};
+
+export type IssueEditIssueCommentAttachmentResponse =
+  | RestResponse<201, RestJsonValue<Attachment>, "application/json", true>
+  | RestResponse<
+    404,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    423,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type IssueEditIssueDeadlineInput = {
+  path: {
+    /**
+     * index of the issue to create or update a deadline on
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<EditDeadlineOption>>>;
+};
+
+export type IssueEditIssueDeadlineResponse =
+  | RestResponse<201, RestJsonValue<IssueDeadline>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueEditLabelInput = {
+  path: {
+    /**
+     * id of the label to edit
+     */
+    "id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<EditLabelOption>>>;
+};
+
+export type IssueEditLabelResponse =
+  | RestResponse<200, RestJsonValue<Label>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type IssueEditMilestoneInput = {
+  path: {
+    /**
+     * the milestone to edit, identified by ID and if not available by name
+     */
+    "id": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<EditMilestoneOption>>>;
+};
+
+export type IssueEditMilestoneResponse =
+  | RestResponse<200, RestJsonValue<Milestone>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueGetCommentInput = {
+  path: {
+    /**
+     * id of the comment
+     */
+    "id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type IssueGetCommentResponse =
+  | RestResponse<200, RestJsonValue<Comment>, "application/json", true>
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueGetCommentReactionsInput = {
+  path: {
+    /**
+     * id of the comment to edit
+     */
+    "id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type IssueGetCommentReactionsResponse =
+  | RestResponse<200, RestJsonValue<Array<Reaction>>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueGetCommentsInput = {
+  path: {
+    /**
+     * index of the issue
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * if provided, only comments updated before the provided time are returned.
+     */
+    "before"?: string;
+    /**
+     * if provided, only comments updated since the specified time are returned.
+     */
+    "since"?: string;
+  };
+};
+
+export type IssueGetCommentsResponse =
+  | RestResponse<200, RestJsonValue<Array<Comment>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueGetCommentsAndTimelineInput = {
+  path: {
+    /**
+     * index of the issue
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * if provided, only comments updated before the provided time are returned.
+     */
+    "before"?: string;
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * if provided, only comments updated since the specified time are returned.
+     */
+    "since"?: string;
+  };
+};
+
+export type IssueGetCommentsAndTimelineResponse =
+  | RestResponse<200, RestJsonValue<Array<TimelineComment>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueGetIssueInput = {
+  path: {
+    /**
+     * index of the issue to get
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type IssueGetIssueResponse =
+  | RestResponse<200, RestJsonValue<Issue>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueGetIssueAttachmentInput = {
+  path: {
+    /**
+     * id of the attachment to get
+     */
+    "attachment_id": RestInt64;
+    /**
+     * index of the issue
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type IssueGetIssueAttachmentResponse =
+  | RestResponse<200, RestJsonValue<Attachment>, "application/json", true>
+  | RestResponse<
+    404,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type IssueGetIssueCommentAttachmentInput = {
+  path: {
+    /**
+     * id of the attachment to get
+     */
+    "attachment_id": RestInt64;
+    /**
+     * id of the comment
+     */
+    "id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type IssueGetIssueCommentAttachmentResponse =
+  | RestResponse<200, RestJsonValue<Attachment>, "application/json", true>
+  | RestResponse<
+    404,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type IssueGetIssueReactionsInput = {
+  path: {
+    /**
+     * index of the issue
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type IssueGetIssueReactionsResponse =
+  | RestResponse<200, RestJsonValue<Array<Reaction>>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueGetLabelInput = {
+  path: {
+    /**
+     * id of the label to get
+     */
+    "id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type IssueGetLabelResponse =
+  | RestResponse<200, RestJsonValue<Label>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueGetLabelsInput = {
+  path: {
+    /**
+     * index of the issue
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type IssueGetLabelsResponse =
+  | RestResponse<200, RestJsonValue<Array<Label>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueGetMilestoneInput = {
+  path: {
+    /**
+     * the milestone to get, identified by ID and if not available by name
+     */
+    "id": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type IssueGetMilestoneResponse =
+  | RestResponse<200, RestJsonValue<Milestone>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueGetMilestonesListInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * filter by milestone name
+     */
+    "name"?: string;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * Milestone state, Recognized values are open, closed and all. Defaults to "open"
+     */
+    "state"?: string;
+  };
+};
+
+export type IssueGetMilestonesListResponse =
+  | RestResponse<200, RestJsonValue<Array<Milestone>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueGetRepoCommentsInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * if provided, only comments updated before the provided time are returned.
+     */
+    "before"?: string;
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * if provided, only comments updated since the provided time are returned.
+     */
+    "since"?: string;
+  };
+};
+
+export type IssueGetRepoCommentsResponse =
+  | RestResponse<200, RestJsonValue<Array<Comment>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueListBlocksInput = {
+  path: {
+    /**
+     * index of the issue
+     */
+    "index": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type IssueListBlocksResponse =
+  | RestResponse<200, RestJsonValue<Array<Issue>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueListIssueAttachmentsInput = {
+  path: {
+    /**
+     * index of the issue
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type IssueListIssueAttachmentsResponse =
+  | RestResponse<200, RestJsonValue<Array<Attachment>>, "application/json", true>
+  | RestResponse<
+    404,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type IssueListIssueCommentAttachmentsInput = {
+  path: {
+    /**
+     * id of the comment
+     */
+    "id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type IssueListIssueCommentAttachmentsResponse =
+  | RestResponse<200, RestJsonValue<Array<Attachment>>, "application/json", true>
+  | RestResponse<
+    404,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type IssueListIssueDependenciesInput = {
+  path: {
+    /**
+     * index of the issue
+     */
+    "index": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type IssueListIssueDependenciesResponse =
+  | RestResponse<200, RestJsonValue<Array<Issue>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueListIssuesInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * Only show items for which the given user is assigned
+     */
+    "assigned_by"?: string;
+    /**
+     * Only show items updated before the given time. This is a timestamp in RFC 3339 format
+     */
+    "before"?: string;
+    /**
+     * Only show items which were created by the given user
+     */
+    "created_by"?: string;
+    /**
+     * comma separated list of label names. Fetch only issues that have any of this label names. Non existent labels are discarded.
+     */
+    "labels"?: string;
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * Only show items in which the given user was mentioned
+     */
+    "mentioned_by"?: string;
+    /**
+     * comma separated list of milestone names or ids. It uses names and fall back to ids. Fetch only issues that have any of this milestones. Non existent milestones are discarded
+     */
+    "milestones"?: string;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * search string
+     */
+    "q"?: string;
+    /**
+     * Only show items updated after the given time. This is a timestamp in RFC 3339 format
+     */
+    "since"?: string;
+    /**
+     * whether issue is open or closed
+     */
+    "state"?: "all" | "closed" | "open";
+    /**
+     * filter by type (issues / pulls) if set
+     */
+    "type"?: "issues" | "pulls";
+  };
+};
+
+export type IssueListIssuesResponse =
+  | RestResponse<200, RestJsonValue<Array<Issue>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueListLabelsInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type IssueListLabelsResponse =
+  | RestResponse<200, RestJsonValue<Array<Label>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueLockIssueInput = {
+  path: {
+    /**
+     * index of the issue
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<LockIssueOption>>>;
+};
+
+export type IssueLockIssueResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssuePostCommentReactionInput = {
+  path: {
+    /**
+     * id of the comment to edit
+     */
+    "id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<EditReactionOption>>>;
+};
+
+export type IssuePostCommentReactionResponse =
+  | RestResponse<200, RestJsonValue<Reaction>, "application/json", true>
+  | RestResponse<201, RestJsonValue<Reaction>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssuePostIssueReactionInput = {
+  path: {
+    /**
+     * index of the issue
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<EditReactionOption>>>;
+};
+
+export type IssuePostIssueReactionResponse =
+  | RestResponse<200, RestJsonValue<Reaction>, "application/json", true>
+  | RestResponse<201, RestJsonValue<Reaction>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueRemoveIssueBlockingInput = {
+  path: {
+    /**
+     * index of the issue
+     */
+    "index": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<IssueMeta>>>;
+};
+
+export type IssueRemoveIssueBlockingResponse =
+  | RestResponse<200, RestJsonValue<Issue>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueRemoveIssueDependenciesInput = {
+  path: {
+    /**
+     * index of the issue
+     */
+    "index": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<IssueMeta>>>;
+};
+
+export type IssueRemoveIssueDependenciesResponse =
+  | RestResponse<200, RestJsonValue<Issue>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    423,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type IssueRemoveLabelInput = {
+  path: {
+    /**
+     * id of the label to remove
+     */
+    "id": RestInt64;
+    /**
+     * index of the issue
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type IssueRemoveLabelResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type IssueReplaceLabelsInput = {
+  path: {
+    /**
+     * index of the issue
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<IssueLabelsOption>>>;
+};
+
+export type IssueReplaceLabelsResponse =
+  | RestResponse<200, RestJsonValue<Array<Label>>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueResetTimeInput = {
+  path: {
+    /**
+     * index of the issue to add tracked time to
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type IssueResetTimeResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueSearchIssuesInput = {
+  query?: {
+    /**
+     * Filter issues or pulls assigned to the authenticated user
+     */
+    "assigned"?: boolean;
+    /**
+     * Only show issues updated before the given time (RFC 3339 format)
+     */
+    "before"?: string;
+    /**
+     * Filter issues or pulls created by the authenticated user
+     */
+    "created"?: boolean;
+    /**
+     * Only show items which were created by the given user
+     */
+    "created_by"?: string;
+    /**
+     * Comma-separated list of label names. Fetch only issues that have any of these labels. Non existent labels are discarded.
+     */
+    "labels"?: string;
+    /**
+     * Number of items per page
+     */
+    "limit"?: RestInt64;
+    /**
+     * Filter issues or pulls mentioning the authenticated user
+     */
+    "mentioned"?: boolean;
+    /**
+     * Comma-separated list of milestone names. Fetch only issues that have any of these milestones. Non existent milestones are discarded.
+     */
+    "milestones"?: string;
+    /**
+     * Filter by repository owner
+     */
+    "owner"?: string;
+    /**
+     * Page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * Search string
+     */
+    "q"?: string;
+    /**
+     * Filter pull requests where the authenticated user's review was requested
+     */
+    "review_requested"?: boolean;
+    /**
+     * Filter pull requests reviewed by the authenticated user
+     */
+    "reviewed"?: boolean;
+    /**
+     * Only show issues updated after the given time (RFC 3339 format)
+     */
+    "since"?: string;
+    /**
+     * State of the issue
+     */
+    "state"?: "all" | "closed" | "open";
+    /**
+     * Filter by team (requires organization owner parameter)
+     */
+    "team"?: string;
+    /**
+     * Filter by issue type
+     */
+    "type"?: "issues" | "pulls";
+  };
+};
+
+export type IssueSearchIssuesResponse =
+  | RestResponse<200, RestJsonValue<Array<Issue>>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type IssueStartStopWatchInput = {
+  path: {
+    /**
+     * index of the issue to create the stopwatch on
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type IssueStartStopWatchResponse =
+  | RestResponse<201, undefined, undefined, true>
+  | RestResponse<403, undefined, undefined, false>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<409, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueStopStopWatchInput = {
+  path: {
+    /**
+     * index of the issue to stop the stopwatch on
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type IssueStopStopWatchResponse =
+  | RestResponse<201, undefined, undefined, true>
+  | RestResponse<403, undefined, undefined, false>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<409, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueSubscriptionsInput = {
+  path: {
+    /**
+     * index of the issue
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type IssueSubscriptionsResponse =
+  | RestResponse<200, RestJsonValue<Array<User>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueTrackedTimesInput = {
+  path: {
+    /**
+     * index of the issue
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * Only show times updated before the given time. This is a timestamp in RFC 3339 format
+     */
+    "before"?: string;
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * Only show times updated after the given time. This is a timestamp in RFC 3339 format
+     */
+    "since"?: string;
+    /**
+     * optional filter by user (available for issue managers)
+     */
+    "user"?: string;
+  };
+};
+
+export type IssueTrackedTimesResponse =
+  | RestResponse<200, RestJsonValue<Array<TrackedTime>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type IssueUnlockIssueInput = {
+  path: {
+    /**
+     * index of the issue
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type IssueUnlockIssueResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type LinkPackageInput = {
+  path: {
+    /**
+     * name of the package
+     */
+    "name": string;
+    /**
+     * owner of the package
+     */
+    "owner": string;
+    /**
+     * name of the repository to link.
+     */
+    "repo_name": string;
+    /**
+     * type of the package
+     */
+    "type": string;
+  };
+};
+
+export type LinkPackageResponse =
+  | RestResponse<201, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type ListActionTasksInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * page size of results, default maximum page size is 50
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type ListActionTasksResponse =
+  | RestResponse<200, RestJsonValue<ActionTaskResponse>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<409, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type ListAdminWorkflowJobsInput = {
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * workflow status (pending, queued, in_progress, failure, success, skipped)
+     */
+    "status"?: string;
+  };
+};
+
+export type ListAdminWorkflowJobsResponse =
+  | RestResponse<200, RestJsonValue<ActionWorkflowJobsResponse>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type ListAdminWorkflowRunsInput = {
+  query?: {
+    /**
+     * triggered by user
+     */
+    "actor"?: string;
+    /**
+     * workflow branch
+     */
+    "branch"?: string;
+    /**
+     * workflow event name
+     */
+    "event"?: string;
+    /**
+     * triggering sha of the workflow run
+     */
+    "head_sha"?: string;
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * workflow status (pending, queued, in_progress, failure, success, skipped)
+     */
+    "status"?: string;
+  };
+};
+
+export type ListAdminWorkflowRunsResponse =
+  | RestResponse<200, RestJsonValue<ActionWorkflowRunsResponse>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type ListForksInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type ListForksResponse =
+  | RestResponse<200, RestJsonValue<Array<Repository>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type ListGitignoresTemplatesInput = Record<string, never>;
+
+export type ListGitignoresTemplatesResponse =
+  | RestResponse<200, RestJsonValue<Array<string>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type ListLabelTemplatesInput = Record<string, never>;
+
+export type ListLabelTemplatesResponse =
+  | RestResponse<200, RestJsonValue<Array<string>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type ListLicenseTemplatesInput = Record<string, never>;
+
+export type ListLicenseTemplatesResponse =
+  | RestResponse<200, RestJsonValue<Array<LicensesTemplateListEntry>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type ListPackageFilesInput = {
+  path: {
+    /**
+     * name of the package
+     */
+    "name": string;
+    /**
+     * owner of the package
+     */
+    "owner": string;
+    /**
+     * type of the package
+     */
+    "type": string;
+    /**
+     * version of the package
+     */
+    "version": string;
+  };
+};
+
+export type ListPackageFilesResponse =
+  | RestResponse<200, RestJsonValue<Array<PackageFile>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type ListPackageVersionsInput = {
+  path: {
+    /**
+     * name of the package
+     */
+    "name": string;
+    /**
+     * owner of the package
+     */
+    "owner": string;
+    /**
+     * type of the package
+     */
+    "type": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type ListPackageVersionsResponse =
+  | RestResponse<200, RestJsonValue<Array<PackageType>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type ListPackagesInput = {
+  path: {
+    /**
+     * owner of the packages
+     */
+    "owner": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * name filter
+     */
+    "q"?: string;
+    /**
+     * package type filter
+     */
+    "type"?:
+      | "alpine"
+      | "cargo"
+      | "chef"
+      | "composer"
+      | "conan"
+      | "conda"
+      | "container"
+      | "cran"
+      | "debian"
+      | "generic"
+      | "go"
+      | "helm"
+      | "maven"
+      | "npm"
+      | "nuget"
+      | "pub"
+      | "pypi"
+      | "rpm"
+      | "rubygems"
+      | "swift"
+      | "terraform"
+      | "vagrant";
+  };
+};
+
+export type ListPackagesResponse =
+  | RestResponse<200, RestJsonValue<Array<PackageType>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type ListWorkflowJobsInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repository
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * workflow status (pending, queued, in_progress, failure, success, skipped)
+     */
+    "status"?: string;
+  };
+};
+
+export type ListWorkflowJobsResponse =
+  | RestResponse<200, RestJsonValue<ActionWorkflowJobsResponse>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type ListWorkflowRunJobsInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repository
+     */
+    "repo": string;
+    /**
+     * runid of the workflow run
+     */
+    "run": RestInt64;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * workflow status (pending, queued, in_progress, failure, success, skipped)
+     */
+    "status"?: string;
+  };
+};
+
+export type ListWorkflowRunJobsResponse =
+  | RestResponse<200, RestJsonValue<ActionWorkflowJobsResponse>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type MoveIssuePinInput = {
+  path: {
+    /**
+     * index of issue
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * the new position
+     */
+    "position": RestInt64;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type MoveIssuePinResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type NotifyGetListInput = {
+  query?: {
+    /**
+     * If true, show notifications marked as read. Default value is false
+     */
+    "all"?: boolean;
+    /**
+     * Only show notifications updated before the given time. This is a timestamp in RFC 3339 format
+     */
+    "before"?: string;
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * Only show notifications updated after the given time. This is a timestamp in RFC 3339 format
+     */
+    "since"?: string;
+    /**
+     * Show notifications with the provided status types. Options are: unread, read and/or pinned. Defaults to unread & pinned.
+     */
+    "status-types"?: Array<string>;
+    /**
+     * filter notifications by subject type
+     */
+    "subject-type"?: Array<"commit" | "issue" | "pull" | "repository">;
+  };
+};
+
+export type NotifyGetListResponse =
+  | RestResponse<200, RestJsonValue<Array<NotificationThread>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type NotifyGetRepoListInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * If true, show notifications marked as read. Default value is false
+     */
+    "all"?: boolean;
+    /**
+     * Only show notifications updated before the given time. This is a timestamp in RFC 3339 format
+     */
+    "before"?: string;
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * Only show notifications updated after the given time. This is a timestamp in RFC 3339 format
+     */
+    "since"?: string;
+    /**
+     * Show notifications with the provided status types. Options are: unread, read and/or pinned. Defaults to unread & pinned
+     */
+    "status-types"?: Array<string>;
+    /**
+     * filter notifications by subject type
+     */
+    "subject-type"?: Array<"commit" | "issue" | "pull" | "repository">;
+  };
+};
+
+export type NotifyGetRepoListResponse =
+  | RestResponse<200, RestJsonValue<Array<NotificationThread>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type NotifyGetThreadInput = {
+  path: {
+    /**
+     * id of notification thread
+     */
+    "id": string;
+  };
+};
+
+export type NotifyGetThreadResponse =
+  | RestResponse<200, RestJsonValue<NotificationThread>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type NotifyNewAvailableInput = Record<string, never>;
+
+export type NotifyNewAvailableResponse =
+  | RestResponse<200, RestJsonValue<NotificationCount>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type NotifyReadListInput = {
+  query?: {
+    /**
+     * If true, mark all notifications on this repo. Default value is false
+     */
+    "all"?: string;
+    /**
+     * Describes the last point that notifications were checked. Anything updated since this time will not be updated.
+     */
+    "last_read_at"?: string;
+    /**
+     * Mark notifications with the provided status types. Options are: unread, read and/or pinned. Defaults to unread.
+     */
+    "status-types"?: Array<string>;
+    /**
+     * Status to mark notifications as, Defaults to read.
+     */
+    "to-status"?: string;
+  };
+};
+
+export type NotifyReadListResponse =
+  | RestResponse<205, undefined, undefined, true>
+  | RestUndocumentedResponse;
+
+export type NotifyReadRepoListInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * If true, mark all notifications on this repo. Default value is false
+     */
+    "all"?: string;
+    /**
+     * Describes the last point that notifications were checked. Anything updated since this time will not be updated.
+     */
+    "last_read_at"?: string;
+    /**
+     * Mark notifications with the provided status types. Options are: unread, read and/or pinned. Defaults to unread.
+     */
+    "status-types"?: Array<string>;
+    /**
+     * Status to mark notifications as. Defaults to read.
+     */
+    "to-status"?: string;
+  };
+};
+
+export type NotifyReadRepoListResponse =
+  | RestResponse<205, undefined, undefined, true>
+  | RestUndocumentedResponse;
+
+export type NotifyReadThreadInput = {
+  path: {
+    /**
+     * id of notification thread
+     */
+    "id": string;
+  };
+  query?: {
+    /**
+     * Status to mark notifications as
+     */
+    "to-status"?: string;
+  };
+};
+
+export type NotifyReadThreadResponse =
+  | RestResponse<205, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgAddTeamMemberInput = {
+  path: {
+    /**
+     * id of the team
+     */
+    "id": RestInt64;
+    /**
+     * username of the user to add to a team
+     */
+    "username": string;
+  };
+};
+
+export type OrgAddTeamMemberResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgAddTeamRepositoryInput = {
+  path: {
+    /**
+     * id of the team
+     */
+    "id": RestInt64;
+    /**
+     * organization that owns the repo to add
+     */
+    "org": string;
+    /**
+     * name of the repo to add
+     */
+    "repo": string;
+  };
+};
+
+export type OrgAddTeamRepositoryResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgConcealMemberInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+    /**
+     * username of the user whose membership is to be concealed
+     */
+    "username": string;
+  };
+};
+
+export type OrgConcealMemberResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgCreateInput = {
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateOrgOption>>>;
+};
+
+export type OrgCreateResponse =
+  | RestResponse<201, RestJsonValue<Organization>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type OrgCreateHookInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+  };
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateHookOption>>>;
+};
+
+export type OrgCreateHookResponse =
+  | RestResponse<201, RestJsonValue<Hook>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgCreateLabelInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateLabelOption>>>;
+};
+
+export type OrgCreateLabelResponse =
+  | RestResponse<201, RestJsonValue<Label>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type OrgCreateRunnerRegistrationTokenInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+  };
+};
+
+export type OrgCreateRunnerRegistrationTokenResponse =
+  | RestResponse<200, undefined, undefined, true, { readonly "token"?: string }>
+  | RestUndocumentedResponse;
+
+export type OrgCreateTeamInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateTeamOption>>>;
+};
+
+export type OrgCreateTeamResponse =
+  | RestResponse<201, RestJsonValue<Team>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type OrgDeleteInput = {
+  path: {
+    /**
+     * organization that is to be deleted
+     */
+    "org": string;
+  };
+};
+
+export type OrgDeleteResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgDeleteAvatarInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+  };
+};
+
+export type OrgDeleteAvatarResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgDeleteHookInput = {
+  path: {
+    /**
+     * id of the hook to delete
+     */
+    "id": RestInt64;
+    /**
+     * name of the organization
+     */
+    "org": string;
+  };
+};
+
+export type OrgDeleteHookResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgDeleteLabelInput = {
+  path: {
+    /**
+     * id of the label to delete
+     */
+    "id": RestInt64;
+    /**
+     * name of the organization
+     */
+    "org": string;
+  };
+};
+
+export type OrgDeleteLabelResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgDeleteMemberInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+    /**
+     * username of the user to remove from the organization
+     */
+    "username": string;
+  };
+};
+
+export type OrgDeleteMemberResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgDeleteTeamInput = {
+  path: {
+    /**
+     * id of the team to delete
+     */
+    "id": RestInt64;
+  };
+};
+
+export type OrgDeleteTeamResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgEditInput = {
+  path: {
+    /**
+     * name of the organization to edit
+     */
+    "org": string;
+  };
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<EditOrgOption>>>;
+};
+
+export type OrgEditResponse =
+  | RestResponse<200, RestJsonValue<Organization>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgEditHookInput = {
+  path: {
+    /**
+     * id of the hook to update
+     */
+    "id": RestInt64;
+    /**
+     * name of the organization
+     */
+    "org": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<EditHookOption>>>;
+};
+
+export type OrgEditHookResponse =
+  | RestResponse<200, RestJsonValue<Hook>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgEditLabelInput = {
+  path: {
+    /**
+     * id of the label to edit
+     */
+    "id": RestInt64;
+    /**
+     * name of the organization
+     */
+    "org": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<EditLabelOption>>>;
+};
+
+export type OrgEditLabelResponse =
+  | RestResponse<200, RestJsonValue<Label>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type OrgEditTeamInput = {
+  path: {
+    /**
+     * id of the team to edit
+     */
+    "id": RestInt64;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<EditTeamOption>>>;
+};
+
+export type OrgEditTeamResponse =
+  | RestResponse<200, RestJsonValue<Team>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgGetInput = {
+  path: {
+    /**
+     * name of the organization to get
+     */
+    "org": string;
+  };
+};
+
+export type OrgGetResponse =
+  | RestResponse<200, RestJsonValue<Organization>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgGetAllInput = {
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type OrgGetAllResponse =
+  | RestResponse<200, RestJsonValue<Array<Organization>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type OrgGetHookInput = {
+  path: {
+    /**
+     * id of the hook to get
+     */
+    "id": RestInt64;
+    /**
+     * name of the organization
+     */
+    "org": string;
+  };
+};
+
+export type OrgGetHookResponse =
+  | RestResponse<200, RestJsonValue<Hook>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgGetLabelInput = {
+  path: {
+    /**
+     * id of the label to get
+     */
+    "id": RestInt64;
+    /**
+     * name of the organization
+     */
+    "org": string;
+  };
+};
+
+export type OrgGetLabelResponse =
+  | RestResponse<200, RestJsonValue<Label>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgGetTeamInput = {
+  path: {
+    /**
+     * id of the team to get
+     */
+    "id": RestInt64;
+  };
+};
+
+export type OrgGetTeamResponse =
+  | RestResponse<200, RestJsonValue<Team>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgGetUserPermissionsInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+    /**
+     * username of the user whose permissions are to be obtained
+     */
+    "username": string;
+  };
+};
+
+export type OrgGetUserPermissionsResponse =
+  | RestResponse<200, RestJsonValue<OrganizationPermissions>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgIsMemberInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+    /**
+     * username of the user to check for an organization membership
+     */
+    "username": string;
+  };
+};
+
+export type OrgIsMemberResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<303, undefined, undefined, false>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgIsPublicMemberInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+    /**
+     * username of the user to check for a public organization membership
+     */
+    "username": string;
+  };
+};
+
+export type OrgIsPublicMemberResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgListActionsSecretsInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type OrgListActionsSecretsResponse =
+  | RestResponse<200, RestJsonValue<Array<Secret>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgListActivityFeedsInput = {
+  path: {
+    /**
+     * name of the org
+     */
+    "org": string;
+  };
+  query?: {
+    /**
+     * the date of the activities to be found
+     */
+    "date"?: string;
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type OrgListActivityFeedsResponse =
+  | RestResponse<200, RestJsonValue<Array<Activity>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgListCurrentUserOrgsInput = {
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type OrgListCurrentUserOrgsResponse =
+  | RestResponse<200, RestJsonValue<Array<Organization>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgListHooksInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type OrgListHooksResponse =
+  | RestResponse<200, RestJsonValue<Array<Hook>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgListLabelsInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type OrgListLabelsResponse =
+  | RestResponse<200, RestJsonValue<Array<Label>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgListMembersInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type OrgListMembersResponse =
+  | RestResponse<200, RestJsonValue<Array<User>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgListPublicMembersInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type OrgListPublicMembersResponse =
+  | RestResponse<200, RestJsonValue<Array<User>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgListReposInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type OrgListReposResponse =
+  | RestResponse<200, RestJsonValue<Array<Repository>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgListTeamActivityFeedsInput = {
+  path: {
+    /**
+     * id of the team
+     */
+    "id": RestInt64;
+  };
+  query?: {
+    /**
+     * the date of the activities to be found
+     */
+    "date"?: string;
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type OrgListTeamActivityFeedsResponse =
+  | RestResponse<200, RestJsonValue<Array<Activity>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgListTeamMemberInput = {
+  path: {
+    /**
+     * id of the team
+     */
+    "id": RestInt64;
+    /**
+     * username of the user whose data is to be listed
+     */
+    "username": string;
+  };
+};
+
+export type OrgListTeamMemberResponse =
+  | RestResponse<200, RestJsonValue<User>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgListTeamMembersInput = {
+  path: {
+    /**
+     * id of the team
+     */
+    "id": RestInt64;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type OrgListTeamMembersResponse =
+  | RestResponse<200, RestJsonValue<Array<User>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgListTeamRepoInput = {
+  path: {
+    /**
+     * id of the team
+     */
+    "id": RestInt64;
+    /**
+     * organization that owns the repo to list
+     */
+    "org": string;
+    /**
+     * name of the repo to list
+     */
+    "repo": string;
+  };
+};
+
+export type OrgListTeamRepoResponse =
+  | RestResponse<200, RestJsonValue<Repository>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgListTeamReposInput = {
+  path: {
+    /**
+     * id of the team
+     */
+    "id": RestInt64;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type OrgListTeamReposResponse =
+  | RestResponse<200, RestJsonValue<Array<Repository>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgListTeamsInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type OrgListTeamsResponse =
+  | RestResponse<200, RestJsonValue<Array<Team>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgListUserOrgsInput = {
+  path: {
+    /**
+     * username of the user whose organizations are to be listed
+     */
+    "username": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type OrgListUserOrgsResponse =
+  | RestResponse<200, RestJsonValue<Array<Organization>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgPublicizeMemberInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+    /**
+     * username of the user whose membership is to be publicized
+     */
+    "username": string;
+  };
+};
+
+export type OrgPublicizeMemberResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgRemoveTeamMemberInput = {
+  path: {
+    /**
+     * id of the team
+     */
+    "id": RestInt64;
+    /**
+     * username of the user to remove from a team
+     */
+    "username": string;
+  };
+};
+
+export type OrgRemoveTeamMemberResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgRemoveTeamRepositoryInput = {
+  path: {
+    /**
+     * id of the team
+     */
+    "id": RestInt64;
+    /**
+     * organization that owns the repo to remove
+     */
+    "org": string;
+    /**
+     * name of the repo to remove
+     */
+    "repo": string;
+  };
+};
+
+export type OrgRemoveTeamRepositoryResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrgUpdateAvatarInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<UpdateUserAvatarOption>>>;
+};
+
+export type OrgUpdateAvatarResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrganizationBlockUserInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+    /**
+     * username of the user to block
+     */
+    "username": string;
+  };
+  query?: {
+    /**
+     * optional note for the block
+     */
+    "note"?: string;
+  };
+};
+
+export type OrganizationBlockUserResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type OrganizationCheckUserBlockInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+    /**
+     * username of the user to check
+     */
+    "username": string;
+  };
+};
+
+export type OrganizationCheckUserBlockResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type OrganizationListBlocksInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type OrganizationListBlocksResponse =
+  | RestResponse<200, RestJsonValue<Array<User>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type OrganizationUnblockUserInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+    /**
+     * username of the user to unblock
+     */
+    "username": string;
+  };
+};
+
+export type OrganizationUnblockUserResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type PinIssueInput = {
+  path: {
+    /**
+     * index of issue to pin
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type PinIssueResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RejectRepoTransferInput = {
+  path: {
+    /**
+     * owner of the repo to transfer
+     */
+    "owner": string;
+    /**
+     * name of the repo to transfer
+     */
+    "repo": string;
+  };
+};
+
+export type RejectRepoTransferResponse =
+  | RestResponse<200, RestJsonValue<Repository>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RenameOrgInput = {
+  path: {
+    /**
+     * existing org name
+     */
+    "org": string;
+  };
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<RenameOrgOption>>>;
+};
+
+export type RenameOrgResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RenderMarkdownInput = {
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<MarkdownOption>>>;
+};
+
+export type RenderMarkdownResponse =
+  | RestResponse<200, RestJsonValue<string>, "application/json", true>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RenderMarkdownRawInput = {
+  /**
+   * Request body to render
+   */
+  body: RestBody<"text/plain", string>;
+};
+
+export type RenderMarkdownRawResponse =
+  | RestResponse<200, RestJsonValue<string>, "application/json", true>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RenderMarkupInput = {
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<MarkupOption>>>;
+};
+
+export type RenderMarkupResponse =
+  | RestResponse<200, RestJsonValue<string>, "application/json", true>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoAddCollaboratorInput = {
+  path: {
+    /**
+     * username of the user to add or update as a collaborator
+     */
+    "collaborator": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<AddCollaboratorOption>>>;
+};
+
+export type RepoAddCollaboratorResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoAddPushMirrorInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<CreatePushMirrorOption>>>;
+};
+
+export type RepoAddPushMirrorResponse =
+  | RestResponse<200, RestJsonValue<PushMirror>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoAddTeamInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+    /**
+     * team name
+     */
+    "team": string;
+  };
+};
+
+export type RepoAddTeamResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    405,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoAddTopicInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+    /**
+     * name of the topic to add
+     */
+    "topic": string;
+  };
+};
+
+export type RepoAddTopicResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "invalidTopics"?: string; readonly "message"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoApplyDiffPatchInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<ApplyDiffPatchFileOptions>>>;
+};
+
+export type RepoApplyDiffPatchResponse =
+  | RestResponse<200, RestJsonValue<FileResponse>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    423,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoCancelScheduledAutoMergeInput = {
+  path: {
+    /**
+     * index of the pull request to merge
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoCancelScheduledAutoMergeResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    423,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoChangeFilesInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<ChangeFilesOptions>>>;
+};
+
+export type RepoChangeFilesResponse =
+  | RestResponse<201, RestJsonValue<FilesResponse>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    423,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoCheckCollaboratorInput = {
+  path: {
+    /**
+     * username of the user to check for being a collaborator
+     */
+    "collaborator": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoCheckCollaboratorResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoCheckTeamInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+    /**
+     * team name
+     */
+    "team": string;
+  };
+};
+
+export type RepoCheckTeamResponse =
+  | RestResponse<200, RestJsonValue<Team>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    405,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoCompareDiffInput = {
+  path: {
+    /**
+     * compare two branches or commits
+     */
+    "basehead": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoCompareDiffResponse =
+  | RestResponse<200, RestJsonValue<Compare>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoCreateBranchInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateBranchRepoOption>>>;
+};
+
+export type RepoCreateBranchResponse =
+  | RestResponse<201, RestJsonValue<Branch>, "application/json", true>
+  | RestResponse<403, undefined, undefined, false>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<409, undefined, undefined, false>
+  | RestResponse<
+    423,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoCreateBranchProtectionInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<
+    "application/json",
+    RestJsonValue<RestRequestValue<CreateBranchProtectionOption>>
+  >;
+};
+
+export type RepoCreateBranchProtectionResponse =
+  | RestResponse<201, RestJsonValue<BranchProtection>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    423,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoCreateFileInput = {
+  path: {
+    /**
+     * path of the file to create
+     */
+    "filepath": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateFileOptions>>>;
+};
+
+export type RepoCreateFileResponse =
+  | RestResponse<201, RestJsonValue<FileResponse>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    423,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoCreateHookInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateHookOption>>>;
+};
+
+export type RepoCreateHookResponse =
+  | RestResponse<201, RestJsonValue<Hook>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoCreateKeyInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateKeyOption>>>;
+};
+
+export type RepoCreateKeyResponse =
+  | RestResponse<201, RestJsonValue<DeployKey>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoCreatePullRequestInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<CreatePullRequestOption>>>;
+};
+
+export type RepoCreatePullRequestResponse =
+  | RestResponse<201, RestJsonValue<PullRequest>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    409,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    423,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoCreatePullReviewInput = {
+  path: {
+    /**
+     * index of the pull request
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<CreatePullReviewOptions>>>;
+};
+
+export type RepoCreatePullReviewResponse =
+  | RestResponse<200, RestJsonValue<PullReview>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoCreatePullReviewRequestsInput = {
+  path: {
+    /**
+     * index of the pull request
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<PullReviewRequestOptions>>>;
+};
+
+export type RepoCreatePullReviewRequestsResponse =
+  | RestResponse<201, RestJsonValue<Array<PullReview>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoCreateReleaseInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateReleaseOption>>>;
+};
+
+export type RepoCreateReleaseResponse =
+  | RestResponse<201, RestJsonValue<Release>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    409,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoCreateReleaseAttachmentInput = {
+  path: {
+    /**
+     * id of the release
+     */
+    "id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * name of the attachment
+     */
+    "name"?: string;
+  };
+  body?: RestBody<
+    "multipart/form-data",
+    RestRequestValue<
+      Record<string, unknown> & {
+        /**
+         * attachment to upload
+         */
+        "attachment"?: RestBinary;
+      }
+    >
+  >;
+};
+
+export type RepoCreateReleaseAttachmentResponse =
+  | RestResponse<201, RestJsonValue<Attachment>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    413,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoCreateRunnerRegistrationTokenInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoCreateRunnerRegistrationTokenResponse =
+  | RestResponse<200, undefined, undefined, true, { readonly "token"?: string }>
+  | RestUndocumentedResponse;
+
+export type RepoCreateStatusInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+    /**
+     * sha of the commit
+     */
+    "sha": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateStatusOption>>>;
+};
+
+export type RepoCreateStatusResponse =
+  | RestResponse<201, RestJsonValue<CommitStatus>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoCreateTagInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateTagOption>>>;
+};
+
+export type RepoCreateTagResponse =
+  | RestResponse<200, RestJsonValue<Tag>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<405, undefined, undefined, false>
+  | RestResponse<409, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    423,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoCreateTagProtectionInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateTagProtectionOption>>>;
+};
+
+export type RepoCreateTagProtectionResponse =
+  | RestResponse<201, RestJsonValue<TagProtection>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    423,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoCreateWikiPageInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateWikiPageOptions>>>;
+};
+
+export type RepoCreateWikiPageResponse =
+  | RestResponse<201, RestJsonValue<WikiPage>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    423,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoDeleteInput = {
+  path: {
+    /**
+     * owner of the repo to delete
+     */
+    "owner": string;
+    /**
+     * name of the repo to delete
+     */
+    "repo": string;
+  };
+};
+
+export type RepoDeleteResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoDeleteAvatarInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoDeleteAvatarResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoDeleteBranchInput = {
+  path: {
+    /**
+     * branch to delete
+     */
+    "branch": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoDeleteBranchResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    423,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoDeleteBranchProtectionInput = {
+  path: {
+    /**
+     * name of protected branch
+     */
+    "name": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoDeleteBranchProtectionResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoDeleteCollaboratorInput = {
+  path: {
+    /**
+     * username of the collaborator to delete
+     */
+    "collaborator": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoDeleteCollaboratorResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoDeleteFileInput = {
+  path: {
+    /**
+     * path of the file to delete
+     */
+    "filepath": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<DeleteFileOptions>>>;
+};
+
+export type RepoDeleteFileResponse =
+  | RestResponse<200, RestJsonValue<FileDeleteResponse>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    404,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    423,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoDeleteGitHookInput = {
+  path: {
+    /**
+     * id of the hook to get
+     */
+    "id": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoDeleteGitHookResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoDeleteHookInput = {
+  path: {
+    /**
+     * id of the hook to delete
+     */
+    "id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoDeleteHookResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoDeleteKeyInput = {
+  path: {
+    /**
+     * id of the key to delete
+     */
+    "id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoDeleteKeyResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoDeletePullReviewInput = {
+  path: {
+    /**
+     * id of the review
+     */
+    "id": RestInt64;
+    /**
+     * index of the pull request
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoDeletePullReviewResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoDeletePullReviewRequestsInput = {
+  path: {
+    /**
+     * index of the pull request
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<PullReviewRequestOptions>>>;
+};
+
+export type RepoDeletePullReviewRequestsResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoDeletePushMirrorInput = {
+  path: {
+    /**
+     * remote name of the pushMirror
+     */
+    "name": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoDeletePushMirrorResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoDeleteReleaseInput = {
+  path: {
+    /**
+     * id of the release to delete
+     */
+    "id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoDeleteReleaseResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoDeleteReleaseAttachmentInput = {
+  path: {
+    /**
+     * id of the attachment to delete
+     */
+    "attachment_id": RestInt64;
+    /**
+     * id of the release
+     */
+    "id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoDeleteReleaseAttachmentResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoDeleteReleaseByTagInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+    /**
+     * tag name of the release to delete
+     */
+    "tag": string;
+  };
+};
+
+export type RepoDeleteReleaseByTagResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoDeleteTagInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+    /**
+     * name of tag to delete
+     */
+    "tag": string;
+  };
+};
+
+export type RepoDeleteTagResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<405, undefined, undefined, false>
+  | RestResponse<409, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    423,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoDeleteTagProtectionInput = {
+  path: {
+    /**
+     * id of protected tag
+     */
+    "id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoDeleteTagProtectionResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoDeleteTeamInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+    /**
+     * team name
+     */
+    "team": string;
+  };
+};
+
+export type RepoDeleteTeamResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    405,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoDeleteTopicInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+    /**
+     * name of the topic to delete
+     */
+    "topic": string;
+  };
+};
+
+export type RepoDeleteTopicResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "invalidTopics"?: string; readonly "message"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoDeleteWikiPageInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the page
+     */
+    "pageName": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoDeleteWikiPageResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    423,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoDismissPullReviewInput = {
+  path: {
+    /**
+     * id of the review
+     */
+    "id": RestInt64;
+    /**
+     * index of the pull request
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<DismissPullReviewOptions>>>;
+};
+
+export type RepoDismissPullReviewResponse =
+  | RestResponse<200, RestJsonValue<PullReview>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoDownloadCommitDiffOrPatchInput = {
+  path: {
+    /**
+     * whether the output is diff or patch
+     */
+    "diffType": "diff" | "patch";
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+    /**
+     * SHA of the commit to get
+     */
+    "sha": string;
+  };
+};
+
+export type RepoDownloadCommitDiffOrPatchResponse =
+  | RestResponse<200, RestJsonValue<string>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoDownloadPullDiffOrPatchInput = {
+  path: {
+    /**
+     * whether the output is diff or patch
+     */
+    "diffType": "diff" | "patch";
+    /**
+     * index of the pull request to get
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * whether to include binary file changes. if true, the diff is applicable with `git apply`
+     */
+    "binary"?: boolean;
+  };
+};
+
+export type RepoDownloadPullDiffOrPatchResponse =
+  | RestResponse<200, RestJsonValue<string>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoEditInput = {
+  path: {
+    /**
+     * owner of the repo to edit
+     */
+    "owner": string;
+    /**
+     * name of the repo to edit
+     */
+    "repo": string;
+  };
+  /**
+   * Properties of a repo that you can edit
+   */
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<EditRepoOption>>>;
+};
+
+export type RepoEditResponse =
+  | RestResponse<200, RestJsonValue<Repository>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoEditBranchProtectionInput = {
+  path: {
+    /**
+     * name of protected branch
+     */
+    "name": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<EditBranchProtectionOption>>>;
+};
+
+export type RepoEditBranchProtectionResponse =
+  | RestResponse<200, RestJsonValue<BranchProtection>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    423,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoEditGitHookInput = {
+  path: {
+    /**
+     * id of the hook to get
+     */
+    "id": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<EditGitHookOption>>>;
+};
+
+export type RepoEditGitHookResponse =
+  | RestResponse<200, RestJsonValue<GitHook>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoEditHookInput = {
+  path: {
+    /**
+     * index of the hook
+     */
+    "id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<EditHookOption>>>;
+};
+
+export type RepoEditHookResponse =
+  | RestResponse<200, RestJsonValue<Hook>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoEditPullRequestInput = {
+  path: {
+    /**
+     * index of the pull request to edit
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<EditPullRequestOption>>>;
+};
+
+export type RepoEditPullRequestResponse =
+  | RestResponse<201, RestJsonValue<PullRequest>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    409,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    412,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoEditReleaseInput = {
+  path: {
+    /**
+     * id of the release to edit
+     */
+    "id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<EditReleaseOption>>>;
+};
+
+export type RepoEditReleaseResponse =
+  | RestResponse<200, RestJsonValue<Release>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoEditReleaseAttachmentInput = {
+  path: {
+    /**
+     * id of the attachment to edit
+     */
+    "attachment_id": RestInt64;
+    /**
+     * id of the release
+     */
+    "id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<EditAttachmentOptions>>>;
+};
+
+export type RepoEditReleaseAttachmentResponse =
+  | RestResponse<201, RestJsonValue<Attachment>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoEditTagProtectionInput = {
+  path: {
+    /**
+     * id of protected tag
+     */
+    "id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<EditTagProtectionOption>>>;
+};
+
+export type RepoEditTagProtectionResponse =
+  | RestResponse<200, RestJsonValue<TagProtection>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    423,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoEditWikiPageInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the page
+     */
+    "pageName": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateWikiPageOptions>>>;
+};
+
+export type RepoEditWikiPageResponse =
+  | RestResponse<200, RestJsonValue<WikiPage>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    423,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoGetInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoGetResponse =
+  | RestResponse<200, RestJsonValue<Repository>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetAllCommitsInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * include a list of affected files for every commit (disable for speedup, default 'true')
+     */
+    "files"?: boolean;
+    /**
+     * page size of results (ignored if used with 'path')
+     */
+    "limit"?: RestInt64;
+    /**
+     * commits that match the given specifier will not be listed.
+     */
+    "not"?: string;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * filepath of a file/dir
+     */
+    "path"?: string;
+    /**
+     * SHA or branch to start listing commits from (usually 'master')
+     */
+    "sha"?: string;
+    /**
+     * Only commits after this date will be returned (ISO 8601 format)
+     */
+    "since"?: string;
+    /**
+     * include diff stats for every commit (disable for speedup, default 'true')
+     */
+    "stat"?: boolean;
+    /**
+     * Only commits before this date will be returned (ISO 8601 format)
+     */
+    "until"?: string;
+    /**
+     * include verification for every commit (disable for speedup, default 'true')
+     */
+    "verification"?: boolean;
+  };
+};
+
+export type RepoGetAllCommitsResponse =
+  | RestResponse<
+    200,
+    RestJsonValue<Array<Commit>>,
+    "application/json",
+    true,
+    {
+      readonly "X-HasMore"?: string;
+      readonly "X-Page"?: string;
+      readonly "X-PageCount"?: string;
+      readonly "X-PerPage"?: string;
+      readonly "X-Total"?: string;
+    }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<409, RestJsonValue<ApiError>, "application/json", false>
+  | RestUndocumentedResponse;
+
+export type RepoGetArchiveInput = {
+  path: {
+    /**
+     * the git reference for download with attached archive format (e.g. master.zip)
+     */
+    "archive": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * subpath of the repository to download
+     */
+    "path"?: Array<string>;
+  };
+};
+
+export type RepoGetArchiveResponse =
+  | RestResponse<200, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetAssigneesInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoGetAssigneesResponse =
+  | RestResponse<200, RestJsonValue<Array<User>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetBranchInput = {
+  path: {
+    /**
+     * branch to get
+     */
+    "branch": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoGetBranchResponse =
+  | RestResponse<200, RestJsonValue<Branch>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetBranchProtectionInput = {
+  path: {
+    /**
+     * name of protected branch
+     */
+    "name": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoGetBranchProtectionResponse =
+  | RestResponse<200, RestJsonValue<BranchProtection>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetByIdInput = {
+  path: {
+    /**
+     * id of the repo to get
+     */
+    "id": RestInt64;
+  };
+};
+
+export type RepoGetByIdResponse =
+  | RestResponse<200, RestJsonValue<Repository>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetCombinedStatusByRefInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of branch/tag/commit
+     */
+    "ref": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type RepoGetCombinedStatusByRefResponse =
+  | RestResponse<200, RestJsonValue<CombinedStatus>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetCommitPullRequestInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+    /**
+     * SHA of the commit to get
+     */
+    "sha": string;
+  };
+};
+
+export type RepoGetCommitPullRequestResponse =
+  | RestResponse<200, RestJsonValue<PullRequest>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetContentsInput = {
+  path: {
+    /**
+     * path of the dir, file, symlink or submodule in the repo
+     */
+    "filepath": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * The name of the commit/branch/tag. Default to the repository’s default branch.
+     */
+    "ref"?: string;
+  };
+};
+
+export type RepoGetContentsResponse =
+  | RestResponse<200, RestJsonValue<ContentsResponse>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetContentsExtInput = {
+  path: {
+    /**
+     * path of the dir, file, symlink or submodule in the repo. Swagger requires path parameter to be "required", you can leave it empty or pass a single dot (".") to get the root directory.
+     */
+    "filepath": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * By default this API's response only contains file's metadata. Use comma-separated "includes" options to retrieve more fields. Option "file_content" will try to retrieve the file content, "lfs_metadata" will try to retrieve LFS metadata, "commit_metadata" will try to retrieve commit metadata, and "commit_message" will try to retrieve commit message.
+     */
+    "includes"?: string;
+    /**
+     * the name of the commit/branch/tag, default to the repository’s default branch.
+     */
+    "ref"?: string;
+  };
+};
+
+export type RepoGetContentsExtResponse =
+  | RestResponse<200, RestJsonValue<ContentsExtResponse>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetContentsListInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * The name of the commit/branch/tag. Default to the repository’s default branch.
+     */
+    "ref"?: string;
+  };
+};
+
+export type RepoGetContentsListResponse =
+  | RestResponse<200, RestJsonValue<Array<ContentsResponse>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetEditorConfigInput = {
+  path: {
+    /**
+     * filepath of file to get
+     */
+    "filepath": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * The name of the commit/branch/tag. Default to the repository’s default branch.
+     */
+    "ref"?: string;
+  };
+};
+
+export type RepoGetEditorConfigResponse =
+  | RestResponse<200, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetFileContentsInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query: {
+    /**
+     * The JSON encoded body (see the POST request): {"files": ["filename1", "filename2"]}
+     */
+    "body": string;
+    /**
+     * The name of the commit/branch/tag. Default to the repository’s default branch.
+     */
+    "ref"?: string;
+  };
+};
+
+export type RepoGetFileContentsResponse =
+  | RestResponse<200, RestJsonValue<Array<ContentsResponse>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetFileContentsPostInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * The name of the commit/branch/tag. Default to the repository’s default branch.
+     */
+    "ref"?: string;
+  };
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<GetFilesOptions>>>;
+};
+
+export type RepoGetFileContentsPostResponse =
+  | RestResponse<200, RestJsonValue<Array<ContentsResponse>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetGitHookInput = {
+  path: {
+    /**
+     * id of the hook to get
+     */
+    "id": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoGetGitHookResponse =
+  | RestResponse<200, RestJsonValue<GitHook>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetHookInput = {
+  path: {
+    /**
+     * id of the hook to get
+     */
+    "id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoGetHookResponse =
+  | RestResponse<200, RestJsonValue<Hook>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetIssueConfigInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoGetIssueConfigResponse =
+  | RestResponse<200, RestJsonValue<IssueConfig>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetIssueTemplatesInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoGetIssueTemplatesResponse =
+  | RestResponse<200, RestJsonValue<Array<IssueTemplate>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetKeyInput = {
+  path: {
+    /**
+     * id of the key to get
+     */
+    "id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoGetKeyResponse =
+  | RestResponse<200, RestJsonValue<DeployKey>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetLanguagesInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoGetLanguagesResponse =
+  | RestResponse<200, RestJsonValue<Record<string, RestInt64>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetLatestReleaseInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoGetLatestReleaseResponse =
+  | RestResponse<200, RestJsonValue<Release>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetLicensesInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoGetLicensesResponse =
+  | RestResponse<200, RestJsonValue<Array<string>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetNoteInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+    /**
+     * a git ref or commit sha
+     */
+    "sha": string;
+  };
+  query?: {
+    /**
+     * include a list of affected files for every commit (disable for speedup, default 'true')
+     */
+    "files"?: boolean;
+    /**
+     * include verification for every commit (disable for speedup, default 'true')
+     */
+    "verification"?: boolean;
+  };
+};
+
+export type RepoGetNoteResponse =
+  | RestResponse<200, RestJsonValue<Note>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoGetPullRequestInput = {
+  path: {
+    /**
+     * index of the pull request to get
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoGetPullRequestResponse =
+  | RestResponse<200, RestJsonValue<PullRequest>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetPullRequestByBaseHeadInput = {
+  path: {
+    /**
+     * base of the pull request to get
+     */
+    "base": string;
+    /**
+     * head of the pull request to get
+     */
+    "head": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoGetPullRequestByBaseHeadResponse =
+  | RestResponse<200, RestJsonValue<PullRequest>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetPullRequestCommitsInput = {
+  path: {
+    /**
+     * index of the pull request to get
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * include a list of affected files for every commit (disable for speedup, default 'true')
+     */
+    "files"?: boolean;
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * include verification for every commit (disable for speedup, default 'true')
+     */
+    "verification"?: boolean;
+  };
+};
+
+export type RepoGetPullRequestCommitsResponse =
+  | RestResponse<
+    200,
+    RestJsonValue<Array<Commit>>,
+    "application/json",
+    true,
+    {
+      readonly "X-HasMore"?: string;
+      readonly "X-Page"?: string;
+      readonly "X-PageCount"?: string;
+      readonly "X-PerPage"?: string;
+      readonly "X-Total"?: string;
+    }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetPullRequestFilesInput = {
+  path: {
+    /**
+     * index of the pull request to get
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * skip to given file
+     */
+    "skip-to"?: string;
+    /**
+     * whitespace behavior
+     */
+    "whitespace"?: "ignore-all" | "ignore-change" | "ignore-eol" | "show-all";
+  };
+};
+
+export type RepoGetPullRequestFilesResponse =
+  | RestResponse<
+    200,
+    RestJsonValue<Array<ChangedFile>>,
+    "application/json",
+    true,
+    {
+      readonly "X-HasMore"?: string;
+      readonly "X-Page"?: string;
+      readonly "X-PageCount"?: string;
+      readonly "X-PerPage"?: string;
+      readonly "X-Total"?: string;
+    }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetPullReviewInput = {
+  path: {
+    /**
+     * id of the review
+     */
+    "id": RestInt64;
+    /**
+     * index of the pull request
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoGetPullReviewResponse =
+  | RestResponse<200, RestJsonValue<PullReview>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetPullReviewCommentsInput = {
+  path: {
+    /**
+     * id of the review
+     */
+    "id": RestInt64;
+    /**
+     * index of the pull request
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoGetPullReviewCommentsResponse =
+  | RestResponse<200, RestJsonValue<Array<PullReviewComment>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetPushMirrorByRemoteNameInput = {
+  path: {
+    /**
+     * remote name of push mirror
+     */
+    "name": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoGetPushMirrorByRemoteNameResponse =
+  | RestResponse<200, RestJsonValue<PushMirror>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetRawFileInput = {
+  path: {
+    /**
+     * path of the file to get, it should be "{ref}/{filepath}". If there is no ref could be inferred, it will be treated as the default branch
+     */
+    "filepath": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * The name of the commit/branch/tag. Default to the repository’s default branch
+     */
+    "ref"?: string;
+  };
+};
+
+export type RepoGetRawFileResponse =
+  | RestResponse<200, globalThis.Blob, "application/octet-stream", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetRawFileOrLfsInput = {
+  path: {
+    /**
+     * path of the file to get, it should be "{ref}/{filepath}". If there is no ref could be inferred, it will be treated as the default branch
+     */
+    "filepath": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * The name of the commit/branch/tag. Default to the repository’s default branch
+     */
+    "ref"?: string;
+  };
+};
+
+export type RepoGetRawFileOrLfsResponse =
+  | RestResponse<200, globalThis.Blob, "application/octet-stream", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetReleaseInput = {
+  path: {
+    /**
+     * id of the release to get
+     */
+    "id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoGetReleaseResponse =
+  | RestResponse<200, RestJsonValue<Release>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetReleaseAttachmentInput = {
+  path: {
+    /**
+     * id of the attachment to get
+     */
+    "attachment_id": RestInt64;
+    /**
+     * id of the release
+     */
+    "id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoGetReleaseAttachmentResponse =
+  | RestResponse<200, RestJsonValue<Attachment>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetReleaseByTagInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+    /**
+     * tag name of the release to get
+     */
+    "tag": string;
+  };
+};
+
+export type RepoGetReleaseByTagResponse =
+  | RestResponse<200, RestJsonValue<Release>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetRepoPermissionsInput = {
+  path: {
+    /**
+     * username of the collaborator whose permissions are to be obtained
+     */
+    "collaborator": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoGetRepoPermissionsResponse =
+  | RestResponse<200, RestJsonValue<RepoCollaboratorPermission>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetReviewersInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoGetReviewersResponse =
+  | RestResponse<200, RestJsonValue<Array<User>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetSingleCommitInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+    /**
+     * a git ref or commit sha
+     */
+    "sha": string;
+  };
+  query?: {
+    /**
+     * include a list of affected files for every commit (disable for speedup, default 'true')
+     */
+    "files"?: boolean;
+    /**
+     * include diff stats for every commit (disable for speedup, default 'true')
+     */
+    "stat"?: boolean;
+    /**
+     * include verification for every commit (disable for speedup, default 'true')
+     */
+    "verification"?: boolean;
+  };
+};
+
+export type RepoGetSingleCommitResponse =
+  | RestResponse<200, RestJsonValue<Commit>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoGetTagInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+    /**
+     * name of tag
+     */
+    "tag": string;
+  };
+};
+
+export type RepoGetTagResponse =
+  | RestResponse<200, RestJsonValue<Tag>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetTagProtectionInput = {
+  path: {
+    /**
+     * id of the tag protect to get
+     */
+    "id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoGetTagProtectionResponse =
+  | RestResponse<200, RestJsonValue<TagProtection>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetWikiPageInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the page
+     */
+    "pageName": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoGetWikiPageResponse =
+  | RestResponse<200, RestJsonValue<WikiPage>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetWikiPageRevisionsInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the page
+     */
+    "pageName": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type RepoGetWikiPageRevisionsResponse =
+  | RestResponse<200, RestJsonValue<WikiCommitList>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoGetWikiPagesInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type RepoGetWikiPagesResponse =
+  | RestResponse<200, RestJsonValue<Array<WikiPageMetaData>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoListActionsSecretsInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repository
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type RepoListActionsSecretsResponse =
+  | RestResponse<200, RestJsonValue<Array<Secret>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoListActivityFeedsInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * the date of the activities to be found
+     */
+    "date"?: string;
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type RepoListActivityFeedsResponse =
+  | RestResponse<200, RestJsonValue<Array<Activity>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoListAllGitRefsInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoListAllGitRefsResponse =
+  | RestResponse<200, RestJsonValue<Array<Reference>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoListBranchProtectionInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoListBranchProtectionResponse =
+  | RestResponse<200, RestJsonValue<Array<BranchProtection>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type RepoListBranchesInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type RepoListBranchesResponse =
+  | RestResponse<200, RestJsonValue<Array<Branch>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type RepoListCollaboratorsInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type RepoListCollaboratorsResponse =
+  | RestResponse<200, RestJsonValue<Array<User>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoListGitHooksInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoListGitHooksResponse =
+  | RestResponse<200, RestJsonValue<Array<GitHook>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoListGitRefsInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * part or full name of the ref
+     */
+    "ref": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoListGitRefsResponse =
+  | RestResponse<200, RestJsonValue<Array<Reference>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoListHooksInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type RepoListHooksResponse =
+  | RestResponse<200, RestJsonValue<Array<Hook>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoListKeysInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * fingerprint of the key
+     */
+    "fingerprint"?: string;
+    /**
+     * the key_id to search for
+     */
+    "key_id"?: RestInt64;
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type RepoListKeysResponse =
+  | RestResponse<200, RestJsonValue<Array<DeployKey>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoListPinnedIssuesInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoListPinnedIssuesResponse =
+  | RestResponse<200, RestJsonValue<Array<Issue>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoListPinnedPullRequestsInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoListPinnedPullRequestsResponse =
+  | RestResponse<200, RestJsonValue<Array<PullRequest>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoListPullRequestsInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * Name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * Filter by target base branch of the pull request
+     */
+    "base_branch"?: string;
+    /**
+     * Label IDs
+     */
+    "labels"?: Array<RestInt64>;
+    /**
+     * Page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * ID of the milestone
+     */
+    "milestone"?: RestInt64;
+    /**
+     * Page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * Filter by pull request author
+     */
+    "poster"?: string;
+    /**
+     * Type of sort
+     */
+    "sort"?:
+      | "leastcomment"
+      | "leastupdate"
+      | "mostcomment"
+      | "oldest"
+      | "priority"
+      | "recentclose"
+      | "recentupdate";
+    /**
+     * State of pull request
+     */
+    "state"?: "all" | "closed" | "open";
+  };
+};
+
+export type RepoListPullRequestsResponse =
+  | RestResponse<200, RestJsonValue<Array<PullRequest>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    500,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoListPullReviewsInput = {
+  path: {
+    /**
+     * index of the pull request
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type RepoListPullReviewsResponse =
+  | RestResponse<200, RestJsonValue<Array<PullReview>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoListPushMirrorsInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type RepoListPushMirrorsResponse =
+  | RestResponse<200, RestJsonValue<Array<PushMirror>>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoListReleaseAttachmentsInput = {
+  path: {
+    /**
+     * id of the release
+     */
+    "id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoListReleaseAttachmentsResponse =
+  | RestResponse<200, RestJsonValue<Array<Attachment>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoListReleasesInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * filter (exclude / include) drafts, if you don't have repo write access none will show
+     */
+    "draft"?: boolean;
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * filter (exclude / include) pre-releases
+     */
+    "pre-release"?: boolean;
+  };
+};
+
+export type RepoListReleasesResponse =
+  | RestResponse<200, RestJsonValue<Array<Release>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoListStargazersInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type RepoListStargazersResponse =
+  | RestResponse<200, RestJsonValue<Array<User>>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoListStatusesInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+    /**
+     * sha of the commit
+     */
+    "sha": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * type of sort
+     */
+    "sort"?: "highestindex" | "leastindex" | "leastupdate" | "oldest" | "recentupdate";
+    /**
+     * type of state
+     */
+    "state"?: "error" | "failure" | "pending" | "success" | "warning";
+  };
+};
+
+export type RepoListStatusesResponse =
+  | RestResponse<200, RestJsonValue<Array<CommitStatus>>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoListStatusesByRefInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of branch/tag/commit
+     */
+    "ref": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * type of sort
+     */
+    "sort"?: "highestindex" | "leastindex" | "leastupdate" | "oldest" | "recentupdate";
+    /**
+     * type of state
+     */
+    "state"?: "error" | "failure" | "pending" | "success" | "warning";
+  };
+};
+
+export type RepoListStatusesByRefResponse =
+  | RestResponse<200, RestJsonValue<Array<CommitStatus>>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoListSubscribersInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type RepoListSubscribersResponse =
+  | RestResponse<200, RestJsonValue<Array<User>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoListTagProtectionInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoListTagProtectionResponse =
+  | RestResponse<200, RestJsonValue<Array<TagProtection>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type RepoListTagsInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * page size of results, default maximum page size is 50
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type RepoListTagsResponse =
+  | RestResponse<200, RestJsonValue<Array<Tag>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoListTeamsInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoListTeamsResponse =
+  | RestResponse<200, RestJsonValue<Array<Team>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoListTopicsInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type RepoListTopicsResponse =
+  | RestResponse<200, RestJsonValue<TopicName>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoMergePullRequestInput = {
+  path: {
+    /**
+     * index of the pull request to merge
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<MergePullRequestOption>>>;
+};
+
+export type RepoMergePullRequestResponse =
+  | RestResponse<200, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<405, undefined, undefined, false>
+  | RestResponse<
+    409,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    423,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoMergeUpstreamInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<MergeUpstreamRequest>>>;
+};
+
+export type RepoMergeUpstreamResponse =
+  | RestResponse<200, RestJsonValue<MergeUpstreamResponse>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoMigrateInput = {
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<MigrateRepoOptions>>>;
+};
+
+export type RepoMigrateResponse =
+  | RestResponse<201, RestJsonValue<Repository>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<409, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoMirrorSyncInput = {
+  path: {
+    /**
+     * owner of the repo to sync
+     */
+    "owner": string;
+    /**
+     * name of the repo to sync
+     */
+    "repo": string;
+  };
+};
+
+export type RepoMirrorSyncResponse =
+  | RestResponse<200, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoNewPinAllowedInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoNewPinAllowedResponse =
+  | RestResponse<200, RestJsonValue<NewIssuePinsAllowed>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoPullRequestIsMergedInput = {
+  path: {
+    /**
+     * index of the pull request
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoPullRequestIsMergedResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoPushMirrorSyncInput = {
+  path: {
+    /**
+     * owner of the repo to sync
+     */
+    "owner": string;
+    /**
+     * name of the repo to sync
+     */
+    "repo": string;
+  };
+};
+
+export type RepoPushMirrorSyncResponse =
+  | RestResponse<200, undefined, undefined, true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoRenameBranchInput = {
+  path: {
+    /**
+     * name of the branch
+     */
+    "branch": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<RenameBranchRepoOption>>>;
+};
+
+export type RepoRenameBranchResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoResolvePullReviewCommentInput = {
+  path: {
+    /**
+     * id of the review comment
+     */
+    "id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoResolvePullReviewCommentResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoSearchInput = {
+  query?: {
+    /**
+     * show only archived, non-archived or all repositories (defaults to all)
+     */
+    "archived"?: boolean;
+    /**
+     * if `uid` is given, search only for repos that the user owns
+     */
+    "exclusive"?: boolean;
+    /**
+     * include search of keyword within repository description
+     */
+    "includeDesc"?: boolean;
+    /**
+     * show only pubic, private or all repositories (defaults to all)
+     */
+    "is_private"?: boolean;
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * type of repository to search for. Supported values are "fork", "source", "mirror" and "collaborative"
+     */
+    "mode"?: string;
+    /**
+     * sort order, either "asc" (ascending) or "desc" (descending). Default is "asc", ignored if "sort" is not specified.
+     */
+    "order"?: string;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * repo owner to prioritize in the results
+     */
+    "priority_owner_id"?: RestInt64;
+    /**
+     * include private repositories this user has access to (defaults to true)
+     */
+    "private"?: boolean;
+    /**
+     * keyword
+     */
+    "q"?: string;
+    /**
+     * sort repos by attribute. Supported values are "alpha", "created", "updated", "size", "git_size", "lfs_size", "stars", "forks" and "id". Default is "alpha"
+     */
+    "sort"?: string;
+    /**
+     * search only for repos that the user with the given id has starred
+     */
+    "starredBy"?: RestInt64;
+    /**
+     * search only for repos that belong to the given team id
+     */
+    "team_id"?: RestInt64;
+    /**
+     * include template repositories this user has access to (defaults to true)
+     */
+    "template"?: boolean;
+    /**
+     * Limit search to repositories with keyword as topic
+     */
+    "topic"?: boolean;
+    /**
+     * search only for repos that the user with the given id owns or contributes to
+     */
+    "uid"?: RestInt64;
+  };
+};
+
+export type RepoSearchResponse =
+  | RestResponse<200, RestJsonValue<SearchResults>, "application/json", true>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoSigningKeyInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoSigningKeyResponse =
+  | RestResponse<200, string, "text/plain", true>
+  | RestUndocumentedResponse;
+
+export type RepoSigningKeySshInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoSigningKeySshResponse =
+  | RestResponse<200, string, "text/plain", true>
+  | RestUndocumentedResponse;
+
+export type RepoSubmitPullReviewInput = {
+  path: {
+    /**
+     * id of the review
+     */
+    "id": RestInt64;
+    /**
+     * index of the pull request
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<SubmitPullReviewOptions>>>;
+};
+
+export type RepoSubmitPullReviewResponse =
+  | RestResponse<200, RestJsonValue<PullReview>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoTestHookInput = {
+  path: {
+    /**
+     * id of the hook to test
+     */
+    "id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * The name of the commit/branch/tag, indicates which commit will be loaded to the webhook payload.
+     */
+    "ref"?: string;
+  };
+};
+
+export type RepoTestHookResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoTrackedTimesInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * Only show times updated before the given time. This is a timestamp in RFC 3339 format
+     */
+    "before"?: string;
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * Only show times updated after the given time. This is a timestamp in RFC 3339 format
+     */
+    "since"?: string;
+    /**
+     * optional filter by user (available for issue managers)
+     */
+    "user"?: string;
+  };
+};
+
+export type RepoTrackedTimesResponse =
+  | RestResponse<200, RestJsonValue<Array<TrackedTime>>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoTransferInput = {
+  path: {
+    /**
+     * owner of the repo to transfer
+     */
+    "owner": string;
+    /**
+     * name of the repo to transfer
+     */
+    "repo": string;
+  };
+  /**
+   * Transfer Options
+   */
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<TransferRepoOption>>>;
+};
+
+export type RepoTransferResponse =
+  | RestResponse<202, RestJsonValue<Repository>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoUnDismissPullReviewInput = {
+  path: {
+    /**
+     * id of the review
+     */
+    "id": RestInt64;
+    /**
+     * index of the pull request
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoUnDismissPullReviewResponse =
+  | RestResponse<200, RestJsonValue<PullReview>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoUnresolvePullReviewCommentInput = {
+  path: {
+    /**
+     * id of the review comment
+     */
+    "id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoUnresolvePullReviewCommentResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoUpdateAvatarInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<UpdateRepoAvatarOption>>>;
+};
+
+export type RepoUpdateAvatarResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RepoUpdateBranchInput = {
+  path: {
+    /**
+     * name of the branch
+     */
+    "branch": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<UpdateBranchRepoOption>>>;
+};
+
+export type RepoUpdateBranchResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<409, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoUpdateBranchProtectionPrioriesInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<
+    "application/json",
+    RestJsonValue<RestRequestValue<UpdateBranchProtectionPriories>>
+  >;
+};
+
+export type RepoUpdateBranchProtectionPrioriesResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    423,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoUpdateFileInput = {
+  path: {
+    /**
+     * path of the file to update
+     */
+    "filepath": string;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<UpdateFileOptions>>>;
+};
+
+export type RepoUpdateFileResponse =
+  | RestResponse<200, RestJsonValue<FileResponse>, "application/json", true>
+  | RestResponse<201, RestJsonValue<FileResponse>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    423,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoUpdatePullRequestInput = {
+  path: {
+    /**
+     * index of the pull request to get
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  query?: {
+    /**
+     * how to update pull request
+     */
+    "style"?: "merge" | "rebase";
+  };
+};
+
+export type RepoUpdatePullRequestResponse =
+  | RestResponse<200, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    409,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoUpdateTopicsInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<RepoTopicOptions>>>;
+};
+
+export type RepoUpdateTopicsResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "invalidTopics"?: string; readonly "message"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RepoValidateIssueConfigInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type RepoValidateIssueConfigResponse =
+  | RestResponse<200, RestJsonValue<IssueConfigValidation>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type RerunFailedWorkflowRunInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repository
+     */
+    "repo": string;
+    /**
+     * id of the run
+     */
+    "run": RestInt64;
+  };
+};
+
+export type RerunFailedWorkflowRunResponse =
+  | RestResponse<201, undefined, undefined, true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RerunWorkflowJobInput = {
+  path: {
+    /**
+     * id of the job
+     */
+    "job_id": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repository
+     */
+    "repo": string;
+    /**
+     * id of the run
+     */
+    "run": RestInt64;
+  };
+};
+
+export type RerunWorkflowJobResponse =
+  | RestResponse<201, RestJsonValue<ActionWorkflowJob>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type RerunWorkflowRunInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repository
+     */
+    "repo": string;
+    /**
+     * id of the run
+     */
+    "run": RestInt64;
+  };
+};
+
+export type RerunWorkflowRunResponse =
+  | RestResponse<201, RestJsonValue<ActionWorkflowRun>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type TeamSearchInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+  };
+  query?: {
+    /**
+     * include search within team description (defaults to true)
+     */
+    "include_desc"?: boolean;
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * keywords to search
+     */
+    "q"?: string;
+  };
+};
+
+export type TeamSearchResponse =
+  | RestResponse<
+    200,
+    RestJsonValue<
+      Record<string, unknown> & {
+        "data"?: Array<Team>;
+        "ok"?: boolean;
+      }
+    >,
+    "application/json",
+    true
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type TopicSearchInput = {
+  query: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * keywords to search
+     */
+    "q": string;
+  };
+};
+
+export type TopicSearchResponse =
+  | RestResponse<200, RestJsonValue<Array<TopicResponse>>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UnlinkPackageInput = {
+  path: {
+    /**
+     * name of the package
+     */
+    "name": string;
+    /**
+     * owner of the package
+     */
+    "owner": string;
+    /**
+     * type of the package
+     */
+    "type": string;
+  };
+};
+
+export type UnlinkPackageResponse =
+  | RestResponse<201, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UnpinIssueInput = {
+  path: {
+    /**
+     * index of issue to unpin
+     */
+    "index": RestInt64;
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type UnpinIssueResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UpdateAdminRunnerInput = {
+  path: {
+    /**
+     * id of the runner
+     */
+    "runner_id": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<EditActionRunnerOption>>>;
+};
+
+export type UpdateAdminRunnerResponse =
+  | RestResponse<200, RestJsonValue<ActionRunner>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type UpdateOrgRunnerInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+    /**
+     * id of the runner
+     */
+    "runner_id": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<EditActionRunnerOption>>>;
+};
+
+export type UpdateOrgRunnerResponse =
+  | RestResponse<200, RestJsonValue<ActionRunner>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type UpdateOrgSecretInput = {
+  path: {
+    /**
+     * name of organization
+     */
+    "org": string;
+    /**
+     * name of the secret
+     */
+    "secretname": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateOrUpdateSecretOption>>>;
+};
+
+export type UpdateOrgSecretResponse =
+  | RestResponse<201, undefined, undefined, true>
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UpdateOrgVariableInput = {
+  path: {
+    /**
+     * name of the organization
+     */
+    "org": string;
+    /**
+     * name of the variable
+     */
+    "variablename": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<UpdateVariableOption>>>;
+};
+
+export type UpdateOrgVariableResponse =
+  | RestResponse<201, undefined, undefined, true>
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UpdateRepoRunnerInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+    /**
+     * id of the runner
+     */
+    "runner_id": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<EditActionRunnerOption>>>;
+};
+
+export type UpdateRepoRunnerResponse =
+  | RestResponse<200, RestJsonValue<ActionRunner>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type UpdateRepoSecretInput = {
+  path: {
+    /**
+     * owner of the repository
+     */
+    "owner": string;
+    /**
+     * name of the repository
+     */
+    "repo": string;
+    /**
+     * name of the secret
+     */
+    "secretname": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateOrUpdateSecretOption>>>;
+};
+
+export type UpdateRepoSecretResponse =
+  | RestResponse<201, undefined, undefined, true>
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UpdateRepoVariableInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repository
+     */
+    "repo": string;
+    /**
+     * name of the variable
+     */
+    "variablename": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<UpdateVariableOption>>>;
+};
+
+export type UpdateRepoVariableResponse =
+  | RestResponse<201, undefined, undefined, true>
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UpdateUserRunnerInput = {
+  path: {
+    /**
+     * id of the runner
+     */
+    "runner_id": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<EditActionRunnerOption>>>;
+};
+
+export type UpdateUserRunnerResponse =
+  | RestResponse<200, RestJsonValue<ActionRunner>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type UpdateUserSecretInput = {
+  path: {
+    /**
+     * name of the secret
+     */
+    "secretname": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateOrUpdateSecretOption>>>;
+};
+
+export type UpdateUserSecretResponse =
+  | RestResponse<201, undefined, undefined, true>
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UpdateUserSettingsInput = {
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<UserSettingsOptions>>>;
+};
+
+export type UpdateUserSettingsResponse =
+  | RestResponse<200, RestJsonValue<Array<UserSettings>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type UpdateUserVariableInput = {
+  path: {
+    /**
+     * name of the variable
+     */
+    "variablename": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<UpdateVariableOption>>>;
+};
+
+export type UpdateUserVariableResponse =
+  | RestResponse<201, undefined, undefined, true>
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UserAddEmailInput = {
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateEmailOption>>>;
+};
+
+export type UserAddEmailResponse =
+  | RestResponse<201, RestJsonValue<Array<Email>>, "application/json", true>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type UserBlockUserInput = {
+  path: {
+    /**
+     * username of the user to block
+     */
+    "username": string;
+  };
+  query?: {
+    /**
+     * optional note for the block
+     */
+    "note"?: string;
+  };
+};
+
+export type UserBlockUserResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type UserCheckFollowingInput = {
+  path: {
+    /**
+     * username of the followed user
+     */
+    "target": string;
+    /**
+     * username of the following user
+     */
+    "username": string;
+  };
+};
+
+export type UserCheckFollowingResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UserCheckUserBlockInput = {
+  path: {
+    /**
+     * username of the user to check
+     */
+    "username": string;
+  };
+};
+
+export type UserCheckUserBlockResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UserCreateHookInput = {
+  body: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateHookOption>>>;
+};
+
+export type UserCreateHookResponse =
+  | RestResponse<201, RestJsonValue<Hook>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type UserCreateOAuth2ApplicationInput = {
+  body: RestBody<
+    "application/json",
+    RestJsonValue<RestRequestValue<CreateOAuth2ApplicationOptions>>
+  >;
+};
+
+export type UserCreateOAuth2ApplicationResponse =
+  | RestResponse<201, RestJsonValue<OAuth2Application>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type UserCreateRunnerRegistrationTokenInput = Record<string, never>;
+
+export type UserCreateRunnerRegistrationTokenResponse =
+  | RestResponse<200, undefined, undefined, true, { readonly "token"?: string }>
+  | RestUndocumentedResponse;
+
+export type UserCreateTokenInput = {
+  path: {
+    /**
+     * username of the user whose token is to be created
+     */
+    "username": string;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateAccessTokenOption>>>;
+};
+
+export type UserCreateTokenResponse =
+  | RestResponse<201, RestJsonValue<AccessToken>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type UserCurrentCheckFollowingInput = {
+  path: {
+    /**
+     * username of the user to check for authenticated followers
+     */
+    "username": string;
+  };
+};
+
+export type UserCurrentCheckFollowingResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UserCurrentCheckStarringInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type UserCurrentCheckStarringResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UserCurrentCheckSubscriptionInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type UserCurrentCheckSubscriptionResponse =
+  | RestResponse<200, RestJsonValue<WatchInfo>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UserCurrentDeleteFollowInput = {
+  path: {
+    /**
+     * username of the user to unfollow
+     */
+    "username": string;
+  };
+};
+
+export type UserCurrentDeleteFollowResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UserCurrentDeleteGpgKeyInput = {
+  path: {
+    /**
+     * id of key to delete
+     */
+    "id": RestInt64;
+  };
+};
+
+export type UserCurrentDeleteGpgKeyResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UserCurrentDeleteKeyInput = {
+  path: {
+    /**
+     * id of key to delete
+     */
+    "id": RestInt64;
+  };
+};
+
+export type UserCurrentDeleteKeyResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UserCurrentDeleteStarInput = {
+  path: {
+    /**
+     * owner of the repo to unstar
+     */
+    "owner": string;
+    /**
+     * name of the repo to unstar
+     */
+    "repo": string;
+  };
+};
+
+export type UserCurrentDeleteStarResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UserCurrentDeleteSubscriptionInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type UserCurrentDeleteSubscriptionResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UserCurrentGetGpgKeyInput = {
+  path: {
+    /**
+     * id of key to get
+     */
+    "id": RestInt64;
+  };
+};
+
+export type UserCurrentGetGpgKeyResponse =
+  | RestResponse<200, RestJsonValue<GpgKey>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UserCurrentGetKeyInput = {
+  path: {
+    /**
+     * id of key to get
+     */
+    "id": RestInt64;
+  };
+};
+
+export type UserCurrentGetKeyResponse =
+  | RestResponse<200, RestJsonValue<PublicKey>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UserCurrentListFollowersInput = {
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type UserCurrentListFollowersResponse =
+  | RestResponse<200, RestJsonValue<Array<User>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type UserCurrentListFollowingInput = {
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type UserCurrentListFollowingResponse =
+  | RestResponse<200, RestJsonValue<Array<User>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type UserCurrentListGpgKeysInput = {
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type UserCurrentListGpgKeysResponse =
+  | RestResponse<200, RestJsonValue<Array<GpgKey>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type UserCurrentListKeysInput = {
+  query?: {
+    /**
+     * fingerprint of the key
+     */
+    "fingerprint"?: string;
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type UserCurrentListKeysResponse =
+  | RestResponse<200, RestJsonValue<Array<PublicKey>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type UserCurrentListReposInput = {
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type UserCurrentListReposResponse =
+  | RestResponse<200, RestJsonValue<Array<Repository>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type UserCurrentListStarredInput = {
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type UserCurrentListStarredResponse =
+  | RestResponse<200, RestJsonValue<Array<Repository>>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type UserCurrentListSubscriptionsInput = {
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type UserCurrentListSubscriptionsResponse =
+  | RestResponse<200, RestJsonValue<Array<Repository>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type UserCurrentPostGpgKeyInput = {
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateGpgKeyOption>>>;
+};
+
+export type UserCurrentPostGpgKeyResponse =
+  | RestResponse<201, RestJsonValue<GpgKey>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type UserCurrentPostKeyInput = {
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<CreateKeyOption>>>;
+};
+
+export type UserCurrentPostKeyResponse =
+  | RestResponse<201, RestJsonValue<PublicKey>, "application/json", true>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type UserCurrentPutFollowInput = {
+  path: {
+    /**
+     * username of the user to follow
+     */
+    "username": string;
+  };
+};
+
+export type UserCurrentPutFollowResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UserCurrentPutStarInput = {
+  path: {
+    /**
+     * owner of the repo to star
+     */
+    "owner": string;
+    /**
+     * name of the repo to star
+     */
+    "repo": string;
+  };
+};
+
+export type UserCurrentPutStarResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UserCurrentPutSubscriptionInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+  };
+};
+
+export type UserCurrentPutSubscriptionResponse =
+  | RestResponse<200, RestJsonValue<WatchInfo>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UserCurrentTrackedTimesInput = {
+  query?: {
+    /**
+     * Only show times updated before the given time. This is a timestamp in RFC 3339 format
+     */
+    "before"?: string;
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * Only show times updated after the given time. This is a timestamp in RFC 3339 format
+     */
+    "since"?: string;
+  };
+};
+
+export type UserCurrentTrackedTimesResponse =
+  | RestResponse<200, RestJsonValue<Array<TrackedTime>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type UserDeleteAccessTokenInput = {
+  path: {
+    /**
+     * token to be deleted, identified by ID and if not available by name
+     */
+    "token": string;
+    /**
+     * username of the user whose token is to be deleted
+     */
+    "username": string;
+  };
+};
+
+export type UserDeleteAccessTokenResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type UserDeleteAvatarInput = Record<string, never>;
+
+export type UserDeleteAvatarResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestUndocumentedResponse;
+
+export type UserDeleteEmailInput = {
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<DeleteEmailOption>>>;
+};
+
+export type UserDeleteEmailResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UserDeleteHookInput = {
+  path: {
+    /**
+     * id of the hook to delete
+     */
+    "id": RestInt64;
+  };
+};
+
+export type UserDeleteHookResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestUndocumentedResponse;
+
+export type UserDeleteOAuth2ApplicationInput = {
+  path: {
+    /**
+     * token to be deleted
+     */
+    "id": RestInt64;
+  };
+};
+
+export type UserDeleteOAuth2ApplicationResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UserEditHookInput = {
+  path: {
+    /**
+     * id of the hook to update
+     */
+    "id": RestInt64;
+  };
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<EditHookOption>>>;
+};
+
+export type UserEditHookResponse =
+  | RestResponse<200, RestJsonValue<Hook>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type UserGetInput = {
+  path: {
+    /**
+     * username of the user whose data is to be listed
+     */
+    "username": string;
+  };
+};
+
+export type UserGetResponse =
+  | RestResponse<200, RestJsonValue<User>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UserGetCurrentInput = Record<string, never>;
+
+export type UserGetCurrentResponse =
+  | RestResponse<200, RestJsonValue<User>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type UserGetHeatmapDataInput = {
+  path: {
+    /**
+     * username of the user whose heatmap is to be obtained
+     */
+    "username": string;
+  };
+};
+
+export type UserGetHeatmapDataResponse =
+  | RestResponse<200, RestJsonValue<Array<UserHeatmapData>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UserGetHookInput = {
+  path: {
+    /**
+     * id of the hook to get
+     */
+    "id": RestInt64;
+  };
+};
+
+export type UserGetHookResponse =
+  | RestResponse<200, RestJsonValue<Hook>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type UserGetOAuth2Application1tziy91Input = {
+  path: {
+    /**
+     * Application ID to be found
+     */
+    "id": RestInt64;
+  };
+};
+
+export type UserGetOAuth2Application1tziy91Response =
+  | RestResponse<200, RestJsonValue<OAuth2Application>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UserGetOauth2Application0hhkiwtInput = {
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type UserGetOauth2Application0hhkiwtResponse =
+  | RestResponse<200, RestJsonValue<Array<OAuth2Application>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type UserGetStopWatchesInput = {
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type UserGetStopWatchesResponse =
+  | RestResponse<200, RestJsonValue<Array<StopWatch>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type UserGetTokensInput = {
+  path: {
+    /**
+     * username of to user whose access tokens are to be listed
+     */
+    "username": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type UserGetTokensResponse =
+  | RestResponse<200, RestJsonValue<Array<AccessToken>>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type UserListActivityFeedsInput = {
+  path: {
+    /**
+     * username of the user whose activity feeds are to be listed
+     */
+    "username": string;
+  };
+  query?: {
+    /**
+     * the date of the activities to be found
+     */
+    "date"?: string;
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * if true, only show actions performed by the requested user
+     */
+    "only-performed-by"?: boolean;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type UserListActivityFeedsResponse =
+  | RestResponse<200, RestJsonValue<Array<Activity>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UserListBlocksInput = {
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type UserListBlocksResponse =
+  | RestResponse<200, RestJsonValue<Array<User>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type UserListEmailsInput = Record<string, never>;
+
+export type UserListEmailsResponse =
+  | RestResponse<200, RestJsonValue<Array<Email>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type UserListFollowersInput = {
+  path: {
+    /**
+     * username of the user whose followers are to be listed
+     */
+    "username": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type UserListFollowersResponse =
+  | RestResponse<200, RestJsonValue<Array<User>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UserListFollowingInput = {
+  path: {
+    /**
+     * username of the user whose followed users are to be listed
+     */
+    "username": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type UserListFollowingResponse =
+  | RestResponse<200, RestJsonValue<Array<User>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UserListGpgKeysInput = {
+  path: {
+    /**
+     * username of the user whose GPG key list is to be obtained
+     */
+    "username": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type UserListGpgKeysResponse =
+  | RestResponse<200, RestJsonValue<Array<GpgKey>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UserListHooksInput = {
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type UserListHooksResponse =
+  | RestResponse<200, RestJsonValue<Array<Hook>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type UserListKeysInput = {
+  path: {
+    /**
+     * username of the user whose public keys are to be listed
+     */
+    "username": string;
+  };
+  query?: {
+    /**
+     * fingerprint of the key
+     */
+    "fingerprint"?: string;
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type UserListKeysResponse =
+  | RestResponse<200, RestJsonValue<Array<PublicKey>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UserListReposInput = {
+  path: {
+    /**
+     * username of the user whose owned repos are to be listed
+     */
+    "username": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type UserListReposResponse =
+  | RestResponse<200, RestJsonValue<Array<Repository>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UserListStarredInput = {
+  path: {
+    /**
+     * username of the user whose starred repos are to be listed
+     */
+    "username": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type UserListStarredResponse =
+  | RestResponse<200, RestJsonValue<Array<Repository>>, "application/json", true>
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UserListSubscriptionsInput = {
+  path: {
+    /**
+     * username of the user whose watched repos are to be listed
+     */
+    "username": string;
+  };
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type UserListSubscriptionsResponse =
+  | RestResponse<200, RestJsonValue<Array<Repository>>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UserListTeamsInput = {
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+  };
+};
+
+export type UserListTeamsResponse =
+  | RestResponse<200, RestJsonValue<Array<Team>>, "application/json", true>
+  | RestUndocumentedResponse;
+
+export type UserSearchInput = {
+  query?: {
+    /**
+     * page size of results
+     */
+    "limit"?: RestInt64;
+    /**
+     * page number of results to return (1-based)
+     */
+    "page"?: RestInt64;
+    /**
+     * keyword
+     */
+    "q"?: string;
+    /**
+     * ID of the user to search for
+     */
+    "uid"?: RestInt64;
+  };
+};
+
+export type UserSearchResponse =
+  | RestResponse<
+    200,
+    RestJsonValue<
+      Record<string, unknown> & {
+        "data"?: Array<User>;
+        "ok"?: boolean;
+      }
+    >,
+    "application/json",
+    true
+  >
+  | RestUndocumentedResponse;
+
+export type UserTrackedTimesInput = {
+  path: {
+    /**
+     * owner of the repo
+     */
+    "owner": string;
+    /**
+     * name of the repo
+     */
+    "repo": string;
+    /**
+     * username of the user whose tracked times are to be listed
+     */
+    "user": string;
+  };
+};
+
+export type UserTrackedTimesResponse =
+  | RestResponse<200, RestJsonValue<Array<TrackedTime>>, "application/json", true>
+  | RestResponse<
+    400,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<
+    403,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UserUnblockUserInput = {
+  path: {
+    /**
+     * username of the user to unblock
+     */
+    "username": string;
+  };
+};
+
+export type UserUnblockUserResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+export type UserUpdateAvatarInput = {
+  body?: RestBody<"application/json", RestJsonValue<RestRequestValue<UpdateUserAvatarOption>>>;
+};
+
+export type UserUpdateAvatarResponse =
+  | RestResponse<204, undefined, undefined, true>
+  | RestUndocumentedResponse;
+
+export type UserUpdateOAuth2ApplicationInput = {
+  path: {
+    /**
+     * application to be updated
+     */
+    "id": RestInt64;
+  };
+  body: RestBody<
+    "application/json",
+    RestJsonValue<RestRequestValue<CreateOAuth2ApplicationOptions>>
+  >;
+};
+
+export type UserUpdateOAuth2ApplicationResponse =
+  | RestResponse<200, RestJsonValue<OAuth2Application>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestUndocumentedResponse;
+
+export type UserVerifyGpgKeyInput = Record<string, never>;
+
+export type UserVerifyGpgKeyResponse =
+  | RestResponse<201, RestJsonValue<GpgKey>, "application/json", true>
+  | RestResponse<404, undefined, undefined, false>
+  | RestResponse<
+    422,
+    undefined,
+    undefined,
+    false,
+    { readonly "message"?: string; readonly "url"?: string }
+  >
+  | RestUndocumentedResponse;
+
+/** Deterministic operation metadata for raw transport access and higher-level adapters. */
+export const giteaOperations = deepFreezeRestOperations(
+  {
+    acceptRepoTransfer: {
+      id: "acceptRepoTransfer",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/transfer/accept",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 202,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    actionsDisableWorkflow: {
+      id: "ActionsDisableWorkflow",
+      method: "PUT",
+      path: "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/disable",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "workflow_id" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        { "status": 204, "mediaTypes": [] },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    actionsDispatchWorkflow: {
+      id: "ActionsDispatchWorkflow",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "workflow_id" }],
+      queryParameters: [{ "name": "return_run_details", "style": "form", "explode": true }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 204, "mediaTypes": [] },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    actionsEnableWorkflow: {
+      id: "ActionsEnableWorkflow",
+      method: "PUT",
+      path: "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/enable",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "workflow_id" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        { "status": 204, "mediaTypes": [] },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 409, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    actionsGetWorkflow: {
+      id: "ActionsGetWorkflow",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/actions/workflows/{workflow_id}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "workflow_id" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 500, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    actionsListRepositoryWorkflows: {
+      id: "ActionsListRepositoryWorkflows",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/actions/workflows",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 500, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    adminAddUserBadges: {
+      id: "adminAddUserBadges",
+      method: "POST",
+      path: "/admin/users/{username}/badges",
+      pathParameters: [{ "name": "username" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 403,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }],
+    },
+    adminAdoptRepository: {
+      id: "adminAdoptRepository",
+      method: "POST",
+      path: "/admin/unadopted/{owner}/{repo}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 403,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    adminCreateHook: {
+      id: "adminCreateHook",
+      method: "POST",
+      path: "/admin/hooks",
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 201,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    adminCreateOrg: {
+      id: "adminCreateOrg",
+      method: "POST",
+      path: "/admin/users/{username}/orgs",
+      pathParameters: [{ "name": "username" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    adminCreatePublicKey: {
+      id: "adminCreatePublicKey",
+      method: "POST",
+      path: "/admin/users/{username}/keys",
+      pathParameters: [{ "name": "username" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    adminCreateRepo: {
+      id: "adminCreateRepo",
+      method: "POST",
+      path: "/admin/users/{username}/repos",
+      pathParameters: [{ "name": "username" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 409, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    adminCreateRunnerRegistrationToken: {
+      id: "adminCreateRunnerRegistrationToken",
+      method: "POST",
+      path: "/admin/actions/runners/registration-token",
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 200, "mediaTypes": [], "headers": ["token"] }],
+    },
+    adminCreateUser: {
+      id: "adminCreateUser",
+      method: "POST",
+      path: "/admin/users",
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    adminCronList: {
+      id: "adminCronList",
+      method: "GET",
+      path: "/admin/cron",
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 403, "mediaTypes": [], "headers": ["message", "url"] }],
+    },
+    adminCronRun: {
+      id: "adminCronRun",
+      method: "POST",
+      path: "/admin/cron/{task}",
+      pathParameters: [{ "name": "task" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    adminDeleteHook: {
+      id: "adminDeleteHook",
+      method: "DELETE",
+      path: "/admin/hooks/{id}",
+      pathParameters: [{ "name": "id" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }],
+    },
+    adminDeleteUnadoptedRepository: {
+      id: "adminDeleteUnadoptedRepository",
+      method: "DELETE",
+      path: "/admin/unadopted/{owner}/{repo}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 403,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }],
+    },
+    adminDeleteUser: {
+      id: "adminDeleteUser",
+      method: "DELETE",
+      path: "/admin/users/{username}",
+      pathParameters: [{ "name": "username" }],
+      queryParameters: [{ "name": "purge", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        { "status": 204, "mediaTypes": [] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    adminDeleteUserBadges: {
+      id: "adminDeleteUserBadges",
+      method: "DELETE",
+      path: "/admin/users/{username}/badges",
+      pathParameters: [{ "name": "username" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 403,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 422, "mediaTypes": [], "headers": ["message", "url"] }],
+    },
+    adminDeleteUserPublicKey: {
+      id: "adminDeleteUserPublicKey",
+      method: "DELETE",
+      path: "/admin/users/{username}/keys/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "username" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 403,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    adminEditHook: {
+      id: "adminEditHook",
+      method: "PATCH",
+      path: "/admin/hooks/{id}",
+      pathParameters: [{ "name": "id" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    adminEditUser: {
+      id: "adminEditUser",
+      method: "PATCH",
+      path: "/admin/users/{username}",
+      pathParameters: [{ "name": "username" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    adminGetAllEmails: {
+      id: "adminGetAllEmails",
+      method: "GET",
+      path: "/admin/emails",
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 403, "mediaTypes": [], "headers": ["message", "url"] }],
+    },
+    adminGetAllOrgs: {
+      id: "adminGetAllOrgs",
+      method: "GET",
+      path: "/admin/orgs",
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 403, "mediaTypes": [], "headers": ["message", "url"] }],
+    },
+    adminGetHook: {
+      id: "adminGetHook",
+      method: "GET",
+      path: "/admin/hooks/{id}",
+      pathParameters: [{ "name": "id" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    adminListHooks: {
+      id: "adminListHooks",
+      method: "GET",
+      path: "/admin/hooks",
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }, { "name": "type", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    adminListUserBadges: {
+      id: "adminListUserBadges",
+      method: "GET",
+      path: "/admin/users/{username}/badges",
+      pathParameters: [{ "name": "username" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    adminRenameUser: {
+      id: "adminRenameUser",
+      method: "POST",
+      path: "/admin/users/{username}/rename",
+      pathParameters: [{ "name": "username" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 403,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 422, "mediaTypes": [], "headers": ["message", "url"] }],
+    },
+    adminSearchEmails: {
+      id: "adminSearchEmails",
+      method: "GET",
+      path: "/admin/emails/search",
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }, { "name": "q", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 403, "mediaTypes": [], "headers": ["message", "url"] }],
+    },
+    adminSearchUsers: {
+      id: "adminSearchUsers",
+      method: "GET",
+      path: "/admin/users",
+      queryParameters: [
+        { "name": "is_2fa_enabled", "style": "form", "explode": true },
+        { "name": "is_active", "style": "form", "explode": true },
+        { "name": "is_admin", "style": "form", "explode": true },
+        { "name": "is_prohibit_login", "style": "form", "explode": true },
+        { "name": "is_restricted", "style": "form", "explode": true },
+        { "name": "limit", "style": "form", "explode": true },
+        { "name": "login_name", "style": "form", "explode": true },
+        { "name": "order", "style": "form", "explode": true },
+        { "name": "page", "style": "form", "explode": true },
+        { "name": "q", "style": "form", "explode": true },
+        { "name": "sort", "style": "form", "explode": true },
+        { "name": "source_id", "style": "form", "explode": true },
+        { "name": "visibility", "style": "form", "explode": true },
+      ],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    adminUnadoptedList: {
+      id: "adminUnadoptedList",
+      method: "GET",
+      path: "/admin/unadopted",
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }, { "name": "pattern", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 403, "mediaTypes": [], "headers": ["message", "url"] }],
+    },
+    createCurrentUserRepo: {
+      id: "createCurrentUserRepo",
+      method: "POST",
+      path: "/user/repos",
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 409, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    createFork: {
+      id: "createFork",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/forks",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 202,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 409, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    createOrgRepo: {
+      id: "createOrgRepo",
+      method: "POST",
+      path: "/orgs/{org}/repos",
+      pathParameters: [{ "name": "org" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    createOrgRepoDeprecated: {
+      id: "createOrgRepoDeprecated",
+      method: "POST",
+      path: "/org/{org}/repos",
+      pathParameters: [{ "name": "org" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    createOrgVariable: {
+      id: "createOrgVariable",
+      method: "POST",
+      path: "/orgs/{org}/actions/variables/{variablename}",
+      pathParameters: [{ "name": "org" }, { "name": "variablename" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        { "status": 201, "mediaTypes": [] },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 409, "mediaTypes": [] },
+        { "status": 500, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    createRepoVariable: {
+      id: "createRepoVariable",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/actions/variables/{variablename}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "variablename" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        { "status": 201, "mediaTypes": [] },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 409, "mediaTypes": [] },
+        { "status": 500, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    createUserVariable: {
+      id: "createUserVariable",
+      method: "POST",
+      path: "/user/actions/variables/{variablename}",
+      pathParameters: [{ "name": "variablename" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 201, "mediaTypes": [] }, {
+        "status": 400,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 409, "mediaTypes": [] }],
+    },
+    deleteActionRun: {
+      id: "deleteActionRun",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/actions/runs/{run}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "run" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 400,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    deleteAdminRunner: {
+      id: "deleteAdminRunner",
+      method: "DELETE",
+      path: "/admin/actions/runners/{runner_id}",
+      pathParameters: [{ "name": "runner_id" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 400,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    deleteArtifact: {
+      id: "deleteArtifact",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/actions/artifacts/{artifact_id}",
+      pathParameters: [{ "name": "artifact_id" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 400,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    deleteOrgRunner: {
+      id: "deleteOrgRunner",
+      method: "DELETE",
+      path: "/orgs/{org}/actions/runners/{runner_id}",
+      pathParameters: [{ "name": "org" }, { "name": "runner_id" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 400,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    deleteOrgSecret: {
+      id: "deleteOrgSecret",
+      method: "DELETE",
+      path: "/orgs/{org}/actions/secrets/{secretname}",
+      pathParameters: [{ "name": "org" }, { "name": "secretname" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 400,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    deleteOrgVariable: {
+      id: "deleteOrgVariable",
+      method: "DELETE",
+      path: "/orgs/{org}/actions/variables/{variablename}",
+      pathParameters: [{ "name": "org" }, { "name": "variablename" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 201, "mediaTypes": [] },
+        { "status": 204, "mediaTypes": [] },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    deletePackage: {
+      id: "deletePackage",
+      method: "DELETE",
+      path: "/packages/{owner}/{type}/{name}",
+      pathParameters: [{ "name": "name" }, { "name": "owner" }, { "name": "type" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    deletePackageVersion: {
+      id: "deletePackageVersion",
+      method: "DELETE",
+      path: "/packages/{owner}/{type}/{name}/{version}",
+      pathParameters: [{ "name": "name" }, { "name": "owner" }, { "name": "type" }, {
+        "name": "version",
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    deleteRepoRunner: {
+      id: "deleteRepoRunner",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/actions/runners/{runner_id}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "runner_id" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 400,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    deleteRepoSecret: {
+      id: "deleteRepoSecret",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/actions/secrets/{secretname}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "secretname" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 400,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    deleteRepoVariable: {
+      id: "deleteRepoVariable",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/actions/variables/{variablename}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "variablename" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 201, "mediaTypes": [] },
+        { "status": 204, "mediaTypes": [] },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    deleteUserRunner: {
+      id: "deleteUserRunner",
+      method: "DELETE",
+      path: "/user/actions/runners/{runner_id}",
+      pathParameters: [{ "name": "runner_id" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 400,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    deleteUserSecret: {
+      id: "deleteUserSecret",
+      method: "DELETE",
+      path: "/user/actions/secrets/{secretname}",
+      pathParameters: [{ "name": "secretname" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 400,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    deleteUserVariable: {
+      id: "deleteUserVariable",
+      method: "DELETE",
+      path: "/user/actions/variables/{variablename}",
+      pathParameters: [{ "name": "variablename" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 201, "mediaTypes": [] }, { "status": 204, "mediaTypes": [] }, {
+        "status": 400,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    downloadActionsRunJobLogs: {
+      id: "downloadActionsRunJobLogs",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/actions/jobs/{job_id}/logs",
+      pathParameters: [{ "name": "job_id" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 200, "mediaTypes": [] }, {
+        "status": 400,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    downloadArtifact: {
+      id: "downloadArtifact",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/actions/artifacts/{artifact_id}/zip",
+      pathParameters: [{ "name": "artifact_id" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 302, "mediaTypes": [] }, {
+        "status": 400,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    generateRepo: {
+      id: "generateRepo",
+      method: "POST",
+      path: "/repos/{template_owner}/{template_repo}/generate",
+      pathParameters: [{ "name": "template_owner" }, { "name": "template_repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 409, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    getAdminRunner: {
+      id: "getAdminRunner",
+      method: "GET",
+      path: "/admin/actions/runners/{runner_id}",
+      pathParameters: [{ "name": "runner_id" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    getAdminRunners: {
+      id: "getAdminRunners",
+      method: "GET",
+      path: "/admin/actions/runners",
+      queryParameters: [{ "name": "disabled", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    getAnnotatedTag: {
+      id: "GetAnnotatedTag",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/git/tags/{sha}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "sha" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    getArtifact: {
+      id: "getArtifact",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/actions/artifacts/{artifact_id}",
+      pathParameters: [{ "name": "artifact_id" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    getArtifacts: {
+      id: "getArtifacts",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/actions/artifacts",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "name", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    getArtifactsOfRun: {
+      id: "getArtifactsOfRun",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/actions/runs/{run}/artifacts",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "run" }],
+      queryParameters: [{ "name": "name", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    getBlob: {
+      id: "GetBlob",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/git/blobs/{sha}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "sha" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    getGeneralApiSettings: {
+      id: "getGeneralAPISettings",
+      method: "GET",
+      path: "/settings/api",
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    getGeneralAttachmentSettings: {
+      id: "getGeneralAttachmentSettings",
+      method: "GET",
+      path: "/settings/attachment",
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    getGeneralRepositorySettings: {
+      id: "getGeneralRepositorySettings",
+      method: "GET",
+      path: "/settings/repository",
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    getGeneralUiSettings: {
+      id: "getGeneralUISettings",
+      method: "GET",
+      path: "/settings/ui",
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    getGitignoreTemplateInfo: {
+      id: "getGitignoreTemplateInfo",
+      method: "GET",
+      path: "/gitignore/templates/{name}",
+      pathParameters: [{ "name": "name" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    getLabelTemplateInfo: {
+      id: "getLabelTemplateInfo",
+      method: "GET",
+      path: "/label/templates/{name}",
+      pathParameters: [{ "name": "name" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    getLatestPackageVersion: {
+      id: "getLatestPackageVersion",
+      method: "GET",
+      path: "/packages/{owner}/{type}/{name}/-/latest",
+      pathParameters: [{ "name": "name" }, { "name": "owner" }, { "name": "type" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    getLicenseTemplateInfo: {
+      id: "getLicenseTemplateInfo",
+      method: "GET",
+      path: "/licenses/{name}",
+      pathParameters: [{ "name": "name" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    getOrgRunner: {
+      id: "getOrgRunner",
+      method: "GET",
+      path: "/orgs/{org}/actions/runners/{runner_id}",
+      pathParameters: [{ "name": "org" }, { "name": "runner_id" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    getOrgRunners: {
+      id: "getOrgRunners",
+      method: "GET",
+      path: "/orgs/{org}/actions/runners",
+      pathParameters: [{ "name": "org" }],
+      queryParameters: [{ "name": "disabled", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    getOrgVariable: {
+      id: "getOrgVariable",
+      method: "GET",
+      path: "/orgs/{org}/actions/variables/{variablename}",
+      pathParameters: [{ "name": "org" }, { "name": "variablename" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    getOrgVariablesList: {
+      id: "getOrgVariablesList",
+      method: "GET",
+      path: "/orgs/{org}/actions/variables",
+      pathParameters: [{ "name": "org" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    getOrgWorkflowJobs: {
+      id: "getOrgWorkflowJobs",
+      method: "GET",
+      path: "/orgs/{org}/actions/jobs",
+      pathParameters: [{ "name": "org" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }, { "name": "status", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    getOrgWorkflowRuns: {
+      id: "getOrgWorkflowRuns",
+      method: "GET",
+      path: "/orgs/{org}/actions/runs",
+      pathParameters: [{ "name": "org" }],
+      queryParameters: [
+        { "name": "actor", "style": "form", "explode": true },
+        { "name": "branch", "style": "form", "explode": true },
+        { "name": "event", "style": "form", "explode": true },
+        { "name": "head_sha", "style": "form", "explode": true },
+        { "name": "limit", "style": "form", "explode": true },
+        { "name": "page", "style": "form", "explode": true },
+        { "name": "status", "style": "form", "explode": true },
+      ],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    getPackage: {
+      id: "getPackage",
+      method: "GET",
+      path: "/packages/{owner}/{type}/{name}/{version}",
+      pathParameters: [{ "name": "name" }, { "name": "owner" }, { "name": "type" }, {
+        "name": "version",
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    getRepoRunner: {
+      id: "getRepoRunner",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/actions/runners/{runner_id}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "runner_id" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    getRepoRunners: {
+      id: "getRepoRunners",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/actions/runners",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "disabled", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    getRepoVariable: {
+      id: "getRepoVariable",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/actions/variables/{variablename}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "variablename" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    getRepoVariablesList: {
+      id: "getRepoVariablesList",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/actions/variables",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    getSigningKey: {
+      id: "getSigningKey",
+      method: "GET",
+      path: "/signing-key.gpg",
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["text/plain"],
+        "decoders": { "text/plain": "text" },
+      }],
+    },
+    getSigningKeySsh: {
+      id: "getSigningKeySSH",
+      method: "GET",
+      path: "/signing-key.pub",
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["text/plain"],
+        "decoders": { "text/plain": "text" },
+      }],
+    },
+    getTree: {
+      id: "GetTree",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/git/trees/{sha}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "sha" }],
+      queryParameters: [{ "name": "page", "style": "form", "explode": true }, {
+        "name": "per_page",
+        "style": "form",
+        "explode": true,
+      }, { "name": "recursive", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    getUserRunner: {
+      id: "getUserRunner",
+      method: "GET",
+      path: "/user/actions/runners/{runner_id}",
+      pathParameters: [{ "name": "runner_id" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    getUserRunners: {
+      id: "getUserRunners",
+      method: "GET",
+      path: "/user/actions/runners",
+      queryParameters: [{ "name": "disabled", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    getUserSettings: {
+      id: "getUserSettings",
+      method: "GET",
+      path: "/user/settings",
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    getUserVariable: {
+      id: "getUserVariable",
+      method: "GET",
+      path: "/user/actions/variables/{variablename}",
+      pathParameters: [{ "name": "variablename" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    getUserVariablesList: {
+      id: "getUserVariablesList",
+      method: "GET",
+      path: "/user/actions/variables",
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    getUserWorkflowJobs: {
+      id: "getUserWorkflowJobs",
+      method: "GET",
+      path: "/user/actions/jobs",
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }, { "name": "status", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    getUserWorkflowRuns: {
+      id: "getUserWorkflowRuns",
+      method: "GET",
+      path: "/user/actions/runs",
+      queryParameters: [
+        { "name": "actor", "style": "form", "explode": true },
+        { "name": "branch", "style": "form", "explode": true },
+        { "name": "event", "style": "form", "explode": true },
+        { "name": "head_sha", "style": "form", "explode": true },
+        { "name": "limit", "style": "form", "explode": true },
+        { "name": "page", "style": "form", "explode": true },
+        { "name": "status", "style": "form", "explode": true },
+      ],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    getVerificationToken: {
+      id: "getVerificationToken",
+      method: "GET",
+      path: "/user/gpg_key_token",
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    getVersion: {
+      id: "getVersion",
+      method: "GET",
+      path: "/version",
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    getWorkflowJob: {
+      id: "getWorkflowJob",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/actions/jobs/{job_id}",
+      pathParameters: [{ "name": "job_id" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    getWorkflowRun: {
+      id: "GetWorkflowRun",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/actions/runs/{run}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "run" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    getWorkflowRuns: {
+      id: "getWorkflowRuns",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/actions/runs",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      queryParameters: [
+        { "name": "actor", "style": "form", "explode": true },
+        { "name": "branch", "style": "form", "explode": true },
+        { "name": "event", "style": "form", "explode": true },
+        { "name": "head_sha", "style": "form", "explode": true },
+        { "name": "limit", "style": "form", "explode": true },
+        { "name": "page", "style": "form", "explode": true },
+        { "name": "status", "style": "form", "explode": true },
+      ],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    issueAddLabel: {
+      id: "issueAddLabel",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/issues/{index}/labels",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    issueAddSubscription: {
+      id: "issueAddSubscription",
+      method: "PUT",
+      path: "/repos/{owner}/{repo}/issues/{index}/subscriptions/{user}",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }, {
+        "name": "user",
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 200, "mediaTypes": [] }, { "status": 201, "mediaTypes": [] }, {
+        "status": 304,
+        "mediaTypes": [],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    issueAddTime: {
+      id: "issueAddTime",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/issues/{index}/times",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    issueCheckSubscription: {
+      id: "issueCheckSubscription",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/issues/{index}/subscriptions/check",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    issueClearLabels: {
+      id: "issueClearLabels",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/issues/{index}/labels",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 403,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    issueCreateComment: {
+      id: "issueCreateComment",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/issues/{index}/comments",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 423, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    issueCreateIssue: {
+      id: "issueCreateIssue",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/issues",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 412, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 423, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    issueCreateIssueAttachment: {
+      id: "issueCreateIssueAttachment",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/issues/{index}/assets",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "name", "style": "form", "explode": true }],
+      requestMediaTypes: ["multipart/form-data"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 413, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 423, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    issueCreateIssueBlocking: {
+      id: "issueCreateIssueBlocking",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/issues/{index}/blocks",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 201,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    issueCreateIssueCommentAttachment: {
+      id: "issueCreateIssueCommentAttachment",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/issues/comments/{id}/assets",
+      pathParameters: [{ "name": "id" }, { "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "name", "style": "form", "explode": true }],
+      requestMediaTypes: ["multipart/form-data"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 413, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 423, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    issueCreateIssueDependencies: {
+      id: "issueCreateIssueDependencies",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/issues/{index}/dependencies",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 423, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    issueCreateLabel: {
+      id: "issueCreateLabel",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/labels",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    issueCreateMilestone: {
+      id: "issueCreateMilestone",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/milestones",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 201,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    issueDelete: {
+      id: "issueDelete",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/issues/{index}",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 403,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    issueDeleteComment: {
+      id: "issueDeleteComment",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/issues/comments/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 403,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    issueDeleteCommentDeprecated: {
+      id: "issueDeleteCommentDeprecated",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/issues/{index}/comments/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "index" }, { "name": "owner" }, {
+        "name": "repo",
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 403,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    issueDeleteCommentReaction: {
+      id: "issueDeleteCommentReaction",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/issues/comments/{id}/reactions",
+      pathParameters: [{ "name": "id" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 403,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    issueDeleteIssueAttachment: {
+      id: "issueDeleteIssueAttachment",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/issues/{index}/assets/{attachment_id}",
+      pathParameters: [{ "name": "attachment_id" }, { "name": "index" }, { "name": "owner" }, {
+        "name": "repo",
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 404,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 423, "mediaTypes": [], "headers": ["message", "url"] }],
+    },
+    issueDeleteIssueCommentAttachment: {
+      id: "issueDeleteIssueCommentAttachment",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/issues/comments/{id}/assets/{attachment_id}",
+      pathParameters: [{ "name": "attachment_id" }, { "name": "id" }, { "name": "owner" }, {
+        "name": "repo",
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 404,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 423, "mediaTypes": [], "headers": ["message", "url"] }],
+    },
+    issueDeleteIssueReaction: {
+      id: "issueDeleteIssueReaction",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/issues/{index}/reactions",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 403,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    issueDeleteLabel: {
+      id: "issueDeleteLabel",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/labels/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    issueDeleteMilestone: {
+      id: "issueDeleteMilestone",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/milestones/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    issueDeleteStopWatch: {
+      id: "issueDeleteStopWatch",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/issues/{index}/stopwatch/delete",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 403, "mediaTypes": [] }, {
+        "status": 404,
+        "mediaTypes": [],
+      }, { "status": 409, "mediaTypes": [] }],
+    },
+    issueDeleteSubscription: {
+      id: "issueDeleteSubscription",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/issues/{index}/subscriptions/{user}",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }, {
+        "name": "user",
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 200, "mediaTypes": [] }, { "status": 201, "mediaTypes": [] }, {
+        "status": 304,
+        "mediaTypes": [],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    issueDeleteTime: {
+      id: "issueDeleteTime",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/issues/{index}/times/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "index" }, { "name": "owner" }, {
+        "name": "repo",
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        { "status": 204, "mediaTypes": [] },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    issueEditComment: {
+      id: "issueEditComment",
+      method: "PATCH",
+      path: "/repos/{owner}/{repo}/issues/comments/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 204, "mediaTypes": [] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 423, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    issueEditCommentDeprecated: {
+      id: "issueEditCommentDeprecated",
+      method: "PATCH",
+      path: "/repos/{owner}/{repo}/issues/{index}/comments/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "index" }, { "name": "owner" }, {
+        "name": "repo",
+      }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 204, "mediaTypes": [] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    issueEditIssue: {
+      id: "issueEditIssue",
+      method: "PATCH",
+      path: "/repos/{owner}/{repo}/issues/{index}",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 412, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    issueEditIssueAttachment: {
+      id: "issueEditIssueAttachment",
+      method: "PATCH",
+      path: "/repos/{owner}/{repo}/issues/{index}/assets/{attachment_id}",
+      pathParameters: [{ "name": "attachment_id" }, { "name": "index" }, { "name": "owner" }, {
+        "name": "repo",
+      }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 404, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 423, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    issueEditIssueCommentAttachment: {
+      id: "issueEditIssueCommentAttachment",
+      method: "PATCH",
+      path: "/repos/{owner}/{repo}/issues/comments/{id}/assets/{attachment_id}",
+      pathParameters: [{ "name": "attachment_id" }, { "name": "id" }, { "name": "owner" }, {
+        "name": "repo",
+      }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 404, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 423, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    issueEditIssueDeadline: {
+      id: "issueEditIssueDeadline",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/issues/{index}/deadline",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    issueEditLabel: {
+      id: "issueEditLabel",
+      method: "PATCH",
+      path: "/repos/{owner}/{repo}/labels/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    issueEditMilestone: {
+      id: "issueEditMilestone",
+      method: "PATCH",
+      path: "/repos/{owner}/{repo}/milestones/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    issueGetComment: {
+      id: "issueGetComment",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/issues/comments/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 204, "mediaTypes": [] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    issueGetCommentReactions: {
+      id: "issueGetCommentReactions",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/issues/comments/{id}/reactions",
+      pathParameters: [{ "name": "id" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    issueGetComments: {
+      id: "issueGetComments",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/issues/{index}/comments",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "before", "style": "form", "explode": true }, {
+        "name": "since",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    issueGetCommentsAndTimeline: {
+      id: "issueGetCommentsAndTimeline",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/issues/{index}/timeline",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      queryParameters: [
+        { "name": "before", "style": "form", "explode": true },
+        { "name": "limit", "style": "form", "explode": true },
+        { "name": "page", "style": "form", "explode": true },
+        { "name": "since", "style": "form", "explode": true },
+      ],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    issueGetIssue: {
+      id: "issueGetIssue",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/issues/{index}",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    issueGetIssueAttachment: {
+      id: "issueGetIssueAttachment",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/issues/{index}/assets/{attachment_id}",
+      pathParameters: [{ "name": "attachment_id" }, { "name": "index" }, { "name": "owner" }, {
+        "name": "repo",
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [], "headers": ["message", "url"] }],
+    },
+    issueGetIssueCommentAttachment: {
+      id: "issueGetIssueCommentAttachment",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/issues/comments/{id}/assets/{attachment_id}",
+      pathParameters: [{ "name": "attachment_id" }, { "name": "id" }, { "name": "owner" }, {
+        "name": "repo",
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [], "headers": ["message", "url"] }],
+    },
+    issueGetIssueReactions: {
+      id: "issueGetIssueReactions",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/issues/{index}/reactions",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    issueGetLabel: {
+      id: "issueGetLabel",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/labels/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    issueGetLabels: {
+      id: "issueGetLabels",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/issues/{index}/labels",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    issueGetMilestone: {
+      id: "issueGetMilestone",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/milestones/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    issueGetMilestonesList: {
+      id: "issueGetMilestonesList",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/milestones",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      queryParameters: [
+        { "name": "limit", "style": "form", "explode": true },
+        { "name": "name", "style": "form", "explode": true },
+        { "name": "page", "style": "form", "explode": true },
+        { "name": "state", "style": "form", "explode": true },
+      ],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    issueGetRepoComments: {
+      id: "issueGetRepoComments",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/issues/comments",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      queryParameters: [
+        { "name": "before", "style": "form", "explode": true },
+        { "name": "limit", "style": "form", "explode": true },
+        { "name": "page", "style": "form", "explode": true },
+        { "name": "since", "style": "form", "explode": true },
+      ],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    issueListBlocks: {
+      id: "issueListBlocks",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/issues/{index}/blocks",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    issueListIssueAttachments: {
+      id: "issueListIssueAttachments",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/issues/{index}/assets",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [], "headers": ["message", "url"] }],
+    },
+    issueListIssueCommentAttachments: {
+      id: "issueListIssueCommentAttachments",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/issues/comments/{id}/assets",
+      pathParameters: [{ "name": "id" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [], "headers": ["message", "url"] }],
+    },
+    issueListIssueDependencies: {
+      id: "issueListIssueDependencies",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/issues/{index}/dependencies",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    issueListIssues: {
+      id: "issueListIssues",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/issues",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      queryParameters: [
+        { "name": "assigned_by", "style": "form", "explode": true },
+        { "name": "before", "style": "form", "explode": true },
+        { "name": "created_by", "style": "form", "explode": true },
+        { "name": "labels", "style": "form", "explode": true },
+        { "name": "limit", "style": "form", "explode": true },
+        { "name": "mentioned_by", "style": "form", "explode": true },
+        { "name": "milestones", "style": "form", "explode": true },
+        { "name": "page", "style": "form", "explode": true },
+        { "name": "q", "style": "form", "explode": true },
+        { "name": "since", "style": "form", "explode": true },
+        { "name": "state", "style": "form", "explode": true },
+        { "name": "type", "style": "form", "explode": true },
+      ],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    issueListLabels: {
+      id: "issueListLabels",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/labels",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    issueLockIssue: {
+      id: "issueLockIssue",
+      method: "PUT",
+      path: "/repos/{owner}/{repo}/issues/{index}/lock",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 403,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    issuePostCommentReaction: {
+      id: "issuePostCommentReaction",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/issues/comments/{id}/reactions",
+      pathParameters: [{ "name": "id" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    issuePostIssueReaction: {
+      id: "issuePostIssueReaction",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/issues/{index}/reactions",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    issueRemoveIssueBlocking: {
+      id: "issueRemoveIssueBlocking",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/issues/{index}/blocks",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    issueRemoveIssueDependencies: {
+      id: "issueRemoveIssueDependencies",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/issues/{index}/dependencies",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 423, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    issueRemoveLabel: {
+      id: "issueRemoveLabel",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/issues/{index}/labels/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "index" }, { "name": "owner" }, {
+        "name": "repo",
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        { "status": 204, "mediaTypes": [] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    issueReplaceLabels: {
+      id: "issueReplaceLabels",
+      method: "PUT",
+      path: "/repos/{owner}/{repo}/issues/{index}/labels",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    issueResetTime: {
+      id: "issueResetTime",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/issues/{index}/times",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        { "status": 204, "mediaTypes": [] },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    issueSearchIssues: {
+      id: "issueSearchIssues",
+      method: "GET",
+      path: "/repos/issues/search",
+      queryParameters: [
+        { "name": "assigned", "style": "form", "explode": true },
+        { "name": "before", "style": "form", "explode": true },
+        { "name": "created", "style": "form", "explode": true },
+        { "name": "created_by", "style": "form", "explode": true },
+        { "name": "labels", "style": "form", "explode": true },
+        { "name": "limit", "style": "form", "explode": true },
+        { "name": "mentioned", "style": "form", "explode": true },
+        { "name": "milestones", "style": "form", "explode": true },
+        { "name": "owner", "style": "form", "explode": true },
+        { "name": "page", "style": "form", "explode": true },
+        { "name": "q", "style": "form", "explode": true },
+        { "name": "review_requested", "style": "form", "explode": true },
+        { "name": "reviewed", "style": "form", "explode": true },
+        { "name": "since", "style": "form", "explode": true },
+        { "name": "state", "style": "form", "explode": true },
+        { "name": "team", "style": "form", "explode": true },
+        { "name": "type", "style": "form", "explode": true },
+      ],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    issueStartStopWatch: {
+      id: "issueStartStopWatch",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/issues/{index}/stopwatch/start",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 201, "mediaTypes": [] }, { "status": 403, "mediaTypes": [] }, {
+        "status": 404,
+        "mediaTypes": [],
+      }, { "status": 409, "mediaTypes": [] }],
+    },
+    issueStopStopWatch: {
+      id: "issueStopStopWatch",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/issues/{index}/stopwatch/stop",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 201, "mediaTypes": [] }, { "status": 403, "mediaTypes": [] }, {
+        "status": 404,
+        "mediaTypes": [],
+      }, { "status": 409, "mediaTypes": [] }],
+    },
+    issueSubscriptions: {
+      id: "issueSubscriptions",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/issues/{index}/subscriptions",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    issueTrackedTimes: {
+      id: "issueTrackedTimes",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/issues/{index}/times",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      queryParameters: [
+        { "name": "before", "style": "form", "explode": true },
+        { "name": "limit", "style": "form", "explode": true },
+        { "name": "page", "style": "form", "explode": true },
+        { "name": "since", "style": "form", "explode": true },
+        { "name": "user", "style": "form", "explode": true },
+      ],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    issueUnlockIssue: {
+      id: "issueUnlockIssue",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/issues/{index}/lock",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 403,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    linkPackage: {
+      id: "linkPackage",
+      method: "POST",
+      path: "/packages/{owner}/{type}/{name}/-/link/{repo_name}",
+      pathParameters: [{ "name": "name" }, { "name": "owner" }, { "name": "repo_name" }, {
+        "name": "type",
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 201, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    listActionTasks: {
+      id: "ListActionTasks",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/actions/tasks",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 409, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    listAdminWorkflowJobs: {
+      id: "listAdminWorkflowJobs",
+      method: "GET",
+      path: "/admin/actions/jobs",
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }, { "name": "status", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    listAdminWorkflowRuns: {
+      id: "listAdminWorkflowRuns",
+      method: "GET",
+      path: "/admin/actions/runs",
+      queryParameters: [
+        { "name": "actor", "style": "form", "explode": true },
+        { "name": "branch", "style": "form", "explode": true },
+        { "name": "event", "style": "form", "explode": true },
+        { "name": "head_sha", "style": "form", "explode": true },
+        { "name": "limit", "style": "form", "explode": true },
+        { "name": "page", "style": "form", "explode": true },
+        { "name": "status", "style": "form", "explode": true },
+      ],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    listForks: {
+      id: "listForks",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/forks",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    listGitignoresTemplates: {
+      id: "listGitignoresTemplates",
+      method: "GET",
+      path: "/gitignore/templates",
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    listLabelTemplates: {
+      id: "listLabelTemplates",
+      method: "GET",
+      path: "/label/templates",
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    listLicenseTemplates: {
+      id: "listLicenseTemplates",
+      method: "GET",
+      path: "/licenses",
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    listPackageFiles: {
+      id: "listPackageFiles",
+      method: "GET",
+      path: "/packages/{owner}/{type}/{name}/{version}/files",
+      pathParameters: [{ "name": "name" }, { "name": "owner" }, { "name": "type" }, {
+        "name": "version",
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    listPackageVersions: {
+      id: "listPackageVersions",
+      method: "GET",
+      path: "/packages/{owner}/{type}/{name}",
+      pathParameters: [{ "name": "name" }, { "name": "owner" }, { "name": "type" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    listPackages: {
+      id: "listPackages",
+      method: "GET",
+      path: "/packages/{owner}",
+      pathParameters: [{ "name": "owner" }],
+      queryParameters: [
+        { "name": "limit", "style": "form", "explode": true },
+        { "name": "page", "style": "form", "explode": true },
+        { "name": "q", "style": "form", "explode": true },
+        { "name": "type", "style": "form", "explode": true },
+      ],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    listWorkflowJobs: {
+      id: "listWorkflowJobs",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/actions/jobs",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }, { "name": "status", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    listWorkflowRunJobs: {
+      id: "listWorkflowRunJobs",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/actions/runs/{run}/jobs",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "run" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }, { "name": "status", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    moveIssuePin: {
+      id: "moveIssuePin",
+      method: "PATCH",
+      path: "/repos/{owner}/{repo}/issues/{index}/pin/{position}",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "position" }, {
+        "name": "repo",
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 403,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    notifyGetList: {
+      id: "notifyGetList",
+      method: "GET",
+      path: "/notifications",
+      queryParameters: [
+        { "name": "all", "style": "form", "explode": true },
+        { "name": "before", "style": "form", "explode": true },
+        { "name": "limit", "style": "form", "explode": true },
+        { "name": "page", "style": "form", "explode": true },
+        { "name": "since", "style": "form", "explode": true },
+        { "name": "status-types", "style": "form", "explode": true },
+        { "name": "subject-type", "style": "form", "explode": true },
+      ],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    notifyGetRepoList: {
+      id: "notifyGetRepoList",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/notifications",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      queryParameters: [
+        { "name": "all", "style": "form", "explode": true },
+        { "name": "before", "style": "form", "explode": true },
+        { "name": "limit", "style": "form", "explode": true },
+        { "name": "page", "style": "form", "explode": true },
+        { "name": "since", "style": "form", "explode": true },
+        { "name": "status-types", "style": "form", "explode": true },
+        { "name": "subject-type", "style": "form", "explode": true },
+      ],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    notifyGetThread: {
+      id: "notifyGetThread",
+      method: "GET",
+      path: "/notifications/threads/{id}",
+      pathParameters: [{ "name": "id" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    notifyNewAvailable: {
+      id: "notifyNewAvailable",
+      method: "GET",
+      path: "/notifications/new",
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    notifyReadList: {
+      id: "notifyReadList",
+      method: "PUT",
+      path: "/notifications",
+      queryParameters: [
+        { "name": "all", "style": "form", "explode": true },
+        { "name": "last_read_at", "style": "form", "explode": true },
+        { "name": "status-types", "style": "form", "explode": true },
+        { "name": "to-status", "style": "form", "explode": true },
+      ],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 205,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    notifyReadRepoList: {
+      id: "notifyReadRepoList",
+      method: "PUT",
+      path: "/repos/{owner}/{repo}/notifications",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      queryParameters: [
+        { "name": "all", "style": "form", "explode": true },
+        { "name": "last_read_at", "style": "form", "explode": true },
+        { "name": "status-types", "style": "form", "explode": true },
+        { "name": "to-status", "style": "form", "explode": true },
+      ],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 205,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    notifyReadThread: {
+      id: "notifyReadThread",
+      method: "PATCH",
+      path: "/notifications/threads/{id}",
+      pathParameters: [{ "name": "id" }],
+      queryParameters: [{ "name": "to-status", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 205,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    orgAddTeamMember: {
+      id: "orgAddTeamMember",
+      method: "PUT",
+      path: "/teams/{id}/members/{username}",
+      pathParameters: [{ "name": "id" }, { "name": "username" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 403,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgAddTeamRepository: {
+      id: "orgAddTeamRepository",
+      method: "PUT",
+      path: "/teams/{id}/repos/{org}/{repo}",
+      pathParameters: [{ "name": "id" }, { "name": "org" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 403,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgConcealMember: {
+      id: "orgConcealMember",
+      method: "DELETE",
+      path: "/orgs/{org}/public_members/{username}",
+      pathParameters: [{ "name": "org" }, { "name": "username" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 403,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgCreate: {
+      id: "orgCreate",
+      method: "POST",
+      path: "/orgs",
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    orgCreateHook: {
+      id: "orgCreateHook",
+      method: "POST",
+      path: "/orgs/{org}/hooks",
+      pathParameters: [{ "name": "org" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 201,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgCreateLabel: {
+      id: "orgCreateLabel",
+      method: "POST",
+      path: "/orgs/{org}/labels",
+      pathParameters: [{ "name": "org" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    orgCreateRunnerRegistrationToken: {
+      id: "orgCreateRunnerRegistrationToken",
+      method: "POST",
+      path: "/orgs/{org}/actions/runners/registration-token",
+      pathParameters: [{ "name": "org" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 200, "mediaTypes": [], "headers": ["token"] }],
+    },
+    orgCreateTeam: {
+      id: "orgCreateTeam",
+      method: "POST",
+      path: "/orgs/{org}/teams",
+      pathParameters: [{ "name": "org" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    orgDelete: {
+      id: "orgDelete",
+      method: "DELETE",
+      path: "/orgs/{org}",
+      pathParameters: [{ "name": "org" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgDeleteAvatar: {
+      id: "orgDeleteAvatar",
+      method: "DELETE",
+      path: "/orgs/{org}/avatar",
+      pathParameters: [{ "name": "org" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgDeleteHook: {
+      id: "orgDeleteHook",
+      method: "DELETE",
+      path: "/orgs/{org}/hooks/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "org" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgDeleteLabel: {
+      id: "orgDeleteLabel",
+      method: "DELETE",
+      path: "/orgs/{org}/labels/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "org" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgDeleteMember: {
+      id: "orgDeleteMember",
+      method: "DELETE",
+      path: "/orgs/{org}/members/{username}",
+      pathParameters: [{ "name": "org" }, { "name": "username" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgDeleteTeam: {
+      id: "orgDeleteTeam",
+      method: "DELETE",
+      path: "/teams/{id}",
+      pathParameters: [{ "name": "id" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgEdit: {
+      id: "orgEdit",
+      method: "PATCH",
+      path: "/orgs/{org}",
+      pathParameters: [{ "name": "org" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgEditHook: {
+      id: "orgEditHook",
+      method: "PATCH",
+      path: "/orgs/{org}/hooks/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "org" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgEditLabel: {
+      id: "orgEditLabel",
+      method: "PATCH",
+      path: "/orgs/{org}/labels/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "org" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    orgEditTeam: {
+      id: "orgEditTeam",
+      method: "PATCH",
+      path: "/teams/{id}",
+      pathParameters: [{ "name": "id" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgGet: {
+      id: "orgGet",
+      method: "GET",
+      path: "/orgs/{org}",
+      pathParameters: [{ "name": "org" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgGetAll: {
+      id: "orgGetAll",
+      method: "GET",
+      path: "/orgs",
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    orgGetHook: {
+      id: "orgGetHook",
+      method: "GET",
+      path: "/orgs/{org}/hooks/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "org" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgGetLabel: {
+      id: "orgGetLabel",
+      method: "GET",
+      path: "/orgs/{org}/labels/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "org" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgGetTeam: {
+      id: "orgGetTeam",
+      method: "GET",
+      path: "/teams/{id}",
+      pathParameters: [{ "name": "id" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgGetUserPermissions: {
+      id: "orgGetUserPermissions",
+      method: "GET",
+      path: "/users/{username}/orgs/{org}/permissions",
+      pathParameters: [{ "name": "org" }, { "name": "username" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    orgIsMember: {
+      id: "orgIsMember",
+      method: "GET",
+      path: "/orgs/{org}/members/{username}",
+      pathParameters: [{ "name": "org" }, { "name": "username" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 303, "mediaTypes": [] }, {
+        "status": 404,
+        "mediaTypes": [],
+      }],
+    },
+    orgIsPublicMember: {
+      id: "orgIsPublicMember",
+      method: "GET",
+      path: "/orgs/{org}/public_members/{username}",
+      pathParameters: [{ "name": "org" }, { "name": "username" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgListActionsSecrets: {
+      id: "orgListActionsSecrets",
+      method: "GET",
+      path: "/orgs/{org}/actions/secrets",
+      pathParameters: [{ "name": "org" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgListActivityFeeds: {
+      id: "orgListActivityFeeds",
+      method: "GET",
+      path: "/orgs/{org}/activities/feeds",
+      pathParameters: [{ "name": "org" }],
+      queryParameters: [{ "name": "date", "style": "form", "explode": true }, {
+        "name": "limit",
+        "style": "form",
+        "explode": true,
+      }, { "name": "page", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgListCurrentUserOrgs: {
+      id: "orgListCurrentUserOrgs",
+      method: "GET",
+      path: "/user/orgs",
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgListHooks: {
+      id: "orgListHooks",
+      method: "GET",
+      path: "/orgs/{org}/hooks",
+      pathParameters: [{ "name": "org" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgListLabels: {
+      id: "orgListLabels",
+      method: "GET",
+      path: "/orgs/{org}/labels",
+      pathParameters: [{ "name": "org" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgListMembers: {
+      id: "orgListMembers",
+      method: "GET",
+      path: "/orgs/{org}/members",
+      pathParameters: [{ "name": "org" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgListPublicMembers: {
+      id: "orgListPublicMembers",
+      method: "GET",
+      path: "/orgs/{org}/public_members",
+      pathParameters: [{ "name": "org" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgListRepos: {
+      id: "orgListRepos",
+      method: "GET",
+      path: "/orgs/{org}/repos",
+      pathParameters: [{ "name": "org" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgListTeamActivityFeeds: {
+      id: "orgListTeamActivityFeeds",
+      method: "GET",
+      path: "/teams/{id}/activities/feeds",
+      pathParameters: [{ "name": "id" }],
+      queryParameters: [{ "name": "date", "style": "form", "explode": true }, {
+        "name": "limit",
+        "style": "form",
+        "explode": true,
+      }, { "name": "page", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgListTeamMember: {
+      id: "orgListTeamMember",
+      method: "GET",
+      path: "/teams/{id}/members/{username}",
+      pathParameters: [{ "name": "id" }, { "name": "username" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgListTeamMembers: {
+      id: "orgListTeamMembers",
+      method: "GET",
+      path: "/teams/{id}/members",
+      pathParameters: [{ "name": "id" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgListTeamRepo: {
+      id: "orgListTeamRepo",
+      method: "GET",
+      path: "/teams/{id}/repos/{org}/{repo}",
+      pathParameters: [{ "name": "id" }, { "name": "org" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgListTeamRepos: {
+      id: "orgListTeamRepos",
+      method: "GET",
+      path: "/teams/{id}/repos",
+      pathParameters: [{ "name": "id" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgListTeams: {
+      id: "orgListTeams",
+      method: "GET",
+      path: "/orgs/{org}/teams",
+      pathParameters: [{ "name": "org" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgListUserOrgs: {
+      id: "orgListUserOrgs",
+      method: "GET",
+      path: "/users/{username}/orgs",
+      pathParameters: [{ "name": "username" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgPublicizeMember: {
+      id: "orgPublicizeMember",
+      method: "PUT",
+      path: "/orgs/{org}/public_members/{username}",
+      pathParameters: [{ "name": "org" }, { "name": "username" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 403,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgRemoveTeamMember: {
+      id: "orgRemoveTeamMember",
+      method: "DELETE",
+      path: "/teams/{id}/members/{username}",
+      pathParameters: [{ "name": "id" }, { "name": "username" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgRemoveTeamRepository: {
+      id: "orgRemoveTeamRepository",
+      method: "DELETE",
+      path: "/teams/{id}/repos/{org}/{repo}",
+      pathParameters: [{ "name": "id" }, { "name": "org" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 403,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    orgUpdateAvatar: {
+      id: "orgUpdateAvatar",
+      method: "POST",
+      path: "/orgs/{org}/avatar",
+      pathParameters: [{ "name": "org" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    organizationBlockUser: {
+      id: "organizationBlockUser",
+      method: "PUT",
+      path: "/orgs/{org}/blocks/{username}",
+      pathParameters: [{ "name": "org" }, { "name": "username" }],
+      queryParameters: [{ "name": "note", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }, {
+        "status": 422,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }],
+    },
+    organizationCheckUserBlock: {
+      id: "organizationCheckUserBlock",
+      method: "GET",
+      path: "/orgs/{org}/blocks/{username}",
+      pathParameters: [{ "name": "org" }, { "name": "username" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    organizationListBlocks: {
+      id: "organizationListBlocks",
+      method: "GET",
+      path: "/orgs/{org}/blocks",
+      pathParameters: [{ "name": "org" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    organizationUnblockUser: {
+      id: "organizationUnblockUser",
+      method: "DELETE",
+      path: "/orgs/{org}/blocks/{username}",
+      pathParameters: [{ "name": "org" }, { "name": "username" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }, {
+        "status": 422,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }],
+    },
+    pinIssue: {
+      id: "pinIssue",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/issues/{index}/pin",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 403,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    rejectRepoTransfer: {
+      id: "rejectRepoTransfer",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/transfer/reject",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    renameOrg: {
+      id: "renameOrg",
+      method: "POST",
+      path: "/orgs/{org}/rename",
+      pathParameters: [{ "name": "org" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 403,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 422, "mediaTypes": [], "headers": ["message", "url"] }],
+    },
+    renderMarkdown: {
+      id: "renderMarkdown",
+      method: "POST",
+      path: "/markdown",
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 422, "mediaTypes": [], "headers": ["message", "url"] }],
+    },
+    renderMarkdownRaw: {
+      id: "renderMarkdownRaw",
+      method: "POST",
+      path: "/markdown/raw",
+      requestMediaTypes: ["text/plain"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 422, "mediaTypes": [], "headers": ["message", "url"] }],
+    },
+    renderMarkup: {
+      id: "renderMarkup",
+      method: "POST",
+      path: "/markup",
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 422, "mediaTypes": [], "headers": ["message", "url"] }],
+    },
+    repoAddCollaborator: {
+      id: "repoAddCollaborator",
+      method: "PUT",
+      path: "/repos/{owner}/{repo}/collaborators/{collaborator}",
+      pathParameters: [{ "name": "collaborator" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        { "status": 204, "mediaTypes": [] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoAddPushMirror: {
+      id: "repoAddPushMirror",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/push_mirrors",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    repoAddTeam: {
+      id: "repoAddTeam",
+      method: "PUT",
+      path: "/repos/{owner}/{repo}/teams/{team}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "team" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }, {
+        "status": 405,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 422, "mediaTypes": [], "headers": ["message", "url"] }],
+    },
+    repoAddTopic: {
+      id: "repoAddTopic",
+      method: "PUT",
+      path: "/repos/{owner}/{repo}/topics/{topic}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "topic" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }, {
+        "status": 422,
+        "mediaTypes": [],
+        "headers": ["invalidTopics", "message"],
+      }],
+    },
+    repoApplyDiffPatch: {
+      id: "repoApplyDiffPatch",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/diffpatch",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 423, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoCancelScheduledAutoMerge: {
+      id: "repoCancelScheduledAutoMerge",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/pulls/{index}/merge",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        { "status": 204, "mediaTypes": [] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 423, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoChangeFiles: {
+      id: "repoChangeFiles",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/contents",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 423, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoCheckCollaborator: {
+      id: "repoCheckCollaborator",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/collaborators/{collaborator}",
+      pathParameters: [{ "name": "collaborator" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }, {
+        "status": 422,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }],
+    },
+    repoCheckTeam: {
+      id: "repoCheckTeam",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/teams/{team}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "team" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 405, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoCompareDiff: {
+      id: "repoCompareDiff",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/compare/{basehead}",
+      pathParameters: [{ "name": "basehead" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoCreateBranch: {
+      id: "repoCreateBranch",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/branches",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 409, "mediaTypes": [] },
+        { "status": 423, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoCreateBranchProtection: {
+      id: "repoCreateBranchProtection",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/branch_protections",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 423, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoCreateFile: {
+      id: "repoCreateFile",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/contents/{filepath}",
+      pathParameters: [{ "name": "filepath" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 423, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoCreateHook: {
+      id: "repoCreateHook",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/hooks",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 201,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoCreateKey: {
+      id: "repoCreateKey",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/keys",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoCreatePullRequest: {
+      id: "repoCreatePullRequest",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/pulls",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 409, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 423, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoCreatePullReview: {
+      id: "repoCreatePullReview",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/pulls/{index}/reviews",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoCreatePullReviewRequests: {
+      id: "repoCreatePullReviewRequests",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/pulls/{index}/requested_reviewers",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoCreateRelease: {
+      id: "repoCreateRelease",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/releases",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 409, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoCreateReleaseAttachment: {
+      id: "repoCreateReleaseAttachment",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/releases/{id}/assets",
+      pathParameters: [{ "name": "id" }, { "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "name", "style": "form", "explode": true }],
+      requestMediaTypes: ["multipart/form-data"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 413, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoCreateRunnerRegistrationToken: {
+      id: "repoCreateRunnerRegistrationToken",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/actions/runners/registration-token",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 200, "mediaTypes": [], "headers": ["token"] }],
+    },
+    repoCreateStatus: {
+      id: "repoCreateStatus",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/statuses/{sha}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "sha" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    repoCreateTag: {
+      id: "repoCreateTag",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/tags",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 405, "mediaTypes": [] },
+        { "status": 409, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 423, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoCreateTagProtection: {
+      id: "repoCreateTagProtection",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/tag_protections",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 423, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoCreateWikiPage: {
+      id: "repoCreateWikiPage",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/wiki/new",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 423, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoDelete: {
+      id: "repoDelete",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 403,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoDeleteAvatar: {
+      id: "repoDeleteAvatar",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/avatar",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoDeleteBranch: {
+      id: "repoDeleteBranch",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/branches/{branch}",
+      pathParameters: [{ "name": "branch" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        { "status": 204, "mediaTypes": [] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 423, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoDeleteBranchProtection: {
+      id: "repoDeleteBranchProtection",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/branch_protections/{name}",
+      pathParameters: [{ "name": "name" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoDeleteCollaborator: {
+      id: "repoDeleteCollaborator",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/collaborators/{collaborator}",
+      pathParameters: [{ "name": "collaborator" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }, {
+        "status": 422,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }],
+    },
+    repoDeleteFile: {
+      id: "repoDeleteFile",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/contents/{filepath}",
+      pathParameters: [{ "name": "filepath" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 423, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoDeleteGitHook: {
+      id: "repoDeleteGitHook",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/hooks/git/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoDeleteHook: {
+      id: "repoDeleteHook",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/hooks/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoDeleteKey: {
+      id: "repoDeleteKey",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/keys/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 403,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoDeletePullReview: {
+      id: "repoDeletePullReview",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/pulls/{index}/reviews/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "index" }, { "name": "owner" }, {
+        "name": "repo",
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 403,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoDeletePullReviewRequests: {
+      id: "repoDeletePullReviewRequests",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/pulls/{index}/requested_reviewers",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        { "status": 204, "mediaTypes": [] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoDeletePushMirror: {
+      id: "repoDeletePushMirror",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/push_mirrors/{name}",
+      pathParameters: [{ "name": "name" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 400,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoDeleteRelease: {
+      id: "repoDeleteRelease",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/releases/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }, {
+        "status": 422,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }],
+    },
+    repoDeleteReleaseAttachment: {
+      id: "repoDeleteReleaseAttachment",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/releases/{id}/assets/{attachment_id}",
+      pathParameters: [{ "name": "attachment_id" }, { "name": "id" }, { "name": "owner" }, {
+        "name": "repo",
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoDeleteReleaseByTag: {
+      id: "repoDeleteReleaseByTag",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/releases/tags/{tag}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "tag" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }, {
+        "status": 422,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }],
+    },
+    repoDeleteTag: {
+      id: "repoDeleteTag",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/tags/{tag}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "tag" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        { "status": 204, "mediaTypes": [] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 405, "mediaTypes": [] },
+        { "status": 409, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 423, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoDeleteTagProtection: {
+      id: "repoDeleteTagProtection",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/tag_protections/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoDeleteTeam: {
+      id: "repoDeleteTeam",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/teams/{team}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "team" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }, {
+        "status": 405,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 422, "mediaTypes": [], "headers": ["message", "url"] }],
+    },
+    repoDeleteTopic: {
+      id: "repoDeleteTopic",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/topics/{topic}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "topic" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }, {
+        "status": 422,
+        "mediaTypes": [],
+        "headers": ["invalidTopics", "message"],
+      }],
+    },
+    repoDeleteWikiPage: {
+      id: "repoDeleteWikiPage",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/wiki/page/{pageName}",
+      pathParameters: [{ "name": "owner" }, { "name": "pageName" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        { "status": 204, "mediaTypes": [] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 423, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoDismissPullReview: {
+      id: "repoDismissPullReview",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/pulls/{index}/reviews/{id}/dismissals",
+      pathParameters: [{ "name": "id" }, { "name": "index" }, { "name": "owner" }, {
+        "name": "repo",
+      }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoDownloadCommitDiffOrPatch: {
+      id: "repoDownloadCommitDiffOrPatch",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/git/commits/{sha}.{diffType}",
+      pathParameters: [{ "name": "diffType" }, { "name": "owner" }, { "name": "repo" }, {
+        "name": "sha",
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoDownloadPullDiffOrPatch: {
+      id: "repoDownloadPullDiffOrPatch",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/pulls/{index}.{diffType}",
+      pathParameters: [{ "name": "diffType" }, { "name": "index" }, { "name": "owner" }, {
+        "name": "repo",
+      }],
+      queryParameters: [{ "name": "binary", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoEdit: {
+      id: "repoEdit",
+      method: "PATCH",
+      path: "/repos/{owner}/{repo}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoEditBranchProtection: {
+      id: "repoEditBranchProtection",
+      method: "PATCH",
+      path: "/repos/{owner}/{repo}/branch_protections/{name}",
+      pathParameters: [{ "name": "name" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 423, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoEditGitHook: {
+      id: "repoEditGitHook",
+      method: "PATCH",
+      path: "/repos/{owner}/{repo}/hooks/git/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoEditHook: {
+      id: "repoEditHook",
+      method: "PATCH",
+      path: "/repos/{owner}/{repo}/hooks/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoEditPullRequest: {
+      id: "repoEditPullRequest",
+      method: "PATCH",
+      path: "/repos/{owner}/{repo}/pulls/{index}",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 409, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 412, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoEditRelease: {
+      id: "repoEditRelease",
+      method: "PATCH",
+      path: "/repos/{owner}/{repo}/releases/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoEditReleaseAttachment: {
+      id: "repoEditReleaseAttachment",
+      method: "PATCH",
+      path: "/repos/{owner}/{repo}/releases/{id}/assets/{attachment_id}",
+      pathParameters: [{ "name": "attachment_id" }, { "name": "id" }, { "name": "owner" }, {
+        "name": "repo",
+      }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoEditTagProtection: {
+      id: "repoEditTagProtection",
+      method: "PATCH",
+      path: "/repos/{owner}/{repo}/tag_protections/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 423, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoEditWikiPage: {
+      id: "repoEditWikiPage",
+      method: "PATCH",
+      path: "/repos/{owner}/{repo}/wiki/page/{pageName}",
+      pathParameters: [{ "name": "owner" }, { "name": "pageName" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 423, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoGet: {
+      id: "repoGet",
+      method: "GET",
+      path: "/repos/{owner}/{repo}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetAllCommits: {
+      id: "repoGetAllCommits",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/commits",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      queryParameters: [
+        { "name": "files", "style": "form", "explode": true },
+        { "name": "limit", "style": "form", "explode": true },
+        { "name": "not", "style": "form", "explode": true },
+        { "name": "page", "style": "form", "explode": true },
+        { "name": "path", "style": "form", "explode": true },
+        { "name": "sha", "style": "form", "explode": true },
+        { "name": "since", "style": "form", "explode": true },
+        { "name": "stat", "style": "form", "explode": true },
+        { "name": "until", "style": "form", "explode": true },
+        { "name": "verification", "style": "form", "explode": true },
+      ],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+          "headers": ["X-HasMore", "X-Page", "X-PageCount", "X-PerPage", "X-Total"],
+        },
+        { "status": 404, "mediaTypes": [] },
+        {
+          "status": 409,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+      ],
+    },
+    repoGetArchive: {
+      id: "repoGetArchive",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/archive/{archive}",
+      pathParameters: [{ "name": "archive" }, { "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "path", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 200, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetAssignees: {
+      id: "repoGetAssignees",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/assignees",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetBranch: {
+      id: "repoGetBranch",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/branches/{branch}",
+      pathParameters: [{ "name": "branch" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetBranchProtection: {
+      id: "repoGetBranchProtection",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/branch_protections/{name}",
+      pathParameters: [{ "name": "name" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetById: {
+      id: "repoGetByID",
+      method: "GET",
+      path: "/repositories/{id}",
+      pathParameters: [{ "name": "id" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetCombinedStatusByRef: {
+      id: "repoGetCombinedStatusByRef",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/commits/{ref}/status",
+      pathParameters: [{ "name": "owner" }, { "name": "ref" }, { "name": "repo" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    repoGetCommitPullRequest: {
+      id: "repoGetCommitPullRequest",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/commits/{sha}/pull",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "sha" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetContents: {
+      id: "repoGetContents",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/contents/{filepath}",
+      pathParameters: [{ "name": "filepath" }, { "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "ref", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetContentsExt: {
+      id: "repoGetContentsExt",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/contents-ext/{filepath}",
+      pathParameters: [{ "name": "filepath" }, { "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "includes", "style": "form", "explode": true }, {
+        "name": "ref",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetContentsList: {
+      id: "repoGetContentsList",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/contents",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "ref", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetEditorConfig: {
+      id: "repoGetEditorConfig",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/editorconfig/{filepath}",
+      pathParameters: [{ "name": "filepath" }, { "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "ref", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 200, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetFileContents: {
+      id: "repoGetFileContents",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/file-contents",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "body", "style": "form", "explode": true }, {
+        "name": "ref",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetFileContentsPost: {
+      id: "repoGetFileContentsPost",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/file-contents",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "ref", "style": "form", "explode": true }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetGitHook: {
+      id: "repoGetGitHook",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/hooks/git/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetHook: {
+      id: "repoGetHook",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/hooks/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetIssueConfig: {
+      id: "repoGetIssueConfig",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/issue_config",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetIssueTemplates: {
+      id: "repoGetIssueTemplates",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/issue_templates",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetKey: {
+      id: "repoGetKey",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/keys/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetLanguages: {
+      id: "repoGetLanguages",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/languages",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetLatestRelease: {
+      id: "repoGetLatestRelease",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/releases/latest",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetLicenses: {
+      id: "repoGetLicenses",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/licenses",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetNote: {
+      id: "repoGetNote",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/git/notes/{sha}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "sha" }],
+      queryParameters: [{ "name": "files", "style": "form", "explode": true }, {
+        "name": "verification",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoGetPullRequest: {
+      id: "repoGetPullRequest",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/pulls/{index}",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetPullRequestByBaseHead: {
+      id: "repoGetPullRequestByBaseHead",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/pulls/{base}/{head}",
+      pathParameters: [{ "name": "base" }, { "name": "head" }, { "name": "owner" }, {
+        "name": "repo",
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetPullRequestCommits: {
+      id: "repoGetPullRequestCommits",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/pulls/{index}/commits",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      queryParameters: [
+        { "name": "files", "style": "form", "explode": true },
+        { "name": "limit", "style": "form", "explode": true },
+        { "name": "page", "style": "form", "explode": true },
+        { "name": "verification", "style": "form", "explode": true },
+      ],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+        "headers": ["X-HasMore", "X-Page", "X-PageCount", "X-PerPage", "X-Total"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetPullRequestFiles: {
+      id: "repoGetPullRequestFiles",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/pulls/{index}/files",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      queryParameters: [
+        { "name": "limit", "style": "form", "explode": true },
+        { "name": "page", "style": "form", "explode": true },
+        { "name": "skip-to", "style": "form", "explode": true },
+        { "name": "whitespace", "style": "form", "explode": true },
+      ],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+        "headers": ["X-HasMore", "X-Page", "X-PageCount", "X-PerPage", "X-Total"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetPullReview: {
+      id: "repoGetPullReview",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/pulls/{index}/reviews/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "index" }, { "name": "owner" }, {
+        "name": "repo",
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetPullReviewComments: {
+      id: "repoGetPullReviewComments",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/pulls/{index}/reviews/{id}/comments",
+      pathParameters: [{ "name": "id" }, { "name": "index" }, { "name": "owner" }, {
+        "name": "repo",
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetPushMirrorByRemoteName: {
+      id: "repoGetPushMirrorByRemoteName",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/push_mirrors/{name}",
+      pathParameters: [{ "name": "name" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    repoGetRawFile: {
+      id: "repoGetRawFile",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/raw/{filepath}",
+      pathParameters: [{ "name": "filepath" }, { "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "ref", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/octet-stream"],
+        "decoders": { "application/octet-stream": "binary" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetRawFileOrLfs: {
+      id: "repoGetRawFileOrLFS",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/media/{filepath}",
+      pathParameters: [{ "name": "filepath" }, { "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "ref", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/octet-stream"],
+        "decoders": { "application/octet-stream": "binary" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetRelease: {
+      id: "repoGetRelease",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/releases/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetReleaseAttachment: {
+      id: "repoGetReleaseAttachment",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/releases/{id}/assets/{attachment_id}",
+      pathParameters: [{ "name": "attachment_id" }, { "name": "id" }, { "name": "owner" }, {
+        "name": "repo",
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetReleaseByTag: {
+      id: "repoGetReleaseByTag",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/releases/tags/{tag}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "tag" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetRepoPermissions: {
+      id: "repoGetRepoPermissions",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/collaborators/{collaborator}/permission",
+      pathParameters: [{ "name": "collaborator" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    repoGetReviewers: {
+      id: "repoGetReviewers",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/reviewers",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetSingleCommit: {
+      id: "repoGetSingleCommit",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/git/commits/{sha}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "sha" }],
+      queryParameters: [{ "name": "files", "style": "form", "explode": true }, {
+        "name": "stat",
+        "style": "form",
+        "explode": true,
+      }, { "name": "verification", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoGetTag: {
+      id: "repoGetTag",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/tags/{tag}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "tag" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetTagProtection: {
+      id: "repoGetTagProtection",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/tag_protections/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetWikiPage: {
+      id: "repoGetWikiPage",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/wiki/page/{pageName}",
+      pathParameters: [{ "name": "owner" }, { "name": "pageName" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetWikiPageRevisions: {
+      id: "repoGetWikiPageRevisions",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/wiki/revisions/{pageName}",
+      pathParameters: [{ "name": "owner" }, { "name": "pageName" }, { "name": "repo" }],
+      queryParameters: [{ "name": "page", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoGetWikiPages: {
+      id: "repoGetWikiPages",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/wiki/pages",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoListActionsSecrets: {
+      id: "repoListActionsSecrets",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/actions/secrets",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoListActivityFeeds: {
+      id: "repoListActivityFeeds",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/activities/feeds",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "date", "style": "form", "explode": true }, {
+        "name": "limit",
+        "style": "form",
+        "explode": true,
+      }, { "name": "page", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoListAllGitRefs: {
+      id: "repoListAllGitRefs",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/git/refs",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoListBranchProtection: {
+      id: "repoListBranchProtection",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/branch_protections",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    repoListBranches: {
+      id: "repoListBranches",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/branches",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    repoListCollaborators: {
+      id: "repoListCollaborators",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/collaborators",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoListGitHooks: {
+      id: "repoListGitHooks",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/hooks/git",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoListGitRefs: {
+      id: "repoListGitRefs",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/git/refs/{ref}",
+      pathParameters: [{ "name": "owner" }, { "name": "ref" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoListHooks: {
+      id: "repoListHooks",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/hooks",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoListKeys: {
+      id: "repoListKeys",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/keys",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      queryParameters: [
+        { "name": "fingerprint", "style": "form", "explode": true },
+        { "name": "key_id", "style": "form", "explode": true },
+        { "name": "limit", "style": "form", "explode": true },
+        { "name": "page", "style": "form", "explode": true },
+      ],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoListPinnedIssues: {
+      id: "repoListPinnedIssues",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/issues/pinned",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoListPinnedPullRequests: {
+      id: "repoListPinnedPullRequests",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/pulls/pinned",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoListPullRequests: {
+      id: "repoListPullRequests",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/pulls",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      queryParameters: [
+        { "name": "base_branch", "style": "form", "explode": true },
+        { "name": "labels", "style": "form", "explode": true },
+        { "name": "limit", "style": "form", "explode": true },
+        { "name": "milestone", "style": "form", "explode": true },
+        { "name": "page", "style": "form", "explode": true },
+        { "name": "poster", "style": "form", "explode": true },
+        { "name": "sort", "style": "form", "explode": true },
+        { "name": "state", "style": "form", "explode": true },
+      ],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 500, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoListPullReviews: {
+      id: "repoListPullReviews",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/pulls/{index}/reviews",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoListPushMirrors: {
+      id: "repoListPushMirrors",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/push_mirrors",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    repoListReleaseAttachments: {
+      id: "repoListReleaseAttachments",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/releases/{id}/assets",
+      pathParameters: [{ "name": "id" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoListReleases: {
+      id: "repoListReleases",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/releases",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      queryParameters: [
+        { "name": "draft", "style": "form", "explode": true },
+        { "name": "limit", "style": "form", "explode": true },
+        { "name": "page", "style": "form", "explode": true },
+        { "name": "pre-release", "style": "form", "explode": true },
+      ],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoListStargazers: {
+      id: "repoListStargazers",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/stargazers",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    repoListStatuses: {
+      id: "repoListStatuses",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/statuses/{sha}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "sha" }],
+      queryParameters: [
+        { "name": "limit", "style": "form", "explode": true },
+        { "name": "page", "style": "form", "explode": true },
+        { "name": "sort", "style": "form", "explode": true },
+        { "name": "state", "style": "form", "explode": true },
+      ],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    repoListStatusesByRef: {
+      id: "repoListStatusesByRef",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/commits/{ref}/statuses",
+      pathParameters: [{ "name": "owner" }, { "name": "ref" }, { "name": "repo" }],
+      queryParameters: [
+        { "name": "limit", "style": "form", "explode": true },
+        { "name": "page", "style": "form", "explode": true },
+        { "name": "sort", "style": "form", "explode": true },
+        { "name": "state", "style": "form", "explode": true },
+      ],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    repoListSubscribers: {
+      id: "repoListSubscribers",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/subscribers",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoListTagProtection: {
+      id: "repoListTagProtection",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/tag_protections",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    repoListTags: {
+      id: "repoListTags",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/tags",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoListTeams: {
+      id: "repoListTeams",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/teams",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoListTopics: {
+      id: "repoListTopics",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/topics",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoMergePullRequest: {
+      id: "repoMergePullRequest",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/pulls/{index}/merge",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        { "status": 200, "mediaTypes": [] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 405, "mediaTypes": [] },
+        { "status": 409, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 423, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoMergeUpstream: {
+      id: "repoMergeUpstream",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/merge-upstream",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    repoMigrate: {
+      id: "repoMigrate",
+      method: "POST",
+      path: "/repos/migrate",
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 409, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoMirrorSync: {
+      id: "repoMirrorSync",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/mirror-sync",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 200, "mediaTypes": [] }, {
+        "status": 403,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoNewPinAllowed: {
+      id: "repoNewPinAllowed",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/new_pin_allowed",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoPullRequestIsMerged: {
+      id: "repoPullRequestIsMerged",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/pulls/{index}/merge",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoPushMirrorSync: {
+      id: "repoPushMirrorSync",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/push_mirrors-sync",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        { "status": 200, "mediaTypes": [] },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    repoRenameBranch: {
+      id: "repoRenameBranch",
+      method: "PATCH",
+      path: "/repos/{owner}/{repo}/branches/{branch}",
+      pathParameters: [{ "name": "branch" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        { "status": 204, "mediaTypes": [] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoResolvePullReviewComment: {
+      id: "repoResolvePullReviewComment",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/pulls/comments/{id}/resolve",
+      pathParameters: [{ "name": "id" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        { "status": 204, "mediaTypes": [] },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    repoSearch: {
+      id: "repoSearch",
+      method: "GET",
+      path: "/repos/search",
+      queryParameters: [
+        { "name": "archived", "style": "form", "explode": true },
+        { "name": "exclusive", "style": "form", "explode": true },
+        { "name": "includeDesc", "style": "form", "explode": true },
+        { "name": "is_private", "style": "form", "explode": true },
+        { "name": "limit", "style": "form", "explode": true },
+        { "name": "mode", "style": "form", "explode": true },
+        { "name": "order", "style": "form", "explode": true },
+        { "name": "page", "style": "form", "explode": true },
+        { "name": "priority_owner_id", "style": "form", "explode": true },
+        { "name": "private", "style": "form", "explode": true },
+        { "name": "q", "style": "form", "explode": true },
+        { "name": "sort", "style": "form", "explode": true },
+        { "name": "starredBy", "style": "form", "explode": true },
+        { "name": "team_id", "style": "form", "explode": true },
+        { "name": "template", "style": "form", "explode": true },
+        { "name": "topic", "style": "form", "explode": true },
+        { "name": "uid", "style": "form", "explode": true },
+      ],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 422, "mediaTypes": [], "headers": ["message", "url"] }],
+    },
+    repoSigningKey: {
+      id: "repoSigningKey",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/signing-key.gpg",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["text/plain"],
+        "decoders": { "text/plain": "text" },
+      }],
+    },
+    repoSigningKeySsh: {
+      id: "repoSigningKeySSH",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/signing-key.pub",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["text/plain"],
+        "decoders": { "text/plain": "text" },
+      }],
+    },
+    repoSubmitPullReview: {
+      id: "repoSubmitPullReview",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/pulls/{index}/reviews/{id}",
+      pathParameters: [{ "name": "id" }, { "name": "index" }, { "name": "owner" }, {
+        "name": "repo",
+      }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoTestHook: {
+      id: "repoTestHook",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/hooks/{id}/tests",
+      pathParameters: [{ "name": "id" }, { "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "ref", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoTrackedTimes: {
+      id: "repoTrackedTimes",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/times",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      queryParameters: [
+        { "name": "before", "style": "form", "explode": true },
+        { "name": "limit", "style": "form", "explode": true },
+        { "name": "page", "style": "form", "explode": true },
+        { "name": "since", "style": "form", "explode": true },
+        { "name": "user", "style": "form", "explode": true },
+      ],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    repoTransfer: {
+      id: "repoTransfer",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/transfer",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 202,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoUnDismissPullReview: {
+      id: "repoUnDismissPullReview",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/pulls/{index}/reviews/{id}/undismissals",
+      pathParameters: [{ "name": "id" }, { "name": "index" }, { "name": "owner" }, {
+        "name": "repo",
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoUnresolvePullReviewComment: {
+      id: "repoUnresolvePullReviewComment",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/pulls/comments/{id}/unresolve",
+      pathParameters: [{ "name": "id" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        { "status": 204, "mediaTypes": [] },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    repoUpdateAvatar: {
+      id: "repoUpdateAvatar",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/avatar",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    repoUpdateBranch: {
+      id: "repoUpdateBranch",
+      method: "PUT",
+      path: "/repos/{owner}/{repo}/branches/{branch}",
+      pathParameters: [{ "name": "branch" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        { "status": 204, "mediaTypes": [] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 409, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoUpdateBranchProtectionPriories: {
+      id: "repoUpdateBranchProtectionPriories",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/branch_protections/priority",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }, {
+        "status": 422,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 423, "mediaTypes": [], "headers": ["message", "url"] }],
+    },
+    repoUpdateFile: {
+      id: "repoUpdateFile",
+      method: "PUT",
+      path: "/repos/{owner}/{repo}/contents/{filepath}",
+      pathParameters: [{ "name": "filepath" }, { "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 423, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoUpdatePullRequest: {
+      id: "repoUpdatePullRequest",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/pulls/{index}/update",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      queryParameters: [{ "name": "style", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        { "status": 200, "mediaTypes": [] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 409, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    repoUpdateTopics: {
+      id: "repoUpdateTopics",
+      method: "PUT",
+      path: "/repos/{owner}/{repo}/topics",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }, {
+        "status": 422,
+        "mediaTypes": [],
+        "headers": ["invalidTopics", "message"],
+      }],
+    },
+    repoValidateIssueConfig: {
+      id: "repoValidateIssueConfig",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/issue_config/validate",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    rerunFailedWorkflowRun: {
+      id: "rerunFailedWorkflowRun",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/actions/runs/{run}/rerun-failed-jobs",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "run" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        { "status": 201, "mediaTypes": [] },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    rerunWorkflowJob: {
+      id: "rerunWorkflowJob",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/actions/runs/{run}/jobs/{job_id}/rerun",
+      pathParameters: [{ "name": "job_id" }, { "name": "owner" }, { "name": "repo" }, {
+        "name": "run",
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    rerunWorkflowRun: {
+      id: "rerunWorkflowRun",
+      method: "POST",
+      path: "/repos/{owner}/{repo}/actions/runs/{run}/rerun",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "run" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    teamSearch: {
+      id: "teamSearch",
+      method: "GET",
+      path: "/orgs/{org}/teams/search",
+      pathParameters: [{ "name": "org" }],
+      queryParameters: [
+        { "name": "include_desc", "style": "form", "explode": true },
+        { "name": "limit", "style": "form", "explode": true },
+        { "name": "page", "style": "form", "explode": true },
+        { "name": "q", "style": "form", "explode": true },
+      ],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    topicSearch: {
+      id: "topicSearch",
+      method: "GET",
+      path: "/topics/search",
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }, { "name": "q", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    unlinkPackage: {
+      id: "unlinkPackage",
+      method: "POST",
+      path: "/packages/{owner}/{type}/{name}/-/unlink",
+      pathParameters: [{ "name": "name" }, { "name": "owner" }, { "name": "type" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 201, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    unpinIssue: {
+      id: "unpinIssue",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/issues/{index}/pin",
+      pathParameters: [{ "name": "index" }, { "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 403,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    updateAdminRunner: {
+      id: "updateAdminRunner",
+      method: "PATCH",
+      path: "/admin/actions/runners/{runner_id}",
+      pathParameters: [{ "name": "runner_id" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    updateOrgRunner: {
+      id: "updateOrgRunner",
+      method: "PATCH",
+      path: "/orgs/{org}/actions/runners/{runner_id}",
+      pathParameters: [{ "name": "org" }, { "name": "runner_id" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    updateOrgSecret: {
+      id: "updateOrgSecret",
+      method: "PUT",
+      path: "/orgs/{org}/actions/secrets/{secretname}",
+      pathParameters: [{ "name": "org" }, { "name": "secretname" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 201, "mediaTypes": [] }, { "status": 204, "mediaTypes": [] }, {
+        "status": 400,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    updateOrgVariable: {
+      id: "updateOrgVariable",
+      method: "PUT",
+      path: "/orgs/{org}/actions/variables/{variablename}",
+      pathParameters: [{ "name": "org" }, { "name": "variablename" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 201, "mediaTypes": [] }, { "status": 204, "mediaTypes": [] }, {
+        "status": 400,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    updateRepoRunner: {
+      id: "updateRepoRunner",
+      method: "PATCH",
+      path: "/repos/{owner}/{repo}/actions/runners/{runner_id}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "runner_id" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    updateRepoSecret: {
+      id: "updateRepoSecret",
+      method: "PUT",
+      path: "/repos/{owner}/{repo}/actions/secrets/{secretname}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "secretname" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 201, "mediaTypes": [] }, { "status": 204, "mediaTypes": [] }, {
+        "status": 400,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    updateRepoVariable: {
+      id: "updateRepoVariable",
+      method: "PUT",
+      path: "/repos/{owner}/{repo}/actions/variables/{variablename}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "variablename" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 201, "mediaTypes": [] }, { "status": 204, "mediaTypes": [] }, {
+        "status": 400,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    updateUserRunner: {
+      id: "updateUserRunner",
+      method: "PATCH",
+      path: "/user/actions/runners/{runner_id}",
+      pathParameters: [{ "name": "runner_id" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    updateUserSecret: {
+      id: "updateUserSecret",
+      method: "PUT",
+      path: "/user/actions/secrets/{secretname}",
+      pathParameters: [{ "name": "secretname" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 201, "mediaTypes": [] }, { "status": 204, "mediaTypes": [] }, {
+        "status": 400,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    updateUserSettings: {
+      id: "updateUserSettings",
+      method: "PATCH",
+      path: "/user/settings",
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    updateUserVariable: {
+      id: "updateUserVariable",
+      method: "PUT",
+      path: "/user/actions/variables/{variablename}",
+      pathParameters: [{ "name": "variablename" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 201, "mediaTypes": [] }, { "status": 204, "mediaTypes": [] }, {
+        "status": 400,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    userAddEmail: {
+      id: "userAddEmail",
+      method: "POST",
+      path: "/user/emails",
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 201,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 422, "mediaTypes": [], "headers": ["message", "url"] }],
+    },
+    userBlockUser: {
+      id: "userBlockUser",
+      method: "PUT",
+      path: "/user/blocks/{username}",
+      pathParameters: [{ "name": "username" }],
+      queryParameters: [{ "name": "note", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }, {
+        "status": 422,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }],
+    },
+    userCheckFollowing: {
+      id: "userCheckFollowing",
+      method: "GET",
+      path: "/users/{username}/following/{target}",
+      pathParameters: [{ "name": "target" }, { "name": "username" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    userCheckUserBlock: {
+      id: "userCheckUserBlock",
+      method: "GET",
+      path: "/user/blocks/{username}",
+      pathParameters: [{ "name": "username" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    userCreateHook: {
+      id: "userCreateHook",
+      method: "POST",
+      path: "/user/hooks",
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 201,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    userCreateOAuth2Application: {
+      id: "userCreateOAuth2Application",
+      method: "POST",
+      path: "/user/applications/oauth2",
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 201,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 400, "mediaTypes": [], "headers": ["message", "url"] }],
+    },
+    userCreateRunnerRegistrationToken: {
+      id: "userCreateRunnerRegistrationToken",
+      method: "POST",
+      path: "/user/actions/runners/registration-token",
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 200, "mediaTypes": [], "headers": ["token"] }],
+    },
+    userCreateToken: {
+      id: "userCreateToken",
+      method: "POST",
+      path: "/users/{username}/tokens",
+      pathParameters: [{ "name": "username" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    userCurrentCheckFollowing: {
+      id: "userCurrentCheckFollowing",
+      method: "GET",
+      path: "/user/following/{username}",
+      pathParameters: [{ "name": "username" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    userCurrentCheckStarring: {
+      id: "userCurrentCheckStarring",
+      method: "GET",
+      path: "/user/starred/{owner}/{repo}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 403,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    userCurrentCheckSubscription: {
+      id: "userCurrentCheckSubscription",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/subscription",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    userCurrentDeleteFollow: {
+      id: "userCurrentDeleteFollow",
+      method: "DELETE",
+      path: "/user/following/{username}",
+      pathParameters: [{ "name": "username" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    userCurrentDeleteGpgKey: {
+      id: "userCurrentDeleteGPGKey",
+      method: "DELETE",
+      path: "/user/gpg_keys/{id}",
+      pathParameters: [{ "name": "id" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 403,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    userCurrentDeleteKey: {
+      id: "userCurrentDeleteKey",
+      method: "DELETE",
+      path: "/user/keys/{id}",
+      pathParameters: [{ "name": "id" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 403,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    userCurrentDeleteStar: {
+      id: "userCurrentDeleteStar",
+      method: "DELETE",
+      path: "/user/starred/{owner}/{repo}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 403,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    userCurrentDeleteSubscription: {
+      id: "userCurrentDeleteSubscription",
+      method: "DELETE",
+      path: "/repos/{owner}/{repo}/subscription",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    userCurrentGetGpgKey: {
+      id: "userCurrentGetGPGKey",
+      method: "GET",
+      path: "/user/gpg_keys/{id}",
+      pathParameters: [{ "name": "id" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    userCurrentGetKey: {
+      id: "userCurrentGetKey",
+      method: "GET",
+      path: "/user/keys/{id}",
+      pathParameters: [{ "name": "id" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    userCurrentListFollowers: {
+      id: "userCurrentListFollowers",
+      method: "GET",
+      path: "/user/followers",
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    userCurrentListFollowing: {
+      id: "userCurrentListFollowing",
+      method: "GET",
+      path: "/user/following",
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    userCurrentListGpgKeys: {
+      id: "userCurrentListGPGKeys",
+      method: "GET",
+      path: "/user/gpg_keys",
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    userCurrentListKeys: {
+      id: "userCurrentListKeys",
+      method: "GET",
+      path: "/user/keys",
+      queryParameters: [{ "name": "fingerprint", "style": "form", "explode": true }, {
+        "name": "limit",
+        "style": "form",
+        "explode": true,
+      }, { "name": "page", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    userCurrentListRepos: {
+      id: "userCurrentListRepos",
+      method: "GET",
+      path: "/user/repos",
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    userCurrentListStarred: {
+      id: "userCurrentListStarred",
+      method: "GET",
+      path: "/user/starred",
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 403, "mediaTypes": [], "headers": ["message", "url"] }],
+    },
+    userCurrentListSubscriptions: {
+      id: "userCurrentListSubscriptions",
+      method: "GET",
+      path: "/user/subscriptions",
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    userCurrentPostGpgKey: {
+      id: "userCurrentPostGPGKey",
+      method: "POST",
+      path: "/user/gpg_keys",
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    userCurrentPostKey: {
+      id: "userCurrentPostKey",
+      method: "POST",
+      path: "/user/keys",
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 201,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 422, "mediaTypes": [], "headers": ["message", "url"] }],
+    },
+    userCurrentPutFollow: {
+      id: "userCurrentPutFollow",
+      method: "PUT",
+      path: "/user/following/{username}",
+      pathParameters: [{ "name": "username" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 403,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    userCurrentPutStar: {
+      id: "userCurrentPutStar",
+      method: "PUT",
+      path: "/user/starred/{owner}/{repo}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, {
+        "status": 403,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    userCurrentPutSubscription: {
+      id: "userCurrentPutSubscription",
+      method: "PUT",
+      path: "/repos/{owner}/{repo}/subscription",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    userCurrentTrackedTimes: {
+      id: "userCurrentTrackedTimes",
+      method: "GET",
+      path: "/user/times",
+      queryParameters: [
+        { "name": "before", "style": "form", "explode": true },
+        { "name": "limit", "style": "form", "explode": true },
+        { "name": "page", "style": "form", "explode": true },
+        { "name": "since", "style": "form", "explode": true },
+      ],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    userDeleteAccessToken: {
+      id: "userDeleteAccessToken",
+      method: "DELETE",
+      path: "/users/{username}/tokens/{token}",
+      pathParameters: [{ "name": "token" }, { "name": "username" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        { "status": 204, "mediaTypes": [] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+    userDeleteAvatar: {
+      id: "userDeleteAvatar",
+      method: "DELETE",
+      path: "/user/avatar",
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }],
+    },
+    userDeleteEmail: {
+      id: "userDeleteEmail",
+      method: "DELETE",
+      path: "/user/emails",
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    userDeleteHook: {
+      id: "userDeleteHook",
+      method: "DELETE",
+      path: "/user/hooks/{id}",
+      pathParameters: [{ "name": "id" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }],
+    },
+    userDeleteOAuth2Application: {
+      id: "userDeleteOAuth2Application",
+      method: "DELETE",
+      path: "/user/applications/oauth2/{id}",
+      pathParameters: [{ "name": "id" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }],
+    },
+    userEditHook: {
+      id: "userEditHook",
+      method: "PATCH",
+      path: "/user/hooks/{id}",
+      pathParameters: [{ "name": "id" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    userGet: {
+      id: "userGet",
+      method: "GET",
+      path: "/users/{username}",
+      pathParameters: [{ "name": "username" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    userGetCurrent: {
+      id: "userGetCurrent",
+      method: "GET",
+      path: "/user",
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    userGetHeatmapData: {
+      id: "userGetHeatmapData",
+      method: "GET",
+      path: "/users/{username}/heatmap",
+      pathParameters: [{ "name": "username" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    userGetHook: {
+      id: "userGetHook",
+      method: "GET",
+      path: "/user/hooks/{id}",
+      pathParameters: [{ "name": "id" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    userGetOAuth2Application_1tziy91: {
+      id: "userGetOAuth2Application",
+      method: "GET",
+      path: "/user/applications/oauth2/{id}",
+      pathParameters: [{ "name": "id" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    userGetOauth2Application_0hhkiwt: {
+      id: "userGetOauth2Application",
+      method: "GET",
+      path: "/user/applications/oauth2",
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    userGetStopWatches: {
+      id: "userGetStopWatches",
+      method: "GET",
+      path: "/user/stopwatches",
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    userGetTokens: {
+      id: "userGetTokens",
+      method: "GET",
+      path: "/users/{username}/tokens",
+      pathParameters: [{ "name": "username" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 403, "mediaTypes": [], "headers": ["message", "url"] }],
+    },
+    userListActivityFeeds: {
+      id: "userListActivityFeeds",
+      method: "GET",
+      path: "/users/{username}/activities/feeds",
+      pathParameters: [{ "name": "username" }],
+      queryParameters: [
+        { "name": "date", "style": "form", "explode": true },
+        { "name": "limit", "style": "form", "explode": true },
+        { "name": "only-performed-by", "style": "form", "explode": true },
+        { "name": "page", "style": "form", "explode": true },
+      ],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    userListBlocks: {
+      id: "userListBlocks",
+      method: "GET",
+      path: "/user/blocks",
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    userListEmails: {
+      id: "userListEmails",
+      method: "GET",
+      path: "/user/emails",
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    userListFollowers: {
+      id: "userListFollowers",
+      method: "GET",
+      path: "/users/{username}/followers",
+      pathParameters: [{ "name": "username" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    userListFollowing: {
+      id: "userListFollowing",
+      method: "GET",
+      path: "/users/{username}/following",
+      pathParameters: [{ "name": "username" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    userListGpgKeys: {
+      id: "userListGPGKeys",
+      method: "GET",
+      path: "/users/{username}/gpg_keys",
+      pathParameters: [{ "name": "username" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    userListHooks: {
+      id: "userListHooks",
+      method: "GET",
+      path: "/user/hooks",
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    userListKeys: {
+      id: "userListKeys",
+      method: "GET",
+      path: "/users/{username}/keys",
+      pathParameters: [{ "name": "username" }],
+      queryParameters: [{ "name": "fingerprint", "style": "form", "explode": true }, {
+        "name": "limit",
+        "style": "form",
+        "explode": true,
+      }, { "name": "page", "style": "form", "explode": true }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    userListRepos: {
+      id: "userListRepos",
+      method: "GET",
+      path: "/users/{username}/repos",
+      pathParameters: [{ "name": "username" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    userListStarred: {
+      id: "userListStarred",
+      method: "GET",
+      path: "/users/{username}/starred",
+      pathParameters: [{ "name": "username" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    userListSubscriptions: {
+      id: "userListSubscriptions",
+      method: "GET",
+      path: "/users/{username}/subscriptions",
+      pathParameters: [{ "name": "username" }],
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    userListTeams: {
+      id: "userListTeams",
+      method: "GET",
+      path: "/user/teams",
+      queryParameters: [{ "name": "limit", "style": "form", "explode": true }, {
+        "name": "page",
+        "style": "form",
+        "explode": true,
+      }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    userSearch: {
+      id: "userSearch",
+      method: "GET",
+      path: "/users/search",
+      queryParameters: [
+        { "name": "limit", "style": "form", "explode": true },
+        { "name": "page", "style": "form", "explode": true },
+        { "name": "q", "style": "form", "explode": true },
+        { "name": "uid", "style": "form", "explode": true },
+      ],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }],
+    },
+    userTrackedTimes: {
+      id: "userTrackedTimes",
+      method: "GET",
+      path: "/repos/{owner}/{repo}/times/{user}",
+      pathParameters: [{ "name": "owner" }, { "name": "repo" }, { "name": "user" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 200,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 400, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
+        { "status": 404, "mediaTypes": [] },
+      ],
+    },
+    userUnblockUser: {
+      id: "userUnblockUser",
+      method: "DELETE",
+      path: "/user/blocks/{username}",
+      pathParameters: [{ "name": "username" }],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }, { "status": 404, "mediaTypes": [] }, {
+        "status": 422,
+        "mediaTypes": [],
+        "headers": ["message", "url"],
+      }],
+    },
+    userUpdateAvatar: {
+      id: "userUpdateAvatar",
+      method: "POST",
+      path: "/user/avatar",
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{ "status": 204, "mediaTypes": [] }],
+    },
+    userUpdateOAuth2Application: {
+      id: "userUpdateOAuth2Application",
+      method: "PATCH",
+      path: "/user/applications/oauth2/{id}",
+      pathParameters: [{ "name": "id" }],
+      requestMediaTypes: ["application/json"],
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [{
+        "status": 200,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      }, { "status": 404, "mediaTypes": [] }],
+    },
+    userVerifyGpgKey: {
+      id: "userVerifyGPGKey",
+      method: "POST",
+      path: "/user/gpg_key_verify",
+      security: [
+        { "BasicAuth": [] },
+        { "Token": [] },
+        { "AccessToken": [] },
+        { "AuthorizationHeaderToken": [] },
+        { "SudoParam": [] },
+        { "SudoHeader": [] },
+        { "TOTPHeader": [] },
+      ],
+      responses: [
+        {
+          "status": 201,
+          "mediaTypes": ["application/json"],
+          "decoders": { "application/json": "json" },
+        },
+        { "status": 404, "mediaTypes": [] },
+        { "status": 422, "mediaTypes": [], "headers": ["message", "url"] },
+      ],
+    },
+  } as const satisfies Readonly<Record<string, RestOperation>>,
+);
+
+/** Native-Fetch Gitea REST client. */
+export class GiteaRestClient {
+  static get servers(): typeof giteaServers {
+    return giteaServers;
+  }
+
+  static get securitySchemes(): typeof giteaSecuritySchemes {
+    return giteaSecuritySchemes;
+  }
+
+  /** Shared transport and raw-request escape hatch. */
+  readonly rest: RestClient;
+
+  constructor(options: RestClientOptions | RestClient) {
+    this.rest = options instanceof RestClient ? options : new RestClient(options);
+  }
+
+  /**
+   * Accept a repo transfer
+   *
+   * @operationId acceptRepoTransfer
+   * @category repository
+   */
+  acceptRepoTransfer(
+    input: AcceptRepoTransferInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<AcceptRepoTransferResponse> {
+    return this.rest.request<AcceptRepoTransferResponse>(
+      giteaOperations.acceptRepoTransfer,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Disable a workflow
+   *
+   * @operationId ActionsDisableWorkflow
+   * @category repository
+   */
+  actionsDisableWorkflow(
+    input: ActionsDisableWorkflowInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<ActionsDisableWorkflowResponse> {
+    return this.rest.request<ActionsDisableWorkflowResponse>(
+      giteaOperations.actionsDisableWorkflow,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create a workflow dispatch event
+   *
+   * @operationId ActionsDispatchWorkflow
+   * @category repository
+   */
+  actionsDispatchWorkflow(
+    input: ActionsDispatchWorkflowInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<ActionsDispatchWorkflowResponse> {
+    return this.rest.request<ActionsDispatchWorkflowResponse>(
+      giteaOperations.actionsDispatchWorkflow,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Enable a workflow
+   *
+   * @operationId ActionsEnableWorkflow
+   * @category repository
+   */
+  actionsEnableWorkflow(
+    input: ActionsEnableWorkflowInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<ActionsEnableWorkflowResponse> {
+    return this.rest.request<ActionsEnableWorkflowResponse>(
+      giteaOperations.actionsEnableWorkflow,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a workflow
+   *
+   * @operationId ActionsGetWorkflow
+   * @category repository
+   */
+  actionsGetWorkflow(
+    input: ActionsGetWorkflowInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<ActionsGetWorkflowResponse> {
+    return this.rest.request<ActionsGetWorkflowResponse>(
+      giteaOperations.actionsGetWorkflow,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List repository workflows
+   *
+   * @operationId ActionsListRepositoryWorkflows
+   * @category repository
+   */
+  actionsListRepositoryWorkflows(
+    input: ActionsListRepositoryWorkflowsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<ActionsListRepositoryWorkflowsResponse> {
+    return this.rest.request<ActionsListRepositoryWorkflowsResponse>(
+      giteaOperations.actionsListRepositoryWorkflows,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Add a badge to a user
+   *
+   * @operationId adminAddUserBadges
+   * @category admin
+   */
+  adminAddUserBadges(
+    input: AdminAddUserBadgesInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<AdminAddUserBadgesResponse> {
+    return this.rest.request<AdminAddUserBadgesResponse>(
+      giteaOperations.adminAddUserBadges,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Adopt unadopted files as a repository
+   *
+   * @operationId adminAdoptRepository
+   * @category admin
+   */
+  adminAdoptRepository(
+    input: AdminAdoptRepositoryInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<AdminAdoptRepositoryResponse> {
+    return this.rest.request<AdminAdoptRepositoryResponse>(
+      giteaOperations.adminAdoptRepository,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create a hook
+   *
+   * @operationId adminCreateHook
+   * @category admin
+   */
+  adminCreateHook(
+    input: AdminCreateHookInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<AdminCreateHookResponse> {
+    return this.rest.request<AdminCreateHookResponse>(
+      giteaOperations.adminCreateHook,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create an organization
+   *
+   * @operationId adminCreateOrg
+   * @category admin
+   */
+  adminCreateOrg(
+    input: AdminCreateOrgInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<AdminCreateOrgResponse> {
+    return this.rest.request<AdminCreateOrgResponse>(
+      giteaOperations.adminCreateOrg,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Add a public key on behalf of a user
+   *
+   * @operationId adminCreatePublicKey
+   * @category admin
+   */
+  adminCreatePublicKey(
+    input: AdminCreatePublicKeyInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<AdminCreatePublicKeyResponse> {
+    return this.rest.request<AdminCreatePublicKeyResponse>(
+      giteaOperations.adminCreatePublicKey,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create a repository on behalf of a user
+   *
+   * @operationId adminCreateRepo
+   * @category admin
+   */
+  adminCreateRepo(
+    input: AdminCreateRepoInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<AdminCreateRepoResponse> {
+    return this.rest.request<AdminCreateRepoResponse>(
+      giteaOperations.adminCreateRepo,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a global actions runner registration token
+   *
+   * @operationId adminCreateRunnerRegistrationToken
+   * @category admin
+   */
+  adminCreateRunnerRegistrationToken(
+    input: AdminCreateRunnerRegistrationTokenInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<AdminCreateRunnerRegistrationTokenResponse> {
+    return this.rest.request<AdminCreateRunnerRegistrationTokenResponse>(
+      giteaOperations.adminCreateRunnerRegistrationToken,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create a user
+   *
+   * @operationId adminCreateUser
+   * @category admin
+   */
+  adminCreateUser(
+    input: AdminCreateUserInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<AdminCreateUserResponse> {
+    return this.rest.request<AdminCreateUserResponse>(
+      giteaOperations.adminCreateUser,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List cron tasks
+   *
+   * @operationId adminCronList
+   * @category admin
+   */
+  adminCronList(
+    input: AdminCronListInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<AdminCronListResponse> {
+    return this.rest.request<AdminCronListResponse>(giteaOperations.adminCronList, input, options);
+  }
+
+  /**
+   * Run cron task
+   *
+   * @operationId adminCronRun
+   * @category admin
+   */
+  adminCronRun(
+    input: AdminCronRunInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<AdminCronRunResponse> {
+    return this.rest.request<AdminCronRunResponse>(giteaOperations.adminCronRun, input, options);
+  }
+
+  /**
+   * Delete a hook
+   *
+   * @operationId adminDeleteHook
+   * @category admin
+   */
+  adminDeleteHook(
+    input: AdminDeleteHookInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<AdminDeleteHookResponse> {
+    return this.rest.request<AdminDeleteHookResponse>(
+      giteaOperations.adminDeleteHook,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete unadopted files
+   *
+   * @operationId adminDeleteUnadoptedRepository
+   * @category admin
+   */
+  adminDeleteUnadoptedRepository(
+    input: AdminDeleteUnadoptedRepositoryInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<AdminDeleteUnadoptedRepositoryResponse> {
+    return this.rest.request<AdminDeleteUnadoptedRepositoryResponse>(
+      giteaOperations.adminDeleteUnadoptedRepository,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a user
+   *
+   * @operationId adminDeleteUser
+   * @category admin
+   */
+  adminDeleteUser(
+    input: AdminDeleteUserInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<AdminDeleteUserResponse> {
+    return this.rest.request<AdminDeleteUserResponse>(
+      giteaOperations.adminDeleteUser,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Remove a badge from a user
+   *
+   * @operationId adminDeleteUserBadges
+   * @category admin
+   */
+  adminDeleteUserBadges(
+    input: AdminDeleteUserBadgesInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<AdminDeleteUserBadgesResponse> {
+    return this.rest.request<AdminDeleteUserBadgesResponse>(
+      giteaOperations.adminDeleteUserBadges,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a user's public key
+   *
+   * @operationId adminDeleteUserPublicKey
+   * @category admin
+   */
+  adminDeleteUserPublicKey(
+    input: AdminDeleteUserPublicKeyInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<AdminDeleteUserPublicKeyResponse> {
+    return this.rest.request<AdminDeleteUserPublicKeyResponse>(
+      giteaOperations.adminDeleteUserPublicKey,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Update a hook
+   *
+   * @operationId adminEditHook
+   * @category admin
+   */
+  adminEditHook(
+    input: AdminEditHookInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<AdminEditHookResponse> {
+    return this.rest.request<AdminEditHookResponse>(giteaOperations.adminEditHook, input, options);
+  }
+
+  /**
+   * Edit an existing user
+   *
+   * @operationId adminEditUser
+   * @category admin
+   */
+  adminEditUser(
+    input: AdminEditUserInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<AdminEditUserResponse> {
+    return this.rest.request<AdminEditUserResponse>(giteaOperations.adminEditUser, input, options);
+  }
+
+  /**
+   * List all emails
+   *
+   * @operationId adminGetAllEmails
+   * @category admin
+   */
+  adminGetAllEmails(
+    input: AdminGetAllEmailsInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<AdminGetAllEmailsResponse> {
+    return this.rest.request<AdminGetAllEmailsResponse>(
+      giteaOperations.adminGetAllEmails,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List all organizations
+   *
+   * @operationId adminGetAllOrgs
+   * @category admin
+   */
+  adminGetAllOrgs(
+    input: AdminGetAllOrgsInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<AdminGetAllOrgsResponse> {
+    return this.rest.request<AdminGetAllOrgsResponse>(
+      giteaOperations.adminGetAllOrgs,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a hook
+   *
+   * @operationId adminGetHook
+   * @category admin
+   */
+  adminGetHook(
+    input: AdminGetHookInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<AdminGetHookResponse> {
+    return this.rest.request<AdminGetHookResponse>(giteaOperations.adminGetHook, input, options);
+  }
+
+  /**
+   * List system's webhooks
+   *
+   * @operationId adminListHooks
+   * @category admin
+   */
+  adminListHooks(
+    input: AdminListHooksInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<AdminListHooksResponse> {
+    return this.rest.request<AdminListHooksResponse>(
+      giteaOperations.adminListHooks,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List a user's badges
+   *
+   * @operationId adminListUserBadges
+   * @category admin
+   */
+  adminListUserBadges(
+    input: AdminListUserBadgesInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<AdminListUserBadgesResponse> {
+    return this.rest.request<AdminListUserBadgesResponse>(
+      giteaOperations.adminListUserBadges,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Rename a user
+   *
+   * @operationId adminRenameUser
+   * @category admin
+   */
+  adminRenameUser(
+    input: AdminRenameUserInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<AdminRenameUserResponse> {
+    return this.rest.request<AdminRenameUserResponse>(
+      giteaOperations.adminRenameUser,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Search all emails
+   *
+   * @operationId adminSearchEmails
+   * @category admin
+   */
+  adminSearchEmails(
+    input: AdminSearchEmailsInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<AdminSearchEmailsResponse> {
+    return this.rest.request<AdminSearchEmailsResponse>(
+      giteaOperations.adminSearchEmails,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Search users according filter conditions
+   *
+   * @operationId adminSearchUsers
+   * @category admin
+   */
+  adminSearchUsers(
+    input: AdminSearchUsersInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<AdminSearchUsersResponse> {
+    return this.rest.request<AdminSearchUsersResponse>(
+      giteaOperations.adminSearchUsers,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List unadopted repositories
+   *
+   * @operationId adminUnadoptedList
+   * @category admin
+   */
+  adminUnadoptedList(
+    input: AdminUnadoptedListInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<AdminUnadoptedListResponse> {
+    return this.rest.request<AdminUnadoptedListResponse>(
+      giteaOperations.adminUnadoptedList,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create a repository
+   *
+   * @operationId createCurrentUserRepo
+   * @category repository, user
+   */
+  createCurrentUserRepo(
+    input: CreateCurrentUserRepoInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<CreateCurrentUserRepoResponse> {
+    return this.rest.request<CreateCurrentUserRepoResponse>(
+      giteaOperations.createCurrentUserRepo,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Fork a repository
+   *
+   * @operationId createFork
+   * @category repository
+   */
+  createFork(
+    input: CreateForkInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<CreateForkResponse> {
+    return this.rest.request<CreateForkResponse>(giteaOperations.createFork, input, options);
+  }
+
+  /**
+   * Create a repository in an organization
+   *
+   * @operationId createOrgRepo
+   * @category organization
+   */
+  createOrgRepo(
+    input: CreateOrgRepoInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<CreateOrgRepoResponse> {
+    return this.rest.request<CreateOrgRepoResponse>(giteaOperations.createOrgRepo, input, options);
+  }
+
+  /**
+   * Create a repository in an organization
+   *
+   * @operationId createOrgRepoDeprecated
+   * @category organization
+   * @deprecated
+   */
+  createOrgRepoDeprecated(
+    input: CreateOrgRepoDeprecatedInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<CreateOrgRepoDeprecatedResponse> {
+    return this.rest.request<CreateOrgRepoDeprecatedResponse>(
+      giteaOperations.createOrgRepoDeprecated,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create an org-level variable
+   *
+   * @operationId createOrgVariable
+   * @category organization
+   */
+  createOrgVariable(
+    input: CreateOrgVariableInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<CreateOrgVariableResponse> {
+    return this.rest.request<CreateOrgVariableResponse>(
+      giteaOperations.createOrgVariable,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create a repo-level variable
+   *
+   * @operationId createRepoVariable
+   * @category repository
+   */
+  createRepoVariable(
+    input: CreateRepoVariableInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<CreateRepoVariableResponse> {
+    return this.rest.request<CreateRepoVariableResponse>(
+      giteaOperations.createRepoVariable,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create a user-level variable
+   *
+   * @operationId createUserVariable
+   * @category user
+   */
+  createUserVariable(
+    input: CreateUserVariableInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<CreateUserVariableResponse> {
+    return this.rest.request<CreateUserVariableResponse>(
+      giteaOperations.createUserVariable,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a workflow run
+   *
+   * @operationId deleteActionRun
+   * @category repository
+   */
+  deleteActionRun(
+    input: DeleteActionRunInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<DeleteActionRunResponse> {
+    return this.rest.request<DeleteActionRunResponse>(
+      giteaOperations.deleteActionRun,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a global runner
+   *
+   * @operationId deleteAdminRunner
+   * @category admin
+   */
+  deleteAdminRunner(
+    input: DeleteAdminRunnerInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<DeleteAdminRunnerResponse> {
+    return this.rest.request<DeleteAdminRunnerResponse>(
+      giteaOperations.deleteAdminRunner,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Deletes a specific artifact for a workflow run
+   *
+   * @operationId deleteArtifact
+   * @category repository
+   */
+  deleteArtifact(
+    input: DeleteArtifactInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<DeleteArtifactResponse> {
+    return this.rest.request<DeleteArtifactResponse>(
+      giteaOperations.deleteArtifact,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete an org-level runner
+   *
+   * @operationId deleteOrgRunner
+   * @category organization
+   */
+  deleteOrgRunner(
+    input: DeleteOrgRunnerInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<DeleteOrgRunnerResponse> {
+    return this.rest.request<DeleteOrgRunnerResponse>(
+      giteaOperations.deleteOrgRunner,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a secret in an organization
+   *
+   * @operationId deleteOrgSecret
+   * @category organization
+   */
+  deleteOrgSecret(
+    input: DeleteOrgSecretInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<DeleteOrgSecretResponse> {
+    return this.rest.request<DeleteOrgSecretResponse>(
+      giteaOperations.deleteOrgSecret,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete an org-level variable
+   *
+   * @operationId deleteOrgVariable
+   * @category organization
+   */
+  deleteOrgVariable(
+    input: DeleteOrgVariableInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<DeleteOrgVariableResponse> {
+    return this.rest.request<DeleteOrgVariableResponse>(
+      giteaOperations.deleteOrgVariable,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a package
+   *
+   * @operationId deletePackage
+   * @category package
+   */
+  deletePackage(
+    input: DeletePackageInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<DeletePackageResponse> {
+    return this.rest.request<DeletePackageResponse>(giteaOperations.deletePackage, input, options);
+  }
+
+  /**
+   * Delete a package version
+   *
+   * @operationId deletePackageVersion
+   * @category package
+   */
+  deletePackageVersion(
+    input: DeletePackageVersionInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<DeletePackageVersionResponse> {
+    return this.rest.request<DeletePackageVersionResponse>(
+      giteaOperations.deletePackageVersion,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a repo-level runner
+   *
+   * @operationId deleteRepoRunner
+   * @category repository
+   */
+  deleteRepoRunner(
+    input: DeleteRepoRunnerInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<DeleteRepoRunnerResponse> {
+    return this.rest.request<DeleteRepoRunnerResponse>(
+      giteaOperations.deleteRepoRunner,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a secret in a repository
+   *
+   * @operationId deleteRepoSecret
+   * @category repository
+   */
+  deleteRepoSecret(
+    input: DeleteRepoSecretInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<DeleteRepoSecretResponse> {
+    return this.rest.request<DeleteRepoSecretResponse>(
+      giteaOperations.deleteRepoSecret,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a repo-level variable
+   *
+   * @operationId deleteRepoVariable
+   * @category repository
+   */
+  deleteRepoVariable(
+    input: DeleteRepoVariableInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<DeleteRepoVariableResponse> {
+    return this.rest.request<DeleteRepoVariableResponse>(
+      giteaOperations.deleteRepoVariable,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a user-level runner
+   *
+   * @operationId deleteUserRunner
+   * @category user
+   */
+  deleteUserRunner(
+    input: DeleteUserRunnerInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<DeleteUserRunnerResponse> {
+    return this.rest.request<DeleteUserRunnerResponse>(
+      giteaOperations.deleteUserRunner,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a secret in a user scope
+   *
+   * @operationId deleteUserSecret
+   * @category user
+   */
+  deleteUserSecret(
+    input: DeleteUserSecretInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<DeleteUserSecretResponse> {
+    return this.rest.request<DeleteUserSecretResponse>(
+      giteaOperations.deleteUserSecret,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a user-level variable which is created by current doer
+   *
+   * @operationId deleteUserVariable
+   * @category user
+   */
+  deleteUserVariable(
+    input: DeleteUserVariableInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<DeleteUserVariableResponse> {
+    return this.rest.request<DeleteUserVariableResponse>(
+      giteaOperations.deleteUserVariable,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Downloads the job logs for a workflow run
+   *
+   * @operationId downloadActionsRunJobLogs
+   * @category repository
+   */
+  downloadActionsRunJobLogs(
+    input: DownloadActionsRunJobLogsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<DownloadActionsRunJobLogsResponse> {
+    return this.rest.request<DownloadActionsRunJobLogsResponse>(
+      giteaOperations.downloadActionsRunJobLogs,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Downloads a specific artifact for a workflow run redirects to blob url
+   *
+   * @operationId downloadArtifact
+   * @category repository
+   */
+  downloadArtifact(
+    input: DownloadArtifactInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<DownloadArtifactResponse> {
+    return this.rest.request<DownloadArtifactResponse>(
+      giteaOperations.downloadArtifact,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create a repository using a template
+   *
+   * @operationId generateRepo
+   * @category repository
+   */
+  generateRepo(
+    input: GenerateRepoInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GenerateRepoResponse> {
+    return this.rest.request<GenerateRepoResponse>(giteaOperations.generateRepo, input, options);
+  }
+
+  /**
+   * Get a global runner
+   *
+   * @operationId getAdminRunner
+   * @category admin
+   */
+  getAdminRunner(
+    input: GetAdminRunnerInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetAdminRunnerResponse> {
+    return this.rest.request<GetAdminRunnerResponse>(
+      giteaOperations.getAdminRunner,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get all runners
+   *
+   * @operationId getAdminRunners
+   * @category admin
+   */
+  getAdminRunners(
+    input: GetAdminRunnersInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetAdminRunnersResponse> {
+    return this.rest.request<GetAdminRunnersResponse>(
+      giteaOperations.getAdminRunners,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Gets the tag object of an annotated tag (not lightweight tags)
+   *
+   * @operationId GetAnnotatedTag
+   * @category repository
+   */
+  getAnnotatedTag(
+    input: GetAnnotatedTagInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetAnnotatedTagResponse> {
+    return this.rest.request<GetAnnotatedTagResponse>(
+      giteaOperations.getAnnotatedTag,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Gets a specific artifact for a workflow run
+   *
+   * @operationId getArtifact
+   * @category repository
+   */
+  getArtifact(
+    input: GetArtifactInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetArtifactResponse> {
+    return this.rest.request<GetArtifactResponse>(giteaOperations.getArtifact, input, options);
+  }
+
+  /**
+   * Lists all artifacts for a repository
+   *
+   * @operationId getArtifacts
+   * @category repository
+   */
+  getArtifacts(
+    input: GetArtifactsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetArtifactsResponse> {
+    return this.rest.request<GetArtifactsResponse>(giteaOperations.getArtifacts, input, options);
+  }
+
+  /**
+   * Lists all artifacts for a repository run
+   *
+   * @operationId getArtifactsOfRun
+   * @category repository
+   */
+  getArtifactsOfRun(
+    input: GetArtifactsOfRunInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetArtifactsOfRunResponse> {
+    return this.rest.request<GetArtifactsOfRunResponse>(
+      giteaOperations.getArtifactsOfRun,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Gets the blob of a repository.
+   *
+   * @operationId GetBlob
+   * @category repository
+   */
+  getBlob(
+    input: GetBlobInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetBlobResponse> {
+    return this.rest.request<GetBlobResponse>(giteaOperations.getBlob, input, options);
+  }
+
+  /**
+   * Get instance's global settings for api
+   *
+   * @operationId getGeneralAPISettings
+   * @category settings
+   */
+  getGeneralApiSettings(
+    input: GetGeneralApiSettingsInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetGeneralApiSettingsResponse> {
+    return this.rest.request<GetGeneralApiSettingsResponse>(
+      giteaOperations.getGeneralApiSettings,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get instance's global settings for Attachment
+   *
+   * @operationId getGeneralAttachmentSettings
+   * @category settings
+   */
+  getGeneralAttachmentSettings(
+    input: GetGeneralAttachmentSettingsInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetGeneralAttachmentSettingsResponse> {
+    return this.rest.request<GetGeneralAttachmentSettingsResponse>(
+      giteaOperations.getGeneralAttachmentSettings,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get instance's global settings for repositories
+   *
+   * @operationId getGeneralRepositorySettings
+   * @category settings
+   */
+  getGeneralRepositorySettings(
+    input: GetGeneralRepositorySettingsInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetGeneralRepositorySettingsResponse> {
+    return this.rest.request<GetGeneralRepositorySettingsResponse>(
+      giteaOperations.getGeneralRepositorySettings,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get instance's global settings for ui
+   *
+   * @operationId getGeneralUISettings
+   * @category settings
+   */
+  getGeneralUiSettings(
+    input: GetGeneralUiSettingsInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetGeneralUiSettingsResponse> {
+    return this.rest.request<GetGeneralUiSettingsResponse>(
+      giteaOperations.getGeneralUiSettings,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Returns information about a gitignore template
+   *
+   * @operationId getGitignoreTemplateInfo
+   * @category miscellaneous
+   */
+  getGitignoreTemplateInfo(
+    input: GetGitignoreTemplateInfoInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetGitignoreTemplateInfoResponse> {
+    return this.rest.request<GetGitignoreTemplateInfoResponse>(
+      giteaOperations.getGitignoreTemplateInfo,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Returns all labels in a template
+   *
+   * @operationId getLabelTemplateInfo
+   * @category miscellaneous
+   */
+  getLabelTemplateInfo(
+    input: GetLabelTemplateInfoInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetLabelTemplateInfoResponse> {
+    return this.rest.request<GetLabelTemplateInfoResponse>(
+      giteaOperations.getLabelTemplateInfo,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Gets the latest version of a package
+   *
+   * @operationId getLatestPackageVersion
+   * @category package
+   */
+  getLatestPackageVersion(
+    input: GetLatestPackageVersionInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetLatestPackageVersionResponse> {
+    return this.rest.request<GetLatestPackageVersionResponse>(
+      giteaOperations.getLatestPackageVersion,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Returns information about a license template
+   *
+   * @operationId getLicenseTemplateInfo
+   * @category miscellaneous
+   */
+  getLicenseTemplateInfo(
+    input: GetLicenseTemplateInfoInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetLicenseTemplateInfoResponse> {
+    return this.rest.request<GetLicenseTemplateInfoResponse>(
+      giteaOperations.getLicenseTemplateInfo,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get an org-level runner
+   *
+   * @operationId getOrgRunner
+   * @category organization
+   */
+  getOrgRunner(
+    input: GetOrgRunnerInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetOrgRunnerResponse> {
+    return this.rest.request<GetOrgRunnerResponse>(giteaOperations.getOrgRunner, input, options);
+  }
+
+  /**
+   * Get org-level runners
+   *
+   * @operationId getOrgRunners
+   * @category organization
+   */
+  getOrgRunners(
+    input: GetOrgRunnersInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetOrgRunnersResponse> {
+    return this.rest.request<GetOrgRunnersResponse>(giteaOperations.getOrgRunners, input, options);
+  }
+
+  /**
+   * Get an org-level variable
+   *
+   * @operationId getOrgVariable
+   * @category organization
+   */
+  getOrgVariable(
+    input: GetOrgVariableInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetOrgVariableResponse> {
+    return this.rest.request<GetOrgVariableResponse>(
+      giteaOperations.getOrgVariable,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get an org-level variables list
+   *
+   * @operationId getOrgVariablesList
+   * @category organization
+   */
+  getOrgVariablesList(
+    input: GetOrgVariablesListInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetOrgVariablesListResponse> {
+    return this.rest.request<GetOrgVariablesListResponse>(
+      giteaOperations.getOrgVariablesList,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get org-level workflow jobs
+   *
+   * @operationId getOrgWorkflowJobs
+   * @category organization
+   */
+  getOrgWorkflowJobs(
+    input: GetOrgWorkflowJobsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetOrgWorkflowJobsResponse> {
+    return this.rest.request<GetOrgWorkflowJobsResponse>(
+      giteaOperations.getOrgWorkflowJobs,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get org-level workflow runs
+   *
+   * @operationId getOrgWorkflowRuns
+   * @category organization
+   */
+  getOrgWorkflowRuns(
+    input: GetOrgWorkflowRunsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetOrgWorkflowRunsResponse> {
+    return this.rest.request<GetOrgWorkflowRunsResponse>(
+      giteaOperations.getOrgWorkflowRuns,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Gets a package
+   *
+   * @operationId getPackage
+   * @category package
+   */
+  getPackage(
+    input: GetPackageInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetPackageResponse> {
+    return this.rest.request<GetPackageResponse>(giteaOperations.getPackage, input, options);
+  }
+
+  /**
+   * Get a repo-level runner
+   *
+   * @operationId getRepoRunner
+   * @category repository
+   */
+  getRepoRunner(
+    input: GetRepoRunnerInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetRepoRunnerResponse> {
+    return this.rest.request<GetRepoRunnerResponse>(giteaOperations.getRepoRunner, input, options);
+  }
+
+  /**
+   * Get repo-level runners
+   *
+   * @operationId getRepoRunners
+   * @category repository
+   */
+  getRepoRunners(
+    input: GetRepoRunnersInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetRepoRunnersResponse> {
+    return this.rest.request<GetRepoRunnersResponse>(
+      giteaOperations.getRepoRunners,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a repo-level variable
+   *
+   * @operationId getRepoVariable
+   * @category repository
+   */
+  getRepoVariable(
+    input: GetRepoVariableInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetRepoVariableResponse> {
+    return this.rest.request<GetRepoVariableResponse>(
+      giteaOperations.getRepoVariable,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get repo-level variables list
+   *
+   * @operationId getRepoVariablesList
+   * @category repository
+   */
+  getRepoVariablesList(
+    input: GetRepoVariablesListInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetRepoVariablesListResponse> {
+    return this.rest.request<GetRepoVariablesListResponse>(
+      giteaOperations.getRepoVariablesList,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get default signing-key.gpg
+   *
+   * @operationId getSigningKey
+   * @category miscellaneous
+   */
+  getSigningKey(
+    input: GetSigningKeyInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetSigningKeyResponse> {
+    return this.rest.request<GetSigningKeyResponse>(giteaOperations.getSigningKey, input, options);
+  }
+
+  /**
+   * Get default signing-key.pub
+   *
+   * @operationId getSigningKeySSH
+   * @category miscellaneous
+   */
+  getSigningKeySsh(
+    input: GetSigningKeySshInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetSigningKeySshResponse> {
+    return this.rest.request<GetSigningKeySshResponse>(
+      giteaOperations.getSigningKeySsh,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Gets the tree of a repository.
+   *
+   * @operationId GetTree
+   * @category repository
+   */
+  getTree(
+    input: GetTreeInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetTreeResponse> {
+    return this.rest.request<GetTreeResponse>(giteaOperations.getTree, input, options);
+  }
+
+  /**
+   * Get a user-level runner
+   *
+   * @operationId getUserRunner
+   * @category user
+   */
+  getUserRunner(
+    input: GetUserRunnerInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetUserRunnerResponse> {
+    return this.rest.request<GetUserRunnerResponse>(giteaOperations.getUserRunner, input, options);
+  }
+
+  /**
+   * Get user-level runners
+   *
+   * @operationId getUserRunners
+   * @category user
+   */
+  getUserRunners(
+    input: GetUserRunnersInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetUserRunnersResponse> {
+    return this.rest.request<GetUserRunnersResponse>(
+      giteaOperations.getUserRunners,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get user settings
+   *
+   * @operationId getUserSettings
+   * @category user
+   */
+  getUserSettings(
+    input: GetUserSettingsInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetUserSettingsResponse> {
+    return this.rest.request<GetUserSettingsResponse>(
+      giteaOperations.getUserSettings,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a user-level variable which is created by current doer
+   *
+   * @operationId getUserVariable
+   * @category user
+   */
+  getUserVariable(
+    input: GetUserVariableInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetUserVariableResponse> {
+    return this.rest.request<GetUserVariableResponse>(
+      giteaOperations.getUserVariable,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get the user-level list of variables which is created by current doer
+   *
+   * @operationId getUserVariablesList
+   * @category user
+   */
+  getUserVariablesList(
+    input: GetUserVariablesListInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetUserVariablesListResponse> {
+    return this.rest.request<GetUserVariablesListResponse>(
+      giteaOperations.getUserVariablesList,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get workflow jobs
+   *
+   * @operationId getUserWorkflowJobs
+   * @category user
+   */
+  getUserWorkflowJobs(
+    input: GetUserWorkflowJobsInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetUserWorkflowJobsResponse> {
+    return this.rest.request<GetUserWorkflowJobsResponse>(
+      giteaOperations.getUserWorkflowJobs,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get workflow runs
+   *
+   * @operationId getUserWorkflowRuns
+   * @category user
+   */
+  getUserWorkflowRuns(
+    input: GetUserWorkflowRunsInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetUserWorkflowRunsResponse> {
+    return this.rest.request<GetUserWorkflowRunsResponse>(
+      giteaOperations.getUserWorkflowRuns,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a Token to verify
+   *
+   * @operationId getVerificationToken
+   * @category user
+   */
+  getVerificationToken(
+    input: GetVerificationTokenInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetVerificationTokenResponse> {
+    return this.rest.request<GetVerificationTokenResponse>(
+      giteaOperations.getVerificationToken,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Returns the version of the Gitea application
+   *
+   * @operationId getVersion
+   * @category miscellaneous
+   */
+  getVersion(
+    input: GetVersionInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetVersionResponse> {
+    return this.rest.request<GetVersionResponse>(giteaOperations.getVersion, input, options);
+  }
+
+  /**
+   * Gets a specific workflow job for a workflow run
+   *
+   * @operationId getWorkflowJob
+   * @category repository
+   */
+  getWorkflowJob(
+    input: GetWorkflowJobInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetWorkflowJobResponse> {
+    return this.rest.request<GetWorkflowJobResponse>(
+      giteaOperations.getWorkflowJob,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Gets a specific workflow run
+   *
+   * @operationId GetWorkflowRun
+   * @category repository
+   */
+  getWorkflowRun(
+    input: GetWorkflowRunInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetWorkflowRunResponse> {
+    return this.rest.request<GetWorkflowRunResponse>(
+      giteaOperations.getWorkflowRun,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Lists all runs for a repository run
+   *
+   * @operationId getWorkflowRuns
+   * @category repository
+   */
+  getWorkflowRuns(
+    input: GetWorkflowRunsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<GetWorkflowRunsResponse> {
+    return this.rest.request<GetWorkflowRunsResponse>(
+      giteaOperations.getWorkflowRuns,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Add a label to an issue
+   *
+   * @operationId issueAddLabel
+   * @category issue
+   */
+  issueAddLabel(
+    input: IssueAddLabelInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueAddLabelResponse> {
+    return this.rest.request<IssueAddLabelResponse>(giteaOperations.issueAddLabel, input, options);
+  }
+
+  /**
+   * Subscribe user to issue
+   *
+   * @operationId issueAddSubscription
+   * @category issue
+   */
+  issueAddSubscription(
+    input: IssueAddSubscriptionInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueAddSubscriptionResponse> {
+    return this.rest.request<IssueAddSubscriptionResponse>(
+      giteaOperations.issueAddSubscription,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Add tracked time to a issue
+   *
+   * @operationId issueAddTime
+   * @category issue
+   */
+  issueAddTime(
+    input: IssueAddTimeInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueAddTimeResponse> {
+    return this.rest.request<IssueAddTimeResponse>(giteaOperations.issueAddTime, input, options);
+  }
+
+  /**
+   * Check if user is subscribed to an issue
+   *
+   * @operationId issueCheckSubscription
+   * @category issue
+   */
+  issueCheckSubscription(
+    input: IssueCheckSubscriptionInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueCheckSubscriptionResponse> {
+    return this.rest.request<IssueCheckSubscriptionResponse>(
+      giteaOperations.issueCheckSubscription,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Remove all labels from an issue
+   *
+   * @operationId issueClearLabels
+   * @category issue
+   */
+  issueClearLabels(
+    input: IssueClearLabelsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueClearLabelsResponse> {
+    return this.rest.request<IssueClearLabelsResponse>(
+      giteaOperations.issueClearLabels,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Add a comment to an issue
+   *
+   * @operationId issueCreateComment
+   * @category issue
+   */
+  issueCreateComment(
+    input: IssueCreateCommentInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueCreateCommentResponse> {
+    return this.rest.request<IssueCreateCommentResponse>(
+      giteaOperations.issueCreateComment,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create an issue. If using deadline only the date will be taken into account, and time of day ignored.
+   *
+   * @operationId issueCreateIssue
+   * @category issue
+   */
+  issueCreateIssue(
+    input: IssueCreateIssueInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueCreateIssueResponse> {
+    return this.rest.request<IssueCreateIssueResponse>(
+      giteaOperations.issueCreateIssue,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create an issue attachment
+   *
+   * @operationId issueCreateIssueAttachment
+   * @category issue
+   */
+  issueCreateIssueAttachment(
+    input: IssueCreateIssueAttachmentInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueCreateIssueAttachmentResponse> {
+    return this.rest.request<IssueCreateIssueAttachmentResponse>(
+      giteaOperations.issueCreateIssueAttachment,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Block the issue given in the body by the issue in path
+   *
+   * @operationId issueCreateIssueBlocking
+   * @category issue
+   */
+  issueCreateIssueBlocking(
+    input: IssueCreateIssueBlockingInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueCreateIssueBlockingResponse> {
+    return this.rest.request<IssueCreateIssueBlockingResponse>(
+      giteaOperations.issueCreateIssueBlocking,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create a comment attachment
+   *
+   * @operationId issueCreateIssueCommentAttachment
+   * @category issue
+   */
+  issueCreateIssueCommentAttachment(
+    input: IssueCreateIssueCommentAttachmentInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueCreateIssueCommentAttachmentResponse> {
+    return this.rest.request<IssueCreateIssueCommentAttachmentResponse>(
+      giteaOperations.issueCreateIssueCommentAttachment,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Make the issue in the url depend on the issue in the form.
+   *
+   * @operationId issueCreateIssueDependencies
+   * @category issue
+   */
+  issueCreateIssueDependencies(
+    input: IssueCreateIssueDependenciesInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueCreateIssueDependenciesResponse> {
+    return this.rest.request<IssueCreateIssueDependenciesResponse>(
+      giteaOperations.issueCreateIssueDependencies,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create a label
+   *
+   * @operationId issueCreateLabel
+   * @category issue
+   */
+  issueCreateLabel(
+    input: IssueCreateLabelInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueCreateLabelResponse> {
+    return this.rest.request<IssueCreateLabelResponse>(
+      giteaOperations.issueCreateLabel,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create a milestone
+   *
+   * @operationId issueCreateMilestone
+   * @category issue
+   */
+  issueCreateMilestone(
+    input: IssueCreateMilestoneInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueCreateMilestoneResponse> {
+    return this.rest.request<IssueCreateMilestoneResponse>(
+      giteaOperations.issueCreateMilestone,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete an issue
+   *
+   * @operationId issueDelete
+   * @category issue
+   */
+  issueDelete(
+    input: IssueDeleteInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueDeleteResponse> {
+    return this.rest.request<IssueDeleteResponse>(giteaOperations.issueDelete, input, options);
+  }
+
+  /**
+   * Delete a comment
+   *
+   * @operationId issueDeleteComment
+   * @category issue
+   */
+  issueDeleteComment(
+    input: IssueDeleteCommentInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueDeleteCommentResponse> {
+    return this.rest.request<IssueDeleteCommentResponse>(
+      giteaOperations.issueDeleteComment,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a comment
+   *
+   * @operationId issueDeleteCommentDeprecated
+   * @category issue
+   * @deprecated
+   */
+  issueDeleteCommentDeprecated(
+    input: IssueDeleteCommentDeprecatedInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueDeleteCommentDeprecatedResponse> {
+    return this.rest.request<IssueDeleteCommentDeprecatedResponse>(
+      giteaOperations.issueDeleteCommentDeprecated,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Remove a reaction from a comment of an issue
+   *
+   * @operationId issueDeleteCommentReaction
+   * @category issue
+   */
+  issueDeleteCommentReaction(
+    input: IssueDeleteCommentReactionInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueDeleteCommentReactionResponse> {
+    return this.rest.request<IssueDeleteCommentReactionResponse>(
+      giteaOperations.issueDeleteCommentReaction,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete an issue attachment
+   *
+   * @operationId issueDeleteIssueAttachment
+   * @category issue
+   */
+  issueDeleteIssueAttachment(
+    input: IssueDeleteIssueAttachmentInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueDeleteIssueAttachmentResponse> {
+    return this.rest.request<IssueDeleteIssueAttachmentResponse>(
+      giteaOperations.issueDeleteIssueAttachment,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a comment attachment
+   *
+   * @operationId issueDeleteIssueCommentAttachment
+   * @category issue
+   */
+  issueDeleteIssueCommentAttachment(
+    input: IssueDeleteIssueCommentAttachmentInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueDeleteIssueCommentAttachmentResponse> {
+    return this.rest.request<IssueDeleteIssueCommentAttachmentResponse>(
+      giteaOperations.issueDeleteIssueCommentAttachment,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Remove a reaction from an issue
+   *
+   * @operationId issueDeleteIssueReaction
+   * @category issue
+   */
+  issueDeleteIssueReaction(
+    input: IssueDeleteIssueReactionInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueDeleteIssueReactionResponse> {
+    return this.rest.request<IssueDeleteIssueReactionResponse>(
+      giteaOperations.issueDeleteIssueReaction,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a label
+   *
+   * @operationId issueDeleteLabel
+   * @category issue
+   */
+  issueDeleteLabel(
+    input: IssueDeleteLabelInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueDeleteLabelResponse> {
+    return this.rest.request<IssueDeleteLabelResponse>(
+      giteaOperations.issueDeleteLabel,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a milestone
+   *
+   * @operationId issueDeleteMilestone
+   * @category issue
+   */
+  issueDeleteMilestone(
+    input: IssueDeleteMilestoneInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueDeleteMilestoneResponse> {
+    return this.rest.request<IssueDeleteMilestoneResponse>(
+      giteaOperations.issueDeleteMilestone,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete an issue's existing stopwatch.
+   *
+   * @operationId issueDeleteStopWatch
+   * @category issue
+   */
+  issueDeleteStopWatch(
+    input: IssueDeleteStopWatchInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueDeleteStopWatchResponse> {
+    return this.rest.request<IssueDeleteStopWatchResponse>(
+      giteaOperations.issueDeleteStopWatch,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Unsubscribe user from issue
+   *
+   * @operationId issueDeleteSubscription
+   * @category issue
+   */
+  issueDeleteSubscription(
+    input: IssueDeleteSubscriptionInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueDeleteSubscriptionResponse> {
+    return this.rest.request<IssueDeleteSubscriptionResponse>(
+      giteaOperations.issueDeleteSubscription,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete specific tracked time
+   *
+   * @operationId issueDeleteTime
+   * @category issue
+   */
+  issueDeleteTime(
+    input: IssueDeleteTimeInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueDeleteTimeResponse> {
+    return this.rest.request<IssueDeleteTimeResponse>(
+      giteaOperations.issueDeleteTime,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Edit a comment
+   *
+   * @operationId issueEditComment
+   * @category issue
+   */
+  issueEditComment(
+    input: IssueEditCommentInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueEditCommentResponse> {
+    return this.rest.request<IssueEditCommentResponse>(
+      giteaOperations.issueEditComment,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Edit a comment
+   *
+   * @operationId issueEditCommentDeprecated
+   * @category issue
+   * @deprecated
+   */
+  issueEditCommentDeprecated(
+    input: IssueEditCommentDeprecatedInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueEditCommentDeprecatedResponse> {
+    return this.rest.request<IssueEditCommentDeprecatedResponse>(
+      giteaOperations.issueEditCommentDeprecated,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Edit an issue. If using deadline only the date will be taken into account, and time of day ignored.
+   *
+   * Pass `content_version` to enable optimistic locking on body edits.
+   * If the version doesn't match the current value, the request fails with 409 Conflict.
+   *
+   * @operationId issueEditIssue
+   * @category issue
+   */
+  issueEditIssue(
+    input: IssueEditIssueInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueEditIssueResponse> {
+    return this.rest.request<IssueEditIssueResponse>(
+      giteaOperations.issueEditIssue,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Edit an issue attachment
+   *
+   * @operationId issueEditIssueAttachment
+   * @category issue
+   */
+  issueEditIssueAttachment(
+    input: IssueEditIssueAttachmentInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueEditIssueAttachmentResponse> {
+    return this.rest.request<IssueEditIssueAttachmentResponse>(
+      giteaOperations.issueEditIssueAttachment,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Edit a comment attachment
+   *
+   * @operationId issueEditIssueCommentAttachment
+   * @category issue
+   */
+  issueEditIssueCommentAttachment(
+    input: IssueEditIssueCommentAttachmentInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueEditIssueCommentAttachmentResponse> {
+    return this.rest.request<IssueEditIssueCommentAttachmentResponse>(
+      giteaOperations.issueEditIssueCommentAttachment,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Set an issue deadline. If set to null, the deadline is deleted. If using deadline only the date will be taken into account, and time of day ignored.
+   *
+   * @operationId issueEditIssueDeadline
+   * @category issue
+   */
+  issueEditIssueDeadline(
+    input: IssueEditIssueDeadlineInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueEditIssueDeadlineResponse> {
+    return this.rest.request<IssueEditIssueDeadlineResponse>(
+      giteaOperations.issueEditIssueDeadline,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Update a label
+   *
+   * @operationId issueEditLabel
+   * @category issue
+   */
+  issueEditLabel(
+    input: IssueEditLabelInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueEditLabelResponse> {
+    return this.rest.request<IssueEditLabelResponse>(
+      giteaOperations.issueEditLabel,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Update a milestone
+   *
+   * @operationId issueEditMilestone
+   * @category issue
+   */
+  issueEditMilestone(
+    input: IssueEditMilestoneInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueEditMilestoneResponse> {
+    return this.rest.request<IssueEditMilestoneResponse>(
+      giteaOperations.issueEditMilestone,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a comment
+   *
+   * @operationId issueGetComment
+   * @category issue
+   */
+  issueGetComment(
+    input: IssueGetCommentInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueGetCommentResponse> {
+    return this.rest.request<IssueGetCommentResponse>(
+      giteaOperations.issueGetComment,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a list of reactions from a comment of an issue
+   *
+   * @operationId issueGetCommentReactions
+   * @category issue
+   */
+  issueGetCommentReactions(
+    input: IssueGetCommentReactionsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueGetCommentReactionsResponse> {
+    return this.rest.request<IssueGetCommentReactionsResponse>(
+      giteaOperations.issueGetCommentReactions,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List all comments on an issue
+   *
+   * @operationId issueGetComments
+   * @category issue
+   */
+  issueGetComments(
+    input: IssueGetCommentsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueGetCommentsResponse> {
+    return this.rest.request<IssueGetCommentsResponse>(
+      giteaOperations.issueGetComments,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List all comments and events on an issue
+   *
+   * @operationId issueGetCommentsAndTimeline
+   * @category issue
+   */
+  issueGetCommentsAndTimeline(
+    input: IssueGetCommentsAndTimelineInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueGetCommentsAndTimelineResponse> {
+    return this.rest.request<IssueGetCommentsAndTimelineResponse>(
+      giteaOperations.issueGetCommentsAndTimeline,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get an issue
+   *
+   * @operationId issueGetIssue
+   * @category issue
+   */
+  issueGetIssue(
+    input: IssueGetIssueInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueGetIssueResponse> {
+    return this.rest.request<IssueGetIssueResponse>(giteaOperations.issueGetIssue, input, options);
+  }
+
+  /**
+   * Get an issue attachment
+   *
+   * @operationId issueGetIssueAttachment
+   * @category issue
+   */
+  issueGetIssueAttachment(
+    input: IssueGetIssueAttachmentInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueGetIssueAttachmentResponse> {
+    return this.rest.request<IssueGetIssueAttachmentResponse>(
+      giteaOperations.issueGetIssueAttachment,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a comment attachment
+   *
+   * @operationId issueGetIssueCommentAttachment
+   * @category issue
+   */
+  issueGetIssueCommentAttachment(
+    input: IssueGetIssueCommentAttachmentInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueGetIssueCommentAttachmentResponse> {
+    return this.rest.request<IssueGetIssueCommentAttachmentResponse>(
+      giteaOperations.issueGetIssueCommentAttachment,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a list reactions of an issue
+   *
+   * @operationId issueGetIssueReactions
+   * @category issue
+   */
+  issueGetIssueReactions(
+    input: IssueGetIssueReactionsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueGetIssueReactionsResponse> {
+    return this.rest.request<IssueGetIssueReactionsResponse>(
+      giteaOperations.issueGetIssueReactions,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a single label
+   *
+   * @operationId issueGetLabel
+   * @category issue
+   */
+  issueGetLabel(
+    input: IssueGetLabelInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueGetLabelResponse> {
+    return this.rest.request<IssueGetLabelResponse>(giteaOperations.issueGetLabel, input, options);
+  }
+
+  /**
+   * Get an issue's labels
+   *
+   * @operationId issueGetLabels
+   * @category issue
+   */
+  issueGetLabels(
+    input: IssueGetLabelsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueGetLabelsResponse> {
+    return this.rest.request<IssueGetLabelsResponse>(
+      giteaOperations.issueGetLabels,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a milestone
+   *
+   * @operationId issueGetMilestone
+   * @category issue
+   */
+  issueGetMilestone(
+    input: IssueGetMilestoneInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueGetMilestoneResponse> {
+    return this.rest.request<IssueGetMilestoneResponse>(
+      giteaOperations.issueGetMilestone,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get all of a repository's opened milestones
+   *
+   * @operationId issueGetMilestonesList
+   * @category issue
+   */
+  issueGetMilestonesList(
+    input: IssueGetMilestonesListInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueGetMilestonesListResponse> {
+    return this.rest.request<IssueGetMilestonesListResponse>(
+      giteaOperations.issueGetMilestonesList,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List all comments in a repository
+   *
+   * @operationId issueGetRepoComments
+   * @category issue
+   */
+  issueGetRepoComments(
+    input: IssueGetRepoCommentsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueGetRepoCommentsResponse> {
+    return this.rest.request<IssueGetRepoCommentsResponse>(
+      giteaOperations.issueGetRepoComments,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List issues that are blocked by this issue
+   *
+   * @operationId issueListBlocks
+   * @category issue
+   */
+  issueListBlocks(
+    input: IssueListBlocksInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueListBlocksResponse> {
+    return this.rest.request<IssueListBlocksResponse>(
+      giteaOperations.issueListBlocks,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List issue's attachments
+   *
+   * @operationId issueListIssueAttachments
+   * @category issue
+   */
+  issueListIssueAttachments(
+    input: IssueListIssueAttachmentsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueListIssueAttachmentsResponse> {
+    return this.rest.request<IssueListIssueAttachmentsResponse>(
+      giteaOperations.issueListIssueAttachments,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List comment's attachments
+   *
+   * @operationId issueListIssueCommentAttachments
+   * @category issue
+   */
+  issueListIssueCommentAttachments(
+    input: IssueListIssueCommentAttachmentsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueListIssueCommentAttachmentsResponse> {
+    return this.rest.request<IssueListIssueCommentAttachmentsResponse>(
+      giteaOperations.issueListIssueCommentAttachments,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List an issue's dependencies, i.e all issues that block this issue.
+   *
+   * @operationId issueListIssueDependencies
+   * @category issue
+   */
+  issueListIssueDependencies(
+    input: IssueListIssueDependenciesInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueListIssueDependenciesResponse> {
+    return this.rest.request<IssueListIssueDependenciesResponse>(
+      giteaOperations.issueListIssueDependencies,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List a repository's issues
+   *
+   * @operationId issueListIssues
+   * @category issue
+   */
+  issueListIssues(
+    input: IssueListIssuesInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueListIssuesResponse> {
+    return this.rest.request<IssueListIssuesResponse>(
+      giteaOperations.issueListIssues,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get all of a repository's labels
+   *
+   * @operationId issueListLabels
+   * @category issue
+   */
+  issueListLabels(
+    input: IssueListLabelsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueListLabelsResponse> {
+    return this.rest.request<IssueListLabelsResponse>(
+      giteaOperations.issueListLabels,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Lock an issue
+   *
+   * @operationId issueLockIssue
+   * @category issue
+   */
+  issueLockIssue(
+    input: IssueLockIssueInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueLockIssueResponse> {
+    return this.rest.request<IssueLockIssueResponse>(
+      giteaOperations.issueLockIssue,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Add a reaction to a comment of an issue
+   *
+   * @operationId issuePostCommentReaction
+   * @category issue
+   */
+  issuePostCommentReaction(
+    input: IssuePostCommentReactionInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssuePostCommentReactionResponse> {
+    return this.rest.request<IssuePostCommentReactionResponse>(
+      giteaOperations.issuePostCommentReaction,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Add a reaction to an issue
+   *
+   * @operationId issuePostIssueReaction
+   * @category issue
+   */
+  issuePostIssueReaction(
+    input: IssuePostIssueReactionInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssuePostIssueReactionResponse> {
+    return this.rest.request<IssuePostIssueReactionResponse>(
+      giteaOperations.issuePostIssueReaction,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Unblock the issue given in the body by the issue in path
+   *
+   * @operationId issueRemoveIssueBlocking
+   * @category issue
+   */
+  issueRemoveIssueBlocking(
+    input: IssueRemoveIssueBlockingInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueRemoveIssueBlockingResponse> {
+    return this.rest.request<IssueRemoveIssueBlockingResponse>(
+      giteaOperations.issueRemoveIssueBlocking,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Remove an issue dependency
+   *
+   * @operationId issueRemoveIssueDependencies
+   * @category issue
+   */
+  issueRemoveIssueDependencies(
+    input: IssueRemoveIssueDependenciesInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueRemoveIssueDependenciesResponse> {
+    return this.rest.request<IssueRemoveIssueDependenciesResponse>(
+      giteaOperations.issueRemoveIssueDependencies,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Remove a label from an issue
+   *
+   * @operationId issueRemoveLabel
+   * @category issue
+   */
+  issueRemoveLabel(
+    input: IssueRemoveLabelInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueRemoveLabelResponse> {
+    return this.rest.request<IssueRemoveLabelResponse>(
+      giteaOperations.issueRemoveLabel,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Replace an issue's labels
+   *
+   * @operationId issueReplaceLabels
+   * @category issue
+   */
+  issueReplaceLabels(
+    input: IssueReplaceLabelsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueReplaceLabelsResponse> {
+    return this.rest.request<IssueReplaceLabelsResponse>(
+      giteaOperations.issueReplaceLabels,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Reset a tracked time of an issue
+   *
+   * @operationId issueResetTime
+   * @category issue
+   */
+  issueResetTime(
+    input: IssueResetTimeInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueResetTimeResponse> {
+    return this.rest.request<IssueResetTimeResponse>(
+      giteaOperations.issueResetTime,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Search for issues across the repositories that the user has access to
+   *
+   * @operationId issueSearchIssues
+   * @category issue
+   */
+  issueSearchIssues(
+    input: IssueSearchIssuesInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueSearchIssuesResponse> {
+    return this.rest.request<IssueSearchIssuesResponse>(
+      giteaOperations.issueSearchIssues,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Start stopwatch on an issue.
+   *
+   * @operationId issueStartStopWatch
+   * @category issue
+   */
+  issueStartStopWatch(
+    input: IssueStartStopWatchInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueStartStopWatchResponse> {
+    return this.rest.request<IssueStartStopWatchResponse>(
+      giteaOperations.issueStartStopWatch,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Stop an issue's existing stopwatch.
+   *
+   * @operationId issueStopStopWatch
+   * @category issue
+   */
+  issueStopStopWatch(
+    input: IssueStopStopWatchInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueStopStopWatchResponse> {
+    return this.rest.request<IssueStopStopWatchResponse>(
+      giteaOperations.issueStopStopWatch,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get users who subscribed on an issue.
+   *
+   * @operationId issueSubscriptions
+   * @category issue
+   */
+  issueSubscriptions(
+    input: IssueSubscriptionsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueSubscriptionsResponse> {
+    return this.rest.request<IssueSubscriptionsResponse>(
+      giteaOperations.issueSubscriptions,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List an issue's tracked times
+   *
+   * @operationId issueTrackedTimes
+   * @category issue
+   */
+  issueTrackedTimes(
+    input: IssueTrackedTimesInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueTrackedTimesResponse> {
+    return this.rest.request<IssueTrackedTimesResponse>(
+      giteaOperations.issueTrackedTimes,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Unlock an issue
+   *
+   * @operationId issueUnlockIssue
+   * @category issue
+   */
+  issueUnlockIssue(
+    input: IssueUnlockIssueInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<IssueUnlockIssueResponse> {
+    return this.rest.request<IssueUnlockIssueResponse>(
+      giteaOperations.issueUnlockIssue,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Link a package to a repository
+   *
+   * @operationId linkPackage
+   * @category package
+   */
+  linkPackage(
+    input: LinkPackageInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<LinkPackageResponse> {
+    return this.rest.request<LinkPackageResponse>(giteaOperations.linkPackage, input, options);
+  }
+
+  /**
+   * List a repository's action tasks
+   *
+   * @operationId ListActionTasks
+   * @category repository
+   */
+  listActionTasks(
+    input: ListActionTasksInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<ListActionTasksResponse> {
+    return this.rest.request<ListActionTasksResponse>(
+      giteaOperations.listActionTasks,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Lists all jobs
+   *
+   * @operationId listAdminWorkflowJobs
+   * @category admin
+   */
+  listAdminWorkflowJobs(
+    input: ListAdminWorkflowJobsInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<ListAdminWorkflowJobsResponse> {
+    return this.rest.request<ListAdminWorkflowJobsResponse>(
+      giteaOperations.listAdminWorkflowJobs,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Lists all runs
+   *
+   * @operationId listAdminWorkflowRuns
+   * @category admin
+   */
+  listAdminWorkflowRuns(
+    input: ListAdminWorkflowRunsInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<ListAdminWorkflowRunsResponse> {
+    return this.rest.request<ListAdminWorkflowRunsResponse>(
+      giteaOperations.listAdminWorkflowRuns,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List a repository's forks
+   *
+   * @operationId listForks
+   * @category repository
+   */
+  listForks(
+    input: ListForksInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<ListForksResponse> {
+    return this.rest.request<ListForksResponse>(giteaOperations.listForks, input, options);
+  }
+
+  /**
+   * Returns a list of all gitignore templates
+   *
+   * @operationId listGitignoresTemplates
+   * @category miscellaneous
+   */
+  listGitignoresTemplates(
+    input: ListGitignoresTemplatesInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<ListGitignoresTemplatesResponse> {
+    return this.rest.request<ListGitignoresTemplatesResponse>(
+      giteaOperations.listGitignoresTemplates,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Returns a list of all label templates
+   *
+   * @operationId listLabelTemplates
+   * @category miscellaneous
+   */
+  listLabelTemplates(
+    input: ListLabelTemplatesInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<ListLabelTemplatesResponse> {
+    return this.rest.request<ListLabelTemplatesResponse>(
+      giteaOperations.listLabelTemplates,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Returns a list of all license templates
+   *
+   * @operationId listLicenseTemplates
+   * @category miscellaneous
+   */
+  listLicenseTemplates(
+    input: ListLicenseTemplatesInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<ListLicenseTemplatesResponse> {
+    return this.rest.request<ListLicenseTemplatesResponse>(
+      giteaOperations.listLicenseTemplates,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Gets all files of a package
+   *
+   * @operationId listPackageFiles
+   * @category package
+   */
+  listPackageFiles(
+    input: ListPackageFilesInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<ListPackageFilesResponse> {
+    return this.rest.request<ListPackageFilesResponse>(
+      giteaOperations.listPackageFiles,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Gets all versions of a package
+   *
+   * @operationId listPackageVersions
+   * @category package
+   */
+  listPackageVersions(
+    input: ListPackageVersionsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<ListPackageVersionsResponse> {
+    return this.rest.request<ListPackageVersionsResponse>(
+      giteaOperations.listPackageVersions,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Gets all packages of an owner
+   *
+   * @operationId listPackages
+   * @category package
+   */
+  listPackages(
+    input: ListPackagesInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<ListPackagesResponse> {
+    return this.rest.request<ListPackagesResponse>(giteaOperations.listPackages, input, options);
+  }
+
+  /**
+   * Lists all jobs for a repository
+   *
+   * @operationId listWorkflowJobs
+   * @category repository
+   */
+  listWorkflowJobs(
+    input: ListWorkflowJobsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<ListWorkflowJobsResponse> {
+    return this.rest.request<ListWorkflowJobsResponse>(
+      giteaOperations.listWorkflowJobs,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Lists all jobs for a workflow run
+   *
+   * @operationId listWorkflowRunJobs
+   * @category repository
+   */
+  listWorkflowRunJobs(
+    input: ListWorkflowRunJobsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<ListWorkflowRunJobsResponse> {
+    return this.rest.request<ListWorkflowRunJobsResponse>(
+      giteaOperations.listWorkflowRunJobs,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Moves the Pin to the given Position
+   *
+   * @operationId moveIssuePin
+   * @category issue
+   */
+  moveIssuePin(
+    input: MoveIssuePinInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<MoveIssuePinResponse> {
+    return this.rest.request<MoveIssuePinResponse>(giteaOperations.moveIssuePin, input, options);
+  }
+
+  /**
+   * List users's notification threads
+   *
+   * @operationId notifyGetList
+   * @category notification
+   */
+  notifyGetList(
+    input: NotifyGetListInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<NotifyGetListResponse> {
+    return this.rest.request<NotifyGetListResponse>(giteaOperations.notifyGetList, input, options);
+  }
+
+  /**
+   * List users's notification threads on a specific repo
+   *
+   * @operationId notifyGetRepoList
+   * @category notification
+   */
+  notifyGetRepoList(
+    input: NotifyGetRepoListInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<NotifyGetRepoListResponse> {
+    return this.rest.request<NotifyGetRepoListResponse>(
+      giteaOperations.notifyGetRepoList,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get notification thread by ID
+   *
+   * @operationId notifyGetThread
+   * @category notification
+   */
+  notifyGetThread(
+    input: NotifyGetThreadInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<NotifyGetThreadResponse> {
+    return this.rest.request<NotifyGetThreadResponse>(
+      giteaOperations.notifyGetThread,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Check if unread notifications exist
+   *
+   * @operationId notifyNewAvailable
+   * @category notification
+   */
+  notifyNewAvailable(
+    input: NotifyNewAvailableInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<NotifyNewAvailableResponse> {
+    return this.rest.request<NotifyNewAvailableResponse>(
+      giteaOperations.notifyNewAvailable,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Mark notification threads as read, pinned or unread
+   *
+   * @operationId notifyReadList
+   * @category notification
+   */
+  notifyReadList(
+    input: NotifyReadListInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<NotifyReadListResponse> {
+    return this.rest.request<NotifyReadListResponse>(
+      giteaOperations.notifyReadList,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Mark notification threads as read, pinned or unread on a specific repo
+   *
+   * @operationId notifyReadRepoList
+   * @category notification
+   */
+  notifyReadRepoList(
+    input: NotifyReadRepoListInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<NotifyReadRepoListResponse> {
+    return this.rest.request<NotifyReadRepoListResponse>(
+      giteaOperations.notifyReadRepoList,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Mark notification thread as read by ID
+   *
+   * @operationId notifyReadThread
+   * @category notification
+   */
+  notifyReadThread(
+    input: NotifyReadThreadInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<NotifyReadThreadResponse> {
+    return this.rest.request<NotifyReadThreadResponse>(
+      giteaOperations.notifyReadThread,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Add a team member
+   *
+   * @operationId orgAddTeamMember
+   * @category organization
+   */
+  orgAddTeamMember(
+    input: OrgAddTeamMemberInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgAddTeamMemberResponse> {
+    return this.rest.request<OrgAddTeamMemberResponse>(
+      giteaOperations.orgAddTeamMember,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Add a repository to a team
+   *
+   * @operationId orgAddTeamRepository
+   * @category organization
+   */
+  orgAddTeamRepository(
+    input: OrgAddTeamRepositoryInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgAddTeamRepositoryResponse> {
+    return this.rest.request<OrgAddTeamRepositoryResponse>(
+      giteaOperations.orgAddTeamRepository,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Conceal a user's membership
+   *
+   * @operationId orgConcealMember
+   * @category organization
+   */
+  orgConcealMember(
+    input: OrgConcealMemberInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgConcealMemberResponse> {
+    return this.rest.request<OrgConcealMemberResponse>(
+      giteaOperations.orgConcealMember,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create an organization
+   *
+   * @operationId orgCreate
+   * @category organization
+   */
+  orgCreate(
+    input: OrgCreateInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgCreateResponse> {
+    return this.rest.request<OrgCreateResponse>(giteaOperations.orgCreate, input, options);
+  }
+
+  /**
+   * Create a hook
+   *
+   * @operationId orgCreateHook
+   * @category organization
+   */
+  orgCreateHook(
+    input: OrgCreateHookInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgCreateHookResponse> {
+    return this.rest.request<OrgCreateHookResponse>(giteaOperations.orgCreateHook, input, options);
+  }
+
+  /**
+   * Create a label for an organization
+   *
+   * @operationId orgCreateLabel
+   * @category organization
+   */
+  orgCreateLabel(
+    input: OrgCreateLabelInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgCreateLabelResponse> {
+    return this.rest.request<OrgCreateLabelResponse>(
+      giteaOperations.orgCreateLabel,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get an organization's actions runner registration token
+   *
+   * @operationId orgCreateRunnerRegistrationToken
+   * @category organization
+   */
+  orgCreateRunnerRegistrationToken(
+    input: OrgCreateRunnerRegistrationTokenInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgCreateRunnerRegistrationTokenResponse> {
+    return this.rest.request<OrgCreateRunnerRegistrationTokenResponse>(
+      giteaOperations.orgCreateRunnerRegistrationToken,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create a team
+   *
+   * @operationId orgCreateTeam
+   * @category organization
+   */
+  orgCreateTeam(
+    input: OrgCreateTeamInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgCreateTeamResponse> {
+    return this.rest.request<OrgCreateTeamResponse>(giteaOperations.orgCreateTeam, input, options);
+  }
+
+  /**
+   * Delete an organization
+   *
+   * @operationId orgDelete
+   * @category organization
+   */
+  orgDelete(
+    input: OrgDeleteInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgDeleteResponse> {
+    return this.rest.request<OrgDeleteResponse>(giteaOperations.orgDelete, input, options);
+  }
+
+  /**
+   * Delete Avatar
+   *
+   * @operationId orgDeleteAvatar
+   * @category organization
+   */
+  orgDeleteAvatar(
+    input: OrgDeleteAvatarInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgDeleteAvatarResponse> {
+    return this.rest.request<OrgDeleteAvatarResponse>(
+      giteaOperations.orgDeleteAvatar,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a hook
+   *
+   * @operationId orgDeleteHook
+   * @category organization
+   */
+  orgDeleteHook(
+    input: OrgDeleteHookInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgDeleteHookResponse> {
+    return this.rest.request<OrgDeleteHookResponse>(giteaOperations.orgDeleteHook, input, options);
+  }
+
+  /**
+   * Delete a label
+   *
+   * @operationId orgDeleteLabel
+   * @category organization
+   */
+  orgDeleteLabel(
+    input: OrgDeleteLabelInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgDeleteLabelResponse> {
+    return this.rest.request<OrgDeleteLabelResponse>(
+      giteaOperations.orgDeleteLabel,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Remove a member from an organization
+   *
+   * @operationId orgDeleteMember
+   * @category organization
+   */
+  orgDeleteMember(
+    input: OrgDeleteMemberInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgDeleteMemberResponse> {
+    return this.rest.request<OrgDeleteMemberResponse>(
+      giteaOperations.orgDeleteMember,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a team
+   *
+   * @operationId orgDeleteTeam
+   * @category organization
+   */
+  orgDeleteTeam(
+    input: OrgDeleteTeamInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgDeleteTeamResponse> {
+    return this.rest.request<OrgDeleteTeamResponse>(giteaOperations.orgDeleteTeam, input, options);
+  }
+
+  /**
+   * Edit an organization
+   *
+   * @operationId orgEdit
+   * @category organization
+   */
+  orgEdit(
+    input: OrgEditInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgEditResponse> {
+    return this.rest.request<OrgEditResponse>(giteaOperations.orgEdit, input, options);
+  }
+
+  /**
+   * Update a hook
+   *
+   * @operationId orgEditHook
+   * @category organization
+   */
+  orgEditHook(
+    input: OrgEditHookInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgEditHookResponse> {
+    return this.rest.request<OrgEditHookResponse>(giteaOperations.orgEditHook, input, options);
+  }
+
+  /**
+   * Update a label
+   *
+   * @operationId orgEditLabel
+   * @category organization
+   */
+  orgEditLabel(
+    input: OrgEditLabelInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgEditLabelResponse> {
+    return this.rest.request<OrgEditLabelResponse>(giteaOperations.orgEditLabel, input, options);
+  }
+
+  /**
+   * Edit a team
+   *
+   * @operationId orgEditTeam
+   * @category organization
+   */
+  orgEditTeam(
+    input: OrgEditTeamInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgEditTeamResponse> {
+    return this.rest.request<OrgEditTeamResponse>(giteaOperations.orgEditTeam, input, options);
+  }
+
+  /**
+   * Get an organization
+   *
+   * @operationId orgGet
+   * @category organization
+   */
+  orgGet(
+    input: OrgGetInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgGetResponse> {
+    return this.rest.request<OrgGetResponse>(giteaOperations.orgGet, input, options);
+  }
+
+  /**
+   * Get list of organizations
+   *
+   * @operationId orgGetAll
+   * @category organization
+   */
+  orgGetAll(
+    input: OrgGetAllInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgGetAllResponse> {
+    return this.rest.request<OrgGetAllResponse>(giteaOperations.orgGetAll, input, options);
+  }
+
+  /**
+   * Get a hook
+   *
+   * @operationId orgGetHook
+   * @category organization
+   */
+  orgGetHook(
+    input: OrgGetHookInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgGetHookResponse> {
+    return this.rest.request<OrgGetHookResponse>(giteaOperations.orgGetHook, input, options);
+  }
+
+  /**
+   * Get a single label
+   *
+   * @operationId orgGetLabel
+   * @category organization
+   */
+  orgGetLabel(
+    input: OrgGetLabelInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgGetLabelResponse> {
+    return this.rest.request<OrgGetLabelResponse>(giteaOperations.orgGetLabel, input, options);
+  }
+
+  /**
+   * Get a team
+   *
+   * @operationId orgGetTeam
+   * @category organization
+   */
+  orgGetTeam(
+    input: OrgGetTeamInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgGetTeamResponse> {
+    return this.rest.request<OrgGetTeamResponse>(giteaOperations.orgGetTeam, input, options);
+  }
+
+  /**
+   * Get user permissions in organization
+   *
+   * @operationId orgGetUserPermissions
+   * @category organization
+   */
+  orgGetUserPermissions(
+    input: OrgGetUserPermissionsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgGetUserPermissionsResponse> {
+    return this.rest.request<OrgGetUserPermissionsResponse>(
+      giteaOperations.orgGetUserPermissions,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Check if a user is a member of an organization
+   *
+   * @operationId orgIsMember
+   * @category organization
+   */
+  orgIsMember(
+    input: OrgIsMemberInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgIsMemberResponse> {
+    return this.rest.request<OrgIsMemberResponse>(giteaOperations.orgIsMember, input, options);
+  }
+
+  /**
+   * Check if a user is a public member of an organization
+   *
+   * @operationId orgIsPublicMember
+   * @category organization
+   */
+  orgIsPublicMember(
+    input: OrgIsPublicMemberInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgIsPublicMemberResponse> {
+    return this.rest.request<OrgIsPublicMemberResponse>(
+      giteaOperations.orgIsPublicMember,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List an organization's actions secrets
+   *
+   * @operationId orgListActionsSecrets
+   * @category organization
+   */
+  orgListActionsSecrets(
+    input: OrgListActionsSecretsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgListActionsSecretsResponse> {
+    return this.rest.request<OrgListActionsSecretsResponse>(
+      giteaOperations.orgListActionsSecrets,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List an organization's activity feeds
+   *
+   * @operationId orgListActivityFeeds
+   * @category organization
+   */
+  orgListActivityFeeds(
+    input: OrgListActivityFeedsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgListActivityFeedsResponse> {
+    return this.rest.request<OrgListActivityFeedsResponse>(
+      giteaOperations.orgListActivityFeeds,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List the current user's organizations
+   *
+   * @operationId orgListCurrentUserOrgs
+   * @category organization
+   */
+  orgListCurrentUserOrgs(
+    input: OrgListCurrentUserOrgsInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgListCurrentUserOrgsResponse> {
+    return this.rest.request<OrgListCurrentUserOrgsResponse>(
+      giteaOperations.orgListCurrentUserOrgs,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List an organization's webhooks
+   *
+   * @operationId orgListHooks
+   * @category organization
+   */
+  orgListHooks(
+    input: OrgListHooksInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgListHooksResponse> {
+    return this.rest.request<OrgListHooksResponse>(giteaOperations.orgListHooks, input, options);
+  }
+
+  /**
+   * List an organization's labels
+   *
+   * @operationId orgListLabels
+   * @category organization
+   */
+  orgListLabels(
+    input: OrgListLabelsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgListLabelsResponse> {
+    return this.rest.request<OrgListLabelsResponse>(giteaOperations.orgListLabels, input, options);
+  }
+
+  /**
+   * List an organization's members
+   *
+   * @operationId orgListMembers
+   * @category organization
+   */
+  orgListMembers(
+    input: OrgListMembersInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgListMembersResponse> {
+    return this.rest.request<OrgListMembersResponse>(
+      giteaOperations.orgListMembers,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List an organization's public members
+   *
+   * @operationId orgListPublicMembers
+   * @category organization
+   */
+  orgListPublicMembers(
+    input: OrgListPublicMembersInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgListPublicMembersResponse> {
+    return this.rest.request<OrgListPublicMembersResponse>(
+      giteaOperations.orgListPublicMembers,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List an organization's repos
+   *
+   * @operationId orgListRepos
+   * @category organization
+   */
+  orgListRepos(
+    input: OrgListReposInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgListReposResponse> {
+    return this.rest.request<OrgListReposResponse>(giteaOperations.orgListRepos, input, options);
+  }
+
+  /**
+   * List a team's activity feeds
+   *
+   * @operationId orgListTeamActivityFeeds
+   * @category organization
+   */
+  orgListTeamActivityFeeds(
+    input: OrgListTeamActivityFeedsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgListTeamActivityFeedsResponse> {
+    return this.rest.request<OrgListTeamActivityFeedsResponse>(
+      giteaOperations.orgListTeamActivityFeeds,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List a particular member of team
+   *
+   * @operationId orgListTeamMember
+   * @category organization
+   */
+  orgListTeamMember(
+    input: OrgListTeamMemberInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgListTeamMemberResponse> {
+    return this.rest.request<OrgListTeamMemberResponse>(
+      giteaOperations.orgListTeamMember,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List a team's members
+   *
+   * @operationId orgListTeamMembers
+   * @category organization
+   */
+  orgListTeamMembers(
+    input: OrgListTeamMembersInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgListTeamMembersResponse> {
+    return this.rest.request<OrgListTeamMembersResponse>(
+      giteaOperations.orgListTeamMembers,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List a particular repo of team
+   *
+   * @operationId orgListTeamRepo
+   * @category organization
+   */
+  orgListTeamRepo(
+    input: OrgListTeamRepoInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgListTeamRepoResponse> {
+    return this.rest.request<OrgListTeamRepoResponse>(
+      giteaOperations.orgListTeamRepo,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List a team's repos
+   *
+   * @operationId orgListTeamRepos
+   * @category organization
+   */
+  orgListTeamRepos(
+    input: OrgListTeamReposInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgListTeamReposResponse> {
+    return this.rest.request<OrgListTeamReposResponse>(
+      giteaOperations.orgListTeamRepos,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List an organization's teams
+   *
+   * @operationId orgListTeams
+   * @category organization
+   */
+  orgListTeams(
+    input: OrgListTeamsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgListTeamsResponse> {
+    return this.rest.request<OrgListTeamsResponse>(giteaOperations.orgListTeams, input, options);
+  }
+
+  /**
+   * List a user's organizations
+   *
+   * @operationId orgListUserOrgs
+   * @category organization
+   */
+  orgListUserOrgs(
+    input: OrgListUserOrgsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgListUserOrgsResponse> {
+    return this.rest.request<OrgListUserOrgsResponse>(
+      giteaOperations.orgListUserOrgs,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Publicize a user's membership
+   *
+   * @operationId orgPublicizeMember
+   * @category organization
+   */
+  orgPublicizeMember(
+    input: OrgPublicizeMemberInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgPublicizeMemberResponse> {
+    return this.rest.request<OrgPublicizeMemberResponse>(
+      giteaOperations.orgPublicizeMember,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Remove a team member
+   *
+   * @operationId orgRemoveTeamMember
+   * @category organization
+   */
+  orgRemoveTeamMember(
+    input: OrgRemoveTeamMemberInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgRemoveTeamMemberResponse> {
+    return this.rest.request<OrgRemoveTeamMemberResponse>(
+      giteaOperations.orgRemoveTeamMember,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Remove a repository from a team
+   *
+   * This does not delete the repository, it only removes the repository from the team.
+   *
+   * @operationId orgRemoveTeamRepository
+   * @category organization
+   */
+  orgRemoveTeamRepository(
+    input: OrgRemoveTeamRepositoryInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgRemoveTeamRepositoryResponse> {
+    return this.rest.request<OrgRemoveTeamRepositoryResponse>(
+      giteaOperations.orgRemoveTeamRepository,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Update Avatar
+   *
+   * @operationId orgUpdateAvatar
+   * @category organization
+   */
+  orgUpdateAvatar(
+    input: OrgUpdateAvatarInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrgUpdateAvatarResponse> {
+    return this.rest.request<OrgUpdateAvatarResponse>(
+      giteaOperations.orgUpdateAvatar,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Block a user
+   *
+   * @operationId organizationBlockUser
+   * @category organization
+   */
+  organizationBlockUser(
+    input: OrganizationBlockUserInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrganizationBlockUserResponse> {
+    return this.rest.request<OrganizationBlockUserResponse>(
+      giteaOperations.organizationBlockUser,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Check if a user is blocked by the organization
+   *
+   * @operationId organizationCheckUserBlock
+   * @category organization
+   */
+  organizationCheckUserBlock(
+    input: OrganizationCheckUserBlockInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrganizationCheckUserBlockResponse> {
+    return this.rest.request<OrganizationCheckUserBlockResponse>(
+      giteaOperations.organizationCheckUserBlock,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List users blocked by the organization
+   *
+   * @operationId organizationListBlocks
+   * @category organization
+   */
+  organizationListBlocks(
+    input: OrganizationListBlocksInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrganizationListBlocksResponse> {
+    return this.rest.request<OrganizationListBlocksResponse>(
+      giteaOperations.organizationListBlocks,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Unblock a user
+   *
+   * @operationId organizationUnblockUser
+   * @category organization
+   */
+  organizationUnblockUser(
+    input: OrganizationUnblockUserInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<OrganizationUnblockUserResponse> {
+    return this.rest.request<OrganizationUnblockUserResponse>(
+      giteaOperations.organizationUnblockUser,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Pin an Issue
+   *
+   * @operationId pinIssue
+   * @category issue
+   */
+  pinIssue(
+    input: PinIssueInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<PinIssueResponse> {
+    return this.rest.request<PinIssueResponse>(giteaOperations.pinIssue, input, options);
+  }
+
+  /**
+   * Reject a repo transfer
+   *
+   * @operationId rejectRepoTransfer
+   * @category repository
+   */
+  rejectRepoTransfer(
+    input: RejectRepoTransferInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RejectRepoTransferResponse> {
+    return this.rest.request<RejectRepoTransferResponse>(
+      giteaOperations.rejectRepoTransfer,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Rename an organization
+   *
+   * @operationId renameOrg
+   * @category organization
+   */
+  renameOrg(
+    input: RenameOrgInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RenameOrgResponse> {
+    return this.rest.request<RenameOrgResponse>(giteaOperations.renameOrg, input, options);
+  }
+
+  /**
+   * Render a markdown document as HTML
+   *
+   * @operationId renderMarkdown
+   * @category miscellaneous
+   */
+  renderMarkdown(
+    input: RenderMarkdownInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RenderMarkdownResponse> {
+    return this.rest.request<RenderMarkdownResponse>(
+      giteaOperations.renderMarkdown,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Render raw markdown as HTML
+   *
+   * @operationId renderMarkdownRaw
+   * @category miscellaneous
+   */
+  renderMarkdownRaw(
+    input: RenderMarkdownRawInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RenderMarkdownRawResponse> {
+    return this.rest.request<RenderMarkdownRawResponse>(
+      giteaOperations.renderMarkdownRaw,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Render a markup document as HTML
+   *
+   * @operationId renderMarkup
+   * @category miscellaneous
+   */
+  renderMarkup(
+    input: RenderMarkupInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RenderMarkupResponse> {
+    return this.rest.request<RenderMarkupResponse>(giteaOperations.renderMarkup, input, options);
+  }
+
+  /**
+   * Add or Update a collaborator to a repository
+   *
+   * @operationId repoAddCollaborator
+   * @category repository
+   */
+  repoAddCollaborator(
+    input: RepoAddCollaboratorInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoAddCollaboratorResponse> {
+    return this.rest.request<RepoAddCollaboratorResponse>(
+      giteaOperations.repoAddCollaborator,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * add a push mirror to the repository
+   *
+   * @operationId repoAddPushMirror
+   * @category repository
+   */
+  repoAddPushMirror(
+    input: RepoAddPushMirrorInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoAddPushMirrorResponse> {
+    return this.rest.request<RepoAddPushMirrorResponse>(
+      giteaOperations.repoAddPushMirror,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Add a team to a repository
+   *
+   * @operationId repoAddTeam
+   * @category repository
+   */
+  repoAddTeam(
+    input: RepoAddTeamInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoAddTeamResponse> {
+    return this.rest.request<RepoAddTeamResponse>(giteaOperations.repoAddTeam, input, options);
+  }
+
+  /**
+   * Add a topic to a repository
+   *
+   * @operationId repoAddTopic
+   * @category repository
+   */
+  repoAddTopic(
+    input: RepoAddTopicInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoAddTopicResponse> {
+    return this.rest.request<RepoAddTopicResponse>(giteaOperations.repoAddTopic, input, options);
+  }
+
+  /**
+   * Apply diff patch to repository
+   *
+   * @operationId repoApplyDiffPatch
+   * @category repository
+   */
+  repoApplyDiffPatch(
+    input: RepoApplyDiffPatchInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoApplyDiffPatchResponse> {
+    return this.rest.request<RepoApplyDiffPatchResponse>(
+      giteaOperations.repoApplyDiffPatch,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Cancel the scheduled auto merge for the given pull request
+   *
+   * @operationId repoCancelScheduledAutoMerge
+   * @category repository
+   */
+  repoCancelScheduledAutoMerge(
+    input: RepoCancelScheduledAutoMergeInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoCancelScheduledAutoMergeResponse> {
+    return this.rest.request<RepoCancelScheduledAutoMergeResponse>(
+      giteaOperations.repoCancelScheduledAutoMerge,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Modify multiple files in a repository
+   *
+   * @operationId repoChangeFiles
+   * @category repository
+   */
+  repoChangeFiles(
+    input: RepoChangeFilesInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoChangeFilesResponse> {
+    return this.rest.request<RepoChangeFilesResponse>(
+      giteaOperations.repoChangeFiles,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Check if a user is a collaborator of a repository
+   *
+   * @operationId repoCheckCollaborator
+   * @category repository
+   */
+  repoCheckCollaborator(
+    input: RepoCheckCollaboratorInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoCheckCollaboratorResponse> {
+    return this.rest.request<RepoCheckCollaboratorResponse>(
+      giteaOperations.repoCheckCollaborator,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Check if a team is assigned to a repository
+   *
+   * @operationId repoCheckTeam
+   * @category repository
+   */
+  repoCheckTeam(
+    input: RepoCheckTeamInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoCheckTeamResponse> {
+    return this.rest.request<RepoCheckTeamResponse>(giteaOperations.repoCheckTeam, input, options);
+  }
+
+  /**
+   * Get commit comparison information
+   *
+   * @operationId repoCompareDiff
+   * @category repository
+   */
+  repoCompareDiff(
+    input: RepoCompareDiffInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoCompareDiffResponse> {
+    return this.rest.request<RepoCompareDiffResponse>(
+      giteaOperations.repoCompareDiff,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create a branch
+   *
+   * @operationId repoCreateBranch
+   * @category repository
+   */
+  repoCreateBranch(
+    input: RepoCreateBranchInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoCreateBranchResponse> {
+    return this.rest.request<RepoCreateBranchResponse>(
+      giteaOperations.repoCreateBranch,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create a branch protections for a repository
+   *
+   * @operationId repoCreateBranchProtection
+   * @category repository
+   */
+  repoCreateBranchProtection(
+    input: RepoCreateBranchProtectionInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoCreateBranchProtectionResponse> {
+    return this.rest.request<RepoCreateBranchProtectionResponse>(
+      giteaOperations.repoCreateBranchProtection,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create a file in a repository
+   *
+   * @operationId repoCreateFile
+   * @category repository
+   */
+  repoCreateFile(
+    input: RepoCreateFileInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoCreateFileResponse> {
+    return this.rest.request<RepoCreateFileResponse>(
+      giteaOperations.repoCreateFile,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create a hook
+   *
+   * @operationId repoCreateHook
+   * @category repository
+   */
+  repoCreateHook(
+    input: RepoCreateHookInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoCreateHookResponse> {
+    return this.rest.request<RepoCreateHookResponse>(
+      giteaOperations.repoCreateHook,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Add a key to a repository
+   *
+   * @operationId repoCreateKey
+   * @category repository
+   */
+  repoCreateKey(
+    input: RepoCreateKeyInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoCreateKeyResponse> {
+    return this.rest.request<RepoCreateKeyResponse>(giteaOperations.repoCreateKey, input, options);
+  }
+
+  /**
+   * Create a pull request
+   *
+   * @operationId repoCreatePullRequest
+   * @category repository
+   */
+  repoCreatePullRequest(
+    input: RepoCreatePullRequestInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoCreatePullRequestResponse> {
+    return this.rest.request<RepoCreatePullRequestResponse>(
+      giteaOperations.repoCreatePullRequest,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create a review to an pull request
+   *
+   * @operationId repoCreatePullReview
+   * @category repository
+   */
+  repoCreatePullReview(
+    input: RepoCreatePullReviewInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoCreatePullReviewResponse> {
+    return this.rest.request<RepoCreatePullReviewResponse>(
+      giteaOperations.repoCreatePullReview,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * create review requests for a pull request
+   *
+   * @operationId repoCreatePullReviewRequests
+   * @category repository
+   */
+  repoCreatePullReviewRequests(
+    input: RepoCreatePullReviewRequestsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoCreatePullReviewRequestsResponse> {
+    return this.rest.request<RepoCreatePullReviewRequestsResponse>(
+      giteaOperations.repoCreatePullReviewRequests,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create a release
+   *
+   * @operationId repoCreateRelease
+   * @category repository
+   */
+  repoCreateRelease(
+    input: RepoCreateReleaseInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoCreateReleaseResponse> {
+    return this.rest.request<RepoCreateReleaseResponse>(
+      giteaOperations.repoCreateRelease,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create a release attachment
+   *
+   * @operationId repoCreateReleaseAttachment
+   * @category repository
+   */
+  repoCreateReleaseAttachment(
+    input: RepoCreateReleaseAttachmentInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoCreateReleaseAttachmentResponse> {
+    return this.rest.request<RepoCreateReleaseAttachmentResponse>(
+      giteaOperations.repoCreateReleaseAttachment,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a repository's actions runner registration token
+   *
+   * @operationId repoCreateRunnerRegistrationToken
+   * @category repository
+   */
+  repoCreateRunnerRegistrationToken(
+    input: RepoCreateRunnerRegistrationTokenInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoCreateRunnerRegistrationTokenResponse> {
+    return this.rest.request<RepoCreateRunnerRegistrationTokenResponse>(
+      giteaOperations.repoCreateRunnerRegistrationToken,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create a commit status
+   *
+   * @operationId repoCreateStatus
+   * @category repository
+   */
+  repoCreateStatus(
+    input: RepoCreateStatusInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoCreateStatusResponse> {
+    return this.rest.request<RepoCreateStatusResponse>(
+      giteaOperations.repoCreateStatus,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create a new git tag in a repository
+   *
+   * @operationId repoCreateTag
+   * @category repository
+   */
+  repoCreateTag(
+    input: RepoCreateTagInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoCreateTagResponse> {
+    return this.rest.request<RepoCreateTagResponse>(giteaOperations.repoCreateTag, input, options);
+  }
+
+  /**
+   * Create a tag protections for a repository
+   *
+   * @operationId repoCreateTagProtection
+   * @category repository
+   */
+  repoCreateTagProtection(
+    input: RepoCreateTagProtectionInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoCreateTagProtectionResponse> {
+    return this.rest.request<RepoCreateTagProtectionResponse>(
+      giteaOperations.repoCreateTagProtection,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create a wiki page
+   *
+   * @operationId repoCreateWikiPage
+   * @category repository
+   */
+  repoCreateWikiPage(
+    input: RepoCreateWikiPageInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoCreateWikiPageResponse> {
+    return this.rest.request<RepoCreateWikiPageResponse>(
+      giteaOperations.repoCreateWikiPage,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a repository
+   *
+   * @operationId repoDelete
+   * @category repository
+   */
+  repoDelete(
+    input: RepoDeleteInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoDeleteResponse> {
+    return this.rest.request<RepoDeleteResponse>(giteaOperations.repoDelete, input, options);
+  }
+
+  /**
+   * Delete avatar
+   *
+   * @operationId repoDeleteAvatar
+   * @category repository
+   */
+  repoDeleteAvatar(
+    input: RepoDeleteAvatarInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoDeleteAvatarResponse> {
+    return this.rest.request<RepoDeleteAvatarResponse>(
+      giteaOperations.repoDeleteAvatar,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a specific branch from a repository
+   *
+   * @operationId repoDeleteBranch
+   * @category repository
+   */
+  repoDeleteBranch(
+    input: RepoDeleteBranchInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoDeleteBranchResponse> {
+    return this.rest.request<RepoDeleteBranchResponse>(
+      giteaOperations.repoDeleteBranch,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a specific branch protection for the repository
+   *
+   * @operationId repoDeleteBranchProtection
+   * @category repository
+   */
+  repoDeleteBranchProtection(
+    input: RepoDeleteBranchProtectionInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoDeleteBranchProtectionResponse> {
+    return this.rest.request<RepoDeleteBranchProtectionResponse>(
+      giteaOperations.repoDeleteBranchProtection,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a collaborator from a repository
+   *
+   * @operationId repoDeleteCollaborator
+   * @category repository
+   */
+  repoDeleteCollaborator(
+    input: RepoDeleteCollaboratorInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoDeleteCollaboratorResponse> {
+    return this.rest.request<RepoDeleteCollaboratorResponse>(
+      giteaOperations.repoDeleteCollaborator,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a file in a repository
+   *
+   * @operationId repoDeleteFile
+   * @category repository
+   */
+  repoDeleteFile(
+    input: RepoDeleteFileInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoDeleteFileResponse> {
+    return this.rest.request<RepoDeleteFileResponse>(
+      giteaOperations.repoDeleteFile,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a Git hook in a repository
+   *
+   * @operationId repoDeleteGitHook
+   * @category repository
+   */
+  repoDeleteGitHook(
+    input: RepoDeleteGitHookInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoDeleteGitHookResponse> {
+    return this.rest.request<RepoDeleteGitHookResponse>(
+      giteaOperations.repoDeleteGitHook,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a hook in a repository
+   *
+   * @operationId repoDeleteHook
+   * @category repository
+   */
+  repoDeleteHook(
+    input: RepoDeleteHookInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoDeleteHookResponse> {
+    return this.rest.request<RepoDeleteHookResponse>(
+      giteaOperations.repoDeleteHook,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a key from a repository
+   *
+   * @operationId repoDeleteKey
+   * @category repository
+   */
+  repoDeleteKey(
+    input: RepoDeleteKeyInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoDeleteKeyResponse> {
+    return this.rest.request<RepoDeleteKeyResponse>(giteaOperations.repoDeleteKey, input, options);
+  }
+
+  /**
+   * Delete a specific review from a pull request
+   *
+   * @operationId repoDeletePullReview
+   * @category repository
+   */
+  repoDeletePullReview(
+    input: RepoDeletePullReviewInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoDeletePullReviewResponse> {
+    return this.rest.request<RepoDeletePullReviewResponse>(
+      giteaOperations.repoDeletePullReview,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * cancel review requests for a pull request
+   *
+   * @operationId repoDeletePullReviewRequests
+   * @category repository
+   */
+  repoDeletePullReviewRequests(
+    input: RepoDeletePullReviewRequestsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoDeletePullReviewRequestsResponse> {
+    return this.rest.request<RepoDeletePullReviewRequestsResponse>(
+      giteaOperations.repoDeletePullReviewRequests,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * deletes a push mirror from a repository by remoteName
+   *
+   * @operationId repoDeletePushMirror
+   * @category repository
+   */
+  repoDeletePushMirror(
+    input: RepoDeletePushMirrorInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoDeletePushMirrorResponse> {
+    return this.rest.request<RepoDeletePushMirrorResponse>(
+      giteaOperations.repoDeletePushMirror,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a release
+   *
+   * @operationId repoDeleteRelease
+   * @category repository
+   */
+  repoDeleteRelease(
+    input: RepoDeleteReleaseInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoDeleteReleaseResponse> {
+    return this.rest.request<RepoDeleteReleaseResponse>(
+      giteaOperations.repoDeleteRelease,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a release attachment
+   *
+   * @operationId repoDeleteReleaseAttachment
+   * @category repository
+   */
+  repoDeleteReleaseAttachment(
+    input: RepoDeleteReleaseAttachmentInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoDeleteReleaseAttachmentResponse> {
+    return this.rest.request<RepoDeleteReleaseAttachmentResponse>(
+      giteaOperations.repoDeleteReleaseAttachment,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a release by tag name
+   *
+   * @operationId repoDeleteReleaseByTag
+   * @category repository
+   */
+  repoDeleteReleaseByTag(
+    input: RepoDeleteReleaseByTagInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoDeleteReleaseByTagResponse> {
+    return this.rest.request<RepoDeleteReleaseByTagResponse>(
+      giteaOperations.repoDeleteReleaseByTag,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a repository's tag by name
+   *
+   * @operationId repoDeleteTag
+   * @category repository
+   */
+  repoDeleteTag(
+    input: RepoDeleteTagInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoDeleteTagResponse> {
+    return this.rest.request<RepoDeleteTagResponse>(giteaOperations.repoDeleteTag, input, options);
+  }
+
+  /**
+   * Delete a specific tag protection for the repository
+   *
+   * @operationId repoDeleteTagProtection
+   * @category repository
+   */
+  repoDeleteTagProtection(
+    input: RepoDeleteTagProtectionInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoDeleteTagProtectionResponse> {
+    return this.rest.request<RepoDeleteTagProtectionResponse>(
+      giteaOperations.repoDeleteTagProtection,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a team from a repository
+   *
+   * @operationId repoDeleteTeam
+   * @category repository
+   */
+  repoDeleteTeam(
+    input: RepoDeleteTeamInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoDeleteTeamResponse> {
+    return this.rest.request<RepoDeleteTeamResponse>(
+      giteaOperations.repoDeleteTeam,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a topic from a repository
+   *
+   * @operationId repoDeleteTopic
+   * @category repository
+   */
+  repoDeleteTopic(
+    input: RepoDeleteTopicInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoDeleteTopicResponse> {
+    return this.rest.request<RepoDeleteTopicResponse>(
+      giteaOperations.repoDeleteTopic,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a wiki page
+   *
+   * @operationId repoDeleteWikiPage
+   * @category repository
+   */
+  repoDeleteWikiPage(
+    input: RepoDeleteWikiPageInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoDeleteWikiPageResponse> {
+    return this.rest.request<RepoDeleteWikiPageResponse>(
+      giteaOperations.repoDeleteWikiPage,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Dismiss a review for a pull request
+   *
+   * @operationId repoDismissPullReview
+   * @category repository
+   */
+  repoDismissPullReview(
+    input: RepoDismissPullReviewInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoDismissPullReviewResponse> {
+    return this.rest.request<RepoDismissPullReviewResponse>(
+      giteaOperations.repoDismissPullReview,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a commit's diff or patch
+   *
+   * @operationId repoDownloadCommitDiffOrPatch
+   * @category repository
+   */
+  repoDownloadCommitDiffOrPatch(
+    input: RepoDownloadCommitDiffOrPatchInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoDownloadCommitDiffOrPatchResponse> {
+    return this.rest.request<RepoDownloadCommitDiffOrPatchResponse>(
+      giteaOperations.repoDownloadCommitDiffOrPatch,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a pull request diff or patch
+   *
+   * @operationId repoDownloadPullDiffOrPatch
+   * @category repository
+   */
+  repoDownloadPullDiffOrPatch(
+    input: RepoDownloadPullDiffOrPatchInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoDownloadPullDiffOrPatchResponse> {
+    return this.rest.request<RepoDownloadPullDiffOrPatchResponse>(
+      giteaOperations.repoDownloadPullDiffOrPatch,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Edit a repository's properties. Only fields that are set will be changed.
+   *
+   * @operationId repoEdit
+   * @category repository
+   */
+  repoEdit(
+    input: RepoEditInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoEditResponse> {
+    return this.rest.request<RepoEditResponse>(giteaOperations.repoEdit, input, options);
+  }
+
+  /**
+   * Edit a branch protections for a repository. Only fields that are set will be changed
+   *
+   * @operationId repoEditBranchProtection
+   * @category repository
+   */
+  repoEditBranchProtection(
+    input: RepoEditBranchProtectionInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoEditBranchProtectionResponse> {
+    return this.rest.request<RepoEditBranchProtectionResponse>(
+      giteaOperations.repoEditBranchProtection,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Edit a Git hook in a repository
+   *
+   * @operationId repoEditGitHook
+   * @category repository
+   */
+  repoEditGitHook(
+    input: RepoEditGitHookInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoEditGitHookResponse> {
+    return this.rest.request<RepoEditGitHookResponse>(
+      giteaOperations.repoEditGitHook,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Edit a hook in a repository
+   *
+   * @operationId repoEditHook
+   * @category repository
+   */
+  repoEditHook(
+    input: RepoEditHookInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoEditHookResponse> {
+    return this.rest.request<RepoEditHookResponse>(giteaOperations.repoEditHook, input, options);
+  }
+
+  /**
+   * Update a pull request. If using deadline only the date will be taken into account, and time of day ignored.
+   *
+   * @operationId repoEditPullRequest
+   * @category repository
+   */
+  repoEditPullRequest(
+    input: RepoEditPullRequestInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoEditPullRequestResponse> {
+    return this.rest.request<RepoEditPullRequestResponse>(
+      giteaOperations.repoEditPullRequest,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Update a release
+   *
+   * @operationId repoEditRelease
+   * @category repository
+   */
+  repoEditRelease(
+    input: RepoEditReleaseInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoEditReleaseResponse> {
+    return this.rest.request<RepoEditReleaseResponse>(
+      giteaOperations.repoEditRelease,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Edit a release attachment
+   *
+   * @operationId repoEditReleaseAttachment
+   * @category repository
+   */
+  repoEditReleaseAttachment(
+    input: RepoEditReleaseAttachmentInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoEditReleaseAttachmentResponse> {
+    return this.rest.request<RepoEditReleaseAttachmentResponse>(
+      giteaOperations.repoEditReleaseAttachment,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Edit a tag protections for a repository. Only fields that are set will be changed
+   *
+   * @operationId repoEditTagProtection
+   * @category repository
+   */
+  repoEditTagProtection(
+    input: RepoEditTagProtectionInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoEditTagProtectionResponse> {
+    return this.rest.request<RepoEditTagProtectionResponse>(
+      giteaOperations.repoEditTagProtection,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Edit a wiki page
+   *
+   * @operationId repoEditWikiPage
+   * @category repository
+   */
+  repoEditWikiPage(
+    input: RepoEditWikiPageInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoEditWikiPageResponse> {
+    return this.rest.request<RepoEditWikiPageResponse>(
+      giteaOperations.repoEditWikiPage,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a repository
+   *
+   * @operationId repoGet
+   * @category repository
+   */
+  repoGet(
+    input: RepoGetInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetResponse> {
+    return this.rest.request<RepoGetResponse>(giteaOperations.repoGet, input, options);
+  }
+
+  /**
+   * Get a list of all commits from a repository
+   *
+   * @operationId repoGetAllCommits
+   * @category repository
+   */
+  repoGetAllCommits(
+    input: RepoGetAllCommitsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetAllCommitsResponse> {
+    return this.rest.request<RepoGetAllCommitsResponse>(
+      giteaOperations.repoGetAllCommits,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get an archive of a repository
+   *
+   * @operationId repoGetArchive
+   * @category repository
+   */
+  repoGetArchive(
+    input: RepoGetArchiveInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetArchiveResponse> {
+    return this.rest.request<RepoGetArchiveResponse>(
+      giteaOperations.repoGetArchive,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Return all users that have write access and can be assigned to issues
+   *
+   * @operationId repoGetAssignees
+   * @category repository
+   */
+  repoGetAssignees(
+    input: RepoGetAssigneesInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetAssigneesResponse> {
+    return this.rest.request<RepoGetAssigneesResponse>(
+      giteaOperations.repoGetAssignees,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Retrieve a specific branch from a repository, including its effective branch protection
+   *
+   * @operationId repoGetBranch
+   * @category repository
+   */
+  repoGetBranch(
+    input: RepoGetBranchInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetBranchResponse> {
+    return this.rest.request<RepoGetBranchResponse>(giteaOperations.repoGetBranch, input, options);
+  }
+
+  /**
+   * Get a specific branch protection for the repository
+   *
+   * @operationId repoGetBranchProtection
+   * @category repository
+   */
+  repoGetBranchProtection(
+    input: RepoGetBranchProtectionInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetBranchProtectionResponse> {
+    return this.rest.request<RepoGetBranchProtectionResponse>(
+      giteaOperations.repoGetBranchProtection,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a repository by id
+   *
+   * @operationId repoGetByID
+   * @category repository
+   */
+  repoGetById(
+    input: RepoGetByIdInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetByIdResponse> {
+    return this.rest.request<RepoGetByIdResponse>(giteaOperations.repoGetById, input, options);
+  }
+
+  /**
+   * Get a commit's combined status, by branch/tag/commit reference
+   *
+   * @operationId repoGetCombinedStatusByRef
+   * @category repository
+   */
+  repoGetCombinedStatusByRef(
+    input: RepoGetCombinedStatusByRefInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetCombinedStatusByRefResponse> {
+    return this.rest.request<RepoGetCombinedStatusByRefResponse>(
+      giteaOperations.repoGetCombinedStatusByRef,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get the merged pull request of the commit
+   *
+   * @operationId repoGetCommitPullRequest
+   * @category repository
+   */
+  repoGetCommitPullRequest(
+    input: RepoGetCommitPullRequestInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetCommitPullRequestResponse> {
+    return this.rest.request<RepoGetCommitPullRequestResponse>(
+      giteaOperations.repoGetCommitPullRequest,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Gets the metadata and contents (if a file) of an entry in a repository, or a list of entries if a dir.
+   *
+   * This API follows GitHub's design, and it is not easy to use. Recommend users to use the "contents-ext" API instead.
+   *
+   * @operationId repoGetContents
+   * @category repository
+   */
+  repoGetContents(
+    input: RepoGetContentsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetContentsResponse> {
+    return this.rest.request<RepoGetContentsResponse>(
+      giteaOperations.repoGetContents,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * The extended "contents" API, to get file metadata and/or content, or list a directory.
+   *
+   * It guarantees that only one of the response fields is set if the request succeeds. Users can pass "includes=file_content" or "includes=lfs_metadata" to retrieve more fields. "includes=file_content" only works for single file, if you need to retrieve file contents in batch, use "file-contents" API after listing the directory.
+   *
+   * @operationId repoGetContentsExt
+   * @category repository
+   */
+  repoGetContentsExt(
+    input: RepoGetContentsExtInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetContentsExtResponse> {
+    return this.rest.request<RepoGetContentsExtResponse>(
+      giteaOperations.repoGetContentsExt,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Gets the metadata of all the entries of the root dir.
+   *
+   * This API follows GitHub's design, and it is not easy to use. Recommend users to use our "contents-ext" API instead.
+   *
+   * @operationId repoGetContentsList
+   * @category repository
+   */
+  repoGetContentsList(
+    input: RepoGetContentsListInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetContentsListResponse> {
+    return this.rest.request<RepoGetContentsListResponse>(
+      giteaOperations.repoGetContentsList,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get the EditorConfig definitions of a file in a repository
+   *
+   * @operationId repoGetEditorConfig
+   * @category repository
+   */
+  repoGetEditorConfig(
+    input: RepoGetEditorConfigInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetEditorConfigResponse> {
+    return this.rest.request<RepoGetEditorConfigResponse>(
+      giteaOperations.repoGetEditorConfig,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get the metadata and contents of requested files
+   *
+   * See the POST method. This GET method supports using JSON encoded request body in query parameter.
+   *
+   * @operationId repoGetFileContents
+   * @category repository
+   */
+  repoGetFileContents(
+    input: RepoGetFileContentsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetFileContentsResponse> {
+    return this.rest.request<RepoGetFileContentsResponse>(
+      giteaOperations.repoGetFileContents,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get the metadata and contents of requested files
+   *
+   * Uses automatic pagination based on default page size and max response size and returns the maximum allowed number of files. Files which could not be retrieved are null. Files which are too large are being returned with `encoding == null`, `content == null` and `size > 0`, they can be requested separately by using the `download_url`.
+   *
+   * @operationId repoGetFileContentsPost
+   * @category repository
+   */
+  repoGetFileContentsPost(
+    input: RepoGetFileContentsPostInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetFileContentsPostResponse> {
+    return this.rest.request<RepoGetFileContentsPostResponse>(
+      giteaOperations.repoGetFileContentsPost,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a Git hook
+   *
+   * @operationId repoGetGitHook
+   * @category repository
+   */
+  repoGetGitHook(
+    input: RepoGetGitHookInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetGitHookResponse> {
+    return this.rest.request<RepoGetGitHookResponse>(
+      giteaOperations.repoGetGitHook,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a hook
+   *
+   * @operationId repoGetHook
+   * @category repository
+   */
+  repoGetHook(
+    input: RepoGetHookInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetHookResponse> {
+    return this.rest.request<RepoGetHookResponse>(giteaOperations.repoGetHook, input, options);
+  }
+
+  /**
+   * Returns the issue config for a repo
+   *
+   * @operationId repoGetIssueConfig
+   * @category repository
+   */
+  repoGetIssueConfig(
+    input: RepoGetIssueConfigInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetIssueConfigResponse> {
+    return this.rest.request<RepoGetIssueConfigResponse>(
+      giteaOperations.repoGetIssueConfig,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get available issue templates for a repository
+   *
+   * @operationId repoGetIssueTemplates
+   * @category repository
+   */
+  repoGetIssueTemplates(
+    input: RepoGetIssueTemplatesInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetIssueTemplatesResponse> {
+    return this.rest.request<RepoGetIssueTemplatesResponse>(
+      giteaOperations.repoGetIssueTemplates,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a repository's key by id
+   *
+   * @operationId repoGetKey
+   * @category repository
+   */
+  repoGetKey(
+    input: RepoGetKeyInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetKeyResponse> {
+    return this.rest.request<RepoGetKeyResponse>(giteaOperations.repoGetKey, input, options);
+  }
+
+  /**
+   * Get languages and number of bytes of code written
+   *
+   * @operationId repoGetLanguages
+   * @category repository
+   */
+  repoGetLanguages(
+    input: RepoGetLanguagesInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetLanguagesResponse> {
+    return this.rest.request<RepoGetLanguagesResponse>(
+      giteaOperations.repoGetLanguages,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Gets the most recent non-prerelease, non-draft release of a repository, sorted by created_at
+   *
+   * @operationId repoGetLatestRelease
+   * @category repository
+   */
+  repoGetLatestRelease(
+    input: RepoGetLatestReleaseInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetLatestReleaseResponse> {
+    return this.rest.request<RepoGetLatestReleaseResponse>(
+      giteaOperations.repoGetLatestRelease,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get repo licenses
+   *
+   * @operationId repoGetLicenses
+   * @category repository
+   */
+  repoGetLicenses(
+    input: RepoGetLicensesInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetLicensesResponse> {
+    return this.rest.request<RepoGetLicensesResponse>(
+      giteaOperations.repoGetLicenses,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a note corresponding to a single commit from a repository
+   *
+   * @operationId repoGetNote
+   * @category repository
+   */
+  repoGetNote(
+    input: RepoGetNoteInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetNoteResponse> {
+    return this.rest.request<RepoGetNoteResponse>(giteaOperations.repoGetNote, input, options);
+  }
+
+  /**
+   * Get a pull request
+   *
+   * @operationId repoGetPullRequest
+   * @category repository
+   */
+  repoGetPullRequest(
+    input: RepoGetPullRequestInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetPullRequestResponse> {
+    return this.rest.request<RepoGetPullRequestResponse>(
+      giteaOperations.repoGetPullRequest,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a pull request by base and head
+   *
+   * @operationId repoGetPullRequestByBaseHead
+   * @category repository
+   */
+  repoGetPullRequestByBaseHead(
+    input: RepoGetPullRequestByBaseHeadInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetPullRequestByBaseHeadResponse> {
+    return this.rest.request<RepoGetPullRequestByBaseHeadResponse>(
+      giteaOperations.repoGetPullRequestByBaseHead,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get commits for a pull request
+   *
+   * @operationId repoGetPullRequestCommits
+   * @category repository
+   */
+  repoGetPullRequestCommits(
+    input: RepoGetPullRequestCommitsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetPullRequestCommitsResponse> {
+    return this.rest.request<RepoGetPullRequestCommitsResponse>(
+      giteaOperations.repoGetPullRequestCommits,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get changed files for a pull request
+   *
+   * @operationId repoGetPullRequestFiles
+   * @category repository
+   */
+  repoGetPullRequestFiles(
+    input: RepoGetPullRequestFilesInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetPullRequestFilesResponse> {
+    return this.rest.request<RepoGetPullRequestFilesResponse>(
+      giteaOperations.repoGetPullRequestFiles,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a specific review for a pull request
+   *
+   * @operationId repoGetPullReview
+   * @category repository
+   */
+  repoGetPullReview(
+    input: RepoGetPullReviewInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetPullReviewResponse> {
+    return this.rest.request<RepoGetPullReviewResponse>(
+      giteaOperations.repoGetPullReview,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a specific review for a pull request
+   *
+   * @operationId repoGetPullReviewComments
+   * @category repository
+   */
+  repoGetPullReviewComments(
+    input: RepoGetPullReviewCommentsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetPullReviewCommentsResponse> {
+    return this.rest.request<RepoGetPullReviewCommentsResponse>(
+      giteaOperations.repoGetPullReviewComments,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get push mirror of the repository by remoteName
+   *
+   * @operationId repoGetPushMirrorByRemoteName
+   * @category repository
+   */
+  repoGetPushMirrorByRemoteName(
+    input: RepoGetPushMirrorByRemoteNameInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetPushMirrorByRemoteNameResponse> {
+    return this.rest.request<RepoGetPushMirrorByRemoteNameResponse>(
+      giteaOperations.repoGetPushMirrorByRemoteName,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a file from a repository
+   *
+   * @operationId repoGetRawFile
+   * @category repository
+   */
+  repoGetRawFile(
+    input: RepoGetRawFileInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetRawFileResponse> {
+    return this.rest.request<RepoGetRawFileResponse>(
+      giteaOperations.repoGetRawFile,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a file or it's LFS object from a repository
+   *
+   * @operationId repoGetRawFileOrLFS
+   * @category repository
+   */
+  repoGetRawFileOrLfs(
+    input: RepoGetRawFileOrLfsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetRawFileOrLfsResponse> {
+    return this.rest.request<RepoGetRawFileOrLfsResponse>(
+      giteaOperations.repoGetRawFileOrLfs,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a release
+   *
+   * @operationId repoGetRelease
+   * @category repository
+   */
+  repoGetRelease(
+    input: RepoGetReleaseInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetReleaseResponse> {
+    return this.rest.request<RepoGetReleaseResponse>(
+      giteaOperations.repoGetRelease,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a release attachment
+   *
+   * @operationId repoGetReleaseAttachment
+   * @category repository
+   */
+  repoGetReleaseAttachment(
+    input: RepoGetReleaseAttachmentInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetReleaseAttachmentResponse> {
+    return this.rest.request<RepoGetReleaseAttachmentResponse>(
+      giteaOperations.repoGetReleaseAttachment,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a release by tag name
+   *
+   * @operationId repoGetReleaseByTag
+   * @category repository
+   */
+  repoGetReleaseByTag(
+    input: RepoGetReleaseByTagInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetReleaseByTagResponse> {
+    return this.rest.request<RepoGetReleaseByTagResponse>(
+      giteaOperations.repoGetReleaseByTag,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get repository permissions for a user
+   *
+   * @operationId repoGetRepoPermissions
+   * @category repository
+   */
+  repoGetRepoPermissions(
+    input: RepoGetRepoPermissionsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetRepoPermissionsResponse> {
+    return this.rest.request<RepoGetRepoPermissionsResponse>(
+      giteaOperations.repoGetRepoPermissions,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Return all users that can be requested to review in this repo
+   *
+   * @operationId repoGetReviewers
+   * @category repository
+   */
+  repoGetReviewers(
+    input: RepoGetReviewersInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetReviewersResponse> {
+    return this.rest.request<RepoGetReviewersResponse>(
+      giteaOperations.repoGetReviewers,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a single commit from a repository
+   *
+   * @operationId repoGetSingleCommit
+   * @category repository
+   */
+  repoGetSingleCommit(
+    input: RepoGetSingleCommitInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetSingleCommitResponse> {
+    return this.rest.request<RepoGetSingleCommitResponse>(
+      giteaOperations.repoGetSingleCommit,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get the tag of a repository by tag name
+   *
+   * @operationId repoGetTag
+   * @category repository
+   */
+  repoGetTag(
+    input: RepoGetTagInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetTagResponse> {
+    return this.rest.request<RepoGetTagResponse>(giteaOperations.repoGetTag, input, options);
+  }
+
+  /**
+   * Get a specific tag protection for the repository
+   *
+   * @operationId repoGetTagProtection
+   * @category repository
+   */
+  repoGetTagProtection(
+    input: RepoGetTagProtectionInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetTagProtectionResponse> {
+    return this.rest.request<RepoGetTagProtectionResponse>(
+      giteaOperations.repoGetTagProtection,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a wiki page
+   *
+   * @operationId repoGetWikiPage
+   * @category repository
+   */
+  repoGetWikiPage(
+    input: RepoGetWikiPageInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetWikiPageResponse> {
+    return this.rest.request<RepoGetWikiPageResponse>(
+      giteaOperations.repoGetWikiPage,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get revisions of a wiki page
+   *
+   * @operationId repoGetWikiPageRevisions
+   * @category repository
+   */
+  repoGetWikiPageRevisions(
+    input: RepoGetWikiPageRevisionsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetWikiPageRevisionsResponse> {
+    return this.rest.request<RepoGetWikiPageRevisionsResponse>(
+      giteaOperations.repoGetWikiPageRevisions,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get all wiki pages
+   *
+   * @operationId repoGetWikiPages
+   * @category repository
+   */
+  repoGetWikiPages(
+    input: RepoGetWikiPagesInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoGetWikiPagesResponse> {
+    return this.rest.request<RepoGetWikiPagesResponse>(
+      giteaOperations.repoGetWikiPages,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List an repo's actions secrets
+   *
+   * @operationId repoListActionsSecrets
+   * @category repository
+   */
+  repoListActionsSecrets(
+    input: RepoListActionsSecretsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoListActionsSecretsResponse> {
+    return this.rest.request<RepoListActionsSecretsResponse>(
+      giteaOperations.repoListActionsSecrets,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List a repository's activity feeds
+   *
+   * @operationId repoListActivityFeeds
+   * @category repository
+   */
+  repoListActivityFeeds(
+    input: RepoListActivityFeedsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoListActivityFeedsResponse> {
+    return this.rest.request<RepoListActivityFeedsResponse>(
+      giteaOperations.repoListActivityFeeds,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get specified ref or filtered repository's refs
+   *
+   * @operationId repoListAllGitRefs
+   * @category repository
+   */
+  repoListAllGitRefs(
+    input: RepoListAllGitRefsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoListAllGitRefsResponse> {
+    return this.rest.request<RepoListAllGitRefsResponse>(
+      giteaOperations.repoListAllGitRefs,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List branch protections for a repository
+   *
+   * @operationId repoListBranchProtection
+   * @category repository
+   */
+  repoListBranchProtection(
+    input: RepoListBranchProtectionInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoListBranchProtectionResponse> {
+    return this.rest.request<RepoListBranchProtectionResponse>(
+      giteaOperations.repoListBranchProtection,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List a repository's branches
+   *
+   * @operationId repoListBranches
+   * @category repository
+   */
+  repoListBranches(
+    input: RepoListBranchesInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoListBranchesResponse> {
+    return this.rest.request<RepoListBranchesResponse>(
+      giteaOperations.repoListBranches,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List a repository's collaborators
+   *
+   * @operationId repoListCollaborators
+   * @category repository
+   */
+  repoListCollaborators(
+    input: RepoListCollaboratorsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoListCollaboratorsResponse> {
+    return this.rest.request<RepoListCollaboratorsResponse>(
+      giteaOperations.repoListCollaborators,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List the Git hooks in a repository
+   *
+   * @operationId repoListGitHooks
+   * @category repository
+   */
+  repoListGitHooks(
+    input: RepoListGitHooksInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoListGitHooksResponse> {
+    return this.rest.request<RepoListGitHooksResponse>(
+      giteaOperations.repoListGitHooks,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get specified ref or filtered repository's refs
+   *
+   * @operationId repoListGitRefs
+   * @category repository
+   */
+  repoListGitRefs(
+    input: RepoListGitRefsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoListGitRefsResponse> {
+    return this.rest.request<RepoListGitRefsResponse>(
+      giteaOperations.repoListGitRefs,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List the hooks in a repository
+   *
+   * @operationId repoListHooks
+   * @category repository
+   */
+  repoListHooks(
+    input: RepoListHooksInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoListHooksResponse> {
+    return this.rest.request<RepoListHooksResponse>(giteaOperations.repoListHooks, input, options);
+  }
+
+  /**
+   * List a repository's keys
+   *
+   * @operationId repoListKeys
+   * @category repository
+   */
+  repoListKeys(
+    input: RepoListKeysInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoListKeysResponse> {
+    return this.rest.request<RepoListKeysResponse>(giteaOperations.repoListKeys, input, options);
+  }
+
+  /**
+   * List a repo's pinned issues
+   *
+   * @operationId repoListPinnedIssues
+   * @category repository
+   */
+  repoListPinnedIssues(
+    input: RepoListPinnedIssuesInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoListPinnedIssuesResponse> {
+    return this.rest.request<RepoListPinnedIssuesResponse>(
+      giteaOperations.repoListPinnedIssues,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List a repo's pinned pull requests
+   *
+   * @operationId repoListPinnedPullRequests
+   * @category repository
+   */
+  repoListPinnedPullRequests(
+    input: RepoListPinnedPullRequestsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoListPinnedPullRequestsResponse> {
+    return this.rest.request<RepoListPinnedPullRequestsResponse>(
+      giteaOperations.repoListPinnedPullRequests,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List a repo's pull requests
+   *
+   * @operationId repoListPullRequests
+   * @category repository
+   */
+  repoListPullRequests(
+    input: RepoListPullRequestsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoListPullRequestsResponse> {
+    return this.rest.request<RepoListPullRequestsResponse>(
+      giteaOperations.repoListPullRequests,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List all reviews for a pull request
+   *
+   * @operationId repoListPullReviews
+   * @category repository
+   */
+  repoListPullReviews(
+    input: RepoListPullReviewsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoListPullReviewsResponse> {
+    return this.rest.request<RepoListPullReviewsResponse>(
+      giteaOperations.repoListPullReviews,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get all push mirrors of the repository
+   *
+   * @operationId repoListPushMirrors
+   * @category repository
+   */
+  repoListPushMirrors(
+    input: RepoListPushMirrorsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoListPushMirrorsResponse> {
+    return this.rest.request<RepoListPushMirrorsResponse>(
+      giteaOperations.repoListPushMirrors,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List release's attachments
+   *
+   * @operationId repoListReleaseAttachments
+   * @category repository
+   */
+  repoListReleaseAttachments(
+    input: RepoListReleaseAttachmentsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoListReleaseAttachmentsResponse> {
+    return this.rest.request<RepoListReleaseAttachmentsResponse>(
+      giteaOperations.repoListReleaseAttachments,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List a repo's releases
+   *
+   * @operationId repoListReleases
+   * @category repository
+   */
+  repoListReleases(
+    input: RepoListReleasesInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoListReleasesResponse> {
+    return this.rest.request<RepoListReleasesResponse>(
+      giteaOperations.repoListReleases,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List a repo's stargazers
+   *
+   * @operationId repoListStargazers
+   * @category repository
+   */
+  repoListStargazers(
+    input: RepoListStargazersInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoListStargazersResponse> {
+    return this.rest.request<RepoListStargazersResponse>(
+      giteaOperations.repoListStargazers,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a commit's statuses
+   *
+   * @operationId repoListStatuses
+   * @category repository
+   */
+  repoListStatuses(
+    input: RepoListStatusesInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoListStatusesResponse> {
+    return this.rest.request<RepoListStatusesResponse>(
+      giteaOperations.repoListStatuses,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a commit's statuses, by branch/tag/commit reference
+   *
+   * @operationId repoListStatusesByRef
+   * @category repository
+   */
+  repoListStatusesByRef(
+    input: RepoListStatusesByRefInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoListStatusesByRefResponse> {
+    return this.rest.request<RepoListStatusesByRefResponse>(
+      giteaOperations.repoListStatusesByRef,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List a repo's watchers
+   *
+   * @operationId repoListSubscribers
+   * @category repository
+   */
+  repoListSubscribers(
+    input: RepoListSubscribersInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoListSubscribersResponse> {
+    return this.rest.request<RepoListSubscribersResponse>(
+      giteaOperations.repoListSubscribers,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List tag protections for a repository
+   *
+   * @operationId repoListTagProtection
+   * @category repository
+   */
+  repoListTagProtection(
+    input: RepoListTagProtectionInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoListTagProtectionResponse> {
+    return this.rest.request<RepoListTagProtectionResponse>(
+      giteaOperations.repoListTagProtection,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List a repository's tags
+   *
+   * @operationId repoListTags
+   * @category repository
+   */
+  repoListTags(
+    input: RepoListTagsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoListTagsResponse> {
+    return this.rest.request<RepoListTagsResponse>(giteaOperations.repoListTags, input, options);
+  }
+
+  /**
+   * List a repository's teams
+   *
+   * @operationId repoListTeams
+   * @category repository
+   */
+  repoListTeams(
+    input: RepoListTeamsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoListTeamsResponse> {
+    return this.rest.request<RepoListTeamsResponse>(giteaOperations.repoListTeams, input, options);
+  }
+
+  /**
+   * Get list of topics that a repository has
+   *
+   * @operationId repoListTopics
+   * @category repository
+   */
+  repoListTopics(
+    input: RepoListTopicsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoListTopicsResponse> {
+    return this.rest.request<RepoListTopicsResponse>(
+      giteaOperations.repoListTopics,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Merge a pull request
+   *
+   * @operationId repoMergePullRequest
+   * @category repository
+   */
+  repoMergePullRequest(
+    input: RepoMergePullRequestInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoMergePullRequestResponse> {
+    return this.rest.request<RepoMergePullRequestResponse>(
+      giteaOperations.repoMergePullRequest,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Merge a branch from upstream
+   *
+   * @operationId repoMergeUpstream
+   * @category repository
+   */
+  repoMergeUpstream(
+    input: RepoMergeUpstreamInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoMergeUpstreamResponse> {
+    return this.rest.request<RepoMergeUpstreamResponse>(
+      giteaOperations.repoMergeUpstream,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Migrate a remote git repository
+   *
+   * @operationId repoMigrate
+   * @category repository
+   */
+  repoMigrate(
+    input: RepoMigrateInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoMigrateResponse> {
+    return this.rest.request<RepoMigrateResponse>(giteaOperations.repoMigrate, input, options);
+  }
+
+  /**
+   * Sync a mirrored repository
+   *
+   * @operationId repoMirrorSync
+   * @category repository
+   */
+  repoMirrorSync(
+    input: RepoMirrorSyncInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoMirrorSyncResponse> {
+    return this.rest.request<RepoMirrorSyncResponse>(
+      giteaOperations.repoMirrorSync,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Returns if new Issue Pins are allowed
+   *
+   * @operationId repoNewPinAllowed
+   * @category repository
+   */
+  repoNewPinAllowed(
+    input: RepoNewPinAllowedInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoNewPinAllowedResponse> {
+    return this.rest.request<RepoNewPinAllowedResponse>(
+      giteaOperations.repoNewPinAllowed,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Check if a pull request has been merged
+   *
+   * @operationId repoPullRequestIsMerged
+   * @category repository
+   */
+  repoPullRequestIsMerged(
+    input: RepoPullRequestIsMergedInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoPullRequestIsMergedResponse> {
+    return this.rest.request<RepoPullRequestIsMergedResponse>(
+      giteaOperations.repoPullRequestIsMerged,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Sync all push mirrored repository
+   *
+   * @operationId repoPushMirrorSync
+   * @category repository
+   */
+  repoPushMirrorSync(
+    input: RepoPushMirrorSyncInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoPushMirrorSyncResponse> {
+    return this.rest.request<RepoPushMirrorSyncResponse>(
+      giteaOperations.repoPushMirrorSync,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Rename a branch
+   *
+   * @operationId repoRenameBranch
+   * @category repository
+   */
+  repoRenameBranch(
+    input: RepoRenameBranchInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoRenameBranchResponse> {
+    return this.rest.request<RepoRenameBranchResponse>(
+      giteaOperations.repoRenameBranch,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Resolve a pull request review comment
+   *
+   * @operationId repoResolvePullReviewComment
+   * @category repository
+   */
+  repoResolvePullReviewComment(
+    input: RepoResolvePullReviewCommentInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoResolvePullReviewCommentResponse> {
+    return this.rest.request<RepoResolvePullReviewCommentResponse>(
+      giteaOperations.repoResolvePullReviewComment,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Search for repositories
+   *
+   * @operationId repoSearch
+   * @category repository
+   */
+  repoSearch(
+    input: RepoSearchInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoSearchResponse> {
+    return this.rest.request<RepoSearchResponse>(giteaOperations.repoSearch, input, options);
+  }
+
+  /**
+   * Get signing-key.gpg for given repository
+   *
+   * @operationId repoSigningKey
+   * @category repository
+   */
+  repoSigningKey(
+    input: RepoSigningKeyInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoSigningKeyResponse> {
+    return this.rest.request<RepoSigningKeyResponse>(
+      giteaOperations.repoSigningKey,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get signing-key.pub for given repository
+   *
+   * @operationId repoSigningKeySSH
+   * @category repository
+   */
+  repoSigningKeySsh(
+    input: RepoSigningKeySshInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoSigningKeySshResponse> {
+    return this.rest.request<RepoSigningKeySshResponse>(
+      giteaOperations.repoSigningKeySsh,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Submit a pending review to an pull request
+   *
+   * @operationId repoSubmitPullReview
+   * @category repository
+   */
+  repoSubmitPullReview(
+    input: RepoSubmitPullReviewInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoSubmitPullReviewResponse> {
+    return this.rest.request<RepoSubmitPullReviewResponse>(
+      giteaOperations.repoSubmitPullReview,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Test a push webhook
+   *
+   * @operationId repoTestHook
+   * @category repository
+   */
+  repoTestHook(
+    input: RepoTestHookInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoTestHookResponse> {
+    return this.rest.request<RepoTestHookResponse>(giteaOperations.repoTestHook, input, options);
+  }
+
+  /**
+   * List a repo's tracked times
+   *
+   * @operationId repoTrackedTimes
+   * @category repository
+   */
+  repoTrackedTimes(
+    input: RepoTrackedTimesInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoTrackedTimesResponse> {
+    return this.rest.request<RepoTrackedTimesResponse>(
+      giteaOperations.repoTrackedTimes,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Transfer a repo ownership
+   *
+   * @operationId repoTransfer
+   * @category repository
+   */
+  repoTransfer(
+    input: RepoTransferInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoTransferResponse> {
+    return this.rest.request<RepoTransferResponse>(giteaOperations.repoTransfer, input, options);
+  }
+
+  /**
+   * Cancel to dismiss a review for a pull request
+   *
+   * @operationId repoUnDismissPullReview
+   * @category repository
+   */
+  repoUnDismissPullReview(
+    input: RepoUnDismissPullReviewInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoUnDismissPullReviewResponse> {
+    return this.rest.request<RepoUnDismissPullReviewResponse>(
+      giteaOperations.repoUnDismissPullReview,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Unresolve a pull request review comment
+   *
+   * @operationId repoUnresolvePullReviewComment
+   * @category repository
+   */
+  repoUnresolvePullReviewComment(
+    input: RepoUnresolvePullReviewCommentInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoUnresolvePullReviewCommentResponse> {
+    return this.rest.request<RepoUnresolvePullReviewCommentResponse>(
+      giteaOperations.repoUnresolvePullReviewComment,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Update avatar
+   *
+   * @operationId repoUpdateAvatar
+   * @category repository
+   */
+  repoUpdateAvatar(
+    input: RepoUpdateAvatarInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoUpdateAvatarResponse> {
+    return this.rest.request<RepoUpdateAvatarResponse>(
+      giteaOperations.repoUpdateAvatar,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Update a branch reference to a new commit
+   *
+   * @operationId repoUpdateBranch
+   * @category repository
+   */
+  repoUpdateBranch(
+    input: RepoUpdateBranchInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoUpdateBranchResponse> {
+    return this.rest.request<RepoUpdateBranchResponse>(
+      giteaOperations.repoUpdateBranch,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Update the priorities of branch protections for a repository.
+   *
+   * @operationId repoUpdateBranchProtectionPriories
+   * @category repository
+   */
+  repoUpdateBranchProtectionPriories(
+    input: RepoUpdateBranchProtectionPrioriesInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoUpdateBranchProtectionPrioriesResponse> {
+    return this.rest.request<RepoUpdateBranchProtectionPrioriesResponse>(
+      giteaOperations.repoUpdateBranchProtectionPriories,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Update a file in a repository if SHA is set, or create the file if SHA is not set
+   *
+   * @operationId repoUpdateFile
+   * @category repository
+   */
+  repoUpdateFile(
+    input: RepoUpdateFileInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoUpdateFileResponse> {
+    return this.rest.request<RepoUpdateFileResponse>(
+      giteaOperations.repoUpdateFile,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Merge PR's baseBranch into headBranch
+   *
+   * @operationId repoUpdatePullRequest
+   * @category repository
+   */
+  repoUpdatePullRequest(
+    input: RepoUpdatePullRequestInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoUpdatePullRequestResponse> {
+    return this.rest.request<RepoUpdatePullRequestResponse>(
+      giteaOperations.repoUpdatePullRequest,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Replace list of topics for a repository
+   *
+   * @operationId repoUpdateTopics
+   * @category repository
+   */
+  repoUpdateTopics(
+    input: RepoUpdateTopicsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoUpdateTopicsResponse> {
+    return this.rest.request<RepoUpdateTopicsResponse>(
+      giteaOperations.repoUpdateTopics,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Returns the validation information for a issue config
+   *
+   * @operationId repoValidateIssueConfig
+   * @category repository
+   */
+  repoValidateIssueConfig(
+    input: RepoValidateIssueConfigInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RepoValidateIssueConfigResponse> {
+    return this.rest.request<RepoValidateIssueConfigResponse>(
+      giteaOperations.repoValidateIssueConfig,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Reruns all failed jobs in a workflow run
+   *
+   * @operationId rerunFailedWorkflowRun
+   * @category repository
+   */
+  rerunFailedWorkflowRun(
+    input: RerunFailedWorkflowRunInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RerunFailedWorkflowRunResponse> {
+    return this.rest.request<RerunFailedWorkflowRunResponse>(
+      giteaOperations.rerunFailedWorkflowRun,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Reruns a specific workflow job in a run
+   *
+   * @operationId rerunWorkflowJob
+   * @category repository
+   */
+  rerunWorkflowJob(
+    input: RerunWorkflowJobInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RerunWorkflowJobResponse> {
+    return this.rest.request<RerunWorkflowJobResponse>(
+      giteaOperations.rerunWorkflowJob,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Reruns an entire workflow run
+   *
+   * @operationId rerunWorkflowRun
+   * @category repository
+   */
+  rerunWorkflowRun(
+    input: RerunWorkflowRunInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<RerunWorkflowRunResponse> {
+    return this.rest.request<RerunWorkflowRunResponse>(
+      giteaOperations.rerunWorkflowRun,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Search for teams within an organization
+   *
+   * @operationId teamSearch
+   * @category organization
+   */
+  teamSearch(
+    input: TeamSearchInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<TeamSearchResponse> {
+    return this.rest.request<TeamSearchResponse>(giteaOperations.teamSearch, input, options);
+  }
+
+  /**
+   * search topics via keyword
+   *
+   * @operationId topicSearch
+   * @category repository
+   */
+  topicSearch(
+    input: TopicSearchInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<TopicSearchResponse> {
+    return this.rest.request<TopicSearchResponse>(giteaOperations.topicSearch, input, options);
+  }
+
+  /**
+   * Unlink a package from a repository
+   *
+   * @operationId unlinkPackage
+   * @category package
+   */
+  unlinkPackage(
+    input: UnlinkPackageInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UnlinkPackageResponse> {
+    return this.rest.request<UnlinkPackageResponse>(giteaOperations.unlinkPackage, input, options);
+  }
+
+  /**
+   * Unpin an Issue
+   *
+   * @operationId unpinIssue
+   * @category issue
+   */
+  unpinIssue(
+    input: UnpinIssueInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UnpinIssueResponse> {
+    return this.rest.request<UnpinIssueResponse>(giteaOperations.unpinIssue, input, options);
+  }
+
+  /**
+   * Update a global runner
+   *
+   * @operationId updateAdminRunner
+   * @category admin
+   */
+  updateAdminRunner(
+    input: UpdateAdminRunnerInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UpdateAdminRunnerResponse> {
+    return this.rest.request<UpdateAdminRunnerResponse>(
+      giteaOperations.updateAdminRunner,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Update an org-level runner
+   *
+   * @operationId updateOrgRunner
+   * @category organization
+   */
+  updateOrgRunner(
+    input: UpdateOrgRunnerInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UpdateOrgRunnerResponse> {
+    return this.rest.request<UpdateOrgRunnerResponse>(
+      giteaOperations.updateOrgRunner,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create or Update a secret value in an organization
+   *
+   * @operationId updateOrgSecret
+   * @category organization
+   */
+  updateOrgSecret(
+    input: UpdateOrgSecretInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UpdateOrgSecretResponse> {
+    return this.rest.request<UpdateOrgSecretResponse>(
+      giteaOperations.updateOrgSecret,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Update an org-level variable
+   *
+   * @operationId updateOrgVariable
+   * @category organization
+   */
+  updateOrgVariable(
+    input: UpdateOrgVariableInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UpdateOrgVariableResponse> {
+    return this.rest.request<UpdateOrgVariableResponse>(
+      giteaOperations.updateOrgVariable,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Update a repo-level runner
+   *
+   * @operationId updateRepoRunner
+   * @category repository
+   */
+  updateRepoRunner(
+    input: UpdateRepoRunnerInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UpdateRepoRunnerResponse> {
+    return this.rest.request<UpdateRepoRunnerResponse>(
+      giteaOperations.updateRepoRunner,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create or Update a secret value in a repository
+   *
+   * @operationId updateRepoSecret
+   * @category repository
+   */
+  updateRepoSecret(
+    input: UpdateRepoSecretInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UpdateRepoSecretResponse> {
+    return this.rest.request<UpdateRepoSecretResponse>(
+      giteaOperations.updateRepoSecret,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Update a repo-level variable
+   *
+   * @operationId updateRepoVariable
+   * @category repository
+   */
+  updateRepoVariable(
+    input: UpdateRepoVariableInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UpdateRepoVariableResponse> {
+    return this.rest.request<UpdateRepoVariableResponse>(
+      giteaOperations.updateRepoVariable,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Update a user-level runner
+   *
+   * @operationId updateUserRunner
+   * @category user
+   */
+  updateUserRunner(
+    input: UpdateUserRunnerInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UpdateUserRunnerResponse> {
+    return this.rest.request<UpdateUserRunnerResponse>(
+      giteaOperations.updateUserRunner,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create or Update a secret value in a user scope
+   *
+   * @operationId updateUserSecret
+   * @category user
+   */
+  updateUserSecret(
+    input: UpdateUserSecretInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UpdateUserSecretResponse> {
+    return this.rest.request<UpdateUserSecretResponse>(
+      giteaOperations.updateUserSecret,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Update user settings
+   *
+   * @operationId updateUserSettings
+   * @category user
+   */
+  updateUserSettings(
+    input: UpdateUserSettingsInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UpdateUserSettingsResponse> {
+    return this.rest.request<UpdateUserSettingsResponse>(
+      giteaOperations.updateUserSettings,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Update a user-level variable which is created by current doer
+   *
+   * @operationId updateUserVariable
+   * @category user
+   */
+  updateUserVariable(
+    input: UpdateUserVariableInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UpdateUserVariableResponse> {
+    return this.rest.request<UpdateUserVariableResponse>(
+      giteaOperations.updateUserVariable,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Add email addresses
+   *
+   * @operationId userAddEmail
+   * @category user
+   */
+  userAddEmail(
+    input: UserAddEmailInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserAddEmailResponse> {
+    return this.rest.request<UserAddEmailResponse>(giteaOperations.userAddEmail, input, options);
+  }
+
+  /**
+   * Block a user
+   *
+   * @operationId userBlockUser
+   * @category user
+   */
+  userBlockUser(
+    input: UserBlockUserInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserBlockUserResponse> {
+    return this.rest.request<UserBlockUserResponse>(giteaOperations.userBlockUser, input, options);
+  }
+
+  /**
+   * Check if one user is following another user
+   *
+   * @operationId userCheckFollowing
+   * @category user
+   */
+  userCheckFollowing(
+    input: UserCheckFollowingInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserCheckFollowingResponse> {
+    return this.rest.request<UserCheckFollowingResponse>(
+      giteaOperations.userCheckFollowing,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Check if a user is blocked by the authenticated user
+   *
+   * @operationId userCheckUserBlock
+   * @category user
+   */
+  userCheckUserBlock(
+    input: UserCheckUserBlockInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserCheckUserBlockResponse> {
+    return this.rest.request<UserCheckUserBlockResponse>(
+      giteaOperations.userCheckUserBlock,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create a hook
+   *
+   * @operationId userCreateHook
+   * @category user
+   */
+  userCreateHook(
+    input: UserCreateHookInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserCreateHookResponse> {
+    return this.rest.request<UserCreateHookResponse>(
+      giteaOperations.userCreateHook,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * creates a new OAuth2 application
+   *
+   * @operationId userCreateOAuth2Application
+   * @category user
+   */
+  userCreateOAuth2Application(
+    input: UserCreateOAuth2ApplicationInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserCreateOAuth2ApplicationResponse> {
+    return this.rest.request<UserCreateOAuth2ApplicationResponse>(
+      giteaOperations.userCreateOAuth2Application,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get an user's actions runner registration token
+   *
+   * @operationId userCreateRunnerRegistrationToken
+   * @category user
+   */
+  userCreateRunnerRegistrationToken(
+    input: UserCreateRunnerRegistrationTokenInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserCreateRunnerRegistrationTokenResponse> {
+    return this.rest.request<UserCreateRunnerRegistrationTokenResponse>(
+      giteaOperations.userCreateRunnerRegistrationToken,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create an access token
+   *
+   * @operationId userCreateToken
+   * @category user
+   */
+  userCreateToken(
+    input: UserCreateTokenInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserCreateTokenResponse> {
+    return this.rest.request<UserCreateTokenResponse>(
+      giteaOperations.userCreateToken,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Check whether a user is followed by the authenticated user
+   *
+   * @operationId userCurrentCheckFollowing
+   * @category user
+   */
+  userCurrentCheckFollowing(
+    input: UserCurrentCheckFollowingInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserCurrentCheckFollowingResponse> {
+    return this.rest.request<UserCurrentCheckFollowingResponse>(
+      giteaOperations.userCurrentCheckFollowing,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Whether the authenticated is starring the repo
+   *
+   * @operationId userCurrentCheckStarring
+   * @category user
+   */
+  userCurrentCheckStarring(
+    input: UserCurrentCheckStarringInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserCurrentCheckStarringResponse> {
+    return this.rest.request<UserCurrentCheckStarringResponse>(
+      giteaOperations.userCurrentCheckStarring,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Check if the current user is watching a repo
+   *
+   * @operationId userCurrentCheckSubscription
+   * @category repository
+   */
+  userCurrentCheckSubscription(
+    input: UserCurrentCheckSubscriptionInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserCurrentCheckSubscriptionResponse> {
+    return this.rest.request<UserCurrentCheckSubscriptionResponse>(
+      giteaOperations.userCurrentCheckSubscription,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Unfollow a user
+   *
+   * @operationId userCurrentDeleteFollow
+   * @category user
+   */
+  userCurrentDeleteFollow(
+    input: UserCurrentDeleteFollowInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserCurrentDeleteFollowResponse> {
+    return this.rest.request<UserCurrentDeleteFollowResponse>(
+      giteaOperations.userCurrentDeleteFollow,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Remove a GPG key
+   *
+   * @operationId userCurrentDeleteGPGKey
+   * @category user
+   */
+  userCurrentDeleteGpgKey(
+    input: UserCurrentDeleteGpgKeyInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserCurrentDeleteGpgKeyResponse> {
+    return this.rest.request<UserCurrentDeleteGpgKeyResponse>(
+      giteaOperations.userCurrentDeleteGpgKey,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a public key
+   *
+   * @operationId userCurrentDeleteKey
+   * @category user
+   */
+  userCurrentDeleteKey(
+    input: UserCurrentDeleteKeyInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserCurrentDeleteKeyResponse> {
+    return this.rest.request<UserCurrentDeleteKeyResponse>(
+      giteaOperations.userCurrentDeleteKey,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Unstar the given repo
+   *
+   * @operationId userCurrentDeleteStar
+   * @category user
+   */
+  userCurrentDeleteStar(
+    input: UserCurrentDeleteStarInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserCurrentDeleteStarResponse> {
+    return this.rest.request<UserCurrentDeleteStarResponse>(
+      giteaOperations.userCurrentDeleteStar,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Unwatch a repo
+   *
+   * @operationId userCurrentDeleteSubscription
+   * @category repository
+   */
+  userCurrentDeleteSubscription(
+    input: UserCurrentDeleteSubscriptionInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserCurrentDeleteSubscriptionResponse> {
+    return this.rest.request<UserCurrentDeleteSubscriptionResponse>(
+      giteaOperations.userCurrentDeleteSubscription,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a GPG key
+   *
+   * @operationId userCurrentGetGPGKey
+   * @category user
+   */
+  userCurrentGetGpgKey(
+    input: UserCurrentGetGpgKeyInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserCurrentGetGpgKeyResponse> {
+    return this.rest.request<UserCurrentGetGpgKeyResponse>(
+      giteaOperations.userCurrentGetGpgKey,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a public key
+   *
+   * @operationId userCurrentGetKey
+   * @category user
+   */
+  userCurrentGetKey(
+    input: UserCurrentGetKeyInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserCurrentGetKeyResponse> {
+    return this.rest.request<UserCurrentGetKeyResponse>(
+      giteaOperations.userCurrentGetKey,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List the authenticated user's followers
+   *
+   * @operationId userCurrentListFollowers
+   * @category user
+   */
+  userCurrentListFollowers(
+    input: UserCurrentListFollowersInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserCurrentListFollowersResponse> {
+    return this.rest.request<UserCurrentListFollowersResponse>(
+      giteaOperations.userCurrentListFollowers,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List the users that the authenticated user is following
+   *
+   * @operationId userCurrentListFollowing
+   * @category user
+   */
+  userCurrentListFollowing(
+    input: UserCurrentListFollowingInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserCurrentListFollowingResponse> {
+    return this.rest.request<UserCurrentListFollowingResponse>(
+      giteaOperations.userCurrentListFollowing,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List the authenticated user's GPG keys
+   *
+   * @operationId userCurrentListGPGKeys
+   * @category user
+   */
+  userCurrentListGpgKeys(
+    input: UserCurrentListGpgKeysInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserCurrentListGpgKeysResponse> {
+    return this.rest.request<UserCurrentListGpgKeysResponse>(
+      giteaOperations.userCurrentListGpgKeys,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List the authenticated user's public keys
+   *
+   * @operationId userCurrentListKeys
+   * @category user
+   */
+  userCurrentListKeys(
+    input: UserCurrentListKeysInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserCurrentListKeysResponse> {
+    return this.rest.request<UserCurrentListKeysResponse>(
+      giteaOperations.userCurrentListKeys,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List the repos that the authenticated user owns
+   *
+   * @operationId userCurrentListRepos
+   * @category user
+   */
+  userCurrentListRepos(
+    input: UserCurrentListReposInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserCurrentListReposResponse> {
+    return this.rest.request<UserCurrentListReposResponse>(
+      giteaOperations.userCurrentListRepos,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * The repos that the authenticated user has starred
+   *
+   * @operationId userCurrentListStarred
+   * @category user
+   */
+  userCurrentListStarred(
+    input: UserCurrentListStarredInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserCurrentListStarredResponse> {
+    return this.rest.request<UserCurrentListStarredResponse>(
+      giteaOperations.userCurrentListStarred,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List repositories watched by the authenticated user
+   *
+   * @operationId userCurrentListSubscriptions
+   * @category user
+   */
+  userCurrentListSubscriptions(
+    input: UserCurrentListSubscriptionsInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserCurrentListSubscriptionsResponse> {
+    return this.rest.request<UserCurrentListSubscriptionsResponse>(
+      giteaOperations.userCurrentListSubscriptions,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create a GPG key
+   *
+   * @operationId userCurrentPostGPGKey
+   * @category user
+   */
+  userCurrentPostGpgKey(
+    input: UserCurrentPostGpgKeyInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserCurrentPostGpgKeyResponse> {
+    return this.rest.request<UserCurrentPostGpgKeyResponse>(
+      giteaOperations.userCurrentPostGpgKey,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Create a public key
+   *
+   * @operationId userCurrentPostKey
+   * @category user
+   */
+  userCurrentPostKey(
+    input: UserCurrentPostKeyInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserCurrentPostKeyResponse> {
+    return this.rest.request<UserCurrentPostKeyResponse>(
+      giteaOperations.userCurrentPostKey,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Follow a user
+   *
+   * @operationId userCurrentPutFollow
+   * @category user
+   */
+  userCurrentPutFollow(
+    input: UserCurrentPutFollowInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserCurrentPutFollowResponse> {
+    return this.rest.request<UserCurrentPutFollowResponse>(
+      giteaOperations.userCurrentPutFollow,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Star the given repo
+   *
+   * @operationId userCurrentPutStar
+   * @category user
+   */
+  userCurrentPutStar(
+    input: UserCurrentPutStarInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserCurrentPutStarResponse> {
+    return this.rest.request<UserCurrentPutStarResponse>(
+      giteaOperations.userCurrentPutStar,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Watch a repo
+   *
+   * @operationId userCurrentPutSubscription
+   * @category repository
+   */
+  userCurrentPutSubscription(
+    input: UserCurrentPutSubscriptionInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserCurrentPutSubscriptionResponse> {
+    return this.rest.request<UserCurrentPutSubscriptionResponse>(
+      giteaOperations.userCurrentPutSubscription,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List the current user's tracked times
+   *
+   * @operationId userCurrentTrackedTimes
+   * @category user
+   */
+  userCurrentTrackedTimes(
+    input: UserCurrentTrackedTimesInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserCurrentTrackedTimesResponse> {
+    return this.rest.request<UserCurrentTrackedTimesResponse>(
+      giteaOperations.userCurrentTrackedTimes,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * delete an access token
+   *
+   * @operationId userDeleteAccessToken
+   * @category user
+   */
+  userDeleteAccessToken(
+    input: UserDeleteAccessTokenInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserDeleteAccessTokenResponse> {
+    return this.rest.request<UserDeleteAccessTokenResponse>(
+      giteaOperations.userDeleteAccessToken,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete Avatar
+   *
+   * @operationId userDeleteAvatar
+   * @category user
+   */
+  userDeleteAvatar(
+    input: UserDeleteAvatarInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserDeleteAvatarResponse> {
+    return this.rest.request<UserDeleteAvatarResponse>(
+      giteaOperations.userDeleteAvatar,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete email addresses
+   *
+   * @operationId userDeleteEmail
+   * @category user
+   */
+  userDeleteEmail(
+    input: UserDeleteEmailInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserDeleteEmailResponse> {
+    return this.rest.request<UserDeleteEmailResponse>(
+      giteaOperations.userDeleteEmail,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Delete a hook
+   *
+   * @operationId userDeleteHook
+   * @category user
+   */
+  userDeleteHook(
+    input: UserDeleteHookInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserDeleteHookResponse> {
+    return this.rest.request<UserDeleteHookResponse>(
+      giteaOperations.userDeleteHook,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * delete an OAuth2 Application
+   *
+   * @operationId userDeleteOAuth2Application
+   * @category user
+   */
+  userDeleteOAuth2Application(
+    input: UserDeleteOAuth2ApplicationInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserDeleteOAuth2ApplicationResponse> {
+    return this.rest.request<UserDeleteOAuth2ApplicationResponse>(
+      giteaOperations.userDeleteOAuth2Application,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Update a hook
+   *
+   * @operationId userEditHook
+   * @category user
+   */
+  userEditHook(
+    input: UserEditHookInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserEditHookResponse> {
+    return this.rest.request<UserEditHookResponse>(giteaOperations.userEditHook, input, options);
+  }
+
+  /**
+   * Get a user
+   *
+   * @operationId userGet
+   * @category user
+   */
+  userGet(
+    input: UserGetInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserGetResponse> {
+    return this.rest.request<UserGetResponse>(giteaOperations.userGet, input, options);
+  }
+
+  /**
+   * Get the authenticated user
+   *
+   * @operationId userGetCurrent
+   * @category user
+   */
+  userGetCurrent(
+    input: UserGetCurrentInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserGetCurrentResponse> {
+    return this.rest.request<UserGetCurrentResponse>(
+      giteaOperations.userGetCurrent,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a user's heatmap
+   *
+   * @operationId userGetHeatmapData
+   * @category user
+   */
+  userGetHeatmapData(
+    input: UserGetHeatmapDataInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserGetHeatmapDataResponse> {
+    return this.rest.request<UserGetHeatmapDataResponse>(
+      giteaOperations.userGetHeatmapData,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get a hook
+   *
+   * @operationId userGetHook
+   * @category user
+   */
+  userGetHook(
+    input: UserGetHookInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserGetHookResponse> {
+    return this.rest.request<UserGetHookResponse>(giteaOperations.userGetHook, input, options);
+  }
+
+  /**
+   * get an OAuth2 Application
+   *
+   * @operationId userGetOAuth2Application
+   * @category user
+   */
+  userGetOAuth2Application_1tziy91(
+    input: UserGetOAuth2Application1tziy91Input,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserGetOAuth2Application1tziy91Response> {
+    return this.rest.request<UserGetOAuth2Application1tziy91Response>(
+      giteaOperations.userGetOAuth2Application_1tziy91,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List the authenticated user's oauth2 applications
+   *
+   * @operationId userGetOauth2Application
+   * @category user
+   */
+  userGetOauth2Application_0hhkiwt(
+    input: UserGetOauth2Application0hhkiwtInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserGetOauth2Application0hhkiwtResponse> {
+    return this.rest.request<UserGetOauth2Application0hhkiwtResponse>(
+      giteaOperations.userGetOauth2Application_0hhkiwt,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Get list of all existing stopwatches
+   *
+   * @operationId userGetStopWatches
+   * @category user
+   */
+  userGetStopWatches(
+    input: UserGetStopWatchesInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserGetStopWatchesResponse> {
+    return this.rest.request<UserGetStopWatchesResponse>(
+      giteaOperations.userGetStopWatches,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List the authenticated user's access tokens
+   *
+   * @operationId userGetTokens
+   * @category user
+   */
+  userGetTokens(
+    input: UserGetTokensInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserGetTokensResponse> {
+    return this.rest.request<UserGetTokensResponse>(giteaOperations.userGetTokens, input, options);
+  }
+
+  /**
+   * List a user's activity feeds
+   *
+   * @operationId userListActivityFeeds
+   * @category user
+   */
+  userListActivityFeeds(
+    input: UserListActivityFeedsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserListActivityFeedsResponse> {
+    return this.rest.request<UserListActivityFeedsResponse>(
+      giteaOperations.userListActivityFeeds,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List users blocked by the authenticated user
+   *
+   * @operationId userListBlocks
+   * @category user
+   */
+  userListBlocks(
+    input: UserListBlocksInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserListBlocksResponse> {
+    return this.rest.request<UserListBlocksResponse>(
+      giteaOperations.userListBlocks,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List the authenticated user's email addresses
+   *
+   * @operationId userListEmails
+   * @category user
+   */
+  userListEmails(
+    input: UserListEmailsInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserListEmailsResponse> {
+    return this.rest.request<UserListEmailsResponse>(
+      giteaOperations.userListEmails,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List the given user's followers
+   *
+   * @operationId userListFollowers
+   * @category user
+   */
+  userListFollowers(
+    input: UserListFollowersInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserListFollowersResponse> {
+    return this.rest.request<UserListFollowersResponse>(
+      giteaOperations.userListFollowers,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List the users that the given user is following
+   *
+   * @operationId userListFollowing
+   * @category user
+   */
+  userListFollowing(
+    input: UserListFollowingInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserListFollowingResponse> {
+    return this.rest.request<UserListFollowingResponse>(
+      giteaOperations.userListFollowing,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List the given user's GPG keys
+   *
+   * @operationId userListGPGKeys
+   * @category user
+   */
+  userListGpgKeys(
+    input: UserListGpgKeysInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserListGpgKeysResponse> {
+    return this.rest.request<UserListGpgKeysResponse>(
+      giteaOperations.userListGpgKeys,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List the authenticated user's webhooks
+   *
+   * @operationId userListHooks
+   * @category user
+   */
+  userListHooks(
+    input: UserListHooksInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserListHooksResponse> {
+    return this.rest.request<UserListHooksResponse>(giteaOperations.userListHooks, input, options);
+  }
+
+  /**
+   * List the given user's public keys
+   *
+   * @operationId userListKeys
+   * @category user
+   */
+  userListKeys(
+    input: UserListKeysInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserListKeysResponse> {
+    return this.rest.request<UserListKeysResponse>(giteaOperations.userListKeys, input, options);
+  }
+
+  /**
+   * List the repos owned by the given user
+   *
+   * @operationId userListRepos
+   * @category user
+   */
+  userListRepos(
+    input: UserListReposInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserListReposResponse> {
+    return this.rest.request<UserListReposResponse>(giteaOperations.userListRepos, input, options);
+  }
+
+  /**
+   * The repos that the given user has starred
+   *
+   * @operationId userListStarred
+   * @category user
+   */
+  userListStarred(
+    input: UserListStarredInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserListStarredResponse> {
+    return this.rest.request<UserListStarredResponse>(
+      giteaOperations.userListStarred,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List the repositories watched by a user
+   *
+   * @operationId userListSubscriptions
+   * @category user
+   */
+  userListSubscriptions(
+    input: UserListSubscriptionsInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserListSubscriptionsResponse> {
+    return this.rest.request<UserListSubscriptionsResponse>(
+      giteaOperations.userListSubscriptions,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * List all the teams a user belongs to
+   *
+   * @operationId userListTeams
+   * @category user
+   */
+  userListTeams(
+    input: UserListTeamsInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserListTeamsResponse> {
+    return this.rest.request<UserListTeamsResponse>(giteaOperations.userListTeams, input, options);
+  }
+
+  /**
+   * Search for users
+   *
+   * @operationId userSearch
+   * @category user
+   */
+  userSearch(
+    input: UserSearchInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserSearchResponse> {
+    return this.rest.request<UserSearchResponse>(giteaOperations.userSearch, input, options);
+  }
+
+  /**
+   * List a user's tracked times in a repo
+   *
+   * @operationId userTrackedTimes
+   * @category repository
+   * @deprecated
+   */
+  userTrackedTimes(
+    input: UserTrackedTimesInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserTrackedTimesResponse> {
+    return this.rest.request<UserTrackedTimesResponse>(
+      giteaOperations.userTrackedTimes,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Unblock a user
+   *
+   * @operationId userUnblockUser
+   * @category user
+   */
+  userUnblockUser(
+    input: UserUnblockUserInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserUnblockUserResponse> {
+    return this.rest.request<UserUnblockUserResponse>(
+      giteaOperations.userUnblockUser,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Update Avatar
+   *
+   * @operationId userUpdateAvatar
+   * @category user
+   */
+  userUpdateAvatar(
+    input: UserUpdateAvatarInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserUpdateAvatarResponse> {
+    return this.rest.request<UserUpdateAvatarResponse>(
+      giteaOperations.userUpdateAvatar,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * update an OAuth2 Application, this includes regenerating the client secret
+   *
+   * @operationId userUpdateOAuth2Application
+   * @category user
+   */
+  userUpdateOAuth2Application(
+    input: UserUpdateOAuth2ApplicationInput,
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserUpdateOAuth2ApplicationResponse> {
+    return this.rest.request<UserUpdateOAuth2ApplicationResponse>(
+      giteaOperations.userUpdateOAuth2Application,
+      input,
+      options,
+    );
+  }
+
+  /**
+   * Verify a GPG key
+   *
+   * @operationId userVerifyGPGKey
+   * @category user
+   */
+  userVerifyGpgKey(
+    input: UserVerifyGpgKeyInput = {},
+    options?: RestGeneratedRequestOptions,
+  ): Promise<UserVerifyGpgKeyResponse> {
+    return this.rest.request<UserVerifyGpgKeyResponse>(
+      giteaOperations.userVerifyGpgKey,
+      input,
+      options,
+    );
+  }
+}
+
+Object.defineProperties(GiteaRestClient, {
+  servers: { configurable: false },
+  securitySchemes: { configurable: false },
+});
