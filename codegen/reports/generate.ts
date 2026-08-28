@@ -1,7 +1,8 @@
+/// <reference path="./turndown-plugin-gfm.d.ts" />
 // @ts-types="npm:@types/turndown@5.0.6"
 import TurndownService from "turndown";
 
-// @ts-types="./turndown-plugin-gfm.d.ts"
+import { generatedComment } from "../notices.ts";
 import { tables } from "turndown-plugin-gfm/lib/turndown-plugin-gfm.es.js";
 import { readReportSummaries, type ReportSnapshot } from "./model.ts";
 
@@ -65,9 +66,10 @@ async function renderReport(report: ReportSnapshot): Promise<string> {
     .map((entry) => entry.id).sort();
   const metrics = summary.sourceCoverage;
   const markdown = [
-    `# ${provider} ${version} — real API E2E`,
+    generatedComment("<!--")
+      .trimEnd(),
     "",
-    "<!-- Generated from raw E2E reports. Do not edit. -->",
+    `# ${provider} ${version} — real API E2E`,
     "",
     `Result: **${
       summary.passed ? "PASS" : "FAIL"
@@ -135,7 +137,7 @@ async function existingMarkdown(directory: URL): Promise<URL[]> {
   return files;
 }
 
-export async function generateReports(root = new URL("../../", import.meta.url)): Promise<void> {
+export async function generateReports(root: URL): Promise<void> {
   const reports = await readReportSummaries(root);
   const oldFiles = await existingMarkdown(new URL("docs/test-results/", root));
   const output = new Map<string, string>();
@@ -155,7 +157,4 @@ export async function generateReports(root = new URL("../../", import.meta.url))
     if (previous !== markdown) await Deno.writeTextFile(file, markdown);
   }
   for (const file of oldFiles) if (!output.has(file.href)) await Deno.remove(file);
-  console.log(`Published ${output.size} Markdown E2E reports.`);
 }
-
-if (import.meta.main) await generateReports();

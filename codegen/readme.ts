@@ -1,10 +1,14 @@
+import { generatedComment } from "./notices.ts";
 import { readReportSummaries } from "./reports/model.ts";
 
 const startMarker = "<!-- BEGIN GENERATED TEST RESULTS -->";
 const endMarker = "<!-- END GENERATED TEST RESULTS -->";
 
-export async function generateReadme(root = new URL("../", import.meta.url)): Promise<void> {
-  const readmePath = new URL("README.md", root);
+export async function generateReadme(
+  root: URL,
+  options: { readmePath?: URL; reportPrefix?: string } = {},
+): Promise<void> {
+  const readmePath = options.readmePath ?? new URL("README.md", root);
   const readme = await Deno.readTextFile(readmePath);
   const start = readme.indexOf(startMarker);
   const end = readme.indexOf(endMarker);
@@ -22,7 +26,7 @@ export async function generateReadme(root = new URL("../", import.meta.url)): Pr
     const endpoints = summary.endpoints;
     rows.push([
       provider,
-      `[${version}](${markdown})`,
+      `[${version}](${options.reportPrefix ?? ""}${markdown})`,
       summary.passed ? "Pass" : "Fail",
       String(endpoints.cases),
       `${endpoints.passed} / ${endpoints.operations}`,
@@ -62,6 +66,8 @@ export async function generateReadme(root = new URL("../", import.meta.url)): Pr
       : "-".repeat(width - 1) + ":"
   );
   const section = [
+    generatedComment("<!--").trimEnd(),
+    "",
     formatRow(headings),
     `| ${separator.join(" | ")} |`,
     ...rows.map(formatRow),
@@ -74,14 +80,4 @@ export async function generateReadme(root = new URL("../", import.meta.url)): Pr
     readme.slice(end)
   }`;
   if (updated !== readme) await Deno.writeTextFile(readmePath, updated);
-}
-
-if (import.meta.main) {
-  try {
-    await generateReadme();
-    console.log("Updated README test results from saved report snapshots.");
-  } catch (error) {
-    console.error(error instanceof Error ? error.message : error);
-    Deno.exit(1);
-  }
 }

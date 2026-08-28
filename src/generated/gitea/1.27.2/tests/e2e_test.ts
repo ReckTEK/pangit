@@ -1,5 +1,0 @@
-// Generated real HTTP E2E suite. Do not edit.
-import { GiteaRestClient } from "../client.ts";
-import manifest from "./manifest.json" with { type: "json" };
-import { runSuite } from "./runtime.ts";
-Deno.test("gitea 1.27.2 real API E2E", async (t) => { await runSuite(t, manifest, GiteaRestClient); });

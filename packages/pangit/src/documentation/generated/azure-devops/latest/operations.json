@@ -1,0 +1,1462 @@
+[
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/annotatedtags"
+    },
+    "methodName": "annotatedTagsCreate",
+    "operationId": "Annotated Tags_Create",
+    "method": "POST",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/annotatedtags",
+    "tags": [
+      "Annotated Tags"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/annotatedtags/{objectId}"
+    },
+    "methodName": "annotatedTagsGet",
+    "operationId": "Annotated Tags_Get",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/annotatedtags/{objectId}",
+    "tags": [
+      "Annotated Tags"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/blobs/{sha1}"
+    },
+    "methodName": "blobsGetBlob",
+    "operationId": "Blobs_Get Blob",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/blobs/{sha1}",
+    "tags": [
+      "Blobs"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/blobs"
+    },
+    "methodName": "blobsGetBlobsZip",
+    "operationId": "Blobs_Get Blobs Zip",
+    "method": "POST",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/blobs",
+    "tags": [
+      "Blobs"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/cherryPicks"
+    },
+    "methodName": "cherryPicksCreate",
+    "operationId": "Cherry Picks_Create",
+    "method": "POST",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/cherryPicks",
+    "tags": [
+      "Cherry Picks"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/cherryPicks/{cherryPickId}"
+    },
+    "methodName": "cherryPicksGetCherryPick",
+    "operationId": "Cherry Picks_Get Cherry Pick",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/cherryPicks/{cherryPickId}",
+    "tags": [
+      "Cherry Picks"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/cherryPicks"
+    },
+    "methodName": "cherryPicksGetCherryPickForRefName",
+    "operationId": "Cherry Picks_Get Cherry Pick For Ref Name",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/cherryPicks",
+    "tags": [
+      "Cherry Picks"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/commits/{commitId}"
+    },
+    "methodName": "commitsGet",
+    "operationId": "Commits_Get",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/commits/{commitId}",
+    "tags": [
+      "Commits"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/commits/{commitId}/changes"
+    },
+    "methodName": "commitsGetChanges",
+    "operationId": "Commits_Get Changes",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/commits/{commitId}/changes",
+    "tags": [
+      "Commits"
+    ]
+  },
+  {
+    "source": {
+      "collection": "x-ms-paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/commits?"
+    },
+    "methodName": "commitsGetCommits",
+    "operationId": "Commits_Get Commits",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/commits",
+    "tags": [
+      "Commits"
+    ],
+    "variant": "commitsGetCommits"
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/commitsbatch"
+    },
+    "methodName": "commitsGetCommitsBatch",
+    "operationId": "Commits_Get Commits Batch",
+    "method": "POST",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/commitsbatch",
+    "tags": [
+      "Commits"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/commits"
+    },
+    "methodName": "commitsGetPushCommits",
+    "operationId": "Commits_Get Push Commits",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/commits",
+    "tags": [
+      "Commits"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/diffs/commits"
+    },
+    "methodName": "diffsGet",
+    "operationId": "Diffs_Get",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/diffs/commits",
+    "tags": [
+      "Diffs"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryNameOrId}/forkSyncRequests"
+    },
+    "methodName": "forksCreateForkSyncRequest",
+    "operationId": "Forks_Create fork sync request",
+    "method": "POST",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryNameOrId}/forkSyncRequests",
+    "tags": [
+      "Forks"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryNameOrId}/forkSyncRequests/{forkSyncOperationId}"
+    },
+    "methodName": "forksGetForkSyncRequest",
+    "operationId": "Forks_Get fork sync request",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryNameOrId}/forkSyncRequests/{forkSyncOperationId}",
+    "tags": [
+      "Forks"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryNameOrId}/forkSyncRequests"
+    },
+    "methodName": "forksGetForkSyncRequests",
+    "operationId": "Forks_Get Fork Sync Requests",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryNameOrId}/forkSyncRequests",
+    "tags": [
+      "Forks"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryNameOrId}/forks/{collectionId}"
+    },
+    "methodName": "forksList",
+    "operationId": "Forks_List",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryNameOrId}/forks/{collectionId}",
+    "tags": [
+      "Forks"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/importRequests"
+    },
+    "methodName": "importRequestsCreate",
+    "operationId": "Import Requests_Create",
+    "method": "POST",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/importRequests",
+    "tags": [
+      "Import Requests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/importRequests/{importRequestId}"
+    },
+    "methodName": "importRequestsGet",
+    "operationId": "Import Requests_Get",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/importRequests/{importRequestId}",
+    "tags": [
+      "Import Requests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/importRequests"
+    },
+    "methodName": "importRequestsQuery",
+    "operationId": "Import Requests_Query",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/importRequests",
+    "tags": [
+      "Import Requests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/importRequests/{importRequestId}"
+    },
+    "methodName": "importRequestsUpdate",
+    "operationId": "Import Requests_Update",
+    "method": "PATCH",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/importRequests/{importRequestId}",
+    "tags": [
+      "Import Requests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "x-ms-paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/items?path={path}"
+    },
+    "methodName": "itemsGet",
+    "operationId": "Items_Get",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/items",
+    "tags": [
+      "Items"
+    ],
+    "variant": "itemsGet"
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/itemsbatch"
+    },
+    "methodName": "itemsGetItemsBatch",
+    "operationId": "Items_Get Items Batch",
+    "method": "POST",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/itemsbatch",
+    "tags": [
+      "Items"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/items"
+    },
+    "methodName": "itemsList",
+    "operationId": "Items_List",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/items",
+    "tags": [
+      "Items"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryNameOrId}/commits/{commitId}/mergebases"
+    },
+    "methodName": "mergeBasesList",
+    "operationId": "Merge Bases_List",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryNameOrId}/commits/{commitId}/mergebases",
+    "tags": [
+      "Merge Bases"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryNameOrId}/merges"
+    },
+    "methodName": "mergesCreate",
+    "operationId": "Merges_Create",
+    "method": "POST",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryNameOrId}/merges",
+    "tags": [
+      "Merges"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryNameOrId}/merges/{mergeOperationId}"
+    },
+    "methodName": "mergesGet",
+    "operationId": "Merges_Get",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryNameOrId}/merges/{mergeOperationId}",
+    "tags": [
+      "Merges"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/policy/configurations"
+    },
+    "methodName": "policyConfigurationsGet",
+    "operationId": "Policy Configurations_Get",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/policy/configurations",
+    "tags": [
+      "Policy Configurations"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/attachments/{fileName}"
+    },
+    "methodName": "pullRequestAttachmentsCreate",
+    "operationId": "Pull Request Attachments_Create",
+    "method": "POST",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/attachments/{fileName}",
+    "tags": [
+      "Pull Request Attachments"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/attachments/{fileName}"
+    },
+    "methodName": "pullRequestAttachmentsDelete",
+    "operationId": "Pull Request Attachments_Delete",
+    "method": "DELETE",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/attachments/{fileName}",
+    "tags": [
+      "Pull Request Attachments"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/attachments/{fileName}"
+    },
+    "methodName": "pullRequestAttachmentsGet",
+    "operationId": "Pull Request Attachments_Get",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/attachments/{fileName}",
+    "tags": [
+      "Pull Request Attachments"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/attachments"
+    },
+    "methodName": "pullRequestAttachmentsList",
+    "operationId": "Pull Request Attachments_List",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/attachments",
+    "tags": [
+      "Pull Request Attachments"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads/{threadId}/comments/{commentId}/likes"
+    },
+    "methodName": "pullRequestCommentLikesCreate",
+    "operationId": "Pull Request Comment Likes_Create",
+    "method": "POST",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads/{threadId}/comments/{commentId}/likes",
+    "tags": [
+      "Pull Request Comment Likes"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads/{threadId}/comments/{commentId}/likes"
+    },
+    "methodName": "pullRequestCommentLikesDelete",
+    "operationId": "Pull Request Comment Likes_Delete",
+    "method": "DELETE",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads/{threadId}/comments/{commentId}/likes",
+    "tags": [
+      "Pull Request Comment Likes"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads/{threadId}/comments/{commentId}/likes"
+    },
+    "methodName": "pullRequestCommentLikesList",
+    "operationId": "Pull Request Comment Likes_List",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads/{threadId}/comments/{commentId}/likes",
+    "tags": [
+      "Pull Request Comment Likes"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/commits"
+    },
+    "methodName": "pullRequestCommitsGetPullRequestCommits",
+    "operationId": "Pull Request Commits_Get Pull Request Commits",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/commits",
+    "tags": [
+      "Pull Request Commits"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/iterations/{iterationId}/commits"
+    },
+    "methodName": "pullRequestCommitsGetPullRequestIterationCommits",
+    "operationId": "Pull Request Commits_Get Pull Request Iteration Commits",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/iterations/{iterationId}/commits",
+    "tags": [
+      "Pull Request Commits"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/iterations/{iterationId}/changes"
+    },
+    "methodName": "pullRequestIterationChangesGet",
+    "operationId": "Pull Request Iteration Changes_Get",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/iterations/{iterationId}/changes",
+    "tags": [
+      "Pull Request Iteration Changes"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/iterations/{iterationId}/statuses"
+    },
+    "methodName": "pullRequestIterationStatusesCreate",
+    "operationId": "Pull Request Iteration Statuses_Create",
+    "method": "POST",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/iterations/{iterationId}/statuses",
+    "tags": [
+      "Pull Request Iteration Statuses"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/iterations/{iterationId}/statuses/{statusId}"
+    },
+    "methodName": "pullRequestIterationStatusesDelete",
+    "operationId": "Pull Request Iteration Statuses_Delete",
+    "method": "DELETE",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/iterations/{iterationId}/statuses/{statusId}",
+    "tags": [
+      "Pull Request Iteration Statuses"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/iterations/{iterationId}/statuses/{statusId}"
+    },
+    "methodName": "pullRequestIterationStatusesGet",
+    "operationId": "Pull Request Iteration Statuses_Get",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/iterations/{iterationId}/statuses/{statusId}",
+    "tags": [
+      "Pull Request Iteration Statuses"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/iterations/{iterationId}/statuses"
+    },
+    "methodName": "pullRequestIterationStatusesList",
+    "operationId": "Pull Request Iteration Statuses_List",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/iterations/{iterationId}/statuses",
+    "tags": [
+      "Pull Request Iteration Statuses"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/iterations/{iterationId}/statuses"
+    },
+    "methodName": "pullRequestIterationStatusesUpdate",
+    "operationId": "Pull Request Iteration Statuses_Update",
+    "method": "PATCH",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/iterations/{iterationId}/statuses",
+    "tags": [
+      "Pull Request Iteration Statuses"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/iterations/{iterationId}"
+    },
+    "methodName": "pullRequestIterationsGet",
+    "operationId": "Pull Request Iterations_Get",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/iterations/{iterationId}",
+    "tags": [
+      "Pull Request Iterations"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/iterations"
+    },
+    "methodName": "pullRequestIterationsList",
+    "operationId": "Pull Request Iterations_List",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/iterations",
+    "tags": [
+      "Pull Request Iterations"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/labels"
+    },
+    "methodName": "pullRequestLabelsCreate",
+    "operationId": "Pull Request Labels_Create",
+    "method": "POST",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/labels",
+    "tags": [
+      "Pull Request Labels"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/labels/{labelIdOrName}"
+    },
+    "methodName": "pullRequestLabelsDelete",
+    "operationId": "Pull Request Labels_Delete",
+    "method": "DELETE",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/labels/{labelIdOrName}",
+    "tags": [
+      "Pull Request Labels"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/labels/{labelIdOrName}"
+    },
+    "methodName": "pullRequestLabelsGet",
+    "operationId": "Pull Request Labels_Get",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/labels/{labelIdOrName}",
+    "tags": [
+      "Pull Request Labels"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/labels"
+    },
+    "methodName": "pullRequestLabelsList",
+    "operationId": "Pull Request Labels_List",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/labels",
+    "tags": [
+      "Pull Request Labels"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/properties"
+    },
+    "methodName": "pullRequestPropertiesList",
+    "operationId": "Pull Request Properties_List",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/properties",
+    "tags": [
+      "Pull Request Properties"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/properties"
+    },
+    "methodName": "pullRequestPropertiesUpdate",
+    "operationId": "Pull Request Properties_Update",
+    "method": "PATCH",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/properties",
+    "tags": [
+      "Pull Request Properties"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullrequestquery"
+    },
+    "methodName": "pullRequestQueryGet",
+    "operationId": "Pull Request Query_Get",
+    "method": "POST",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullrequestquery",
+    "tags": [
+      "Pull Request Query"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/reviewers/{reviewerId}"
+    },
+    "methodName": "pullRequestReviewersCreatePullRequestReviewer",
+    "operationId": "Pull Request Reviewers_Create Pull Request Reviewer",
+    "method": "PUT",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/reviewers/{reviewerId}",
+    "tags": [
+      "Pull Request Reviewers"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/reviewers"
+    },
+    "methodName": "pullRequestReviewersCreatePullRequestReviewers",
+    "operationId": "Pull Request Reviewers_Create Pull Request Reviewers",
+    "method": "POST",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/reviewers",
+    "tags": [
+      "Pull Request Reviewers"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/reviewers"
+    },
+    "methodName": "pullRequestReviewersCreateUnmaterializedPullRequestReviewer",
+    "operationId": "Pull Request Reviewers_Create Unmaterialized Pull Request Reviewer",
+    "method": "PUT",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/reviewers",
+    "tags": [
+      "Pull Request Reviewers"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/reviewers/{reviewerId}"
+    },
+    "methodName": "pullRequestReviewersDelete",
+    "operationId": "Pull Request Reviewers_Delete",
+    "method": "DELETE",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/reviewers/{reviewerId}",
+    "tags": [
+      "Pull Request Reviewers"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/reviewers/{reviewerId}"
+    },
+    "methodName": "pullRequestReviewersGet",
+    "operationId": "Pull Request Reviewers_Get",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/reviewers/{reviewerId}",
+    "tags": [
+      "Pull Request Reviewers"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/reviewers"
+    },
+    "methodName": "pullRequestReviewersList",
+    "operationId": "Pull Request Reviewers_List",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/reviewers",
+    "tags": [
+      "Pull Request Reviewers"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/reviewers/{reviewerId}"
+    },
+    "methodName": "pullRequestReviewersUpdatePullRequestReviewer",
+    "operationId": "Pull Request Reviewers_Update Pull Request Reviewer",
+    "method": "PATCH",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/reviewers/{reviewerId}",
+    "tags": [
+      "Pull Request Reviewers"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/reviewers"
+    },
+    "methodName": "pullRequestReviewersUpdatePullRequestReviewers",
+    "operationId": "Pull Request Reviewers_Update Pull Request Reviewers",
+    "method": "PATCH",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/reviewers",
+    "tags": [
+      "Pull Request Reviewers"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/share"
+    },
+    "methodName": "pullRequestShareSharePullRequest",
+    "operationId": "Pull Request Share_Share Pull Request",
+    "method": "POST",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/share",
+    "tags": [
+      "Pull Request Share"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/statuses"
+    },
+    "methodName": "pullRequestStatusesCreate",
+    "operationId": "Pull Request Statuses_Create",
+    "method": "POST",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/statuses",
+    "tags": [
+      "Pull Request Statuses"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/statuses/{statusId}"
+    },
+    "methodName": "pullRequestStatusesDelete",
+    "operationId": "Pull Request Statuses_Delete",
+    "method": "DELETE",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/statuses/{statusId}",
+    "tags": [
+      "Pull Request Statuses"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/statuses/{statusId}"
+    },
+    "methodName": "pullRequestStatusesGet",
+    "operationId": "Pull Request Statuses_Get",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/statuses/{statusId}",
+    "tags": [
+      "Pull Request Statuses"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/statuses"
+    },
+    "methodName": "pullRequestStatusesList",
+    "operationId": "Pull Request Statuses_List",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/statuses",
+    "tags": [
+      "Pull Request Statuses"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/statuses"
+    },
+    "methodName": "pullRequestStatusesUpdate",
+    "operationId": "Pull Request Statuses_Update",
+    "method": "PATCH",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/statuses",
+    "tags": [
+      "Pull Request Statuses"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads/{threadId}/comments"
+    },
+    "methodName": "pullRequestThreadCommentsCreate",
+    "operationId": "Pull Request Thread Comments_Create",
+    "method": "POST",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads/{threadId}/comments",
+    "tags": [
+      "Pull Request Thread Comments"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads/{threadId}/comments/{commentId}"
+    },
+    "methodName": "pullRequestThreadCommentsDelete",
+    "operationId": "Pull Request Thread Comments_Delete",
+    "method": "DELETE",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads/{threadId}/comments/{commentId}",
+    "tags": [
+      "Pull Request Thread Comments"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads/{threadId}/comments/{commentId}"
+    },
+    "methodName": "pullRequestThreadCommentsGet",
+    "operationId": "Pull Request Thread Comments_Get",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads/{threadId}/comments/{commentId}",
+    "tags": [
+      "Pull Request Thread Comments"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads/{threadId}/comments"
+    },
+    "methodName": "pullRequestThreadCommentsList",
+    "operationId": "Pull Request Thread Comments_List",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads/{threadId}/comments",
+    "tags": [
+      "Pull Request Thread Comments"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads/{threadId}/comments/{commentId}"
+    },
+    "methodName": "pullRequestThreadCommentsUpdate",
+    "operationId": "Pull Request Thread Comments_Update",
+    "method": "PATCH",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads/{threadId}/comments/{commentId}",
+    "tags": [
+      "Pull Request Thread Comments"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads"
+    },
+    "methodName": "pullRequestThreadsCreate",
+    "operationId": "Pull Request Threads_Create",
+    "method": "POST",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads",
+    "tags": [
+      "Pull Request Threads"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads/{threadId}"
+    },
+    "methodName": "pullRequestThreadsGet",
+    "operationId": "Pull Request Threads_Get",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads/{threadId}",
+    "tags": [
+      "Pull Request Threads"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads"
+    },
+    "methodName": "pullRequestThreadsList",
+    "operationId": "Pull Request Threads_List",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads",
+    "tags": [
+      "Pull Request Threads"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads/{threadId}"
+    },
+    "methodName": "pullRequestThreadsUpdate",
+    "operationId": "Pull Request Threads_Update",
+    "method": "PATCH",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/threads/{threadId}",
+    "tags": [
+      "Pull Request Threads"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/workitems"
+    },
+    "methodName": "pullRequestWorkItemsList",
+    "operationId": "Pull Request Work Items_List",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/workitems",
+    "tags": [
+      "Pull Request Work Items"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullrequests"
+    },
+    "methodName": "pullRequestsCreate",
+    "operationId": "Pull Requests_Create",
+    "method": "POST",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullrequests",
+    "tags": [
+      "Pull Requests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullrequests/{pullRequestId}"
+    },
+    "methodName": "pullRequestsGetPullRequest",
+    "operationId": "Pull Requests_Get Pull Request",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullrequests/{pullRequestId}",
+    "tags": [
+      "Pull Requests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/pullrequests/{pullRequestId}"
+    },
+    "methodName": "pullRequestsGetPullRequestById",
+    "operationId": "Pull Requests_Get Pull Request By Id",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/pullrequests/{pullRequestId}",
+    "tags": [
+      "Pull Requests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullrequests"
+    },
+    "methodName": "pullRequestsGetPullRequests",
+    "operationId": "Pull Requests_Get Pull Requests",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullrequests",
+    "tags": [
+      "Pull Requests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/pullrequests"
+    },
+    "methodName": "pullRequestsGetPullRequestsByProject",
+    "operationId": "Pull Requests_Get Pull Requests By Project",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/pullrequests",
+    "tags": [
+      "Pull Requests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullrequests/{pullRequestId}"
+    },
+    "methodName": "pullRequestsUpdate",
+    "operationId": "Pull Requests_Update",
+    "method": "PATCH",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullrequests/{pullRequestId}",
+    "tags": [
+      "Pull Requests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pushes"
+    },
+    "methodName": "pushesCreate",
+    "operationId": "Pushes_Create",
+    "method": "POST",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pushes",
+    "tags": [
+      "Pushes"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pushes/{pushId}"
+    },
+    "methodName": "pushesGet",
+    "operationId": "Pushes_Get",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pushes/{pushId}",
+    "tags": [
+      "Pushes"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pushes"
+    },
+    "methodName": "pushesList",
+    "operationId": "Pushes_List",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pushes",
+    "tags": [
+      "Pushes"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/favorites/refs"
+    },
+    "methodName": "refsFavoritesCreate",
+    "operationId": "Refs Favorites_Create",
+    "method": "POST",
+    "path": "/{organization}/{project}/_apis/git/favorites/refs",
+    "tags": [
+      "Refs Favorites"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/favorites/refs/{favoriteId}"
+    },
+    "methodName": "refsFavoritesDelete",
+    "operationId": "Refs Favorites_Delete",
+    "method": "DELETE",
+    "path": "/{organization}/{project}/_apis/git/favorites/refs/{favoriteId}",
+    "tags": [
+      "Refs Favorites"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/favorites/refsForProject"
+    },
+    "methodName": "refsFavoritesForProjectList",
+    "operationId": "Refs Favorites For Project_List",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/favorites/refsForProject",
+    "tags": [
+      "Refs Favorites For Project"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/favorites/refs/{favoriteId}"
+    },
+    "methodName": "refsFavoritesGet",
+    "operationId": "Refs Favorites_Get",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/favorites/refs/{favoriteId}",
+    "tags": [
+      "Refs Favorites"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/favorites/refs"
+    },
+    "methodName": "refsFavoritesList",
+    "operationId": "Refs Favorites_List",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/favorites/refs",
+    "tags": [
+      "Refs Favorites"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/refs"
+    },
+    "methodName": "refsList",
+    "operationId": "Refs_List",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/refs",
+    "tags": [
+      "Refs"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/refs"
+    },
+    "methodName": "refsUpdateRef",
+    "operationId": "Refs_Update Ref",
+    "method": "PATCH",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/refs",
+    "tags": [
+      "Refs"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/refs"
+    },
+    "methodName": "refsUpdateRefs",
+    "operationId": "Refs_Update Refs",
+    "method": "POST",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/refs",
+    "tags": [
+      "Refs"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories"
+    },
+    "methodName": "repositoriesCreate",
+    "operationId": "Repositories_Create",
+    "method": "POST",
+    "path": "/{organization}/{project}/_apis/git/repositories",
+    "tags": [
+      "Repositories"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}"
+    },
+    "methodName": "repositoriesDelete",
+    "operationId": "Repositories_Delete",
+    "method": "DELETE",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}",
+    "tags": [
+      "Repositories"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/recycleBin/repositories/{repositoryId}"
+    },
+    "methodName": "repositoriesDeleteRepositoryFromRecycleBin",
+    "operationId": "Repositories_Delete Repository From Recycle Bin",
+    "method": "DELETE",
+    "path": "/{organization}/{project}/_apis/git/recycleBin/repositories/{repositoryId}",
+    "tags": [
+      "Repositories"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/deletedrepositories"
+    },
+    "methodName": "repositoriesGetDeletedRepositories",
+    "operationId": "Repositories_Get Deleted Repositories",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/deletedrepositories",
+    "tags": [
+      "Repositories"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/recycleBin/repositories"
+    },
+    "methodName": "repositoriesGetRecycleBinRepositories",
+    "operationId": "Repositories_Get Recycle Bin Repositories",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/recycleBin/repositories",
+    "tags": [
+      "Repositories"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}"
+    },
+    "methodName": "repositoriesGetRepository",
+    "operationId": "Repositories_Get Repository",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}",
+    "tags": [
+      "Repositories"
+    ]
+  },
+  {
+    "source": {
+      "collection": "x-ms-paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}?includeParent={includeParent}"
+    },
+    "methodName": "repositoriesGetRepositoryWithParent",
+    "operationId": "Repositories_Get Repository With Parent",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}",
+    "tags": [
+      "Repositories"
+    ],
+    "variant": "repositoriesGetRepositoryWithParent"
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories"
+    },
+    "methodName": "repositoriesList",
+    "operationId": "Repositories_List",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories",
+    "tags": [
+      "Repositories"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/recycleBin/repositories/{repositoryId}"
+    },
+    "methodName": "repositoriesRestoreRepositoryFromRecycleBin",
+    "operationId": "Repositories_Restore Repository From Recycle Bin",
+    "method": "PATCH",
+    "path": "/{organization}/{project}/_apis/git/recycleBin/repositories/{repositoryId}",
+    "tags": [
+      "Repositories"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}"
+    },
+    "methodName": "repositoriesUpdate",
+    "operationId": "Repositories_Update",
+    "method": "PATCH",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}",
+    "tags": [
+      "Repositories"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/reverts"
+    },
+    "methodName": "revertsCreate",
+    "operationId": "Reverts_Create",
+    "method": "POST",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/reverts",
+    "tags": [
+      "Reverts"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/reverts/{revertId}"
+    },
+    "methodName": "revertsGetRevert",
+    "operationId": "Reverts_Get Revert",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/reverts/{revertId}",
+    "tags": [
+      "Reverts"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/reverts"
+    },
+    "methodName": "revertsGetRevertForRefName",
+    "operationId": "Reverts_Get Revert For Ref Name",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/reverts",
+    "tags": [
+      "Reverts"
+    ]
+  },
+  {
+    "source": {
+      "collection": "x-ms-paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/stats/branches?name={name}"
+    },
+    "methodName": "statsGet",
+    "operationId": "Stats_Get",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/stats/branches",
+    "tags": [
+      "Stats"
+    ],
+    "variant": "statsGet"
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/stats/branches"
+    },
+    "methodName": "statsList",
+    "operationId": "Stats_List",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/stats/branches",
+    "tags": [
+      "Stats"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/commits/{commitId}/statuses"
+    },
+    "methodName": "statusesCreate",
+    "operationId": "Statuses_Create",
+    "method": "POST",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/commits/{commitId}/statuses",
+    "tags": [
+      "Statuses"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/commits/{commitId}/statuses"
+    },
+    "methodName": "statusesList",
+    "operationId": "Statuses_List",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/commits/{commitId}/statuses",
+    "tags": [
+      "Statuses"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/suggestions"
+    },
+    "methodName": "suggestionsList",
+    "operationId": "Suggestions_List",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/suggestions",
+    "tags": [
+      "Suggestions"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/trees/{sha1}"
+    },
+    "methodName": "treesGet",
+    "operationId": "Trees_Get",
+    "method": "GET",
+    "path": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/trees/{sha1}",
+    "tags": [
+      "Trees"
+    ]
+  }
+]

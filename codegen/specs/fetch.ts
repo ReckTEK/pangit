@@ -20,7 +20,8 @@ type FetchedApiSpec = {
   sha256: string;
 };
 
-type RawSpecManifest = {
+/** Source/normalized/test-map paths are repository-relative; emitted artifacts are PanGit-package-relative. */
+export type RawSpecManifest = {
   schemaVersion: 1;
   providers: Record<
     string,
@@ -47,6 +48,7 @@ type RawSpecManifest = {
             tests: string;
             results: string;
             compose: string;
+            documentation: { openapi: string; operations: string; route: string };
           };
         }
       >;
@@ -117,12 +119,21 @@ async function fetchApiSpec(
   }
 
   const body = applyApiSpecTransform(await response.text(), source, version);
+  return describeApiSpec(provider, version, body);
+}
+
+async function describeApiSpec(
+  provider: ApiSpecProvider,
+  version: string,
+  body: string,
+): Promise<FetchedApiSpec> {
+  const providerSource = apiSpecProviders[provider];
   assertApiSpecDocument(body, providerSource.format, `${providerSource.name} ${version}`);
   return {
     provider,
     version,
     format: providerSource.format,
-    source,
+    source: providerSource.versions[version],
     body,
     bytes: textEncoder.encode(body).byteLength,
     sha256: await sha256(body),
@@ -155,6 +166,11 @@ function createRawSpecManifest(fetchedSpecs: FetchedApiSpec[]): RawSpecManifest 
           tests: `src/generated/${provider}/${version}/tests`,
           results: `src/generated/${provider}/${version}/tests/results`,
           compose: `src/generated/${provider}/${version}/tests/compose.yaml`,
+          documentation: {
+            openapi: `src/documentation/generated/${provider}/${version}/openapi.json`,
+            operations: `src/documentation/generated/${provider}/${version}/operations.json`,
+            route: `/docs/raw/${provider}/${version}`,
+          },
         },
       };
     }
@@ -171,7 +187,10 @@ function createRawSpecManifest(fetchedSpecs: FetchedApiSpec[]): RawSpecManifest 
   return manifest;
 }
 
-export async function fetchApiSpecs(fetcher: typeof fetch = fetch): Promise<void> {
+export async function fetchApiSpecs(
+  fetcher: typeof fetch = fetch,
+  directory = rawSpecsDirectory,
+): Promise<void> {
   const requests = getApiSpecProviders().flatMap((provider) =>
     getApiSpecVersions(provider).map((version) => fetchApiSpec(provider, version, fetcher))
   );
@@ -179,58 +198,38 @@ export async function fetchApiSpecs(fetcher: typeof fetch = fetch): Promise<void
   // Validate every response before replacing any local raw specification.
   const fetchedSpecs = await Promise.all(requests);
   try {
-    await Deno.remove(rawSpecsDirectory, { recursive: true });
+    await Deno.remove(directory, { recursive: true });
   } catch (error) {
     if (!(error instanceof Deno.errors.NotFound)) throw error;
   }
-  await Deno.mkdir(rawSpecsDirectory, { recursive: true });
+  await Deno.mkdir(directory, { recursive: true });
 
   for (const fetched of fetchedSpecs) {
     const fileName = getVersionedRawApiSpecFileName(fetched.provider, fetched.version);
-    await Deno.mkdir(new URL(`${fetched.provider}/`, rawSpecsDirectory), { recursive: true });
-    await Deno.writeTextFile(new URL(fileName, rawSpecsDirectory), fetched.body);
-
-    console.log(JSON.stringify({
-      provider: fetched.provider,
-      version: fetched.version,
-      source: fetched.source.url,
-      bytes: fetched.bytes,
-      sha256: fetched.sha256,
-      destination: `codegen/specs/raw/${fileName}`,
-    }));
+    await Deno.mkdir(new URL(`${fetched.provider}/`, directory), { recursive: true });
+    await Deno.writeTextFile(new URL(fileName, directory), fetched.body);
   }
 
   const manifest = createRawSpecManifest(fetchedSpecs);
   await Deno.writeTextFile(
-    new URL("manifest.json", rawSpecsDirectory),
+    new URL("manifest.json", directory),
     `${JSON.stringify(manifest, null, 2)}\n`,
   );
 }
 
-if (import.meta.main) {
-  if (Deno.args.includes("--manifest-only")) {
-    const specs: FetchedApiSpec[] = [];
-    for (const provider of getApiSpecProviders()) {
-      for (const version of getApiSpecVersions(provider)) {
-        const body = await Deno.readTextFile(
-          new URL(getVersionedRawApiSpecFileName(provider, version), rawSpecsDirectory),
-        );
-        specs.push({
-          provider,
-          version,
-          format: apiSpecProviders[provider].format,
-          source: apiSpecProviders[provider].versions[version],
-          body,
-          bytes: textEncoder.encode(body).byteLength,
-          sha256: await sha256(body),
-        });
-      }
+/** Rebuild the source manifest from validated checked-in specs, without fetching upstream. */
+export async function reuseApiSpecs(directory = rawSpecsDirectory): Promise<void> {
+  const specs: FetchedApiSpec[] = [];
+  for (const provider of getApiSpecProviders()) {
+    for (const version of getApiSpecVersions(provider)) {
+      const body = await Deno.readTextFile(
+        new URL(getVersionedRawApiSpecFileName(provider, version), directory),
+      );
+      specs.push(await describeApiSpec(provider, version, body));
     }
-    await Deno.writeTextFile(
-      new URL("manifest.json", rawSpecsDirectory),
-      `${JSON.stringify(createRawSpecManifest(specs), null, 2)}\n`,
-    );
-  } else {
-    await fetchApiSpecs();
   }
+  await Deno.writeTextFile(
+    new URL("manifest.json", directory),
+    `${JSON.stringify(createRawSpecManifest(specs), null, 2)}\n`,
+  );
 }

@@ -1,4 +1,3 @@
-// Generated container entrypoint. Do not edit.
 import manifest from "./manifest.json" with { type: "json" };
 
 const results = manifest.runner.results;

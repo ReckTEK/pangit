@@ -123,7 +123,3 @@ export async function clearNormalizedApiSpecs(): Promise<void> {
     if (!(error instanceof Deno.errors.NotFound)) throw error;
   }
 }
-
-export function normalizedSpecPath(provider: ApiSpecProvider, version: string): string {
-  return `codegen/specs/normalized/${provider}/${version}.json`;
-}

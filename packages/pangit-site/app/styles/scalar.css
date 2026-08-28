@@ -1,0 +1,32 @@
+@import "@scalar/api-reference-react/style.css";
+
+/* Scalar's public theme variables apply to the reference and its request dialogs. */
+:root,
+.light-mode,
+.dark-mode {
+  --scalar-font: var(--font-sans);
+  --scalar-font-code: var(--font-mono);
+  --scalar-color-1: var(--pg-ink);
+  --scalar-color-2: var(--pg-muted);
+  --scalar-color-3: var(--pg-muted);
+  --scalar-color-accent: var(--pg-accent);
+  --scalar-background-1: var(--pg-paper);
+  --scalar-background-2: var(--pg-panel);
+  --scalar-background-3: var(--pg-code);
+  --scalar-background-accent: var(--pg-accent-soft);
+  --scalar-border-color: var(--pg-line);
+  --scalar-button-1: var(--pg-accent);
+  --scalar-button-1-hover: var(--pg-accent);
+  --scalar-button-1-color: var(--pg-paper);
+  --scalar-sidebar-background: var(--pg-panel);
+  --scalar-sidebar-color-1: var(--pg-ink);
+  --scalar-sidebar-color-2: var(--pg-muted);
+  --scalar-sidebar-color-active: var(--pg-accent);
+  --scalar-sidebar-item-active-background: var(--pg-accent-soft);
+  --scalar-sidebar-item-hover-background: var(--pg-paper);
+  --scalar-sidebar-border-color: var(--pg-line);
+  --scalar-sidebar-search-background: var(--pg-paper);
+  --scalar-sidebar-search-color: var(--pg-muted);
+  --scalar-sidebar-search-border-color: var(--pg-line);
+  --scalar-custom-header-height: 72px;
+}

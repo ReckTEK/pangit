@@ -1,3 +1,5 @@
+import { generatedComment, markGenerated } from "../notices.ts";
+import { workspace, type WorkspacePaths } from "../workspace.ts";
 import { generateSandboxes } from "../docker/generate.ts";
 import type {
   E2EManifest,
@@ -6,9 +8,6 @@ import type {
   JsonRecord,
   SpecManifest,
 } from "./model.ts";
-
-const root = new URL("../../", import.meta.url);
-const templateDirectory = new URL("./templates/", import.meta.url);
 
 function resolve(document: JsonRecord, value: unknown): JsonRecord {
   const object = (value ?? {}) as JsonRecord;
@@ -20,18 +19,20 @@ function resolve(document: JsonRecord, value: unknown): JsonRecord {
   return resolve(document, target);
 }
 
-export async function generateClientTests(): Promise<void> {
+export async function generateClientTests(paths: WorkspacePaths = workspace): Promise<void> {
+  const root = paths.packages.pangit;
+  const templateDirectory = new URL("tests/templates/", paths.codegen);
   const manifest: SpecManifest = JSON.parse(
-    await Deno.readTextFile(new URL("codegen/specs/raw/manifest.json", root)),
+    await Deno.readTextFile(new URL("specs/raw/manifest.json", paths.codegen)),
   );
   for (const [provider, definition] of Object.entries(manifest.providers)) {
     if (!definition.testing) continue;
     const config: E2EManifest = JSON.parse(
-      await Deno.readTextFile(new URL(definition.testing.manifest, root)),
+      await Deno.readTextFile(new URL(definition.testing.manifest, paths.root)),
     );
     for (const [version, release] of Object.entries(definition.versions)) {
       const document = JSON.parse(
-        await Deno.readTextFile(new URL(release.artifacts.normalized, root)),
+        await Deno.readTextFile(new URL(release.artifacts.normalized, paths.root)),
       );
       const clientModule = await import(new URL(release.artifacts.client, root).href);
       const registry = clientModule[`${definition.client.variablePrefix}Operations`] as Record<
@@ -132,24 +133,26 @@ export async function generateClientTests(): Promise<void> {
         `${JSON.stringify(generated, null, 2)}\n`,
       );
       const test =
-        `// Generated real HTTP E2E suite. Do not edit.\nimport { ${definition.client.className} } from "../client.ts";\nimport manifest from "./manifest.json" with { type: "json" };\nimport { runSuite } from "./runtime.ts";\nDeno.test(${
+        `import { ${definition.client.className} } from "../client.ts";\nimport manifest from "./manifest.json" with { type: "json" };\nimport { runSuite } from "./runtime.ts";\nDeno.test(${
           JSON.stringify(`${provider} ${version} real API E2E`)
         }, async (t) => { await runSuite(t, manifest, ${definition.client.className}); });\n`;
-      await Deno.writeTextFile(new URL("e2e_test.ts", output), test);
+      await Deno.writeTextFile(
+        new URL("e2e_test.ts", output),
+        markGenerated(test, "//"),
+      );
       for (const template of ["runtime.ts", "run.ts"]) {
         const source = await Deno.readTextFile(new URL(`${template}.tpl`, templateDirectory));
-        await Deno.writeTextFile(new URL(template, output), source);
+        await Deno.writeTextFile(
+          new URL(template, output),
+          markGenerated(source, "//"),
+        );
       }
       await Deno.writeTextFile(
         new URL("model.ts", output),
-        await Deno.readTextFile(new URL("./model.ts", import.meta.url)),
-      );
-      console.log(
-        `${provider} ${version}: ${operations.length} real endpoint tests -> ${release.artifacts.tests}`,
+        generatedComment("//") +
+          await Deno.readTextFile(new URL("tests/model.ts", paths.codegen)),
       );
     }
   }
-  await generateSandboxes();
+  await generateSandboxes(paths);
 }
-
-if (import.meta.main) await generateClientTests();

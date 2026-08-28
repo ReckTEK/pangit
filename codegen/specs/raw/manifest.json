@@ -26,7 +26,12 @@
             "client": "src/generated/azure-devops/latest/client.ts",
             "tests": "src/generated/azure-devops/latest/tests",
             "results": "src/generated/azure-devops/latest/tests/results",
-            "compose": "src/generated/azure-devops/latest/tests/compose.yaml"
+            "compose": "src/generated/azure-devops/latest/tests/compose.yaml",
+            "documentation": {
+              "openapi": "src/documentation/generated/azure-devops/latest/openapi.json",
+              "operations": "src/documentation/generated/azure-devops/latest/operations.json",
+              "route": "/docs/raw/azure-devops/latest"
+            }
           }
         }
       }
@@ -56,7 +61,12 @@
             "client": "src/generated/bitbucket/latest/client.ts",
             "tests": "src/generated/bitbucket/latest/tests",
             "results": "src/generated/bitbucket/latest/tests/results",
-            "compose": "src/generated/bitbucket/latest/tests/compose.yaml"
+            "compose": "src/generated/bitbucket/latest/tests/compose.yaml",
+            "documentation": {
+              "openapi": "src/documentation/generated/bitbucket/latest/openapi.json",
+              "operations": "src/documentation/generated/bitbucket/latest/operations.json",
+              "route": "/docs/raw/bitbucket/latest"
+            }
           }
         }
       }
@@ -80,13 +90,18 @@
           "format": "json",
           "destination": "codegen/specs/raw/codeberg/latest.json",
           "bytes": 853956,
-          "sha256": "sha256:6461eaacfe2b90caed995d1ca8d6743d056104b7d2cc8cc0a73c0b61a6c97fa5",
+          "sha256": "sha256:bb988ce779fbd7c332391d5abd93b0e6080e12a233945a756aa85093759ad56a",
           "artifacts": {
             "normalized": "codegen/specs/normalized/codeberg/latest.json",
             "client": "src/generated/codeberg/latest/client.ts",
             "tests": "src/generated/codeberg/latest/tests",
             "results": "src/generated/codeberg/latest/tests/results",
-            "compose": "src/generated/codeberg/latest/tests/compose.yaml"
+            "compose": "src/generated/codeberg/latest/tests/compose.yaml",
+            "documentation": {
+              "openapi": "src/documentation/generated/codeberg/latest/openapi.json",
+              "operations": "src/documentation/generated/codeberg/latest/operations.json",
+              "route": "/docs/raw/codeberg/latest"
+            }
           }
         }
       }
@@ -119,7 +134,12 @@
             "client": "src/generated/gitea/1.26.4/client.ts",
             "tests": "src/generated/gitea/1.26.4/tests",
             "results": "src/generated/gitea/1.26.4/tests/results",
-            "compose": "src/generated/gitea/1.26.4/tests/compose.yaml"
+            "compose": "src/generated/gitea/1.26.4/tests/compose.yaml",
+            "documentation": {
+              "openapi": "src/documentation/generated/gitea/1.26.4/openapi.json",
+              "operations": "src/documentation/generated/gitea/1.26.4/operations.json",
+              "route": "/docs/raw/gitea/1.26.4"
+            }
           }
         },
         "1.27.2": {
@@ -135,7 +155,12 @@
             "client": "src/generated/gitea/1.27.2/client.ts",
             "tests": "src/generated/gitea/1.27.2/tests",
             "results": "src/generated/gitea/1.27.2/tests/results",
-            "compose": "src/generated/gitea/1.27.2/tests/compose.yaml"
+            "compose": "src/generated/gitea/1.27.2/tests/compose.yaml",
+            "documentation": {
+              "openapi": "src/documentation/generated/gitea/1.27.2/openapi.json",
+              "operations": "src/documentation/generated/gitea/1.27.2/operations.json",
+              "route": "/docs/raw/gitea/1.27.2"
+            }
           }
         }
       }
@@ -158,14 +183,19 @@
           "source": "https://raw.githubusercontent.com/github/rest-api-description/main/descriptions/api.github.com/api.github.com.yaml",
           "format": "yaml",
           "destination": "codegen/specs/raw/github/latest.yaml",
-          "bytes": 9838785,
-          "sha256": "sha256:10471725f0abd9c275d2b61bf93bb8f86242ccc2aba427f83e265b0c037e3b7f",
+          "bytes": 9841270,
+          "sha256": "sha256:0ca05b6840052d8d1971523a6c243e36765e2264c797fc56a8f7b5e04ce4a147",
           "artifacts": {
             "normalized": "codegen/specs/normalized/github/latest.json",
             "client": "src/generated/github/latest/client.ts",
             "tests": "src/generated/github/latest/tests",
             "results": "src/generated/github/latest/tests/results",
-            "compose": "src/generated/github/latest/tests/compose.yaml"
+            "compose": "src/generated/github/latest/tests/compose.yaml",
+            "documentation": {
+              "openapi": "src/documentation/generated/github/latest/openapi.json",
+              "operations": "src/documentation/generated/github/latest/operations.json",
+              "route": "/docs/raw/github/latest"
+            }
           }
         }
       }
@@ -195,7 +225,12 @@
             "client": "src/generated/gitlab/18.11.11/client.ts",
             "tests": "src/generated/gitlab/18.11.11/tests",
             "results": "src/generated/gitlab/18.11.11/tests/results",
-            "compose": "src/generated/gitlab/18.11.11/tests/compose.yaml"
+            "compose": "src/generated/gitlab/18.11.11/tests/compose.yaml",
+            "documentation": {
+              "openapi": "src/documentation/generated/gitlab/18.11.11/openapi.json",
+              "operations": "src/documentation/generated/gitlab/18.11.11/operations.json",
+              "route": "/docs/raw/gitlab/18.11.11"
+            }
           }
         },
         "19.3.1": {
@@ -211,7 +246,12 @@
             "client": "src/generated/gitlab/19.3.1/client.ts",
             "tests": "src/generated/gitlab/19.3.1/tests",
             "results": "src/generated/gitlab/19.3.1/tests/results",
-            "compose": "src/generated/gitlab/19.3.1/tests/compose.yaml"
+            "compose": "src/generated/gitlab/19.3.1/tests/compose.yaml",
+            "documentation": {
+              "openapi": "src/documentation/generated/gitlab/19.3.1/openapi.json",
+              "operations": "src/documentation/generated/gitlab/19.3.1/operations.json",
+              "route": "/docs/raw/gitlab/19.3.1"
+            }
           }
         }
       }

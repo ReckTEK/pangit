@@ -1,0 +1,234 @@
+@layer scalar-base, scalar-theme, scalar-config, theme, base, components, utilities;
+@import "tailwindcss";
+
+@custom-variant dark {
+  &:where(.dark, .dark *) {
+    @slot;
+  }
+  @media (prefers-color-scheme: dark) {
+    &:where(.system, .system *) {
+      @slot;
+    }
+  }
+}
+
+@theme inline {
+  --color-paper: var(--pg-paper);
+  --color-panel: var(--pg-panel);
+  --color-ink: var(--pg-ink);
+  --color-muted: var(--pg-muted);
+  --color-line: var(--pg-line);
+  --color-accent: var(--pg-accent);
+  --color-accent-soft: var(--pg-accent-soft);
+  --font-sans: "Inter", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+:root {
+  color-scheme: light;
+  --pg-paper: #fcfbf8;
+  --pg-panel: #f5f3ee;
+  --pg-ink: #172536;
+  --pg-muted: #66707a;
+  --pg-line: #e1e0d9;
+  --pg-accent: #b95029;
+  --pg-accent-soft: #fcf0e9;
+  --pg-code: #f0eee8;
+  @variant dark {
+    color-scheme: dark;
+    --pg-paper: #111a26;
+    --pg-panel: #172230;
+    --pg-ink: #edf0f3;
+    --pg-muted: #a0adba;
+    --pg-line: #2d3947;
+    --pg-accent: #f6a17b;
+    --pg-accent-soft: #302824;
+    --pg-code: #0d1520;
+  }
+}
+
+@layer base {
+  html {
+    scroll-padding-top: 100px;
+  }
+  body {
+    @apply bg-paper font-sans text-ink antialiased;
+  }
+  button,
+  select,
+  summary {
+    -webkit-tap-highlight-color: transparent;
+  }
+  button,
+  a,
+  input,
+  select,
+  summary,
+  textarea {
+    @apply focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent;
+  }
+  button {
+    cursor: pointer;
+  }
+  ::selection {
+    background: var(--pg-accent);
+    color: var(--pg-paper);
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply font-mono text-[11px] font-semibold tracking-[0.16em] text-accent;
+  }
+  .nav-link {
+    @apply text-muted transition-colors hover:text-ink;
+  }
+  .button-primary {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-accent
+      bg-accent px-5 py-2.5 text-sm font-semibold text-paper transition-opacity hover:opacity-85;
+  }
+  .button-secondary {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-line
+      bg-paper px-4 py-2.5 text-sm font-medium text-ink transition-colors hover:border-muted;
+  }
+  .text-link {
+    @apply inline-flex items-center gap-1.5 font-medium text-muted transition-colors
+      hover:text-accent;
+  }
+  .badge {
+    @apply inline-flex rounded border border-line px-2 py-1 font-mono text-[9px] font-medium
+      tracking-wide text-muted;
+  }
+  .provider-card {
+    @apply rounded-xl border border-line bg-paper p-6 transition-colors hover:border-accent/50
+      hover:bg-panel;
+  }
+  .provider-mark {
+    @apply flex size-10 items-center justify-center rounded-lg border border-line bg-panel font-mono
+      text-sm font-semibold text-ink;
+  }
+  .sidebar-link {
+    @apply flex min-h-10 items-center gap-3 rounded-lg px-3 py-2 text-[13px] text-muted
+      transition-colors hover:bg-paper hover:text-ink;
+  }
+  .sidebar-link.active {
+    @apply bg-accent-soft font-medium text-accent;
+  }
+  .select-shell {
+    @apply inline-flex items-center gap-3 rounded-lg border border-line bg-paper px-3 py-2.5
+      text-sm;
+  }
+  .select-shell select {
+    @apply max-w-full cursor-pointer appearance-none bg-transparent pr-2 font-medium;
+  }
+  .reference-tab {
+    @apply relative -mb-px border-b-2 border-transparent pb-3 font-medium text-muted
+      transition-colors hover:text-ink;
+  }
+  .reference-tab.active {
+    @apply border-accent text-accent;
+  }
+  .field {
+    @apply min-h-11 rounded-lg border border-line bg-paper px-3 py-2.5 text-ink
+      placeholder:text-muted/70;
+  }
+  .version-link {
+    @apply inline-flex items-center gap-2 rounded-md border border-line px-2.5 py-1.5 font-mono
+      text-[10px] text-muted transition-colors hover:border-accent hover:text-accent;
+  }
+  .version-link.current {
+    @apply border-accent/20 bg-accent-soft text-accent;
+  }
+  .method-row {
+    @apply block border-b border-line bg-paper px-5 py-4 transition-colors last:border-b-0
+      hover:bg-panel;
+  }
+  .http-method {
+    @apply inline-flex min-w-15 items-center justify-center rounded border px-2 py-1 font-mono
+      text-[10px] font-bold;
+  }
+  .method-get,
+  .method-head {
+    @apply border-blue-600/25 bg-blue-500/10 text-blue-700 dark:text-blue-300;
+  }
+  .method-post {
+    @apply border-emerald-600/25 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300;
+  }
+  .method-put,
+  .method-patch {
+    @apply border-amber-600/25 bg-amber-500/10 text-amber-800 dark:text-amber-200;
+  }
+  .method-delete {
+    @apply border-red-600/25 bg-red-500/10 text-red-700 dark:text-red-300;
+  }
+  .method-options {
+    @apply border-violet-600/25 bg-violet-500/10 text-violet-700 dark:text-violet-300;
+  }
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded
+      focus:bg-accent focus:px-5 focus:py-3 focus:text-paper;
+  }
+}
+
+.guide-content {
+  @apply text-[15px] leading-8;
+}
+.guide-content h1 {
+  @apply mb-7 text-4xl leading-tight font-semibold tracking-[-1.5px] sm:text-5xl;
+}
+.guide-content h2 {
+  @apply mt-12 mb-5 border-t border-line pt-8 text-2xl font-semibold tracking-tight;
+}
+.guide-content h3 {
+  @apply mt-8 mb-3 text-lg font-semibold;
+}
+.guide-content p {
+  @apply my-4 text-muted;
+}
+.guide-content strong {
+  @apply font-semibold text-ink;
+}
+.guide-content a {
+  @apply text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent;
+}
+.guide-content ul {
+  @apply my-4 list-disc space-y-2 pl-6 text-muted;
+}
+.guide-content ol {
+  @apply my-4 list-decimal space-y-2 pl-6 text-muted;
+}
+.guide-content code {
+  @apply rounded px-1.5 py-0.5 font-mono text-[0.84em] text-ink;
+  background: var(--pg-code);
+}
+.guide-content pre {
+  @apply my-6 overflow-x-auto rounded-xl border border-line p-5 text-sm leading-7;
+  background: var(--pg-code);
+}
+.guide-content pre code {
+  @apply bg-transparent p-0;
+}
+.guide-content table {
+  @apply my-5 w-full border-collapse text-left text-sm leading-6;
+}
+.guide-content th {
+  @apply border-b border-line bg-panel p-3 font-semibold;
+}
+.guide-content td {
+  @apply border-b border-line p-3 align-top text-muted;
+}
+.guide-content blockquote {
+  @apply my-6 border-l-2 border-accent pl-5;
+}
+.guide-content hr {
+  @apply my-8 border-line;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

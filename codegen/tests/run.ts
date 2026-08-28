@@ -1,6 +1,5 @@
+import { workspace, type WorkspacePaths } from "../workspace.ts";
 import type { E2EManifest, SpecManifest } from "./model.ts";
-
-const root = new URL("../../", import.meta.url);
 
 async function clearDirectory(directory: URL): Promise<void> {
   await Deno.mkdir(directory, { recursive: true });
@@ -11,9 +10,10 @@ async function clearDirectory(directory: URL): Promise<void> {
   }
 }
 
-export async function runGeneratedClientTests(): Promise<void> {
+export async function runGeneratedClientTests(paths: WorkspacePaths = workspace): Promise<void> {
+  const root = paths.packages.pangit;
   const manifest: SpecManifest = JSON.parse(
-    await Deno.readTextFile(new URL("codegen/specs/raw/manifest.json", root)),
+    await Deno.readTextFile(new URL("specs/raw/manifest.json", paths.codegen)),
   );
   const decoder = new TextDecoder();
   let failed = false;
@@ -68,7 +68,7 @@ export async function runGeneratedClientTests(): Promise<void> {
     providers: for (const [provider, definition] of Object.entries(manifest.providers)) {
       if (!definition.testing) continue;
       const config: E2EManifest = JSON.parse(
-        await Deno.readTextFile(new URL(definition.testing.manifest, root)),
+        await Deno.readTextFile(new URL(definition.testing.manifest, paths.root)),
       );
       for (const [version, release] of Object.entries(definition.versions)) {
         if (interrupted) break providers;

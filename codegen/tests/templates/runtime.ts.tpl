@@ -1,4 +1,3 @@
-// Generated real HTTP E2E runtime. Do not edit.
 import { RestClient, type RestClientOptions, type RestOperationInput, type AnyRestResponse } from "../../../../rest.ts";
 import type { E2EStep, GeneratedE2EManifest } from "./model.ts";
 

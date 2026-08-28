@@ -1,39 +1,49 @@
+import { generatedComment, markGenerated } from "../notices.ts";
+import { relativePath, workspace, type WorkspacePaths } from "../workspace.ts";
 import { stringify } from "@std/yaml";
 import type { E2EManifest, SpecManifest } from "../tests/model.ts";
 
-const root = new URL("../../", import.meta.url);
-
-export async function generateSandboxes(): Promise<void> {
+export async function generateSandboxes(paths: WorkspacePaths = workspace): Promise<void> {
+  const root = paths.packages.pangit;
   const manifest: SpecManifest = JSON.parse(
-    await Deno.readTextFile(new URL("codegen/specs/raw/manifest.json", root)),
+    await Deno.readTextFile(new URL("specs/raw/manifest.json", paths.codegen)),
   );
   for (const [provider, definition] of Object.entries(manifest.providers)) {
     if (!definition.testing) continue;
     const config: E2EManifest = JSON.parse(
-      await Deno.readTextFile(new URL(definition.testing.manifest, root)),
+      await Deno.readTextFile(new URL(definition.testing.manifest, paths.root)),
     );
     for (const [version, release] of Object.entries(definition.versions)) {
       if (!release.containerImage) {
         throw new Error(`${provider} ${version}: missing container image`);
       }
       const tests = new URL(`${release.artifacts.tests}/`, root);
-      const relativeRoot = "../".repeat(release.artifacts.tests.split("/").length);
+      const relativeRoot = `${relativePath(tests, root)}/`;
       await Deno.mkdir(new URL(".auth/", tests), { recursive: true });
-      await Deno.writeTextFile(new URL(".gitignore", new URL(".auth/", tests)), "*\n!.gitignore\n");
+      await Deno.writeTextFile(
+        new URL(".gitignore", new URL(".auth/", tests)),
+        markGenerated("*\n!.gitignore\n", "#"),
+      );
       await Deno.writeTextFile(
         new URL("bootstrap.sh", tests),
-        `${config.service.bootstrap.join("\n")}\n`,
+        markGenerated(`${config.service.bootstrap.join("\n")}\n`, "#"),
       );
       for (const [name, content] of Object.entries(config.files ?? {})) {
         if (name.includes("/") || name === "." || name === "..") {
           throw new Error(`Invalid fixture filename: ${name}`);
         }
-        await Deno.writeTextFile(new URL(name, tests), content);
+        const supportsComments =
+          /(?:\.(?:sh|ya?ml|Dockerfile)|^Dockerfile|^\.(?:docker|git)ignore)$/i
+            .test(name);
+        await Deno.writeTextFile(
+          new URL(name, tests),
+          supportsComments ? markGenerated(content, "#") : content,
+        );
       }
       if (config.services?.[config.service.name] || config.services?.[config.runner.name]) {
         throw new Error("Fixture service collides with the API or test service");
       }
-      const projectName = `branch-press-e2e-${provider}-${version.replaceAll(".", "-")}`;
+      const projectName = `pangit-e2e-${provider}-${version.replaceAll(".", "-")}`;
       const compose = {
         name: projectName,
         services: {
@@ -95,11 +105,8 @@ export async function generateSandboxes(): Promise<void> {
       };
       await Deno.writeTextFile(
         new URL(release.artifacts.compose, root),
-        `# Generated from the specification and E2E manifests. Do not edit.\n${stringify(compose)}`,
+        generatedComment("#") + stringify(compose),
       );
-      console.log(`${provider} ${version}: ${release.artifacts.compose}`);
     }
   }
 }
-
-if (import.meta.main) await generateSandboxes();

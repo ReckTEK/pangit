@@ -1,0 +1,4204 @@
+[
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/reports/{reportId}/annotations"
+    },
+    "methodName": "bulkCreateOrUpdateAnnotations",
+    "operationId": "bulkCreateOrUpdateAnnotations",
+    "method": "POST",
+    "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/reports/{reportId}/annotations",
+    "summary": "Bulk create or update annotations",
+    "tags": [
+      "Commits",
+      "Reports"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/deployments_config/environments/{environment_uuid}/variables"
+    },
+    "methodName": "createDeploymentVariable",
+    "operationId": "createDeploymentVariable",
+    "method": "POST",
+    "path": "/repositories/{workspace}/{repo_slug}/deployments_config/environments/{environment_uuid}/variables",
+    "summary": "Create a variable for an environment",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/environments"
+    },
+    "methodName": "createEnvironment",
+    "operationId": "createEnvironment",
+    "method": "POST",
+    "path": "/repositories/{workspace}/{repo_slug}/environments",
+    "summary": "Create an environment",
+    "tags": [
+      "Deployments"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/reports/{reportId}/annotations/{annotationId}"
+    },
+    "methodName": "createOrUpdateAnnotation",
+    "operationId": "createOrUpdateAnnotation",
+    "method": "PUT",
+    "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/reports/{reportId}/annotations/{annotationId}",
+    "summary": "Create or update an annotation",
+    "tags": [
+      "Commits",
+      "Reports"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/reports/{reportId}"
+    },
+    "methodName": "createOrUpdateReport",
+    "operationId": "createOrUpdateReport",
+    "method": "PUT",
+    "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/reports/{reportId}",
+    "summary": "Create or update a report",
+    "tags": [
+      "Commits",
+      "Reports"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines"
+    },
+    "methodName": "createPipelineForRepository",
+    "operationId": "createPipelineForRepository",
+    "method": "POST",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines",
+    "summary": "Run a pipeline",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/teams/{username}/pipelines_config/variables"
+    },
+    "methodName": "createPipelineVariableForTeam",
+    "operationId": "createPipelineVariableForTeam",
+    "method": "POST",
+    "path": "/teams/{username}/pipelines_config/variables",
+    "summary": "Create a variable for a user",
+    "deprecated": true,
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/users/{selected_user}/pipelines_config/variables"
+    },
+    "methodName": "createPipelineVariableForUser",
+    "operationId": "createPipelineVariableForUser",
+    "method": "POST",
+    "path": "/users/{selected_user}/pipelines_config/variables",
+    "summary": "Create a variable for a user",
+    "deprecated": true,
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/pipelines-config/variables"
+    },
+    "methodName": "createPipelineVariableForWorkspace",
+    "operationId": "createPipelineVariableForWorkspace",
+    "method": "POST",
+    "path": "/workspaces/{workspace}/pipelines-config/variables",
+    "summary": "Create a variable for a workspace",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/ssh/known_hosts"
+    },
+    "methodName": "createRepositoryPipelineKnownHost",
+    "operationId": "createRepositoryPipelineKnownHost",
+    "method": "POST",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/ssh/known_hosts",
+    "summary": "Create a known host",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/schedules"
+    },
+    "methodName": "createRepositoryPipelineSchedule",
+    "operationId": "createRepositoryPipelineSchedule",
+    "method": "POST",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/schedules",
+    "summary": "Create a schedule",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/variables"
+    },
+    "methodName": "createRepositoryPipelineVariable",
+    "operationId": "createRepositoryPipelineVariable",
+    "method": "POST",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/variables",
+    "summary": "Create a variable for a repository",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines-config/runners"
+    },
+    "methodName": "createRepositoryRunner",
+    "operationId": "createRepositoryRunner",
+    "method": "POST",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines-config/runners",
+    "summary": "Create repository runner",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/pipelines-config/runners"
+    },
+    "methodName": "createWorkspaceRunner",
+    "operationId": "createWorkspaceRunner",
+    "method": "POST",
+    "path": "/workspaces/{workspace}/pipelines-config/runners",
+    "summary": "Create workspace runner",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/addon"
+    },
+    "methodName": "deleteAddon",
+    "operationId": "delete /addon",
+    "method": "DELETE",
+    "path": "/addon",
+    "summary": "Delete an app",
+    "tags": [
+      "Addon"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/reports/{reportId}/annotations/{annotationId}"
+    },
+    "methodName": "deleteAnnotation",
+    "operationId": "deleteAnnotation",
+    "method": "DELETE",
+    "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/reports/{reportId}/annotations/{annotationId}",
+    "summary": "Delete an annotation",
+    "tags": [
+      "Commits",
+      "Reports"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/properties/{app_key}/{property_name}"
+    },
+    "methodName": "deleteCommitHostedPropertyValue",
+    "operationId": "deleteCommitHostedPropertyValue",
+    "method": "DELETE",
+    "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/properties/{app_key}/{property_name}",
+    "summary": "Delete a commit application property",
+    "tags": [
+      "properties"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/deployments_config/environments/{environment_uuid}/variables/{variable_uuid}"
+    },
+    "methodName": "deleteDeploymentVariable",
+    "operationId": "deleteDeploymentVariable",
+    "method": "DELETE",
+    "path": "/repositories/{workspace}/{repo_slug}/deployments_config/environments/{environment_uuid}/variables/{variable_uuid}",
+    "summary": "Delete a variable for an environment",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/environments/{environment_uuid}"
+    },
+    "methodName": "deleteEnvironmentForRepository",
+    "operationId": "deleteEnvironmentForRepository",
+    "method": "DELETE",
+    "path": "/repositories/{workspace}/{repo_slug}/environments/{environment_uuid}",
+    "summary": "Delete an environment",
+    "tags": [
+      "Deployments"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/teams/{username}/pipelines_config/variables/{variable_uuid}"
+    },
+    "methodName": "deletePipelineVariableForTeam",
+    "operationId": "deletePipelineVariableForTeam",
+    "method": "DELETE",
+    "path": "/teams/{username}/pipelines_config/variables/{variable_uuid}",
+    "summary": "Delete a variable for a team",
+    "deprecated": true,
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/users/{selected_user}/pipelines_config/variables/{variable_uuid}"
+    },
+    "methodName": "deletePipelineVariableForUser",
+    "operationId": "deletePipelineVariableForUser",
+    "method": "DELETE",
+    "path": "/users/{selected_user}/pipelines_config/variables/{variable_uuid}",
+    "summary": "Delete a variable for a user",
+    "deprecated": true,
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/pipelines-config/variables/{variable_uuid}"
+    },
+    "methodName": "deletePipelineVariableForWorkspace",
+    "operationId": "deletePipelineVariableForWorkspace",
+    "method": "DELETE",
+    "path": "/workspaces/{workspace}/pipelines-config/variables/{variable_uuid}",
+    "summary": "Delete a variable for a workspace",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pullrequest_id}/properties/{app_key}/{property_name}"
+    },
+    "methodName": "deletePullRequestHostedPropertyValue",
+    "operationId": "deletePullRequestHostedPropertyValue",
+    "method": "DELETE",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pullrequest_id}/properties/{app_key}/{property_name}",
+    "summary": "Delete a pull request application property",
+    "tags": [
+      "properties"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/reports/{reportId}"
+    },
+    "methodName": "deleteReport",
+    "operationId": "deleteReport",
+    "method": "DELETE",
+    "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/reports/{reportId}",
+    "summary": "Delete a report",
+    "tags": [
+      "Commits",
+      "Reports"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}"
+    },
+    "methodName": "deleteRepositoriesWorkspaceRepoSlug",
+    "operationId": "delete /repositories/{workspace}/{repo_slug}",
+    "method": "DELETE",
+    "path": "/repositories/{workspace}/{repo_slug}",
+    "summary": "Delete a repository",
+    "tags": [
+      "Repositories"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/branch-restrictions/{id}"
+    },
+    "methodName": "deleteRepositoriesWorkspaceRepoSlugBranchRestrictionsId",
+    "operationId": "delete /repositories/{workspace}/{repo_slug}/branch-restrictions/{id}",
+    "method": "DELETE",
+    "path": "/repositories/{workspace}/{repo_slug}/branch-restrictions/{id}",
+    "summary": "Delete a branch restriction rule",
+    "tags": [
+      "Branch restrictions"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/approve"
+    },
+    "methodName": "deleteRepositoriesWorkspaceRepoSlugCommitCommitApprove",
+    "operationId": "delete /repositories/{workspace}/{repo_slug}/commit/{commit}/approve",
+    "method": "DELETE",
+    "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/approve",
+    "summary": "Unapprove a commit",
+    "tags": [
+      "Commits"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/comments/{comment_id}"
+    },
+    "methodName": "deleteRepositoriesWorkspaceRepoSlugCommitCommitCommentsCommentId",
+    "operationId": "delete /repositories/{workspace}/{repo_slug}/commit/{commit}/comments/{comment_id}",
+    "method": "DELETE",
+    "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/comments/{comment_id}",
+    "summary": "Delete a commit comment",
+    "tags": [
+      "Commits"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/default-reviewers/{target_username}"
+    },
+    "methodName": "deleteRepositoriesWorkspaceRepoSlugDefaultReviewersTargetUsername",
+    "operationId": "delete /repositories/{workspace}/{repo_slug}/default-reviewers/{target_username}",
+    "method": "DELETE",
+    "path": "/repositories/{workspace}/{repo_slug}/default-reviewers/{target_username}",
+    "summary": "Remove a user from the default reviewers",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/deploy-keys/{key_id}"
+    },
+    "methodName": "deleteRepositoriesWorkspaceRepoSlugDeployKeysKeyId",
+    "operationId": "delete /repositories/{workspace}/{repo_slug}/deploy-keys/{key_id}",
+    "method": "DELETE",
+    "path": "/repositories/{workspace}/{repo_slug}/deploy-keys/{key_id}",
+    "summary": "Delete a repository deploy key",
+    "tags": [
+      "Deployments"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/downloads/{filename}"
+    },
+    "methodName": "deleteRepositoriesWorkspaceRepoSlugDownloadsFilename",
+    "operationId": "delete /repositories/{workspace}/{repo_slug}/downloads/{filename}",
+    "method": "DELETE",
+    "path": "/repositories/{workspace}/{repo_slug}/downloads/{filename}",
+    "summary": "Delete a download artifact",
+    "tags": [
+      "Downloads"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/hooks/{uid}"
+    },
+    "methodName": "deleteRepositoriesWorkspaceRepoSlugHooksUid",
+    "operationId": "delete /repositories/{workspace}/{repo_slug}/hooks/{uid}",
+    "method": "DELETE",
+    "path": "/repositories/{workspace}/{repo_slug}/hooks/{uid}",
+    "summary": "Delete a webhook for a repository",
+    "tags": [
+      "Repositories",
+      "Webhooks"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/permissions-config/groups/{group_slug}"
+    },
+    "methodName": "deleteRepositoriesWorkspaceRepoSlugPermissionsConfigGroupsGroupSlug",
+    "operationId": "delete /repositories/{workspace}/{repo_slug}/permissions-config/groups/{group_slug}",
+    "method": "DELETE",
+    "path": "/repositories/{workspace}/{repo_slug}/permissions-config/groups/{group_slug}",
+    "summary": "Delete an explicit group permission for a repository",
+    "tags": [
+      "Repositories"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/permissions-config/users/{selected_user_id}"
+    },
+    "methodName": "deleteRepositoriesWorkspaceRepoSlugPermissionsConfigUsersSelectedUserId",
+    "operationId": "delete /repositories/{workspace}/{repo_slug}/permissions-config/users/{selected_user_id}",
+    "method": "DELETE",
+    "path": "/repositories/{workspace}/{repo_slug}/permissions-config/users/{selected_user_id}",
+    "summary": "Delete an explicit user permission for a repository",
+    "tags": [
+      "Repositories"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/approve"
+    },
+    "methodName": "deleteRepositoriesWorkspaceRepoSlugPullrequestsPullRequestIdApprove",
+    "operationId": "delete /repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/approve",
+    "method": "DELETE",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/approve",
+    "summary": "Unapprove a pull request",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id}"
+    },
+    "methodName": "deleteRepositoriesWorkspaceRepoSlugPullrequestsPullRequestIdCommentsCommentId",
+    "operationId": "delete /repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id}",
+    "method": "DELETE",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id}",
+    "summary": "Delete a comment on a pull request",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id}/resolve"
+    },
+    "methodName": "deleteRepositoriesWorkspaceRepoSlugPullrequestsPullRequestIdCommentsCommentIdResolve",
+    "operationId": "delete /repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id}/resolve",
+    "method": "DELETE",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id}/resolve",
+    "summary": "Reopen a comment thread",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/request-changes"
+    },
+    "methodName": "deleteRepositoriesWorkspaceRepoSlugPullrequestsPullRequestIdRequestChanges",
+    "operationId": "delete /repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/request-changes",
+    "method": "DELETE",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/request-changes",
+    "summary": "Remove change request for a pull request",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/tasks/{task_id}"
+    },
+    "methodName": "deleteRepositoriesWorkspaceRepoSlugPullrequestsPullRequestIdTasksTaskId",
+    "operationId": "delete /repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/tasks/{task_id}",
+    "method": "DELETE",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/tasks/{task_id}",
+    "summary": "Delete a task on a pull request",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/refs/branches/{name}"
+    },
+    "methodName": "deleteRepositoriesWorkspaceRepoSlugRefsBranchesName",
+    "operationId": "delete /repositories/{workspace}/{repo_slug}/refs/branches/{name}",
+    "method": "DELETE",
+    "path": "/repositories/{workspace}/{repo_slug}/refs/branches/{name}",
+    "summary": "Delete a branch",
+    "tags": [
+      "Refs"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/refs/tags/{name}"
+    },
+    "methodName": "deleteRepositoriesWorkspaceRepoSlugRefsTagsName",
+    "operationId": "delete /repositories/{workspace}/{repo_slug}/refs/tags/{name}",
+    "method": "DELETE",
+    "path": "/repositories/{workspace}/{repo_slug}/refs/tags/{name}",
+    "summary": "Delete a tag",
+    "tags": [
+      "Refs"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/properties/{app_key}/{property_name}"
+    },
+    "methodName": "deleteRepositoryHostedPropertyValue",
+    "operationId": "deleteRepositoryHostedPropertyValue",
+    "method": "DELETE",
+    "path": "/repositories/{workspace}/{repo_slug}/properties/{app_key}/{property_name}",
+    "summary": "Delete a repository application property",
+    "tags": [
+      "properties"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines-config/caches/{cache_uuid}"
+    },
+    "methodName": "deleteRepositoryPipelineCache",
+    "operationId": "deleteRepositoryPipelineCache",
+    "method": "DELETE",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines-config/caches/{cache_uuid}",
+    "summary": "Delete a cache",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines-config/caches"
+    },
+    "methodName": "deleteRepositoryPipelineCaches",
+    "operationId": "deleteRepositoryPipelineCaches",
+    "method": "DELETE",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines-config/caches",
+    "summary": "Delete caches",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/ssh/key_pair"
+    },
+    "methodName": "deleteRepositoryPipelineKeyPair",
+    "operationId": "deleteRepositoryPipelineKeyPair",
+    "method": "DELETE",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/ssh/key_pair",
+    "summary": "Delete SSH key pair",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/ssh/known_hosts/{known_host_uuid}"
+    },
+    "methodName": "deleteRepositoryPipelineKnownHost",
+    "operationId": "deleteRepositoryPipelineKnownHost",
+    "method": "DELETE",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/ssh/known_hosts/{known_host_uuid}",
+    "summary": "Delete a known host",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/schedules/{schedule_uuid}"
+    },
+    "methodName": "deleteRepositoryPipelineSchedule",
+    "operationId": "deleteRepositoryPipelineSchedule",
+    "method": "DELETE",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/schedules/{schedule_uuid}",
+    "summary": "Delete a schedule",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/variables/{variable_uuid}"
+    },
+    "methodName": "deleteRepositoryPipelineVariable",
+    "operationId": "deleteRepositoryPipelineVariable",
+    "method": "DELETE",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/variables/{variable_uuid}",
+    "summary": "Delete a variable for a repository",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines-config/runners/{runner_uuid}"
+    },
+    "methodName": "deleteRepositoryRunner",
+    "operationId": "deleteRepositoryRunner",
+    "method": "DELETE",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines-config/runners/{runner_uuid}",
+    "summary": "Delete repository runner",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/snippets/{workspace}/{encoded_id}"
+    },
+    "methodName": "deleteSnippetsWorkspaceEncodedId",
+    "operationId": "delete /snippets/{workspace}/{encoded_id}",
+    "method": "DELETE",
+    "path": "/snippets/{workspace}/{encoded_id}",
+    "summary": "Delete a snippet",
+    "tags": [
+      "Snippets"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/snippets/{workspace}/{encoded_id}/comments/{comment_id}"
+    },
+    "methodName": "deleteSnippetsWorkspaceEncodedIdCommentsCommentId",
+    "operationId": "delete /snippets/{workspace}/{encoded_id}/comments/{comment_id}",
+    "method": "DELETE",
+    "path": "/snippets/{workspace}/{encoded_id}/comments/{comment_id}",
+    "summary": "Delete a comment on a snippet",
+    "tags": [
+      "Snippets"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/snippets/{workspace}/{encoded_id}/{node_id}"
+    },
+    "methodName": "deleteSnippetsWorkspaceEncodedIdNodeId",
+    "operationId": "delete /snippets/{workspace}/{encoded_id}/{node_id}",
+    "method": "DELETE",
+    "path": "/snippets/{workspace}/{encoded_id}/{node_id}",
+    "summary": "Delete a previous revision of a snippet",
+    "tags": [
+      "Snippets"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/snippets/{workspace}/{encoded_id}/watch"
+    },
+    "methodName": "deleteSnippetsWorkspaceEncodedIdWatch",
+    "operationId": "delete /snippets/{workspace}/{encoded_id}/watch",
+    "method": "DELETE",
+    "path": "/snippets/{workspace}/{encoded_id}/watch",
+    "summary": "Stop watching a snippet",
+    "tags": [
+      "Snippets"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/users/{selected_user}/properties/{app_key}/{property_name}"
+    },
+    "methodName": "deleteUserHostedPropertyValue",
+    "operationId": "deleteUserHostedPropertyValue",
+    "method": "DELETE",
+    "path": "/users/{selected_user}/properties/{app_key}/{property_name}",
+    "summary": "Delete a user application property",
+    "tags": [
+      "properties"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/users/{selected_user}/gpg-keys/{fingerprint}"
+    },
+    "methodName": "deleteUsersSelectedUserGpgKeysFingerprint",
+    "operationId": "delete /users/{selected_user}/gpg-keys/{fingerprint}",
+    "method": "DELETE",
+    "path": "/users/{selected_user}/gpg-keys/{fingerprint}",
+    "summary": "Delete a GPG key",
+    "tags": [
+      "GPG"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/users/{selected_user}/ssh-keys/{key_id}"
+    },
+    "methodName": "deleteUsersSelectedUserSshKeysKeyId",
+    "operationId": "delete /users/{selected_user}/ssh-keys/{key_id}",
+    "method": "DELETE",
+    "path": "/users/{selected_user}/ssh-keys/{key_id}",
+    "summary": "Delete a SSH key",
+    "tags": [
+      "SSH"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/pipelines-config/runners/{runner_uuid}"
+    },
+    "methodName": "deleteWorkspaceRunner",
+    "operationId": "deleteWorkspaceRunner",
+    "method": "DELETE",
+    "path": "/workspaces/{workspace}/pipelines-config/runners/{runner_uuid}",
+    "summary": "Delete workspace runner",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/hooks/{uid}"
+    },
+    "methodName": "deleteWorkspacesWorkspaceHooksUid",
+    "operationId": "delete /workspaces/{workspace}/hooks/{uid}",
+    "method": "DELETE",
+    "path": "/workspaces/{workspace}/hooks/{uid}",
+    "summary": "Delete a webhook for a workspace",
+    "tags": [
+      "Webhooks",
+      "Workspaces"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/projects/{project_key}"
+    },
+    "methodName": "deleteWorkspacesWorkspaceProjectsProjectKey",
+    "operationId": "delete /workspaces/{workspace}/projects/{project_key}",
+    "method": "DELETE",
+    "path": "/workspaces/{workspace}/projects/{project_key}",
+    "summary": "Delete a project for a workspace",
+    "tags": [
+      "Projects"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/projects/{project_key}/default-reviewers/{selected_user}"
+    },
+    "methodName": "deleteWorkspacesWorkspaceProjectsProjectKeyDefaultReviewersSelectedUser",
+    "operationId": "delete /workspaces/{workspace}/projects/{project_key}/default-reviewers/{selected_user}",
+    "method": "DELETE",
+    "path": "/workspaces/{workspace}/projects/{project_key}/default-reviewers/{selected_user}",
+    "summary": "Remove the specific user from the project's default reviewers",
+    "tags": [
+      "Projects"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/projects/{project_key}/deploy-keys/{key_id}"
+    },
+    "methodName": "deleteWorkspacesWorkspaceProjectsProjectKeyDeployKeysKeyId",
+    "operationId": "delete /workspaces/{workspace}/projects/{project_key}/deploy-keys/{key_id}",
+    "method": "DELETE",
+    "path": "/workspaces/{workspace}/projects/{project_key}/deploy-keys/{key_id}",
+    "summary": "Delete a deploy key from a project",
+    "tags": [
+      "Deployments"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/projects/{project_key}/permissions-config/groups/{group_slug}"
+    },
+    "methodName": "deleteWorkspacesWorkspaceProjectsProjectKeyPermissionsConfigGroupsGroupSlug",
+    "operationId": "delete /workspaces/{workspace}/projects/{project_key}/permissions-config/groups/{group_slug}",
+    "method": "DELETE",
+    "path": "/workspaces/{workspace}/projects/{project_key}/permissions-config/groups/{group_slug}",
+    "summary": "Delete an explicit group permission for a project",
+    "tags": [
+      "Projects"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/projects/{project_key}/permissions-config/users/{selected_user_id}"
+    },
+    "methodName": "deleteWorkspacesWorkspaceProjectsProjectKeyPermissionsConfigUsersSelectedUserId",
+    "operationId": "delete /workspaces/{workspace}/projects/{project_key}/permissions-config/users/{selected_user_id}",
+    "method": "DELETE",
+    "path": "/workspaces/{workspace}/projects/{project_key}/permissions-config/users/{selected_user_id}",
+    "summary": "Delete an explicit user permission for a project",
+    "tags": [
+      "Projects"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/addon/{addon_key}/client-key"
+    },
+    "methodName": "getAddonAddonKeyClientKey",
+    "operationId": "get /addon/{addon_key}/client-key",
+    "method": "GET",
+    "path": "/addon/{addon_key}/client-key",
+    "summary": "Get the client key of a Connect addon",
+    "tags": [
+      "Addon"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/reports/{reportId}/annotations/{annotationId}"
+    },
+    "methodName": "getAnnotation",
+    "operationId": "getAnnotation",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/reports/{reportId}/annotations/{annotationId}",
+    "summary": "Get an annotation",
+    "tags": [
+      "Commits",
+      "Reports"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/reports/{reportId}/annotations"
+    },
+    "methodName": "getAnnotationsForReport",
+    "operationId": "getAnnotationsForReport",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/reports/{reportId}/annotations",
+    "summary": "List annotations",
+    "tags": [
+      "Commits",
+      "Reports"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/properties/{app_key}/{property_name}"
+    },
+    "methodName": "getCommitHostedPropertyValue",
+    "operationId": "getCommitHostedPropertyValue",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/properties/{app_key}/{property_name}",
+    "summary": "Get a commit application property",
+    "tags": [
+      "properties"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/deployments/{deployment_uuid}"
+    },
+    "methodName": "getDeploymentForRepository",
+    "operationId": "getDeploymentForRepository",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/deployments/{deployment_uuid}",
+    "summary": "Get a deployment",
+    "tags": [
+      "Deployments"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/deployments_config/environments/{environment_uuid}/variables"
+    },
+    "methodName": "getDeploymentVariables",
+    "operationId": "getDeploymentVariables",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/deployments_config/environments/{environment_uuid}/variables",
+    "summary": "List variables for an environment",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/deployments"
+    },
+    "methodName": "getDeploymentsForRepository",
+    "operationId": "getDeploymentsForRepository",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/deployments",
+    "summary": "List deployments",
+    "tags": [
+      "Deployments"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/environments/{environment_uuid}"
+    },
+    "methodName": "getEnvironmentForRepository",
+    "operationId": "getEnvironmentForRepository",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/environments/{environment_uuid}",
+    "summary": "Get an environment",
+    "tags": [
+      "Deployments"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/environments"
+    },
+    "methodName": "getEnvironmentsForRepository",
+    "operationId": "getEnvironmentsForRepository",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/environments",
+    "summary": "List environments",
+    "tags": [
+      "Deployments"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/hook_events"
+    },
+    "methodName": "getHookEvents",
+    "operationId": "get /hook_events",
+    "method": "GET",
+    "path": "/hook_events",
+    "summary": "Get a webhook resource",
+    "tags": [
+      "Webhooks"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/hook_events/{subject_type}"
+    },
+    "methodName": "getHookEventsSubjectType",
+    "operationId": "get /hook_events/{subject_type}",
+    "method": "GET",
+    "path": "/hook_events/{subject_type}",
+    "summary": "List subscribable webhook types",
+    "tags": [
+      "Webhooks"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/pipelines-config/identity/oidc/.well-known/openid-configuration"
+    },
+    "methodName": "getOidcConfiguration",
+    "operationId": "getOIDCConfiguration",
+    "method": "GET",
+    "path": "/workspaces/{workspace}/pipelines-config/identity/oidc/.well-known/openid-configuration",
+    "summary": "Get OpenID configuration for OIDC in Pipelines",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/pipelines-config/identity/oidc/keys.json"
+    },
+    "methodName": "getOidcKeys",
+    "operationId": "getOIDCKeys",
+    "method": "GET",
+    "path": "/workspaces/{workspace}/pipelines-config/identity/oidc/keys.json",
+    "summary": "Get keys for OIDC in Pipelines",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines/{pipeline_uuid}/steps/{step_uuid}/logs/{log_uuid}"
+    },
+    "methodName": "getPipelineContainerLog",
+    "operationId": "getPipelineContainerLog",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines/{pipeline_uuid}/steps/{step_uuid}/logs/{log_uuid}",
+    "summary": "Get the logs for the build container or a service container for a given step of a pipeline.",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines/{pipeline_uuid}"
+    },
+    "methodName": "getPipelineForRepository",
+    "operationId": "getPipelineForRepository",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines/{pipeline_uuid}",
+    "summary": "Get a pipeline",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines/{pipeline_uuid}/steps/{step_uuid}"
+    },
+    "methodName": "getPipelineStepForRepository",
+    "operationId": "getPipelineStepForRepository",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines/{pipeline_uuid}/steps/{step_uuid}",
+    "summary": "Get a step of a pipeline",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines/{pipeline_uuid}/steps/{step_uuid}/log"
+    },
+    "methodName": "getPipelineStepLogForRepository",
+    "operationId": "getPipelineStepLogForRepository",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines/{pipeline_uuid}/steps/{step_uuid}/log",
+    "summary": "Get log file for a step",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines/{pipeline_uuid}/steps"
+    },
+    "methodName": "getPipelineStepsForRepository",
+    "operationId": "getPipelineStepsForRepository",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines/{pipeline_uuid}/steps",
+    "summary": "List steps for a pipeline",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines/{pipeline_uuid}/steps/{step_uuid}/test_reports/test_cases/{test_case_uuid}/test_case_reasons"
+    },
+    "methodName": "getPipelineTestReportTestCaseReasons",
+    "operationId": "getPipelineTestReportTestCaseReasons",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines/{pipeline_uuid}/steps/{step_uuid}/test_reports/test_cases/{test_case_uuid}/test_case_reasons",
+    "summary": "Get test case reasons (output) for a given test case in a step of a pipeline.",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines/{pipeline_uuid}/steps/{step_uuid}/test_reports/test_cases"
+    },
+    "methodName": "getPipelineTestReportTestCases",
+    "operationId": "getPipelineTestReportTestCases",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines/{pipeline_uuid}/steps/{step_uuid}/test_reports/test_cases",
+    "summary": "Get test cases for a given step of a pipeline.",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines/{pipeline_uuid}/steps/{step_uuid}/test_reports"
+    },
+    "methodName": "getPipelineTestReports",
+    "operationId": "getPipelineTestReports",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines/{pipeline_uuid}/steps/{step_uuid}/test_reports",
+    "summary": "Get a summary of test reports for a given step of a pipeline.",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/teams/{username}/pipelines_config/variables/{variable_uuid}"
+    },
+    "methodName": "getPipelineVariableForTeam",
+    "operationId": "getPipelineVariableForTeam",
+    "method": "GET",
+    "path": "/teams/{username}/pipelines_config/variables/{variable_uuid}",
+    "summary": "Get a variable for a team",
+    "deprecated": true,
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/users/{selected_user}/pipelines_config/variables/{variable_uuid}"
+    },
+    "methodName": "getPipelineVariableForUser",
+    "operationId": "getPipelineVariableForUser",
+    "method": "GET",
+    "path": "/users/{selected_user}/pipelines_config/variables/{variable_uuid}",
+    "summary": "Get a variable for a user",
+    "deprecated": true,
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/pipelines-config/variables/{variable_uuid}"
+    },
+    "methodName": "getPipelineVariableForWorkspace",
+    "operationId": "getPipelineVariableForWorkspace",
+    "method": "GET",
+    "path": "/workspaces/{workspace}/pipelines-config/variables/{variable_uuid}",
+    "summary": "Get variable for a workspace",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/teams/{username}/pipelines_config/variables"
+    },
+    "methodName": "getPipelineVariablesForTeam",
+    "operationId": "getPipelineVariablesForTeam",
+    "method": "GET",
+    "path": "/teams/{username}/pipelines_config/variables",
+    "summary": "List variables for an account",
+    "deprecated": true,
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/users/{selected_user}/pipelines_config/variables"
+    },
+    "methodName": "getPipelineVariablesForUser",
+    "operationId": "getPipelineVariablesForUser",
+    "method": "GET",
+    "path": "/users/{selected_user}/pipelines_config/variables",
+    "summary": "List variables for a user",
+    "deprecated": true,
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/pipelines-config/variables"
+    },
+    "methodName": "getPipelineVariablesForWorkspace",
+    "operationId": "getPipelineVariablesForWorkspace",
+    "method": "GET",
+    "path": "/workspaces/{workspace}/pipelines-config/variables",
+    "summary": "List variables for a workspace",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines"
+    },
+    "methodName": "getPipelinesForRepository",
+    "operationId": "getPipelinesForRepository",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines",
+    "summary": "List pipelines",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pullrequest_id}/properties/{app_key}/{property_name}"
+    },
+    "methodName": "getPullRequestHostedPropertyValue",
+    "operationId": "getPullRequestHostedPropertyValue",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pullrequest_id}/properties/{app_key}/{property_name}",
+    "summary": "Get a pull request application property",
+    "tags": [
+      "properties"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/pullrequests"
+    },
+    "methodName": "getPullrequestsForCommit",
+    "operationId": "getPullrequestsForCommit",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/pullrequests",
+    "summary": "List pull requests that contain a commit",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/reports/{reportId}"
+    },
+    "methodName": "getReport",
+    "operationId": "getReport",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/reports/{reportId}",
+    "summary": "Get a report",
+    "tags": [
+      "Commits",
+      "Reports"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/reports"
+    },
+    "methodName": "getReportsForCommit",
+    "operationId": "getReportsForCommit",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/reports",
+    "summary": "List reports",
+    "tags": [
+      "Commits",
+      "Reports"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories"
+    },
+    "methodName": "getRepositories",
+    "operationId": "get /repositories",
+    "method": "GET",
+    "path": "/repositories",
+    "summary": "List public repositories",
+    "deprecated": true,
+    "tags": [
+      "Repositories"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}"
+    },
+    "methodName": "getRepositoriesWorkspace",
+    "operationId": "get /repositories/{workspace}",
+    "method": "GET",
+    "path": "/repositories/{workspace}",
+    "summary": "List repositories in a workspace",
+    "tags": [
+      "Repositories"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlug",
+    "operationId": "get /repositories/{workspace}/{repo_slug}",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}",
+    "summary": "Get a repository",
+    "tags": [
+      "Repositories"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/branch-restrictions"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugBranchRestrictions",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/branch-restrictions",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/branch-restrictions",
+    "summary": "List branch restrictions",
+    "tags": [
+      "Branch restrictions"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/branch-restrictions/{id}"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugBranchRestrictionsId",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/branch-restrictions/{id}",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/branch-restrictions/{id}",
+    "summary": "Get a branch restriction rule",
+    "tags": [
+      "Branch restrictions"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/branching-model"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugBranchingModel",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/branching-model",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/branching-model",
+    "summary": "Get the branching model for a repository",
+    "tags": [
+      "Branching model"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/branching-model/settings"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugBranchingModelSettings",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/branching-model/settings",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/branching-model/settings",
+    "summary": "Get the branching model config for a repository",
+    "tags": [
+      "Branching model"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugCommitCommit",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/commit/{commit}",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}",
+    "summary": "Get a commit",
+    "tags": [
+      "Commits"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/comments"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugCommitCommitComments",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/commit/{commit}/comments",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/comments",
+    "summary": "List a commit's comments",
+    "tags": [
+      "Commits"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/comments/{comment_id}"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugCommitCommitCommentsCommentId",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/commit/{commit}/comments/{comment_id}",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/comments/{comment_id}",
+    "summary": "Get a commit comment",
+    "tags": [
+      "Commits"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/statuses"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugCommitCommitStatuses",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/commit/{commit}/statuses",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/statuses",
+    "summary": "List commit statuses for a commit",
+    "tags": [
+      "Commit statuses"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/statuses/build/{key}"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugCommitCommitStatusesBuildKey",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/commit/{commit}/statuses/build/{key}",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/statuses/build/{key}",
+    "summary": "Get a build status for a commit",
+    "tags": [
+      "Commit statuses"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/commits"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugCommits",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/commits",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/commits",
+    "summary": "List commits",
+    "tags": [
+      "Commits"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/commits/{revision}"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugCommitsRevision",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/commits/{revision}",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/commits/{revision}",
+    "summary": "List commits for revision",
+    "tags": [
+      "Commits"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/default-reviewers"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugDefaultReviewers",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/default-reviewers",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/default-reviewers",
+    "summary": "List default reviewers",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/default-reviewers/{target_username}"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugDefaultReviewersTargetUsername",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/default-reviewers/{target_username}",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/default-reviewers/{target_username}",
+    "summary": "Get a default reviewer",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/deploy-keys"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugDeployKeys",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/deploy-keys",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/deploy-keys",
+    "summary": "List repository deploy keys",
+    "tags": [
+      "Deployments"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/deploy-keys/{key_id}"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugDeployKeysKeyId",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/deploy-keys/{key_id}",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/deploy-keys/{key_id}",
+    "summary": "Get a repository deploy key",
+    "tags": [
+      "Deployments"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/diff/{spec}"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugDiffSpec",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/diff/{spec}",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/diff/{spec}",
+    "summary": "Compare two commits",
+    "tags": [
+      "Commits"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/diffstat/{spec}"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugDiffstatSpec",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/diffstat/{spec}",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/diffstat/{spec}",
+    "summary": "Compare two commit diff stats",
+    "tags": [
+      "Commits"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/downloads"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugDownloads",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/downloads",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/downloads",
+    "summary": "List download artifacts",
+    "tags": [
+      "Downloads"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/downloads/{filename}"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugDownloadsFilename",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/downloads/{filename}",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/downloads/{filename}",
+    "summary": "Get a download artifact link",
+    "tags": [
+      "Downloads"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/effective-branching-model"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugEffectiveBranchingModel",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/effective-branching-model",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/effective-branching-model",
+    "summary": "Get the effective, or currently applied, branching model for a repository",
+    "tags": [
+      "Branching model"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/effective-default-reviewers"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugEffectiveDefaultReviewers",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/effective-default-reviewers",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/effective-default-reviewers",
+    "summary": "List effective default reviewers",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/file-conflicts/{spec}"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugFileConflictsSpec",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/file-conflicts/{spec}",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/file-conflicts/{spec}",
+    "summary": "Get file conflicts for a commit spec",
+    "tags": [
+      "Commits"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/filehistory/{commit}/{path}"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugFilehistoryCommitPath",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/filehistory/{commit}/{path}",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/filehistory/{commit}/{path}",
+    "summary": "List commits that modified a file",
+    "tags": [
+      "Repositories",
+      "Source"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/forks"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugForks",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/forks",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/forks",
+    "summary": "List repository forks",
+    "tags": [
+      "Repositories"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/hooks"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugHooks",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/hooks",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/hooks",
+    "summary": "List webhooks for a repository",
+    "tags": [
+      "Repositories",
+      "Webhooks"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/hooks/{uid}"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugHooksUid",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/hooks/{uid}",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/hooks/{uid}",
+    "summary": "Get a webhook for a repository",
+    "tags": [
+      "Repositories",
+      "Webhooks"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/merge-base/{revspec}"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugMergeBaseRevspec",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/merge-base/{revspec}",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/merge-base/{revspec}",
+    "summary": "Get the common ancestor between two commits",
+    "tags": [
+      "Commits"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/override-settings"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugOverrideSettings",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/override-settings",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/override-settings",
+    "summary": "Retrieve the inheritance state for repository settings",
+    "tags": [
+      "Repositories"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/patch/{spec}"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugPatchSpec",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/patch/{spec}",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/patch/{spec}",
+    "summary": "Get a patch for two commits",
+    "tags": [
+      "Commits"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/permissions-config/groups"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugPermissionsConfigGroups",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/permissions-config/groups",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/permissions-config/groups",
+    "summary": "List explicit group permissions for a repository",
+    "tags": [
+      "Repositories"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/permissions-config/groups/{group_slug}"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugPermissionsConfigGroupsGroupSlug",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/permissions-config/groups/{group_slug}",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/permissions-config/groups/{group_slug}",
+    "summary": "Get an explicit group permission for a repository",
+    "tags": [
+      "Repositories"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/permissions-config/users"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugPermissionsConfigUsers",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/permissions-config/users",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/permissions-config/users",
+    "summary": "List explicit user permissions for a repository",
+    "tags": [
+      "Repositories"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/permissions-config/users/{selected_user_id}"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugPermissionsConfigUsersSelectedUserId",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/permissions-config/users/{selected_user_id}",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/permissions-config/users/{selected_user_id}",
+    "summary": "Get an explicit user permission for a repository",
+    "tags": [
+      "Repositories"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugPullrequests",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/pullrequests",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests",
+    "summary": "List pull requests",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests/activity"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugPullrequestsActivity",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/pullrequests/activity",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests/activity",
+    "summary": "List a pull request activity log",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugPullrequestsPullRequestId",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}",
+    "summary": "Get a pull request",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/activity"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugPullrequestsPullRequestIdActivity",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/activity",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/activity",
+    "summary": "List a pull request activity log",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugPullrequestsPullRequestIdComments",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments",
+    "summary": "List comments on a pull request",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id}"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugPullrequestsPullRequestIdCommentsCommentId",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id}",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id}",
+    "summary": "Get a comment on a pull request",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/commits"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugPullrequestsPullRequestIdCommits",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/commits",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/commits",
+    "summary": "List commits on a pull request",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/conflicts"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugPullrequestsPullRequestIdConflicts",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/conflicts",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/conflicts",
+    "summary": "Get file conflicts for a pull request",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/diff"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugPullrequestsPullRequestIdDiff",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/diff",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/diff",
+    "summary": "List changes in a pull request",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/diffstat"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugPullrequestsPullRequestIdDiffstat",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/diffstat",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/diffstat",
+    "summary": "Get the diff stat for a pull request",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/merge/task-status/{task_id}"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugPullrequestsPullRequestIdMergeTaskStatusTaskId",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/merge/task-status/{task_id}",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/merge/task-status/{task_id}",
+    "summary": "Get the merge task status for a pull request",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/patch"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugPullrequestsPullRequestIdPatch",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/patch",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/patch",
+    "summary": "Get the patch for a pull request",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/statuses"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugPullrequestsPullRequestIdStatuses",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/statuses",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/statuses",
+    "summary": "List commit statuses for a pull request",
+    "tags": [
+      "Commit statuses",
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/tasks"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugPullrequestsPullRequestIdTasks",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/tasks",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/tasks",
+    "summary": "List tasks on a pull request",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/tasks/{task_id}"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugPullrequestsPullRequestIdTasksTaskId",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/tasks/{task_id}",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/tasks/{task_id}",
+    "summary": "Get a task on a pull request",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/refs"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugRefs",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/refs",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/refs",
+    "summary": "List branches and tags",
+    "tags": [
+      "Refs"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/refs/branches"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugRefsBranches",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/refs/branches",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/refs/branches",
+    "summary": "List open branches",
+    "tags": [
+      "Refs"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/refs/branches/{name}"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugRefsBranchesName",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/refs/branches/{name}",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/refs/branches/{name}",
+    "summary": "Get a branch",
+    "tags": [
+      "Refs"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/refs/tags"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugRefsTags",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/refs/tags",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/refs/tags",
+    "summary": "List tags",
+    "tags": [
+      "Refs"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/refs/tags/{name}"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugRefsTagsName",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/refs/tags/{name}",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/refs/tags/{name}",
+    "summary": "Get a tag",
+    "tags": [
+      "Refs"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/src"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugSrc",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/src",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/src",
+    "summary": "Get the root directory of the main branch",
+    "tags": [
+      "Repositories",
+      "Source"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/src/{commit}/{path}"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugSrcCommitPath",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/src/{commit}/{path}",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/src/{commit}/{path}",
+    "summary": "Get file or directory contents",
+    "tags": [
+      "Repositories",
+      "Source"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/watchers"
+    },
+    "methodName": "getRepositoriesWorkspaceRepoSlugWatchers",
+    "operationId": "get /repositories/{workspace}/{repo_slug}/watchers",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/watchers",
+    "summary": "List repositories watchers",
+    "tags": [
+      "Repositories"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/properties/{app_key}/{property_name}"
+    },
+    "methodName": "getRepositoryHostedPropertyValue",
+    "operationId": "getRepositoryHostedPropertyValue",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/properties/{app_key}/{property_name}",
+    "summary": "Get a repository application property",
+    "tags": [
+      "properties"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines-config/caches/{cache_uuid}/content-uri"
+    },
+    "methodName": "getRepositoryPipelineCacheContentUri",
+    "operationId": "getRepositoryPipelineCacheContentURI",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines-config/caches/{cache_uuid}/content-uri",
+    "summary": "Get cache content URI",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines-config/caches"
+    },
+    "methodName": "getRepositoryPipelineCaches",
+    "operationId": "getRepositoryPipelineCaches",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines-config/caches",
+    "summary": "List caches",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines_config"
+    },
+    "methodName": "getRepositoryPipelineConfig",
+    "operationId": "getRepositoryPipelineConfig",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines_config",
+    "summary": "Get configuration",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/ssh/known_hosts/{known_host_uuid}"
+    },
+    "methodName": "getRepositoryPipelineKnownHost",
+    "operationId": "getRepositoryPipelineKnownHost",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/ssh/known_hosts/{known_host_uuid}",
+    "summary": "Get a known host",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/ssh/known_hosts"
+    },
+    "methodName": "getRepositoryPipelineKnownHosts",
+    "operationId": "getRepositoryPipelineKnownHosts",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/ssh/known_hosts",
+    "summary": "List known hosts",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/schedules/{schedule_uuid}"
+    },
+    "methodName": "getRepositoryPipelineSchedule",
+    "operationId": "getRepositoryPipelineSchedule",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/schedules/{schedule_uuid}",
+    "summary": "Get a schedule",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/schedules/{schedule_uuid}/executions"
+    },
+    "methodName": "getRepositoryPipelineScheduleExecutions",
+    "operationId": "getRepositoryPipelineScheduleExecutions",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/schedules/{schedule_uuid}/executions",
+    "summary": "List executions of a schedule",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/schedules"
+    },
+    "methodName": "getRepositoryPipelineSchedules",
+    "operationId": "getRepositoryPipelineSchedules",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/schedules",
+    "summary": "List schedules",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/ssh/key_pair"
+    },
+    "methodName": "getRepositoryPipelineSshKeyPair",
+    "operationId": "getRepositoryPipelineSshKeyPair",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/ssh/key_pair",
+    "summary": "Get SSH key pair",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/variables/{variable_uuid}"
+    },
+    "methodName": "getRepositoryPipelineVariable",
+    "operationId": "getRepositoryPipelineVariable",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/variables/{variable_uuid}",
+    "summary": "Get a variable for a repository",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/variables"
+    },
+    "methodName": "getRepositoryPipelineVariables",
+    "operationId": "getRepositoryPipelineVariables",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/variables",
+    "summary": "List variables for a repository",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines-config/runners/{runner_uuid}"
+    },
+    "methodName": "getRepositoryRunner",
+    "operationId": "getRepositoryRunner",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines-config/runners/{runner_uuid}",
+    "summary": "Get repository runner",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines-config/runners"
+    },
+    "methodName": "getRepositoryRunners",
+    "operationId": "getRepositoryRunners",
+    "method": "GET",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines-config/runners",
+    "summary": "Get repository runners",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/snippets"
+    },
+    "methodName": "getSnippets",
+    "operationId": "get /snippets",
+    "method": "GET",
+    "path": "/snippets",
+    "summary": "List snippets",
+    "deprecated": true,
+    "tags": [
+      "Snippets"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/snippets/{workspace}"
+    },
+    "methodName": "getSnippetsWorkspace",
+    "operationId": "get /snippets/{workspace}",
+    "method": "GET",
+    "path": "/snippets/{workspace}",
+    "summary": "List snippets in a workspace",
+    "tags": [
+      "Snippets"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/snippets/{workspace}/{encoded_id}"
+    },
+    "methodName": "getSnippetsWorkspaceEncodedId",
+    "operationId": "get /snippets/{workspace}/{encoded_id}",
+    "method": "GET",
+    "path": "/snippets/{workspace}/{encoded_id}",
+    "summary": "Get a snippet",
+    "tags": [
+      "Snippets"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/snippets/{workspace}/{encoded_id}/comments"
+    },
+    "methodName": "getSnippetsWorkspaceEncodedIdComments",
+    "operationId": "get /snippets/{workspace}/{encoded_id}/comments",
+    "method": "GET",
+    "path": "/snippets/{workspace}/{encoded_id}/comments",
+    "summary": "List comments on a snippet",
+    "tags": [
+      "Snippets"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/snippets/{workspace}/{encoded_id}/comments/{comment_id}"
+    },
+    "methodName": "getSnippetsWorkspaceEncodedIdCommentsCommentId",
+    "operationId": "get /snippets/{workspace}/{encoded_id}/comments/{comment_id}",
+    "method": "GET",
+    "path": "/snippets/{workspace}/{encoded_id}/comments/{comment_id}",
+    "summary": "Get a comment on a snippet",
+    "tags": [
+      "Snippets"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/snippets/{workspace}/{encoded_id}/commits"
+    },
+    "methodName": "getSnippetsWorkspaceEncodedIdCommits",
+    "operationId": "get /snippets/{workspace}/{encoded_id}/commits",
+    "method": "GET",
+    "path": "/snippets/{workspace}/{encoded_id}/commits",
+    "summary": "List snippet changes",
+    "tags": [
+      "Snippets"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/snippets/{workspace}/{encoded_id}/commits/{revision}"
+    },
+    "methodName": "getSnippetsWorkspaceEncodedIdCommitsRevision",
+    "operationId": "get /snippets/{workspace}/{encoded_id}/commits/{revision}",
+    "method": "GET",
+    "path": "/snippets/{workspace}/{encoded_id}/commits/{revision}",
+    "summary": "Get a previous snippet change",
+    "tags": [
+      "Snippets"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/snippets/{workspace}/{encoded_id}/files/{path}"
+    },
+    "methodName": "getSnippetsWorkspaceEncodedIdFilesPath",
+    "operationId": "get /snippets/{workspace}/{encoded_id}/files/{path}",
+    "method": "GET",
+    "path": "/snippets/{workspace}/{encoded_id}/files/{path}",
+    "summary": "Get a snippet's raw file at HEAD",
+    "tags": [
+      "Snippets"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/snippets/{workspace}/{encoded_id}/{node_id}"
+    },
+    "methodName": "getSnippetsWorkspaceEncodedIdNodeId",
+    "operationId": "get /snippets/{workspace}/{encoded_id}/{node_id}",
+    "method": "GET",
+    "path": "/snippets/{workspace}/{encoded_id}/{node_id}",
+    "summary": "Get a previous revision of a snippet",
+    "tags": [
+      "Snippets"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/snippets/{workspace}/{encoded_id}/{node_id}/files/{path}"
+    },
+    "methodName": "getSnippetsWorkspaceEncodedIdNodeIdFilesPath",
+    "operationId": "get /snippets/{workspace}/{encoded_id}/{node_id}/files/{path}",
+    "method": "GET",
+    "path": "/snippets/{workspace}/{encoded_id}/{node_id}/files/{path}",
+    "summary": "Get a snippet's raw file",
+    "tags": [
+      "Snippets"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/snippets/{workspace}/{encoded_id}/{revision}/diff"
+    },
+    "methodName": "getSnippetsWorkspaceEncodedIdRevisionDiff",
+    "operationId": "get /snippets/{workspace}/{encoded_id}/{revision}/diff",
+    "method": "GET",
+    "path": "/snippets/{workspace}/{encoded_id}/{revision}/diff",
+    "summary": "Get snippet changes between versions",
+    "tags": [
+      "Snippets"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/snippets/{workspace}/{encoded_id}/{revision}/patch"
+    },
+    "methodName": "getSnippetsWorkspaceEncodedIdRevisionPatch",
+    "operationId": "get /snippets/{workspace}/{encoded_id}/{revision}/patch",
+    "method": "GET",
+    "path": "/snippets/{workspace}/{encoded_id}/{revision}/patch",
+    "summary": "Get snippet patch between versions",
+    "tags": [
+      "Snippets"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/snippets/{workspace}/{encoded_id}/watch"
+    },
+    "methodName": "getSnippetsWorkspaceEncodedIdWatch",
+    "operationId": "get /snippets/{workspace}/{encoded_id}/watch",
+    "method": "GET",
+    "path": "/snippets/{workspace}/{encoded_id}/watch",
+    "summary": "Check if the current user is watching a snippet",
+    "tags": [
+      "Snippets"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/snippets/{workspace}/{encoded_id}/watchers"
+    },
+    "methodName": "getSnippetsWorkspaceEncodedIdWatchers",
+    "operationId": "get /snippets/{workspace}/{encoded_id}/watchers",
+    "method": "GET",
+    "path": "/snippets/{workspace}/{encoded_id}/watchers",
+    "summary": "List users watching a snippet",
+    "deprecated": true,
+    "tags": [
+      "Snippets"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/user"
+    },
+    "methodName": "getUser",
+    "operationId": "get /user",
+    "method": "GET",
+    "path": "/user",
+    "summary": "Get current user",
+    "tags": [
+      "Users"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/user/emails"
+    },
+    "methodName": "getUserEmails",
+    "operationId": "get /user/emails",
+    "method": "GET",
+    "path": "/user/emails",
+    "summary": "List email addresses for current user",
+    "tags": [
+      "Users"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/user/emails/{email}"
+    },
+    "methodName": "getUserEmailsEmail",
+    "operationId": "get /user/emails/{email}",
+    "method": "GET",
+    "path": "/user/emails/{email}",
+    "summary": "Get an email address for current user",
+    "tags": [
+      "Users"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/user/permissions/repositories"
+    },
+    "methodName": "getUserPermissionsRepositories",
+    "operationId": "get /user/permissions/repositories",
+    "method": "GET",
+    "path": "/user/permissions/repositories",
+    "summary": "List repository permissions for a user",
+    "deprecated": true,
+    "tags": [
+      "Repositories"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/user/workspaces"
+    },
+    "methodName": "getUserWorkspaces",
+    "operationId": "get /user/workspaces",
+    "method": "GET",
+    "path": "/user/workspaces",
+    "summary": "List workspaces for the current user",
+    "tags": [
+      "Workspaces"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/user/workspaces/{workspace}/permission"
+    },
+    "methodName": "getUserWorkspacesWorkspacePermission",
+    "operationId": "get /user/workspaces/{workspace}/permission",
+    "method": "GET",
+    "path": "/user/workspaces/{workspace}/permission",
+    "summary": "Get user permission on a workspace",
+    "tags": [
+      "Workspaces"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/user/workspaces/{workspace}/permissions/repositories"
+    },
+    "methodName": "getUserWorkspacesWorkspacePermissionsRepositories",
+    "operationId": "get /user/workspaces/{workspace}/permissions/repositories",
+    "method": "GET",
+    "path": "/user/workspaces/{workspace}/permissions/repositories",
+    "summary": "List repository permissions in a workspace for a user",
+    "tags": [
+      "Repositories"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/users/{selected_user}"
+    },
+    "methodName": "getUsersSelectedUser",
+    "operationId": "get /users/{selected_user}",
+    "method": "GET",
+    "path": "/users/{selected_user}",
+    "summary": "Get a user",
+    "tags": [
+      "Users"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/users/{selected_user}/gpg-keys"
+    },
+    "methodName": "getUsersSelectedUserGpgKeys",
+    "operationId": "get /users/{selected_user}/gpg-keys",
+    "method": "GET",
+    "path": "/users/{selected_user}/gpg-keys",
+    "summary": "List GPG keys",
+    "tags": [
+      "GPG"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/users/{selected_user}/gpg-keys/{fingerprint}"
+    },
+    "methodName": "getUsersSelectedUserGpgKeysFingerprint",
+    "operationId": "get /users/{selected_user}/gpg-keys/{fingerprint}",
+    "method": "GET",
+    "path": "/users/{selected_user}/gpg-keys/{fingerprint}",
+    "summary": "Get a GPG key",
+    "tags": [
+      "GPG"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/users/{selected_user}/ssh-keys"
+    },
+    "methodName": "getUsersSelectedUserSshKeys",
+    "operationId": "get /users/{selected_user}/ssh-keys",
+    "method": "GET",
+    "path": "/users/{selected_user}/ssh-keys",
+    "summary": "List SSH keys",
+    "tags": [
+      "SSH"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/users/{selected_user}/ssh-keys/{key_id}"
+    },
+    "methodName": "getUsersSelectedUserSshKeysKeyId",
+    "operationId": "get /users/{selected_user}/ssh-keys/{key_id}",
+    "method": "GET",
+    "path": "/users/{selected_user}/ssh-keys/{key_id}",
+    "summary": "Get a SSH key",
+    "tags": [
+      "SSH"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/pipelines-config/runners/{runner_uuid}"
+    },
+    "methodName": "getWorkspaceRunner",
+    "operationId": "getWorkspaceRunner",
+    "method": "GET",
+    "path": "/workspaces/{workspace}/pipelines-config/runners/{runner_uuid}",
+    "summary": "Get workspace runner",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/pipelines-config/runners"
+    },
+    "methodName": "getWorkspaceRunners",
+    "operationId": "getWorkspaceRunners",
+    "method": "GET",
+    "path": "/workspaces/{workspace}/pipelines-config/runners",
+    "summary": "Get workspace runners",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces"
+    },
+    "methodName": "getWorkspaces",
+    "operationId": "get /workspaces",
+    "method": "GET",
+    "path": "/workspaces",
+    "summary": "List workspaces for user",
+    "deprecated": true,
+    "tags": [
+      "Workspaces"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}"
+    },
+    "methodName": "getWorkspacesWorkspace",
+    "operationId": "get /workspaces/{workspace}",
+    "method": "GET",
+    "path": "/workspaces/{workspace}",
+    "summary": "Get a workspace",
+    "tags": [
+      "Workspaces"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/hooks"
+    },
+    "methodName": "getWorkspacesWorkspaceHooks",
+    "operationId": "get /workspaces/{workspace}/hooks",
+    "method": "GET",
+    "path": "/workspaces/{workspace}/hooks",
+    "summary": "List webhooks for a workspace",
+    "tags": [
+      "Webhooks",
+      "Workspaces"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/hooks/{uid}"
+    },
+    "methodName": "getWorkspacesWorkspaceHooksUid",
+    "operationId": "get /workspaces/{workspace}/hooks/{uid}",
+    "method": "GET",
+    "path": "/workspaces/{workspace}/hooks/{uid}",
+    "summary": "Get a webhook for a workspace",
+    "tags": [
+      "Webhooks",
+      "Workspaces"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/members"
+    },
+    "methodName": "getWorkspacesWorkspaceMembers",
+    "operationId": "get /workspaces/{workspace}/members",
+    "method": "GET",
+    "path": "/workspaces/{workspace}/members",
+    "summary": "List users in a workspace",
+    "tags": [
+      "Workspaces"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/members/{member}"
+    },
+    "methodName": "getWorkspacesWorkspaceMembersMember",
+    "operationId": "get /workspaces/{workspace}/members/{member}",
+    "method": "GET",
+    "path": "/workspaces/{workspace}/members/{member}",
+    "summary": "Get user membership for a workspace",
+    "tags": [
+      "Workspaces"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/permissions"
+    },
+    "methodName": "getWorkspacesWorkspacePermissions",
+    "operationId": "get /workspaces/{workspace}/permissions",
+    "method": "GET",
+    "path": "/workspaces/{workspace}/permissions",
+    "summary": "List user permissions in a workspace",
+    "tags": [
+      "Workspaces"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/permissions/repositories"
+    },
+    "methodName": "getWorkspacesWorkspacePermissionsRepositories",
+    "operationId": "get /workspaces/{workspace}/permissions/repositories",
+    "method": "GET",
+    "path": "/workspaces/{workspace}/permissions/repositories",
+    "summary": "List all repository permissions for a workspace",
+    "tags": [
+      "Workspaces"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/permissions/repositories/{repo_slug}"
+    },
+    "methodName": "getWorkspacesWorkspacePermissionsRepositoriesRepoSlug",
+    "operationId": "get /workspaces/{workspace}/permissions/repositories/{repo_slug}",
+    "method": "GET",
+    "path": "/workspaces/{workspace}/permissions/repositories/{repo_slug}",
+    "summary": "List a repository permissions for a workspace",
+    "tags": [
+      "Workspaces"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/projects"
+    },
+    "methodName": "getWorkspacesWorkspaceProjects",
+    "operationId": "get /workspaces/{workspace}/projects",
+    "method": "GET",
+    "path": "/workspaces/{workspace}/projects",
+    "summary": "List projects in a workspace",
+    "tags": [
+      "Workspaces"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/projects/{project_key}"
+    },
+    "methodName": "getWorkspacesWorkspaceProjectsProjectKey",
+    "operationId": "get /workspaces/{workspace}/projects/{project_key}",
+    "method": "GET",
+    "path": "/workspaces/{workspace}/projects/{project_key}",
+    "summary": "Get a project for a workspace",
+    "tags": [
+      "Projects",
+      "Workspaces"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/projects/{project_key}/branching-model"
+    },
+    "methodName": "getWorkspacesWorkspaceProjectsProjectKeyBranchingModel",
+    "operationId": "get /workspaces/{workspace}/projects/{project_key}/branching-model",
+    "method": "GET",
+    "path": "/workspaces/{workspace}/projects/{project_key}/branching-model",
+    "summary": "Get the branching model for a project",
+    "tags": [
+      "Branching model"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/projects/{project_key}/branching-model/settings"
+    },
+    "methodName": "getWorkspacesWorkspaceProjectsProjectKeyBranchingModelSettings",
+    "operationId": "get /workspaces/{workspace}/projects/{project_key}/branching-model/settings",
+    "method": "GET",
+    "path": "/workspaces/{workspace}/projects/{project_key}/branching-model/settings",
+    "summary": "Get the branching model config for a project",
+    "tags": [
+      "Branching model"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/projects/{project_key}/default-reviewers"
+    },
+    "methodName": "getWorkspacesWorkspaceProjectsProjectKeyDefaultReviewers",
+    "operationId": "get /workspaces/{workspace}/projects/{project_key}/default-reviewers",
+    "method": "GET",
+    "path": "/workspaces/{workspace}/projects/{project_key}/default-reviewers",
+    "summary": "List the default reviewers in a project",
+    "tags": [
+      "Projects"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/projects/{project_key}/default-reviewers/{selected_user}"
+    },
+    "methodName": "getWorkspacesWorkspaceProjectsProjectKeyDefaultReviewersSelectedUser",
+    "operationId": "get /workspaces/{workspace}/projects/{project_key}/default-reviewers/{selected_user}",
+    "method": "GET",
+    "path": "/workspaces/{workspace}/projects/{project_key}/default-reviewers/{selected_user}",
+    "summary": "Get a default reviewer",
+    "tags": [
+      "Projects"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/projects/{project_key}/deploy-keys"
+    },
+    "methodName": "getWorkspacesWorkspaceProjectsProjectKeyDeployKeys",
+    "operationId": "get /workspaces/{workspace}/projects/{project_key}/deploy-keys",
+    "method": "GET",
+    "path": "/workspaces/{workspace}/projects/{project_key}/deploy-keys",
+    "summary": "List project deploy keys",
+    "tags": [
+      "Deployments"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/projects/{project_key}/deploy-keys/{key_id}"
+    },
+    "methodName": "getWorkspacesWorkspaceProjectsProjectKeyDeployKeysKeyId",
+    "operationId": "get /workspaces/{workspace}/projects/{project_key}/deploy-keys/{key_id}",
+    "method": "GET",
+    "path": "/workspaces/{workspace}/projects/{project_key}/deploy-keys/{key_id}",
+    "summary": "Get a project deploy key",
+    "tags": [
+      "Deployments"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/projects/{project_key}/permissions-config/groups"
+    },
+    "methodName": "getWorkspacesWorkspaceProjectsProjectKeyPermissionsConfigGroups",
+    "operationId": "get /workspaces/{workspace}/projects/{project_key}/permissions-config/groups",
+    "method": "GET",
+    "path": "/workspaces/{workspace}/projects/{project_key}/permissions-config/groups",
+    "summary": "List explicit group permissions for a project",
+    "tags": [
+      "Projects"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/projects/{project_key}/permissions-config/groups/{group_slug}"
+    },
+    "methodName": "getWorkspacesWorkspaceProjectsProjectKeyPermissionsConfigGroupsGroupSlug",
+    "operationId": "get /workspaces/{workspace}/projects/{project_key}/permissions-config/groups/{group_slug}",
+    "method": "GET",
+    "path": "/workspaces/{workspace}/projects/{project_key}/permissions-config/groups/{group_slug}",
+    "summary": "Get an explicit group permission for a project",
+    "tags": [
+      "Projects"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/projects/{project_key}/permissions-config/users"
+    },
+    "methodName": "getWorkspacesWorkspaceProjectsProjectKeyPermissionsConfigUsers",
+    "operationId": "get /workspaces/{workspace}/projects/{project_key}/permissions-config/users",
+    "method": "GET",
+    "path": "/workspaces/{workspace}/projects/{project_key}/permissions-config/users",
+    "summary": "List explicit user permissions for a project",
+    "tags": [
+      "Projects"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/projects/{project_key}/permissions-config/users/{selected_user_id}"
+    },
+    "methodName": "getWorkspacesWorkspaceProjectsProjectKeyPermissionsConfigUsersSelectedUserId",
+    "operationId": "get /workspaces/{workspace}/projects/{project_key}/permissions-config/users/{selected_user_id}",
+    "method": "GET",
+    "path": "/workspaces/{workspace}/projects/{project_key}/permissions-config/users/{selected_user_id}",
+    "summary": "Get an explicit user permission for a project",
+    "tags": [
+      "Projects"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/pullrequests/{selected_user}"
+    },
+    "methodName": "getWorkspacesWorkspacePullrequestsSelectedUser",
+    "operationId": "get /workspaces/{workspace}/pullrequests/{selected_user}",
+    "method": "GET",
+    "path": "/workspaces/{workspace}/pullrequests/{selected_user}",
+    "summary": "List workspace pull requests for a user",
+    "tags": [
+      "Pullrequests",
+      "Workspaces"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/settings/gpg/public-key"
+    },
+    "methodName": "getWorkspacesWorkspaceSettingsGpgPublicKey",
+    "operationId": "get /workspaces/{workspace}/settings/gpg/public-key",
+    "method": "GET",
+    "path": "/workspaces/{workspace}/settings/gpg/public-key",
+    "summary": "Get the workspace system GPG public key(s)",
+    "tags": [
+      "Workspaces"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}"
+    },
+    "methodName": "postRepositoriesWorkspaceRepoSlug",
+    "operationId": "post /repositories/{workspace}/{repo_slug}",
+    "method": "POST",
+    "path": "/repositories/{workspace}/{repo_slug}",
+    "summary": "Create a repository",
+    "tags": [
+      "Repositories"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/branch-restrictions"
+    },
+    "methodName": "postRepositoriesWorkspaceRepoSlugBranchRestrictions",
+    "operationId": "post /repositories/{workspace}/{repo_slug}/branch-restrictions",
+    "method": "POST",
+    "path": "/repositories/{workspace}/{repo_slug}/branch-restrictions",
+    "summary": "Create a branch restriction rule",
+    "tags": [
+      "Branch restrictions"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/approve"
+    },
+    "methodName": "postRepositoriesWorkspaceRepoSlugCommitCommitApprove",
+    "operationId": "post /repositories/{workspace}/{repo_slug}/commit/{commit}/approve",
+    "method": "POST",
+    "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/approve",
+    "summary": "Approve a commit",
+    "tags": [
+      "Commits"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/comments"
+    },
+    "methodName": "postRepositoriesWorkspaceRepoSlugCommitCommitComments",
+    "operationId": "post /repositories/{workspace}/{repo_slug}/commit/{commit}/comments",
+    "method": "POST",
+    "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/comments",
+    "summary": "Create comment for a commit",
+    "tags": [
+      "Commits"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/statuses/build"
+    },
+    "methodName": "postRepositoriesWorkspaceRepoSlugCommitCommitStatusesBuild",
+    "operationId": "post /repositories/{workspace}/{repo_slug}/commit/{commit}/statuses/build",
+    "method": "POST",
+    "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/statuses/build",
+    "summary": "Create a build status for a commit",
+    "tags": [
+      "Commit statuses"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/commits"
+    },
+    "methodName": "postRepositoriesWorkspaceRepoSlugCommits",
+    "operationId": "post /repositories/{workspace}/{repo_slug}/commits",
+    "method": "POST",
+    "path": "/repositories/{workspace}/{repo_slug}/commits",
+    "summary": "List commits with include/exclude",
+    "tags": [
+      "Commits"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/commits/{revision}"
+    },
+    "methodName": "postRepositoriesWorkspaceRepoSlugCommitsRevision",
+    "operationId": "post /repositories/{workspace}/{repo_slug}/commits/{revision}",
+    "method": "POST",
+    "path": "/repositories/{workspace}/{repo_slug}/commits/{revision}",
+    "summary": "List commits for revision using include/exclude",
+    "tags": [
+      "Commits"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/deploy-keys"
+    },
+    "methodName": "postRepositoriesWorkspaceRepoSlugDeployKeys",
+    "operationId": "post /repositories/{workspace}/{repo_slug}/deploy-keys",
+    "method": "POST",
+    "path": "/repositories/{workspace}/{repo_slug}/deploy-keys",
+    "summary": "Add a repository deploy key",
+    "tags": [
+      "Deployments"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/downloads"
+    },
+    "methodName": "postRepositoriesWorkspaceRepoSlugDownloads",
+    "operationId": "post /repositories/{workspace}/{repo_slug}/downloads",
+    "method": "POST",
+    "path": "/repositories/{workspace}/{repo_slug}/downloads",
+    "summary": "Upload a download artifact",
+    "tags": [
+      "Downloads"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/forks"
+    },
+    "methodName": "postRepositoriesWorkspaceRepoSlugForks",
+    "operationId": "post /repositories/{workspace}/{repo_slug}/forks",
+    "method": "POST",
+    "path": "/repositories/{workspace}/{repo_slug}/forks",
+    "summary": "Fork a repository",
+    "tags": [
+      "Repositories"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/hooks"
+    },
+    "methodName": "postRepositoriesWorkspaceRepoSlugHooks",
+    "operationId": "post /repositories/{workspace}/{repo_slug}/hooks",
+    "method": "POST",
+    "path": "/repositories/{workspace}/{repo_slug}/hooks",
+    "summary": "Create a webhook for a repository",
+    "tags": [
+      "Repositories",
+      "Webhooks"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests"
+    },
+    "methodName": "postRepositoriesWorkspaceRepoSlugPullrequests",
+    "operationId": "post /repositories/{workspace}/{repo_slug}/pullrequests",
+    "method": "POST",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests",
+    "summary": "Create a pull request",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/approve"
+    },
+    "methodName": "postRepositoriesWorkspaceRepoSlugPullrequestsPullRequestIdApprove",
+    "operationId": "post /repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/approve",
+    "method": "POST",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/approve",
+    "summary": "Approve a pull request",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments"
+    },
+    "methodName": "postRepositoriesWorkspaceRepoSlugPullrequestsPullRequestIdComments",
+    "operationId": "post /repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments",
+    "method": "POST",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments",
+    "summary": "Create a comment on a pull request",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id}/resolve"
+    },
+    "methodName": "postRepositoriesWorkspaceRepoSlugPullrequestsPullRequestIdCommentsCommentIdResolve",
+    "operationId": "post /repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id}/resolve",
+    "method": "POST",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id}/resolve",
+    "summary": "Resolve a comment thread",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/decline"
+    },
+    "methodName": "postRepositoriesWorkspaceRepoSlugPullrequestsPullRequestIdDecline",
+    "operationId": "post /repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/decline",
+    "method": "POST",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/decline",
+    "summary": "Decline a pull request",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/merge"
+    },
+    "methodName": "postRepositoriesWorkspaceRepoSlugPullrequestsPullRequestIdMerge",
+    "operationId": "post /repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/merge",
+    "method": "POST",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/merge",
+    "summary": "Merge a pull request",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/request-changes"
+    },
+    "methodName": "postRepositoriesWorkspaceRepoSlugPullrequestsPullRequestIdRequestChanges",
+    "operationId": "post /repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/request-changes",
+    "method": "POST",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/request-changes",
+    "summary": "Request changes for a pull request",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/tasks"
+    },
+    "methodName": "postRepositoriesWorkspaceRepoSlugPullrequestsPullRequestIdTasks",
+    "operationId": "post /repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/tasks",
+    "method": "POST",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/tasks",
+    "summary": "Create a task on a pull request",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/refs/branches"
+    },
+    "methodName": "postRepositoriesWorkspaceRepoSlugRefsBranches",
+    "operationId": "post /repositories/{workspace}/{repo_slug}/refs/branches",
+    "method": "POST",
+    "path": "/repositories/{workspace}/{repo_slug}/refs/branches",
+    "summary": "Create a branch",
+    "tags": [
+      "Refs"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/refs/tags"
+    },
+    "methodName": "postRepositoriesWorkspaceRepoSlugRefsTags",
+    "operationId": "post /repositories/{workspace}/{repo_slug}/refs/tags",
+    "method": "POST",
+    "path": "/repositories/{workspace}/{repo_slug}/refs/tags",
+    "summary": "Create a tag",
+    "tags": [
+      "Refs"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/src"
+    },
+    "methodName": "postRepositoriesWorkspaceRepoSlugSrc",
+    "operationId": "post /repositories/{workspace}/{repo_slug}/src",
+    "method": "POST",
+    "path": "/repositories/{workspace}/{repo_slug}/src",
+    "summary": "Create a commit by uploading a file",
+    "tags": [
+      "Repositories",
+      "Source"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/snippets"
+    },
+    "methodName": "postSnippets",
+    "operationId": "post /snippets",
+    "method": "POST",
+    "path": "/snippets",
+    "summary": "Create a snippet",
+    "tags": [
+      "Snippets"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/snippets/{workspace}"
+    },
+    "methodName": "postSnippetsWorkspace",
+    "operationId": "post /snippets/{workspace}",
+    "method": "POST",
+    "path": "/snippets/{workspace}",
+    "summary": "Create a snippet for a workspace",
+    "tags": [
+      "Snippets"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/snippets/{workspace}/{encoded_id}/comments"
+    },
+    "methodName": "postSnippetsWorkspaceEncodedIdComments",
+    "operationId": "post /snippets/{workspace}/{encoded_id}/comments",
+    "method": "POST",
+    "path": "/snippets/{workspace}/{encoded_id}/comments",
+    "summary": "Create a comment on a snippet",
+    "tags": [
+      "Snippets"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/users/{selected_user}/gpg-keys"
+    },
+    "methodName": "postUsersSelectedUserGpgKeys",
+    "operationId": "post /users/{selected_user}/gpg-keys",
+    "method": "POST",
+    "path": "/users/{selected_user}/gpg-keys",
+    "summary": "Add a new GPG key",
+    "tags": [
+      "GPG"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/users/{selected_user}/ssh-keys"
+    },
+    "methodName": "postUsersSelectedUserSshKeys",
+    "operationId": "post /users/{selected_user}/ssh-keys",
+    "method": "POST",
+    "path": "/users/{selected_user}/ssh-keys",
+    "summary": "Add a new SSH key",
+    "tags": [
+      "SSH"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/hooks"
+    },
+    "methodName": "postWorkspacesWorkspaceHooks",
+    "operationId": "post /workspaces/{workspace}/hooks",
+    "method": "POST",
+    "path": "/workspaces/{workspace}/hooks",
+    "summary": "Create a webhook for a workspace",
+    "tags": [
+      "Webhooks",
+      "Workspaces"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/projects"
+    },
+    "methodName": "postWorkspacesWorkspaceProjects",
+    "operationId": "post /workspaces/{workspace}/projects",
+    "method": "POST",
+    "path": "/workspaces/{workspace}/projects",
+    "summary": "Create a project in a workspace",
+    "tags": [
+      "Projects"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/projects/{project_key}/deploy-keys"
+    },
+    "methodName": "postWorkspacesWorkspaceProjectsProjectKeyDeployKeys",
+    "operationId": "post /workspaces/{workspace}/projects/{project_key}/deploy-keys",
+    "method": "POST",
+    "path": "/workspaces/{workspace}/projects/{project_key}/deploy-keys",
+    "summary": "Create a project deploy key",
+    "tags": [
+      "Deployments"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/addon"
+    },
+    "methodName": "putAddon",
+    "operationId": "put /addon",
+    "method": "PUT",
+    "path": "/addon",
+    "summary": "Update an installed app",
+    "tags": [
+      "Addon"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}"
+    },
+    "methodName": "putRepositoriesWorkspaceRepoSlug",
+    "operationId": "put /repositories/{workspace}/{repo_slug}",
+    "method": "PUT",
+    "path": "/repositories/{workspace}/{repo_slug}",
+    "summary": "Update a repository",
+    "tags": [
+      "Repositories"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/branch-restrictions/{id}"
+    },
+    "methodName": "putRepositoriesWorkspaceRepoSlugBranchRestrictionsId",
+    "operationId": "put /repositories/{workspace}/{repo_slug}/branch-restrictions/{id}",
+    "method": "PUT",
+    "path": "/repositories/{workspace}/{repo_slug}/branch-restrictions/{id}",
+    "summary": "Update a branch restriction rule",
+    "tags": [
+      "Branch restrictions"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/branching-model/settings"
+    },
+    "methodName": "putRepositoriesWorkspaceRepoSlugBranchingModelSettings",
+    "operationId": "put /repositories/{workspace}/{repo_slug}/branching-model/settings",
+    "method": "PUT",
+    "path": "/repositories/{workspace}/{repo_slug}/branching-model/settings",
+    "summary": "Update the branching model config for a repository",
+    "tags": [
+      "Branching model"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/comments/{comment_id}"
+    },
+    "methodName": "putRepositoriesWorkspaceRepoSlugCommitCommitCommentsCommentId",
+    "operationId": "put /repositories/{workspace}/{repo_slug}/commit/{commit}/comments/{comment_id}",
+    "method": "PUT",
+    "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/comments/{comment_id}",
+    "summary": "Update a commit comment",
+    "tags": [
+      "Commits"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/statuses/build/{key}"
+    },
+    "methodName": "putRepositoriesWorkspaceRepoSlugCommitCommitStatusesBuildKey",
+    "operationId": "put /repositories/{workspace}/{repo_slug}/commit/{commit}/statuses/build/{key}",
+    "method": "PUT",
+    "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/statuses/build/{key}",
+    "summary": "Update a build status for a commit",
+    "tags": [
+      "Commit statuses"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/default-reviewers/{target_username}"
+    },
+    "methodName": "putRepositoriesWorkspaceRepoSlugDefaultReviewersTargetUsername",
+    "operationId": "put /repositories/{workspace}/{repo_slug}/default-reviewers/{target_username}",
+    "method": "PUT",
+    "path": "/repositories/{workspace}/{repo_slug}/default-reviewers/{target_username}",
+    "summary": "Add a user to the default reviewers",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/deploy-keys/{key_id}"
+    },
+    "methodName": "putRepositoriesWorkspaceRepoSlugDeployKeysKeyId",
+    "operationId": "put /repositories/{workspace}/{repo_slug}/deploy-keys/{key_id}",
+    "method": "PUT",
+    "path": "/repositories/{workspace}/{repo_slug}/deploy-keys/{key_id}",
+    "summary": "Update a repository deploy key",
+    "tags": [
+      "Deployments"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/hooks/{uid}"
+    },
+    "methodName": "putRepositoriesWorkspaceRepoSlugHooksUid",
+    "operationId": "put /repositories/{workspace}/{repo_slug}/hooks/{uid}",
+    "method": "PUT",
+    "path": "/repositories/{workspace}/{repo_slug}/hooks/{uid}",
+    "summary": "Update a webhook for a repository",
+    "tags": [
+      "Repositories",
+      "Webhooks"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/override-settings"
+    },
+    "methodName": "putRepositoriesWorkspaceRepoSlugOverrideSettings",
+    "operationId": "put /repositories/{workspace}/{repo_slug}/override-settings",
+    "method": "PUT",
+    "path": "/repositories/{workspace}/{repo_slug}/override-settings",
+    "summary": "Set the inheritance state for repository settings\n                ",
+    "tags": [
+      "Repositories"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/permissions-config/groups/{group_slug}"
+    },
+    "methodName": "putRepositoriesWorkspaceRepoSlugPermissionsConfigGroupsGroupSlug",
+    "operationId": "put /repositories/{workspace}/{repo_slug}/permissions-config/groups/{group_slug}",
+    "method": "PUT",
+    "path": "/repositories/{workspace}/{repo_slug}/permissions-config/groups/{group_slug}",
+    "summary": "Update an explicit group permission for a repository",
+    "tags": [
+      "Repositories"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/permissions-config/users/{selected_user_id}"
+    },
+    "methodName": "putRepositoriesWorkspaceRepoSlugPermissionsConfigUsersSelectedUserId",
+    "operationId": "put /repositories/{workspace}/{repo_slug}/permissions-config/users/{selected_user_id}",
+    "method": "PUT",
+    "path": "/repositories/{workspace}/{repo_slug}/permissions-config/users/{selected_user_id}",
+    "summary": "Update an explicit user permission for a repository",
+    "tags": [
+      "Repositories"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}"
+    },
+    "methodName": "putRepositoriesWorkspaceRepoSlugPullrequestsPullRequestId",
+    "operationId": "put /repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}",
+    "method": "PUT",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}",
+    "summary": "Update a pull request",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id}"
+    },
+    "methodName": "putRepositoriesWorkspaceRepoSlugPullrequestsPullRequestIdCommentsCommentId",
+    "operationId": "put /repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id}",
+    "method": "PUT",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id}",
+    "summary": "Update a comment on a pull request",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/tasks/{task_id}"
+    },
+    "methodName": "putRepositoriesWorkspaceRepoSlugPullrequestsPullRequestIdTasksTaskId",
+    "operationId": "put /repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/tasks/{task_id}",
+    "method": "PUT",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/tasks/{task_id}",
+    "summary": "Update a task on a pull request",
+    "tags": [
+      "Pullrequests"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/snippets/{workspace}/{encoded_id}"
+    },
+    "methodName": "putSnippetsWorkspaceEncodedId",
+    "operationId": "put /snippets/{workspace}/{encoded_id}",
+    "method": "PUT",
+    "path": "/snippets/{workspace}/{encoded_id}",
+    "summary": "Update a snippet",
+    "tags": [
+      "Snippets"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/snippets/{workspace}/{encoded_id}/comments/{comment_id}"
+    },
+    "methodName": "putSnippetsWorkspaceEncodedIdCommentsCommentId",
+    "operationId": "put /snippets/{workspace}/{encoded_id}/comments/{comment_id}",
+    "method": "PUT",
+    "path": "/snippets/{workspace}/{encoded_id}/comments/{comment_id}",
+    "summary": "Update a comment on a snippet",
+    "tags": [
+      "Snippets"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/snippets/{workspace}/{encoded_id}/{node_id}"
+    },
+    "methodName": "putSnippetsWorkspaceEncodedIdNodeId",
+    "operationId": "put /snippets/{workspace}/{encoded_id}/{node_id}",
+    "method": "PUT",
+    "path": "/snippets/{workspace}/{encoded_id}/{node_id}",
+    "summary": "Update a previous revision of a snippet",
+    "tags": [
+      "Snippets"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/snippets/{workspace}/{encoded_id}/watch"
+    },
+    "methodName": "putSnippetsWorkspaceEncodedIdWatch",
+    "operationId": "put /snippets/{workspace}/{encoded_id}/watch",
+    "method": "PUT",
+    "path": "/snippets/{workspace}/{encoded_id}/watch",
+    "summary": "Watch a snippet",
+    "tags": [
+      "Snippets"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/users/{selected_user}/ssh-keys/{key_id}"
+    },
+    "methodName": "putUsersSelectedUserSshKeysKeyId",
+    "operationId": "put /users/{selected_user}/ssh-keys/{key_id}",
+    "method": "PUT",
+    "path": "/users/{selected_user}/ssh-keys/{key_id}",
+    "summary": "Update a SSH key",
+    "tags": [
+      "SSH"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/hooks/{uid}"
+    },
+    "methodName": "putWorkspacesWorkspaceHooksUid",
+    "operationId": "put /workspaces/{workspace}/hooks/{uid}",
+    "method": "PUT",
+    "path": "/workspaces/{workspace}/hooks/{uid}",
+    "summary": "Update a webhook for a workspace",
+    "tags": [
+      "Webhooks",
+      "Workspaces"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/projects/{project_key}"
+    },
+    "methodName": "putWorkspacesWorkspaceProjectsProjectKey",
+    "operationId": "put /workspaces/{workspace}/projects/{project_key}",
+    "method": "PUT",
+    "path": "/workspaces/{workspace}/projects/{project_key}",
+    "summary": "Update a project for a workspace",
+    "tags": [
+      "Projects"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/projects/{project_key}/branching-model/settings"
+    },
+    "methodName": "putWorkspacesWorkspaceProjectsProjectKeyBranchingModelSettings",
+    "operationId": "put /workspaces/{workspace}/projects/{project_key}/branching-model/settings",
+    "method": "PUT",
+    "path": "/workspaces/{workspace}/projects/{project_key}/branching-model/settings",
+    "summary": "Update the branching model config for a project",
+    "tags": [
+      "Branching model"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/projects/{project_key}/default-reviewers/{selected_user}"
+    },
+    "methodName": "putWorkspacesWorkspaceProjectsProjectKeyDefaultReviewersSelectedUser",
+    "operationId": "put /workspaces/{workspace}/projects/{project_key}/default-reviewers/{selected_user}",
+    "method": "PUT",
+    "path": "/workspaces/{workspace}/projects/{project_key}/default-reviewers/{selected_user}",
+    "summary": "Add the specific user as a default reviewer for the project",
+    "tags": [
+      "Projects"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/projects/{project_key}/permissions-config/groups/{group_slug}"
+    },
+    "methodName": "putWorkspacesWorkspaceProjectsProjectKeyPermissionsConfigGroupsGroupSlug",
+    "operationId": "put /workspaces/{workspace}/projects/{project_key}/permissions-config/groups/{group_slug}",
+    "method": "PUT",
+    "path": "/workspaces/{workspace}/projects/{project_key}/permissions-config/groups/{group_slug}",
+    "summary": "Update an explicit group permission for a project",
+    "tags": [
+      "Projects"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/projects/{project_key}/permissions-config/users/{selected_user_id}"
+    },
+    "methodName": "putWorkspacesWorkspaceProjectsProjectKeyPermissionsConfigUsersSelectedUserId",
+    "operationId": "put /workspaces/{workspace}/projects/{project_key}/permissions-config/users/{selected_user_id}",
+    "method": "PUT",
+    "path": "/workspaces/{workspace}/projects/{project_key}/permissions-config/users/{selected_user_id}",
+    "summary": "Update an explicit user permission for a project",
+    "tags": [
+      "Projects"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/users/{selected_user}/properties/{app_key}/{property_name}"
+    },
+    "methodName": "retrieveUserHostedPropertyValue",
+    "operationId": "retrieveUserHostedPropertyValue",
+    "method": "GET",
+    "path": "/users/{selected_user}/properties/{app_key}/{property_name}",
+    "summary": "Get a user application property",
+    "tags": [
+      "properties"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/users/{selected_user}/search/code"
+    },
+    "methodName": "searchAccount",
+    "operationId": "searchAccount",
+    "method": "GET",
+    "path": "/users/{selected_user}/search/code",
+    "summary": "Search for code in a user's repositories",
+    "deprecated": true,
+    "tags": [
+      "Search"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/teams/{username}/search/code"
+    },
+    "methodName": "searchTeam",
+    "operationId": "searchTeam",
+    "method": "GET",
+    "path": "/teams/{username}/search/code",
+    "summary": "Search for code in a team's repositories",
+    "deprecated": true,
+    "tags": [
+      "Search"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/search/code"
+    },
+    "methodName": "searchWorkspace",
+    "operationId": "searchWorkspace",
+    "method": "GET",
+    "path": "/workspaces/{workspace}/search/code",
+    "summary": "Search for code in a workspace",
+    "deprecated": true,
+    "tags": [
+      "Search"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines/{pipeline_uuid}/stopPipeline"
+    },
+    "methodName": "stopPipeline",
+    "operationId": "stopPipeline",
+    "method": "POST",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines/{pipeline_uuid}/stopPipeline",
+    "summary": "Stop a pipeline",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/properties/{app_key}/{property_name}"
+    },
+    "methodName": "updateCommitHostedPropertyValue",
+    "operationId": "updateCommitHostedPropertyValue",
+    "method": "PUT",
+    "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/properties/{app_key}/{property_name}",
+    "summary": "Update a commit application property",
+    "tags": [
+      "properties"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/deployments_config/environments/{environment_uuid}/variables/{variable_uuid}"
+    },
+    "methodName": "updateDeploymentVariable",
+    "operationId": "updateDeploymentVariable",
+    "method": "PUT",
+    "path": "/repositories/{workspace}/{repo_slug}/deployments_config/environments/{environment_uuid}/variables/{variable_uuid}",
+    "summary": "Update a variable for an environment",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/environments/{environment_uuid}/changes"
+    },
+    "methodName": "updateEnvironmentForRepository",
+    "operationId": "updateEnvironmentForRepository",
+    "method": "POST",
+    "path": "/repositories/{workspace}/{repo_slug}/environments/{environment_uuid}/changes",
+    "summary": "Update an environment",
+    "tags": [
+      "Deployments"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/teams/{username}/pipelines_config/variables/{variable_uuid}"
+    },
+    "methodName": "updatePipelineVariableForTeam",
+    "operationId": "updatePipelineVariableForTeam",
+    "method": "PUT",
+    "path": "/teams/{username}/pipelines_config/variables/{variable_uuid}",
+    "summary": "Update a variable for a team",
+    "deprecated": true,
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/users/{selected_user}/pipelines_config/variables/{variable_uuid}"
+    },
+    "methodName": "updatePipelineVariableForUser",
+    "operationId": "updatePipelineVariableForUser",
+    "method": "PUT",
+    "path": "/users/{selected_user}/pipelines_config/variables/{variable_uuid}",
+    "summary": "Update a variable for a user",
+    "deprecated": true,
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/pipelines-config/variables/{variable_uuid}"
+    },
+    "methodName": "updatePipelineVariableForWorkspace",
+    "operationId": "updatePipelineVariableForWorkspace",
+    "method": "PUT",
+    "path": "/workspaces/{workspace}/pipelines-config/variables/{variable_uuid}",
+    "summary": "Update variable for a workspace",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pullrequest_id}/properties/{app_key}/{property_name}"
+    },
+    "methodName": "updatePullRequestHostedPropertyValue",
+    "operationId": "updatePullRequestHostedPropertyValue",
+    "method": "PUT",
+    "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pullrequest_id}/properties/{app_key}/{property_name}",
+    "summary": "Update a pull request application property",
+    "tags": [
+      "properties"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/build_number"
+    },
+    "methodName": "updateRepositoryBuildNumber",
+    "operationId": "updateRepositoryBuildNumber",
+    "method": "PUT",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/build_number",
+    "summary": "Update the next build number",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/properties/{app_key}/{property_name}"
+    },
+    "methodName": "updateRepositoryHostedPropertyValue",
+    "operationId": "updateRepositoryHostedPropertyValue",
+    "method": "PUT",
+    "path": "/repositories/{workspace}/{repo_slug}/properties/{app_key}/{property_name}",
+    "summary": "Update a repository application property",
+    "tags": [
+      "properties"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines_config"
+    },
+    "methodName": "updateRepositoryPipelineConfig",
+    "operationId": "updateRepositoryPipelineConfig",
+    "method": "PUT",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines_config",
+    "summary": "Update configuration",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/ssh/key_pair"
+    },
+    "methodName": "updateRepositoryPipelineKeyPair",
+    "operationId": "updateRepositoryPipelineKeyPair",
+    "method": "PUT",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/ssh/key_pair",
+    "summary": "Update SSH key pair",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/ssh/known_hosts/{known_host_uuid}"
+    },
+    "methodName": "updateRepositoryPipelineKnownHost",
+    "operationId": "updateRepositoryPipelineKnownHost",
+    "method": "PUT",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/ssh/known_hosts/{known_host_uuid}",
+    "summary": "Update a known host",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/schedules/{schedule_uuid}"
+    },
+    "methodName": "updateRepositoryPipelineSchedule",
+    "operationId": "updateRepositoryPipelineSchedule",
+    "method": "PUT",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/schedules/{schedule_uuid}",
+    "summary": "Update a schedule",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/variables/{variable_uuid}"
+    },
+    "methodName": "updateRepositoryPipelineVariable",
+    "operationId": "updateRepositoryPipelineVariable",
+    "method": "PUT",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/variables/{variable_uuid}",
+    "summary": "Update a variable for a repository",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/repositories/{workspace}/{repo_slug}/pipelines-config/runners/{runner_uuid}"
+    },
+    "methodName": "updateRepositoryRunner",
+    "operationId": "updateRepositoryRunner",
+    "method": "PUT",
+    "path": "/repositories/{workspace}/{repo_slug}/pipelines-config/runners/{runner_uuid}",
+    "summary": "Update repository runner",
+    "tags": [
+      "Pipelines"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/users/{selected_user}/properties/{app_key}/{property_name}"
+    },
+    "methodName": "updateUserHostedPropertyValue",
+    "operationId": "updateUserHostedPropertyValue",
+    "method": "PUT",
+    "path": "/users/{selected_user}/properties/{app_key}/{property_name}",
+    "summary": "Update a user application property",
+    "tags": [
+      "properties"
+    ]
+  },
+  {
+    "source": {
+      "collection": "paths",
+      "path": "/workspaces/{workspace}/pipelines-config/runners/{runner_uuid}"
+    },
+    "methodName": "updateWorkspaceRunner",
+    "operationId": "updateWorkspaceRunner",
+    "method": "PUT",
+    "path": "/workspaces/{workspace}/pipelines-config/runners/{runner_uuid}",
+    "summary": "Update workspace runner",
+    "tags": [
+      "Pipelines"
+    ]
+  }
+]

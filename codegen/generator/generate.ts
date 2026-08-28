@@ -1,3 +1,5 @@
+import { generatedComment } from "../notices.ts";
+import { workspace, type WorkspacePaths } from "../workspace.ts";
 import { allocateNames, compareText, renderJsDoc, toIdentifier } from "./naming.ts";
 import {
   asBoolean,
@@ -16,12 +18,6 @@ import {
 import { SchemaRenderer, union } from "./schema.ts";
 import { apiSpecProviders } from "../specs/sources.ts";
 import { rawResultDirectories } from "../results.ts";
-
-const defaultNormalizedSpecsDirectory = new URL("../specs/normalized/", import.meta.url);
-const defaultSpecManifestFile = new URL("../specs/raw/manifest.json", import.meta.url);
-const defaultGeneratedClientsDirectory = new URL("../../src/generated/", import.meta.url);
-const denoConfiguration = new URL("../../deno.json", import.meta.url);
-const defaultPublicNamesFile = new URL("./public-names.json", import.meta.url);
 
 const providerNames: Readonly<Record<string, ProviderNames>> = Object.fromEntries(
   Object.entries(apiSpecProviders).map(([provider, source]) => [provider, source.client]),
@@ -106,6 +102,7 @@ type RenderedOperation = OperationModel & {
 };
 
 export type ClientOperationDescriptor = {
+  source: { collection: "paths" | "x-ms-paths"; path: string };
   methodName: string;
   operationId: string;
   method: Uppercase<OpenApiHttpMethod>;
@@ -117,6 +114,7 @@ export type ClientOperationDescriptor = {
 };
 
 export type RestClientGenerationOptions = {
+  workspace?: WorkspacePaths;
   /** Compare rendered output with the destination without writing. */
   check?: boolean;
   generatedClientsDirectory?: URL;
@@ -160,12 +158,16 @@ type RestClientSpecManifest = {
 export async function generateRestClients(
   options: RestClientGenerationOptions = {},
 ): Promise<void> {
+  const paths = options.workspace ?? workspace;
+  const denoConfiguration = new URL("deno.json", paths.root);
   const normalizedSpecsDirectory = options.normalizedSpecsDirectory ??
-    defaultNormalizedSpecsDirectory;
+    new URL("specs/normalized/", paths.codegen);
   const generatedClientsDirectory = options.generatedClientsDirectory ??
-    defaultGeneratedClientsDirectory;
-  const publicNamesFile = options.publicNamesFile ?? defaultPublicNamesFile;
-  const specManifestFile = options.specManifestFile ?? defaultSpecManifestFile;
+    new URL("src/generated/", paths.packages.pangit);
+  const publicNamesFile = options.publicNamesFile ??
+    new URL("generator/public-names.json", paths.codegen);
+  const specManifestFile = options.specManifestFile ??
+    new URL("specs/raw/manifest.json", paths.codegen);
   if (options.check && options.updatePublicNames) {
     throw new Error("Public-name update cannot run in check mode");
   }
@@ -212,12 +214,13 @@ export async function generateRestClients(
   };
   if (!options.updatePublicNames) assertPublicNamesCurrent(lockedNames, capturedNames);
 
-  const formatted = await formatGeneratedSources(rendered);
+  const formatted = await formatGeneratedSources(rendered, denoConfiguration);
   if (options.check) {
-    await validateGeneratedSources(generatedClientsDirectory, formatted);
+    await validateGeneratedSources(generatedClientsDirectory, formatted, denoConfiguration);
     await assertGeneratedSourcesCurrent(generatedClientsDirectory, formatted);
   } else {
     await replaceGeneratedDirectory(generatedClientsDirectory, formatted, {
+      validate: (stage) => typeCheckGeneratedDirectory(stage, denoConfiguration),
       manifest: options.updatePublicNames
         ? {
           file: publicNamesFile,
@@ -225,19 +228,6 @@ export async function generateRestClients(
         }
         : undefined,
     });
-  }
-
-  for (const provider of providers) {
-    for (
-      const version of Object.keys(manifest.providers[provider].versions).toSorted(compareText)
-    ) {
-      console.log(JSON.stringify({
-        provider,
-        version,
-        destination: manifest.providers[provider].versions[version].artifacts.client,
-        mode: options.check ? "checked" : "written",
-      }));
-    }
   }
 }
 
@@ -256,10 +246,22 @@ export function assertExpectedProviderSet(
 }
 
 /** Describe the exact public methods emitted for an OpenAPI document. */
-export function describeClientOperations(document: OpenApiDocument): ClientOperationDescriptor[] {
+export function describeClientOperations(
+  document: OpenApiDocument,
+  lockedNames?: ProviderPublicNames,
+): ClientOperationDescriptor[] {
   const operations = collectOperations(document);
-  const names = allocateOperationNames(operations);
+  const names = allocateOperationNames(
+    operations,
+    new Map(Object.entries(lockedNames?.methods ?? {})),
+  );
   return operations.map((operation) => ({
+    source: {
+      collection: operation.key.startsWith("x-ms-paths:")
+        ? "x-ms-paths" as const
+        : "paths" as const,
+      path: operation.key.slice(operation.key.indexOf(":", operation.key.indexOf(":") + 1) + 1),
+    },
     methodName: requiredName(names, operation.key),
     operationId: operation.operationId,
     method: operation.method,
@@ -329,6 +331,8 @@ export function renderProviderClient(
   const operationsName = `${names.variablePrefix}Operations`;
   const securitySchemesName = `${names.variablePrefix}SecuritySchemes`;
   const serversName = `${names.variablePrefix}Servers`;
+  const serverDefinitionsName = `${names.variablePrefix}ServerDefinitions`;
+  const securityDefinitionsName = `${names.variablePrefix}SecuritySchemeDefinitions`;
   const topLevelReserved = new Set([
     "AnyRestResponse",
     "Array",
@@ -393,6 +397,8 @@ export function renderProviderClient(
     operationsName,
     securitySchemesName,
     serversName,
+    serverDefinitionsName,
+    securityDefinitionsName,
   ]);
   const schemas = componentSchemas(document);
   const symbolRequests = [
@@ -440,7 +446,6 @@ export function renderProviderClient(
       infoVersion ? ` ${infoVersion}` : ""
     }.`,
     infoDescription,
-    "This file is generated. Edit the OpenAPI normalizer or generator instead.",
   ]);
   const rootServers = Array.isArray(document.servers)
     ? document.servers.flatMap((server) => {
@@ -491,7 +496,7 @@ export function renderProviderClient(
     ? "  type RestHttpStatus,\n  type RestSuccessfulStatus,\n"
     : "";
 
-  return `${header}
+  return `${generatedComment("//")}${header}
 
 import {
 ${binaryImport}${int64Import}${jsonNumberImport}${jsonValueImport}${requestValueImport}${statusImports}  type RestBody,
@@ -505,12 +510,12 @@ ${binaryImport}${int64Import}${jsonNumberImport}${jsonValueImport}${requestValue
   deepFreezeRestMetadata,
 } from ${JSON.stringify(options.restModulePath ?? "../rest.ts")};
 
-export const ${serversName} = deepFreezeRestMetadata(${JSON.stringify(rootServers)} as const);
+const ${serverDefinitionsName} = ${JSON.stringify(rootServers)} as const;
+export const ${serversName}: typeof ${serverDefinitionsName} = deepFreezeRestMetadata(${serverDefinitionsName});
 
+const ${securityDefinitionsName} = ${JSON.stringify(securitySchemes)} as const;
 /** Provider-native OpenAPI security schemes retained as immutable metadata. */
-export const ${securitySchemesName} = deepFreezeRestMetadata(${
-    JSON.stringify(securitySchemes)
-  } as const);
+export const ${securitySchemesName}: typeof ${securityDefinitionsName} = deepFreezeRestMetadata(${securityDefinitionsName});
 
 ${componentDeclarations}
 
@@ -1360,7 +1365,9 @@ function renderGeneratedModule(manifest: RestClientSpecManifest): string {
     return `  ${JSON.stringify(provider)}: {\n${entries.join("\n")}\n  },`;
   });
 
-  return `/** Generated, strongly typed lazy loader for provider REST client versions. */
+  return `${
+    generatedComment("//")
+  }/** Strongly typed lazy loader for provider REST client versions. */
 import type { RestClient, RestClientOptions } from "../rest.ts";
 
 export const restClientVersions = ${JSON.stringify(versions)} as const;
@@ -1563,7 +1570,7 @@ function assertPublicNamesCurrent(
 ): void {
   if (JSON.stringify(expected) === JSON.stringify(actual)) return;
   throw new Error(
-    "Generated public names differ from codegen/generator/public-names.json; review the API change, then use codegen/generator/generate.ts --update-public-names",
+    "Generated public names differ from codegen/generator/public-names.json; review the API change, then use deno task generate --update-public-names",
   );
 }
 
@@ -1575,6 +1582,7 @@ function sortRecord<T>(value: Readonly<Record<string, T>>): Record<string, T> {
 
 async function formatGeneratedSources(
   sources: ReadonlyMap<string, string>,
+  denoConfiguration: URL,
 ): Promise<ReadonlyMap<string, string>> {
   const formatted = new Map<string, string>();
   for (
@@ -1755,6 +1763,7 @@ export async function replaceGeneratedDirectory(
 async function validateGeneratedSources(
   directory: URL,
   sources: ReadonlyMap<string, string>,
+  denoConfiguration: URL,
 ): Promise<void> {
   const parent = new URL("../", directory);
   const stage = new URL(`.generated-validation-${crypto.randomUUID()}/`, parent);
@@ -1765,13 +1774,16 @@ async function validateGeneratedSources(
       await Deno.mkdir(new URL("./", destination), { recursive: true });
       await Deno.writeTextFile(destination, source, { createNew: true });
     }
-    await typeCheckGeneratedDirectory(stage);
+    await typeCheckGeneratedDirectory(stage, denoConfiguration);
   } finally {
     if (await pathExists(stage)) await Deno.remove(stage, { recursive: true });
   }
 }
 
-async function typeCheckGeneratedDirectory(directory: URL): Promise<void> {
+async function typeCheckGeneratedDirectory(
+  directory: URL,
+  denoConfiguration = new URL("deno.json", workspace.root),
+): Promise<void> {
   const sourceNames = await generatedSourceNames(directory);
   const output = await new Deno.Command(Deno.execPath(), {
     args: [
@@ -1834,17 +1846,4 @@ async function pathExists(path: URL): Promise<boolean> {
     if (error instanceof Deno.errors.NotFound) return false;
     throw error;
   }
-}
-
-if (import.meta.main) {
-  const unknownArguments = Deno.args.filter((argument) =>
-    argument !== "--check" && argument !== "--update-public-names"
-  );
-  if (unknownArguments.length > 0) {
-    throw new Error(`Unknown generator arguments: ${unknownArguments.join(", ")}`);
-  }
-  await generateRestClients({
-    check: Deno.args.includes("--check"),
-    updatePublicNames: Deno.args.includes("--update-public-names"),
-  });
 }
