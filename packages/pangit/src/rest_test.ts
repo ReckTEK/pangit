@@ -12,6 +12,7 @@ import {
   type RestMethod,
   type RestOperation,
   RestParseError,
+  type RestRequestContext,
   type RestRequestOperation,
   type RestRequestOptions,
   type RestRequestValue,
@@ -693,6 +694,61 @@ Deno.test("RestClient applies configured headers from the final request origin",
         assertEquals(providerContexts[0], `${baseOrigin}/from-upload`);
       }
     }
+  }
+});
+
+Deno.test("RestClient shares hook and default-header ordering across generated and raw requests", async () => {
+  const fixture: RestOperation = {
+    id: "fixtures/hook-order",
+    method: "GET",
+    path: "/before",
+    responses: [{ status: 204, mediaTypes: [] }],
+  };
+
+  for (const mode of ["generated", "raw"] as const) {
+    const phases: string[] = [];
+    const controller = new AbortController();
+    let finalContext: RestRequestContext | undefined;
+    const client = new RestClient({
+      baseUrl: "https://example.test",
+      beforeRequest: (request, requestOperation, context) => {
+        phases.push("beforeRequest");
+        assertEquals(requestOperation.id, mode === "raw" ? "raw:GET" : fixture.id);
+        assertEquals(context.url, "https://example.test/before");
+        assertEquals(context.signal, controller.signal);
+        assertEquals(request.headers.get("x-default"), null);
+        const headers = new Headers(request.headers);
+        headers.set("x-priority", "hook");
+        return new Request("https://example.test/after", { headers, signal: request.signal });
+      },
+      headers: (_operation, context) => {
+        phases.push("headers");
+        finalContext = context;
+        assertEquals(context.url, "https://example.test/after");
+        return { "x-default": "configured", "x-priority": "configured" };
+      },
+      fetch: (input) => {
+        phases.push("fetch");
+        assert(input instanceof Request, "transport must receive the final Request");
+        assertEquals(input.headers.get("x-default"), "configured");
+        assertEquals(input.headers.get("x-priority"), "hook");
+        assertEquals(input.signal, finalContext?.signal);
+        return Promise.resolve(new Response(null, { status: 204 }));
+      },
+      afterResponse: (response, request, _operation, context) => {
+        phases.push("afterResponse");
+        assertEquals(context, finalContext);
+        assertEquals(request.url, context.url);
+        return response;
+      },
+    });
+
+    if (mode === "generated") {
+      await client.request(fixture, {}, { signal: controller.signal });
+    } else {
+      await client.fetch("/before", { signal: controller.signal });
+    }
+    assertEquals(phases.join(","), "beforeRequest,headers,fetch,afterResponse");
   }
 });
 

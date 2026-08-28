@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import { siteConfig } from "../../site.config.ts";
 import { CodeSnippet } from "../components/code-snippet.tsx";
+import { ProviderVersionLinks } from "../components/provider-version-links.tsx";
 import { documentation } from "../lib.ts";
 import { siteUrls } from "../urls.ts";
 
@@ -102,18 +103,7 @@ export default function Home() {
                   </Link>
                 </th>
                 <td className="py-3">
-                  <div className="flex flex-wrap gap-2">
-                    {provider.versions.map((version) => (
-                      <Link
-                        key={version.version}
-                        to={siteUrls.reference(provider.id, version.version)}
-                        className="version-link"
-                        aria-label={`${provider.name} ${version.version} API reference`}
-                      >
-                        {version.version}
-                      </Link>
-                    ))}
-                  </div>
+                  <ProviderVersionLinks provider={provider} variant="table" />
                 </td>
               </tr>
             ))}

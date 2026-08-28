@@ -1,0 +1,109 @@
+/** Lossless JSON wire encoding, including exact unsafe integers and precision checks. */
+import type { RestJsonNumber } from "./contracts.ts";
+
+const REST_JSON_MAX_INTEGER_DIGITS = 10_000;
+
+export function stringifyJson(value: unknown): string {
+  let root = true;
+  const serialized = JSON.stringify(value, (_key, item) => {
+    const isRoot = root;
+    root = false;
+    if (item === undefined && isRoot) {
+      throw new TypeError("Top-level JSON request value cannot be undefined");
+    }
+    if (typeof item === "function" || typeof item === "symbol") {
+      throw new TypeError(`JSON request values cannot contain ${typeof item}`);
+    }
+    if (typeof item === "bigint") return exactJson.rawJSON(item.toString());
+    if (typeof item === "number" && !Number.isFinite(item)) {
+      throw new RangeError(`JSON request numbers must be finite: ${String(item)}`);
+    }
+    if (typeof item === "number" && Number.isInteger(item) && !Number.isSafeInteger(item)) {
+      throw new RangeError("Unsafe integer JSON request values must be passed as bigint");
+    }
+    return item;
+  });
+  if (serialized === undefined) {
+    throw new TypeError("Top-level JSON request value cannot be undefined");
+  }
+  return serialized;
+}
+
+export function parseJson(text: string): unknown {
+  return exactJson.parse(
+    text,
+    (_key: string, value: unknown, context: { readonly source: string }) => {
+      return typeof value === "number" ? parseJsonNumberToken(context.source, value) : value;
+    },
+  );
+}
+
+type NormalizedJsonNumber = {
+  coefficient: string;
+  exponent: number;
+  negative: boolean;
+};
+
+function parseJsonNumberToken(source: string, value: number): RestJsonNumber {
+  const exact = normalizeJsonNumber(source);
+  if (exact.coefficient === "0") return value;
+  if (exact.exponent >= 0) {
+    if (
+      exact.coefficient.length > REST_JSON_MAX_INTEGER_DIGITS ||
+      exact.exponent > REST_JSON_MAX_INTEGER_DIGITS - exact.coefficient.length
+    ) {
+      throw new RangeError(
+        `JSON response integer exceeds the ${REST_JSON_MAX_INTEGER_DIGITS}-digit safety limit: ${source}`,
+      );
+    }
+    const integer = BigInt(
+      `${exact.negative ? "-" : ""}${exact.coefficient}${"0".repeat(exact.exponent)}`,
+    );
+    return integer >= -9007199254740991n && integer <= 9007199254740991n
+      ? Number(integer)
+      : integer;
+  }
+
+  if (!Number.isFinite(value)) {
+    throw new RangeError(`JSON response number exceeds the supported finite range: ${source}`);
+  }
+  const runtime = normalizeJsonNumber(value.toString());
+  if (
+    exact.negative !== runtime.negative || exact.coefficient !== runtime.coefficient ||
+    exact.exponent !== runtime.exponent
+  ) {
+    throw new RangeError(`JSON response number loses precision: ${source}`);
+  }
+  return value;
+}
+
+function normalizeJsonNumber(source: string): NormalizedJsonNumber {
+  const match = /^(-?)(0|[1-9]\d*)(?:\.(\d+))?(?:[eE]([+-]?\d+))?$/.exec(source);
+  if (match === null) throw new SyntaxError(`Invalid JSON number token: ${source}`);
+  const fraction = match[3] ?? "";
+  let coefficient = `${match[2]}${fraction}`.replace(/^0+/, "");
+  if (coefficient === "") return { coefficient: "0", exponent: 0, negative: false };
+
+  const explicitExponent = Number(match[4] ?? "0");
+  if (!Number.isSafeInteger(explicitExponent)) {
+    throw new RangeError(`JSON response exponent is too large to preserve exactly: ${source}`);
+  }
+  let exponent = explicitExponent - fraction.length;
+  const trailingZeroCount = /0+$/.exec(coefficient)?.[0].length ?? 0;
+  if (trailingZeroCount > 0) {
+    coefficient = coefficient.slice(0, -trailingZeroCount);
+    exponent += trailingZeroCount;
+  }
+  if (!Number.isSafeInteger(exponent)) {
+    throw new RangeError(`JSON response exponent is too large to preserve exactly: ${source}`);
+  }
+  return { coefficient, exponent, negative: match[1] === "-" };
+}
+
+const exactJson = JSON as typeof JSON & {
+  rawJSON(source: string): unknown;
+  parse(
+    text: string,
+    reviver: (key: string, value: unknown, context: { readonly source: string }) => unknown,
+  ): unknown;
+};

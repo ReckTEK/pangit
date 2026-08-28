@@ -1,0 +1,299 @@
+/** Provider-native response matching, decoding, and typed success/error results. */
+import type {
+  AnyRestResponse,
+  RestGeneratedDecodeMode,
+  RestOperation,
+  RestOperationResponse,
+  RestParseMode,
+  RestUndocumentedResponse,
+} from "./contracts.ts";
+import {
+  bindResponseStream,
+  bindResponseToSignal,
+  readResponseBytes,
+  throwIfAborted,
+} from "./lifecycle.ts";
+import { parseJson } from "./lossless-json.ts";
+import { isJson, mediaTypeEssence } from "./media-type.ts";
+
+/** An HTTP error containing both the native Response and parsed generated response. */
+export class RestApiError<TResponse extends AnyRestResponse = AnyRestResponse> extends Error {
+  readonly result: TResponse;
+
+  constructor(result: TResponse) {
+    super(`${result.operation.id} failed with HTTP ${result.status}`);
+    this.name = "RestApiError";
+    this.result = result;
+  }
+}
+
+/** A successful response that cannot be represented by the generated response contract. */
+export class RestUndocumentedResponseError<
+  TResponse extends RestUndocumentedResponse = RestUndocumentedResponse,
+> extends Error {
+  readonly result: TResponse;
+
+  constructor(result: TResponse) {
+    super(`${result.operation.id} returned undocumented HTTP ${result.status}`);
+    this.name = "RestUndocumentedResponseError";
+    this.result = result;
+  }
+}
+
+/** A response whose bytes could not be decoded using the selected response decoder. */
+export class RestParseError extends Error {
+  readonly operation: RestOperation;
+  readonly response: Response;
+  readonly mediaType: string | undefined;
+  readonly decodeAs: RestGeneratedDecodeMode | Exclude<RestParseMode, "auto">;
+
+  constructor(
+    operation: RestOperation,
+    response: Response,
+    mediaType: string | undefined,
+    decodeAs: RestGeneratedDecodeMode | Exclude<RestParseMode, "auto">,
+    cause: unknown,
+  ) {
+    super(`${operation.id} could not decode HTTP ${response.status} response as ${decodeAs}`, {
+      cause,
+    });
+    this.name = "RestParseError";
+    this.operation = operation;
+    this.response = response;
+    this.mediaType = mediaType;
+    this.decodeAs = decodeAs;
+  }
+}
+
+/** Match native status/media metadata and decode the complete typed response envelope. */
+export async function decodeRestResponse<TResponse extends AnyRestResponse>(
+  operation: RestOperation,
+  response: Response,
+  parseAs: RestParseMode,
+  throwOnError: boolean,
+  signal: AbortSignal | undefined,
+): Promise<TResponse> {
+  if (parseAs === "response" || parseAs === "none") {
+    response = bindResponseToSignal(response, signal);
+  }
+
+  const noContent = operation.method === "HEAD" || response.status === 204 ||
+    response.status === 205;
+  const actualMediaType = noContent ? undefined : responseMediaType(response);
+  let match = matchDocumentedResponse(operation, response.status, actualMediaType);
+  const decodeAs = noContent
+    ? "none"
+    : parseAs === "auto"
+    ? match.decodeAs ?? inferResponseDecodeMode(actualMediaType)
+    : parseAs;
+  let parsedBody: unknown;
+  try {
+    if (
+      !noContent && parseAs === "auto" && match.documented && decodeAs === "none" &&
+      response.body !== null
+    ) {
+      const bytes = await readResponseBytes(response.body, signal);
+      if (bytes.byteLength === 0) {
+        parsedBody = undefined;
+      } else {
+        match = { documented: false };
+        parsedBody = new TextDecoder().decode(bytes);
+      }
+    } else {
+      parsedBody = await parseResponseBody(response, decodeAs, signal);
+    }
+  } catch (cause) {
+    throwIfAborted(signal);
+    throw new RestParseError(
+      operation,
+      response,
+      match.mediaType ?? actualMediaType,
+      decodeAs,
+      cause,
+    );
+  }
+  const result = {
+    documented: match.documented,
+    ok: response.ok,
+    status: response.status,
+    mediaType: match.documented ? match.mediaType : actualMediaType,
+    body: parsedBody,
+    headerValues: responseHeaderValues(
+      response.headers,
+      match.documented ? match.headerNames ?? [] : undefined,
+    ),
+    headers: response.headers,
+    response,
+    operation,
+  } as TResponse;
+
+  if (throwOnError && !response.ok) {
+    throw new RestApiError(result);
+  }
+  return result;
+}
+
+/** Narrow a generated response union to successful responses. */
+export function isRestSuccess<TResponse extends AnyRestResponse>(
+  result: TResponse,
+): result is TResponse & { ok: true } {
+  return result.ok;
+}
+
+/** Documented successful members of a generated response union. */
+export type RestDocumentedSuccess<TResponse extends AnyRestResponse> = TResponse extends
+  { documented: true; ok: infer TOk extends boolean }
+  ? true extends TOk ? TResponse & { ok: true } : never
+  : never;
+
+/** Narrow a generated response union to a documented successful response. */
+export function isRestDocumentedSuccess<TResponse extends AnyRestResponse>(
+  result: TResponse,
+): result is RestDocumentedSuccess<TResponse> {
+  return result.documented && result.ok;
+}
+
+export type RestDocumentedSuccessBody<TResponse extends AnyRestResponse> =
+  RestDocumentedSuccess<TResponse> extends infer TSuccess
+    ? TSuccess extends { body: infer TBody } ? TBody : never
+    : never;
+
+/** Return a documented successful response body or throw a typed response error. */
+export function unwrapRestResponse<TResponse extends AnyRestResponse>(
+  result: TResponse,
+): RestDocumentedSuccessBody<TResponse> {
+  if (!result.ok) {
+    throw new RestApiError(result);
+  }
+  if (!result.documented) {
+    throw new RestUndocumentedResponseError(result);
+  }
+  return result.body as RestDocumentedSuccessBody<TResponse>;
+}
+
+export function responseAcceptHeader(operation: RestOperation): string | undefined {
+  const successfulResponses = operation.responses.filter((response) =>
+    typeof response.status === "number" && response.status >= 200 && response.status < 300
+  );
+  const responses = successfulResponses.length === 0 ? operation.responses : successfulResponses;
+  const mediaTypes = new Set(responses.flatMap((response) => response.mediaTypes));
+  return [...mediaTypes].sort(compareMediaTypes).join(", ") || undefined;
+}
+
+function compareMediaTypes(left: string, right: string): number {
+  return mediaTypePriority(left) - mediaTypePriority(right) ||
+    mediaTypeEssence(left).localeCompare(mediaTypeEssence(right)) || left.localeCompare(right);
+}
+
+function mediaTypePriority(mediaType: string): number {
+  const essence = mediaTypeEssence(mediaType);
+  if (essence === "application/json") return 0;
+  if (essence.endsWith("+json") || essence.includes("json")) return 1;
+  if (essence.startsWith("text/")) return 2;
+  return 3;
+}
+
+function responseMediaType(response: Response): string | undefined {
+  const mediaType = response.headers.get("content-type");
+  return mediaType === null ? undefined : mediaTypeEssence(mediaType) || undefined;
+}
+
+async function parseResponseBody(
+  response: Response,
+  mode: RestGeneratedDecodeMode | Exclude<RestParseMode, "auto">,
+  signal: AbortSignal | undefined,
+): Promise<unknown> {
+  if (mode === "none") return undefined;
+  if (mode === "response") return response;
+  if (mode === "stream") return bindResponseStream(response.body, signal);
+  const bytes = await readResponseBytes(response.body, signal);
+  if (mode === "arrayBuffer") return bytes.buffer;
+  if (mode === "bytes") return bytes;
+  if (mode === "binary" || mode === "blob") {
+    return new Blob([bytes], { type: response.headers.get("content-type") ?? "" });
+  }
+  const text = new TextDecoder().decode(bytes);
+  if (mode === "text") return text;
+  if (text === "") throw new SyntaxError("JSON response body is empty");
+  return parseJson(text);
+}
+
+type RestResponseMatch = {
+  documented: boolean;
+  mediaType?: string;
+  decodeAs?: RestGeneratedDecodeMode | "none";
+  headerNames?: readonly string[];
+};
+
+function matchDocumentedResponse(
+  operation: RestOperation,
+  status: number,
+  mediaType: string | undefined,
+): RestResponseMatch {
+  const definition = operation.responses.find((response) => response.status === status) ??
+    operation.responses.find((response) => response.status === "default");
+  if (definition === undefined) {
+    return { documented: false };
+  }
+  if (operation.method === "HEAD" || status === 204 || status === 205) {
+    return { documented: true, decodeAs: "none", headerNames: definition.headers };
+  }
+  if (definition.mediaTypes.length === 0) {
+    return mediaType === undefined
+      ? { documented: true, decodeAs: "none", headerNames: definition.headers }
+      : { documented: false };
+  }
+  if (mediaType === undefined) return { documented: false };
+  const declaredMediaType = definition.mediaTypes.find((candidate) =>
+    mediaTypeEssence(candidate) === mediaType
+  );
+  return declaredMediaType === undefined ? { documented: false } : {
+    documented: true,
+    mediaType: declaredMediaType,
+    decodeAs: responseDecoder(definition, declaredMediaType) ??
+      inferResponseDecodeMode(declaredMediaType),
+    headerNames: definition.headers,
+  };
+}
+
+function responseHeaderValues(
+  headers: Headers,
+  documentedNames: readonly string[] | undefined,
+): Readonly<Record<string, string>> {
+  const values: Record<string, string> = Object.create(null);
+  if (documentedNames === undefined) {
+    headers.forEach((value, name) => {
+      values[name] = value;
+    });
+  } else {
+    for (const name of [...new Set(documentedNames)].sort()) {
+      const value = headers.get(name);
+      if (value !== null) values[name] = value;
+    }
+  }
+  return Object.freeze(values);
+}
+
+function responseDecoder(
+  definition: RestOperationResponse,
+  mediaType: string,
+): RestGeneratedDecodeMode | undefined {
+  const exact = definition.decoders?.[mediaType];
+  if (exact !== undefined) return exact;
+  const normalized = mediaTypeEssence(mediaType);
+  return Object.entries(definition.decoders ?? {}).find(([candidate]) =>
+    mediaTypeEssence(candidate) === normalized
+  )?.[1];
+}
+
+function inferResponseDecodeMode(mediaType: string | undefined): RestGeneratedDecodeMode {
+  if (mediaType !== undefined && isJson(mediaType)) return "json";
+  const essence = mediaType === undefined ? undefined : mediaTypeEssence(mediaType);
+  if (
+    essence === undefined || essence.startsWith("text/") || essence.includes("xml") ||
+    essence.includes("yaml")
+  ) {
+    return "text";
+  }
+  return "binary";
+}

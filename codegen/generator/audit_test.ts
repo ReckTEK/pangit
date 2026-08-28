@@ -371,6 +371,115 @@ Deno.test("audit records exact optional path-group policies without treating esc
   );
 });
 
+Deno.test("audit retains referenced use sites, parameter overrides, and query-selected identities", () => {
+  const document = parseOpenApiDocument(
+    JSON.stringify({
+      openapi: "3.0.3",
+      info: { title: "Reference fixture", version: "1" },
+      security: [{ bearer: [] }],
+      paths: {
+        "/items/{id}": { $ref: "#/components/pathItems/Items" },
+        "/remote": { $ref: "https://schemas.example.test/paths.json" },
+      },
+      "x-ms-paths": {
+        "/items/{id}?mode=full": {
+          get: {
+            operationId: "listFull",
+            parameters: [{ in: "path", name: "id", schema: { type: "string" } }],
+            responses: { "200": { $ref: "#/components/responses/Success" } },
+          },
+        },
+      },
+      components: {
+        pathItems: {
+          Items: {
+            parameters: [{ in: "path", name: "id", allowReserved: true }],
+            get: {
+              operationId: "list",
+              security: [],
+              parameters: [{ in: "path", name: "id", schema: { type: "string" } }],
+              responses: { "200": { $ref: "#/components/responses/Success" } },
+            },
+          },
+        },
+        responses: {
+          Success: {
+            content: { "application/json": { schema: { type: "object" } } },
+            headers: { "x-trace": { $ref: "#/components/headers/Trace" } },
+          },
+        },
+        headers: { Trace: { schema: { type: "string" } } },
+      },
+    }),
+    "reference-fixture",
+  );
+  const audit = auditOpenApiDocument(document);
+  assertEquals(audit.summary.operations, 2);
+  assertEquals(audit.summary.synthesizedPathParameters, 0);
+  assertEquals(audit.summary.allowReservedParameterUses, 0);
+  assertEquals(audit.summary.securityRequirements, 1);
+  assertEquals(audit.summary.responseHeaderUses, 2);
+  assertEquals(audit.summary.externalReferenceUses, 1);
+  assertEquals(
+    audit.responseMedia.map(({ operationId, operationKey, path, pointer }) => ({
+      operationId,
+      operationKey,
+      path,
+      pointer,
+    })),
+    [
+      {
+        operationId: "list",
+        operationKey: "paths:get:/items/{id}",
+        path: "/items/{id}",
+        pointer: "#/paths/~1items~1{id}/get/responses/200/content/application~1json",
+      },
+      {
+        operationId: "listFull",
+        operationKey: "x-ms-paths:get:/items/{id}?mode=full",
+        path: "/items/{id}",
+        pointer: "#/x-ms-paths/~1items~1{id}?mode=full/get/responses/200/content/application~1json",
+      },
+    ],
+  );
+});
+
+Deno.test("audit preserves circular-reference and duplicate-media failures", () => {
+  const operation = {
+    operationId: "list",
+    responses: { "200": { content: { "application/json": { schema: {} } } } },
+  };
+  const fixtures = [
+    {
+      paths: { "/items": { $ref: "#/paths/~1items" } },
+      expected: "Circular local OpenAPI reference: #/paths/~1items",
+    },
+    {
+      paths: { "/items": { get: operation } },
+      "x-ms-paths": { "/items?mode=full": { get: operation } },
+      expected:
+        'Duplicate response media branch key: ["fixture","GET","/items","list",200,"application/json"]',
+    },
+  ];
+  for (const { expected, ...fixture } of fixtures) {
+    const document = parseOpenApiDocument(
+      JSON.stringify({
+        openapi: "3.0.3",
+        info: { title: "Failure fixture", version: "1" },
+        ...fixture,
+      }),
+      "failure-fixture",
+    );
+    let failure: unknown;
+    try {
+      auditOpenApiDocument(document);
+    } catch (error) {
+      failure = error;
+    }
+    assertEquals(failure instanceof Error ? failure.message : failure, expected);
+  }
+});
+
 function compareDiagnostics(
   left: OpenApiDiagnosticEntry,
   right: OpenApiDiagnosticEntry,

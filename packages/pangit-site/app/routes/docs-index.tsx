@@ -1,5 +1,6 @@
 import { ArrowRight, BookOpen, Code2, Terminal } from "lucide-react";
 import { Link } from "react-router";
+import { ProviderVersionLinks } from "../components/provider-version-links.tsx";
 import { documentation, formatCount } from "../lib.ts";
 import { siteConfig } from "../../site.config.ts";
 import { siteUrls } from "../urls.ts";
@@ -55,20 +56,7 @@ export default function DocsIndex() {
                   ? "Pinned specification snapshot"
                   : "Versioned API contracts"}
               </p>
-              <div className="mt-5 flex flex-wrap gap-2">
-                {provider.versions.toReversed().map((version) => (
-                  <Link
-                    key={version.version}
-                    to={siteUrls.reference(provider.id, version.version)}
-                    className={`version-link ${
-                      version.version === provider.selected ? "current" : ""
-                    }`}
-                  >
-                    {version.version}
-                    <ArrowRight size={12} />
-                  </Link>
-                ))}
-              </div>
+              <ProviderVersionLinks provider={provider} variant="card" />
             </div>
           );
         })}

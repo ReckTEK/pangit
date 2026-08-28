@@ -1,8 +1,9 @@
 import type { DocumentationProvider, DocumentationVersion } from "@mannsion/pangit/documentation";
-import { ArrowDownToLine, ArrowUpRight, ChevronDown } from "lucide-react";
+import { ArrowDownToLine, ArrowUpRight } from "lucide-react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router";
 import { documentation, formatCount } from "../lib.ts";
 import { siteUrls } from "../urls.ts";
+import { SelectControl } from "./select-control.tsx";
 
 export function ReferenceHeading(
   { provider, version, compact = false }: {
@@ -21,41 +22,34 @@ export function ReferenceHeading(
     <>
       <div className="mb-9 flex flex-wrap items-center justify-between gap-4">
         <div className="flex flex-wrap gap-3">
-          <label className="select-shell">
-            <span className="sr-only">Provider</span>
-            <select
-              aria-label="Provider"
-              value={provider.id}
-              onChange={(event) => {
-                const next = documentation.providers.find((entry) =>
-                  entry.id === event.target.value
-                )!;
-                navigate(siteUrls.reference(next.id, next.selected, view));
-              }}
-            >
-              {documentation.providers.map((entry) => (
-                <option key={entry.id} value={entry.id}>{entry.name}</option>
-              ))}
-            </select>
-            <ChevronDown size={14} aria-hidden="true" />
-          </label>
-          <label className="select-shell font-mono text-xs">
-            <span className="sr-only">API version</span>
-            <select
-              aria-label="API version"
-              value={version.version}
-              onChange={(event) =>
-                navigate(siteUrls.reference(provider.id, event.target.value, view))}
-            >
-              {provider.versions.toReversed().map((entry) => (
-                <option key={entry.version} value={entry.version}>
-                  {entry.version}
-                  {entry.version === provider.selected ? " · current" : ""}
-                </option>
-              ))}
-            </select>
-            <ChevronDown size={14} aria-hidden="true" />
-          </label>
+          <SelectControl
+            label="Provider"
+            value={provider.id}
+            onChange={(event) => {
+              const next = documentation.providers.find((entry) =>
+                entry.id === event.target.value
+              )!;
+              navigate(siteUrls.reference(next.id, next.selected, view));
+            }}
+          >
+            {documentation.providers.map((entry) => (
+              <option key={entry.id} value={entry.id}>{entry.name}</option>
+            ))}
+          </SelectControl>
+          <SelectControl
+            label="API version"
+            value={version.version}
+            className="font-mono text-xs"
+            onChange={(event) =>
+              navigate(siteUrls.reference(provider.id, event.target.value, view))}
+          >
+            {provider.versions.toReversed().map((entry) => (
+              <option key={entry.version} value={entry.version}>
+                {entry.version}
+                {entry.version === provider.selected ? " · current" : ""}
+              </option>
+            ))}
+          </SelectControl>
         </div>
         <a
           href={siteUrls.spec(provider.id, version.version)}
