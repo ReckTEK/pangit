@@ -5,7 +5,9 @@
 The selected provider and version determine the generated REST implementation used internally.
 
 ```ts
-const pangit = PanGit.createClient("gitea");
+const pangit = PanGit.createClient("gitea", "1.27.2", {
+  baseUrl: "https://git.example.com/api/v1",
+});
 ```
 
 PanGit presents the same common API regardless of that selection.
@@ -31,9 +33,11 @@ context.
 
 ## Authorization
 
-`authorize` is a common operation: it uses the selected provider adapter to run its OAuth protocol,
-obtain a token, and produce an authorized REST client. OAuth routing is handled by one standard
-Fetch callback handler, usable directly from Deno or through any Fetch-based framework.
+`login` begins the selected provider's OAuth hop. A universal `OAuthHandler` registers those
+selected logins, starts one by provider, and accepts the native callback `Request` plus its retained
+transaction. It routes by the callback's `type`, validates state, runs the selected provider
+adapter, and returns the authorized result. Browser, server, and CLI examples use this same API;
+only their short-lived transaction storage differs.
 
 ## Boundary
 

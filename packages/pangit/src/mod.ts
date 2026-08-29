@@ -9,8 +9,17 @@ export type {
   Login,
   LoginOptions,
   MaybePromise,
+  OAuthAuthorization,
+  OAuthAuthorizedClient,
+  OAuthAuthorizedClientFor,
+  OAuthHandler,
+  OAuthLoginRegistry,
+  OAuthLoginStart,
+  OAuthLoginTransaction,
+  OAuthLoginTransactionFor,
   TokenAuthorization,
 } from "./auth/core.ts";
+export type { AuthAdapterNotImplementedError, OAuthCallbackError } from "./auth/errors.ts";
 export type { AuthorizedClient, ClientOptions } from "./client/core.ts";
 export type { SelectedClient } from "./client/mod.ts";
 export type {

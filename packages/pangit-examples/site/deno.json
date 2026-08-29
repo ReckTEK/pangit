@@ -1,0 +1,34 @@
+{
+  "name": "@mannsion/pangit-example-site",
+  "version": "0.1.0",
+  "publish": false,
+  "exports": "./app/root.tsx",
+  "imports": {
+    "@mannsion/pangit": "../../pangit/src/mod.ts"
+  },
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "lib": [
+      "deno.ns",
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "types": [
+      "./app/vite.d.ts"
+    ]
+  },
+  "tasks": {
+    "dev": "deno run -A --conditions=development npm:@react-router/dev@8.3.0 dev",
+    "build": "deno run -A npm:@react-router/dev@8.3.0 build",
+    "start": "NODE_ENV=production deno run --allow-env --allow-net --allow-read=build serve.ts",
+    "check": "deno check app serve.ts react-router.config.ts vite.config.ts",
+    "test": "deno test --permit-no-files app",
+    "lint": "deno lint app *.ts"
+  },
+  "exclude": [
+    "build",
+    ".react-router"
+  ]
+}

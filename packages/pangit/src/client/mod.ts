@@ -1,5 +1,5 @@
-import { createAuth } from "../auth/mod.ts";
-import type { Auth } from "../auth/core.ts";
+import { createAuth, createOAuthHandler } from "../auth/mod.ts";
+import type { Auth, OAuthHandler, OAuthLoginRegistry } from "../auth/core.ts";
 import { type Provider, type ProviderVersion, restClientVersions } from "../generated/mod.ts";
 import type { ClientOptions } from "./core.ts";
 
@@ -25,6 +25,9 @@ export interface PanGit {
     version: TVersion,
     options: ClientOptions,
   ): SelectedClient<TProvider, TVersion>;
+  createOAuthHandler<const TLogins extends OAuthLoginRegistry>(
+    logins: TLogins,
+  ): OAuthHandler<Extract<keyof TLogins, Provider>>;
 }
 
 function createClient<
@@ -50,4 +53,4 @@ function createClient<
 }
 
 /** Public PanGit entry point. */
-export const PanGit: PanGit = Object.freeze({ createClient });
+export const PanGit: PanGit = Object.freeze({ createClient, createOAuthHandler });

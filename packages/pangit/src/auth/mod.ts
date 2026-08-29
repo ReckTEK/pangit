@@ -8,6 +8,8 @@ import type {
   LoginOptions,
   TokenAuthorization,
 } from "./core.ts";
+import { AuthAdapterNotImplementedError } from "./errors.ts";
+import { createLogin } from "./oauth.ts";
 
 export type {
   Auth,
@@ -15,43 +17,16 @@ export type {
   BasicAuthorization,
   Login,
   LoginOptions,
+  OAuthAuthorization,
+  OAuthAuthorizedClient,
+  OAuthHandler,
+  OAuthLoginRegistry,
+  OAuthLoginStart,
+  OAuthLoginTransaction,
   TokenAuthorization,
 } from "./core.ts";
-
-/** The fluent auth surface exists; provider protocol adapters are the next implementation slice. */
-export class AuthAdapterNotImplementedError extends Error {
-  constructor(path: string) {
-    super(`${path} provider adapter is not implemented yet`);
-    this.name = "AuthAdapterNotImplementedError";
-  }
-}
-
-class LoginImpl<
-  TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
-> implements Login<TProvider, TVersion> {
-  readonly options: LoginOptions;
-
-  constructor(
-    readonly provider: TProvider,
-    readonly version: TVersion,
-    options: LoginOptions,
-  ) {
-    this.options = Object.freeze({
-      ...options,
-      callbackUrl: new URL(options.callbackUrl),
-      scopes: options.scopes === undefined ? undefined : Object.freeze([...options.scopes]),
-    });
-  }
-
-  start(): Promise<URL> {
-    return Promise.reject(new AuthAdapterNotImplementedError("OAuth login"));
-  }
-
-  authorize(_callback: Request): Promise<AuthorizedClient<TProvider, TVersion>> {
-    return Promise.reject(new AuthAdapterNotImplementedError("OAuth login"));
-  }
-}
+export { AuthAdapterNotImplementedError, OAuthCallbackError } from "./errors.ts";
+export { createOAuthHandler } from "./oauth.ts";
 
 class BasicAuthorizationImpl<
   TProvider extends Provider,
@@ -160,7 +135,7 @@ class AuthImpl<
   }
 
   login(options: LoginOptions): Login<TProvider, TVersion> {
-    return new LoginImpl(this.#provider, this.#version, options);
+    return createLogin(this.#provider, this.#version, options, this.#options);
   }
 
   basic(): BasicAuthorization<TProvider, TVersion> {

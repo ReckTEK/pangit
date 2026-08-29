@@ -1,0 +1,20 @@
+{
+  "name": "@mannsion/pangit-example-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@deno/vite-plugin": "2.0.3",
+    "@react-router/dev": "8.3.0",
+    "@tailwindcss/vite": "4.3.3",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "react-router": "8.3.0",
+    "tailwindcss": "4.3.3",
+    "vite": "8.2.2"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.5"
+  }
+}

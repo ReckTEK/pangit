@@ -33,6 +33,28 @@ const operation: RestOperation = {
   responses: [{ status: 200, mediaTypes: ["application/json"] }],
 };
 
+Deno.test("RestClient invokes the browser global Fetch with its required receiver", async () => {
+  const originalFetch = globalThis.fetch;
+  let invoked = false;
+  globalThis.fetch = function (input: RequestInfo | URL, _init?: RequestInit) {
+    if (this !== globalThis) throw new TypeError("Illegal invocation");
+    invoked = true;
+    const request = input instanceof Request ? input : new Request(input);
+    return Promise.resolve(Response.json({ url: request.url }));
+  };
+
+  try {
+    const client = new RestClient({ baseUrl: "https://example.test/api/v1" });
+    const response = await client.fetch("/version");
+    assert(invoked, "default Fetch was not invoked");
+    assertEquals(response.status, 200);
+    const body = await response.json();
+    assertEquals(body.url, "https://example.test/api/v1/version");
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 Deno.test("RestClient serializes generated requests with native Fetch types", async () => {
   let captured: Request | undefined;
   const client = new RestClient({

@@ -73,32 +73,48 @@ each provider includes a provider discriminator:
 /auth/callback?type=azure-devops
 ```
 
-All variants route to one callback implementation. The handler reads `type`, selects the matching
-provider adapter, exchanges the returned authorization code, and completes the login flow. OAuth
-state validation remains required to protect and correlate the login attempt; the `type` parameter
-only selects the adapter.
+All variants route through one `OAuthHandler`. The handler reads `type`, selects the matching
+configured login, validates the caller-retained transaction and OAuth state, exchanges the returned
+authorization code, and completes the login flow. The `type` parameter selects the adapter; the
+unpredictable `state` correlates and protects the individual attempt.
+
+```ts
+const gitea = PanGit.createClient("gitea", "1.27.2", {
+  baseUrl: "http://127.0.0.1:3300/api/v1",
+});
+
+const oauth = PanGit.createOAuthHandler({
+  gitea: gitea.auth.login({
+    clientId,
+    callbackUrl: "http://127.0.0.1:5173/auth/callback",
+    scopes: ["read:user"],
+  }),
+});
+
+const { url, transaction } = await oauth.start("gitea");
+// Send the user to `url`, retain `transaction`, then pass the callback Request back:
+const authorized = await oauth.authorize(request, transaction);
+```
+
+The registry and callback request are provider-neutral. Gitea is the first implemented OAuth
+adapter; the remaining providers join the same registry as their adapters are implemented.
 
 ## Runtime-neutral integration
 
-PanGit is a library. It does not run a server and does not own permanent token, cookie, or session
-storage.
+PanGit is a library. It does not run a server and does not own transaction, token, cookie, or
+session storage.
 
 The OAuth implementation is shared; the consuming environment supplies the runtime bridge:
 
-| Environment        | Integration                                                                       |
-| ------------------ | --------------------------------------------------------------------------------- |
-| Browser            | Navigate to the provider login and give the returned callback location to PanGit. |
-| Deno desktop       | Open the system browser and give the returned request to PanGit.                  |
-| Server application | Route the callback request from the application's server to PanGit.               |
+| Environment        | Temporary transaction owner | Integration                                                 |
+| ------------------ | --------------------------- | ----------------------------------------------------------- |
+| Browser            | Browser storage             | Navigate to login; pass the callback URL as a `Request`.    |
+| Deno desktop / CLI | Process memory              | Open a browser; pass the loopback listener's raw `Request`. |
+| Server application | Application cookie/session  | Pass the application's callback route's raw `Request`.      |
 
-For server and desktop integrations, PanGit can expose a standard Fetch-compatible handler shape:
-
-```ts
-((request: Request) => Response | Promise<Response>);
-```
-
-`Deno.serve` accepts this shape directly. Fetch-based runtimes use it directly; frameworks such as
-Hono can pass their raw `Request` and return the resulting `Response`.
+`Deno.serve`, React Router, Hono, and other Fetch-based runtimes can pass their native `Request`
+directly to `oauth.authorize`. PanGit returns the authorization result; the application decides its
+own `Response`.
 
 After authentication, PanGit returns the authorization result to the consuming application. The
 application chooses whether to keep it in memory, store it, create its own cookie/session, or

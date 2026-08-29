@@ -3090,6 +3090,22 @@
       "npm:turndown@7.2.4"
     ],
     "members": {
+      "packages/pangit-examples/site": {
+        "packageJson": {
+          "dependencies": [
+            "npm:@deno/vite-plugin@2.0.3",
+            "npm:@react-router/dev@8.3.0",
+            "npm:@tailwindcss/vite@4.3.3",
+            "npm:@types/react-dom@19.2.5",
+            "npm:@types/react@19.2.18",
+            "npm:react-dom@19.2.8",
+            "npm:react-router@8.3.0",
+            "npm:react@19.2.8",
+            "npm:tailwindcss@4.3.3",
+            "npm:vite@8.2.2"
+          ]
+        }
+      },
       "packages/pangit-site": {
         "packageJson": {
           "dependencies": [

@@ -1,28 +1,29 @@
 # PanGit examples
 
-Start the local authentication sandbox:
+Start or resume the local provider sandbox and example site:
 
 ```sh
-deno task start
+docker compose up --detach --wait
 ```
 
-This starts fresh Gitea and GitLab containers, creates their local users and personal access tokens,
-and runs the unchanged Gitea example against the real Gitea API. The services remain available after
-verification:
+The Compose-hosted site is available at <http://127.0.0.1:5173>. It contains one Gitea login using
+PanGit's shared client and generic request transport.
+
+GitLab remains available in the same provider sandbox but is not part of this minimal login page.
 
 | Provider | URL                      | Username  | Password                 |
 | -------- | ------------------------ | --------- | ------------------------ |
-| Gitea    | <http://localhost:3300>  | `sandbox` | `gitea-sandbox-password` |
+| Gitea    | <http://127.0.0.1:3300>  | `sandbox` | `gitea-sandbox-password` |
 | GitLab   | <http://localhost:38080> | `root`    | `7vQ9!mZ4-Lk2@xR8#pT6`   |
 
-The Gitea token is generated inside the disposable sandbox and verified by the example runner. The
-fixed GitLab token is `glpat-pangit-example-token-000001`. These credentials are only for the local
-sandbox.
+Provider databases, repositories, login sessions, tokens, and the Gitea OAuth application live in
+named volumes and are reused across stop/start cycles. OAuth tokens remain runtime values and are
+not printed or committed.
 
-Remove every sandbox container, network, and volume with:
+Stop the containers without deleting their provider data:
 
 ```sh
-deno task stop
+docker compose down
 ```
 
 Downloaded images remain cached.

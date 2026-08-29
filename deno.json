@@ -2,6 +2,7 @@
   "workspace": [
     "./packages/pangit",
     "./packages/pangit-examples",
+    "./packages/pangit-examples/site",
     "./packages/pangit-site"
   ],
   "nodeModulesDir": "auto",
@@ -26,14 +27,18 @@
       "packages/pangit/docs/test-results",
       "packages/pangit-site/public",
       "packages/pangit-site/.react-router",
-      "packages/pangit-site/build"
+      "packages/pangit-site/build",
+      "packages/pangit-examples/site/.react-router",
+      "packages/pangit-examples/site/build"
     ]
   },
   "exclude": [
     "node_modules",
     "**/.deno",
     "packages/pangit-site/build",
-    "packages/pangit-site/.react-router"
+    "packages/pangit-site/.react-router",
+    "packages/pangit-examples/site/build",
+    "packages/pangit-examples/site/.react-router"
   ],
   "imports": {
     "@std/fmt": "jsr:@std/fmt@1.0.10",

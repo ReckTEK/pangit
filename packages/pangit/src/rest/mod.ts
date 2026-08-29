@@ -113,7 +113,7 @@ export class RestClient {
 
   constructor(options: RestClientOptions) {
     this.#baseUrl = new URL(options.baseUrl);
-    this.#fetch = options.fetch ?? globalThis.fetch;
+    this.#fetch = options.fetch ?? ((input, init) => globalThis.fetch(input, init));
     this.#headers = typeof options.headers === "function"
       ? options.headers
       : options.headers === undefined

@@ -8,19 +8,25 @@ services:
       GITEA__database__PATH: /data/gitea/gitea.db
       GITEA__mailer__ENABLED: "false"
       GITEA__security__INSTALL_LOCK: "true"
-      GITEA__server__DOMAIN: git.example.com
-      GITEA__server__ROOT_URL: https://git.example.com/
+      GITEA__server__DOMAIN: 127.0.0.1
+      GITEA__server__ROOT_URL: http://127.0.0.1:3300/
+      GITEA__server__PUBLIC_URL_DETECTION: never
+      GITEA__cors__ENABLED: "true"
+      GITEA__cors__ALLOW_DOMAIN: http://127.0.0.1:5173
+      GITEA__cors__METHODS: GET,HEAD,POST,PUT,PATCH,DELETE,OPTIONS
+      GITEA__cors__ALLOW_CREDENTIALS: "false"
+      GITEA__cors__HEADERS: Content-Type,Authorization
       GITEA__service__DISABLE_REGISTRATION: "true"
       GITEA__repository__DEFAULT_BRANCH: main
+      GITEA__session__PROVIDER: db
       USER_UID: "1000"
       USER_GID: "1000"
-      GITEA_USERNAME: ${GITEA_USERNAME}
-      GITEA_PASSWORD: ${GITEA_PASSWORD}
-      GITEA_EMAIL: ${GITEA_EMAIL}
-    tmpfs:
-      - /data:exec,mode=0750,uid=1000,gid=1000
+      GITEA_USERNAME: ${GITEA_USERNAME:-sandbox}
+      GITEA_PASSWORD: ${GITEA_PASSWORD:-gitea-sandbox-password}
+      GITEA_EMAIL: ${GITEA_EMAIL:-sandbox@example.invalid}
     volumes:
-      - ./gitea-bootstrap.sh:/sandbox/bootstrap.sh:ro
+      - gitea-data:/data
+      - ./sandbox/gitea-bootstrap.sh:/sandbox/bootstrap.sh:ro
       - auth:/sandbox-auth
     post_start:
       - command: ["chown", "1000:1000", "/sandbox-auth"]
@@ -32,6 +38,7 @@ services:
         - CMD-SHELL
         - >-
             test -f /sandbox-auth/gitea-ready &&
+            test -s /sandbox-auth/gitea-oauth-client-id &&
             wget -qO- --header="Authorization: token $$(cat /sandbox-auth/gitea-token)"
             http://127.0.0.1:3000/api/v1/user | grep -q '"login":"sandbox"'
       interval: 2s
@@ -49,16 +56,16 @@ services:
     environment:
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'http://localhost:38080'
-        gitlab_rails['initial_root_password'] = '${GITLAB_PASSWORD}'
+        gitlab_rails['initial_root_password'] = '${GITLAB_PASSWORD:-7vQ9!mZ4-Lk2@xR8#pT6}'
         gitlab_rails['gitlab_signup_enabled'] = false
         nginx['listen_port'] = 80
         letsencrypt['enable'] = false
         prometheus_monitoring['enable'] = false
-      GITLAB_USERNAME: ${GITLAB_USERNAME}
-      GITLAB_TOKEN: ${GITLAB_TOKEN}
+      GITLAB_USERNAME: ${GITLAB_USERNAME:-root}
+      GITLAB_TOKEN: ${GITLAB_TOKEN:-glpat-pangit-example-token-000001}
     shm_size: 256m
     volumes:
-      - ./gitlab-bootstrap.sh:/sandbox/bootstrap.sh:ro
+      - ./sandbox/gitlab-bootstrap.sh:/sandbox/bootstrap.sh:ro
       - auth:/sandbox-auth
       - gitlab-config:/etc/gitlab
       - gitlab-logs:/var/log/gitlab
@@ -85,7 +92,7 @@ services:
   proxy:
     image: caddy:2.10.2-alpine@sha256:4c6e91c6ed0e2fa03efd5b44747b625fec79bc9cd06ac5235a779726618e530d
     volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./sandbox/Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy-data:/data
       - caddy-config:/config
     networks:
@@ -99,32 +106,44 @@ services:
       retries: 30
     restart: "no"
 
-  example:
-    profiles: [example]
-    image: denoland/deno:alpine-2.9.5@sha256:b49ac52f05c3d8d0da890b6628168e9bfb5721f7bccc00305bb3ad29ed0e40af
-    user: "0:0"
-    working_dir: /workspace/packages/pangit-examples
-    entrypoint: ["deno"]
-    command:
-      - run
-      - --cert=/caddy-data/caddy/pki/authorities/local/root.crt
-      - --allow-read=/workspace,/sandbox-auth,/caddy-data
-      - --allow-net=git.example.com:443
-      - sandbox/verify.ts
+  site:
+    image: denoland/deno:2.9.5@sha256:b429777c3dcff34a6488f365a1537db1640b2d48379b60f5e6206be034472463
+    user: "1000:1000"
+    network_mode: host
+    working_dir: /workspace/packages/pangit-examples/site
+    entrypoint: ["/bin/sh", "/sandbox/site-bootstrap.sh"]
     environment:
       DENO_DIR: /tmp/deno
+      PANGIT_EXAMPLE_COOKIE_SECRET: ${PANGIT_EXAMPLE_COOKIE_SECRET:-pangit-local-example-cookie-secret-v1}
     volumes:
-      - ../../..:/workspace:ro
+      - ../..:/workspace
+      - ./sandbox/site-bootstrap.sh:/sandbox/site-bootstrap.sh:ro
       - auth:/sandbox-auth:ro
-      - caddy-data:/caddy-data:ro
     tmpfs:
-      - /tmp:mode=0700,uid=0,gid=0
+      - /tmp:mode=0700,uid=1000,gid=1000
+    depends_on:
+      gitea:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - deno
+        - eval
+        - >-
+            const response = await fetch("http://127.0.0.1:5173/");
+            if (!response.ok) Deno.exit(1);
+      interval: 2s
+      timeout: 3s
+      retries: 90
+      start_period: 10s
     restart: "no"
+    stop_grace_period: 10s
 
 volumes:
   auth:
   caddy-config:
   caddy-data:
+  gitea-data:
   gitlab-config:
   gitlab-data:
   gitlab-logs:
