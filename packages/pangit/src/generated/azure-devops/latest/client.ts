@@ -18,7 +18,7 @@ import {
   type RestRequestValue,
   type RestResponse,
   type RestUndocumentedResponse,
-} from "../../../rest.ts";
+} from "../../../rest/mod.ts";
 
 const azureDevOpsServerDefinitions = ["https://dev.azure.com"] as const;
 export const azureDevOpsServers: typeof azureDevOpsServerDefinitions = deepFreezeRestMetadata(

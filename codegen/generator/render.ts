@@ -135,7 +135,7 @@ ${conditionalTypeImports}  type RestBody,
   type RestUndocumentedResponse,
   deepFreezeRestOperations,
   deepFreezeRestMetadata,
-} from ${JSON.stringify(options.restModulePath ?? "../rest.ts")};
+} from ${JSON.stringify(options.restModulePath ?? "../rest/mod.ts")};
 
 const ${serverDefinitionsName} = ${JSON.stringify(rootServers)} as const;
 export const ${serversName}: typeof ${serverDefinitionsName} = deepFreezeRestMetadata(${serverDefinitionsName});
@@ -180,7 +180,10 @@ Object.defineProperties(${names.className}, {
 `;
 }
 
-export function renderGeneratedModule(manifest: RestClientSpecManifest): string {
+export function renderGeneratedModule(
+  manifest: RestClientSpecManifest,
+  options: { readonly restModulePath?: string } = {},
+): string {
   const providers = Object.keys(manifest.providers).toSorted(compareText);
   const versions = Object.fromEntries(
     providers.map((provider) => [
@@ -220,13 +223,18 @@ export function renderGeneratedModule(manifest: RestClientSpecManifest): string 
   return `${
     generatedComment("//")
   }/** Strongly typed lazy loader for provider REST client versions. */
-import type { RestClient, RestClientOptions } from "../rest.ts";
+import type { RestClient, RestClientOptions } from ${
+    JSON.stringify(options.restModulePath ?? "../rest/mod.ts")
+  };
 
 export const restClientVersions = ${JSON.stringify(versions)} as const;
 
-export type RestClientProvider = keyof RestClientTypeMap;
-export type RestClientVersion<TProvider extends RestClientProvider> =
+export type Provider = keyof RestClientTypeMap;
+export type ProviderVersion<TProvider extends Provider> =
   keyof RestClientTypeMap[TProvider] & string;
+
+export type RestClientProvider = Provider;
+export type RestClientVersion<TProvider extends RestClientProvider> = ProviderVersion<TProvider>;
 
 export type RestClientTypeMap = {
 ${typeMap.join("\n")}

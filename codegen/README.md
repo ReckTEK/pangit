@@ -15,14 +15,15 @@ upstream inputs. Real provider execution remains a separate `deno task e2e`.
 | Providers, versions, and source URLs   | [specs/providers.json](specs/providers.json), [specs/sources.ts](specs/sources.ts) | Raw-spec manifest and downstream inventories                 |
 | OpenAPI conversion                     | [specs/normalizers](specs/normalizers/mod.ts)                                      | `specs/normalized/`                                          |
 | REST clients and lazy provider loaders | [generator/generate.ts](generator/generate.ts)                                     | `packages/pangit/src/generated/`                             |
-| Documentation and tutorial catalog     | [docs/generate.ts](docs/generate.ts), package-authored guides                      | `packages/pangit/src/documentation/generated/`               |
+| Documentation catalog                  | [docs/generate.ts](docs/generate.ts), normalized provider specifications           | `packages/pangit-site/app/documentation/generated/`          |
 | E2E scenarios and sandboxes            | [tests](tests/generate.ts), [docker/generate.ts](docker/generate.ts)               | Generated client test directories                            |
 | Saved-result publication               | [reports/generate.ts](reports/generate.ts), [readme.ts](readme.ts)                 | Package Markdown reports and the root README results section |
 | Site assets and route types            | [site/assets.ts](site/assets.ts), [site/routes.ts](site/routes.ts)                 | `packages/pangit-site/public/` and `.react-router/`          |
 
 Output paths above are repository-relative. [workspace.ts](workspace.ts) resolves the configured
-package locations. The site's React components, layouts, styles, and configuration are authored in
-`packages/pangit-site/`; only its data/assets and route types are generated.
+package locations. The site's React components, documentation facade, layouts, styles, and
+configuration are authored in `packages/pangit-site/`; its catalog data, public assets, and route
+types are generated there.
 
 ## Follow one client through the generator
 

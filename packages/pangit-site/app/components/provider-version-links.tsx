@@ -1,4 +1,4 @@
-import type { DocumentationProvider } from "@mannsion/pangit/documentation";
+import type { DocumentationProvider } from "../documentation/model.ts";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router";
 import { siteUrls } from "../urls.ts";

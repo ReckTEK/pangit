@@ -1,0 +1,4 @@
+interface:
+  display_name: "REST Client Capability Map"
+  short_description: "Map every REST capability across PanGit providers"
+  default_prompt: "Use $rest-client-capability-map to build the exhaustive two-sheet REST capability comparison, starting with Gitea and accounting for every provider and client version."

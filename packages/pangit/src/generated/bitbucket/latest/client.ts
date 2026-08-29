@@ -20,7 +20,7 @@ import {
   type RestResponse,
   type RestSuccessfulStatus,
   type RestUndocumentedResponse,
-} from "../../../rest.ts";
+} from "../../../rest/mod.ts";
 
 const bitbucketServerDefinitions = ["https://api.bitbucket.org/2.0"] as const;
 export const bitbucketServers: typeof bitbucketServerDefinitions = deepFreezeRestMetadata(

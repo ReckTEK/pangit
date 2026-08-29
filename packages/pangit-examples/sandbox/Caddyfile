@@ -1,0 +1,9 @@
+{
+	admin off
+	auto_https disable_redirects
+}
+
+https://git.example.com {
+	tls internal
+	reverse_proxy gitea:3000
+}

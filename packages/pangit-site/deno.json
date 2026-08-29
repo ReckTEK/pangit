@@ -5,6 +5,7 @@
   "exports": {
     ".": "./app/root.tsx",
     "./config": "./site.config.ts",
+    "./documentation": "./app/documentation/mod.ts",
     "./urls": "./app/urls.ts"
   },
   "compilerOptions": {

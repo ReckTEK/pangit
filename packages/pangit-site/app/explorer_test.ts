@@ -2,7 +2,7 @@ import {
   documentation,
   type DocumentationOperation,
   loadDocumentationOperations,
-} from "@mannsion/pangit/documentation";
+} from "./documentation/mod.ts";
 import { type ExplorerSpec, explorerSpec } from "./explorer.ts";
 import { operationHref, scalarConfiguration } from "./scalar.ts";
 

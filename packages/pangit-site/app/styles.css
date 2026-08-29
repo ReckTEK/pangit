@@ -170,60 +170,6 @@
   }
 }
 
-.guide-content {
-  @apply text-[15px] leading-8;
-}
-.guide-content h1 {
-  @apply mb-7 text-4xl leading-tight font-semibold tracking-[-1.5px] sm:text-5xl;
-}
-.guide-content h2 {
-  @apply mt-12 mb-5 border-t border-line pt-8 text-2xl font-semibold tracking-tight;
-}
-.guide-content h3 {
-  @apply mt-8 mb-3 text-lg font-semibold;
-}
-.guide-content p {
-  @apply my-4 text-muted;
-}
-.guide-content strong {
-  @apply font-semibold text-ink;
-}
-.guide-content a {
-  @apply text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent;
-}
-.guide-content ul {
-  @apply my-4 list-disc space-y-2 pl-6 text-muted;
-}
-.guide-content ol {
-  @apply my-4 list-decimal space-y-2 pl-6 text-muted;
-}
-.guide-content code {
-  @apply rounded px-1.5 py-0.5 font-mono text-[0.84em] text-ink;
-  background: var(--pg-code);
-}
-.guide-content pre {
-  @apply my-6 overflow-x-auto rounded-xl border border-line p-5 text-sm leading-7;
-  background: var(--pg-code);
-}
-.guide-content pre code {
-  @apply bg-transparent p-0;
-}
-.guide-content table {
-  @apply my-5 w-full border-collapse text-left text-sm leading-6;
-}
-.guide-content th {
-  @apply border-b border-line bg-panel p-3 font-semibold;
-}
-.guide-content td {
-  @apply border-b border-line p-3 align-top text-muted;
-}
-.guide-content blockquote {
-  @apply my-6 border-l-2 border-accent pl-5;
-}
-.guide-content hr {
-  @apply my-8 border-line;
-}
-
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

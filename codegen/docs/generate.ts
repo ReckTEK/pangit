@@ -13,27 +13,26 @@ import {
 import { compareText } from "../generator/naming.ts";
 import { type RawSpecManifest, sha256 } from "../specs/fetch.ts";
 import type {
-  DocumentationGuideContent,
   DocumentationManifest,
   DocumentationOperation,
   DocumentationProvider,
-} from "@mannsion/pangit/documentation";
+} from "@mannsion/pangit-site/documentation";
 
-const outputPrefix = "src/documentation/generated/";
+const outputPrefix = "app/documentation/generated/";
 const json = (value: unknown) => `${JSON.stringify(value, null, 2)}\n`;
 
 /** Render all artifacts before touching the existing documentation. No network or timestamps. */
 export async function renderDocumentation(
   paths: WorkspacePaths = workspace,
 ): Promise<Map<string, string>> {
-  const root = paths.packages.pangit;
+  const libraryRoot = paths.packages.pangit;
   const specManifest: RawSpecManifest = JSON.parse(
     await Deno.readTextFile(new URL("specs/raw/manifest.json", paths.codegen)),
   );
   const publicNames: RestClientPublicNamesManifest = JSON.parse(
     await Deno.readTextFile(new URL("generator/public-names.json", paths.codegen)),
   );
-  const config = JSON.parse(await Deno.readTextFile(new URL("deno.json", root)));
+  const config = JSON.parse(await Deno.readTextFile(new URL("deno.json", libraryRoot)));
   if (specManifest.schemaVersion !== 1 || publicNames.version !== 1) {
     throw new Error("Unsupported specification or public-name manifest version");
   }
@@ -125,63 +124,18 @@ export async function renderDocumentation(
     }
     providers.push(entry);
   }
-  const guides = await readGuides(new URL("docs/examples/", root));
-  const guideImports: string[] = [];
-  for (const guide of guides) {
-    const path = `guides/${guide.slug || "examples"}.json`;
-    files.set(path, json(guide));
-    guideImports.push(
-      `  ${JSON.stringify(guide.slug)}: () => import(${
-        JSON.stringify(`./${path}`)
-      }, { with: { type: "json" } }),`,
-    );
-  }
   const manifest: DocumentationManifest = {
     schemaVersion: 1,
     package: { name: config.name, version: config.version },
     providers,
-    guides: guides.map(({ markdown: _markdown, ...guide }) => guide),
   };
   files.set("manifest.json", json(manifest));
   files.set(
     "loaders.ts",
     generatedComment("//") +
-      `export const operationLoaders = {\n${operationImports.join("\n")}\n};\n\n` +
-      `export const guideLoaders = {\n${guideImports.join("\n")}\n};\n`,
+      `export const operationLoaders = {\n${operationImports.join("\n")}\n};\n`,
   );
   return files;
-}
-
-async function readGuides(directory: URL): Promise<DocumentationGuideContent[]> {
-  const sources = await listFiles(directory);
-  const markdown = new Map<string, string>();
-  for (const source of sources.filter((source) => source.endsWith(".md"))) {
-    markdown.set(source, await Deno.readTextFile(new URL(source, directory)));
-  }
-  const index = markdown.get("examples.md");
-  if (!index) {
-    throw new Error("The handwritten tutorial index docs/examples/examples.md is missing");
-  }
-  const order = new Set(["examples.md"]);
-  for (const match of index.matchAll(/\]\(([^)]+\.md)\)/g)) {
-    if (markdown.has(match[1])) order.add(match[1]);
-  }
-  for (const source of markdown.keys()) order.add(source);
-  return [...order].map((source) => {
-    const text = markdown.get(source)!;
-    const title = /^#\s+(.+)$/m.exec(text)?.[1];
-    if (!title) throw new Error(`Missing tutorial heading: ${source}`);
-    const slug = source === "examples.md" ? "" : source.replace(/\.md$/, "");
-    const [, provider, version] = source.split("/");
-    return {
-      slug,
-      title,
-      source,
-      route: `/docs/guides${slug ? `/${slug}` : ""}`,
-      ...(source.startsWith("raw-clients/") ? { provider, version } : {}),
-      markdown: text,
-    };
-  });
 }
 
 async function listFiles(directory: URL, prefix = ""): Promise<string[]> {
@@ -200,9 +154,8 @@ export async function generateDocumentation(
   options: { workspace?: WorkspacePaths; check?: boolean } = {},
 ): Promise<void> {
   const paths = options.workspace ?? workspace;
-  const root = paths.packages.pangit;
   const files = await renderDocumentation(paths);
-  const output = new URL(outputPrefix, root);
+  const output = new URL(outputPrefix, paths.packages.site);
   if (options.check) {
     const actual = await listFiles(output);
     if (actual.length !== files.size) throw new Error("Documentation artifact inventory is stale");

@@ -1,8 +1,7 @@
 # PanGit site development
 
-The site is a Deno 2 workspace package that imports `@mannsion/pangit/documentation` through the
-same JSR specifier a published consumer uses. Deno resolves it to the local workspace package while
-working in this repository. No package publication or separate Node installation is needed.
+The site is a Deno 2 workspace package that owns its generated documentation catalog and facade. The
+published PanGit library contains only library code and does not export this site data.
 
 ## Configuration and snippets
 
@@ -14,16 +13,14 @@ resolver.
 
 [urls.ts](app/urls.ts) derives router patterns and URLs from those settings. Components and asset
 preparation use the same helpers, so changing a route or asset prefix does not require editing JSX.
-Upstream specification URLs come from the generated catalog. Tutorial links come from their Markdown
-sources and are resolved through the site's configured paths.
+Upstream specification URLs come from the generated catalog.
 
 Code snippets live in [app/snippets](app/snippets). Edit the `.ts` or `.sh` file directly, or add a
 file and select its filename in `siteConfig.snippets`. The shared
 [CodeSnippet component](app/components/code-snippet.tsx) uses
 [Vite's raw glob imports](https://vite.dev/guide/features#glob-import) to bundle the files as text
 for SSR and the browser. It never executes snippets or reads source files from the production
-filesystem. The TypeScript snippet is included in `deno task check`; workflow tutorials remain
-handwritten in the library's `docs/examples/` directory.
+filesystem.
 
 ## Editor types
 
@@ -62,29 +59,28 @@ visit. See [Vite dependency optimization](https://vite.dev/config/dep-optimizati
 
 ## Pages and generated content
 
-| Route                                  | Content                                                          |
-| -------------------------------------- | ---------------------------------------------------------------- |
-| `/`                                    | PanGit landing page.                                             |
-| `/docs`                                | Documentation overview and provider catalog.                     |
-| `/docs/raw/:provider/:version`         | Complete interactive OpenAPI reference.                          |
-| `/docs/raw/:provider/:version/methods` | Searchable index of every generated client method.               |
-| `/docs/guides`                         | Handwritten tutorial index, with linked concern-specific guides. |
-| `/docs/unified`                        | Reserved section for the future high-level API.                  |
+| Route                                  | Content                                            |
+| -------------------------------------- | -------------------------------------------------- |
+| `/`                                    | PanGit landing page.                               |
+| `/docs`                                | Documentation overview and provider catalog.       |
+| `/docs/raw/:provider/:version`         | Complete interactive OpenAPI reference.            |
+| `/docs/raw/:provider/:version/methods` | Searchable index of every generated client method. |
+| `/docs/unified`                        | Reserved section for the future high-level API.    |
 
 The root [generation entry point](../../codegen/generate.ts) creates the site's `public/` reference,
-brand, and tutorial assets and React Router route types alongside the library's generated output.
-`dev`, `build`, and checks consume those artifacts; they do not run a separate preparation command.
-Run `deno task generate --cached` after a fresh checkout or changes to specs, tutorials, or asset
-settings. The copied assets and route types are ignored; the tracked reference authority remains in
-`packages/pangit/src/documentation/generated/`. The root `deno.json` workspace list configures
+brand assets and React Router route types alongside the library's generated output. `dev`, `build`,
+and checks consume those artifacts; they do not run a separate preparation command. Run
+`deno task generate --cached` after a fresh checkout or changes to specs or asset settings. The
+copied assets and route types are ignored; the tracked reference authority remains in
+`packages/pangit-site/app/documentation/generated/`. The root `deno.json` workspace list configures
 package locations; the shared [resolver](../../codegen/workspace.ts) supplies them to all
-generators. Provider/version navigation comes from the library's manifest. See
+generators. Provider/version navigation comes from the site-owned manifest. See
 [documentation generation](../pangit/docs/Documentation.md).
 
-Pages, method indexes, and Markdown guides render on the server through React's Web Streams API.
-Scalar and its stylesheet load only on reference pages; the interactive component mounts after
-hydration. Its operation links use PanGit method names; descriptions retain upstream operation IDs,
-and downloaded specifications are unchanged.
+Pages and method indexes render on the server through React's Web Streams API. Scalar and its
+stylesheet load only on reference pages; the interactive component mounts after hydration. Its
+operation links use PanGit method names; descriptions retain upstream operation IDs, and downloaded
+specifications are unchanged.
 
 The integration has three responsibilities:
 
@@ -150,8 +146,8 @@ deno task build
 ```
 
 The tests compare the manifest with every generated client registry, retain byte-identical OpenAPI
-documents and handwritten guides, and exercise explorer adaptation, method links, authorization
-boundaries, themes, and static asset preparation. Docker E2E remains a separate `deno task e2e`.
+documents, and exercise explorer adaptation, method links, authorization boundaries, themes, and
+static asset preparation. Docker E2E remains a separate `deno task e2e`.
 
 ## Upgrading Scalar
 

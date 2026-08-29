@@ -1,8 +1,8 @@
-import { documentation } from "@mannsion/pangit/documentation";
+import { documentation } from "./app/documentation/mod.ts";
 import { siteConfig } from "./site.config.ts";
 import { siteUrls } from "./app/urls.ts";
 
-const libraryRoot = new URL("../", import.meta.resolve("@mannsion/pangit/documentation"));
+const siteRoot = new URL("./", import.meta.url);
 
 Deno.test("prepared references are exact copies of package assets for every provider and version", async () => {
   for (const provider of documentation.providers) {
@@ -13,7 +13,7 @@ Deno.test("prepared references are exact copies of package assets for every prov
           [version.artifacts.operations, siteUrls.operations(provider.id, version.version)],
         ]
       ) {
-        const expected = await Deno.readTextFile(new URL(artifact, libraryRoot));
+        const expected = await Deno.readTextFile(new URL(artifact, siteRoot));
         const actual = await Deno.readTextFile(new URL(`./public${url}`, import.meta.url));
         if (expected !== actual) {
           throw new Error(

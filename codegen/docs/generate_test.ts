@@ -6,13 +6,13 @@ import { generateDocumentation } from "./generate.ts";
 import {
   documentation,
   type DocumentationOperation,
-  loadDocumentationGuide,
   loadDocumentationOperations,
-} from "@mannsion/pangit/documentation";
-import { restClientVersions } from "@mannsion/pangit";
+} from "@mannsion/pangit-site/documentation";
+import { restClientVersions } from "../../packages/pangit/src/generated/mod.ts";
 import { type RawSpecManifest, sha256 } from "../specs/fetch.ts";
 
-const root = workspace.packages.pangit;
+const libraryRoot = workspace.packages.pangit;
+const siteRoot = workspace.packages.site;
 function assert(value: unknown, message: string): asserts value {
   if (!value) throw new Error(message);
 }
@@ -35,7 +35,7 @@ Deno.test("documentation covers every shipped client, exact method allocation, a
     );
     for (const version of provider.versions) {
       const artifact = specs.providers[provider.id].versions[version.version].artifacts;
-      const client = await import(new URL(artifact.client, root).href);
+      const client = await import(new URL(artifact.client, libraryRoot).href);
       const registry = client[`${provider.client.variablePrefix}Operations`] as Record<
         string,
         { id: string; method: string; path: string }
@@ -54,7 +54,7 @@ Deno.test("documentation covers every shipped client, exact method allocation, a
         );
       }
       const normalized = await Deno.readTextFile(new URL(artifact.normalized, workspace.root));
-      const published = await Deno.readTextFile(new URL(version.artifacts.openapi, root));
+      const published = await Deno.readTextFile(new URL(version.artifacts.openapi, siteRoot));
       assert(
         normalized === published,
         "Documentation altered or truncated the provider specification",
@@ -80,15 +80,7 @@ Deno.test("documentation covers every shipped client, exact method allocation, a
   await generateDocumentation({ check: true });
 });
 
-Deno.test("documentation loaders retain handwritten guides and reject unknown or prototype keys", async () => {
-  for (const guide of documentation.guides) {
-    const content = await loadDocumentationGuide(guide.slug);
-    assert(
-      content?.markdown === await Deno.readTextFile(new URL(`docs/examples/${guide.source}`, root)),
-      `Tutorial source changed: ${guide.source}`,
-    );
-  }
-  assert(await loadDocumentationGuide("constructor") === undefined, "Inherited guide key resolved");
+Deno.test("documentation loaders reject unknown client versions", async () => {
   assert(
     await loadDocumentationOperations("gitea", "not-a-version") === undefined,
     "Unknown version resolved",
@@ -108,21 +100,16 @@ Deno.test("relocated workspace generates documentation and site assets determini
     await write("components/sdk/deno.json", { name: "@mannsion/pangit", version: "0.1.0" });
     await write("web/reference/deno.json", { name: "@mannsion/pangit-site" });
     const paths = await readWorkspace(fixture);
-    const library = paths.packages.pangit;
+    const site = paths.packages.site;
     const config = {
       ...siteConfig,
       assets: {
         ...siteConfig.assets,
         openapi: "/schemas",
         brand: { source: "docs/images/", path: "/identity" },
-        examples: { source: "docs/examples/", path: "/tutorials" },
       },
     };
     const urls = createSiteUrls(config);
-    await write(
-      "components/sdk/docs/examples/examples.md",
-      "# Examples\n\nKeep this handwritten.\n",
-    );
     await write("components/sdk/docs/images/logo.svg", "<svg/>");
     await write("codegen/generator/public-names.json", {
       version: 1,
@@ -149,8 +136,8 @@ Deno.test("relocated workspace generates documentation and site assets determini
               artifacts: {
                 normalized: "codegen/specs/normalized/fixture/1.0.json",
                 documentation: {
-                  openapi: "src/documentation/generated/fixture/1.0/openapi.json",
-                  operations: "src/documentation/generated/fixture/1.0/operations.json",
+                  openapi: "app/documentation/generated/fixture/1.0/openapi.json",
+                  operations: "app/documentation/generated/fixture/1.0/operations.json",
                   route: "/docs/raw/fixture/1.0",
                 },
               },
@@ -178,7 +165,7 @@ Deno.test("relocated workspace generates documentation and site assets determini
       },
     });
     await generateDocumentation({ workspace: paths });
-    const manifest = new URL("src/documentation/generated/manifest.json", library);
+    const manifest = new URL("app/documentation/generated/manifest.json", site);
     const previous = await Deno.readTextFile(manifest);
     await generateSiteAssets(paths, config);
     const reference = new URL(`public${urls.spec("fixture", "1.0")}`, paths.packages.site);
@@ -194,14 +181,9 @@ Deno.test("relocated workspace generates documentation and site assets determini
         "<svg/>",
       "Brand path was not configured",
     );
-    assert(
-      await Deno.readTextFile(new URL("public/tutorials/examples.md", paths.packages.site)) ===
-        "# Examples\n\nKeep this handwritten.\n",
-      "Tutorial path was not configured",
-    );
     const operations = JSON.parse(
       await Deno.readTextFile(
-        new URL("src/documentation/generated/fixture/1.0/operations.json", library),
+        new URL("app/documentation/generated/fixture/1.0/operations.json", site),
       ),
     );
     const main = operations.find((operation: DocumentationOperation) =>

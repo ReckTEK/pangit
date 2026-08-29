@@ -1,7 +1,6 @@
-import { loadDocumentationGuide } from "@mannsion/pangit/documentation";
 import { matchRoutes, RouterContextProvider } from "react-router";
 import { siteConfig } from "../site.config.ts";
-import { documentation, findReference, guideLink, readTheme } from "./lib.ts";
+import { documentation, findReference, readTheme } from "./lib.ts";
 import { action as setTheme } from "./routes/theme.ts";
 import { createSiteUrls, isWithinPath, siteUrls } from "./urls.ts";
 
@@ -43,14 +42,12 @@ Deno.test("configured URL changes keep routes, navigation, and downloads aligned
       theme: "/appearance",
       raw: "rest",
       methods: "functions",
-      guides: "tutorials",
       unified: "common",
     },
     assets: {
       ...siteConfig.assets,
       openapi: "/contracts",
       brand: { ...siteConfig.assets.brand, path: "/identity" },
-      examples: { ...siteConfig.assets.examples, path: "/sources" },
     },
   });
   const routes = [
@@ -82,13 +79,6 @@ Deno.test("configured URL changes keep routes, navigation, and downloads aligned
       }
     }
   }
-  for (const guide of documentation.guides) {
-    const match = matchRoutes(routes, urls.guide(guide.slug))?.at(-1);
-    assert(
-      match?.route.id === "guides" && match.params["*"] === guide.slug,
-      "Tutorial route changed",
-    );
-  }
   assert(
     matchRoutes(routes, urls.unified)?.at(-1)?.route.id === "unified",
     "Unified link is detached from its route",
@@ -101,10 +91,6 @@ Deno.test("configured URL changes keep routes, navigation, and downloads aligned
     urls.operations("gitea", "1.27.2") === "/contracts/gitea/1.27.2.operations.json",
     "Method index path ignored configuration",
   );
-  assert(
-    urls.example("workflow/main.ts") === "/sources/workflow/main.ts",
-    "Example source path ignored configuration",
-  );
   assert(urls.logo === `/identity/${siteConfig.assets.logo}`, "Brand path ignored configuration");
   assert(urls.package === "https://packages.example/pangit", "Package link ignored configuration");
   assert(
@@ -114,34 +100,6 @@ Deno.test("configured URL changes keep routes, navigation, and downloads aligned
   assert(!isWithinPath("/manual-other", urls.docs), "Unrelated path treated as documentation");
   assert(isWithinPath("/manual", "/"), "Root path is not supported");
   assert(!isWithinPath("//other.example/manual", "/"), "External link treated as a site path");
-});
-
-Deno.test("all tutorial links navigate between guides or downloadable source files", async () => {
-  let checked = 0;
-  for (const guide of documentation.guides) {
-    const content = await loadDocumentationGuide(guide.slug);
-    assert(content, "Guide missing");
-    for (const [, href] of content.markdown.matchAll(/\]\(([^)]+)\)/g)) {
-      const target = guideLink(guide.source, href);
-      if (isWithinPath(target, siteUrls.docs)) {
-        assert(
-          documentation.guides.some((entry) => siteUrls.guide(entry.slug) === target.split("#")[0]),
-          `Broken guide link: ${target}`,
-        );
-        checked++;
-      } else if (isWithinPath(target, siteConfig.assets.examples.path)) {
-        const file = new URL(`../public${target.split("#")[0]}`, import.meta.url);
-        assert((await Deno.stat(file)).isFile, `Missing downloadable source ${target}`);
-        checked++;
-      }
-    }
-  }
-  assert(checked > documentation.guides.length, "Tutorial chain was not checked");
-  const first = documentation.guides.find((guide) => guide.slug)!;
-  assert(
-    guideLink(first.source, "?download=1#section").endsWith("?download=1#section"),
-    "Markdown navigation discarded a query or fragment",
-  );
 });
 
 Deno.test("theme selection is server-readable, validates input, and cannot redirect off-site", async () => {

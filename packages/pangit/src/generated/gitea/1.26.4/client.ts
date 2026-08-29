@@ -19,7 +19,7 @@ import {
   type RestRequestValue,
   type RestResponse,
   type RestUndocumentedResponse,
-} from "../../../rest.ts";
+} from "../../../rest/mod.ts";
 
 const giteaServerDefinitions = ["/api/v1"] as const;
 export const giteaServers: typeof giteaServerDefinitions = deepFreezeRestMetadata(

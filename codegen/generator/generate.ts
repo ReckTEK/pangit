@@ -91,12 +91,17 @@ export async function generateRestClients(
             ? (names) => capturedProviders[provider] = names
             : undefined,
           lockedNames: lockedNames.providers[provider],
-          restModulePath: "../../../rest.ts",
+          restModulePath: "../../../rest/mod.ts",
         }),
       );
     }
   }
-  rendered.set("mod.ts", renderGeneratedModule(manifest));
+  rendered.set(
+    "mod.ts",
+    renderGeneratedModule(manifest, {
+      restModulePath: "../rest/mod.ts",
+    }),
+  );
   const capturedNames: RestClientPublicNamesManifest = {
     version: 1,
     providers: sortRecord(capturedProviders),

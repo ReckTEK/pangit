@@ -1,20 +1,15 @@
 {
   "name": "@mannsion/pangit",
   "version": "0.1.0",
-  "exports": {
-    ".": "./src/mod.ts",
-    "./rest": "./src/rest.ts",
-    "./documentation": "./src/documentation.ts"
-  },
+  "exports": "./src/mod.ts",
   "tasks": {
     "check": "deno check src",
     "fmt": "deno fmt",
     "lint": "deno lint src",
-    "test": "deno test src/*_test.ts"
+    "test": "deno test src/auth src/client src/rest"
   },
   "fmt": {
     "exclude": [
-      "src/documentation/generated/**",
       "src/generated/**/tests/**",
       "docs/test-results/**"
     ],

@@ -1,6 +1,6 @@
-import type { DocumentationProvider, DocumentationVersion } from "@mannsion/pangit/documentation";
+import type { DocumentationProvider, DocumentationVersion } from "../documentation/model.ts";
 import { ArrowDownToLine, ArrowUpRight } from "lucide-react";
-import { Link, NavLink, useLocation, useNavigate } from "react-router";
+import { NavLink, useLocation, useNavigate } from "react-router";
 import { documentation, formatCount } from "../lib.ts";
 import { siteUrls } from "../urls.ts";
 import { SelectControl } from "./select-control.tsx";
@@ -15,9 +15,6 @@ export function ReferenceHeading(
   const navigate = useNavigate();
   const location = useLocation();
   const view = siteUrls.referenceView(location.pathname);
-  const guide = documentation.guides.find((entry) =>
-    entry.provider === provider.id && entry.version === version.version
-  );
   return (
     <>
       <div className="mb-9 flex flex-wrap items-center justify-between gap-4">
@@ -106,11 +103,6 @@ export function ReferenceHeading(
         >
           Client methods
         </NavLink>
-        {guide && (
-          <Link to={siteUrls.guide(guide.slug)} className="reference-tab">
-            Tutorials ↗
-          </Link>
-        )}
       </nav>
     </>
   );

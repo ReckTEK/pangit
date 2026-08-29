@@ -4,8 +4,10 @@ import {
   renderProviderClient,
   replaceGeneratedDirectory,
 } from "./generate.ts";
+import type { RestClientSpecManifest } from "./client-manifests.ts";
 import { extractExportedTypeAliases } from "./generated_type_oracle.ts";
 import { parseOpenApiDocument } from "./openapi.ts";
+import { renderGeneratedModule } from "./render.ts";
 
 Deno.test("complete provider set is always required", () => {
   assertExpectedProviderSet(expectedRestClientProviders);
@@ -44,6 +46,47 @@ Deno.test("provider rendering is deterministic and emits one registry entry and 
     assertEquals(count(rendered, `\n  ${method}(`), 1);
     assertEquals(count(rendered, `fixtureOperations.${method}, input, options`), 1);
   }
+});
+
+Deno.test("generated module ships raw clients behind literal dynamic imports", () => {
+  const manifest = {
+    schemaVersion: 1,
+    providers: {
+      gitea: {
+        selected: "1.27.2",
+        client: {
+          className: "GiteaRestClient",
+          displayName: "Gitea",
+          namespaceName: "GiteaApi",
+          variablePrefix: "gitea",
+        },
+        versions: {
+          "1.27.2": {
+            destination: "packages/pangit/src/generated/gitea/1.27.2",
+            artifacts: {
+              client: "src/generated/gitea/1.27.2/client.ts",
+              normalized: "codegen/specs/normalized/gitea/1.27.2.json",
+              tests: "src/generated/gitea/1.27.2/tests",
+            },
+          },
+        },
+      },
+    },
+  } satisfies RestClientSpecManifest;
+
+  const source = renderGeneratedModule(manifest, {
+    restModulePath: "../rest/mod.ts",
+  });
+  assert(
+    source.includes('import type { RestClient, RestClientOptions } from "../rest/mod.ts"'),
+    "generated registry must import only transport types",
+  );
+  assert(
+    source.includes('await import("./gitea/1.27.2/client.ts")'),
+    "selected raw client must be loaded through a literal dynamic import",
+  );
+  assertEquals(count(source, 'from "./gitea/1.27.2/client.ts"'), 0);
+  assertEquals(count(source, "import { GiteaRestClient }"), 0);
 });
 
 Deno.test("unsupported parameter and response constructs fail instead of disappearing", () => {

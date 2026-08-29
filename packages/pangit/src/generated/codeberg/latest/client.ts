@@ -19,7 +19,7 @@ import {
   type RestRequestValue,
   type RestResponse,
   type RestUndocumentedResponse,
-} from "../../../rest.ts";
+} from "../../../rest/mod.ts";
 
 const codebergServerDefinitions = ["/api/v1"] as const;
 export const codebergServers: typeof codebergServerDefinitions = deepFreezeRestMetadata(

@@ -1,0 +1,12 @@
+{
+  "name": "@mannsion/pangit-examples",
+  "version": "0.1.0",
+  "exports": "./main.ts",
+  "tasks": {
+    "start": "deno run --allow-run=docker sandbox/run.ts start",
+    "stop": "deno run --allow-run=docker sandbox/run.ts stop",
+    "check": "deno check main.ts sandbox",
+    "test": "deno test main.ts sandbox",
+    "lint": "deno lint main.ts sandbox"
+  }
+}

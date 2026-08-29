@@ -1,8 +1,8 @@
 # Documentation generation
 
-PanGit publishes a documentation catalog alongside its raw clients. The website consumes that
-catalog through `@mannsion/pangit/documentation`; it does not maintain another list of supported
-providers or versions.
+The PanGit website owns a generated documentation catalog for the library's raw clients. It does not
+maintain another handwritten list of supported providers or versions, and the published library does
+not export website data.
 
 ## Sources and artifacts
 
@@ -10,21 +10,20 @@ The source map is [`codegen/specs/providers.json`](../../../codegen/specs/provid
 specs generates [`codegen/specs/raw/manifest.json`](../../../codegen/specs/raw/manifest.json), where
 each version maps its normalized specification, generated client, E2E assets, and documentation
 artifacts. Source, normalized-spec, and test-map paths are relative to the repository root;
-generated client, test, result, and documentation paths are relative to the PanGit package. The
-shared [workspace resolver](../../../codegen/workspace.ts) locates that package through the root
-`deno.json` workspace configuration, without embedding its directory in the manifests.
+generated client, test, and result paths are relative to the PanGit package. Documentation paths are
+relative to the site package. The shared [workspace resolver](../../../codegen/workspace.ts) locates
+both packages through the root `deno.json` workspace configuration.
 
 ```text
 providers.json
   → raw/manifest.json
   → normalized/<provider>/<version>.json
   → src/generated/<provider>/<version>/client.ts
-  → src/documentation/generated/
+  → packages/pangit-site/app/documentation/generated/
       manifest.json
       loaders.ts
       <provider>/<version>/openapi.json
       <provider>/<version>/operations.json
-      guides/...
 ```
 
 The documentation generator reuses the client's operation parser and reviewed public-name map. Each
@@ -51,10 +50,9 @@ Markdown, root README results, site assets, and React Router route types. `--cac
 checked-in raw specifications; omit it to refresh upstream specs first. Neither mode starts Docker
 or runs E2E. Actual E2E execution remains `deno task e2e`.
 
-The documentation stage reuses the client parser, public-name map, and handwritten
-[tutorials](examples/examples.md). It renders everything before replacing its own output tree and
-does not rewrite tutorial Markdown or snippet sources. The subsequent site stage reads the newly
-generated catalog and copies its assets into the site's configured public paths.
+The documentation stage reuses the client parser and public-name map. It renders everything before
+replacing its own output tree. The subsequent site stage reads the newly generated catalog and
+copies its assets into the site's configured public paths.
 
 When adding a provider or version, update the provider source map and regenerate. The new reference
 and navigation entries appear without another provider registration in the site. For a reviewed
@@ -66,23 +64,17 @@ packages at different workspace paths. Invalid documentation input must leave th
 intact. Run generation before checks or builds on a fresh checkout; the site's copied assets and
 route types are ignored build inputs.
 
-## Package API
+## Site catalog API
 
 ```ts
-import {
-  documentation,
-  loadDocumentationGuide,
-  loadDocumentationOperations,
-} from "@mannsion/pangit/documentation";
+import { documentation, loadDocumentationOperations } from "@mannsion/pangit-site/documentation";
 
 const operations = await loadDocumentationOperations("gitea", "1.27.2");
-const tutorialIndex = await loadDocumentationGuide("");
-console.log(documentation.providers, operations, tutorialIndex);
+console.log(documentation.providers, operations);
 ```
 
-Metadata is separate from the main library export. Ordinary REST-client consumers do not import
-documentation payloads. Method indexes and tutorial bodies load lazily; unknown providers, versions,
-or guide slugs return `undefined`.
+This is an internal export of the private site workspace package. `@mannsion/pangit` does not
+publish it. Method indexes load lazily; unknown providers or versions return `undefined`.
 
 ## Browser explorer behavior
 
@@ -103,6 +95,6 @@ Native security schemes are available in the authentication controls; arbitrary 
 the request's Headers tab. Credentials stay in memory for the current reference and are discarded on
 reload or provider/version changes. There is no server request proxy or hosted credential service.
 
-The SSR website serves navigation, method indexes, tutorials, and page metadata as HTML. The
-interactive Scalar explorer loads in the browser. The high-level API has a reserved navigation entry
-but no implementation or unified specification.
+The SSR website serves navigation, method indexes, and page metadata as HTML. The interactive Scalar
+explorer loads in the browser. The high-level API has a reserved navigation entry but no
+implementation or unified specification.

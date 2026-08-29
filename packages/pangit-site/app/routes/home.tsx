@@ -10,7 +10,7 @@ export const meta = () => [
   {
     name: "description",
     content:
-      `${siteConfig.name} package installation, usage examples, and REST API references by provider and version.`,
+      `${siteConfig.name} package installation and REST API references by provider and version.`,
   },
 ];
 
@@ -36,12 +36,6 @@ export default function Home() {
           <h2 id="install-heading" className="text-xl font-semibold">Install</h2>
           <p className="mt-3 text-sm text-muted">Add the package to a Deno project:</p>
           <CodeSnippet file={siteConfig.snippets.install} />
-          <h3 className="mt-7 font-semibold">Usage</h3>
-          <p className="mt-3 text-sm leading-6 text-muted">
-            Select the provider and version, then set your instance’s API URL. This example reads a
-            Gitea server's version.
-          </p>
-          <CodeSnippet file={siteConfig.snippets.usage} />
         </section>
 
         <aside aria-labelledby="documentation-heading">
@@ -62,14 +56,6 @@ export default function Home() {
               <dd className="mt-1.5 leading-6 text-muted">
                 Endpoints, schemas, and client methods.
               </dd>
-            </div>
-            <div>
-              <dt>
-                <Link to={siteUrls.guide()} className="text-accent hover:underline">
-                  Usage examples
-                </Link>
-              </dt>
-              <dd className="mt-1.5 leading-6 text-muted">Gitea setup and workflow tutorials.</dd>
             </div>
           </dl>
         </aside>

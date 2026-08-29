@@ -1,4 +1,4 @@
-import { BookOpen, ChevronRight, Layers3, Library, LockKeyhole } from "lucide-react";
+import { ChevronRight, Layers3, Library, LockKeyhole } from "lucide-react";
 import { Link, NavLink, Outlet, useLocation, useNavigate, useParams } from "react-router";
 import { documentation } from "../lib.ts";
 import { siteConfig } from "../../site.config.ts";
@@ -15,12 +15,6 @@ function Sidebar() {
           className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}
         >
           <Library size={16} />Overview
-        </NavLink>
-        <NavLink
-          to={siteUrls.guide()}
-          className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}
-        >
-          <BookOpen size={16} />Tutorials & examples
         </NavLink>
       </div>
       <div>
@@ -69,7 +63,6 @@ export default function DocsLayout() {
   const location = useLocation();
   const provider = documentation.providers.find((entry) => entry.id === params.provider);
   const unified = isWithinPath(location.pathname, siteUrls.unified);
-  const guides = isWithinPath(location.pathname, siteUrls.guide());
   const explorer = provider && params.version &&
     location.pathname === siteUrls.reference(provider.id, params.version);
   return (
@@ -114,12 +107,6 @@ export default function DocsLayout() {
               <span>{provider.name}</span>
               <ChevronRight size={12} />
               <span className="font-mono text-ink">{params.version}</span>
-            </>
-          )}
-          {guides && (
-            <>
-              <ChevronRight size={12} />
-              <span className="text-ink">Tutorials</span>
             </>
           )}
           <span className="ml-auto hidden font-mono text-[10px] sm:inline">

@@ -1,0 +1,130 @@
+name: pangit-examples
+
+services:
+  gitea:
+    image: docker.gitea.com/gitea:1.27.2@sha256:d20286ca2b2e170fdf628e7231b8a31a3220ade39ff462b55041d43d1fc757dd
+    environment:
+      GITEA__database__DB_TYPE: sqlite3
+      GITEA__database__PATH: /data/gitea/gitea.db
+      GITEA__mailer__ENABLED: "false"
+      GITEA__security__INSTALL_LOCK: "true"
+      GITEA__server__DOMAIN: git.example.com
+      GITEA__server__ROOT_URL: https://git.example.com/
+      GITEA__service__DISABLE_REGISTRATION: "true"
+      GITEA__repository__DEFAULT_BRANCH: main
+      USER_UID: "1000"
+      USER_GID: "1000"
+      GITEA_USERNAME: ${GITEA_USERNAME}
+      GITEA_PASSWORD: ${GITEA_PASSWORD}
+      GITEA_EMAIL: ${GITEA_EMAIL}
+    tmpfs:
+      - /data:exec,mode=0750,uid=1000,gid=1000
+    volumes:
+      - ./gitea-bootstrap.sh:/sandbox/bootstrap.sh:ro
+      - auth:/sandbox-auth
+    post_start:
+      - command: ["chown", "1000:1000", "/sandbox-auth"]
+        user: "0:0"
+      - command: ["/bin/sh", "/sandbox/bootstrap.sh"]
+        user: "1000:1000"
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+            test -f /sandbox-auth/gitea-ready &&
+            wget -qO- --header="Authorization: token $$(cat /sandbox-auth/gitea-token)"
+            http://127.0.0.1:3000/api/v1/user | grep -q '"login":"sandbox"'
+      interval: 2s
+      timeout: 3s
+      retries: 90
+      start_period: 5s
+    ports:
+      - 127.0.0.1:3300:3000
+    restart: "no"
+    stop_grace_period: 10s
+
+  gitlab:
+    image: gitlab/gitlab-ce:19.3.1-ce.0@sha256:f63df4c43029fe91db370609c0b40a1e3585cebd06e3e9637d93a9a3030eb86e
+    hostname: gitlab
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://localhost:38080'
+        gitlab_rails['initial_root_password'] = '${GITLAB_PASSWORD}'
+        gitlab_rails['gitlab_signup_enabled'] = false
+        nginx['listen_port'] = 80
+        letsencrypt['enable'] = false
+        prometheus_monitoring['enable'] = false
+      GITLAB_USERNAME: ${GITLAB_USERNAME}
+      GITLAB_TOKEN: ${GITLAB_TOKEN}
+    shm_size: 256m
+    volumes:
+      - ./gitlab-bootstrap.sh:/sandbox/bootstrap.sh:ro
+      - auth:/sandbox-auth
+      - gitlab-config:/etc/gitlab
+      - gitlab-logs:/var/log/gitlab
+      - gitlab-data:/var/opt/gitlab
+    post_start:
+      - command: ["/bin/sh", "/sandbox/bootstrap.sh"]
+        user: "0:0"
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+            test -f /sandbox-auth/gitlab-ready &&
+            curl --fail --silent --header="PRIVATE-TOKEN: $${GITLAB_TOKEN}"
+            http://127.0.0.1/api/v4/user | grep -q '"username":"root"'
+      interval: 3s
+      timeout: 5s
+      retries: 180
+      start_period: 30s
+    ports:
+      - 127.0.0.1:38080:80
+    restart: "no"
+    stop_grace_period: 30s
+
+  proxy:
+    image: caddy:2.10.2-alpine@sha256:4c6e91c6ed0e2fa03efd5b44747b625fec79bc9cd06ac5235a779726618e530d
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    networks:
+      default:
+        aliases:
+          - git.example.com
+    healthcheck:
+      test: ["CMD-SHELL", "test -f /data/caddy/pki/authorities/local/root.crt"]
+      interval: 1s
+      timeout: 2s
+      retries: 30
+    restart: "no"
+
+  example:
+    profiles: [example]
+    image: denoland/deno:alpine-2.9.5@sha256:b49ac52f05c3d8d0da890b6628168e9bfb5721f7bccc00305bb3ad29ed0e40af
+    user: "0:0"
+    working_dir: /workspace/packages/pangit-examples
+    entrypoint: ["deno"]
+    command:
+      - run
+      - --cert=/caddy-data/caddy/pki/authorities/local/root.crt
+      - --allow-read=/workspace,/sandbox-auth,/caddy-data
+      - --allow-net=git.example.com:443
+      - sandbox/verify.ts
+    environment:
+      DENO_DIR: /tmp/deno
+    volumes:
+      - ../../..:/workspace:ro
+      - auth:/sandbox-auth:ro
+      - caddy-data:/caddy-data:ro
+    tmpfs:
+      - /tmp:mode=0700,uid=0,gid=0
+    restart: "no"
+
+volumes:
+  auth:
+  caddy-config:
+  caddy-data:
+  gitlab-config:
+  gitlab-data:
+  gitlab-logs:

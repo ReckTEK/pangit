@@ -22,6 +22,6 @@ export default defineConfig({
   server: { host: "0.0.0.0" },
   // SSR discovers these after serving HTML; prebundle them before the first hydration request.
   optimizeDeps: {
-    include: ["lucide-react", "react-markdown", "remark-gfm", "@scalar/api-reference-react"],
+    include: ["lucide-react", "@scalar/api-reference-react"],
   },
 });

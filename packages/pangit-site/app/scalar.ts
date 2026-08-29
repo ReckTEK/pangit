@@ -1,6 +1,6 @@
 import type { ApiReferenceConfigurationWithMultipleSources } from "@scalar/api-reference-react";
 import { slugify } from "@scalar/helpers/string/slugify";
-import type { DocumentationOperation } from "@mannsion/pangit/documentation";
+import type { DocumentationOperation } from "./documentation/model.ts";
 import type { ExplorerSpec } from "./explorer.ts";
 import { siteConfig } from "../site.config.ts";
 

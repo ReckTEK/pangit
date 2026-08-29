@@ -1,4 +1,4 @@
-import type { DocumentationOperation } from "@mannsion/pangit/documentation";
+import type { DocumentationOperation } from "./documentation/model.ts";
 
 export interface ExplorerSpec {
   openapi: string;

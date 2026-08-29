@@ -20,7 +20,7 @@ import {
   type RestRequestValue,
   type RestResponse,
   type RestUndocumentedResponse,
-} from "../../../rest.ts";
+} from "../../../rest/mod.ts";
 
 const gitHubServerDefinitions = ["https://api.github.com"] as const;
 export const gitHubServers: typeof gitHubServerDefinitions = deepFreezeRestMetadata(

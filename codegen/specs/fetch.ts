@@ -20,7 +20,7 @@ type FetchedApiSpec = {
   sha256: string;
 };
 
-/** Source/normalized/test-map paths are repository-relative; emitted artifacts are PanGit-package-relative. */
+/** Source paths are repository-relative; client/test artifacts are library-relative and docs are site-relative. */
 export type RawSpecManifest = {
   schemaVersion: 1;
   providers: Record<
@@ -167,8 +167,8 @@ function createRawSpecManifest(fetchedSpecs: FetchedApiSpec[]): RawSpecManifest 
           results: `src/generated/${provider}/${version}/tests/results`,
           compose: `src/generated/${provider}/${version}/tests/compose.yaml`,
           documentation: {
-            openapi: `src/documentation/generated/${provider}/${version}/openapi.json`,
-            operations: `src/documentation/generated/${provider}/${version}/operations.json`,
+            openapi: `app/documentation/generated/${provider}/${version}/openapi.json`,
+            operations: `app/documentation/generated/${provider}/${version}/operations.json`,
             route: `/docs/raw/${provider}/${version}`,
           },
         },

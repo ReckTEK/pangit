@@ -1,4 +1,4 @@
-import { RestClient, type RestClientOptions, type RestOperationInput, type AnyRestResponse } from "../../../../rest.ts";
+import { RestClient, type RestClientOptions, type RestOperationInput, type AnyRestResponse } from "../../../../rest/mod.ts";
 import type { E2EStep, GeneratedE2EManifest } from "./model.ts";
 
 type Client = { rest: RestClient };

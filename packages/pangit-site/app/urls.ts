@@ -14,7 +14,6 @@ function joinPath(base: string, ...parts: string[]): string {
 export function createSiteUrls(config: SiteConfig) {
   const { routes, assets } = config;
   const raw = joinPath(routes.docs, routes.raw);
-  const guides = joinPath(routes.docs, routes.guides);
   const referencePattern = joinPath(routes.raw, ":provider", ":version");
   const reference = (provider: string, version: string, view: ReferenceView = "explorer") =>
     joinPath(
@@ -40,14 +39,11 @@ export function createSiteUrls(config: SiteConfig) {
     logo: joinPath(assets.brand.path, assets.logo),
     reference,
     provider: (provider: string) => joinPath(raw, encodeURIComponent(provider)),
-    guide: (slug = "") => joinPath(guides, slug),
-    example: (source: string) => joinPath(assets.examples.path, source),
     spec: (provider: string, version: string) => artifact(provider, version),
     operations: (provider: string, version: string) => artifact(provider, version, ".operations"),
     patterns: {
       reference: referencePattern,
       methods: joinPath(referencePattern, routes.methods),
-      guides: joinPath(routes.guides, "*"),
       unified: routes.unified,
     },
     referenceView: (pathname: string): ReferenceView =>

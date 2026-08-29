@@ -1,4 +1,4 @@
-import { loadDocumentationOperations } from "@mannsion/pangit/documentation";
+import { loadDocumentationOperations } from "../documentation/mod.ts";
 import { useMemo, useState } from "react";
 import { Link, type LoaderFunctionArgs, useLoaderData } from "react-router";
 import { ArrowUpRight, Search } from "lucide-react";

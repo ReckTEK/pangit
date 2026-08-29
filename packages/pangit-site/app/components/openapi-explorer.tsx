@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import type { DocumentationOperation } from "@mannsion/pangit/documentation";
+import type { DocumentationOperation } from "../documentation/model.ts";
 import { AlertCircle, LoaderCircle } from "lucide-react";
 import { type ExplorerSpec, explorerSpec } from "../explorer.ts";
 import { useColorScheme } from "../hooks/use-color-scheme.ts";
@@ -84,8 +84,8 @@ export function OpenApiExplorer({ specUrl, operationsUrl, variant }: {
       >
         <LoaderCircle size={18} className="animate-spin" />Loading the API reference…
         <noscript>
-          JavaScript is required for the interactive explorer. The client method index and tutorials
-          are available without it.
+          JavaScript is required for the interactive explorer. The client method index is available
+          without it.
         </noscript>
       </div>
     );

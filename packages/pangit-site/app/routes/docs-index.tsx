@@ -1,9 +1,7 @@
-import { ArrowRight, BookOpen, Code2, Terminal } from "lucide-react";
-import { Link } from "react-router";
+import { Code2, Terminal } from "lucide-react";
 import { ProviderVersionLinks } from "../components/provider-version-links.tsx";
 import { documentation, formatCount } from "../lib.ts";
 import { siteConfig } from "../../site.config.ts";
-import { siteUrls } from "../urls.ts";
 
 export const meta = () => [{ title: `Documentation — ${siteConfig.name}` }];
 
@@ -18,19 +16,6 @@ export default function DocsIndex() {
         Explore the full API surface of every PanGit REST client. Pick a provider, choose a version,
         and go from the contract to your first request.
       </p>
-      <Link
-        to={siteUrls.guide()}
-        className="mt-8 flex items-center gap-5 rounded-xl border border-accent/25 bg-accent-soft px-6 py-5 transition-colors hover:border-accent/60"
-      >
-        <BookOpen size={23} className="shrink-0 text-accent" />
-        <div>
-          <h2 className="text-sm font-semibold">Start with a real workflow</h2>
-          <p className="mt-1 text-sm text-muted">
-            From installing the JSR package to repositories, pull requests, releases, and webhooks.
-          </p>
-        </div>
-        <ArrowRight size={19} className="ml-auto shrink-0 text-accent" />
-      </Link>
       <div className="mt-12 flex items-center justify-between">
         <h2 className="text-xl font-semibold tracking-tight">Raw REST clients</h2>
         <span className="font-mono text-xs text-muted">
@@ -76,8 +61,8 @@ export default function DocsIndex() {
             <Terminal size={20} className="text-accent" />
             <h3 className="mt-4 text-sm font-semibold">Explore here. Run from your project.</h3>
             <p className="mt-2 text-sm leading-7 text-muted">
-              The explorer makes HTTP requests directly in your browser. Tutorials use the published
-              package in your own Deno project against an existing instance.
+              The explorer makes HTTP requests directly in your browser. Use the published package
+              in your own Deno project against an existing instance.
             </p>
           </div>
         </div>

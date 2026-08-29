@@ -34,7 +34,7 @@ async function generate(options: GenerationOptions): Promise<void> {
       run: () => generateRestClients({ updatePublicNames: options.updatePublicNames }),
     },
     {
-      title: "Generate API documentation and tutorial catalog",
+      title: "Generate API documentation",
       run: () => generateDocumentation(),
     },
     { title: "Generate E2E suites and sandboxes", run: () => generateClientTests() },

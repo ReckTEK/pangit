@@ -17,7 +17,7 @@ import {
   type RestRequestValue,
   type RestResponse,
   type RestUndocumentedResponse,
-} from "../../../rest.ts";
+} from "../../../rest/mod.ts";
 
 const gitLabServerDefinitions = ["//gitlab.com"] as const;
 export const gitLabServers: typeof gitLabServerDefinitions = deepFreezeRestMetadata(
