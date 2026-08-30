@@ -4,7 +4,7 @@ set -eu
 umask 077
 rm -f /sandbox-auth/gitea-ready
 
-until wget -qO- http://127.0.0.1:3000/api/v1/version >/dev/null; do
+until wget -qO- http://127.0.0.1:3000/api/v1/version >/dev/null 2>&1; do
   sleep 1
 done
 

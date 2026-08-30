@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "exports": "./main.ts",
   "tasks": {
-    "start": "deno run --allow-run=docker sandbox/run.ts start",
-    "stop": "deno run --allow-run=docker sandbox/run.ts stop",
+    "start": "docker compose up",
+    "stop": "docker compose down",
     "site": "deno run --allow-run=docker,deno sandbox/launch.ts site-dev",
     "cli": "deno run --allow-run=docker,deno sandbox/launch.ts cli",
     "check": "deno check main.ts oauth cli sandbox",

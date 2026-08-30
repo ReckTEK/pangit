@@ -21,6 +21,26 @@ const denoPlugins = deno().map((plugin) => {
 });
 
 export default defineConfig({
-  plugins: [denoPlugins, tailwindcss(), reactRouter()],
+  logLevel: "warn",
+  plugins: [
+    denoPlugins,
+    tailwindcss(),
+    reactRouter(),
+    {
+      name: "pangit-example-urls",
+      configureServer(server) {
+        server.httpServer?.once("listening", () => {
+          setTimeout(() => {
+            console.log([
+              "",
+              "PanGit examples ready:",
+              "  Site:   http://127.0.0.1:5173",
+              "  Gitea:  http://127.0.0.1:3300  (sandbox / gitea-sandbox-password)",
+            ].join("\n"));
+          }, 3_000);
+        });
+      },
+    },
+  ],
   server: { host: "127.0.0.1", port: 5173 },
 });

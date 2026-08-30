@@ -3,6 +3,7 @@ name: pangit-examples
 services:
   gitea:
     image: docker.gitea.com/gitea:1.27.2@sha256:d20286ca2b2e170fdf628e7231b8a31a3220ade39ff462b55041d43d1fc757dd
+    attach: false
     environment:
       GITEA__database__DB_TYPE: sqlite3
       GITEA__database__PATH: /data/gitea/gitea.db
@@ -50,47 +51,9 @@ services:
     restart: "no"
     stop_grace_period: 10s
 
-  gitlab:
-    image: gitlab/gitlab-ce:19.3.1-ce.0@sha256:f63df4c43029fe91db370609c0b40a1e3585cebd06e3e9637d93a9a3030eb86e
-    hostname: gitlab
-    environment:
-      GITLAB_OMNIBUS_CONFIG: |
-        external_url 'http://localhost:38080'
-        gitlab_rails['initial_root_password'] = '${GITLAB_PASSWORD:-7vQ9!mZ4-Lk2@xR8#pT6}'
-        gitlab_rails['gitlab_signup_enabled'] = false
-        nginx['listen_port'] = 80
-        letsencrypt['enable'] = false
-        prometheus_monitoring['enable'] = false
-      GITLAB_USERNAME: ${GITLAB_USERNAME:-root}
-      GITLAB_TOKEN: ${GITLAB_TOKEN:-glpat-pangit-example-token-000001}
-    shm_size: 256m
-    volumes:
-      - ./sandbox/gitlab-bootstrap.sh:/sandbox/bootstrap.sh:ro
-      - auth:/sandbox-auth
-      - gitlab-config:/etc/gitlab
-      - gitlab-logs:/var/log/gitlab
-      - gitlab-data:/var/opt/gitlab
-    post_start:
-      - command: ["/bin/sh", "/sandbox/bootstrap.sh"]
-        user: "0:0"
-    healthcheck:
-      test:
-        - CMD-SHELL
-        - >-
-            test -f /sandbox-auth/gitlab-ready &&
-            curl --fail --silent --header="PRIVATE-TOKEN: $${GITLAB_TOKEN}"
-            http://127.0.0.1/api/v4/user | grep -q '"username":"root"'
-      interval: 3s
-      timeout: 5s
-      retries: 180
-      start_period: 30s
-    ports:
-      - 127.0.0.1:38080:80
-    restart: "no"
-    stop_grace_period: 30s
-
   proxy:
     image: caddy:2.10.2-alpine@sha256:4c6e91c6ed0e2fa03efd5b44747b625fec79bc9cd06ac5235a779726618e530d
+    attach: false
     volumes:
       - ./sandbox/Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy-data:/data
@@ -144,6 +107,3 @@ volumes:
   caddy-config:
   caddy-data:
   gitea-data:
-  gitlab-config:
-  gitlab-data:
-  gitlab-logs:

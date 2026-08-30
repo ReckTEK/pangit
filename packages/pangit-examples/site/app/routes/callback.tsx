@@ -1,26 +1,16 @@
 import { data, Link, type LoaderFunctionArgs, useLoaderData } from "react-router";
 import { createExampleOAuth } from "../oauth.ts";
-import { callbackUrl, giteaClientId } from "../server/config.server.ts";
-import {
-  clearTransactionCookie,
-  readTransactionCookie,
-} from "../server/transaction-cookie.server.ts";
+import { callbackUrl, giteaClientId, oauthCookieSecret } from "../server/config.server.ts";
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const transaction = await readTransactionCookie(request);
-  if (!transaction) {
-    throw new Response("No Gitea login is in progress", { status: 400 });
-  }
-
   const oauth = createExampleOAuth({
     clientId: giteaClientId(),
     callbackUrl: callbackUrl(request),
+    cookieSecret: oauthCookieSecret(),
   });
-  try {
-    const authorized = await oauth.authorize(
-      request,
-      transaction as Parameters<typeof oauth.authorize>[1],
-    );
+  const completed = await oauth.complete(request);
+  if (completed.ok) {
+    const authorized = completed.authorized;
     return data(
       {
         result: "success" as const,
@@ -28,17 +18,16 @@ export async function loader({ request }: LoaderFunctionArgs) {
         version: authorized.version,
         tokenType: authorized.authorization.tokenType,
       },
-      { headers: { "Set-Cookie": clearTransactionCookie() } },
-    );
-  } catch (cause) {
-    return data(
-      {
-        result: "error" as const,
-        error: cause instanceof Error ? cause.message : String(cause),
-      },
-      { headers: { "Set-Cookie": clearTransactionCookie() } },
+      { headers: completed.headers },
     );
   }
+  return data(
+    {
+      result: "error" as const,
+      error: completed.error.message,
+    },
+    { headers: completed.headers, status: 400 },
+  );
 }
 
 export default function CallbackPage() {

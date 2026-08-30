@@ -4,6 +4,12 @@ export function giteaClientId(): string {
   return value;
 }
 
+export function oauthCookieSecret(): string {
+  const value = Deno.env.get("PANGIT_EXAMPLE_COOKIE_SECRET")?.trim();
+  if (!value) throw new Error("PANGIT_EXAMPLE_COOKIE_SECRET is required");
+  return value;
+}
+
 export function callbackUrl(request: Request): URL {
   return new URL("/auth/callback", request.url);
 }

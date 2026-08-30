@@ -73,7 +73,10 @@ async function run(): Promise<void> {
       }
     };
 
-    console.log(`Open this URL to authorize Gitea:\n${start.url}`);
+    console.log("Gitea login:");
+    console.log("  Username: sandbox");
+    console.log("  Password: gitea-sandbox-password");
+    console.log(`\nOpen this URL to authorize Gitea:\n${start.url}`);
     if (!noOpen) await openBrowser(start.url);
 
     const authorized = await completed.promise;
