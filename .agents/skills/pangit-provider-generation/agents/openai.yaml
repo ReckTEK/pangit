@@ -1,0 +1,4 @@
+interface:
+  display_name: "PanGit Provider Generation"
+  short_description: "Generate self-contained lazy PanGit providers"
+  default_prompt: "Use $pangit-provider-generation to change PanGit provider generation while preserving self-contained output, lazy loading, and clean provider/version folders."

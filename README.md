@@ -10,7 +10,7 @@
 <p align="center">
   <a href="#quick-start">Quick start</a> ·
   <a href="#providers">Providers</a> ·
-  <a href="#test-results">Test results</a>
+  <a href="#real-provider-e2e-results">Test results</a>
 </p>
 
 PanGit brings Gitea, GitLab, GitHub, Codeberg, Bitbucket Cloud, and Azure DevOps Git into your
@@ -74,7 +74,7 @@ negotiate a newer API contract at runtime.
 | Package                                                           | Purpose                                                                 |
 | ----------------------------------------------------------------- | ----------------------------------------------------------------------- |
 | [`@mannsion/pangit`](packages/pangit/deno.json)                   | The JSR library and generated raw clients.                              |
-| [`@mannsion/pangit-examples`](packages/pangit-examples/deno.json) | Placeholder Deno CLI for the new examples package.                      |
+| [`@mannsion/pangit-examples`](packages/pangit-examples/deno.json) | Persistent local Gitea sandbox and OAuth example site.                  |
 | [`@mannsion/pangit-site`](packages/pangit-site/Development.md)    | React Router SSR documentation website on Deno 2, styled with Tailwind. |
 
 The private site package owns its documentation catalog. The published PanGit library does not
@@ -104,46 +104,51 @@ Open `http://localhost:3000` (or set `PORT`). The explorer sends requests direct
 to your selected API server. Scalar provides authentication, headers, request editing, and response
 inspection. Your server must allow the browser origin with CORS. Authorization is not persisted.
 
-The high-level API section is reserved for future work; only raw REST clients are implemented. See
+The site’s high-level reference section is still reserved; the library already exports the managed
+`PanGit` client, authentication helpers, and raw REST clients. See
 [site development](packages/pangit-site/Development.md) and
-[documentation generation](packages/pangit/docs/Documentation.md).
+[documentation generation](packages/pangit/docs/Documentation.md). The reviewed boundary for a
+future provider-neutral API is the
+[common API analysis](packages/pangit/docs/api-analysis/README.md).
 
 ## Development
 
 Generation lives in [`codegen/generate.ts`](codegen/generate.ts), outside the published packages.
-[`codegen/workspace.ts`](codegen/workspace.ts) resolves package names from the root `deno.json`
-workspace paths. Change package locations there; generators do not duplicate directory names. The
-internal stages are library functions, not separate generation commands.
+[`codegen/workspace-layout.ts`](codegen/workspace-layout.ts) resolves package names from the root
+`deno.json` workspace paths. Change package locations there; generators do not duplicate directory
+names. Use the root task for both generators or the explicit `generate:pangit` and
+`generate:pangit-site` tasks when working on only one owner.
 
-- `deno task generate` — the single generation pipeline: download and normalize specs, rebuild
-  clients, API documentation, E2E assets, Markdown reports, this README's results, site assets, and
-  site route types. Requires saved reports; never runs containers.
+- `deno task generate` — download and normalize specs, rebuild clients and generated E2E assets,
+  then rebuild site documentation, static assets, and route types. It never runs containers or
+  touches saved E2E evidence, result Markdown, or this README.
 - `deno task generate --cached` — run that entire pipeline using checked-in raw specs, without
   downloading schemas. Use after a fresh checkout or when editing generators or site asset settings.
 - `deno task generate --update-public-names` — explicitly update the reviewed public-name map as
   part of the full pipeline after reviewing an API change. Can be combined with `--cached`.
-- `deno task e2e` — run generated Gitea suites against fresh Docker Compose environments, save raw
-  reports under `packages/pangit/src/generated/<provider>/<version>/tests/results/`, then remove run
-  containers, networks, and volumes. Markdown reports live under
-  `packages/pangit/docs/test-results/<provider>/<version>/`.
+- `deno task e2e` — replace every manifest-owned raw result under
+  `tests/providers/<provider>/<version>/results/`, run the generated suites against fresh Docker
+  Compose environments, remove every run resource, and atomically replace the Markdown report tree
+  under `packages/pangit/docs/test-results/`.
 - `deno task check`, `deno task test`, `deno task lint` — check root codegen and both packages.
 - `deno task fmt` — format workspace sources.
 
-## Test results
+## Real-provider E2E results
 
-Saved real-container results. Run `deno task e2e`, then `deno task generate` to refresh this table.
+```text
+generated suite + fresh provider container
+                  │
+                  ├──> tests/providers/<provider>/<version>/results/       raw evidence
+                  └──> packages/pangit/docs/test-results/.../test-result.md clean Markdown
+                                      ▲
+                                      └── these human-authored links are validated, never rewritten
+```
 
-<!-- BEGIN GENERATED TEST RESULTS -->
+| Provider | Verified reports                                                                                                                                  |
+| :------- | :------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Gitea    | [1.26.4](packages/pangit/docs/test-results/gitea/1.26.4/test-result.md) · [1.27.2](packages/pangit/docs/test-results/gitea/1.27.2/test-result.md) |
 
-<!-- @generated by codegen/generate.ts. DO NOT EDIT. -->
-
-| Provider | Version                                                                 | Result | Cases | Endpoints | Negative-only | Client lines |
-| :------- | :---------------------------------------------------------------------- | :----: | ----: | --------: | ------------: | -----------: |
-| gitea    | [1.26.4](packages/pangit/docs/test-results/gitea/1.26.4/test-result.md) |  Pass  |   532 | 471 / 471 |             3 |       99.96% |
-| gitea    | [1.27.2](packages/pangit/docs/test-results/gitea/1.27.2/test-result.md) |  Pass  |   543 | 482 / 482 |             3 |       99.96% |
-
-Endpoints count operations with passing checks, including expected errors. Negative-only operations
-have no successful-response test. Coverage measures generated client source, not server code or all
-API behaviors.
-
-<!-- END GENERATED TEST RESULTS -->
+Each report contains the real-container endpoint rollup, generated-client coverage, negative-only
+boundaries, and the complete endpoint table. `deno task e2e` validates these links against the
+provider manifest before replacing the report tree. See the full
+[artifact ownership flow](packages/pangit/docs/Documentation.md#e2e-evidence-and-reporting).

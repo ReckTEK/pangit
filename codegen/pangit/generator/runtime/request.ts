@@ -1,0 +1,352 @@
+/** Provider-native path, query, header and request-body serialization. */
+import type { RestBody, RestOperation, RestQueryParameter } from "./contracts/operation.ts";
+import { stringifyJson } from "./lossless-json.ts";
+import { isJson, isMultipart, mediaTypeEssence } from "./media-type.ts";
+
+export function interpolatePath(
+  operation: RestOperation,
+  values: Readonly<Record<string, unknown>> | undefined,
+  groupSelections: Readonly<Record<string, boolean>> | undefined,
+): string {
+  const parameters = new Map(
+    operation.pathParameters?.map((parameter) => [parameter.name, parameter]),
+  );
+  let path = operation.path;
+  const groups = [...operation.pathGroups ?? []].toSorted((left, right) =>
+    right.start - left.start || right.end - left.end
+  );
+  const selectors = new Set(
+    groups.flatMap((group) => group.selector === undefined ? [] : [group.selector]),
+  );
+  for (const selector of Object.keys(groupSelections ?? {}).toSorted()) {
+    if (!selectors.has(selector)) {
+      throw new TypeError(`${operation.id} has no optional path group selector ${selector}`);
+    }
+  }
+  let followingStart = operation.path.length;
+  for (const group of groups) {
+    const groupParameters = group.parameters ?? [];
+    const parameterized = groupParameters.length > 0;
+    const selectable = group.selector !== undefined && groupParameters.length === 0 &&
+      typeof group.defaultIncluded === "boolean";
+    if (
+      !Number.isInteger(group.start) || !Number.isInteger(group.end) || group.start < 0 ||
+      group.end <= group.start || group.end > operation.path.length || group.end > followingStart ||
+      parameterized === selectable
+    ) {
+      throw new TypeError(`${operation.id} has invalid optional path group metadata`);
+    }
+    followingStart = group.start;
+    if (selectable) {
+      const selected = groupSelections?.[group.selector!];
+      if (selected !== undefined && typeof selected !== "boolean") {
+        throw new TypeError(
+          `${operation.id} optional path group selector ${group.selector} must be boolean`,
+        );
+      }
+      if ((selected ?? group.defaultIncluded) === false) {
+        path = `${path.slice(0, group.start)}${path.slice(group.end)}`;
+      }
+      continue;
+    }
+    const present = groupParameters.map((name) => {
+      const value = values?.[name];
+      return value !== undefined && value !== null;
+    });
+    const presentCount = present.filter(Boolean).length;
+    if (presentCount !== 0 && presentCount !== present.length) {
+      throw new TypeError(
+        `${operation.id} optional path group requires all parameters together: ${
+          groupParameters.join(", ")
+        }`,
+      );
+    }
+    if (presentCount === 0) {
+      path = `${path.slice(0, group.start)}${path.slice(group.end)}`;
+    }
+  }
+  return path.replaceAll(/\{([^}]+)\}/g, (_placeholder, name: string) => {
+    const value = values?.[name];
+    if (value === undefined || value === null) {
+      throw new TypeError(`${operation.id} requires path parameter ${name}`);
+    }
+    const serialized = serializePrimitive(value);
+    if (serialized === "") {
+      throw new TypeError(
+        `${operation.id} path parameter ${name} serializes to an empty path segment`,
+      );
+    }
+    const multiSegment = parameters.get(name)?.multiSegment ?? false;
+    const segments = multiSegment ? serialized.split("/") : [serialized];
+    if (multiSegment && segments.some((segment) => segment === "")) {
+      throw new TypeError(
+        `${operation.id} path parameter ${name} contains an empty multi-segment component; ` +
+          "native generated routing cannot preserve empty path components",
+      );
+    }
+    const dotSegment = segments.find((segment) => segment === "." || segment === "..");
+    if (dotSegment !== undefined) {
+      throw new TypeError(
+        `${operation.id} path parameter ${name} contains unsupported dot-only segment ${dotSegment}; ` +
+          "native URL normalization cannot represent literal dot-only path segments",
+      );
+    }
+    return multiSegment ? segments.map(encodePathSegment).join("/") : encodePathSegment(serialized);
+  });
+}
+
+function encodePathSegment(value: string): string {
+  return encodeURIComponent(value).replaceAll(
+    /[!'()*]/g,
+    (character) => `%${character.charCodeAt(0).toString(16).toUpperCase()}`,
+  );
+}
+
+export function joinUrl(baseUrl: URL, path: string): URL {
+  const url = new URL(baseUrl);
+  const relative = new URL(path, "https://rest.invalid");
+  const basePath = url.pathname === "/" ? "" : url.pathname.replace(/\/+$/, "");
+  const operationPath = relative.pathname.startsWith("/")
+    ? relative.pathname
+    : `/${relative.pathname}`;
+  url.pathname = `${basePath}${operationPath}`.replaceAll(/\/{2,}/g, "/");
+  relative.searchParams.forEach((value, name) => url.searchParams.append(name, value));
+  url.hash = relative.hash;
+  return url;
+}
+
+export function appendQuery(
+  url: URL,
+  values: Readonly<Record<string, unknown>> | undefined,
+  definitions: readonly RestQueryParameter[] = [],
+): void {
+  if (values === undefined) {
+    return;
+  }
+  const definitionByName = new Map(definitions.map((definition) => [definition.name, definition]));
+  for (const name of Object.keys(values).sort()) {
+    const value = values[name];
+    if (value === undefined) {
+      continue;
+    }
+    appendQueryValue(url.searchParams, name, value, definitionByName.get(name));
+  }
+}
+
+export function snapshotQuery(
+  values: Readonly<Record<string, unknown>> | undefined,
+): readonly (readonly [string, string])[] | undefined {
+  if (values === undefined) return undefined;
+  const url = new URL("https://rest.invalid");
+  appendQuery(url, values);
+  return Object.freeze(
+    [...url.searchParams.entries()].map(([name, value]) => Object.freeze([name, value] as const)),
+  );
+}
+
+export function appendQueryEntries(
+  url: URL,
+  entries: readonly (readonly [string, string])[] | undefined,
+): void {
+  for (const [name, value] of entries ?? []) {
+    url.searchParams.append(name, value);
+  }
+}
+
+function appendQueryValue(
+  query: URLSearchParams,
+  name: string,
+  value: unknown,
+  definition: RestQueryParameter | undefined,
+): void {
+  if (definition?.allowReserved) {
+    throw new TypeError(`Query parameter ${name} uses unsupported allowReserved serialization`);
+  }
+  if (definition?.style === "deepObject") {
+    if (!isRecord(value)) {
+      throw new TypeError(`Deep-object query parameter ${name} must be an object`);
+    }
+    for (
+      const [key, item] of Object.entries(value).sort(([left], [right]) =>
+        left.localeCompare(right)
+      )
+    ) {
+      if (Array.isArray(item) || isRecord(item)) {
+        throw new TypeError(`Deep-object query parameter ${name}.${key} must be primitive`);
+      }
+      if (item !== undefined) query.append(`${name}[${key}]`, serializePrimitive(item));
+    }
+    return;
+  }
+  const separator = definition?.style === "spaceDelimited"
+    ? " "
+    : definition?.style === "pipeDelimited"
+    ? "|"
+    : ",";
+  const explode = definition?.explode ?? (definition?.style ?? "form") === "form";
+
+  if (Array.isArray(value)) {
+    if (explode) {
+      for (const item of value) {
+        query.append(name, serializePrimitive(item));
+      }
+    } else {
+      query.append(name, value.map(serializePrimitive).join(separator));
+    }
+    return;
+  }
+  if (isRecord(value)) {
+    const entries = Object.entries(value).sort(([left], [right]) => left.localeCompare(right));
+    if (explode) {
+      for (const [key, item] of entries) {
+        query.append(key, serializePrimitive(item));
+      }
+    } else {
+      query.append(
+        name,
+        entries.flatMap(([key, item]) => [key, serializePrimitive(item)]).join(separator),
+      );
+    }
+    return;
+  }
+  query.append(name, serializePrimitive(value));
+}
+
+export function appendHeaderValues(
+  headers: Headers,
+  values: Readonly<Record<string, unknown>> | undefined,
+): void {
+  if (values === undefined) {
+    return;
+  }
+  for (const name of Object.keys(values).sort()) {
+    const value = values[name];
+    if (value !== undefined) {
+      headers.set(
+        name,
+        Array.isArray(value) ? value.map(serializePrimitive).join(",") : serializePrimitive(value),
+      );
+    }
+  }
+}
+
+export function mergeHeaders(target: Headers, source: HeadersInit | undefined): void {
+  if (source === undefined) {
+    return;
+  }
+  new Headers(source).forEach((value, name) => target.set(name, value));
+}
+
+export function serializeBody(body: RestBody<string, unknown>): BodyInit | null {
+  const { mediaType, value } = body;
+  const essence = mediaTypeEssence(mediaType);
+  if (isJson(mediaType)) {
+    return stringifyJson(value);
+  }
+  if (value === undefined) {
+    return null;
+  }
+  if (isMultipart(mediaType)) {
+    return toFormData(value);
+  }
+  if (essence === "application/x-www-form-urlencoded") {
+    return toUrlSearchParams(value);
+  }
+  if (essence.startsWith("text/")) {
+    return serializePrimitive(value);
+  }
+  if (isBodyInit(value)) {
+    return value;
+  }
+  throw new TypeError(`Cannot serialize ${mediaType} request body`);
+}
+
+function toFormData(value: unknown): FormData {
+  if (value instanceof FormData) {
+    return value;
+  }
+  if (!isRecord(value)) {
+    throw new TypeError("Multipart request bodies must be objects or FormData");
+  }
+  const form = new FormData();
+  for (const name of Object.keys(value).sort()) {
+    const item = value[name];
+    const values = Array.isArray(item) ? item : [item];
+    for (const entry of values) {
+      if (entry === undefined) {
+        continue;
+      }
+      if (entry instanceof Blob) {
+        form.append(name, entry);
+      } else if (entry instanceof ArrayBuffer) {
+        form.append(name, new Blob([entry]));
+      } else if (ArrayBuffer.isView(entry)) {
+        form.append(
+          name,
+          new Blob([new Uint8Array(entry.buffer, entry.byteOffset, entry.byteLength).slice()]),
+        );
+      } else if (isRecord(entry)) {
+        form.append(name, stringifyJson(entry));
+      } else {
+        form.append(name, serializePrimitive(entry));
+      }
+    }
+  }
+  return form;
+}
+
+function toUrlSearchParams(value: unknown): URLSearchParams {
+  if (value instanceof URLSearchParams) {
+    return value;
+  }
+  if (!isRecord(value)) {
+    throw new TypeError("URL-encoded request bodies must be objects or URLSearchParams");
+  }
+  const parameters = new URLSearchParams();
+  for (const name of Object.keys(value).sort()) {
+    const item = value[name];
+    const values = Array.isArray(item) ? item : [item];
+    for (const entry of values) {
+      if (entry !== undefined) {
+        parameters.append(name, serializePrimitive(entry));
+      }
+    }
+  }
+  return parameters;
+}
+
+function serializePrimitive(value: unknown): string {
+  if (value === null) return "";
+  if (value instanceof Date) return value.toISOString();
+  if (typeof value === "number" && !Number.isFinite(value)) {
+    throw new RangeError(`Path/query/header numbers must be finite: ${String(value)}`);
+  }
+  if (typeof value === "number" && Number.isInteger(value) && !Number.isSafeInteger(value)) {
+    throw new RangeError("Unsafe integer path/query/header values must be passed as bigint");
+  }
+  if (
+    typeof value === "string" || typeof value === "number" || typeof value === "boolean" ||
+    typeof value === "bigint"
+  ) {
+    return String(value);
+  }
+  return stringifyJson(value);
+}
+
+function isBodyInit(value: unknown): value is BodyInit {
+  return typeof value === "string" ||
+    value instanceof ArrayBuffer ||
+    ArrayBuffer.isView(value) ||
+    value instanceof Blob ||
+    value instanceof FormData ||
+    value instanceof ReadableStream ||
+    value instanceof URLSearchParams;
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return value !== null && typeof value === "object" && !Array.isArray(value);
+}
+
+export function isAbsoluteUrl(value: string): boolean {
+  return /^[a-z][a-z\d+.-]*:\/\//i.test(value);
+}

@@ -6,19 +6,21 @@ not export website data.
 
 ## Sources and artifacts
 
-The source map is [`codegen/specs/providers.json`](../../../codegen/specs/providers.json). Fetching
-specs generates [`codegen/specs/raw/manifest.json`](../../../codegen/specs/raw/manifest.json), where
+The source map is
+[`codegen/pangit/specs/providers.json`](../../../codegen/pangit/specs/providers.json). Fetching
+specs generates
+[`codegen/pangit/specs/raw/manifest.json`](../../../codegen/pangit/specs/raw/manifest.json), where
 each version maps its normalized specification, generated client, E2E assets, and documentation
-artifacts. Source, normalized-spec, and test-map paths are relative to the repository root;
-generated client, test, and result paths are relative to the PanGit package. Documentation paths are
-relative to the site package. The shared [workspace resolver](../../../codegen/workspace.ts) locates
-both packages through the root `deno.json` workspace configuration.
+artifacts. Source, normalized-spec, test-map, E2E, and result paths are relative to the repository
+root; generated client paths are relative to the PanGit package. Documentation paths are relative to
+the site package. The shared [workspace resolver](../../../codegen/workspace-layout.ts) locates both
+packages through the root `deno.json` workspace configuration.
 
 ```text
 providers.json
   → raw/manifest.json
   → normalized/<provider>/<version>.json
-  → src/generated/<provider>/<version>/client.ts
+  → packages/pangit/src/providers/<provider>/<version>/<Provider>RestClient.ts
   → packages/pangit-site/app/documentation/generated/
       manifest.json
       loaders.ts
@@ -36,6 +38,37 @@ parameters, schemas, authentication, status codes, and vendor extensions are ret
 copies these artifacts into its static build rather than importing full specs into the main
 JavaScript bundle.
 
+## E2E evidence and reporting
+
+Code generation owns the executable provider suites, but it does not own test execution or result
+publication:
+
+```text
+codegen/pangit/specs/raw/manifest.json
+  └── deno task generate
+        └── tests/providers/<provider>/<version>/        generated suite and Compose sandbox
+              └── deno task e2e
+                    ├── results/                         raw HTML, JSON, coverage, and logs
+                    └── packages/pangit/docs/test-results/
+                          └── <provider>/<version>/test-result.md
+
+README.md ── human-authored report links ── validated against the same manifest ──┘
+```
+
+| Artifact                                            | Owner                | Replacement rule                                                                                                    |
+| :-------------------------------------------------- | :------------------- | :------------------------------------------------------------------------------------------------------------------ |
+| `tests/providers/<provider>/<version>/` suite files | `deno task generate` | Only generator-marker-owned files are replaced; `results/` is preserved.                                            |
+| `tests/providers/<provider>/<version>/results/`     | `deno task e2e`      | Every manifest-owned result directory is cleared before a run; obsolete E2E-owned results are removed.              |
+| `packages/pangit/docs/test-results/`                | `deno task e2e`      | Every snapshot is validated and rendered first, then the complete marker-owned tree is replaced as one transaction. |
+| Root README report links                            | Human                | E2E verifies exactly one link for every manifest-declared report and never rewrites the README.                     |
+
+The Markdown publisher reads only manifest-declared provider versions. It verifies summary totals,
+endpoint identities, coverage arithmetic, the raw-results ownership marker, and the manually
+authored README links before touching published documentation. Runtime timestamps and logs stay in
+raw evidence, so repeated publication from the same evidence is byte-identical. Invalid or
+incomplete evidence leaves the previous Markdown tree intact; successful replacement removes
+obsolete files and empty directories instead of orphaning them.
+
 ## Regenerate
 
 From the repository root:
@@ -44,11 +77,14 @@ From the repository root:
 deno task generate --cached
 ```
 
-[`codegen/generate.ts`](../../../codegen/generate.ts) is the only generation entry point. It runs
-the whole pipeline: specifications, clients, documentation, E2E suites and sandboxes, saved-result
-Markdown, root README results, site assets, and React Router route types. `--cached` uses the
-checked-in raw specifications; omit it to refresh upstream specs first. Neither mode starts Docker
-or runs E2E. Actual E2E execution remains `deno task e2e`.
+[`codegen/generate.ts`](../../../codegen/generate.ts) is the root generation entry point. It runs
+the independent PanGit and PanGit-site generators in dependency order: specifications, clients, E2E
+suite assets, site documentation, static assets, and React Router route types. `--cached` uses the
+checked-in raw specifications; omit it to refresh upstream specs first. Generation never starts
+Docker, reads raw E2E evidence, publishes result Markdown, or changes the root README.
+
+Run `deno task e2e` separately to execute every manifest-declared real-provider suite and publish
+its deterministic Markdown evidence. No second generation command is required after E2E.
 
 The documentation stage reuses the client parser and public-name map. It renders everything before
 replacing its own output tree. The subsequent site stage reads the newly generated catalog and

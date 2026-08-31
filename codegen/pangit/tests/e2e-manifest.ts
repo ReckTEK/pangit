@@ -1,0 +1,94 @@
+/** JSON object accepted by generated E2E manifests and fixtures. */
+export type JsonRecord = Record<string, unknown>;
+
+export type E2EStep = {
+  operationId: string;
+  fixture?: { method: string; url: string; json?: unknown };
+  name?: string;
+  input?: JsonRecord;
+  auth?: "token" | "basic" | "none";
+  capture?: Record<string, string>;
+  expect: {
+    status: number[];
+    equals?: Record<string, unknown>;
+    contains?: Record<string, unknown>;
+    nonempty?: string[];
+  };
+  optional?: boolean;
+  poll?: {
+    timeoutMs: number;
+    intervalMs: number;
+    retryStatuses: number[];
+    consecutiveSuccesses?: number;
+  };
+  note?: string;
+};
+
+export type E2EManifest = {
+  schemaVersion: 1;
+  service: {
+    name: string;
+    apiUrl: string;
+    localApiUrl: string;
+    environment: Record<string, string>;
+    tmpfs: string[];
+    bootstrap: string[];
+    healthcheck: string;
+    uid: string;
+    gid: string;
+  };
+  runner: {
+    name: string;
+    image: string;
+    workspace: string;
+    results: string;
+    credentials: string;
+    timeoutMs: number;
+  };
+  credentials: {
+    username: string;
+    password: string;
+    email: string;
+    tokenFile: string;
+    authorizationHeader: string;
+    tokenPrefix: string;
+  };
+  variables: JsonRecord;
+  services?: Record<string, JsonRecord>;
+  files?: Record<string, string>;
+  parameterDefaults: JsonRecord;
+  scenarios: Array<{ name: string; steps: E2EStep[] }>;
+  negativeCases: E2EStep[];
+};
+
+export type SpecManifest = {
+  schemaVersion: 1;
+  providers: Record<string, {
+    client: {
+      className: string;
+      displayName: string;
+      namespaceName: string;
+      variablePrefix: string;
+    };
+    testing?: { manifest: string };
+    versions: Record<string, {
+      containerImage: string | null;
+      artifacts: {
+        normalized: string;
+        client: string;
+        tests: string;
+        results: string;
+        compose: string;
+      };
+    }>;
+  }>;
+};
+
+export type GeneratedE2EManifest = E2EManifest & {
+  provider: string;
+  version: string;
+  image: string;
+  client: string;
+  clientImplementation: string;
+  operations: Array<{ id: string; method: string; path: string; methodName: string }>;
+};

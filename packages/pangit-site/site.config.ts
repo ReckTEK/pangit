@@ -19,7 +19,11 @@ export const siteConfig = {
   },
   assets: {
     openapi: "/openapi",
-    brand: { source: "docs/images/", path: "/brand" },
+    brand: {
+      source: "docs/images/",
+      path: "/brand",
+      files: ["pangit-logo.png"],
+    },
     logo: "pangit-logo.png",
   },
   anchors: { main: "main", reference: "rest-api-reference" },

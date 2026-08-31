@@ -1,0 +1,260 @@
+{
+  "schemaVersion": 1,
+  "providers": {
+    "azure-devops": {
+      "name": "Azure DevOps Git",
+      "kind": "live",
+      "upstream": "https://github.com/MicrosoftDocs/vsts-rest-api-specs",
+      "selected": "latest",
+      "client": {
+        "className": "AzureDevOpsRestClient",
+        "displayName": "Azure DevOps",
+        "namespaceName": "AzureDevOpsApi",
+        "variablePrefix": "azureDevOps"
+      },
+      "versions": {
+        "latest": {
+          "containerImage": null,
+          "ref": null,
+          "source": "https://raw.githubusercontent.com/MicrosoftDocs/vsts-rest-api-specs/master/specification/git/7.2/git.json",
+          "format": "json",
+          "destination": "codegen/pangit/specs/raw/azure-devops/latest.json",
+          "bytes": 590222,
+          "sha256": "sha256:7e7b5bd1af4b486a1af498c78150ca1083b7c6d621671bde26967406e3d75d6d",
+          "artifacts": {
+            "normalized": "codegen/pangit/specs/normalized/azure-devops/latest.json",
+            "client": "src/providers/azure-devops/latest/mod.ts",
+            "tests": "tests/providers/azure-devops/latest",
+            "results": "tests/providers/azure-devops/latest/results",
+            "compose": "tests/providers/azure-devops/latest/compose.yaml",
+            "documentation": {
+              "openapi": "app/documentation/generated/azure-devops/latest/openapi.json",
+              "operations": "app/documentation/generated/azure-devops/latest/operations.json",
+              "route": "/docs/raw/azure-devops/latest"
+            }
+          }
+        }
+      }
+    },
+    "bitbucket": {
+      "name": "Bitbucket Cloud",
+      "kind": "live",
+      "upstream": "https://developer.atlassian.com/cloud/bitbucket",
+      "selected": "latest",
+      "client": {
+        "className": "BitbucketRestClient",
+        "displayName": "Bitbucket",
+        "namespaceName": "BitbucketApi",
+        "variablePrefix": "bitbucket"
+      },
+      "versions": {
+        "latest": {
+          "containerImage": null,
+          "ref": null,
+          "source": "https://dac-static.atlassian.com/cloud/bitbucket/swagger.v3.json",
+          "format": "json",
+          "destination": "codegen/pangit/specs/raw/bitbucket/latest.json",
+          "bytes": 1359673,
+          "sha256": "sha256:3dbfe6a80143511a287e58c21a193d3551ab5d41e8b60e65c1ae121b7000dec3",
+          "artifacts": {
+            "normalized": "codegen/pangit/specs/normalized/bitbucket/latest.json",
+            "client": "src/providers/bitbucket/latest/mod.ts",
+            "tests": "tests/providers/bitbucket/latest",
+            "results": "tests/providers/bitbucket/latest/results",
+            "compose": "tests/providers/bitbucket/latest/compose.yaml",
+            "documentation": {
+              "openapi": "app/documentation/generated/bitbucket/latest/openapi.json",
+              "operations": "app/documentation/generated/bitbucket/latest/operations.json",
+              "route": "/docs/raw/bitbucket/latest"
+            }
+          }
+        }
+      }
+    },
+    "codeberg": {
+      "name": "Codeberg (Forgejo)",
+      "kind": "live",
+      "upstream": "https://codeberg.org",
+      "selected": "latest",
+      "client": {
+        "className": "CodebergRestClient",
+        "displayName": "Codeberg",
+        "namespaceName": "CodebergApi",
+        "variablePrefix": "codeberg"
+      },
+      "versions": {
+        "latest": {
+          "containerImage": null,
+          "ref": null,
+          "source": "https://codeberg.org/swagger.v1.json",
+          "format": "json",
+          "destination": "codegen/pangit/specs/raw/codeberg/latest.json",
+          "bytes": 853956,
+          "sha256": "sha256:bb988ce779fbd7c332391d5abd93b0e6080e12a233945a756aa85093759ad56a",
+          "artifacts": {
+            "normalized": "codegen/pangit/specs/normalized/codeberg/latest.json",
+            "client": "src/providers/codeberg/latest/mod.ts",
+            "tests": "tests/providers/codeberg/latest",
+            "results": "tests/providers/codeberg/latest/results",
+            "compose": "tests/providers/codeberg/latest/compose.yaml",
+            "documentation": {
+              "openapi": "app/documentation/generated/codeberg/latest/openapi.json",
+              "operations": "app/documentation/generated/codeberg/latest/operations.json",
+              "route": "/docs/raw/codeberg/latest"
+            }
+          }
+        }
+      }
+    },
+    "gitea": {
+      "name": "Gitea",
+      "kind": "release",
+      "upstream": "https://github.com/go-gitea/gitea",
+      "selected": "1.27.2",
+      "client": {
+        "className": "GiteaRestClient",
+        "displayName": "Gitea",
+        "namespaceName": "GiteaApi",
+        "variablePrefix": "gitea"
+      },
+      "testing": {
+        "manifest": "codegen/pangit/tests/maps/gitea.json"
+      },
+      "versions": {
+        "1.26.4": {
+          "containerImage": "docker.gitea.com/gitea:1.26.4",
+          "ref": "v1.26.4",
+          "source": "https://raw.githubusercontent.com/go-gitea/gitea/v1.26.4/templates/swagger/v1_json.tmpl",
+          "format": "json",
+          "destination": "codegen/pangit/specs/raw/gitea/1.26.4.json",
+          "bytes": 839152,
+          "sha256": "sha256:0b69d8398ae3557ff8480c55ee3abebd21131ddac39c23621264a69f13cd893d",
+          "artifacts": {
+            "normalized": "codegen/pangit/specs/normalized/gitea/1.26.4.json",
+            "client": "src/providers/gitea/1.26.4/mod.ts",
+            "tests": "tests/providers/gitea/1.26.4",
+            "results": "tests/providers/gitea/1.26.4/results",
+            "compose": "tests/providers/gitea/1.26.4/compose.yaml",
+            "documentation": {
+              "openapi": "app/documentation/generated/gitea/1.26.4/openapi.json",
+              "operations": "app/documentation/generated/gitea/1.26.4/operations.json",
+              "route": "/docs/raw/gitea/1.26.4"
+            }
+          }
+        },
+        "1.27.2": {
+          "containerImage": "docker.gitea.com/gitea:1.27.2",
+          "ref": "v1.27.2",
+          "source": "https://raw.githubusercontent.com/go-gitea/gitea/v1.27.2/templates/swagger/v1_openapi3_json.tmpl",
+          "format": "json",
+          "destination": "codegen/pangit/specs/raw/gitea/1.27.2.json",
+          "bytes": 952215,
+          "sha256": "sha256:0f5a90ebce4a7efff9e338a8944894283c14757d759b28fab4940c461cf2f120",
+          "artifacts": {
+            "normalized": "codegen/pangit/specs/normalized/gitea/1.27.2.json",
+            "client": "src/providers/gitea/1.27.2/mod.ts",
+            "tests": "tests/providers/gitea/1.27.2",
+            "results": "tests/providers/gitea/1.27.2/results",
+            "compose": "tests/providers/gitea/1.27.2/compose.yaml",
+            "documentation": {
+              "openapi": "app/documentation/generated/gitea/1.27.2/openapi.json",
+              "operations": "app/documentation/generated/gitea/1.27.2/operations.json",
+              "route": "/docs/raw/gitea/1.27.2"
+            }
+          }
+        }
+      }
+    },
+    "github": {
+      "name": "GitHub",
+      "kind": "live",
+      "upstream": "https://github.com/github/rest-api-description",
+      "selected": "latest",
+      "client": {
+        "className": "GitHubRestClient",
+        "displayName": "GitHub",
+        "namespaceName": "GitHubApi",
+        "variablePrefix": "gitHub"
+      },
+      "versions": {
+        "latest": {
+          "containerImage": null,
+          "ref": null,
+          "source": "https://raw.githubusercontent.com/github/rest-api-description/main/descriptions/api.github.com/api.github.com.yaml",
+          "format": "yaml",
+          "destination": "codegen/pangit/specs/raw/github/latest.yaml",
+          "bytes": 9841270,
+          "sha256": "sha256:0ca05b6840052d8d1971523a6c243e36765e2264c797fc56a8f7b5e04ce4a147",
+          "artifacts": {
+            "normalized": "codegen/pangit/specs/normalized/github/latest.json",
+            "client": "src/providers/github/latest/mod.ts",
+            "tests": "tests/providers/github/latest",
+            "results": "tests/providers/github/latest/results",
+            "compose": "tests/providers/github/latest/compose.yaml",
+            "documentation": {
+              "openapi": "app/documentation/generated/github/latest/openapi.json",
+              "operations": "app/documentation/generated/github/latest/operations.json",
+              "route": "/docs/raw/github/latest"
+            }
+          }
+        }
+      }
+    },
+    "gitlab": {
+      "name": "GitLab",
+      "kind": "release",
+      "upstream": "https://gitlab.com/gitlab-org/gitlab",
+      "selected": "19.3.1",
+      "client": {
+        "className": "GitLabRestClient",
+        "displayName": "GitLab",
+        "namespaceName": "GitLabApi",
+        "variablePrefix": "gitLab"
+      },
+      "versions": {
+        "18.11.11": {
+          "containerImage": null,
+          "ref": "v18.11.11-ee",
+          "source": "https://gitlab.com/gitlab-org/gitlab/-/raw/v18.11.11-ee/doc/api/openapi/openapi_v2.yaml",
+          "format": "yaml",
+          "destination": "codegen/pangit/specs/raw/gitlab/18.11.11.yaml",
+          "bytes": 2254700,
+          "sha256": "sha256:4ec241f083a00372d2eb1629b2cac0b1877463e453d2a961c31057a99206ed4a",
+          "artifacts": {
+            "normalized": "codegen/pangit/specs/normalized/gitlab/18.11.11.json",
+            "client": "src/providers/gitlab/18.11.11/mod.ts",
+            "tests": "tests/providers/gitlab/18.11.11",
+            "results": "tests/providers/gitlab/18.11.11/results",
+            "compose": "tests/providers/gitlab/18.11.11/compose.yaml",
+            "documentation": {
+              "openapi": "app/documentation/generated/gitlab/18.11.11/openapi.json",
+              "operations": "app/documentation/generated/gitlab/18.11.11/operations.json",
+              "route": "/docs/raw/gitlab/18.11.11"
+            }
+          }
+        },
+        "19.3.1": {
+          "containerImage": null,
+          "ref": "v19.3.1-ee",
+          "source": "https://gitlab.com/gitlab-org/gitlab/-/raw/v19.3.1-ee/doc/api/openapi/openapi_v2.yaml",
+          "format": "yaml",
+          "destination": "codegen/pangit/specs/raw/gitlab/19.3.1.yaml",
+          "bytes": 2441347,
+          "sha256": "sha256:17a1d86d6d6da7255f71ad9828c4378a16e48b505f0959896cc0f23e9fd5ee17",
+          "artifacts": {
+            "normalized": "codegen/pangit/specs/normalized/gitlab/19.3.1.json",
+            "client": "src/providers/gitlab/19.3.1/mod.ts",
+            "tests": "tests/providers/gitlab/19.3.1",
+            "results": "tests/providers/gitlab/19.3.1/results",
+            "compose": "tests/providers/gitlab/19.3.1/compose.yaml",
+            "documentation": {
+              "openapi": "app/documentation/generated/gitlab/19.3.1/openapi.json",
+              "operations": "app/documentation/generated/gitlab/19.3.1/operations.json",
+              "route": "/docs/raw/gitlab/19.3.1"
+            }
+          }
+        }
+      }
+    }
+  }
+}

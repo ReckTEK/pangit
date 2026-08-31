@@ -73,7 +73,7 @@ and checks consume those artifacts; they do not run a separate preparation comma
 `deno task generate --cached` after a fresh checkout or changes to specs or asset settings. The
 copied assets and route types are ignored; the tracked reference authority remains in
 `packages/pangit-site/app/documentation/generated/`. The root `deno.json` workspace list configures
-package locations; the shared [resolver](../../codegen/workspace.ts) supplies them to all
+package locations; the shared [resolver](../../codegen/workspace-layout.ts) supplies them to all
 generators. Provider/version navigation comes from the site-owned manifest. See
 [documentation generation](../pangit/docs/Documentation.md).
 

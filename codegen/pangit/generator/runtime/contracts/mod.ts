@@ -1,0 +1,37 @@
+export type {
+  RestBinary,
+  RestInt64,
+  RestJsonData,
+  RestJsonNumber,
+  RestJsonValue,
+  RestRequestValue,
+} from "./data.ts";
+export type {
+  RestBody,
+  RestGeneratedDecodeMode,
+  RestMethod,
+  RestOperation,
+  RestOperationInput,
+  RestOperationResponse,
+  RestPathGroup,
+  RestPathParameter,
+  RestQueryParameter,
+  RestRequestOperation,
+  RestSecurityRequirement,
+} from "./operation.ts";
+export type {
+  MaybePromise,
+  RestClientOptions,
+  RestGeneratedRequestOptions,
+  RestHeadersProvider,
+  RestParseMode,
+  RestRequestContext,
+  RestRequestOptions,
+} from "./request.ts";
+export type {
+  AnyRestResponse,
+  RestHttpStatus,
+  RestResponse,
+  RestSuccessfulStatus,
+  RestUndocumentedResponse,
+} from "./response.ts";

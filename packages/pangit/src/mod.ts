@@ -1,6 +1,16 @@
-/** PanGit's managed client and dynamically loaded raw provider clients. */
+/**
+ * PanGit's managed client, authentication API, and lazy provider-client selection.
+ *
+ * @module
+ */
 export { PanGit } from "./client/mod.ts";
-export { loadRestClient } from "./generated/mod.ts";
+export { loadRestClient } from "./providers/registry.ts";
+export {
+  AuthAdapterNotImplementedError,
+  createOAuthCookieFlow,
+  createOAuthTransactionCookie,
+  OAuthCallbackError,
+} from "./auth/mod.ts";
 
 export type {
   Auth,
@@ -12,15 +22,22 @@ export type {
   OAuthAuthorization,
   OAuthAuthorizedClient,
   OAuthAuthorizedClientFor,
+  OAuthCookieCompletion,
+  OAuthCookieFlow,
+  OAuthCookieFlowOptions,
+  OAuthCookieSameSite,
   OAuthHandler,
   OAuthLoginRegistry,
   OAuthLoginStart,
   OAuthLoginTransaction,
   OAuthLoginTransactionFor,
+  OAuthTransactionCookie,
+  OAuthTransactionCookieErrorCode,
+  OAuthTransactionCookieOptions,
+  OAuthTransactionCookieSecret,
   TokenAuthorization,
-} from "./auth/core.ts";
-export type { AuthAdapterNotImplementedError, OAuthCallbackError } from "./auth/errors.ts";
-export type { AuthorizedClient, ClientOptions } from "./client/core.ts";
+} from "./auth/mod.ts";
+export type { AuthorizedClient, ClientOptions } from "./providers/managed-client.ts";
 export type { SelectedClient } from "./client/mod.ts";
 export type {
   Provider,
@@ -28,7 +45,7 @@ export type {
   RestClientProvider,
   RestClientTypeMap,
   RestClientVersion,
-} from "./generated/mod.ts";
+} from "./providers/mod.ts";
 export type {
   AnyRestResponse,
   RestApiError,
@@ -65,4 +82,4 @@ export type {
   RestTransportError,
   RestUndocumentedResponse,
   RestUndocumentedResponseError,
-} from "./rest/mod.ts";
+} from "./providers/runtime/mod.ts";

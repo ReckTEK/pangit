@@ -8,6 +8,9 @@ provider-specific**. It proposes interfaces; it does not implement them.
 | [Core](core.md)               | 25 capability groups shared by every included client, with native method bindings. |
 | [Supplements](supplements.md) | Optional shared modules and provider-only capabilities.                            |
 
+The exact reviewed bindings for every proposed core method are in the
+[provider method map](core-method-map.md).
+
 ## Implementation split
 
 1. **Core:** repository, Git content, pull-request, review-action and commit-status operations
@@ -23,14 +26,14 @@ proof of equivalent behavior.
 
 ## Scope
 
-| Provider / client source                                           | Included versions                                              |
-| ------------------------------------------------------------------ | -------------------------------------------------------------- |
-| [Gitea](../src/generated/gitea/1.27.2/client.ts)                   | 1.27.2; [1.26.4](../src/generated/gitea/1.26.4/client.ts)      |
-| [Codeberg / Forgejo](../src/generated/codeberg/latest/client.ts)   | Cached `latest`                                                |
-| [GitHub](../src/generated/github/latest/client.ts)                 | Cached `latest`                                                |
-| [GitLab](../src/generated/gitlab/19.3.1/client.ts)                 | 19.3.1; [18.11.11](../src/generated/gitlab/18.11.11/client.ts) |
-| [Bitbucket Cloud](../src/generated/bitbucket/latest/client.ts)     | Cached `latest`; not Bitbucket Server                          |
-| [Azure DevOps Git](../src/generated/azure-devops/latest/client.ts) | Git 7.2-preview only                                           |
+| Provider / client source                                                             | Included versions                                                           |
+| ------------------------------------------------------------------------------------ | --------------------------------------------------------------------------- |
+| [Gitea](../../src/providers/gitea/1.27.2/GiteaRestClient.ts)                         | 1.27.2; [1.26.4](../../src/providers/gitea/1.26.4/GiteaRestClient.ts)       |
+| [Codeberg / Forgejo](../../src/providers/codeberg/latest/CodebergRestClient.ts)      | Cached `latest`                                                             |
+| [GitHub](../../src/providers/github/latest/GitHubRestClient.ts)                      | Cached `latest`                                                             |
+| [GitLab](../../src/providers/gitlab/19.3.1/GitLabRestClient.ts)                      | 19.3.1; [18.11.11](../../src/providers/gitlab/18.11.11/GitLabRestClient.ts) |
+| [Bitbucket Cloud](../../src/providers/bitbucket/latest/BitbucketRestClient.ts)       | Cached `latest`; not Bitbucket Server                                       |
+| [Azure DevOps Git](../../src/providers/azure-devops/latest/AzureDevOpsRestClient.ts) | Git 7.2-preview only                                                        |
 
 Based on the reviewed 5,364-operation snapshot across six providers and eight clients. The core
 groups collapse 106 shared tasks; options and aliases are not separate interfaces. These are source

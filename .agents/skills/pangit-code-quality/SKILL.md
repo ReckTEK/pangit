@@ -1,0 +1,62 @@
+---
+name: pangit-code-quality
+description: Implement or refactor authored PanGit Deno/TypeScript with human-readable filenames, barrel-only entrypoints, explicit exports, generated-contract reuse, one-way provider dependencies, and a clean publish surface. Use for package architecture, auth/client work, module naming, imports, exports, or structural cleanup in this repository; generated provider output is handled by pangit-provider-generation.
+---
+
+# PanGit Code Quality
+
+Keep `packages/pangit` understandable from Ctrl+P, import statements, and the published package.
+
+## File and module shape
+
+- `mod.ts` and `index.ts` are entrypoint barrels only: module comments, imports, and re-exports.
+  Move every declaration, implementation, initialization, and side effect into a concern-named file.
+- Name implementation files for the symbol or responsibility they own, such as `PanGit.ts`,
+  `oauth-handler.ts`, or `OAuthCallbackError.ts`. Avoid ambiguous names such as `core.ts`,
+  `flow.ts`, `errors.ts`, or `utils.ts` when Ctrl+P would not reveal the concern.
+- Keep one cohesive responsibility per module. Group tightly related contracts; do not create one
+  file per trivial type, and do not hide unrelated concerns in a mega-file.
+- Split unrelated error classes into files named for the error. Keep private helpers with their
+  owner unless they have an independent consumer or lifecycle.
+
+## Dependency direction
+
+- Authored code may import generated contracts, registries, and runtime from `src/providers`.
+  Nothing under `src/providers` may import authored code outside that tree. `src/providers` is
+  immutable once generated, and updates to it must be made through the generator.
+- Reuse generated provider/version/client types in the high-level API. Do not redeclare a type that
+  can be derived from the manifest, schema, generated registry, or generated REST client.
+- Keep provider implementations lazy. Runtime value imports must not eagerly load every provider;
+  provider/version selection uses literal deferred imports.
+- Keep reusable modules import-safe: importing PanGit must not start I/O, read environment state, or
+  initialize a provider.
+
+## Public and published shape
+
+- Deno does not implicitly resolve a directory to `mod.ts` or `index.ts`. Every internal import and
+  package export must name its target explicitly.
+- Public root and subpath exports land on barrels; barrels re-export named implementation modules.
+  Keep internal-only factories out of public barrels.
+- All package runtime source lives under `packages/pangit/src`. Tests, generated E2E/Docker assets,
+  reports, and maintainer documentation stay outside the published package.
+- Add concise JSDoc to authored public abstractions and non-obvious boundaries. Do not hand-document
+  emitted OpenAPI types or churn narrative documentation during code-only structural work.
+
+## Working rule
+
+Before editing, identify whether each touched file is authored or generator-owned and inspect its
+callers and export path. Change only the responsible layer. For generated files, stop and use
+`pangit-provider-generation`.
+
+After an authored structural change, run the smallest relevant checks:
+
+```bash
+deno fmt --check packages/pangit/src
+deno task --cwd packages/pangit build
+deno task --cwd packages/pangit lint
+(cd packages/pangit && deno publish --dry-run --allow-dirty)
+```
+
+Also inspect every in-scope `mod.ts`/`index.ts` for declarations and inspect the module graph for
+imports escaping `packages/pangit/src`. Respect explicit instructions not to add or run tests,
+Docker, documentation generation, or unrelated workspace gates.

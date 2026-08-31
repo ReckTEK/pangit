@@ -1,0 +1,4 @@
+interface:
+  display_name: "PanGit Code Quality"
+  short_description: "Keep authored PanGit TypeScript clean and navigable"
+  default_prompt: "Use $pangit-code-quality to implement or refactor authored PanGit code with clear files, barrel-only entrypoints, and clean package boundaries."

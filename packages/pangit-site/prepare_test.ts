@@ -23,6 +23,28 @@ Deno.test("prepared references are exact copies of package assets for every prov
       }
     }
   }
+
+  const brandDirectory = new URL(`./public${siteConfig.assets.brand.path}/`, import.meta.url);
+  const actualBrandFiles: string[] = [];
+  for await (const entry of Deno.readDir(brandDirectory)) {
+    if (!entry.isFile) throw new Error(`Unexpected brand directory: ${entry.name}`);
+    actualBrandFiles.push(entry.name);
+  }
+  const expectedBrandFiles = [...siteConfig.assets.brand.files].toSorted();
+  if (JSON.stringify(actualBrandFiles.toSorted()) !== JSON.stringify(expectedBrandFiles)) {
+    throw new Error("Prepared brand asset inventory differs from site configuration");
+  }
+  for (const file of expectedBrandFiles) {
+    const expected = await Deno.readFile(
+      new URL(`../pangit/${siteConfig.assets.brand.source}${file}`, siteRoot),
+    );
+    const actual = await Deno.readFile(new URL(file, brandDirectory));
+    if (
+      expected.length !== actual.length || expected.some((byte, index) => byte !== actual[index])
+    ) {
+      throw new Error(`Prepared brand asset differs: ${file}`);
+    }
+  }
 });
 
 Deno.test("configured snippets point to nonempty standalone source files", async () => {

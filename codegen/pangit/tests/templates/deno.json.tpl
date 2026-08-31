@@ -1,0 +1,14 @@
+{
+  "workspace": [],
+  "nodeModulesDir": "none",
+  "compilerOptions": {
+    "lib": [
+      "deno.ns",
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
+  }
+}
