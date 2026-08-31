@@ -1,4 +1,4 @@
-import { PanGit } from "@mannsion/pangit";
+import * as PanGit from "@mannsion/pangit";
 
 export const GITEA_API_URL = "http://127.0.0.1:3300/api/v1";
 export const GITEA_VERSION = "1.27.2";
@@ -14,10 +14,10 @@ export function createExampleOAuth(options: ExampleOAuthOptions) {
     throw new TypeError("Gitea OAuth client ID cannot be empty");
   }
 
-  const selected = PanGit.createClient("gitea", GITEA_VERSION, {
+  const selected = PanGit.api.createClient("gitea", GITEA_VERSION, {
     baseUrl: GITEA_API_URL,
   });
-  return PanGit.createOAuthHandler({
+  return PanGit.api.auth.createOAuthHandler({
     gitea: selected.auth.login({
       clientId: options.clientId,
       callbackUrl: options.callbackUrl,

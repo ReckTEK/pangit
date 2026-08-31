@@ -115,6 +115,11 @@ Deno.test("generated module ships raw clients behind literal dynamic imports", (
     source.includes('import type { RestClient, RestClientOptions } from "./runtime/mod.ts"'),
     "generated registry must import only generated runtime types",
   );
+  assert(
+    source.includes("baseUrl: string | URL") &&
+      source.includes("baseUrlOrConfiguration instanceof URL"),
+    "generated provider factory must accept the base URL shorthand",
+  );
   for (
     const [path, className] of [
       ["./gitea/1.26.4/mod.ts", "GiteaRestClient"],

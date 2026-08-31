@@ -1,4 +1,4 @@
-import type { Provider, ProviderVersion } from "../providers/provider.ts";
+import type { Provider, ProviderVersion } from "../../providers/provider.ts";
 import type {
   OAuthAuthorizedClientFor,
   OAuthHandler,
@@ -61,7 +61,7 @@ class OAuthHandlerImpl<TProvider extends Provider> implements OAuthHandler<TProv
   }
 }
 
-/** Build one universal OAuth callback dispatcher over the configured provider logins. */
+/** Build one OAuth callback dispatcher over the configured provider logins. */
 export function createOAuthHandler<const TLogins extends OAuthLoginRegistry>(
   logins: TLogins,
 ): OAuthHandler<Extract<keyof TLogins, Provider>> {

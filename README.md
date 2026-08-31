@@ -17,8 +17,10 @@ PanGit brings Gitea, GitLab, GitHub, Codeberg, Bitbucket Cloud, and Azure DevOps
 TypeScript project. Clients are generated from OpenAPI specifications and preserve each provider's
 request fields, response bodies, and HTTP status codes.
 
-`loadRestClient(provider, version, options)` loads only the client you select, with its methods and
-types inferred. Every client uses the same native-Fetch transport.
+`PanGit.createProviderClient(provider, version, baseUrlOrOptions)` lazily creates only the generated
+client you select, with its provider-native methods and types inferred. Pass the base URL directly
+for the common case or a full options object for headers and transport controls. `PanGit.api` is the
+fluent, provider-neutral API.
 
 ## Quick start
 
@@ -31,12 +33,12 @@ deno add jsr:@mannsion/pangit
 Save this as `main.ts`, replacing the API URL with your Gitea 1.27.2 instance:
 
 ```ts
-import { loadRestClient } from "@mannsion/pangit";
+import * as PanGit from "@mannsion/pangit";
 
 const token = Deno.env.get("GITEA_TOKEN");
 if (!token) throw new Error("Set GITEA_TOKEN to your personal access token.");
 
-const client = await loadRestClient("gitea", "1.27.2", {
+const client = await PanGit.createProviderClient("gitea", "1.27.2", {
   baseUrl: "https://git.example.com/api/v1",
   headers: { Authorization: `token ${token}` },
 });
@@ -104,9 +106,8 @@ Open `http://localhost:3000` (or set `PORT`). The explorer sends requests direct
 to your selected API server. Scalar provides authentication, headers, request editing, and response
 inspection. Your server must allow the browser origin with CORS. Authorization is not persisted.
 
-The site’s high-level reference section is still reserved; the library already exports the managed
-`PanGit` client, authentication helpers, and raw REST clients. See
-[site development](packages/pangit-site/Development.md) and
+The site’s high-level reference section is still reserved; the library already exports its fluent
+API and provider-native clients. See [site development](packages/pangit-site/Development.md) and
 [documentation generation](packages/pangit/docs/Documentation.md). The reviewed boundary for a
 future provider-neutral API is the
 [common API analysis](packages/pangit/docs/api-analysis/README.md).

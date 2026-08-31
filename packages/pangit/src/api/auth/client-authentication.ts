@@ -1,6 +1,6 @@
-import type { AuthorizedClient, ClientOptions } from "../providers/managed-client.ts";
-import type { Provider, ProviderVersion } from "../providers/provider.ts";
-import { loadRestClient } from "../providers/registry.ts";
+import type { AuthorizedClient, ClientOptions } from "../../providers/managed-client.ts";
+import type { Provider, ProviderVersion } from "../../providers/provider.ts";
+import { createProviderClient } from "../../providers/registry.ts";
 import type { Auth, BasicAuthorization, TokenAuthorization } from "./authentication-contracts.ts";
 import { AuthAdapterNotImplementedError } from "./AuthAdapterNotImplementedError.ts";
 import { createBasicAuthorization } from "./basic-authorization.ts";
@@ -27,7 +27,7 @@ class AuthImpl<
       throw new AuthAdapterNotImplementedError("Token authentication");
     }
 
-    const client = await loadRestClient(
+    const client = await createProviderClient(
       "gitea",
       this.#version as ProviderVersion<"gitea">,
       {

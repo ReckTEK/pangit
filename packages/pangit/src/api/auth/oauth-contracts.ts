@@ -1,6 +1,6 @@
-import type { RestClientTypeMap } from "../providers/clients.ts";
-import type { AuthorizedClient } from "../providers/managed-client.ts";
-import type { Provider, ProviderVersion } from "../providers/provider.ts";
+import type { RestClientTypeMap } from "../../providers/clients.ts";
+import type { AuthorizedClient } from "../../providers/managed-client.ts";
+import type { Provider, ProviderVersion } from "../../providers/provider.ts";
 
 /** Common inputs needed to begin a provider-hosted OAuth login. */
 export interface LoginOptions {
@@ -65,7 +65,7 @@ export interface Login<
   ): Promise<OAuthAuthorizedClient<TProvider, TVersion>>;
 }
 
-/** Provider logins configured behind one universal callback endpoint. */
+/** Provider logins configured behind one shared callback endpoint. */
 export type OAuthLoginRegistry = Partial<
   {
     [TProvider in Provider]: Login<TProvider, ProviderVersion<TProvider>>;

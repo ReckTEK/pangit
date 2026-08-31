@@ -1,11 +1,11 @@
-/** Keep direct provider/version package exports synchronized with the generation manifest. */
+/** Keep public provider-client package exports synchronized with the generation manifest. */
 import type { RestClientSpecManifest } from "./client-manifests.ts";
 import { compareText } from "./naming.ts";
 
 type JsonObject = Record<string, unknown>;
 
 /** Render the package configuration with exactly the provider/version exports in the manifest. */
-export function renderPackageConfigurationWithProviderExports(
+export function renderPackageConfigurationWithProviderClientExports(
   source: string,
   manifest: RestClientSpecManifest,
   label: string,
@@ -16,11 +16,11 @@ export function renderPackageConfigurationWithProviderExports(
     throw new Error(`Package configuration has no object exports map: ${label}`);
   }
 
-  const generatedExports = directProviderExports(manifest);
+  const generatedExports = directProviderClientExports(manifest);
   const synchronizedExports: JsonObject = {};
   let insertedGeneratedExports = false;
   for (const [specifier, target] of Object.entries(packageExports)) {
-    if (isGeneratedProviderExport(specifier)) {
+    if (isManagedProviderClientExport(specifier)) {
       if (!insertedGeneratedExports) {
         Object.assign(synchronizedExports, generatedExports);
         insertedGeneratedExports = true;
@@ -28,10 +28,6 @@ export function renderPackageConfigurationWithProviderExports(
       continue;
     }
     synchronizedExports[specifier] = target;
-    if (specifier === "./providers" && !insertedGeneratedExports) {
-      Object.assign(synchronizedExports, generatedExports);
-      insertedGeneratedExports = true;
-    }
   }
   if (!insertedGeneratedExports) Object.assign(synchronizedExports, generatedExports);
 
@@ -40,10 +36,8 @@ export function renderPackageConfigurationWithProviderExports(
   return `${JSON.stringify({ ...configuration, exports: synchronizedExports }, null, 2)}\n`;
 }
 
-function directProviderExports(manifest: RestClientSpecManifest): Record<string, string> {
-  const exports: Record<string, string> = {
-    "./providers": "./src/providers/mod.ts",
-  };
+function directProviderClientExports(manifest: RestClientSpecManifest): Record<string, string> {
+  const exports: Record<string, string> = {};
   for (const provider of Object.keys(manifest.providers).toSorted(compareText)) {
     for (
       const version of Object.keys(manifest.providers[provider].versions).toSorted(compareText)
@@ -52,14 +46,17 @@ function directProviderExports(manifest: RestClientSpecManifest): Record<string,
       exports[specifier] = `./${manifest.providers[provider].versions[version].artifacts.client}`;
     }
   }
-  exports["./providers/runtime"] = "./src/providers/runtime/mod.ts";
   return exports;
 }
 
-function isGeneratedProviderExport(specifier: string): boolean {
-  if (specifier === "./providers" || specifier === "./providers/runtime") return true;
+function isManagedProviderClientExport(specifier: string): boolean {
+  if (
+    specifier === "./raw" || specifier === "./providers" ||
+    specifier === "./providers/runtime"
+  ) return true;
   const segments = specifier.split("/");
-  return segments.length === 4 && segments[0] === "." && segments[1] === "providers" &&
+  return segments.length === 4 && segments[0] === "." &&
+    (segments[1] === "raw" || segments[1] === "providers") &&
     segments[2].length > 0 && segments[3].length > 0;
 }
 

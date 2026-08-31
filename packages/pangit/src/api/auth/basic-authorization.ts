@@ -1,5 +1,5 @@
-import type { AuthorizedClient } from "../providers/managed-client.ts";
-import type { Provider, ProviderVersion } from "../providers/provider.ts";
+import type { AuthorizedClient } from "../../providers/managed-client.ts";
+import type { Provider, ProviderVersion } from "../../providers/provider.ts";
 import type { AuthBranch, BasicAuthorization } from "./authentication-contracts.ts";
 import { AuthAdapterNotImplementedError } from "./AuthAdapterNotImplementedError.ts";
 

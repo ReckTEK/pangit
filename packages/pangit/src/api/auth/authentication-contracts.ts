@@ -1,5 +1,5 @@
-import type { AuthorizedClient } from "../providers/managed-client.ts";
-import type { Provider, ProviderVersion } from "../providers/provider.ts";
+import type { AuthorizedClient } from "../../providers/managed-client.ts";
+import type { Provider, ProviderVersion } from "../../providers/provider.ts";
 import type { Login, LoginOptions } from "./oauth-contracts.ts";
 
 /** A value returned immediately or asynchronously. */

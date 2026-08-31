@@ -14,9 +14,9 @@
     "dev": "deno task --recursive --filter @mannsion/pangit-site dev",
     "build": "deno task --recursive --filter @mannsion/pangit-site build",
     "start": "deno task --recursive --filter @mannsion/pangit-site start",
-    "check": "deno check codegen tests/documentation tests/e2e-runner.ts tests/reporting && deno task --recursive --filter @mannsion/* check",
-    "test": "deno test --allow-env=NODE_DISABLE_COLORS --allow-read --allow-write --allow-run=deno codegen tests/documentation tests/e2e-result-tree_test.ts tests/reporting && deno task --recursive --filter @mannsion/* test",
-    "lint": "deno lint codegen tests/documentation tests/e2e-releases.ts tests/e2e-result-tree.ts tests/e2e-result-tree_test.ts tests/e2e-runner.ts tests/reporting && deno task --recursive --filter @mannsion/* lint",
+    "check": "deno check codegen tests/documentation tests/package tests/e2e-runner.ts tests/reporting && deno task --recursive --filter @mannsion/* check",
+    "test": "deno test --allow-env=NODE_DISABLE_COLORS --allow-read --allow-write --allow-run=deno codegen tests/documentation tests/package tests/e2e-result-tree_test.ts tests/reporting && deno task --recursive --filter @mannsion/* test",
+    "lint": "deno lint codegen tests/documentation tests/package tests/e2e-releases.ts tests/e2e-result-tree.ts tests/e2e-result-tree_test.ts tests/e2e-runner.ts tests/reporting && deno task --recursive --filter @mannsion/* lint",
     "fmt": "deno fmt"
   },
   "fmt": {

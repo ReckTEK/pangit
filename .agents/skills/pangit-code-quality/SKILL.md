@@ -11,7 +11,7 @@ Keep `packages/pangit` understandable from Ctrl+P, import statements, and the pu
 
 - `mod.ts` and `index.ts` are entrypoint barrels only: module comments, imports, and re-exports.
   Move every declaration, implementation, initialization, and side effect into a concern-named file.
-- Name implementation files for the symbol or responsibility they own, such as `PanGit.ts`,
+- Name implementation files for the symbol or responsibility they own, such as `FluentClient.ts`,
   `oauth-handler.ts`, or `OAuthCallbackError.ts`. Avoid ambiguous names such as `core.ts`,
   `flow.ts`, `errors.ts`, or `utils.ts` when Ctrl+P would not reveal the concern.
 - Keep one cohesive responsibility per module. Group tightly related contracts; do not create one
@@ -37,6 +37,8 @@ Keep `packages/pangit` understandable from Ctrl+P, import statements, and the pu
   package export must name its target explicitly.
 - Public root and subpath exports land on barrels; barrels re-export named implementation modules.
   Keep internal-only factories out of public barrels.
+- The package root exports only the `api` namespace and `createProviderClient` factory. Fluent types
+  stay under `api`; generated provider-native types stay in a provider/version module.
 - All package runtime source lives under `packages/pangit/src`. Tests, generated E2E/Docker assets,
   reports, and maintainer documentation stay outside the published package.
 - Add concise JSDoc to authored public abstractions and non-obvious boundaries. Do not hand-document

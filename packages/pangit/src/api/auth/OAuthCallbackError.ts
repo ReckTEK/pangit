@@ -1,4 +1,4 @@
-/** OAuth provider returned or PanGit detected a failed callback. */
+/** OAuth provider returned or PanGit detected a failed authentication callback. */
 export class OAuthCallbackError extends Error {
   readonly code: string;
 

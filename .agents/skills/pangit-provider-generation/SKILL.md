@@ -59,8 +59,11 @@ provider-native OpenAPI type.
   lives at `packages/pangit/docs/test-results/<provider>/<version>/test-result.md`. Both roots
   require their E2E ownership markers, and a successful E2E publication must leave no obsolete files
   or directories.
-- Package export generation points public provider/version subpaths to each barrel while keeping
-  provider loading deferred.
+- Package export generation points `providers/<provider>/<version>` subpaths to each generated
+  barrel while keeping `createProviderClient` deferred. Generated runtime modules and a bare
+  `providers` barrel are not public package paths.
+- `createProviderClient(provider, version, input)` accepts a base URL string/URL for the common case
+  and full generated client options or an existing transport for advanced use.
 
 ## Change and prove generation
 

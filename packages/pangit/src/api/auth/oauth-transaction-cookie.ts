@@ -1,5 +1,5 @@
-import type { Provider, ProviderVersion } from "../providers/provider.ts";
-import { restClientVersions } from "../providers/versions.ts";
+import type { Provider, ProviderVersion } from "../../providers/provider.ts";
+import { restClientVersions } from "../../providers/versions.ts";
 import type { OAuthLoginTransaction, OAuthLoginTransactionFor } from "./oauth-contracts.ts";
 import { OAuthCallbackError } from "./OAuthCallbackError.ts";
 

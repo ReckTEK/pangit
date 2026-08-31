@@ -1,4 +1,4 @@
-import type { Provider, ProviderVersion } from "../providers/provider.ts";
+import type { Provider, ProviderVersion } from "../../providers/provider.ts";
 import {
   createOAuthTransactionCookie,
   type OAuthTransactionCookie,

@@ -1,26 +1,50 @@
 # PanGit
 
-PanGit is a typed TypeScript library for Git-hosting providers. It combines a small handwritten API
-with provider-native REST clients generated from reviewed API specifications.
+PanGit is a typed TypeScript library for Git-hosting providers. Its fluent API provides
+provider-neutral workflows, while generated provider clients preserve each provider's native API.
 
 ## Imports
 
-The package exposes a small high-level surface plus explicit raw-provider entry points:
-
-| Import                                        | Purpose                                                                 |
-| --------------------------------------------- | ----------------------------------------------------------------------- |
-| `@mannsion/pangit`                            | Managed client, authentication helpers, and the lazy raw-client loader. |
-| `@mannsion/pangit/auth`                       | Provider authentication contracts and flows.                            |
-| `@mannsion/pangit/providers`                  | Provider/version metadata and typed lazy REST-client loading.           |
-| `@mannsion/pangit/providers/<name>/<version>` | One provider-native generated REST client.                              |
-| `@mannsion/pangit/providers/runtime`          | Generated shared REST contracts and native-Fetch runtime.               |
-
-Use the root entry for normal application code:
+Import the package as a namespace so the fluent API stays visually distinct from direct provider
+client creation:
 
 ```ts
-import { loadRestClient } from "@mannsion/pangit";
+import * as PanGit from "@mannsion/pangit";
+```
 
-const gitea = await loadRestClient("gitea", "1.27.2", {
+| Entry point                                       | Purpose                                                    |
+| ------------------------------------------------- | ---------------------------------------------------------- |
+| `PanGit.api`                                      | Provider-neutral fluent API and authentication.            |
+| `PanGit.createProviderClient`                     | Lazily create one generated provider/version client.       |
+| `@mannsion/pangit/api`                            | Direct import of the fluent API.                           |
+| `@mannsion/pangit/providers/<provider>/<version>` | One generated provider-native client and its native types. |
+
+Create a provider-neutral fluent client:
+
+```ts
+const git = PanGit.api.createClient("gitea", "1.27.2", {
+  baseUrl: "https://git.example.com/api/v1",
+});
+
+const authorized = await git.auth.token({ token: "example" });
+```
+
+Create exactly one provider-native client without evaluating the other providers:
+
+```ts
+import * as PanGit from "@mannsion/pangit";
+
+const publicGitea = await PanGit.createProviderClient(
+  "gitea",
+  "1.27.2",
+  "https://git.example.com/api/v1",
+);
+```
+
+Pass full client options when you need authentication or transport controls:
+
+```ts
+const gitea = await PanGit.createProviderClient("gitea", "1.27.2", {
   baseUrl: "https://git.example.com/api/v1",
   headers: { authorization: "token example" },
 });
@@ -28,17 +52,19 @@ const gitea = await loadRestClient("gitea", "1.27.2", {
 const response = await gitea.userGetCurrent();
 ```
 
-Each provider/version implementation is loaded only after `loadRestClient` selects it. Importing the
-package or provider registry does not eagerly import every generated client.
+Fluent types live under `PanGit.api`. Generated provider-native types live with the selected
+provider/version module. The root does not spill authentication, transport, or provider types.
+
+Each provider/version implementation is loaded only after `PanGit.createProviderClient` selects it.
+Importing PanGit does not eagerly import every generated client.
 
 ## Source layout
 
 ```text
 src/
-├── auth/       Authored authentication contracts and flows
-├── client/     Authored managed client API
-├── providers/  Generated clients, lazy registry, contracts, and Fetch runtime
-└── mod.ts      Definition-free root barrel
+├── api/        Authored fluent API and authentication
+├── providers/  Generated clients, lazy factory, contracts, and Fetch runtime
+└── mod.ts      Minimal public barrel
 ```
 
 Generator-owned provider/version directories contain a `.generated` ownership marker. Changes inside

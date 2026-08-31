@@ -12,7 +12,7 @@ import {
 import type { ProviderPublicNames, RestClientPublicNamesManifest } from "./client-manifests.ts";
 import { compareText } from "./naming.ts";
 import { parseOpenApiDocument } from "./openapi.ts";
-import { renderPackageConfigurationWithProviderExports } from "./package-exports.ts";
+import { renderPackageConfigurationWithProviderClientExports } from "./provider-client-package-exports.ts";
 import {
   assertGeneratedSourcesCurrent,
   formatGeneratedSources,
@@ -120,7 +120,7 @@ export async function generateRestClients(
   if (!options.updatePublicNames) assertPublicNamesCurrent(lockedNames, capturedNames);
 
   const currentPackageConfiguration = await Deno.readTextFile(packageConfigurationFile);
-  const synchronizedPackageConfiguration = renderPackageConfigurationWithProviderExports(
+  const synchronizedPackageConfiguration = renderPackageConfigurationWithProviderClientExports(
     currentPackageConfiguration,
     manifest,
     packageConfigurationFile.pathname,

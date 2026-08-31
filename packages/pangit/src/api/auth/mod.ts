@@ -1,4 +1,4 @@
-/** Public provider-authentication contracts and helpers. @module */
+/** Fluent API authentication contracts and helpers. @module */
 
 export type {
   Auth,

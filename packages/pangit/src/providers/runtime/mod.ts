@@ -3,8 +3,8 @@
  * Generated native-Fetch runtime for PanGit REST clients.
  *
  * Generated provider clients use this transport to preserve provider-native requests and
- * responses. Applications may import the same runtime from `@mannsion/pangit/providers/runtime` for
- * shared configuration, hooks, raw requests, and response helpers without loading a provider.
+ * responses. PanGit exposes provider-native clients without exposing this transport implementation,
+ * which remains inside the self-contained generated provider tree.
  *
  * @module
  */

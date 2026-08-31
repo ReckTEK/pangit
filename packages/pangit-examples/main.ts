@@ -1,12 +1,12 @@
-import { type AuthorizedClient, type Login, PanGit } from "@mannsion/pangit";
+import * as PanGit from "@mannsion/pangit";
 
-const pangit = PanGit.createClient("gitea", "1.27.2", {
+const pangit = PanGit.api.createClient("gitea", "1.27.2", {
   baseUrl: "https://git.example.com/api/v1",
 });
 
 export async function authorizeWithToken(
   token: string,
-): Promise<AuthorizedClient<"gitea", "1.27.2">> {
+): Promise<PanGit.api.AuthorizedClient<"gitea", "1.27.2">> {
   const authorized = await pangit.auth.token({ token });
 
   // Later: authorized.repositories.list(...)
@@ -16,7 +16,7 @@ export async function authorizeWithToken(
 export async function authorizeWithBasic(
   username: string,
   password: string,
-): Promise<AuthorizedClient<"gitea", "1.27.2">> {
+): Promise<PanGit.api.AuthorizedClient<"gitea", "1.27.2">> {
   return await pangit.auth
     .basic()
     .gitea(() => ({ username, password }))
@@ -28,7 +28,7 @@ export async function authorizeWithBasic(
 export function createLogin(
   clientId = "pangit-example",
   callbackUrl = "https://example.com/auth/callback",
-): Login<"gitea", "1.27.2"> {
+): PanGit.api.auth.Login<"gitea", "1.27.2"> {
   return pangit.auth.login({
     clientId,
     callbackUrl,

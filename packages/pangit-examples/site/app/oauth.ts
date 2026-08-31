@@ -1,4 +1,4 @@
-import { createOAuthCookieFlow } from "@mannsion/pangit";
+import * as PanGit from "@mannsion/pangit";
 import {
   createExampleOAuth as createLowLevelExampleOAuth,
   type ExampleOAuthOptions,
@@ -7,7 +7,7 @@ import {
 export function createExampleOAuth(
   options: ExampleOAuthOptions & { readonly cookieSecret: string },
 ) {
-  return createOAuthCookieFlow(createLowLevelExampleOAuth(options), {
+  return PanGit.api.auth.createOAuthCookieFlow(createLowLevelExampleOAuth(options), {
     cookie: { secret: options.cookieSecret },
   });
 }

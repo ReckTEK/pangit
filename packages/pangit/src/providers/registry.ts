@@ -2,9 +2,9 @@
 import type { RestClientProvider, RestClientTypeMap, RestClientVersion } from "./clients.ts";
 import type { RestClient, RestClientOptions } from "./runtime/mod.ts";
 
-type RestClientLoader = (
-  options: RestClientOptions | RestClient,
-) => Promise<unknown>;
+type RestClientConfiguration = RestClientOptions | RestClient;
+
+type RestClientLoader = (configuration: RestClientConfiguration) => Promise<unknown>;
 
 const restClientLoaders = {
   "azure-devops": {
@@ -37,17 +37,39 @@ const restClientLoaders = {
   },
 } satisfies Record<RestClientProvider, Record<string, RestClientLoader>>;
 
-export function loadRestClient<
-  TProvider extends RestClientProvider,
-  TVersion extends RestClientVersion<TProvider>,
+export function createProviderClient<
+  const TProvider extends RestClientProvider,
+  const TVersion extends RestClientVersion<TProvider>,
 >(
   provider: TProvider,
   version: TVersion,
-  options: RestClientOptions | RestClient,
+  baseUrl: string | URL,
+): Promise<RestClientTypeMap[TProvider][TVersion]>;
+export function createProviderClient<
+  const TProvider extends RestClientProvider,
+  const TVersion extends RestClientVersion<TProvider>,
+>(
+  provider: TProvider,
+  version: TVersion,
+  configuration: RestClientConfiguration,
+): Promise<RestClientTypeMap[TProvider][TVersion]>;
+export function createProviderClient<
+  const TProvider extends RestClientProvider,
+  const TVersion extends RestClientVersion<TProvider>,
+>(
+  provider: TProvider,
+  version: TVersion,
+  baseUrlOrConfiguration: string | URL | RestClientConfiguration,
 ): Promise<RestClientTypeMap[TProvider][TVersion]> {
   const loader = (restClientLoaders[provider] as Record<string, RestClientLoader>)[version];
   if (loader === undefined) {
-    throw new Error(`Unknown REST client version ${provider} ${version}`);
+    throw new Error(`Unknown provider client version ${provider} ${version}`);
   }
-  return loader(options) as Promise<RestClientTypeMap[TProvider][TVersion]>;
+  let configuration: RestClientConfiguration;
+  if (typeof baseUrlOrConfiguration === "string" || baseUrlOrConfiguration instanceof URL) {
+    configuration = { baseUrl: baseUrlOrConfiguration };
+  } else {
+    configuration = baseUrlOrConfiguration;
+  }
+  return loader(configuration) as Promise<RestClientTypeMap[TProvider][TVersion]>;
 }

@@ -1,6 +1,6 @@
-import type { ClientOptions } from "../providers/managed-client.ts";
-import type { Provider, ProviderVersion } from "../providers/provider.ts";
-import { loadRestClient } from "../providers/registry.ts";
+import type { ClientOptions } from "../../providers/managed-client.ts";
+import type { Provider, ProviderVersion } from "../../providers/provider.ts";
+import { createProviderClient } from "../../providers/registry.ts";
 import type {
   Login,
   LoginOptions,
@@ -105,7 +105,7 @@ class LoginImpl<
       redirect_uri: transaction.callbackUrl,
       code_verifier: transaction.codeVerifier,
     });
-    const { RestClient } = await import("../providers/runtime/mod.ts");
+    const { RestClient } = await import("../../providers/runtime/mod.ts");
     const transport = new RestClient(this.#clientOptions);
     const response = await transport.fetch(tokenUrl, {
       method: "POST",
@@ -124,7 +124,7 @@ class LoginImpl<
     const accessToken = requiredString(payload.access_token, "access_token");
     const tokenType = requiredString(payload.token_type, "token_type");
 
-    const client = await loadRestClient(
+    const client = await createProviderClient(
       "gitea",
       this.version as ProviderVersion<"gitea">,
       {

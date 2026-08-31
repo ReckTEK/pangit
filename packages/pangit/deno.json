@@ -4,8 +4,7 @@
   "license": "MIT",
   "exports": {
     ".": "./src/mod.ts",
-    "./auth": "./src/auth/mod.ts",
-    "./providers": "./src/providers/mod.ts",
+    "./api": "./src/api/mod.ts",
     "./providers/azure-devops/latest": "./src/providers/azure-devops/latest/mod.ts",
     "./providers/bitbucket/latest": "./src/providers/bitbucket/latest/mod.ts",
     "./providers/codeberg/latest": "./src/providers/codeberg/latest/mod.ts",
@@ -13,8 +12,7 @@
     "./providers/gitea/1.27.2": "./src/providers/gitea/1.27.2/mod.ts",
     "./providers/github/latest": "./src/providers/github/latest/mod.ts",
     "./providers/gitlab/18.11.11": "./src/providers/gitlab/18.11.11/mod.ts",
-    "./providers/gitlab/19.3.1": "./src/providers/gitlab/19.3.1/mod.ts",
-    "./providers/runtime": "./src/providers/runtime/mod.ts"
+    "./providers/gitlab/19.3.1": "./src/providers/gitlab/19.3.1/mod.ts"
   },
   "publish": {
     "include": [
