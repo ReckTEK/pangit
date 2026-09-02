@@ -103,7 +103,7 @@ if (handWrittenFluentTest !== undefined) {
 
 const testsPassed = (generatedRawTest?.success ?? true) &&
   (handWrittenFluentTest?.success ?? true);
-let reportingPassed = true;
+let evidencePassed = true;
 let endpointTotals: unknown;
 let sourceCoverage: unknown;
 
@@ -121,10 +121,10 @@ if (generatedRawTest !== undefined) {
     ]
   ) {
     const result = await command(args);
-    reportingPassed &&= result.success;
+    evidencePassed &&= result.success;
   }
 
-  if (reportingPassed) {
+  if (evidencePassed) {
     await Deno.rename(`${coverageData}/html`, `${generatedRawResults}/coverage`);
     const lcov = (await Deno.readTextFile(`${generatedRawResults}/coverage.lcov`)).replace(
       /^SF:.*$/gm,
@@ -177,11 +177,11 @@ if (handWrittenFluentTest !== undefined) {
         error instanceof Error ? error.message : error
       }`,
     );
-    reportingPassed = false;
+    evidencePassed = false;
   }
 }
 
-if (reportingPassed) {
+if (evidencePassed) {
   const suites = {
     ...(generatedRawTest === undefined ? {} : {
       generatedRawRestClientTest: {
@@ -224,4 +224,4 @@ if (reportingPassed) {
   );
 }
 
-Deno.exit(testsPassed && reportingPassed ? 0 : 1);
+Deno.exit(testsPassed && evidencePassed ? 0 : 1);

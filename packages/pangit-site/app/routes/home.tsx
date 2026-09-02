@@ -9,8 +9,7 @@ export const meta = () => [
   { title: `${siteConfig.name} — Documentation` },
   {
     name: "description",
-    content:
-      `${siteConfig.name} package installation and REST API references by provider and version.`,
+    content: `${siteConfig.name} generated REST-client documentation by provider and API version.`,
   },
 ];
 
@@ -20,8 +19,8 @@ export default function Home() {
       <header className="border-b border-line pb-8">
         <h1 className="text-4xl font-semibold tracking-tight">{siteConfig.name}</h1>
         <p className="mt-4 max-w-2xl text-base leading-7 text-muted">
-          A TypeScript package of REST clients for Git hosting APIs, generated from each provider’s
-          OpenAPI specifications.
+          Generated TypeScript REST clients for Git hosting providers, with exact-version OpenAPI
+          references and browser request exploration.
         </p>
         <a
           href={siteUrls.package}
@@ -45,7 +44,7 @@ export default function Home() {
               <dt>
                 <Link to={siteUrls.docs} className="text-accent hover:underline">Overview</Link>
               </dt>
-              <dd className="mt-1.5 leading-6 text-muted">Package structure and available APIs.</dd>
+              <dd className="mt-1.5 leading-6 text-muted">Raw-client setup and providers.</dd>
             </div>
             <div>
               <dt>

@@ -8,6 +8,5 @@ export default [
     index("routes/docs-index.tsx"),
     route(siteUrls.patterns.reference, "routes/raw-reference.tsx"),
     route(siteUrls.patterns.methods, "routes/client-methods.tsx"),
-    route(siteUrls.patterns.unified, "routes/unified.tsx"),
   ]),
 ] satisfies RouteConfig;

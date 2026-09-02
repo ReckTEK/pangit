@@ -5,7 +5,6 @@ import {
   includesRawSuite,
   parseE2ERunSelection,
   resolveE2EResultDirectory,
-  shouldPublishE2EResults,
 } from "./e2e-run-selection.ts";
 
 const catalog = {
@@ -29,7 +28,7 @@ function rejects(args: readonly string[], message: string): void {
   assert(rejected, message);
 }
 
-Deno.test("unfiltered E2E selection runs every suite and remains publishable", () => {
+Deno.test("unfiltered E2E selection runs every suite", () => {
   const selection = parseE2ERunSelection([], catalog);
   assert(
     selection.suite === "all",
@@ -124,7 +123,7 @@ Deno.test("release filtering retains only the requested host and version", () =>
   );
 });
 
-Deno.test("focused results are isolated and only an unfiltered run publishes", () => {
+Deno.test("focused results are isolated from complete results", () => {
   const root = new URL("file:///workspace/");
   const release = {
     gitHost: "gitea",
@@ -141,13 +140,5 @@ Deno.test("focused results are isolated and only an unfiltered run publishes", (
     resolveE2EResultDirectory(root, release, focused).pathname ===
       "/workspace/tests/e2e/.focused-results/gitea/1.27.2/",
     "Focused result directory was not isolated",
-  );
-  assert(
-    shouldPublishE2EResults(full),
-    "Unfiltered run was made non-publishing",
-  );
-  assert(
-    !shouldPublishE2EResults(focused),
-    "Focused run was allowed to publish",
   );
 });

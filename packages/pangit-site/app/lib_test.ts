@@ -42,7 +42,6 @@ Deno.test("configured URL changes keep routes, navigation, and downloads aligned
       theme: "/appearance",
       raw: "rest",
       methods: "functions",
-      unified: "common",
     },
     assets: {
       ...siteConfig.assets,
@@ -79,10 +78,6 @@ Deno.test("configured URL changes keep routes, navigation, and downloads aligned
       }
     }
   }
-  assert(
-    matchRoutes(routes, urls.unified)?.at(-1)?.route.id === "unified",
-    "Unified link is detached from its route",
-  );
   assert(
     urls.spec("gitea", "1.27.2") === "/contracts/gitea/1.27.2.json",
     "Spec path ignored configuration",

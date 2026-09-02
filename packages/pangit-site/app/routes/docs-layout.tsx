@@ -1,5 +1,5 @@
-import { ChevronRight, Layers3, Library, LockKeyhole } from "lucide-react";
-import { Link, NavLink, Outlet, useLocation, useNavigate, useParams } from "react-router";
+import { ChevronRight, Library } from "lucide-react";
+import { Link, NavLink, Outlet, useLocation, useParams } from "react-router";
 import { documentation } from "../lib.ts";
 import { siteConfig } from "../../site.config.ts";
 import { isWithinPath, siteUrls } from "../urls.ts";
@@ -36,17 +36,6 @@ function Sidebar() {
           ))}
         </div>
       </div>
-      <div className="border-t border-line pt-6">
-        <NavLink
-          to={siteUrls.unified}
-          className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}
-        >
-          <Layers3 size={16} />High-level API <LockKeyhole size={12} className="ml-auto" />
-        </NavLink>
-        <p className="mt-2 px-3 text-xs leading-5 text-muted">
-          A place for the future unified API. Not implemented yet.
-        </p>
-      </div>
       <div className="mx-3 rounded-xl border border-line bg-paper p-4">
         <span className="font-mono text-[10px] text-accent">FROM SPEC TO SOURCE</span>
         <p className="mt-2 text-xs leading-6 text-muted">
@@ -59,10 +48,8 @@ function Sidebar() {
 
 export default function DocsLayout() {
   const params = useParams();
-  const navigate = useNavigate();
   const location = useLocation();
   const provider = documentation.providers.find((entry) => entry.id === params.provider);
-  const unified = isWithinPath(location.pathname, siteUrls.unified);
   const explorer = provider && params.version &&
     location.pathname === siteUrls.reference(provider.id, params.version);
   return (
@@ -90,17 +77,6 @@ export default function DocsLayout() {
         </details>
         <div className="flex min-h-15 flex-wrap items-center gap-2 border-b border-line px-5 py-3 text-xs text-muted sm:px-10">
           <Link to={siteUrls.docs} className="hover:text-accent">Docs</Link>
-          <ChevronRight size={12} />
-          <select
-            aria-label="API layer"
-            className="max-w-45 cursor-pointer bg-transparent font-medium text-ink"
-            value={unified ? "unified" : "raw"}
-            onChange={(event) =>
-              navigate(event.target.value === "unified" ? siteUrls.unified : siteUrls.docs)}
-          >
-            <option value="raw">Raw REST clients</option>
-            <option value="unified">High-level API · planned</option>
-          </select>
           {provider && (
             <>
               <ChevronRight size={12} />

@@ -17,7 +17,7 @@ export type E2ERunSelection = {
   readonly version?: string;
   readonly suite: E2ESuite;
   readonly contract?: string;
-  /** Any CLI selector makes this a non-publishing focused run. */
+  /** Any CLI selector makes this a focused run with isolated evidence. */
   readonly focused: boolean;
 };
 
@@ -149,7 +149,7 @@ export function includesFluentSuite(suite: E2ESuite): boolean {
   return suite === "fluent" || suite === "all";
 }
 
-/** Keep focused evidence outside the complete, publishable result tree. */
+/** Keep focused evidence outside the complete result tree. */
 export function resolveE2EResultDirectory(
   root: URL,
   release: { readonly gitHost: string; readonly version: string; readonly results: URL },
@@ -158,9 +158,4 @@ export function resolveE2EResultDirectory(
   return selection.focused
     ? new URL(`tests/e2e/.focused-results/${release.gitHost}/${release.version}/`, root)
     : release.results;
-}
-
-/** Only the argument-free complete run may replace published E2E documentation. */
-export function shouldPublishE2EResults(selection: E2ERunSelection): boolean {
-  return !selection.focused;
 }

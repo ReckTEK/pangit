@@ -63,7 +63,7 @@ Deno.test("E2E result preparation refuses to delete unowned orphan evidence", as
   }
 });
 
-Deno.test("focused result preparation cannot replace complete publishable evidence", async () => {
+Deno.test("focused result preparation cannot replace complete evidence", async () => {
   const directory = await Deno.makeTempDir({ dir: "tests", prefix: ".result-tree-test-" });
   const root = new URL(`file://${Deno.cwd()}/${directory}/`);
   const complete = new URL("results/gitea/1.27.2/", root);

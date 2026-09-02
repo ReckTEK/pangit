@@ -225,7 +225,7 @@ Deno.test("generated raw test and Docker environment reference the hand-written 
     );
     assert(
       composeSource.includes("PANGIT_E2E_RESULTS_SOURCE"),
-      "Compose cannot isolate focused output from complete publishable results",
+      "Compose cannot isolate focused output from complete results",
     );
     assert(
       compose.services.e2e.command?.some((argument) =>

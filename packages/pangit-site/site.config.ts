@@ -15,7 +15,6 @@ export const siteConfig = {
     theme: "/theme",
     raw: "raw",
     methods: "methods",
-    unified: "unified",
   },
   assets: {
     openapi: "/openapi",

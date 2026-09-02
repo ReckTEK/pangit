@@ -34,19 +34,5 @@ tests/e2e/generated/raw-rest-client-tests/<git-host>/<version>/
 tests/e2e/generated/docker-environments/<git-host>/<version>/
 ```
 
-The generated raw test imports a generated REST client directly. The generated Docker environment
-joins that raw test with a path to an existing hand-written fluent API test. Generation never writes
-the hand-written test tree:
-
-```text
-tests/e2e/hand-written/
-├── raw-rest-client-test-cases/
-├── fluent-api-contracts/
-├── git-host-adapter-tests/
-├── docker-environment-definitions/
-└── live-test-plan.json
-```
-
-`deno task e2e` is a separate command. It discovers the generated Docker runs, executes both test
-kinds, writes suite-separated evidence under `tests/e2e/results/`, and publishes Markdown reports.
-Code generation does not start Docker or touch runtime evidence.
+Generated raw-client tests import generated REST clients directly. Code generation does not start
+Docker or touch runtime evidence under `tests/e2e/results/`.

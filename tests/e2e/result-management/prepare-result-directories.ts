@@ -86,14 +86,3 @@ export async function prepareResultDirectories(
   }
   for (const release of releases) await clearResultDirectory(release.results);
 }
-
-/** Verify that a result directory belongs to E2E before publishing from it. */
-export async function assertLiveTestResultOwnership(directory: URL): Promise<void> {
-  const marker = new URL(".generated", directory);
-  if (
-    !await pathExists(marker) ||
-    await Deno.readTextFile(marker) !== liveTestResultOwnershipMarker
-  ) {
-    throw new Error(`Invalid E2E result ownership marker: ${directory.pathname}`);
-  }
-}

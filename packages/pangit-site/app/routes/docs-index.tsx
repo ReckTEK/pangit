@@ -8,13 +8,13 @@ export const meta = () => [{ title: `Documentation — ${siteConfig.name}` }];
 export default function DocsIndex() {
   return (
     <>
-      <p className="eyebrow">THE DOCUMENTATION</p>
+      <p className="eyebrow">RAW REST CLIENT DOCUMENTATION</p>
       <h1 className="mt-4 text-4xl font-semibold tracking-[-1.5px] sm:text-5xl">
         Find your way around.
       </h1>
       <p className="mt-5 max-w-2xl text-base leading-8 text-muted">
-        Explore the full API surface of every PanGit REST client. Pick a provider, choose a version,
-        and go from the contract to your first request.
+        Explore every generated PanGit REST client. Pick a provider and API version to inspect its
+        methods, schemas, and complete request contracts.
       </p>
       <div className="mt-12 flex items-center justify-between">
         <h2 className="text-xl font-semibold tracking-tight">Raw REST clients</h2>

@@ -65,7 +65,6 @@ visit. See [Vite dependency optimization](https://vite.dev/config/dep-optimizati
 | `/docs`                                | Documentation overview and provider catalog.       |
 | `/docs/raw/:provider/:version`         | Complete interactive OpenAPI reference.            |
 | `/docs/raw/:provider/:version/methods` | Searchable index of every generated client method. |
-| `/docs/unified`                        | Reserved section for the future high-level API.    |
 
 The root [generation entry point](../../codegen/generate-all.ts) creates the site's `public/`
 reference, brand assets and React Router route types alongside the library's generated output.
@@ -147,7 +146,7 @@ deno task build
 
 The tests compare the manifest with every generated client registry, retain byte-identical OpenAPI
 documents, and exercise explorer adaptation, method links, authorization boundaries, themes, and
-static asset preparation. Docker E2E remains a separate `deno task e2e`.
+static asset preparation.
 
 ## Upgrading Scalar
 

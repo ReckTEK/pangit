@@ -1,12 +1,10 @@
 import { relativePath, workspace, type WorkspacePaths } from "../../../codegen/workspace-layout.ts";
-import { publishE2EDocumentation } from "../reporting/publish-e2e-documentation.ts";
 import { prepareResultDirectories } from "../result-management/prepare-result-directories.ts";
 import { discoverGeneratedLiveTests } from "./discover-generated-live-tests.ts";
 import {
   filterE2EReleases,
   parseE2ERunSelection,
   resolveE2EResultDirectory,
-  shouldPublishE2EResults,
 } from "./e2e-run-selection.ts";
 import { liveE2ERunCatalog } from "./live-e2e-run-catalog.ts";
 
@@ -22,7 +20,7 @@ async function clearAuthenticationDirectory(directory: URL): Promise<void> {
   }
 }
 
-/** Run selected manifest suites; publish only an argument-free complete run. */
+/** Run selected manifest suites and retain their machine-readable evidence. */
 export async function runAllLiveTests(
   paths: WorkspacePaths = workspace,
   args: readonly string[] = Deno.args,
@@ -290,23 +288,6 @@ export async function runAllLiveTests(
     Deno.removeSignalListener("SIGTERM", interrupt);
   }
 
-  if (shouldPublishE2EResults(selection)) {
-    try {
-      await publishE2EDocumentation(paths, releases);
-      console.log(
-        `Published ${releases.length} deterministic E2E Markdown reports.`,
-      );
-    } catch (error) {
-      failed = true;
-      console.error(
-        `E2E documentation publication failed: ${error instanceof Error ? error.message : error}`,
-      );
-    }
-  } else {
-    console.log(
-      "Focused E2E results were kept separate and were not published.",
-    );
-  }
   if (failed || interrupted) {
     throw new Error(
       "Selected real API E2E execution did not complete successfully.",

@@ -33,7 +33,6 @@ export function createSiteUrls(config: SiteConfig) {
     docs: routes.docs,
     theme: routes.theme,
     package: config.links.package,
-    unified: joinPath(routes.docs, routes.unified),
     main: `#${config.anchors.main}`,
     referenceSection: `#${config.anchors.reference}`,
     logo: joinPath(assets.brand.path, assets.logo),
@@ -44,7 +43,6 @@ export function createSiteUrls(config: SiteConfig) {
     patterns: {
       reference: referencePattern,
       methods: joinPath(referencePattern, routes.methods),
-      unified: routes.unified,
     },
     referenceView: (pathname: string): ReferenceView =>
       pathname.endsWith(`/${routes.methods}`) ? "methods" : "explorer",
