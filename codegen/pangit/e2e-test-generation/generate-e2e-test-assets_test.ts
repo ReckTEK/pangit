@@ -210,7 +210,8 @@ Deno.test("generated raw test and Docker environment reference the hand-written 
       run.suites.handWrittenFluentApiTest.testFile === testPlan.handWrittenFluentApiTest,
       "Generated run manifest does not name the hand-written fluent API test",
     );
-    const compose = parseYaml(await Deno.readTextFile(new URL("compose.yaml", docker))) as {
+    const composeSource = await Deno.readTextFile(new URL("compose.yaml", docker));
+    const compose = parseYaml(composeSource) as {
       services: Record<string, { working_dir?: string; volumes?: string[]; command?: string[] }>;
     };
     assert(compose.services.e2e.working_dir === "/workspace", "Runner is not workspace-rooted");
@@ -221,6 +222,16 @@ Deno.test("generated raw test and Docker environment reference the hand-written 
     assert(
       compose.services.e2e.volumes?.some((volume) => volume.endsWith(":/results")) === true,
       "Compose does not bind the separate results tree",
+    );
+    assert(
+      composeSource.includes("PANGIT_E2E_RESULTS_SOURCE"),
+      "Compose cannot isolate focused output from complete publishable results",
+    );
+    assert(
+      compose.services.e2e.command?.some((argument) =>
+        argument.includes("PANGIT_E2E_SUITE") && argument.includes("PANGIT_E2E_CONTRACT")
+      ) === true,
+      "Compose runner cannot receive authored suite and contract selection",
     );
   } finally {
     await Deno.remove(directory, { recursive: true });

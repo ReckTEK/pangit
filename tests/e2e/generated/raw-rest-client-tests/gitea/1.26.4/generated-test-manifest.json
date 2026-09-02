@@ -25434,6 +25434,15 @@
           }
         },
         {
+          "status": 201,
+          "mediaTypes": [
+            "application/json"
+          ],
+          "decoders": {
+            "application/json": "json"
+          }
+        },
+        {
           "status": 404,
           "mediaTypes": []
         },
@@ -32004,6 +32013,10 @@
       "responses": [
         {
           "status": 200,
+          "mediaTypes": []
+        },
+        {
+          "status": 201,
           "mediaTypes": []
         },
         {

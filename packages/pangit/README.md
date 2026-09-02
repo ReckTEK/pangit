@@ -1,89 +1,100 @@
 # PanGit
 
-PanGit is a typed TypeScript library for Git hosts. Its hand-written fluent API provides
-Git-host-neutral workflows, while generated raw REST clients preserve each host's native API.
+PanGit is a typed TypeScript library for Git hosts. It exposes two deliberately separate APIs:
+
+| API                           | Use it for                                                   | Provider coverage                                            |
+| ----------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| `PanGit.api`                  | Portable, immutable Git workflows through a provider adapter | Gitea 1.26.4 and 1.27.2                                      |
+| `PanGit.createProviderClient` | The complete generated, provider-native REST surface         | Azure DevOps, Bitbucket, Codeberg, Gitea, GitHub, and GitLab |
+
+The fluent API is not a renamed raw client. It defines shared behavior, bounded work, cancellation,
+normalized errors, immutable entities, optional capability metadata, narrow provider extensions, and
+typed native escape doors.
 
 ## Imports
 
-Import the package as a namespace so the fluent API stays visually distinct from direct raw
-REST-client creation:
+Import the package as a namespace so portable and raw calls remain visually distinct:
 
 ```ts
 import * as PanGit from "@mannsion/pangit";
 ```
 
-| Entry point                                       | Purpose                                                    |
-| ------------------------------------------------- | ---------------------------------------------------------- |
-| `PanGit.api`                                      | Git-host-neutral fluent API and authentication.            |
-| `PanGit.createProviderClient`                     | Lazily create one generated raw REST client.               |
-| `@mannsion/pangit/api`                            | Direct import of the fluent API.                           |
-| `@mannsion/pangit/providers/<provider>/<version>` | One generated provider-native client and its native types. |
+| Entry point                                       | Purpose                                                                    |
+| ------------------------------------------------- | -------------------------------------------------------------------------- |
+| `PanGit.api`                                      | Fluent API, authentication, entities, contracts, errors, and support types |
+| `PanGit.createProviderClient`                     | Lazy generated raw-client factory                                          |
+| `@mannsion/pangit/api`                            | Direct fluent API import                                                   |
+| `@mannsion/pangit/providers/<provider>/<version>` | One generated client and its exact native types                            |
 
-Create a provider-neutral fluent client:
-
-```ts
-const git = PanGit.api.createClient(
-  "gitea",
-  "1.27.2",
-  "https://git.example.com/api/v1",
-);
-
-const authorized = await git.auth.token("example");
-
-const container = await authorized.container("acme");
-const repositories = await container.repositories();
-const repository = await container.repository("website");
-const existing = await container.findRepository("optional-repository");
-const exists = await container.hasRepository("website");
-```
-
-A repository container is the Git host's repository-owning scope: a Gitea user or organization,
-GitHub organization, GitLab group, Bitbucket workspace, Azure DevOps project, or equivalent. Exact
-lookup and existence checks call the hand-written Git-host adapter directly; they do not download
-every repository first.
-
-Create exactly one raw REST client without evaluating the other Git hosts:
+## Fluent Gitea example
 
 ```ts
 import * as PanGit from "@mannsion/pangit";
 
-const publicGitea = await PanGit.createProviderClient(
-  "gitea",
-  "1.27.2",
-  "https://git.example.com/api/v1",
-);
+const connection = PanGit.api.createClient("gitea", "1.27.2", {
+  baseUrl: "https://git.example.com/api/v1",
+});
+const git = await connection.auth.token("example-token");
+
+const owner = await git.container("acme");
+const repository = await owner.repository("website");
+
+const branches = await repository.branches.list({ limit: 25 });
+const readme = await repository.content.read("README.md", { ref: "main" });
+const issues = await repository.issues.list({ state: "open", limit: 25 });
+const profile = await git.currentUserProfile.current();
+
+console.log(branches.items, readme.kind, issues.items, profile.username);
 ```
 
-Pass full client options when you need authentication or transport controls:
+Repository-owning scopes are called containers: a Gitea user or organization today, and the
+equivalent organization, group, workspace, or project when another fluent adapter is added.
+`repository(name)`, `findRepository(name)`, and `hasRepository(name)` use direct lookup; they do not
+list every repository and scan locally.
+
+Every optional handle has frozen local support metadata. Reading `support` performs no feature
+probe. Gitea reports deployments/environments and gists/snippets through
+`git.unsupportedOptionalCapabilities.support` instead of exposing methods that cannot work.
+
+## Generated raw client example
 
 ```ts
 const gitea = await PanGit.createProviderClient("gitea", "1.27.2", {
   baseUrl: "https://git.example.com/api/v1",
-  headers: { authorization: "token example" },
+  headers: { Authorization: "token example-token" },
 });
 
 const response = await gitea.userGetCurrent();
 ```
 
-Fluent types live under `PanGit.api`. Generated native types live with the selected Git-host/version
-module. The root does not spill authentication, transport, or raw-client types.
+Raw calls retain generated request types, documented response unions, provider operation names, and
+exact HTTP status behavior. Selecting one provider/version loads only that client.
 
-Each Git-host/version implementation is loaded only after `PanGit.createProviderClient` selects it.
-Importing PanGit does not eagerly import every generated client.
+## Architecture and ownership
 
-## Source layout
+```text
+consumer
+  -> hand-written fluent API
+  -> universal GitHostAdapter concern contracts
+  -> hand-written Gitea adapter
+  -> selected generated Gitea REST client
+  -> HTTP
+```
 
 ```text
 src/
-├── fluent-api/             HAND-WRITTEN portable API and authentication
-├── git-host-adapters/      HAND-WRITTEN translations to host-specific APIs
-├── generated-rest-clients/ GENERATED FROM OPENAPI, including Fetch runtime
-└── mod.ts                  Minimal public barrel
+├── fluent-api/             HAND-WRITTEN portable API and adapter contract
+├── git-host-adapters/      HAND-WRITTEN provider implementations
+├── generated-rest-clients/ GENERATED from checked-in OpenAPI inputs
+└── mod.ts                  Small public barrel
 ```
 
-`src/generated-rest-clients/` contains a `.generated` ownership marker and is replaced on
-generation. The generator never writes `src/fluent-api/` or `src/git-host-adapters/`. Generated
-raw-client code is self-contained and never imports either hand-written tree. Tests, Docker assets,
-reports, codegen, and repository documentation are outside the package publish set.
+The generator replaces only marker-owned generated clients, raw-client E2E suites, Docker
+environments, and site artifacts. It never writes the fluent API, provider adapters, or hand-written
+fluent contracts.
+
+See the [fluent provider-adapter architecture](docs/fluent-api-provider-adapter-architecture.md) for
+the complete 52-operation core inventory, optional Gitea capabilities, extensions, native doors,
+request-cost rules, and generated-versus-authored E2E tree.
 
 PanGit is licensed under the MIT License.

@@ -1,4 +1,5 @@
-import type { Provider, ProviderVersion } from "../../generated-rest-clients/git-host.ts";
+import type { ProviderVersion } from "../../generated-rest-clients/git-host.ts";
+import type { FluentProvider } from "../provider-registry.ts";
 import {
   createOAuthTransactionCookie,
   type OAuthTransactionCookie,
@@ -13,7 +14,7 @@ export interface OAuthCookieFlowOptions {
   readonly redirectStatus?: 302 | 303;
 }
 
-export type OAuthCookieCompletion<TProvider extends Provider> =
+export type OAuthCookieCompletion<TProvider extends FluentProvider> =
   | Readonly<{
     ok: true;
     authorized: OAuthAuthorizedClientFor<TProvider>;
@@ -31,7 +32,7 @@ export type OAuthCookieCompletion<TProvider extends Provider> =
  * Framework-neutral OAuth orchestration backed by a short-lived encrypted browser cookie.
  * It owns only protocol transaction state; application login sessions remain caller-owned.
  */
-export interface OAuthCookieFlow<TProvider extends Provider> {
+export interface OAuthCookieFlow<TProvider extends FluentProvider> {
   readonly oauth: OAuthHandler<TProvider>;
   readonly cookie: OAuthTransactionCookie<TProvider>;
   /** Begin login and return a native redirect Response containing the transaction cookie. */
@@ -41,7 +42,7 @@ export interface OAuthCookieFlow<TProvider extends Provider> {
 }
 
 /** Add native cookie transaction handling to an existing low-level OAuth handler. */
-export function createOAuthCookieFlow<TProvider extends Provider>(
+export function createOAuthCookieFlow<TProvider extends FluentProvider>(
   oauth: OAuthHandler<TProvider>,
   options: OAuthCookieFlowOptions,
 ): OAuthCookieFlow<TProvider> {

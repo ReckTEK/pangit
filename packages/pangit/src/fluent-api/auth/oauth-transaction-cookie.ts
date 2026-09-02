@@ -1,5 +1,6 @@
-import type { Provider, ProviderVersion } from "../../generated-rest-clients/git-host.ts";
+import type { ProviderVersion } from "../../generated-rest-clients/git-host.ts";
 import { restClientVersions } from "../../generated-rest-clients/supported-versions.ts";
+import { type FluentProvider, isFluentProvider } from "../provider-registry.ts";
 import type { OAuthLoginTransaction, OAuthLoginTransactionFor } from "./oauth-contracts.ts";
 import { OAuthCallbackError } from "./OAuthCallbackError.ts";
 
@@ -38,7 +39,9 @@ export interface OAuthTransactionCookieOptions {
  * Set and clear return native Set-Cookie header values. Read consumes the native
  * callback request and needs no HTTP framework adapter. Cookies are always HttpOnly.
  */
-export interface OAuthTransactionCookie<TProvider extends Provider = Provider> {
+export interface OAuthTransactionCookie<
+  TProvider extends FluentProvider = FluentProvider,
+> {
   readonly name: string;
 
   set<
@@ -58,7 +61,7 @@ export interface OAuthTransactionCookie<TProvider extends Provider = Provider> {
 interface CookiePayload {
   readonly version: typeof payloadVersion;
   readonly expiresAt: number;
-  readonly transaction: OAuthLoginTransactionFor<Provider>;
+  readonly transaction: OAuthLoginTransactionFor<FluentProvider>;
 }
 
 interface CookieOptions {
@@ -79,13 +82,15 @@ interface ResolvedCookiePolicy {
 }
 
 /** Build an encrypted OAuth transaction cookie using only standard Web APIs. */
-export function createOAuthTransactionCookie<TProvider extends Provider = Provider>(
+export function createOAuthTransactionCookie<
+  TProvider extends FluentProvider = FluentProvider,
+>(
   options: OAuthTransactionCookieOptions,
 ): OAuthTransactionCookie<TProvider> {
   return new OAuthTransactionCookieImpl<TProvider>(options);
 }
 
-class OAuthTransactionCookieImpl<TProvider extends Provider>
+class OAuthTransactionCookieImpl<TProvider extends FluentProvider>
   implements OAuthTransactionCookie<TProvider> {
   readonly name: string;
   readonly #options: CookieOptions;
@@ -339,7 +344,7 @@ function validatePayload(value: unknown): CookiePayload {
   };
 }
 
-function validateTransaction(value: unknown): OAuthLoginTransactionFor<Provider> {
+function validateTransaction(value: unknown): OAuthLoginTransactionFor<FluentProvider> {
   if (!isRecord(value) || !isProvider(value.provider)) throw invalidCookie();
   const provider = value.provider;
   if (
@@ -356,17 +361,29 @@ function validateTransaction(value: unknown): OAuthLoginTransactionFor<Provider>
   } catch {
     throw invalidCookie();
   }
+  if (value.providerTransaction !== undefined && !isStringRecord(value.providerTransaction)) {
+    throw invalidCookie();
+  }
   return Object.freeze({
     provider,
     version: value.version,
     state: value.state,
     codeVerifier: value.codeVerifier,
     callbackUrl: value.callbackUrl,
-  }) as OAuthLoginTransactionFor<Provider>;
+    ...(value.providerTransaction === undefined
+      ? {}
+      : isStringRecord(value.providerTransaction)
+      ? { providerTransaction: Object.freeze({ ...value.providerTransaction }) }
+      : {}),
+  }) as OAuthLoginTransactionFor<FluentProvider>;
 }
 
-function isProvider(value: unknown): value is Provider {
-  return typeof value === "string" && Object.hasOwn(restClientVersions, value);
+function isProvider(value: unknown): value is FluentProvider {
+  return typeof value === "string" && isFluentProvider(value);
+}
+
+function isStringRecord(value: unknown): value is Record<string, string> {
+  return isRecord(value) && Object.values(value).every((item) => typeof item === "string");
 }
 
 function nonEmptyString(value: unknown): value is string {

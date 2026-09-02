@@ -3,25 +3,3534 @@
   "gitHost": "gitea",
   "version": "1.27.2",
   "kind": "hand-written-fluent-api-contracts",
+  "selectedContractIds": [
+    "core/authentication",
+    "core/repositories",
+    "core/forks",
+    "core/branches",
+    "core/tags",
+    "core/commits",
+    "core/content-reads",
+    "core/file-change-commits",
+    "core/pull-request-discovery",
+    "core/pull-request-mutation",
+    "core/pull-request-merge",
+    "core/pull-request-reviews-comments",
+    "core/commit-statuses",
+    "gitea-extension/file-change-commit",
+    "gitea-extension/compare-diff-patch",
+    "gitea-extension/pull-request-merge",
+    "gitea-extension/pull-request-review",
+    "gitea-extension/commit-status",
+    "shared-capability/current-user-profile",
+    "shared-capability/issues",
+    "gitea-extension/issue-content-version",
+    "shared-capability/releases",
+    "shared-capability/repository-webhooks",
+    "shared-capability/ci-run-discovery",
+    "shared-capability/packages",
+    "shared-capability/blob-reads",
+    "shared-capability/pull-request-reviews",
+    "shared-capability/branch-rules",
+    "gitea-extension/branch-rule-priority",
+    "shared-capability/unsupported-gitea-modules",
+    "native-access/gitea/client",
+    "native-access/gitea/entities"
+  ],
   "passed": true,
   "contracts": [
     {
-      "name": "repository-container",
+      "id": "core/authentication",
+      "passed": true,
+      "assertions": [
+        "PAT and invalid credential paths use one identity verification request",
+        "Basic authentication and the narrow Gitea TOTP extension are live-proven",
+        "OAuth state, PKCE, browser grant, exchange, and identity verification pass",
+        "authentication cancellation makes zero provider requests"
+      ],
+      "requestEvidence": [
+        {
+          "operation": "authorizeToken",
+          "expectedOperationIds": [
+            "userGetCurrent"
+          ],
+          "requests": [
+            {
+              "operationId": "userGetCurrent",
+              "method": "GET",
+              "path": "/api/v1/user"
+            }
+          ]
+        },
+        {
+          "operation": "authorizeBasic",
+          "expectedOperationIds": [
+            "userGetCurrent"
+          ],
+          "requests": [
+            {
+              "operationId": "userGetCurrent",
+              "method": "GET",
+              "path": "/api/v1/user"
+            }
+          ]
+        },
+        {
+          "operation": "authorizeBasic.totp",
+          "expectedOperationIds": [
+            "userGetCurrent"
+          ],
+          "requests": [
+            {
+              "operationId": "userGetCurrent",
+              "method": "GET",
+              "path": "/api/v1/user"
+            }
+          ]
+        },
+        {
+          "operation": "beginOAuth",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "oauthStateMismatch",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "authorizeOAuthCallback",
+          "expectedOperationIds": [
+            "raw:POST",
+            "userGetCurrent"
+          ],
+          "requests": [
+            {
+              "operationId": "raw:POST",
+              "method": "POST",
+              "path": "/login/oauth/access_token"
+            },
+            {
+              "operationId": "userGetCurrent",
+              "method": "GET",
+              "path": "/api/v1/user"
+            }
+          ]
+        },
+        {
+          "operation": "authorizeToken.preflightAbort",
+          "expectedOperationIds": [],
+          "requests": []
+        }
+      ]
+    },
+    {
+      "id": "core/repositories",
       "passed": true,
       "assertions": [
         "token authorization retains the selected client",
         "container discovery returns normalized user and organization owners",
+        "invalid opaque container cursors fail locally with exact adapter context",
         "container(name) resolves normalized user and organization owners",
         "repository existence, optional lookup, and required lookup are direct",
+        "only confirmed repository absence becomes undefined or false",
         "container-scoped repository listing and lookup return normalized entities",
-        "repository create, rename, refresh, and delete succeed"
+        "repository creation accepts an exact multi-file initial tree and branch",
+        "repository create, rename, refresh, and delete succeed",
+        "repository validation and preflight cancellation make zero requests"
+      ],
+      "requestEvidence": [
+        {
+          "operation": "authorizeToken",
+          "expectedOperationIds": [
+            "userGetCurrent"
+          ],
+          "requests": [
+            {
+              "operationId": "userGetCurrent",
+              "method": "GET",
+              "path": "/api/v1/user"
+            }
+          ]
+        },
+        {
+          "operation": "listRepositoryContainers",
+          "expectedOperationIds": [
+            "orgListCurrentUserOrgs"
+          ],
+          "requests": [
+            {
+              "operationId": "orgListCurrentUserOrgs",
+              "method": "GET",
+              "path": "/api/v1/user/orgs"
+            }
+          ]
+        },
+        {
+          "operation": "listRepositoryContainers.invalidCursor",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "getCurrentUserContainer",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "getOrganizationContainer",
+          "expectedOperationIds": [
+            "orgGet"
+          ],
+          "requests": [
+            {
+              "operationId": "orgGet",
+              "method": "GET",
+              "path": "/api/v1/orgs/pge2e-mtkgijbv-0e3780c3-org"
+            }
+          ]
+        },
+        {
+          "operation": "hasRepository",
+          "expectedOperationIds": [
+            "repoGet"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGet",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgijbv-0e3780c3-user"
+            }
+          ]
+        },
+        {
+          "operation": "findRepository",
+          "expectedOperationIds": [
+            "repoGet"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGet",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgijbv-0e3780c3-user"
+            }
+          ]
+        },
+        {
+          "operation": "getRepository",
+          "expectedOperationIds": [
+            "repoGet"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGet",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgijbv-0e3780c3-user"
+            }
+          ]
+        },
+        {
+          "operation": "findRepository.missing",
+          "expectedOperationIds": [
+            "repoGet"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGet",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgijbv-0e3780c3-user-missing"
+            }
+          ]
+        },
+        {
+          "operation": "hasRepository.missing",
+          "expectedOperationIds": [
+            "repoGet"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGet",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgijbv-0e3780c3-user-missing"
+            }
+          ]
+        },
+        {
+          "operation": "listUserRepositories",
+          "expectedOperationIds": [
+            "userCurrentListRepos"
+          ],
+          "requests": [
+            {
+              "operationId": "userCurrentListRepos",
+              "method": "GET",
+              "path": "/api/v1/user/repos"
+            }
+          ]
+        },
+        {
+          "operation": "listRepositories",
+          "expectedOperationIds": [
+            "orgListRepos"
+          ],
+          "requests": [
+            {
+              "operationId": "orgListRepos",
+              "method": "GET",
+              "path": "/api/v1/orgs/pge2e-mtkgijbv-0e3780c3-org/repos"
+            }
+          ]
+        },
+        {
+          "operation": "getOrganizationRepository",
+          "expectedOperationIds": [
+            "repoGet"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGet",
+              "method": "GET",
+              "path": "/api/v1/repos/pge2e-mtkgijbv-0e3780c3-org/pge2e-mtkgijbv-0e3780c3-repo"
+            }
+          ]
+        },
+        {
+          "operation": "createOrganizationRepository",
+          "expectedOperationIds": [
+            "createOrgRepo"
+          ],
+          "requests": [
+            {
+              "operationId": "createOrgRepo",
+              "method": "POST",
+              "path": "/api/v1/orgs/pge2e-mtkgijbv-0e3780c3-org/repos"
+            }
+          ]
+        },
+        {
+          "operation": "deleteOrganizationRepository",
+          "expectedOperationIds": [
+            "repoDelete"
+          ],
+          "requests": [
+            {
+              "operationId": "repoDelete",
+              "method": "DELETE",
+              "path": "/api/v1/repos/pge2e-mtkgijbv-0e3780c3-org/pge2e-mtkgijbv-0e3780c3-org-mutation"
+            }
+          ]
+        },
+        {
+          "operation": "createInitializedRepository",
+          "expectedOperationIds": [
+            "createCurrentUserRepo",
+            "repoChangeFiles"
+          ],
+          "requests": [
+            {
+              "operationId": "createCurrentUserRepo",
+              "method": "POST",
+              "path": "/api/v1/user/repos"
+            },
+            {
+              "operationId": "repoChangeFiles",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgijbv-0e3780c3-initialized/contents"
+            }
+          ]
+        },
+        {
+          "operation": "readInitializedRepositoryFiles",
+          "expectedOperationIds": [
+            "repoGetFileContentsPost"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetFileContentsPost",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgijbv-0e3780c3-initialized/file-contents"
+            }
+          ]
+        },
+        {
+          "operation": "deleteInitializedRepository",
+          "expectedOperationIds": [
+            "repoDelete"
+          ],
+          "requests": [
+            {
+              "operationId": "repoDelete",
+              "method": "DELETE",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgijbv-0e3780c3-initialized"
+            }
+          ]
+        },
+        {
+          "operation": "createRepository",
+          "expectedOperationIds": [
+            "createCurrentUserRepo"
+          ],
+          "requests": [
+            {
+              "operationId": "createCurrentUserRepo",
+              "method": "POST",
+              "path": "/api/v1/user/repos"
+            }
+          ]
+        },
+        {
+          "operation": "renameRepository",
+          "expectedOperationIds": [
+            "repoEdit"
+          ],
+          "requests": [
+            {
+              "operationId": "repoEdit",
+              "method": "PATCH",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgijbv-0e3780c3-mutation"
+            }
+          ]
+        },
+        {
+          "operation": "refreshRenamedRepository",
+          "expectedOperationIds": [
+            "repoGet"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGet",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgijbv-0e3780c3-mutation-renamed"
+            }
+          ]
+        },
+        {
+          "operation": "deleteRepository",
+          "expectedOperationIds": [
+            "repoDelete"
+          ],
+          "requests": [
+            {
+              "operationId": "repoDelete",
+              "method": "DELETE",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgijbv-0e3780c3-mutation-renamed"
+            }
+          ]
+        },
+        {
+          "operation": "hasRepository.afterDelete",
+          "expectedOperationIds": [
+            "repoGet"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGet",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgijbv-0e3780c3-mutation-renamed"
+            }
+          ]
+        },
+        {
+          "operation": "getRepository.preflightAbort",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "getRepository.blankIdentity",
+          "expectedOperationIds": [],
+          "requests": []
+        }
       ]
     },
     {
-      "name": "gitea-native-context",
+      "id": "core/forks",
       "passed": true,
       "assertions": [
-        "native.gitea retains exact generated container and repository contexts"
+        "fork creation polls only the known direct destination and returns usable data",
+        "fork listing reads one bounded provider page",
+        "preflight cancellation performs no provider request"
+      ],
+      "requestEvidence": [
+        {
+          "operation": "createFork",
+          "expectedOperationIds": [
+            "createFork",
+            "repoGet"
+          ],
+          "requests": [
+            {
+              "operationId": "createFork",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgijxj-9393fb03-fork-source/forks"
+            },
+            {
+              "operationId": "repoGet",
+              "method": "GET",
+              "path": "/api/v1/repos/pge2e-mtkgijxj-9393fb03-fork-destination/pge2e-mtkgijxj-9393fb03-created-fork"
+            }
+          ]
+        },
+        {
+          "operation": "listForks",
+          "expectedOperationIds": [
+            "listForks"
+          ],
+          "requests": [
+            {
+              "operationId": "listForks",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgijxj-9393fb03-fork-source/forks"
+            }
+          ]
+        },
+        {
+          "operation": "listForks.preflightAbort",
+          "expectedOperationIds": [],
+          "requests": []
+        }
+      ]
+    },
+    {
+      "id": "core/branches",
+      "passed": true,
+      "assertions": [
+        "branch listing is one page and version-specific filtering stays bounded",
+        "branch get and exists use one direct request with 404-only absence",
+        "branch create, conflict, rename, and delete use direct operations",
+        "default-branch mutation guards make zero provider requests",
+        "divergence is exact from two count-only provider probes",
+        "divergence pages obey one page plus two probes per returned branch"
+      ],
+      "requestEvidence": [
+        {
+          "operation": "listBranches",
+          "expectedOperationIds": [
+            "repoListBranches"
+          ],
+          "requests": [
+            {
+              "operationId": "repoListBranches",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgik37-e9ce3f23-branches/branches"
+            }
+          ]
+        },
+        {
+          "operation": "listBranches.filtered",
+          "expectedOperationIds": [
+            "repoListBranches"
+          ],
+          "requests": [
+            {
+              "operationId": "repoListBranches",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgik37-e9ce3f23-branches/branches"
+            }
+          ]
+        },
+        {
+          "operation": "getBranch",
+          "expectedOperationIds": [
+            "repoGetBranch"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetBranch",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgik37-e9ce3f23-branches/branches/feature-diverged"
+            }
+          ]
+        },
+        {
+          "operation": "branchExists",
+          "expectedOperationIds": [
+            "repoGetBranch"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetBranch",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgik37-e9ce3f23-branches/branches/feature-diverged"
+            }
+          ]
+        },
+        {
+          "operation": "branchExists.missing",
+          "expectedOperationIds": [
+            "repoGetBranch"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetBranch",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgik37-e9ce3f23-branches/branches/feature-diverged-missing"
+            }
+          ]
+        },
+        {
+          "operation": "createBranch",
+          "expectedOperationIds": [
+            "repoCreateBranch"
+          ],
+          "requests": [
+            {
+              "operationId": "repoCreateBranch",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgik37-e9ce3f23-branches/branches"
+            }
+          ]
+        },
+        {
+          "operation": "renameBranch",
+          "expectedOperationIds": [
+            "repoRenameBranch"
+          ],
+          "requests": [
+            {
+              "operationId": "repoRenameBranch",
+              "method": "PATCH",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgik37-e9ce3f23-branches/branches/pge2e-mtkgik37-e9ce3f23-branch-mutation"
+            }
+          ]
+        },
+        {
+          "operation": "getRenamedBranch",
+          "expectedOperationIds": [
+            "repoGetBranch"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetBranch",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgik37-e9ce3f23-branches/branches/pge2e-mtkgik37-e9ce3f23-branch-mutation-renamed"
+            }
+          ]
+        },
+        {
+          "operation": "deleteBranch",
+          "expectedOperationIds": [
+            "repoDeleteBranch"
+          ],
+          "requests": [
+            {
+              "operationId": "repoDeleteBranch",
+              "method": "DELETE",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgik37-e9ce3f23-branches/branches/pge2e-mtkgik37-e9ce3f23-branch-mutation-renamed"
+            }
+          ]
+        },
+        {
+          "operation": "renameBranch.default",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "deleteBranch.default",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "getDivergence",
+          "expectedOperationIds": [
+            "repoGetAllCommits",
+            "repoGetAllCommits"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetAllCommits",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgik37-e9ce3f23-branches/commits"
+            },
+            {
+              "operationId": "repoGetAllCommits",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgik37-e9ce3f23-branches/commits"
+            }
+          ]
+        },
+        {
+          "operation": "listBranchDivergences",
+          "expectedOperationIds": [
+            "repoListBranches",
+            "repoGetAllCommits",
+            "repoGetAllCommits",
+            "repoGetAllCommits",
+            "repoGetAllCommits"
+          ],
+          "requests": [
+            {
+              "operationId": "repoListBranches",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgik37-e9ce3f23-branches/branches"
+            },
+            {
+              "operationId": "repoGetAllCommits",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgik37-e9ce3f23-branches/commits"
+            },
+            {
+              "operationId": "repoGetAllCommits",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgik37-e9ce3f23-branches/commits"
+            },
+            {
+              "operationId": "repoGetAllCommits",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgik37-e9ce3f23-branches/commits"
+            },
+            {
+              "operationId": "repoGetAllCommits",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgik37-e9ce3f23-branches/commits"
+            }
+          ]
+        },
+        {
+          "operation": "getBranch.preflightAbort",
+          "expectedOperationIds": [],
+          "requests": []
+        }
+      ]
+    },
+    {
+      "id": "core/tags",
+      "passed": true,
+      "assertions": [
+        "tag listing fetches exactly one bounded provider page",
+        "tag lookup is direct and preserves confirmed absence",
+        "tag create/native access/conflict/delete stay direct and immutable"
+      ],
+      "requestEvidence": [
+        {
+          "operation": "listTags",
+          "expectedOperationIds": [
+            "repoListTags"
+          ],
+          "requests": [
+            {
+              "operationId": "repoListTags",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgikoe-5a73d7dc-tags/tags"
+            }
+          ]
+        },
+        {
+          "operation": "getTag",
+          "expectedOperationIds": [
+            "repoGetTag"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetTag",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgikoe-5a73d7dc-tags/tags/fixture-v1"
+            }
+          ]
+        },
+        {
+          "operation": "createTag",
+          "expectedOperationIds": [
+            "repoCreateTag"
+          ],
+          "requests": [
+            {
+              "operationId": "repoCreateTag",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgikoe-5a73d7dc-tags/tags"
+            }
+          ]
+        },
+        {
+          "operation": "deleteTag",
+          "expectedOperationIds": [
+            "repoDeleteTag"
+          ],
+          "requests": [
+            {
+              "operationId": "repoDeleteTag",
+              "method": "DELETE",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgikoe-5a73d7dc-tags/tags/fluent-v2"
+            }
+          ]
+        },
+        {
+          "operation": "listTags.preflightAbort",
+          "expectedOperationIds": [],
+          "requests": []
+        }
+      ]
+    },
+    {
+      "id": "core/commits",
+      "passed": true,
+      "assertions": [
+        "commit listing fetches one page with expensive facets omitted by default",
+        "direct commit gets expose only explicitly requested facets",
+        "multi-get touches only unique requested SHAs with stable duplicate order",
+        "comparison and commit-file listing each use one direct provider request",
+        "reachable counts and merge bases remain explicitly bounded",
+        "ref discovery inspects one requested ref page and only its candidates",
+        "contributor aggregation stops at its explicit history slice"
+      ],
+      "requestEvidence": [
+        {
+          "operation": "listCommits",
+          "expectedOperationIds": [
+            "repoGetAllCommits"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetAllCommits",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiku3-84f12bce-commits/commits"
+            }
+          ]
+        },
+        {
+          "operation": "getCommit",
+          "expectedOperationIds": [
+            "repoGetSingleCommit"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetSingleCommit",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiku3-84f12bce-commits/git/commits/66f462edd43adcbc70589d8a81a88482f6d119f9"
+            }
+          ]
+        },
+        {
+          "operation": "getCommit.facets",
+          "expectedOperationIds": [
+            "repoGetSingleCommit"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetSingleCommit",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiku3-84f12bce-commits/git/commits/66f462edd43adcbc70589d8a81a88482f6d119f9"
+            }
+          ]
+        },
+        {
+          "operation": "getCommits",
+          "expectedOperationIds": [
+            "repoGetSingleCommit",
+            "repoGetSingleCommit"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetSingleCommit",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiku3-84f12bce-commits/git/commits/66f462edd43adcbc70589d8a81a88482f6d119f9"
+            },
+            {
+              "operationId": "repoGetSingleCommit",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiku3-84f12bce-commits/git/commits/462f9673a05786074a677b2ca5d4464476e9d13f"
+            }
+          ]
+        },
+        {
+          "operation": "compareCommits",
+          "expectedOperationIds": [
+            "repoCompareDiff"
+          ],
+          "requests": [
+            {
+              "operationId": "repoCompareDiff",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiku3-84f12bce-commits/compare/462f9673a05786074a677b2ca5d4464476e9d13f...66f462edd43adcbc70589d8a81a88482f6d119f9"
+            }
+          ]
+        },
+        {
+          "operation": "listCommitFiles",
+          "expectedOperationIds": [
+            "repoGetSingleCommit"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetSingleCommit",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiku3-84f12bce-commits/git/commits/66f462edd43adcbc70589d8a81a88482f6d119f9"
+            }
+          ]
+        },
+        {
+          "operation": "countReachableCommits",
+          "expectedOperationIds": [
+            "repoGetAllCommits"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetAllCommits",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiku3-84f12bce-commits/commits"
+            }
+          ]
+        },
+        {
+          "operation": "findMergeBases",
+          "expectedOperationIds": [
+            "repoGetAllCommits",
+            "repoGetAllCommits",
+            "repoGetAllCommits",
+            "repoGetAllCommits",
+            "repoGetAllCommits",
+            "repoGetAllCommits",
+            "repoGetAllCommits",
+            "repoGetAllCommits",
+            "repoGetAllCommits",
+            "repoGetSingleCommit"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetAllCommits",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiku3-84f12bce-commits/commits"
+            },
+            {
+              "operationId": "repoGetAllCommits",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiku3-84f12bce-commits/commits"
+            },
+            {
+              "operationId": "repoGetAllCommits",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiku3-84f12bce-commits/commits"
+            },
+            {
+              "operationId": "repoGetAllCommits",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiku3-84f12bce-commits/commits"
+            },
+            {
+              "operationId": "repoGetAllCommits",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiku3-84f12bce-commits/commits"
+            },
+            {
+              "operationId": "repoGetAllCommits",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiku3-84f12bce-commits/commits"
+            },
+            {
+              "operationId": "repoGetAllCommits",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiku3-84f12bce-commits/commits"
+            },
+            {
+              "operationId": "repoGetAllCommits",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiku3-84f12bce-commits/commits"
+            },
+            {
+              "operationId": "repoGetAllCommits",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiku3-84f12bce-commits/commits"
+            },
+            {
+              "operationId": "repoGetSingleCommit",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiku3-84f12bce-commits/git/commits/462f9673a05786074a677b2ca5d4464476e9d13f"
+            }
+          ]
+        },
+        {
+          "operation": "findRefsForCommit.head",
+          "expectedOperationIds": [
+            "repoListBranches"
+          ],
+          "requests": [
+            {
+              "operationId": "repoListBranches",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiku3-84f12bce-commits/branches"
+            }
+          ]
+        },
+        {
+          "operation": "findRefsForCommit.contains",
+          "expectedOperationIds": [
+            "repoListBranches",
+            "repoGetAllCommits",
+            "repoGetAllCommits"
+          ],
+          "requests": [
+            {
+              "operationId": "repoListBranches",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiku3-84f12bce-commits/branches"
+            },
+            {
+              "operationId": "repoGetAllCommits",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiku3-84f12bce-commits/commits"
+            },
+            {
+              "operationId": "repoGetAllCommits",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiku3-84f12bce-commits/commits"
+            }
+          ]
+        },
+        {
+          "operation": "listContributors",
+          "expectedOperationIds": [
+            "repoGetAllCommits"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetAllCommits",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiku3-84f12bce-commits/commits"
+            }
+          ]
+        },
+        {
+          "operation": "findMergeBases.insufficientRequestBudget",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "getCommit.preflightAbort",
+          "expectedOperationIds": [],
+          "requests": []
+        }
+      ]
+    },
+    {
+      "id": "core/content-reads",
+      "passed": true,
+      "assertions": [
+        "text, binary, empty, Unicode, and nested paths use one direct request each",
+        "batch reads deduplicate one provider request and restore caller order",
+        "directory and recursive reads visit only the requested bounded subtree",
+        "first-parent metadata resolves one commit and only required directory prefixes",
+        "linked reads are metadata-only by default; explicit dereference stays inside Gitea"
+      ],
+      "requestEvidence": [
+        {
+          "operation": "readContent.text",
+          "expectedOperationIds": [
+            "repoGetContentsExt"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetContentsExt",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgild3-9446a7c5-content/contents-ext/text.txt"
+            }
+          ]
+        },
+        {
+          "operation": "readContent.binary",
+          "expectedOperationIds": [
+            "repoGetContentsExt"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetContentsExt",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgild3-9446a7c5-content/contents-ext/binary.bin"
+            }
+          ]
+        },
+        {
+          "operation": "readContent.empty",
+          "expectedOperationIds": [
+            "repoGetContentsExt"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetContentsExt",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgild3-9446a7c5-content/contents-ext/empty.txt"
+            }
+          ]
+        },
+        {
+          "operation": "readContent.unicode",
+          "expectedOperationIds": [
+            "repoGetContentsExt"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetContentsExt",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgild3-9446a7c5-content/contents-ext/unicod%C3%A9-%E6%96%87%E4%BB%B6.txt"
+            }
+          ]
+        },
+        {
+          "operation": "readFiles",
+          "expectedOperationIds": [
+            "repoGetFileContentsPost"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetFileContentsPost",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgild3-9446a7c5-content/file-contents"
+            }
+          ]
+        },
+        {
+          "operation": "getDirectory",
+          "expectedOperationIds": [
+            "repoGetContentsExt"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetContentsExt",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgild3-9446a7c5-content/contents-ext/nested"
+            }
+          ]
+        },
+        {
+          "operation": "listDirectory",
+          "expectedOperationIds": [
+            "repoGetContentsExt"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetContentsExt",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgild3-9446a7c5-content/contents-ext/nested"
+            }
+          ]
+        },
+        {
+          "operation": "listDirectory.recursive",
+          "expectedOperationIds": [
+            "repoGetContentsExt",
+            "repoGetContentsExt"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetContentsExt",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgild3-9446a7c5-content/contents-ext/nested"
+            },
+            {
+              "operationId": "repoGetContentsExt",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgild3-9446a7c5-content/contents-ext/nested%2Fdeeper"
+            }
+          ]
+        },
+        {
+          "operation": "listDirectory.collapseSingleFolders",
+          "expectedOperationIds": [
+            "repoGetContentsExt",
+            "repoGetContentsExt",
+            "repoGetContentsExt"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetContentsExt",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgild3-9446a7c5-content/contents-ext/chain"
+            },
+            {
+              "operationId": "repoGetContentsExt",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgild3-9446a7c5-content/contents-ext/chain%2Fone"
+            },
+            {
+              "operationId": "repoGetContentsExt",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgild3-9446a7c5-content/contents-ext/chain%2Fone%2Ftwo"
+            }
+          ]
+        },
+        {
+          "operation": "readPathMetadataBatch.firstParent",
+          "expectedOperationIds": [
+            "repoGetSingleCommit",
+            "repoGetContentsExt",
+            "repoGetContentsExt"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetSingleCommit",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgild3-9446a7c5-content/git/commits/91c0973e9667df057b0b123ac2155eff06a5a27a"
+            },
+            {
+              "operationId": "repoGetContentsExt",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgild3-9446a7c5-content/contents-ext/nested"
+            },
+            {
+              "operationId": "repoGetContentsExt",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgild3-9446a7c5-content/contents-ext/nested"
+            }
+          ]
+        },
+        {
+          "operation": "readSymlink",
+          "expectedOperationIds": [
+            "repoGetContentsExt"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetContentsExt",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/e2e-links/contents-ext/link.txt"
+            }
+          ]
+        },
+        {
+          "operation": "readSymlink.internal",
+          "expectedOperationIds": [
+            "repoGetContentsExt",
+            "repoGetContentsExt"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetContentsExt",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/e2e-links/contents-ext/link.txt"
+            },
+            {
+              "operationId": "repoGetContentsExt",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/e2e-links/contents-ext/target.txt"
+            }
+          ]
+        },
+        {
+          "operation": "readSubmodule",
+          "expectedOperationIds": [
+            "repoGetContentsExt"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetContentsExt",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/e2e-links/contents-ext/vendor%2Fexternal"
+            }
+          ]
+        },
+        {
+          "operation": "readSubmodule.externalDereference",
+          "expectedOperationIds": [
+            "repoGetContentsExt"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetContentsExt",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/e2e-links/contents-ext/vendor%2Fexternal"
+            }
+          ]
+        },
+        {
+          "operation": "readSubmodule.internal",
+          "expectedOperationIds": [
+            "repoGetContentsExt",
+            "repoGetContentsList"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetContentsExt",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/e2e-links/contents-ext/vendor%2Finternal"
+            },
+            {
+              "operationId": "repoGetContentsList",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/e2e-submodule/contents"
+            }
+          ]
+        },
+        {
+          "operation": "readContent.preflightAbort",
+          "expectedOperationIds": [],
+          "requests": []
+        }
+      ]
+    },
+    {
+      "id": "core/file-change-commits",
+      "passed": true,
+      "assertions": [
+        "mixed create/update/move/delete is one commit with at most one batch pre-read",
+        "a caller-selected new branch is created by the same batch mutation",
+        "stale file SHA guards prevent overwriting newer content",
+        "invalid local file batches make zero provider requests"
+      ],
+      "requestEvidence": [
+        {
+          "operation": "commitFileChanges.mixed",
+          "expectedOperationIds": [
+            "repoGetFileContentsPost",
+            "repoChangeFiles"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetFileContentsPost",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgilsl-d3b3902c-file-changes/file-contents"
+            },
+            {
+              "operationId": "repoChangeFiles",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgilsl-d3b3902c-file-changes/contents"
+            }
+          ]
+        },
+        {
+          "operation": "readFiles.afterMixedChange",
+          "expectedOperationIds": [
+            "repoGetFileContentsPost"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetFileContentsPost",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgilsl-d3b3902c-file-changes/file-contents"
+            }
+          ]
+        },
+        {
+          "operation": "commitFileChanges.newBranch",
+          "expectedOperationIds": [
+            "repoChangeFiles"
+          ],
+          "requests": [
+            {
+              "operationId": "repoChangeFiles",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgilsl-d3b3902c-file-changes/contents"
+            }
+          ]
+        },
+        {
+          "operation": "getNewFileChangeBranch",
+          "expectedOperationIds": [
+            "repoGetBranch"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetBranch",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgilsl-d3b3902c-file-changes/branches/batch-created-branch"
+            }
+          ]
+        },
+        {
+          "operation": "commitFileChanges.invalid.empty",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "commitFileChanges.invalid.duplicate",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "commitFileChanges.preflightAbort",
+          "expectedOperationIds": [],
+          "requests": []
+        }
+      ]
+    },
+    {
+      "id": "core/pull-request-discovery",
+      "passed": true,
+      "assertions": [
+        "pull-request listing preserves one bounded provider page",
+        "get and base/head find are direct and preserve 404-only absence",
+        "snapshot merge state is local and fresh merge state is one direct read",
+        "PR commits and files each read exactly one provider page"
+      ],
+      "requestEvidence": [
+        {
+          "operation": "listPullRequests",
+          "expectedOperationIds": [
+            "repoListPullRequests"
+          ],
+          "requests": [
+            {
+              "operationId": "repoListPullRequests",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgim9c-62fa6ca6-pr-discovery/pulls"
+            }
+          ]
+        },
+        {
+          "operation": "listPullRequests.filtered",
+          "expectedOperationIds": [
+            "issueSearchIssues",
+            "repoGetPullRequest"
+          ],
+          "requests": [
+            {
+              "operationId": "issueSearchIssues",
+              "method": "GET",
+              "path": "/api/v1/repos/issues/search"
+            },
+            {
+              "operationId": "repoGetPullRequest",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgim9c-62fa6ca6-pr-discovery/pulls/1"
+            }
+          ]
+        },
+        {
+          "operation": "getPullRequest",
+          "expectedOperationIds": [
+            "repoGetPullRequest"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetPullRequest",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgim9c-62fa6ca6-pr-discovery/pulls/1"
+            }
+          ]
+        },
+        {
+          "operation": "findPullRequest",
+          "expectedOperationIds": [
+            "repoGetPullRequestByBaseHead"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetPullRequestByBaseHead",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgim9c-62fa6ca6-pr-discovery/pulls/main/discovery-same"
+            }
+          ]
+        },
+        {
+          "operation": "getPullRequest.crossFork",
+          "expectedOperationIds": [
+            "repoGetPullRequest"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetPullRequest",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgim9c-62fa6ca6-pr-discovery/pulls/2"
+            }
+          ]
+        },
+        {
+          "operation": "findPullRequest.missing",
+          "expectedOperationIds": [
+            "repoGetPullRequestByBaseHead"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetPullRequestByBaseHead",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgim9c-62fa6ca6-pr-discovery/pulls/main/discovery-same-missing"
+            }
+          ]
+        },
+        {
+          "operation": "isPullRequestMerged.snapshot",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "isPullRequestMerged.refresh",
+          "expectedOperationIds": [
+            "repoGetPullRequest"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetPullRequest",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgim9c-62fa6ca6-pr-discovery/pulls/1"
+            }
+          ]
+        },
+        {
+          "operation": "listPullRequestCommits",
+          "expectedOperationIds": [
+            "repoGetPullRequestCommits"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetPullRequestCommits",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgim9c-62fa6ca6-pr-discovery/pulls/1/commits"
+            }
+          ]
+        },
+        {
+          "operation": "listPullRequestFiles",
+          "expectedOperationIds": [
+            "repoGetPullRequestFiles"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetPullRequestFiles",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgim9c-62fa6ca6-pr-discovery/pulls/1/files"
+            }
+          ]
+        },
+        {
+          "operation": "getPullRequest.preflightAbort",
+          "expectedOperationIds": [],
+          "requests": []
+        }
+      ]
+    },
+    {
+      "id": "core/pull-request-mutation",
+      "passed": true,
+      "assertions": [
+        "same-repository create, update, and close each use one direct mutation",
+        "cross-fork creation uses its explicit source identity without discovery",
+        "invalid and cancelled mutations perform zero provider requests"
+      ],
+      "requestEvidence": [
+        {
+          "operation": "createPullRequest.sameRepository",
+          "expectedOperationIds": [
+            "repoCreatePullRequest"
+          ],
+          "requests": [
+            {
+              "operationId": "repoCreatePullRequest",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgio52-115b3dd9-pr-mutation/pulls"
+            }
+          ]
+        },
+        {
+          "operation": "updatePullRequest",
+          "expectedOperationIds": [
+            "repoEditPullRequest"
+          ],
+          "requests": [
+            {
+              "operationId": "repoEditPullRequest",
+              "method": "PATCH",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgio52-115b3dd9-pr-mutation/pulls/1"
+            }
+          ]
+        },
+        {
+          "operation": "closePullRequest",
+          "expectedOperationIds": [
+            "repoEditPullRequest"
+          ],
+          "requests": [
+            {
+              "operationId": "repoEditPullRequest",
+              "method": "PATCH",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgio52-115b3dd9-pr-mutation/pulls/1"
+            }
+          ]
+        },
+        {
+          "operation": "createPullRequest.crossFork",
+          "expectedOperationIds": [
+            "repoCreatePullRequest"
+          ],
+          "requests": [
+            {
+              "operationId": "repoCreatePullRequest",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgio52-115b3dd9-pr-mutation/pulls"
+            }
+          ]
+        },
+        {
+          "operation": "createPullRequest.closeCandidate",
+          "expectedOperationIds": [
+            "repoCreatePullRequest"
+          ],
+          "requests": [
+            {
+              "operationId": "repoCreatePullRequest",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgio52-115b3dd9-pr-mutation/pulls"
+            }
+          ]
+        },
+        {
+          "operation": "updatePullRequest.empty",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "closePullRequest.preflightAbort",
+          "expectedOperationIds": [],
+          "requests": []
+        }
+      ]
+    },
+    {
+      "id": "core/pull-request-merge",
+      "passed": true,
+      "assertions": [
+        "provider-default merge is one mutation plus one direct hydration",
+        "squash merge is terminal and does not poll or enumerate pull requests"
+      ],
+      "requestEvidence": [
+        {
+          "operation": "mergePullRequest.providerDefault",
+          "expectedOperationIds": [
+            "repoMergePullRequest",
+            "repoGetPullRequest"
+          ],
+          "requests": [
+            {
+              "operationId": "repoMergePullRequest",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgip8d-9a7ec5ea-pr-merge-default/pulls/1/merge"
+            },
+            {
+              "operationId": "repoGetPullRequest",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgip8d-9a7ec5ea-pr-merge-default/pulls/1"
+            }
+          ]
+        },
+        {
+          "operation": "mergePullRequest.sourceCleanup",
+          "expectedOperationIds": [
+            "repoGetBranch"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetBranch",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgip8d-9a7ec5ea-pr-merge-default/branches/merge-default"
+            }
+          ]
+        },
+        {
+          "operation": "mergePullRequest.squash",
+          "expectedOperationIds": [
+            "repoMergePullRequest",
+            "repoGetPullRequest"
+          ],
+          "requests": [
+            {
+              "operationId": "repoMergePullRequest",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgip8d-9a7ec5ea-pr-merge-squash/pulls/1/merge"
+            },
+            {
+              "operationId": "repoGetPullRequest",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgip8d-9a7ec5ea-pr-merge-squash/pulls/1"
+            }
+          ]
+        },
+        {
+          "operation": "mergePullRequest.sourceRetained",
+          "expectedOperationIds": [
+            "repoGetBranch"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetBranch",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgip8d-9a7ec5ea-pr-merge-squash/branches/merge-squash"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "core/pull-request-reviews-comments",
+      "passed": true,
+      "assertions": [
+        "reviewer request is one direct action against the known PR",
+        "approval publishes one direct completed review action",
+        "text and old/new line comments each publish through one direct endpoint",
+        "invalid and cancelled review actions perform zero provider requests"
+      ],
+      "requestEvidence": [
+        {
+          "operation": "requestPullRequestReviewers",
+          "expectedOperationIds": [
+            "repoCreatePullReviewRequests"
+          ],
+          "requests": [
+            {
+              "operationId": "repoCreatePullReviewRequests",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiuhw-3529ccb1-pr-reviews/pulls/1/requested_reviewers"
+            }
+          ]
+        },
+        {
+          "operation": "approvePullRequest",
+          "expectedOperationIds": [
+            "repoCreatePullReview"
+          ],
+          "requests": [
+            {
+              "operationId": "repoCreatePullReview",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiuhw-3529ccb1-pr-reviews/pulls/1/reviews"
+            }
+          ]
+        },
+        {
+          "operation": "publishPullRequestComment.text",
+          "expectedOperationIds": [
+            "issueCreateComment"
+          ],
+          "requests": [
+            {
+              "operationId": "issueCreateComment",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiuhw-3529ccb1-pr-reviews/issues/1/comments"
+            }
+          ]
+        },
+        {
+          "operation": "publishPullRequestComment.newLine",
+          "expectedOperationIds": [
+            "repoCreatePullReview"
+          ],
+          "requests": [
+            {
+              "operationId": "repoCreatePullReview",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiuhw-3529ccb1-pr-reviews/pulls/1/reviews"
+            }
+          ]
+        },
+        {
+          "operation": "publishPullRequestComment.oldLine",
+          "expectedOperationIds": [
+            "repoCreatePullReview"
+          ],
+          "requests": [
+            {
+              "operationId": "repoCreatePullReview",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiuhw-3529ccb1-pr-reviews/pulls/1/reviews"
+            }
+          ]
+        },
+        {
+          "operation": "requestPullRequestReviewers.empty",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "publishPullRequestComment.invalidLine",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "publishPullRequestComment.preflightAbort",
+          "expectedOperationIds": [],
+          "requests": []
+        }
+      ]
+    },
+    {
+      "id": "core/commit-statuses",
+      "passed": true,
+      "assertions": [
+        "commit, branch, tag, and PR-head modes use direct refs or one direct PR-head lookup",
+        "status pages are bounded and preserve provider-only states verbatim",
+        "status get means one direct combined-by-ref operation",
+        "invalid and cancelled status operations perform zero provider requests"
+      ],
+      "requestEvidence": [
+        {
+          "operation": "setCommitStatus.commit",
+          "expectedOperationIds": [
+            "repoCreateStatus"
+          ],
+          "requests": [
+            {
+              "operationId": "repoCreateStatus",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiv4x-ae3875ac-statuses/statuses/de63214b5f9dbf5ea0547a62e01ec27bfa9c85f8"
+            }
+          ]
+        },
+        {
+          "operation": "setCommitStatus.branch",
+          "expectedOperationIds": [
+            "repoCreateStatus"
+          ],
+          "requests": [
+            {
+              "operationId": "repoCreateStatus",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiv4x-ae3875ac-statuses/statuses/status-branch"
+            }
+          ]
+        },
+        {
+          "operation": "setCommitStatus.tag",
+          "expectedOperationIds": [
+            "repoCreateStatus"
+          ],
+          "requests": [
+            {
+              "operationId": "repoCreateStatus",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiv4x-ae3875ac-statuses/statuses/status-tag"
+            }
+          ]
+        },
+        {
+          "operation": "setCommitStatus.pullRequestHead",
+          "expectedOperationIds": [
+            "repoGetPullRequest",
+            "repoCreateStatus"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetPullRequest",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiv4x-ae3875ac-statuses/pulls/1"
+            },
+            {
+              "operationId": "repoCreateStatus",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiv4x-ae3875ac-statuses/statuses/de63214b5f9dbf5ea0547a62e01ec27bfa9c85f8"
+            }
+          ]
+        },
+        {
+          "operation": "listCommitStatuses.branch",
+          "expectedOperationIds": [
+            "repoListStatusesByRef"
+          ],
+          "requests": [
+            {
+              "operationId": "repoListStatusesByRef",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiv4x-ae3875ac-statuses/commits/status-branch/statuses"
+            }
+          ]
+        },
+        {
+          "operation": "getCombinedCommitStatus.tag",
+          "expectedOperationIds": [
+            "repoGetCombinedStatusByRef"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetCombinedStatusByRef",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiv4x-ae3875ac-statuses/commits/status-tag/status"
+            }
+          ]
+        },
+        {
+          "operation": "listCommitStatuses.pullRequestHead",
+          "expectedOperationIds": [
+            "repoGetPullRequest",
+            "repoListStatusesByRef"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetPullRequest",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiv4x-ae3875ac-statuses/pulls/1"
+            },
+            {
+              "operationId": "repoListStatusesByRef",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiv4x-ae3875ac-statuses/commits/de63214b5f9dbf5ea0547a62e01ec27bfa9c85f8/statuses"
+            }
+          ]
+        },
+        {
+          "operation": "listCommitStatuses",
+          "expectedOperationIds": [
+            "repoListStatusesByRef"
+          ],
+          "requests": [
+            {
+              "operationId": "repoListStatusesByRef",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiv4x-ae3875ac-statuses/commits/de63214b5f9dbf5ea0547a62e01ec27bfa9c85f8/statuses"
+            }
+          ]
+        },
+        {
+          "operation": "listCommitStatuses.nextPage",
+          "expectedOperationIds": [
+            "repoListStatusesByRef"
+          ],
+          "requests": [
+            {
+              "operationId": "repoListStatusesByRef",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiv4x-ae3875ac-statuses/commits/de63214b5f9dbf5ea0547a62e01ec27bfa9c85f8/statuses"
+            }
+          ]
+        },
+        {
+          "operation": "listCommitStatuses.providerState",
+          "expectedOperationIds": [
+            "repoListStatusesByRef"
+          ],
+          "requests": [
+            {
+              "operationId": "repoListStatusesByRef",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiv4x-ae3875ac-statuses/commits/de63214b5f9dbf5ea0547a62e01ec27bfa9c85f8/statuses"
+            }
+          ]
+        },
+        {
+          "operation": "getCombinedCommitStatus",
+          "expectedOperationIds": [
+            "repoGetCombinedStatusByRef"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetCombinedStatusByRef",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiv4x-ae3875ac-statuses/commits/de63214b5f9dbf5ea0547a62e01ec27bfa9c85f8/status"
+            }
+          ]
+        },
+        {
+          "operation": "setCommitStatus.invalidContext",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "listCommitStatuses.preflightAbort",
+          "expectedOperationIds": [],
+          "requests": []
+        }
+      ]
+    },
+    {
+      "id": "gitea-extension/file-change-commit",
+      "passed": true,
+      "assertions": [
+        "typed context, force update, signoff, committer, and exact dates use one batch mutation"
+      ],
+      "requestEvidence": [
+        {
+          "operation": "commitFileChanges.giteaExtension",
+          "expectedOperationIds": [
+            "repoChangeFiles"
+          ],
+          "requests": [
+            {
+              "operationId": "repoChangeFiles",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgivlr-787fffdf-extension-files/contents"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gitea-extension/compare-diff-patch",
+      "passed": true,
+      "assertions": [
+        "diff and patch each use one repoCompareDiff request and retain complete text"
+      ],
+      "requestEvidence": [
+        {
+          "operation": "compareCommits.gitea.diff",
+          "expectedOperationIds": [
+            "repoCompareDiff"
+          ],
+          "requests": [
+            {
+              "operationId": "repoCompareDiff",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgivsy-188f3a68-extension-compare/compare/38766959eeb642f45b9f06db9023e07163c96039...60049143dfb6284572efd01e81849e31a13d54a1"
+            }
+          ]
+        },
+        {
+          "operation": "compareCommits.gitea.patch",
+          "expectedOperationIds": [
+            "repoCompareDiff"
+          ],
+          "requests": [
+            {
+              "operationId": "repoCompareDiff",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgivsy-188f3a68-extension-compare/compare/38766959eeb642f45b9f06db9023e07163c96039...60049143dfb6284572efd01e81849e31a13d54a1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gitea-extension/pull-request-merge",
+      "passed": true,
+      "assertions": [
+        "typed Gitea merge options use one mutation plus one direct hydration",
+        "stale head SHA fails after one merge request without discovery or polling",
+        "scheduled merge polls only the known PR and stops at exactly two reads"
+      ],
+      "requestEvidence": [
+        {
+          "operation": "mergePullRequest.giteaExtension",
+          "expectedOperationIds": [
+            "repoMergePullRequest",
+            "repoGetPullRequest"
+          ],
+          "requests": [
+            {
+              "operationId": "repoMergePullRequest",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiw3g-977a55f8-extension-merge-success/pulls/1/merge"
+            },
+            {
+              "operationId": "repoGetPullRequest",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiw3g-977a55f8-extension-merge-success/pulls/1"
+            }
+          ]
+        },
+        {
+          "operation": "mergePullRequest.giteaExtension.verifyMessage",
+          "expectedOperationIds": [
+            "repoGetSingleCommit"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetSingleCommit",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiw3g-977a55f8-extension-merge-success/git/commits/573deef24f98de24e9fb83fb894b966736c78424"
+            }
+          ]
+        },
+        {
+          "operation": "mergePullRequest.giteaExtension.staleHead",
+          "expectedOperationIds": [
+            "repoMergePullRequest"
+          ],
+          "requests": [
+            {
+              "operationId": "repoMergePullRequest",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiw3g-977a55f8-extension-merge-stale/pulls/1/merge"
+            }
+          ]
+        },
+        {
+          "operation": "mergePullRequest.giteaExtension.scheduledBound",
+          "expectedOperationIds": [
+            "repoMergePullRequest",
+            "repoGetPullRequest",
+            "repoGetPullRequest"
+          ],
+          "requests": [
+            {
+              "operationId": "repoMergePullRequest",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiw3g-977a55f8-extension-merge-scheduled/pulls/1/merge"
+            },
+            {
+              "operationId": "repoGetPullRequest",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiw3g-977a55f8-extension-merge-scheduled/pulls/1"
+            },
+            {
+              "operationId": "repoGetPullRequest",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgiw3g-977a55f8-extension-merge-scheduled/pulls/1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gitea-extension/pull-request-review",
+      "passed": true,
+      "assertions": [
+        "one create-review request carries the exact event and grouped old/new positions"
+      ],
+      "requestEvidence": [
+        {
+          "operation": "createPullRequestReview.giteaExtension",
+          "expectedOperationIds": [
+            "repoCreatePullReview"
+          ],
+          "requests": [
+            {
+              "operationId": "repoCreatePullReview",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj5w2-783ab8aa-extension-review/pulls/1/reviews"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gitea-extension/commit-status",
+      "passed": true,
+      "assertions": [
+        "error, warning, and skipped each use one typed extension callback and one direct mutation",
+        "provider-only states remain verbatim and outside the portable state union"
+      ],
+      "requestEvidence": [
+        {
+          "operation": "setCommitStatus.giteaExtension.error",
+          "expectedOperationIds": [
+            "repoCreateStatus"
+          ],
+          "requests": [
+            {
+              "operationId": "repoCreateStatus",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6hn-4da24e7b-extension-status/statuses/771891d55898aeb633f0512d7543d737394befee"
+            }
+          ]
+        },
+        {
+          "operation": "setCommitStatus.giteaExtension.warning",
+          "expectedOperationIds": [
+            "repoCreateStatus"
+          ],
+          "requests": [
+            {
+              "operationId": "repoCreateStatus",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6hn-4da24e7b-extension-status/statuses/771891d55898aeb633f0512d7543d737394befee"
+            }
+          ]
+        },
+        {
+          "operation": "setCommitStatus.giteaExtension.skipped",
+          "expectedOperationIds": [
+            "repoCreateStatus"
+          ],
+          "requests": [
+            {
+              "operationId": "repoCreateStatus",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6hn-4da24e7b-extension-status/statuses/771891d55898aeb633f0512d7543d737394befee"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shared-capability/current-user-profile",
+      "passed": true,
+      "assertions": [
+        "capability support is static and performs zero provider requests",
+        "authorized normalized and native identity use one direct provider request",
+        "unauthorized lookup costs one request and pre-aborted lookup costs zero"
+      ],
+      "requestEvidence": [
+        {
+          "operation": "currentUserProfile.support",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "currentUserProfile.current",
+          "expectedOperationIds": [
+            "userGetCurrent"
+          ],
+          "requests": [
+            {
+              "operationId": "userGetCurrent",
+              "method": "GET",
+              "path": "/api/v1/user"
+            }
+          ]
+        },
+        {
+          "operation": "currentUserProfile.native.gitea",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "currentUserProfile.current.unauthorized",
+          "expectedOperationIds": [
+            "userGetCurrent"
+          ],
+          "requests": [
+            {
+              "operationId": "userGetCurrent",
+              "method": "GET",
+              "path": "/api/v1/user"
+            }
+          ]
+        },
+        {
+          "operation": "currentUserProfile.current.preflightAbort",
+          "expectedOperationIds": [],
+          "requests": []
+        }
+      ]
+    },
+    {
+      "id": "shared-capability/issues",
+      "passed": true,
+      "assertions": [
+        "issue support metadata is static, explicit, and request-free",
+        "create, direct get, and one bounded list each use one provider request",
+        "portable update, close, and reopen are direct mutations",
+        "comment create/get/list/update and native access preserve exact identities",
+        "comment deletion and missing issue behavior each use one direct lookup proof",
+        "invalid and cancelled calls cost zero; deterministic issue cleanup is direct"
+      ],
+      "requestEvidence": [
+        {
+          "operation": "repository.issues.support",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "repository.issues.create",
+          "expectedOperationIds": [
+            "issueCreateIssue"
+          ],
+          "requests": [
+            {
+              "operationId": "issueCreateIssue",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6mp-f218c6a8-issues/issues"
+            }
+          ]
+        },
+        {
+          "operation": "repository.issues.get",
+          "expectedOperationIds": [
+            "issueGetIssue"
+          ],
+          "requests": [
+            {
+              "operationId": "issueGetIssue",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6mp-f218c6a8-issues/issues/1"
+            }
+          ]
+        },
+        {
+          "operation": "repository.issues.list",
+          "expectedOperationIds": [
+            "issueListIssues"
+          ],
+          "requests": [
+            {
+              "operationId": "issueListIssues",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6mp-f218c6a8-issues/issues"
+            }
+          ]
+        },
+        {
+          "operation": "repository.issues.update",
+          "expectedOperationIds": [
+            "issueEditIssue"
+          ],
+          "requests": [
+            {
+              "operationId": "issueEditIssue",
+              "method": "PATCH",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6mp-f218c6a8-issues/issues/1"
+            }
+          ]
+        },
+        {
+          "operation": "repository.issues.setState.closed",
+          "expectedOperationIds": [
+            "issueEditIssue"
+          ],
+          "requests": [
+            {
+              "operationId": "issueEditIssue",
+              "method": "PATCH",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6mp-f218c6a8-issues/issues/1"
+            }
+          ]
+        },
+        {
+          "operation": "repository.issues.setState.open",
+          "expectedOperationIds": [
+            "issueEditIssue"
+          ],
+          "requests": [
+            {
+              "operationId": "issueEditIssue",
+              "method": "PATCH",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6mp-f218c6a8-issues/issues/1"
+            }
+          ]
+        },
+        {
+          "operation": "repository.issues.comments.create",
+          "expectedOperationIds": [
+            "issueCreateComment"
+          ],
+          "requests": [
+            {
+              "operationId": "issueCreateComment",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6mp-f218c6a8-issues/issues/1/comments"
+            }
+          ]
+        },
+        {
+          "operation": "repository.issues.comments.get",
+          "expectedOperationIds": [
+            "issueGetComment"
+          ],
+          "requests": [
+            {
+              "operationId": "issueGetComment",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6mp-f218c6a8-issues/issues/comments/91"
+            }
+          ]
+        },
+        {
+          "operation": "repository.issues.comments.list",
+          "expectedOperationIds": [
+            "issueGetRepoComments"
+          ],
+          "requests": [
+            {
+              "operationId": "issueGetRepoComments",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6mp-f218c6a8-issues/issues/comments"
+            }
+          ]
+        },
+        {
+          "operation": "repository.issues.comments.update",
+          "expectedOperationIds": [
+            "issueEditComment"
+          ],
+          "requests": [
+            {
+              "operationId": "issueEditComment",
+              "method": "PATCH",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6mp-f218c6a8-issues/issues/comments/91"
+            }
+          ]
+        },
+        {
+          "operation": "issue.native.gitea",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "issueComment.native.gitea",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "repository.issues.comments.delete",
+          "expectedOperationIds": [
+            "issueDeleteComment"
+          ],
+          "requests": [
+            {
+              "operationId": "issueDeleteComment",
+              "method": "DELETE",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6mp-f218c6a8-issues/issues/comments/91"
+            }
+          ]
+        },
+        {
+          "operation": "repository.issues.comments.get.afterDelete",
+          "expectedOperationIds": [
+            "issueGetComment"
+          ],
+          "requests": [
+            {
+              "operationId": "issueGetComment",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6mp-f218c6a8-issues/issues/comments/91"
+            }
+          ]
+        },
+        {
+          "operation": "repository.issues.get.missing",
+          "expectedOperationIds": [
+            "issueGetIssue"
+          ],
+          "requests": [
+            {
+              "operationId": "issueGetIssue",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6mp-f218c6a8-issues/issues/100001"
+            }
+          ]
+        },
+        {
+          "operation": "repository.issues.create.invalidTitle",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "repository.issues.get.preflightAbort",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "repository.issues.cleanup.close",
+          "expectedOperationIds": [
+            "issueEditIssue"
+          ],
+          "requests": [
+            {
+              "operationId": "issueEditIssue",
+              "method": "PATCH",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6mp-f218c6a8-issues/issues/1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gitea-extension/issue-content-version",
+      "passed": true,
+      "assertions": [
+        "content-version extension support is static and request-free",
+        "a correct Gitea content version performs exactly one guarded update",
+        "a stale content version conflicts once and a direct read proves no overwrite"
+      ],
+      "requestEvidence": [
+        {
+          "operation": "repository.issues.support.contentVersionGuard",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "repository.issues.create.contentVersionFixture",
+          "expectedOperationIds": [
+            "issueCreateIssue"
+          ],
+          "requests": [
+            {
+              "operationId": "issueCreateIssue",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6t7-ede4e866-issue-content-version/issues"
+            }
+          ]
+        },
+        {
+          "operation": "issue.native.gitea.contentVersion",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "repository.issues.update.gitea.contentVersion",
+          "expectedOperationIds": [
+            "issueEditIssue"
+          ],
+          "requests": [
+            {
+              "operationId": "issueEditIssue",
+              "method": "PATCH",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6t7-ede4e866-issue-content-version/issues/1"
+            }
+          ]
+        },
+        {
+          "operation": "repository.issues.update.gitea.staleContentVersion",
+          "expectedOperationIds": [
+            "issueEditIssue"
+          ],
+          "requests": [
+            {
+              "operationId": "issueEditIssue",
+              "method": "PATCH",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6t7-ede4e866-issue-content-version/issues/1"
+            }
+          ]
+        },
+        {
+          "operation": "repository.issues.get.afterStaleConflict",
+          "expectedOperationIds": [
+            "issueGetIssue"
+          ],
+          "requests": [
+            {
+              "operationId": "issueGetIssue",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6t7-ede4e866-issue-content-version/issues/1"
+            }
+          ]
+        },
+        {
+          "operation": "repository.issues.cleanup.closeContentVersionFixture",
+          "expectedOperationIds": [
+            "issueEditIssue"
+          ],
+          "requests": [
+            {
+              "operationId": "issueEditIssue",
+              "method": "PATCH",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6t7-ede4e866-issue-content-version/issues/1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shared-capability/releases",
+      "passed": true,
+      "assertions": [
+        "release support metadata is static, explicit, and request-free",
+        "create, ID get, tag get, and bounded list have exact one-request budgets",
+        "asset upload/get/bounded-list/update and native access retain exact identity",
+        "asset/release cleanup is direct; absence is separately proven in one request",
+        "invalid and cancelled release calls perform zero provider requests"
+      ],
+      "requestEvidence": [
+        {
+          "operation": "repository.releases.support",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "repository.releases.create",
+          "expectedOperationIds": [
+            "repoCreateRelease"
+          ],
+          "requests": [
+            {
+              "operationId": "repoCreateRelease",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6yd-83a54d96-releases/releases"
+            }
+          ]
+        },
+        {
+          "operation": "repository.releases.get",
+          "expectedOperationIds": [
+            "repoGetRelease"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetRelease",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6yd-83a54d96-releases/releases/14"
+            }
+          ]
+        },
+        {
+          "operation": "repository.releases.getByTag",
+          "expectedOperationIds": [
+            "repoGetReleaseByTag"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetReleaseByTag",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6yd-83a54d96-releases/releases/tags/optional-release-v1"
+            }
+          ]
+        },
+        {
+          "operation": "repository.releases.list",
+          "expectedOperationIds": [
+            "repoListReleases"
+          ],
+          "requests": [
+            {
+              "operationId": "repoListReleases",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6yd-83a54d96-releases/releases"
+            }
+          ]
+        },
+        {
+          "operation": "repository.releases.update",
+          "expectedOperationIds": [
+            "repoEditRelease"
+          ],
+          "requests": [
+            {
+              "operationId": "repoEditRelease",
+              "method": "PATCH",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6yd-83a54d96-releases/releases/14"
+            }
+          ]
+        },
+        {
+          "operation": "repository.releases.assets.upload",
+          "expectedOperationIds": [
+            "repoCreateReleaseAttachment"
+          ],
+          "requests": [
+            {
+              "operationId": "repoCreateReleaseAttachment",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6yd-83a54d96-releases/releases/14/assets"
+            }
+          ]
+        },
+        {
+          "operation": "repository.releases.assets.get",
+          "expectedOperationIds": [
+            "repoGetReleaseAttachment"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetReleaseAttachment",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6yd-83a54d96-releases/releases/14/assets/4"
+            }
+          ]
+        },
+        {
+          "operation": "repository.releases.assets.list",
+          "expectedOperationIds": [
+            "repoListReleaseAttachments"
+          ],
+          "requests": [
+            {
+              "operationId": "repoListReleaseAttachments",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6yd-83a54d96-releases/releases/14/assets"
+            }
+          ]
+        },
+        {
+          "operation": "repository.releases.assets.update",
+          "expectedOperationIds": [
+            "repoEditReleaseAttachment"
+          ],
+          "requests": [
+            {
+              "operationId": "repoEditReleaseAttachment",
+              "method": "PATCH",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6yd-83a54d96-releases/releases/14/assets/4"
+            }
+          ]
+        },
+        {
+          "operation": "release.native.gitea",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "releaseAsset.native.gitea",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "repository.releases.assets.delete",
+          "expectedOperationIds": [
+            "repoDeleteReleaseAttachment"
+          ],
+          "requests": [
+            {
+              "operationId": "repoDeleteReleaseAttachment",
+              "method": "DELETE",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6yd-83a54d96-releases/releases/14/assets/4"
+            }
+          ]
+        },
+        {
+          "operation": "repository.releases.assets.get.afterDelete",
+          "expectedOperationIds": [
+            "repoGetReleaseAttachment"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetReleaseAttachment",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6yd-83a54d96-releases/releases/14/assets/4"
+            }
+          ]
+        },
+        {
+          "operation": "repository.releases.create.invalidTag",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "repository.releases.get.preflightAbort",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "repository.releases.delete",
+          "expectedOperationIds": [
+            "repoDeleteRelease"
+          ],
+          "requests": [
+            {
+              "operationId": "repoDeleteRelease",
+              "method": "DELETE",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6yd-83a54d96-releases/releases/14"
+            }
+          ]
+        },
+        {
+          "operation": "repository.releases.get.afterDelete",
+          "expectedOperationIds": [
+            "repoGetRelease"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetRelease",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj6yd-83a54d96-releases/releases/14"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shared-capability/repository-webhooks",
+      "passed": true,
+      "assertions": [
+        "webhook support metadata is static, bounded, and request-free",
+        "create, get, bounded list, and update have exact one-request budgets",
+        "one fluent commit triggers one bounded, repository-specific push delivery",
+        "invalid and cancelled calls cost zero; delete and absence are each direct"
+      ],
+      "requestEvidence": [
+        {
+          "operation": "repository.webhooks.support",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "repository.webhooks.create",
+          "expectedOperationIds": [
+            "repoCreateHook"
+          ],
+          "requests": [
+            {
+              "operationId": "repoCreateHook",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj74k-743340cb-webhooks/hooks"
+            }
+          ]
+        },
+        {
+          "operation": "repository.webhooks.get",
+          "expectedOperationIds": [
+            "repoGetHook"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetHook",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj74k-743340cb-webhooks/hooks/5"
+            }
+          ]
+        },
+        {
+          "operation": "repository.webhooks.list",
+          "expectedOperationIds": [
+            "repoListHooks"
+          ],
+          "requests": [
+            {
+              "operationId": "repoListHooks",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj74k-743340cb-webhooks/hooks"
+            }
+          ]
+        },
+        {
+          "operation": "repository.webhooks.update",
+          "expectedOperationIds": [
+            "repoEditHook"
+          ],
+          "requests": [
+            {
+              "operationId": "repoEditHook",
+              "method": "PATCH",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj74k-743340cb-webhooks/hooks/5"
+            }
+          ]
+        },
+        {
+          "operation": "repositoryWebhook.native.gitea",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "repository.webhooks.trigger.push",
+          "expectedOperationIds": [
+            "repoChangeFiles"
+          ],
+          "requests": [
+            {
+              "operationId": "repoChangeFiles",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj74k-743340cb-webhooks/contents"
+            }
+          ]
+        },
+        {
+          "operation": "repository.webhooks.create.invalidUrl",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "repository.webhooks.get.preflightAbort",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "repository.webhooks.delete",
+          "expectedOperationIds": [
+            "repoDeleteHook"
+          ],
+          "requests": [
+            {
+              "operationId": "repoDeleteHook",
+              "method": "DELETE",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj74k-743340cb-webhooks/hooks/5"
+            }
+          ]
+        },
+        {
+          "operation": "repository.webhooks.get.afterDelete",
+          "expectedOperationIds": [
+            "repoGetHook"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetHook",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj74k-743340cb-webhooks/hooks/5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shared-capability/ci-run-discovery",
+      "passed": true,
+      "assertions": [
+        "CI discovery support is static, read-only, bounded, and request-free",
+        "known workflow/run reads and one filtered run page each use one request",
+        "known job list/get operations each inspect one provider page or identity",
+        "artifact find/get/absence are direct and native access adds zero requests",
+        "invalid and cancelled CI discovery operations perform zero provider requests"
+      ],
+      "requestEvidence": [
+        {
+          "operation": "repository.ciRuns.support",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "repository.ciRuns.workflow",
+          "expectedOperationIds": [
+            "ActionsGetWorkflow"
+          ],
+          "requests": [
+            {
+              "operationId": "ActionsGetWorkflow",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj8ig-3a88f48b-ci-run-discovery/actions/workflows/optional-ci.yaml"
+            }
+          ]
+        },
+        {
+          "operation": "repository.ciRuns.runs",
+          "expectedOperationIds": [
+            "getWorkflowRuns"
+          ],
+          "requests": [
+            {
+              "operationId": "getWorkflowRuns",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj8ig-3a88f48b-ci-run-discovery/actions/runs"
+            }
+          ]
+        },
+        {
+          "operation": "repository.ciRuns.run",
+          "expectedOperationIds": [
+            "GetWorkflowRun"
+          ],
+          "requests": [
+            {
+              "operationId": "GetWorkflowRun",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj8ig-3a88f48b-ci-run-discovery/actions/runs/2"
+            }
+          ]
+        },
+        {
+          "operation": "repository.ciRuns.jobs",
+          "expectedOperationIds": [
+            "listWorkflowRunJobs"
+          ],
+          "requests": [
+            {
+              "operationId": "listWorkflowRunJobs",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj8ig-3a88f48b-ci-run-discovery/actions/runs/2/jobs"
+            }
+          ]
+        },
+        {
+          "operation": "repository.ciRuns.job",
+          "expectedOperationIds": [
+            "getWorkflowJob"
+          ],
+          "requests": [
+            {
+              "operationId": "getWorkflowJob",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj8ig-3a88f48b-ci-run-discovery/actions/jobs/5"
+            }
+          ]
+        },
+        {
+          "operation": "repository.ciRuns.findArtifact",
+          "expectedOperationIds": [
+            "getArtifactsOfRun"
+          ],
+          "requests": [
+            {
+              "operationId": "getArtifactsOfRun",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj8ig-3a88f48b-ci-run-discovery/actions/runs/2/artifacts"
+            }
+          ]
+        },
+        {
+          "operation": "repository.ciRuns.artifact",
+          "expectedOperationIds": [
+            "getArtifact"
+          ],
+          "requests": [
+            {
+              "operationId": "getArtifact",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj8ig-3a88f48b-ci-run-discovery/actions/artifacts/5"
+            }
+          ]
+        },
+        {
+          "operation": "repository.ciRuns.findArtifact.missing",
+          "expectedOperationIds": [
+            "getArtifactsOfRun"
+          ],
+          "requests": [
+            {
+              "operationId": "getArtifactsOfRun",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgj8ig-3a88f48b-ci-run-discovery/actions/runs/2/artifacts"
+            }
+          ]
+        },
+        {
+          "operation": "ciRun.native.gitea",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "ciArtifact.native.gitea",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "repository.ciRuns.workflow.invalidId",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "repository.ciRuns.run.preflightAbort",
+          "expectedOperationIds": [],
+          "requests": []
+        }
+      ]
+    },
+    {
+      "id": "shared-capability/packages",
+      "passed": true,
+      "assertions": [
+        "package support metadata is static, conservative, and request-free",
+        "owner and version discovery each inspect exactly one bounded provider page",
+        "direct get/find/files retain normalized and exact native metadata",
+        "confirmed absence costs one request; invalid and cancelled reads cost zero",
+        "version and whole-package lifecycle cleanup are direct and identity-based"
+      ],
+      "requestEvidence": [
+        {
+          "operation": "packages.support",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "packages.list",
+          "expectedOperationIds": [
+            "listPackages"
+          ],
+          "requests": [
+            {
+              "operationId": "listPackages",
+              "method": "GET",
+              "path": "/api/v1/packages/sandbox"
+            }
+          ]
+        },
+        {
+          "operation": "packages.versions",
+          "expectedOperationIds": [
+            "listPackageVersions"
+          ],
+          "requests": [
+            {
+              "operationId": "listPackageVersions",
+              "method": "GET",
+              "path": "/api/v1/packages/sandbox/generic/pge2e-mtkgja05-9e6a67c4-package"
+            }
+          ]
+        },
+        {
+          "operation": "packages.get",
+          "expectedOperationIds": [
+            "getPackage"
+          ],
+          "requests": [
+            {
+              "operationId": "getPackage",
+              "method": "GET",
+              "path": "/api/v1/packages/sandbox/generic/pge2e-mtkgja05-9e6a67c4-package/1.0.0"
+            }
+          ]
+        },
+        {
+          "operation": "packages.find",
+          "expectedOperationIds": [
+            "getPackage"
+          ],
+          "requests": [
+            {
+              "operationId": "getPackage",
+              "method": "GET",
+              "path": "/api/v1/packages/sandbox/generic/pge2e-mtkgja05-9e6a67c4-package/1.0.0"
+            }
+          ]
+        },
+        {
+          "operation": "packages.files",
+          "expectedOperationIds": [
+            "listPackageFiles"
+          ],
+          "requests": [
+            {
+              "operationId": "listPackageFiles",
+              "method": "GET",
+              "path": "/api/v1/packages/sandbox/generic/pge2e-mtkgja05-9e6a67c4-package/1.0.0/files"
+            }
+          ]
+        },
+        {
+          "operation": "packageVersion.native.gitea",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "packageFile.native.gitea",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "packages.find.missing",
+          "expectedOperationIds": [
+            "getPackage"
+          ],
+          "requests": [
+            {
+              "operationId": "getPackage",
+              "method": "GET",
+              "path": "/api/v1/packages/sandbox/generic/pge2e-mtkgja05-9e6a67c4-package/999.0.0-missing"
+            }
+          ]
+        },
+        {
+          "operation": "packages.get.invalidType",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "packages.get.preflightAbort",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "packages.deleteVersion",
+          "expectedOperationIds": [
+            "deletePackageVersion"
+          ],
+          "requests": [
+            {
+              "operationId": "deletePackageVersion",
+              "method": "DELETE",
+              "path": "/api/v1/packages/sandbox/generic/pge2e-mtkgja05-9e6a67c4-package/2.0.0"
+            }
+          ]
+        },
+        {
+          "operation": "packages.find.afterDeleteVersion",
+          "expectedOperationIds": [
+            "getPackage"
+          ],
+          "requests": [
+            {
+              "operationId": "getPackage",
+              "method": "GET",
+              "path": "/api/v1/packages/sandbox/generic/pge2e-mtkgja05-9e6a67c4-package/2.0.0"
+            }
+          ]
+        },
+        {
+          "operation": "packages.delete",
+          "expectedOperationIds": [
+            "deletePackage"
+          ],
+          "requests": [
+            {
+              "operationId": "deletePackage",
+              "method": "DELETE",
+              "path": "/api/v1/packages/sandbox/generic/pge2e-mtkgja05-9e6a67c4-package"
+            }
+          ]
+        },
+        {
+          "operation": "packages.find.afterDeletePackage",
+          "expectedOperationIds": [
+            "getPackage"
+          ],
+          "requests": [
+            {
+              "operationId": "getPackage",
+              "method": "GET",
+              "path": "/api/v1/packages/sandbox/generic/pge2e-mtkgja05-9e6a67c4-package/1.0.0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shared-capability/blob-reads",
+      "passed": true,
+      "assertions": [
+        "capability support is static and performs zero provider requests",
+        "known immutable binary bytes are returned by one direct SHA request",
+        "exact native payload access performs zero additional provider requests",
+        "absence costs one direct request; invalid and cancelled reads cost zero"
+      ],
+      "requestEvidence": [
+        {
+          "operation": "repository.blobs.support",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "repository.blobs.get",
+          "expectedOperationIds": [
+            "GetBlob"
+          ],
+          "requests": [
+            {
+              "operationId": "GetBlob",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgja1m-c63a3a95-blob-reads/git/blobs/ac0deae0c6de979e3136dcc6bdb1d07c58d37107"
+            }
+          ]
+        },
+        {
+          "operation": "blob.native.gitea",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "repository.blobs.get.missing",
+          "expectedOperationIds": [
+            "GetBlob"
+          ],
+          "requests": [
+            {
+              "operationId": "GetBlob",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgja1m-c63a3a95-blob-reads/git/blobs/ffffffffffffffffffffffffffffffffffffffff"
+            }
+          ]
+        },
+        {
+          "operation": "repository.blobs.get.invalidSha",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "repository.blobs.get.preflightAbort",
+          "expectedOperationIds": [],
+          "requests": []
+        }
+      ]
+    },
+    {
+      "id": "shared-capability/pull-request-reviews",
+      "passed": true,
+      "assertions": [
+        "review-object capability support is static and request-free",
+        "create, direct get, and bounded list each use one provider operation",
+        "submitting a known pending review is one direct mutation",
+        "invalid and cancelled review lookups perform zero provider requests"
+      ],
+      "requestEvidence": [
+        {
+          "operation": "repository.pullRequests.reviews.support",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "pullRequest.reviews.create",
+          "expectedOperationIds": [
+            "repoCreatePullReview"
+          ],
+          "requests": [
+            {
+              "operationId": "repoCreatePullReview",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgjaac-b4c48c58-review-objects/pulls/1/reviews"
+            }
+          ]
+        },
+        {
+          "operation": "pullRequest.reviews.get",
+          "expectedOperationIds": [
+            "repoGetPullReview"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetPullReview",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgjaac-b4c48c58-review-objects/pulls/1/reviews/8"
+            }
+          ]
+        },
+        {
+          "operation": "pullRequest.reviews.list",
+          "expectedOperationIds": [
+            "repoListPullReviews"
+          ],
+          "requests": [
+            {
+              "operationId": "repoListPullReviews",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgjaac-b4c48c58-review-objects/pulls/1/reviews"
+            }
+          ]
+        },
+        {
+          "operation": "pullRequestReview.native.gitea",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "pullRequest.reviews.submit",
+          "expectedOperationIds": [
+            "repoSubmitPullReview"
+          ],
+          "requests": [
+            {
+              "operationId": "repoSubmitPullReview",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgjaac-b4c48c58-review-objects/pulls/1/reviews/8"
+            }
+          ]
+        },
+        {
+          "operation": "pullRequest.reviews.get.invalidId",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "pullRequest.reviews.get.preflightAbort",
+          "expectedOperationIds": [],
+          "requests": []
+        }
+      ]
+    },
+    {
+      "id": "shared-capability/branch-rules",
+      "passed": true,
+      "assertions": [
+        "configured and effective capability metadata is static and request-free",
+        "configured rule create/get/list operations are direct and explicitly bounded",
+        "effective enforcement comes from one direct branch response, not rule inference",
+        "delete is direct and absence is confirmed by one separate direct lookup",
+        "invalid and cancelled branch-rule operations perform zero provider requests"
+      ],
+      "requestEvidence": [
+        {
+          "operation": "repository.branchRules.support",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "repository.branchRules.create",
+          "expectedOperationIds": [
+            "repoCreateBranchProtection"
+          ],
+          "requests": [
+            {
+              "operationId": "repoCreateBranchProtection",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgjau5-ba6f1440-branch-rules/branch_protections"
+            }
+          ]
+        },
+        {
+          "operation": "repository.branchRules.get",
+          "expectedOperationIds": [
+            "repoGetBranchProtection"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetBranchProtection",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgjau5-ba6f1440-branch-rules/branch_protections/main"
+            }
+          ]
+        },
+        {
+          "operation": "repository.branchRules.list",
+          "expectedOperationIds": [
+            "repoListBranchProtection"
+          ],
+          "requests": [
+            {
+              "operationId": "repoListBranchProtection",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgjau5-ba6f1440-branch-rules/branch_protections"
+            }
+          ]
+        },
+        {
+          "operation": "repository.branchRules.update",
+          "expectedOperationIds": [
+            "repoEditBranchProtection"
+          ],
+          "requests": [
+            {
+              "operationId": "repoEditBranchProtection",
+              "method": "PATCH",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgjau5-ba6f1440-branch-rules/branch_protections/main"
+            }
+          ]
+        },
+        {
+          "operation": "repository.branchRules.effective",
+          "expectedOperationIds": [
+            "repoGetBranch"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetBranch",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgjau5-ba6f1440-branch-rules/branches/main"
+            }
+          ]
+        },
+        {
+          "operation": "branchRule.native.gitea",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "repository.branchRules.delete",
+          "expectedOperationIds": [
+            "repoDeleteBranchProtection"
+          ],
+          "requests": [
+            {
+              "operationId": "repoDeleteBranchProtection",
+              "method": "DELETE",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgjau5-ba6f1440-branch-rules/branch_protections/main"
+            }
+          ]
+        },
+        {
+          "operation": "repository.branchRules.get.afterDelete",
+          "expectedOperationIds": [
+            "repoGetBranchProtection"
+          ],
+          "requests": [
+            {
+              "operationId": "repoGetBranchProtection",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgjau5-ba6f1440-branch-rules/branch_protections/main"
+            }
+          ]
+        },
+        {
+          "operation": "repository.branchRules.create.invalidName",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "repository.branchRules.get.preflightAbort",
+          "expectedOperationIds": [],
+          "requests": []
+        }
+      ]
+    },
+    {
+      "id": "gitea-extension/branch-rule-priority",
+      "passed": true,
+      "assertions": [
+        "Gitea priority callback is scoped and executes one direct ordering mutation",
+        "missing and invalid priority extensions perform zero provider requests"
+      ],
+      "requestEvidence": [
+        {
+          "operation": "branchRulePriority.create.first",
+          "expectedOperationIds": [
+            "repoCreateBranchProtection"
+          ],
+          "requests": [
+            {
+              "operationId": "repoCreateBranchProtection",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgjazr-3d5d600c-branch-rule-priority/branch_protections"
+            }
+          ]
+        },
+        {
+          "operation": "branchRulePriority.create.second",
+          "expectedOperationIds": [
+            "repoCreateBranchProtection"
+          ],
+          "requests": [
+            {
+              "operationId": "repoCreateBranchProtection",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgjazr-3d5d600c-branch-rule-priority/branch_protections"
+            }
+          ]
+        },
+        {
+          "operation": "branchRules.setOrder.gitea",
+          "expectedOperationIds": [
+            "repoUpdateBranchProtectionPriories"
+          ],
+          "requests": [
+            {
+              "operationId": "repoUpdateBranchProtectionPriories",
+              "method": "POST",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgjazr-3d5d600c-branch-rule-priority/branch_protections/priority"
+            }
+          ]
+        },
+        {
+          "operation": "branchRules.list.afterSetOrder",
+          "expectedOperationIds": [
+            "repoListBranchProtection"
+          ],
+          "requests": [
+            {
+              "operationId": "repoListBranchProtection",
+              "method": "GET",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgjazr-3d5d600c-branch-rule-priority/branch_protections"
+            }
+          ]
+        },
+        {
+          "operation": "branchRules.setOrder.missingExtension",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "branchRules.setOrder.duplicate",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "branchRulePriority.delete.first",
+          "expectedOperationIds": [
+            "repoDeleteBranchProtection"
+          ],
+          "requests": [
+            {
+              "operationId": "repoDeleteBranchProtection",
+              "method": "DELETE",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgjazr-3d5d600c-branch-rule-priority/branch_protections/priority-first"
+            }
+          ]
+        },
+        {
+          "operation": "branchRulePriority.delete.second",
+          "expectedOperationIds": [
+            "repoDeleteBranchProtection"
+          ],
+          "requests": [
+            {
+              "operationId": "repoDeleteBranchProtection",
+              "method": "DELETE",
+              "path": "/api/v1/repos/sandbox/pge2e-mtkgjazr-3d5d600c-branch-rule-priority/branch_protections/priority-second"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shared-capability/unsupported-gitea-modules",
+      "passed": true,
+      "assertions": [
+        "deployments/environments and gists/snippets are non-callable static unsupported metadata",
+        "both unsupported capability checks perform zero provider requests"
+      ],
+      "requestEvidence": [
+        {
+          "operation": "unsupportedOptionalCapabilities.deploymentsEnvironments",
+          "expectedOperationIds": [],
+          "requests": []
+        },
+        {
+          "operation": "unsupportedOptionalCapabilities.gistsSnippets",
+          "expectedOperationIds": [],
+          "requests": []
+        }
+      ]
+    },
+    {
+      "id": "native-access/gitea/client",
+      "passed": true,
+      "assertions": [
+        "client native access exposes the selected generated Gitea client with zero HTTP requests"
+      ],
+      "requestEvidence": [
+        {
+          "operation": "client.native.gitea",
+          "expectedOperationIds": [],
+          "requests": []
+        }
+      ]
+    },
+    {
+      "id": "native-access/gitea/entities",
+      "passed": true,
+      "assertions": [
+        "container, repository, branch, tag, commit, content, pull request, review, and status native payloads require zero refetches"
+      ],
+      "requestEvidence": [
+        {
+          "operation": "entity.native.gitea",
+          "expectedOperationIds": [],
+          "requests": []
+        }
       ]
     }
   ]

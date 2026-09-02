@@ -2,11 +2,11 @@
 
 export type {
   Auth,
-  AuthBranch,
   BasicAuthorization,
+  GiteaBasicAuthorizationBranch,
+  GiteaBasicAuthorizationExtension,
   MaybePromise,
 } from "./authentication-contracts.ts";
-export { AuthAdapterNotImplementedError } from "./AuthAdapterNotImplementedError.ts";
 export type {
   OAuthCookieCompletion,
   OAuthCookieFlow,

@@ -16,18 +16,648 @@
 
 **PASS** hand-written contracts against the same live Git-host environment:
 
-### repository-container
+### `core/authentication`
+
+- PAT and invalid credential paths use one identity verification request
+- Basic authentication and the narrow Gitea TOTP extension are live-proven
+- OAuth state, PKCE, browser grant, exchange, and identity verification pass
+- authentication cancellation makes zero provider requests
+
+#### Request-budget evidence
+
+| Fluent operation                | Expected provider operations | Observed provider operations    |
+| :------------------------------ | :--------------------------- | :------------------------------ |
+| `authorizeToken`                | `userGetCurrent`             | 1: `userGetCurrent`             |
+| `authorizeBasic`                | `userGetCurrent`             | 1: `userGetCurrent`             |
+| `authorizeBasic.totp`           | `userGetCurrent`             | 1: `userGetCurrent`             |
+| `beginOAuth`                    | none                         | 0: none                         |
+| `oauthStateMismatch`            | none                         | 0: none                         |
+| `authorizeOAuthCallback`        | `raw:POST`, `userGetCurrent` | 2: `raw:POST`, `userGetCurrent` |
+| `authorizeToken.preflightAbort` | none                         | 0: none                         |
+
+### `core/repositories`
 
 - token authorization retains the selected client
 - container discovery returns normalized user and organization owners
+- invalid opaque container cursors fail locally with exact adapter context
 - container(name) resolves normalized user and organization owners
 - repository existence, optional lookup, and required lookup are direct
+- only confirmed repository absence becomes undefined or false
 - container-scoped repository listing and lookup return normalized entities
+- repository creation accepts an exact multi-file initial tree and branch
 - repository create, rename, refresh, and delete succeed
+- repository validation and preflight cancellation make zero requests
 
-### gitea-native-context
+#### Request-budget evidence
 
-- native.gitea retains exact generated container and repository contexts
+| Fluent operation                         | Expected provider operations               | Observed provider operations                  |
+| :--------------------------------------- | :----------------------------------------- | :-------------------------------------------- |
+| `authorizeToken`                         | `userGetCurrent`                           | 1: `userGetCurrent`                           |
+| `listRepositoryContainers`               | `orgListCurrentUserOrgs`                   | 1: `orgListCurrentUserOrgs`                   |
+| `listRepositoryContainers.invalidCursor` | none                                       | 0: none                                       |
+| `getCurrentUserContainer`                | none                                       | 0: none                                       |
+| `getOrganizationContainer`               | `orgGet`                                   | 1: `orgGet`                                   |
+| `hasRepository`                          | `repoGet`                                  | 1: `repoGet`                                  |
+| `findRepository`                         | `repoGet`                                  | 1: `repoGet`                                  |
+| `getRepository`                          | `repoGet`                                  | 1: `repoGet`                                  |
+| `findRepository.missing`                 | `repoGet`                                  | 1: `repoGet`                                  |
+| `hasRepository.missing`                  | `repoGet`                                  | 1: `repoGet`                                  |
+| `listUserRepositories`                   | `userCurrentListRepos`                     | 1: `userCurrentListRepos`                     |
+| `listRepositories`                       | `orgListRepos`                             | 1: `orgListRepos`                             |
+| `getOrganizationRepository`              | `repoGet`                                  | 1: `repoGet`                                  |
+| `createOrganizationRepository`           | `createOrgRepo`                            | 1: `createOrgRepo`                            |
+| `deleteOrganizationRepository`           | `repoDelete`                               | 1: `repoDelete`                               |
+| `createInitializedRepository`            | `createCurrentUserRepo`, `repoChangeFiles` | 2: `createCurrentUserRepo`, `repoChangeFiles` |
+| `readInitializedRepositoryFiles`         | `repoGetFileContentsPost`                  | 1: `repoGetFileContentsPost`                  |
+| `deleteInitializedRepository`            | `repoDelete`                               | 1: `repoDelete`                               |
+| `createRepository`                       | `createCurrentUserRepo`                    | 1: `createCurrentUserRepo`                    |
+| `renameRepository`                       | `repoEdit`                                 | 1: `repoEdit`                                 |
+| `refreshRenamedRepository`               | `repoGet`                                  | 1: `repoGet`                                  |
+| `deleteRepository`                       | `repoDelete`                               | 1: `repoDelete`                               |
+| `hasRepository.afterDelete`              | `repoGet`                                  | 1: `repoGet`                                  |
+| `getRepository.preflightAbort`           | none                                       | 0: none                                       |
+| `getRepository.blankIdentity`            | none                                       | 0: none                                       |
+
+### `core/forks`
+
+- fork creation polls only the known direct destination and returns usable data
+- fork listing reads one bounded provider page
+- preflight cancellation performs no provider request
+
+#### Request-budget evidence
+
+| Fluent operation           | Expected provider operations | Observed provider operations |
+| :------------------------- | :--------------------------- | :--------------------------- |
+| `createFork`               | `createFork`, `repoGet`      | 2: `createFork`, `repoGet`   |
+| `listForks`                | `listForks`                  | 1: `listForks`               |
+| `listForks.preflightAbort` | none                         | 0: none                      |
+
+### `core/branches`
+
+- branch listing is one page and version-specific filtering stays bounded
+- branch get and exists use one direct request with 404-only absence
+- branch create, conflict, rename, and delete use direct operations
+- default-branch mutation guards make zero provider requests
+- divergence is exact from two count-only provider probes
+- divergence pages obey one page plus two probes per returned branch
+
+#### Request-budget evidence
+
+| Fluent operation           | Expected provider operations                                                                           | Observed provider operations                                                                              |
+| :------------------------- | :----------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------- |
+| `listBranches`             | `repoListBranches`                                                                                     | 1: `repoListBranches`                                                                                     |
+| `listBranches.filtered`    | `repoListBranches`                                                                                     | 1: `repoListBranches`                                                                                     |
+| `getBranch`                | `repoGetBranch`                                                                                        | 1: `repoGetBranch`                                                                                        |
+| `branchExists`             | `repoGetBranch`                                                                                        | 1: `repoGetBranch`                                                                                        |
+| `branchExists.missing`     | `repoGetBranch`                                                                                        | 1: `repoGetBranch`                                                                                        |
+| `createBranch`             | `repoCreateBranch`                                                                                     | 1: `repoCreateBranch`                                                                                     |
+| `renameBranch`             | `repoRenameBranch`                                                                                     | 1: `repoRenameBranch`                                                                                     |
+| `getRenamedBranch`         | `repoGetBranch`                                                                                        | 1: `repoGetBranch`                                                                                        |
+| `deleteBranch`             | `repoDeleteBranch`                                                                                     | 1: `repoDeleteBranch`                                                                                     |
+| `renameBranch.default`     | none                                                                                                   | 0: none                                                                                                   |
+| `deleteBranch.default`     | none                                                                                                   | 0: none                                                                                                   |
+| `getDivergence`            | `repoGetAllCommits`, `repoGetAllCommits`                                                               | 2: `repoGetAllCommits`, `repoGetAllCommits`                                                               |
+| `listBranchDivergences`    | `repoListBranches`, `repoGetAllCommits`, `repoGetAllCommits`, `repoGetAllCommits`, `repoGetAllCommits` | 5: `repoListBranches`, `repoGetAllCommits`, `repoGetAllCommits`, `repoGetAllCommits`, `repoGetAllCommits` |
+| `getBranch.preflightAbort` | none                                                                                                   | 0: none                                                                                                   |
+
+### `core/tags`
+
+- tag listing fetches exactly one bounded provider page
+- tag lookup is direct and preserves confirmed absence
+- tag create/native access/conflict/delete stay direct and immutable
+
+#### Request-budget evidence
+
+| Fluent operation          | Expected provider operations | Observed provider operations |
+| :------------------------ | :--------------------------- | :--------------------------- |
+| `listTags`                | `repoListTags`               | 1: `repoListTags`            |
+| `getTag`                  | `repoGetTag`                 | 1: `repoGetTag`              |
+| `createTag`               | `repoCreateTag`              | 1: `repoCreateTag`           |
+| `deleteTag`               | `repoDeleteTag`              | 1: `repoDeleteTag`           |
+| `listTags.preflightAbort` | none                         | 0: none                      |
+
+### `core/commits`
+
+- commit listing fetches one page with expensive facets omitted by default
+- direct commit gets expose only explicitly requested facets
+- multi-get touches only unique requested SHAs with stable duplicate order
+- comparison and commit-file listing each use one direct provider request
+- reachable counts and merge bases remain explicitly bounded
+- ref discovery inspects one requested ref page and only its candidates
+- contributor aggregation stops at its explicit history slice
+
+#### Request-budget evidence
+
+| Fluent operation                           | Expected provider operations                                                                                                                                                                                       | Observed provider operations                                                                                                                                                                                           |
+| :----------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `listCommits`                              | `repoGetAllCommits`                                                                                                                                                                                                | 1: `repoGetAllCommits`                                                                                                                                                                                                 |
+| `getCommit`                                | `repoGetSingleCommit`                                                                                                                                                                                              | 1: `repoGetSingleCommit`                                                                                                                                                                                               |
+| `getCommit.facets`                         | `repoGetSingleCommit`                                                                                                                                                                                              | 1: `repoGetSingleCommit`                                                                                                                                                                                               |
+| `getCommits`                               | `repoGetSingleCommit`, `repoGetSingleCommit`                                                                                                                                                                       | 2: `repoGetSingleCommit`, `repoGetSingleCommit`                                                                                                                                                                        |
+| `compareCommits`                           | `repoCompareDiff`                                                                                                                                                                                                  | 1: `repoCompareDiff`                                                                                                                                                                                                   |
+| `listCommitFiles`                          | `repoGetSingleCommit`                                                                                                                                                                                              | 1: `repoGetSingleCommit`                                                                                                                                                                                               |
+| `countReachableCommits`                    | `repoGetAllCommits`                                                                                                                                                                                                | 1: `repoGetAllCommits`                                                                                                                                                                                                 |
+| `findMergeBases`                           | `repoGetAllCommits`, `repoGetAllCommits`, `repoGetAllCommits`, `repoGetAllCommits`, `repoGetAllCommits`, `repoGetAllCommits`, `repoGetAllCommits`, `repoGetAllCommits`, `repoGetAllCommits`, `repoGetSingleCommit` | 10: `repoGetAllCommits`, `repoGetAllCommits`, `repoGetAllCommits`, `repoGetAllCommits`, `repoGetAllCommits`, `repoGetAllCommits`, `repoGetAllCommits`, `repoGetAllCommits`, `repoGetAllCommits`, `repoGetSingleCommit` |
+| `findRefsForCommit.head`                   | `repoListBranches`                                                                                                                                                                                                 | 1: `repoListBranches`                                                                                                                                                                                                  |
+| `findRefsForCommit.contains`               | `repoListBranches`, `repoGetAllCommits`, `repoGetAllCommits`                                                                                                                                                       | 3: `repoListBranches`, `repoGetAllCommits`, `repoGetAllCommits`                                                                                                                                                        |
+| `listContributors`                         | `repoGetAllCommits`                                                                                                                                                                                                | 1: `repoGetAllCommits`                                                                                                                                                                                                 |
+| `findMergeBases.insufficientRequestBudget` | none                                                                                                                                                                                                               | 0: none                                                                                                                                                                                                                |
+| `getCommit.preflightAbort`                 | none                                                                                                                                                                                                               | 0: none                                                                                                                                                                                                                |
+
+### `core/content-reads`
+
+- text, binary, empty, Unicode, and nested paths use one direct request each
+- batch reads deduplicate one provider request and restore caller order
+- directory and recursive reads visit only the requested bounded subtree
+- first-parent metadata resolves one commit and only required directory prefixes
+- linked reads are metadata-only by default; explicit dereference stays inside Gitea
+
+#### Request-budget evidence
+
+| Fluent operation                      | Expected provider operations                                      | Observed provider operations                                         |
+| :------------------------------------ | :---------------------------------------------------------------- | :------------------------------------------------------------------- |
+| `readContent.text`                    | `repoGetContentsExt`                                              | 1: `repoGetContentsExt`                                              |
+| `readContent.binary`                  | `repoGetContentsExt`                                              | 1: `repoGetContentsExt`                                              |
+| `readContent.empty`                   | `repoGetContentsExt`                                              | 1: `repoGetContentsExt`                                              |
+| `readContent.unicode`                 | `repoGetContentsExt`                                              | 1: `repoGetContentsExt`                                              |
+| `readFiles`                           | `repoGetFileContentsPost`                                         | 1: `repoGetFileContentsPost`                                         |
+| `getDirectory`                        | `repoGetContentsExt`                                              | 1: `repoGetContentsExt`                                              |
+| `listDirectory`                       | `repoGetContentsExt`                                              | 1: `repoGetContentsExt`                                              |
+| `listDirectory.recursive`             | `repoGetContentsExt`, `repoGetContentsExt`                        | 2: `repoGetContentsExt`, `repoGetContentsExt`                        |
+| `listDirectory.collapseSingleFolders` | `repoGetContentsExt`, `repoGetContentsExt`, `repoGetContentsExt`  | 3: `repoGetContentsExt`, `repoGetContentsExt`, `repoGetContentsExt`  |
+| `readPathMetadataBatch.firstParent`   | `repoGetSingleCommit`, `repoGetContentsExt`, `repoGetContentsExt` | 3: `repoGetSingleCommit`, `repoGetContentsExt`, `repoGetContentsExt` |
+| `readSymlink`                         | `repoGetContentsExt`                                              | 1: `repoGetContentsExt`                                              |
+| `readSymlink.internal`                | `repoGetContentsExt`, `repoGetContentsExt`                        | 2: `repoGetContentsExt`, `repoGetContentsExt`                        |
+| `readSubmodule`                       | `repoGetContentsExt`                                              | 1: `repoGetContentsExt`                                              |
+| `readSubmodule.externalDereference`   | `repoGetContentsExt`                                              | 1: `repoGetContentsExt`                                              |
+| `readSubmodule.internal`              | `repoGetContentsExt`, `repoGetContentsList`                       | 2: `repoGetContentsExt`, `repoGetContentsList`                       |
+| `readContent.preflightAbort`          | none                                                              | 0: none                                                              |
+
+### `core/file-change-commits`
+
+- mixed create/update/move/delete is one commit with at most one batch pre-read
+- a caller-selected new branch is created by the same batch mutation
+- stale file SHA guards prevent overwriting newer content
+- invalid local file batches make zero provider requests
+
+#### Request-budget evidence
+
+| Fluent operation                      | Expected provider operations                 | Observed provider operations                    |
+| :------------------------------------ | :------------------------------------------- | :---------------------------------------------- |
+| `commitFileChanges.mixed`             | `repoGetFileContentsPost`, `repoChangeFiles` | 2: `repoGetFileContentsPost`, `repoChangeFiles` |
+| `readFiles.afterMixedChange`          | `repoGetFileContentsPost`                    | 1: `repoGetFileContentsPost`                    |
+| `commitFileChanges.newBranch`         | `repoChangeFiles`                            | 1: `repoChangeFiles`                            |
+| `getNewFileChangeBranch`              | `repoGetBranch`                              | 1: `repoGetBranch`                              |
+| `commitFileChanges.invalid.empty`     | none                                         | 0: none                                         |
+| `commitFileChanges.invalid.duplicate` | none                                         | 0: none                                         |
+| `commitFileChanges.preflightAbort`    | none                                         | 0: none                                         |
+
+### `core/pull-request-discovery`
+
+- pull-request listing preserves one bounded provider page
+- get and base/head find are direct and preserve 404-only absence
+- snapshot merge state is local and fresh merge state is one direct read
+- PR commits and files each read exactly one provider page
+
+#### Request-budget evidence
+
+| Fluent operation                | Expected provider operations              | Observed provider operations                 |
+| :------------------------------ | :---------------------------------------- | :------------------------------------------- |
+| `listPullRequests`              | `repoListPullRequests`                    | 1: `repoListPullRequests`                    |
+| `listPullRequests.filtered`     | `issueSearchIssues`, `repoGetPullRequest` | 2: `issueSearchIssues`, `repoGetPullRequest` |
+| `getPullRequest`                | `repoGetPullRequest`                      | 1: `repoGetPullRequest`                      |
+| `findPullRequest`               | `repoGetPullRequestByBaseHead`            | 1: `repoGetPullRequestByBaseHead`            |
+| `getPullRequest.crossFork`      | `repoGetPullRequest`                      | 1: `repoGetPullRequest`                      |
+| `findPullRequest.missing`       | `repoGetPullRequestByBaseHead`            | 1: `repoGetPullRequestByBaseHead`            |
+| `isPullRequestMerged.snapshot`  | none                                      | 0: none                                      |
+| `isPullRequestMerged.refresh`   | `repoGetPullRequest`                      | 1: `repoGetPullRequest`                      |
+| `listPullRequestCommits`        | `repoGetPullRequestCommits`               | 1: `repoGetPullRequestCommits`               |
+| `listPullRequestFiles`          | `repoGetPullRequestFiles`                 | 1: `repoGetPullRequestFiles`                 |
+| `getPullRequest.preflightAbort` | none                                      | 0: none                                      |
+
+### `core/pull-request-mutation`
+
+- same-repository create, update, and close each use one direct mutation
+- cross-fork creation uses its explicit source identity without discovery
+- invalid and cancelled mutations perform zero provider requests
+
+#### Request-budget evidence
+
+| Fluent operation                   | Expected provider operations | Observed provider operations |
+| :--------------------------------- | :--------------------------- | :--------------------------- |
+| `createPullRequest.sameRepository` | `repoCreatePullRequest`      | 1: `repoCreatePullRequest`   |
+| `updatePullRequest`                | `repoEditPullRequest`        | 1: `repoEditPullRequest`     |
+| `closePullRequest`                 | `repoEditPullRequest`        | 1: `repoEditPullRequest`     |
+| `createPullRequest.crossFork`      | `repoCreatePullRequest`      | 1: `repoCreatePullRequest`   |
+| `createPullRequest.closeCandidate` | `repoCreatePullRequest`      | 1: `repoCreatePullRequest`   |
+| `updatePullRequest.empty`          | none                         | 0: none                      |
+| `closePullRequest.preflightAbort`  | none                         | 0: none                      |
+
+### `core/pull-request-merge`
+
+- provider-default merge is one mutation plus one direct hydration
+- squash merge is terminal and does not poll or enumerate pull requests
+
+#### Request-budget evidence
+
+| Fluent operation                   | Expected provider operations                 | Observed provider operations                    |
+| :--------------------------------- | :------------------------------------------- | :---------------------------------------------- |
+| `mergePullRequest.providerDefault` | `repoMergePullRequest`, `repoGetPullRequest` | 2: `repoMergePullRequest`, `repoGetPullRequest` |
+| `mergePullRequest.sourceCleanup`   | `repoGetBranch`                              | 1: `repoGetBranch`                              |
+| `mergePullRequest.squash`          | `repoMergePullRequest`, `repoGetPullRequest` | 2: `repoMergePullRequest`, `repoGetPullRequest` |
+| `mergePullRequest.sourceRetained`  | `repoGetBranch`                              | 1: `repoGetBranch`                              |
+
+### `core/pull-request-reviews-comments`
+
+- reviewer request is one direct action against the known PR
+- approval publishes one direct completed review action
+- text and old/new line comments each publish through one direct endpoint
+- invalid and cancelled review actions perform zero provider requests
+
+#### Request-budget evidence
+
+| Fluent operation                           | Expected provider operations   | Observed provider operations      |
+| :----------------------------------------- | :----------------------------- | :-------------------------------- |
+| `requestPullRequestReviewers`              | `repoCreatePullReviewRequests` | 1: `repoCreatePullReviewRequests` |
+| `approvePullRequest`                       | `repoCreatePullReview`         | 1: `repoCreatePullReview`         |
+| `publishPullRequestComment.text`           | `issueCreateComment`           | 1: `issueCreateComment`           |
+| `publishPullRequestComment.newLine`        | `repoCreatePullReview`         | 1: `repoCreatePullReview`         |
+| `publishPullRequestComment.oldLine`        | `repoCreatePullReview`         | 1: `repoCreatePullReview`         |
+| `requestPullRequestReviewers.empty`        | none                           | 0: none                           |
+| `publishPullRequestComment.invalidLine`    | none                           | 0: none                           |
+| `publishPullRequestComment.preflightAbort` | none                           | 0: none                           |
+
+### `core/commit-statuses`
+
+- commit, branch, tag, and PR-head modes use direct refs or one direct PR-head lookup
+- status pages are bounded and preserve provider-only states verbatim
+- status get means one direct combined-by-ref operation
+- invalid and cancelled status operations perform zero provider requests
+
+#### Request-budget evidence
+
+| Fluent operation                     | Expected provider operations                  | Observed provider operations                     |
+| :----------------------------------- | :-------------------------------------------- | :----------------------------------------------- |
+| `setCommitStatus.commit`             | `repoCreateStatus`                            | 1: `repoCreateStatus`                            |
+| `setCommitStatus.branch`             | `repoCreateStatus`                            | 1: `repoCreateStatus`                            |
+| `setCommitStatus.tag`                | `repoCreateStatus`                            | 1: `repoCreateStatus`                            |
+| `setCommitStatus.pullRequestHead`    | `repoGetPullRequest`, `repoCreateStatus`      | 2: `repoGetPullRequest`, `repoCreateStatus`      |
+| `listCommitStatuses.branch`          | `repoListStatusesByRef`                       | 1: `repoListStatusesByRef`                       |
+| `getCombinedCommitStatus.tag`        | `repoGetCombinedStatusByRef`                  | 1: `repoGetCombinedStatusByRef`                  |
+| `listCommitStatuses.pullRequestHead` | `repoGetPullRequest`, `repoListStatusesByRef` | 2: `repoGetPullRequest`, `repoListStatusesByRef` |
+| `listCommitStatuses`                 | `repoListStatusesByRef`                       | 1: `repoListStatusesByRef`                       |
+| `listCommitStatuses.nextPage`        | `repoListStatusesByRef`                       | 1: `repoListStatusesByRef`                       |
+| `listCommitStatuses.providerState`   | `repoListStatusesByRef`                       | 1: `repoListStatusesByRef`                       |
+| `getCombinedCommitStatus`            | `repoGetCombinedStatusByRef`                  | 1: `repoGetCombinedStatusByRef`                  |
+| `setCommitStatus.invalidContext`     | none                                          | 0: none                                          |
+| `listCommitStatuses.preflightAbort`  | none                                          | 0: none                                          |
+
+### `gitea-extension/file-change-commit`
+
+- typed context, force update, signoff, committer, and exact dates use one batch mutation
+
+#### Request-budget evidence
+
+| Fluent operation                   | Expected provider operations | Observed provider operations |
+| :--------------------------------- | :--------------------------- | :--------------------------- |
+| `commitFileChanges.giteaExtension` | `repoChangeFiles`            | 1: `repoChangeFiles`         |
+
+### `gitea-extension/compare-diff-patch`
+
+- diff and patch each use one repoCompareDiff request and retain complete text
+
+#### Request-budget evidence
+
+| Fluent operation             | Expected provider operations | Observed provider operations |
+| :--------------------------- | :--------------------------- | :--------------------------- |
+| `compareCommits.gitea.diff`  | `repoCompareDiff`            | 1: `repoCompareDiff`         |
+| `compareCommits.gitea.patch` | `repoCompareDiff`            | 1: `repoCompareDiff`         |
+
+### `gitea-extension/pull-request-merge`
+
+- typed Gitea merge options use one mutation plus one direct hydration
+- stale head SHA fails after one merge request without discovery or polling
+- scheduled merge polls only the known PR and stops at exactly two reads
+
+#### Request-budget evidence
+
+| Fluent operation                                 | Expected provider operations                                       | Observed provider operations                                          |
+| :----------------------------------------------- | :----------------------------------------------------------------- | :-------------------------------------------------------------------- |
+| `mergePullRequest.giteaExtension`                | `repoMergePullRequest`, `repoGetPullRequest`                       | 2: `repoMergePullRequest`, `repoGetPullRequest`                       |
+| `mergePullRequest.giteaExtension.verifyMessage`  | `repoGetSingleCommit`                                              | 1: `repoGetSingleCommit`                                              |
+| `mergePullRequest.giteaExtension.staleHead`      | `repoMergePullRequest`                                             | 1: `repoMergePullRequest`                                             |
+| `mergePullRequest.giteaExtension.scheduledBound` | `repoMergePullRequest`, `repoGetPullRequest`, `repoGetPullRequest` | 3: `repoMergePullRequest`, `repoGetPullRequest`, `repoGetPullRequest` |
+
+### `gitea-extension/pull-request-review`
+
+- one create-review request carries the exact event and grouped old/new positions
+
+#### Request-budget evidence
+
+| Fluent operation                         | Expected provider operations | Observed provider operations |
+| :--------------------------------------- | :--------------------------- | :--------------------------- |
+| `createPullRequestReview.giteaExtension` | `repoCreatePullReview`       | 1: `repoCreatePullReview`    |
+
+### `gitea-extension/commit-status`
+
+- error, warning, and skipped each use one typed extension callback and one direct mutation
+- provider-only states remain verbatim and outside the portable state union
+
+#### Request-budget evidence
+
+| Fluent operation                         | Expected provider operations | Observed provider operations |
+| :--------------------------------------- | :--------------------------- | :--------------------------- |
+| `setCommitStatus.giteaExtension.error`   | `repoCreateStatus`           | 1: `repoCreateStatus`        |
+| `setCommitStatus.giteaExtension.warning` | `repoCreateStatus`           | 1: `repoCreateStatus`        |
+| `setCommitStatus.giteaExtension.skipped` | `repoCreateStatus`           | 1: `repoCreateStatus`        |
+
+### `shared-capability/current-user-profile`
+
+- capability support is static and performs zero provider requests
+- authorized normalized and native identity use one direct provider request
+- unauthorized lookup costs one request and pre-aborted lookup costs zero
+
+#### Request-budget evidence
+
+| Fluent operation                            | Expected provider operations | Observed provider operations |
+| :------------------------------------------ | :--------------------------- | :--------------------------- |
+| `currentUserProfile.support`                | none                         | 0: none                      |
+| `currentUserProfile.current`                | `userGetCurrent`             | 1: `userGetCurrent`          |
+| `currentUserProfile.native.gitea`           | none                         | 0: none                      |
+| `currentUserProfile.current.unauthorized`   | `userGetCurrent`             | 1: `userGetCurrent`          |
+| `currentUserProfile.current.preflightAbort` | none                         | 0: none                      |
+
+### `shared-capability/issues`
+
+- issue support metadata is static, explicit, and request-free
+- create, direct get, and one bounded list each use one provider request
+- portable update, close, and reopen are direct mutations
+- comment create/get/list/update and native access preserve exact identities
+- comment deletion and missing issue behavior each use one direct lookup proof
+- invalid and cancelled calls cost zero; deterministic issue cleanup is direct
+
+#### Request-budget evidence
+
+| Fluent operation                             | Expected provider operations | Observed provider operations |
+| :------------------------------------------- | :--------------------------- | :--------------------------- |
+| `repository.issues.support`                  | none                         | 0: none                      |
+| `repository.issues.create`                   | `issueCreateIssue`           | 1: `issueCreateIssue`        |
+| `repository.issues.get`                      | `issueGetIssue`              | 1: `issueGetIssue`           |
+| `repository.issues.list`                     | `issueListIssues`            | 1: `issueListIssues`         |
+| `repository.issues.update`                   | `issueEditIssue`             | 1: `issueEditIssue`          |
+| `repository.issues.setState.closed`          | `issueEditIssue`             | 1: `issueEditIssue`          |
+| `repository.issues.setState.open`            | `issueEditIssue`             | 1: `issueEditIssue`          |
+| `repository.issues.comments.create`          | `issueCreateComment`         | 1: `issueCreateComment`      |
+| `repository.issues.comments.get`             | `issueGetComment`            | 1: `issueGetComment`         |
+| `repository.issues.comments.list`            | `issueGetRepoComments`       | 1: `issueGetRepoComments`    |
+| `repository.issues.comments.update`          | `issueEditComment`           | 1: `issueEditComment`        |
+| `issue.native.gitea`                         | none                         | 0: none                      |
+| `issueComment.native.gitea`                  | none                         | 0: none                      |
+| `repository.issues.comments.delete`          | `issueDeleteComment`         | 1: `issueDeleteComment`      |
+| `repository.issues.comments.get.afterDelete` | `issueGetComment`            | 1: `issueGetComment`         |
+| `repository.issues.get.missing`              | `issueGetIssue`              | 1: `issueGetIssue`           |
+| `repository.issues.create.invalidTitle`      | none                         | 0: none                      |
+| `repository.issues.get.preflightAbort`       | none                         | 0: none                      |
+| `repository.issues.cleanup.close`            | `issueEditIssue`             | 1: `issueEditIssue`          |
+
+### `gitea-extension/issue-content-version`
+
+- content-version extension support is static and request-free
+- a correct Gitea content version performs exactly one guarded update
+- a stale content version conflicts once and a direct read proves no overwrite
+
+#### Request-budget evidence
+
+| Fluent operation                                       | Expected provider operations | Observed provider operations |
+| :----------------------------------------------------- | :--------------------------- | :--------------------------- |
+| `repository.issues.support.contentVersionGuard`        | none                         | 0: none                      |
+| `repository.issues.create.contentVersionFixture`       | `issueCreateIssue`           | 1: `issueCreateIssue`        |
+| `issue.native.gitea.contentVersion`                    | none                         | 0: none                      |
+| `repository.issues.update.gitea.contentVersion`        | `issueEditIssue`             | 1: `issueEditIssue`          |
+| `repository.issues.update.gitea.staleContentVersion`   | `issueEditIssue`             | 1: `issueEditIssue`          |
+| `repository.issues.get.afterStaleConflict`             | `issueGetIssue`              | 1: `issueGetIssue`           |
+| `repository.issues.cleanup.closeContentVersionFixture` | `issueEditIssue`             | 1: `issueEditIssue`          |
+
+### `shared-capability/releases`
+
+- release support metadata is static, explicit, and request-free
+- create, ID get, tag get, and bounded list have exact one-request budgets
+- asset upload/get/bounded-list/update and native access retain exact identity
+- asset/release cleanup is direct; absence is separately proven in one request
+- invalid and cancelled release calls perform zero provider requests
+
+#### Request-budget evidence
+
+| Fluent operation                             | Expected provider operations  | Observed provider operations     |
+| :------------------------------------------- | :---------------------------- | :------------------------------- |
+| `repository.releases.support`                | none                          | 0: none                          |
+| `repository.releases.create`                 | `repoCreateRelease`           | 1: `repoCreateRelease`           |
+| `repository.releases.get`                    | `repoGetRelease`              | 1: `repoGetRelease`              |
+| `repository.releases.getByTag`               | `repoGetReleaseByTag`         | 1: `repoGetReleaseByTag`         |
+| `repository.releases.list`                   | `repoListReleases`            | 1: `repoListReleases`            |
+| `repository.releases.update`                 | `repoEditRelease`             | 1: `repoEditRelease`             |
+| `repository.releases.assets.upload`          | `repoCreateReleaseAttachment` | 1: `repoCreateReleaseAttachment` |
+| `repository.releases.assets.get`             | `repoGetReleaseAttachment`    | 1: `repoGetReleaseAttachment`    |
+| `repository.releases.assets.list`            | `repoListReleaseAttachments`  | 1: `repoListReleaseAttachments`  |
+| `repository.releases.assets.update`          | `repoEditReleaseAttachment`   | 1: `repoEditReleaseAttachment`   |
+| `release.native.gitea`                       | none                          | 0: none                          |
+| `releaseAsset.native.gitea`                  | none                          | 0: none                          |
+| `repository.releases.assets.delete`          | `repoDeleteReleaseAttachment` | 1: `repoDeleteReleaseAttachment` |
+| `repository.releases.assets.get.afterDelete` | `repoGetReleaseAttachment`    | 1: `repoGetReleaseAttachment`    |
+| `repository.releases.create.invalidTag`      | none                          | 0: none                          |
+| `repository.releases.get.preflightAbort`     | none                          | 0: none                          |
+| `repository.releases.delete`                 | `repoDeleteRelease`           | 1: `repoDeleteRelease`           |
+| `repository.releases.get.afterDelete`        | `repoGetRelease`              | 1: `repoGetRelease`              |
+
+### `shared-capability/repository-webhooks`
+
+- webhook support metadata is static, bounded, and request-free
+- create, get, bounded list, and update have exact one-request budgets
+- one fluent commit triggers one bounded, repository-specific push delivery
+- invalid and cancelled calls cost zero; delete and absence are each direct
+
+#### Request-budget evidence
+
+| Fluent operation                         | Expected provider operations | Observed provider operations |
+| :--------------------------------------- | :--------------------------- | :--------------------------- |
+| `repository.webhooks.support`            | none                         | 0: none                      |
+| `repository.webhooks.create`             | `repoCreateHook`             | 1: `repoCreateHook`          |
+| `repository.webhooks.get`                | `repoGetHook`                | 1: `repoGetHook`             |
+| `repository.webhooks.list`               | `repoListHooks`              | 1: `repoListHooks`           |
+| `repository.webhooks.update`             | `repoEditHook`               | 1: `repoEditHook`            |
+| `repositoryWebhook.native.gitea`         | none                         | 0: none                      |
+| `repository.webhooks.trigger.push`       | `repoChangeFiles`            | 1: `repoChangeFiles`         |
+| `repository.webhooks.create.invalidUrl`  | none                         | 0: none                      |
+| `repository.webhooks.get.preflightAbort` | none                         | 0: none                      |
+| `repository.webhooks.delete`             | `repoDeleteHook`             | 1: `repoDeleteHook`          |
+| `repository.webhooks.get.afterDelete`    | `repoGetHook`                | 1: `repoGetHook`             |
+
+### `shared-capability/ci-run-discovery`
+
+- CI discovery support is static, read-only, bounded, and request-free
+- known workflow/run reads and one filtered run page each use one request
+- known job list/get operations each inspect one provider page or identity
+- artifact find/get/absence are direct and native access adds zero requests
+- invalid and cancelled CI discovery operations perform zero provider requests
+
+#### Request-budget evidence
+
+| Fluent operation                         | Expected provider operations | Observed provider operations |
+| :--------------------------------------- | :--------------------------- | :--------------------------- |
+| `repository.ciRuns.support`              | none                         | 0: none                      |
+| `repository.ciRuns.workflow`             | `ActionsGetWorkflow`         | 1: `ActionsGetWorkflow`      |
+| `repository.ciRuns.runs`                 | `getWorkflowRuns`            | 1: `getWorkflowRuns`         |
+| `repository.ciRuns.run`                  | `GetWorkflowRun`             | 1: `GetWorkflowRun`          |
+| `repository.ciRuns.jobs`                 | `listWorkflowRunJobs`        | 1: `listWorkflowRunJobs`     |
+| `repository.ciRuns.job`                  | `getWorkflowJob`             | 1: `getWorkflowJob`          |
+| `repository.ciRuns.findArtifact`         | `getArtifactsOfRun`          | 1: `getArtifactsOfRun`       |
+| `repository.ciRuns.artifact`             | `getArtifact`                | 1: `getArtifact`             |
+| `repository.ciRuns.findArtifact.missing` | `getArtifactsOfRun`          | 1: `getArtifactsOfRun`       |
+| `ciRun.native.gitea`                     | none                         | 0: none                      |
+| `ciArtifact.native.gitea`                | none                         | 0: none                      |
+| `repository.ciRuns.workflow.invalidId`   | none                         | 0: none                      |
+| `repository.ciRuns.run.preflightAbort`   | none                         | 0: none                      |
+
+### `shared-capability/packages`
+
+- package support metadata is static, conservative, and request-free
+- owner and version discovery each inspect exactly one bounded provider page
+- direct get/find/files retain normalized and exact native metadata
+- confirmed absence costs one request; invalid and cancelled reads cost zero
+- version and whole-package lifecycle cleanup are direct and identity-based
+
+#### Request-budget evidence
+
+| Fluent operation                   | Expected provider operations | Observed provider operations |
+| :--------------------------------- | :--------------------------- | :--------------------------- |
+| `packages.support`                 | none                         | 0: none                      |
+| `packages.list`                    | `listPackages`               | 1: `listPackages`            |
+| `packages.versions`                | `listPackageVersions`        | 1: `listPackageVersions`     |
+| `packages.get`                     | `getPackage`                 | 1: `getPackage`              |
+| `packages.find`                    | `getPackage`                 | 1: `getPackage`              |
+| `packages.files`                   | `listPackageFiles`           | 1: `listPackageFiles`        |
+| `packageVersion.native.gitea`      | none                         | 0: none                      |
+| `packageFile.native.gitea`         | none                         | 0: none                      |
+| `packages.find.missing`            | `getPackage`                 | 1: `getPackage`              |
+| `packages.get.invalidType`         | none                         | 0: none                      |
+| `packages.get.preflightAbort`      | none                         | 0: none                      |
+| `packages.deleteVersion`           | `deletePackageVersion`       | 1: `deletePackageVersion`    |
+| `packages.find.afterDeleteVersion` | `getPackage`                 | 1: `getPackage`              |
+| `packages.delete`                  | `deletePackage`              | 1: `deletePackage`           |
+| `packages.find.afterDeletePackage` | `getPackage`                 | 1: `getPackage`              |
+
+### `shared-capability/blob-reads`
+
+- capability support is static and performs zero provider requests
+- known immutable binary bytes are returned by one direct SHA request
+- exact native payload access performs zero additional provider requests
+- absence costs one direct request; invalid and cancelled reads cost zero
+
+#### Request-budget evidence
+
+| Fluent operation                      | Expected provider operations | Observed provider operations |
+| :------------------------------------ | :--------------------------- | :--------------------------- |
+| `repository.blobs.support`            | none                         | 0: none                      |
+| `repository.blobs.get`                | `GetBlob`                    | 1: `GetBlob`                 |
+| `blob.native.gitea`                   | none                         | 0: none                      |
+| `repository.blobs.get.missing`        | `GetBlob`                    | 1: `GetBlob`                 |
+| `repository.blobs.get.invalidSha`     | none                         | 0: none                      |
+| `repository.blobs.get.preflightAbort` | none                         | 0: none                      |
+
+### `shared-capability/pull-request-reviews`
+
+- review-object capability support is static and request-free
+- create, direct get, and bounded list each use one provider operation
+- submitting a known pending review is one direct mutation
+- invalid and cancelled review lookups perform zero provider requests
+
+#### Request-budget evidence
+
+| Fluent operation                          | Expected provider operations | Observed provider operations |
+| :---------------------------------------- | :--------------------------- | :--------------------------- |
+| `repository.pullRequests.reviews.support` | none                         | 0: none                      |
+| `pullRequest.reviews.create`              | `repoCreatePullReview`       | 1: `repoCreatePullReview`    |
+| `pullRequest.reviews.get`                 | `repoGetPullReview`          | 1: `repoGetPullReview`       |
+| `pullRequest.reviews.list`                | `repoListPullReviews`        | 1: `repoListPullReviews`     |
+| `pullRequestReview.native.gitea`          | none                         | 0: none                      |
+| `pullRequest.reviews.submit`              | `repoSubmitPullReview`       | 1: `repoSubmitPullReview`    |
+| `pullRequest.reviews.get.invalidId`       | none                         | 0: none                      |
+| `pullRequest.reviews.get.preflightAbort`  | none                         | 0: none                      |
+
+### `shared-capability/branch-rules`
+
+- configured and effective capability metadata is static and request-free
+- configured rule create/get/list operations are direct and explicitly bounded
+- effective enforcement comes from one direct branch response, not rule inference
+- delete is direct and absence is confirmed by one separate direct lookup
+- invalid and cancelled branch-rule operations perform zero provider requests
+
+#### Request-budget evidence
+
+| Fluent operation                            | Expected provider operations | Observed provider operations    |
+| :------------------------------------------ | :--------------------------- | :------------------------------ |
+| `repository.branchRules.support`            | none                         | 0: none                         |
+| `repository.branchRules.create`             | `repoCreateBranchProtection` | 1: `repoCreateBranchProtection` |
+| `repository.branchRules.get`                | `repoGetBranchProtection`    | 1: `repoGetBranchProtection`    |
+| `repository.branchRules.list`               | `repoListBranchProtection`   | 1: `repoListBranchProtection`   |
+| `repository.branchRules.update`             | `repoEditBranchProtection`   | 1: `repoEditBranchProtection`   |
+| `repository.branchRules.effective`          | `repoGetBranch`              | 1: `repoGetBranch`              |
+| `branchRule.native.gitea`                   | none                         | 0: none                         |
+| `repository.branchRules.delete`             | `repoDeleteBranchProtection` | 1: `repoDeleteBranchProtection` |
+| `repository.branchRules.get.afterDelete`    | `repoGetBranchProtection`    | 1: `repoGetBranchProtection`    |
+| `repository.branchRules.create.invalidName` | none                         | 0: none                         |
+| `repository.branchRules.get.preflightAbort` | none                         | 0: none                         |
+
+### `gitea-extension/branch-rule-priority`
+
+- Gitea priority callback is scoped and executes one direct ordering mutation
+- missing and invalid priority extensions perform zero provider requests
+
+#### Request-budget evidence
+
+| Fluent operation                        | Expected provider operations         | Observed provider operations            |
+| :-------------------------------------- | :----------------------------------- | :-------------------------------------- |
+| `branchRulePriority.create.first`       | `repoCreateBranchProtection`         | 1: `repoCreateBranchProtection`         |
+| `branchRulePriority.create.second`      | `repoCreateBranchProtection`         | 1: `repoCreateBranchProtection`         |
+| `branchRules.setOrder.gitea`            | `repoUpdateBranchProtectionPriories` | 1: `repoUpdateBranchProtectionPriories` |
+| `branchRules.list.afterSetOrder`        | `repoListBranchProtection`           | 1: `repoListBranchProtection`           |
+| `branchRules.setOrder.missingExtension` | none                                 | 0: none                                 |
+| `branchRules.setOrder.duplicate`        | none                                 | 0: none                                 |
+| `branchRulePriority.delete.first`       | `repoDeleteBranchProtection`         | 1: `repoDeleteBranchProtection`         |
+| `branchRulePriority.delete.second`      | `repoDeleteBranchProtection`         | 1: `repoDeleteBranchProtection`         |
+
+### `shared-capability/unsupported-gitea-modules`
+
+- deployments/environments and gists/snippets are non-callable static unsupported metadata
+- both unsupported capability checks perform zero provider requests
+
+#### Request-budget evidence
+
+| Fluent operation                                          | Expected provider operations | Observed provider operations |
+| :-------------------------------------------------------- | :--------------------------- | :--------------------------- |
+| `unsupportedOptionalCapabilities.deploymentsEnvironments` | none                         | 0: none                      |
+| `unsupportedOptionalCapabilities.gistsSnippets`           | none                         | 0: none                      |
+
+### `native-access/gitea/client`
+
+- client native access exposes the selected generated Gitea client with zero HTTP requests
+
+#### Request-budget evidence
+
+| Fluent operation      | Expected provider operations | Observed provider operations |
+| :-------------------- | :--------------------------- | :--------------------------- |
+| `client.native.gitea` | none                         | 0: none                      |
+
+### `native-access/gitea/entities`
+
+- container, repository, branch, tag, commit, content, pull request, review, and status native
+  payloads require zero refetches
+
+#### Request-budget evidence
+
+| Fluent operation      | Expected provider operations | Observed provider operations |
+| :-------------------- | :--------------------------- | :--------------------------- |
+| `entity.native.gitea` | none                         | 0: none                      |
 
 ## Generated client coverage
 
@@ -35,7 +665,7 @@ Measured by Deno against the generated REST client, not the Git host.
 
 | Metric    | Covered / total | Coverage |
 | :-------- | --------------: | -------: |
-| lines     |   14972 / 14978 |   99.96% |
+| lines     |   14978 / 14984 |   99.96% |
 | branches  |           2 / 2 |  100.00% |
 | functions |       484 / 486 |   99.59% |
 

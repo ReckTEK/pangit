@@ -13078,6 +13078,7 @@ export type RepoCreateTagInput = {
 
 export type RepoCreateTagResponse =
   | RestResponse<200, RestJsonValue<Tag>, "application/json", true>
+  | RestResponse<201, RestJsonValue<Tag>, "application/json", true>
   | RestResponse<404, undefined, undefined, false>
   | RestResponse<405, undefined, undefined, false>
   | RestResponse<409, undefined, undefined, false>
@@ -16142,6 +16143,7 @@ export type RepoMergePullRequestInput = {
 
 export type RepoMergePullRequestResponse =
   | RestResponse<200, undefined, undefined, true>
+  | RestResponse<201, undefined, undefined, true>
   | RestResponse<
     403,
     undefined,
@@ -25067,6 +25069,11 @@ const giteaOperationsSource = {
         "mediaTypes": ["application/json"],
         "decoders": { "application/json": "json" },
       },
+      {
+        "status": 201,
+        "mediaTypes": ["application/json"],
+        "decoders": { "application/json": "json" },
+      },
       { "status": 404, "mediaTypes": [] },
       { "status": 405, "mediaTypes": [] },
       { "status": 409, "mediaTypes": [] },
@@ -27421,6 +27428,7 @@ const giteaOperationsSource = {
     ],
     responses: [
       { "status": 200, "mediaTypes": [] },
+      { "status": 201, "mediaTypes": [] },
       { "status": 403, "mediaTypes": [], "headers": ["message", "url"] },
       { "status": 404, "mediaTypes": [] },
       { "status": 405, "mediaTypes": [] },

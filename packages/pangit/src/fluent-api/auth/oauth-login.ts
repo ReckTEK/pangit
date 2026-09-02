@@ -1,5 +1,13 @@
-import type { ClientOptions } from "../../generated-rest-clients/client-options.ts";
-import type { Provider, ProviderVersion } from "../../generated-rest-clients/git-host.ts";
+import type { ProviderVersion } from "../../generated-rest-clients/git-host.ts";
+import type {
+  OAuthBeginInput,
+  OAuthBeginResult,
+  OAuthExchangeInput,
+  OAuthTokenData,
+} from "../adapter-contract/authentication.ts";
+import type { OperationOptions } from "../adapter-contract/operation-options.ts";
+import { ValidationError } from "../adapter-contract/errors.ts";
+import type { FluentProvider } from "../provider-registry.ts";
 import type {
   Login,
   LoginOptions,
@@ -8,39 +16,42 @@ import type {
   OAuthLoginStart,
   OAuthLoginTransaction,
 } from "./oauth-contracts.ts";
-import { AuthAdapterNotImplementedError } from "./AuthAdapterNotImplementedError.ts";
 import { OAuthCallbackError } from "./OAuthCallbackError.ts";
 
-type TokenResponse = {
-  access_token?: unknown;
-  token_type?: unknown;
-  expires_in?: unknown;
-  refresh_token?: unknown;
-  scope?: unknown;
-  error?: unknown;
-  error_description?: unknown;
-};
+type OAuthBegin = (input: OAuthBeginInput) => Promise<OAuthBeginResult>;
+type OAuthExchange = (
+  input: OAuthExchangeInput,
+  options?: OperationOptions,
+) => Promise<OAuthTokenData>;
 
 class LoginImpl<
-  TProvider extends Provider,
+  TProvider extends FluentProvider,
   TVersion extends ProviderVersion<TProvider>,
 > implements Login<TProvider, TVersion> {
   readonly options: LoginOptions;
-  readonly #clientOptions: ClientOptions;
+  readonly #beginOAuth: OAuthBegin;
+  readonly #exchangeOAuthCode: OAuthExchange;
   readonly #authorizeClient: OAuthClientAuthorizer<TProvider, TVersion>;
 
   constructor(
     readonly provider: TProvider,
     readonly version: TVersion,
     options: LoginOptions,
-    clientOptions: ClientOptions,
+    beginOAuth: OAuthBegin,
+    exchangeOAuthCode: OAuthExchange,
     authorizeClient: OAuthClientAuthorizer<TProvider, TVersion>,
   ) {
-    if (options.clientId.length === 0) throw new TypeError("clientId cannot be empty");
+    const validationContext = { provider, version, operation: "beginOAuth" } as const;
+    if (options.clientId.length === 0) {
+      throw new ValidationError("clientId cannot be empty", validationContext);
+    }
     const callbackUrl = new URL(options.callbackUrl);
     const callbackType = callbackUrl.searchParams.get("type");
     if (callbackType !== null && callbackType !== provider) {
-      throw new TypeError(`OAuth callback type ${callbackType} does not match ${provider}`);
+      throw new ValidationError(
+        `OAuth callback type ${callbackType} does not match ${provider}`,
+        validationContext,
+      );
     }
     callbackUrl.searchParams.set("type", provider);
     this.options = Object.freeze({
@@ -48,35 +59,36 @@ class LoginImpl<
       callbackUrl,
       scopes: options.scopes === undefined ? undefined : Object.freeze([...options.scopes]),
     });
-    this.#clientOptions = clientOptions;
+    this.#beginOAuth = beginOAuth;
+    this.#exchangeOAuthCode = exchangeOAuthCode;
     this.#authorizeClient = authorizeClient;
   }
 
   async start(): Promise<OAuthLoginStart<TProvider, TVersion>> {
-    this.#requireGitea();
     const state = randomBase64Url(32);
     const codeVerifier = randomBase64Url(32);
     const codeChallenge = await sha256Base64Url(codeVerifier);
     const callbackUrl = new URL(this.options.callbackUrl);
-    const url = new URL("login/oauth/authorize", providerRoot(this.#clientOptions.baseUrl));
-    url.searchParams.set("client_id", this.options.clientId);
-    url.searchParams.set("redirect_uri", callbackUrl.href);
-    url.searchParams.set("response_type", "code");
-    url.searchParams.set("state", state);
-    url.searchParams.set("code_challenge_method", "S256");
-    url.searchParams.set("code_challenge", codeChallenge);
-    if (this.options.scopes !== undefined && this.options.scopes.length > 0) {
-      url.searchParams.set("scope", this.options.scopes.join(" "));
-    }
+    const begin = await this.#beginOAuth({
+      clientId: this.options.clientId,
+      callbackUrl,
+      scopes: this.options.scopes ?? [],
+      state,
+      codeChallenge,
+      codeChallengeMethod: "S256",
+    });
 
     return Object.freeze({
-      url,
+      url: begin.authorizationUrl,
       transaction: Object.freeze({
         provider: this.provider,
         version: this.version,
         state,
         codeVerifier,
         callbackUrl: callbackUrl.href,
+        ...(begin.providerTransaction === undefined
+          ? {}
+          : { providerTransaction: begin.providerTransaction }),
       }),
     });
   }
@@ -85,7 +97,6 @@ class LoginImpl<
     callback: Request,
     transaction: OAuthLoginTransaction<TProvider, TVersion>,
   ): Promise<OAuthAuthorizedClient<TProvider, TVersion>> {
-    this.#requireGitea();
     validateTransaction(this, callback, transaction);
     const callbackUrl = new URL(callback.url);
     const providerError = callbackUrl.searchParams.get("error");
@@ -100,75 +111,58 @@ class LoginImpl<
       throw new OAuthCallbackError("missing_code", "OAuth callback did not include a code");
     }
 
-    const tokenUrl = new URL("login/oauth/access_token", providerRoot(this.#clientOptions.baseUrl));
-    const body = new URLSearchParams({
-      client_id: this.options.clientId,
+    const token = await this.#exchangeOAuthCode({
+      clientId: this.options.clientId,
+      ...(this.options.clientSecret === undefined
+        ? {}
+        : { clientSecret: this.options.clientSecret }),
+      callbackUrl: new URL(transaction.callbackUrl),
       code,
-      grant_type: "authorization_code",
-      redirect_uri: transaction.callbackUrl,
-      code_verifier: transaction.codeVerifier,
-    });
-    const { RestClient } = await import("../../generated-rest-clients/runtime/mod.ts");
-    const transport = new RestClient(this.#clientOptions);
-    const response = await transport.fetch(tokenUrl, {
-      method: "POST",
-      signal: callback.signal,
-      headers: {
-        accept: "application/json",
-        "content-type": "application/x-www-form-urlencoded",
-      },
-      body,
-    });
-    const payload = await readTokenResponse(response);
-    if (!response.ok) {
-      const errorCode = stringValue(payload.error) ?? `http_${response.status}`;
-      throw new OAuthCallbackError(errorCode, stringValue(payload.error_description));
-    }
-    const accessToken = requiredString(payload.access_token, "access_token");
-    const tokenType = requiredString(payload.token_type, "token_type");
-
-    const expiresIn = numberValue(payload.expires_in);
-    const refreshToken = stringValue(payload.refresh_token);
-    const scope = stringValue(payload.scope);
+      codeVerifier: transaction.codeVerifier,
+      ...(transaction.providerTransaction === undefined
+        ? {}
+        : { providerTransaction: transaction.providerTransaction }),
+    }, { signal: callback.signal });
     const authorization = Object.freeze({
       method: "oauth" as const,
-      accessToken,
-      tokenType,
-      ...(expiresIn === undefined ? {} : { expiresIn }),
-      ...(refreshToken === undefined ? {} : { refreshToken }),
-      ...(scope === undefined ? {} : { scope }),
+      accessToken: token.accessToken,
+      tokenType: token.tokenType,
+      ...(token.expiresIn === undefined ? {} : { expiresIn: token.expiresIn }),
+      ...(token.refreshToken === undefined ? {} : { refreshToken: token.refreshToken }),
+      ...(token.scope === undefined ? {} : { scope: token.scope }),
     });
     return await this.#authorizeClient(
-      accessToken,
-      tokenType,
+      token,
       authorization,
       callback.signal,
     );
-  }
-
-  #requireGitea(): void {
-    if (this.provider !== "gitea") {
-      throw new AuthAdapterNotImplementedError("OAuth login");
-    }
   }
 }
 
 /** @internal Build one selected provider login. */
 export function createOAuthLogin<
-  TProvider extends Provider,
+  TProvider extends FluentProvider,
   TVersion extends ProviderVersion<TProvider>,
 >(
   provider: TProvider,
   version: TVersion,
   options: LoginOptions,
-  clientOptions: ClientOptions,
+  beginOAuth: OAuthBegin,
+  exchangeOAuthCode: OAuthExchange,
   authorizeClient: OAuthClientAuthorizer<TProvider, TVersion>,
 ): Login<TProvider, TVersion> {
-  return new LoginImpl(provider, version, options, clientOptions, authorizeClient);
+  return new LoginImpl(
+    provider,
+    version,
+    options,
+    beginOAuth,
+    exchangeOAuthCode,
+    authorizeClient,
+  );
 }
 
 function validateTransaction<
-  TProvider extends Provider,
+  TProvider extends FluentProvider,
   TVersion extends ProviderVersion<TProvider>,
 >(
   login: Login<TProvider, TVersion>,
@@ -202,15 +196,6 @@ function validateTransaction<
   }
 }
 
-function providerRoot(baseUrl: string | URL): URL {
-  const root = new URL(baseUrl);
-  root.search = "";
-  root.hash = "";
-  root.pathname = root.pathname.replace(/\/?api\/v1\/?$/, "/");
-  if (!root.pathname.endsWith("/")) root.pathname += "/";
-  return root;
-}
-
 function randomBase64Url(byteLength: number): string {
   const bytes = crypto.getRandomValues(new Uint8Array(byteLength));
   return base64Url(bytes);
@@ -225,37 +210,4 @@ function base64Url(bytes: Uint8Array): string {
   let binary = "";
   for (const byte of bytes) binary += String.fromCharCode(byte);
   return btoa(binary).replaceAll("+", "-").replaceAll("/", "_").replace(/=+$/, "");
-}
-
-async function readTokenResponse(response: Response): Promise<TokenResponse> {
-  const text = await response.text();
-  if (text.length === 0) return {};
-  try {
-    const value: unknown = JSON.parse(text);
-    if (typeof value !== "object" || value === null || Array.isArray(value)) return {};
-    return value as TokenResponse;
-  } catch {
-    return Object.fromEntries(new URLSearchParams(text)) as TokenResponse;
-  }
-}
-
-function requiredString(value: unknown, name: string): string {
-  const parsed = stringValue(value);
-  if (parsed === undefined || parsed.length === 0) {
-    throw new OAuthCallbackError("invalid_token_response", `OAuth token response has no ${name}`);
-  }
-  return parsed;
-}
-
-function stringValue(value: unknown): string | undefined {
-  return typeof value === "string" ? value : undefined;
-}
-
-function numberValue(value: unknown): number | undefined {
-  if (typeof value === "number" && Number.isFinite(value)) return value;
-  if (typeof value === "string" && value.length > 0) {
-    const parsed = Number(value);
-    return Number.isFinite(parsed) ? parsed : undefined;
-  }
-  return undefined;
 }

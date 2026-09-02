@@ -10,7 +10,8 @@ import {
   gitHostOpenApiSources,
 } from "../openapi-source-catalog.ts";
 
-type JsonObject = Record<string, unknown>;
+export type JsonObject = Record<string, unknown>;
+export type NormalizedOpenApiTransform = (document: JsonObject) => void;
 
 export const targetOpenApiVersion = "3.0.3";
 
@@ -52,6 +53,7 @@ async function writeNormalizedSpec(
   gitHost: GitHost,
   version: string,
   document: JsonObject,
+  options: { readonly escapeHtml?: boolean; readonly trailingNewline?: boolean } = {},
 ): Promise<void> {
   if (document.openapi !== targetOpenApiVersion) {
     throw new Error(
@@ -62,15 +64,20 @@ async function writeNormalizedSpec(
   }
 
   await Deno.mkdir(new URL(`${gitHost}/`, normalizedSpecsDirectory), { recursive: true });
+  const json = JSON.stringify(document, null, 2);
+  const serialized = options.escapeHtml
+    ? json.replaceAll("<", "\\u003c").replaceAll(">", "\\u003e").replaceAll("&", "\\u0026")
+    : json;
   await Deno.writeTextFile(
     normalizedSpecUrl(gitHost, version),
-    `${JSON.stringify(document, null, 2)}\n`,
+    `${serialized}${options.trailingNewline === false ? "" : "\n"}`,
   );
 }
 
 export async function normalizeSwagger2(
   gitHost: GitHost,
   version: string,
+  transform?: NormalizedOpenApiTransform,
 ): Promise<void> {
   const document = await readDownloadedSpecification(gitHost, version);
   if (document.swagger !== "2.0") {
@@ -87,12 +94,15 @@ export async function normalizeSwagger2(
   );
   const normalized: unknown = result.openapi;
   assertJsonObject(normalized, gitHost, version);
+  transform?.(normalized);
   await writeNormalizedSpec(gitHost, version, normalized);
 }
 
 export async function normalizeOpenApi3(
   gitHost: GitHost,
   version: string,
+  transform?: NormalizedOpenApiTransform,
+  options?: { readonly escapeHtml?: boolean; readonly trailingNewline?: boolean },
 ): Promise<void> {
   const document = await readDownloadedSpecification(gitHost, version);
   if (typeof document.openapi !== "string" || !document.openapi.startsWith("3.0.")) {
@@ -100,7 +110,8 @@ export async function normalizeOpenApi3(
   }
 
   document.openapi = targetOpenApiVersion;
-  await writeNormalizedSpec(gitHost, version, document);
+  transform?.(document);
+  await writeNormalizedSpec(gitHost, version, document, options);
 }
 
 export async function passThroughOpenApi3(

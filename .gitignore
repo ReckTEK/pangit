@@ -3,6 +3,7 @@ node_modules/
 .env
 .env.*
 !.env.example
+tests/e2e/.focused-results/
 packages/pangit-site/.react-router/
 packages/pangit-site/build/
 packages/pangit-site/public/openapi/

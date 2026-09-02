@@ -1,4 +1,5 @@
-import type { Provider, ProviderVersion } from "../../generated-rest-clients/git-host.ts";
+import type { ProviderVersion } from "../../generated-rest-clients/git-host.ts";
+import type { FluentProvider } from "../provider-registry.ts";
 import type {
   OAuthAuthorizedClientFor,
   OAuthHandler,
@@ -13,7 +14,7 @@ type RuntimeLogin = {
   authorize(callback: Request, transaction: unknown): Promise<unknown>;
 };
 
-class OAuthHandlerImpl<TProvider extends Provider> implements OAuthHandler<TProvider> {
+class OAuthHandlerImpl<TProvider extends FluentProvider> implements OAuthHandler<TProvider> {
   readonly #logins: OAuthLoginRegistry;
 
   constructor(logins: OAuthLoginRegistry) {
@@ -49,7 +50,7 @@ class OAuthHandlerImpl<TProvider extends Provider> implements OAuthHandler<TProv
     >;
   }
 
-  #login(provider: Provider): RuntimeLogin {
+  #login(provider: FluentProvider): RuntimeLogin {
     const login = this.#logins[provider];
     if (login === undefined) {
       throw new OAuthCallbackError(
@@ -64,6 +65,6 @@ class OAuthHandlerImpl<TProvider extends Provider> implements OAuthHandler<TProv
 /** Build one OAuth callback dispatcher over the configured provider logins. */
 export function createOAuthHandler<const TLogins extends OAuthLoginRegistry>(
   logins: TLogins,
-): OAuthHandler<Extract<keyof TLogins, Provider>> {
+): OAuthHandler<Extract<keyof TLogins, FluentProvider>> {
   return new OAuthHandlerImpl(logins);
 }

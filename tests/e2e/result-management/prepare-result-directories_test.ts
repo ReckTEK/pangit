@@ -62,3 +62,53 @@ Deno.test("E2E result preparation refuses to delete unowned orphan evidence", as
     await Deno.remove(directory, { recursive: true });
   }
 });
+
+Deno.test("focused result preparation cannot replace complete publishable evidence", async () => {
+  const directory = await Deno.makeTempDir({ dir: "tests", prefix: ".result-tree-test-" });
+  const root = new URL(`file://${Deno.cwd()}/${directory}/`);
+  const complete = new URL("results/gitea/1.27.2/", root);
+  const focusedRoot = new URL(".focused-results/", root);
+  const focused = new URL("gitea/1.27.2/", focusedRoot);
+  try {
+    await Deno.mkdir(complete, { recursive: true });
+    await Deno.writeTextFile(new URL("summary.json", complete), "complete-evidence");
+    await prepareResultDirectories(focusedRoot, [{ results: focused } as LiveTestRelease]);
+    assert(
+      await Deno.readTextFile(new URL("summary.json", complete)) === "complete-evidence",
+      "Focused result preparation changed complete evidence",
+    );
+    assert(
+      await Deno.readTextFile(new URL(".generated", focused)) === liveTestResultOwnershipMarker,
+      "Focused result ownership marker was not created",
+    );
+  } finally {
+    await Deno.remove(directory, { recursive: true });
+  }
+});
+
+Deno.test("focused result preparation preserves other independently focused versions", async () => {
+  const directory = await Deno.makeTempDir({ dir: "tests", prefix: ".result-tree-test-" });
+  const focusedRoot = new URL(`file://${Deno.cwd()}/${directory}/.focused-results/`);
+  const selected = new URL("gitea/1.27.2/", focusedRoot);
+  const other = new URL("gitea/1.26.4/", focusedRoot);
+  try {
+    await Deno.mkdir(other, { recursive: true });
+    await Deno.writeTextFile(new URL(".generated", other), liveTestResultOwnershipMarker);
+    await Deno.writeTextFile(new URL("summary.json", other), "older-focused-evidence");
+    await prepareResultDirectories(
+      focusedRoot,
+      [{ results: selected } as LiveTestRelease],
+      { pruneUnselected: false },
+    );
+    assert(
+      await Deno.readTextFile(new URL("summary.json", other)) === "older-focused-evidence",
+      "A focused run removed another version's independent evidence",
+    );
+    assert(
+      await Deno.readTextFile(new URL(".generated", selected)) === liveTestResultOwnershipMarker,
+      "Selected focused result ownership marker was not created",
+    );
+  } finally {
+    await Deno.remove(directory, { recursive: true });
+  }
+});

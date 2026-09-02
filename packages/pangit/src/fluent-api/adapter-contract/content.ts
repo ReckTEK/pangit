@@ -1,0 +1,171 @@
+import type { Provider, ProviderVersion } from "../../generated-rest-clients/git-host.ts";
+import type { ProviderEntityNative } from "../native-access/ProviderNativeRegistry.ts";
+import type { CommitData, GitActor } from "./commits.ts";
+import type { BoundedOperationOptions, OperationOptions } from "./operation-options.ts";
+import type { RepositoryData } from "./repositories.ts";
+
+export type RepositoryContentKind = "file" | "directory" | "symlink" | "submodule";
+
+export interface ContentData<
+  TProvider extends Provider,
+  TVersion extends ProviderVersion<TProvider>,
+> {
+  readonly kind: RepositoryContentKind;
+  readonly path: string;
+  readonly name: string;
+  readonly sha?: string;
+  readonly size?: number;
+  readonly bytes?: Uint8Array;
+  readonly target?: string;
+  readonly submoduleUrl?: string;
+  /** One explicitly dereferenced target that was proven to stay inside this provider. */
+  readonly dereferenced?: ContentData<TProvider, TVersion>;
+  readonly lastCommitSha?: string;
+  /** Object/blob SHA for this path at the resolved commit's first parent, when requested. */
+  readonly firstParentSha?: string;
+  readonly native: ProviderEntityNative<TProvider, TVersion, "content">;
+}
+
+export interface ReadContentOptions extends OperationOptions {
+  readonly ref?: string;
+  /** Defaults to true for a direct file read. */
+  readonly includeBytes?: boolean;
+  readonly includeCommitMetadata?: boolean;
+}
+
+/** Linked content is metadata-only unless this internal-only mode is selected. */
+export interface ReadLinkedContentOptions extends ReadContentOptions {
+  readonly dereference?: "internal";
+}
+
+export interface ReadFilesOptions extends BoundedOperationOptions {
+  readonly ref?: string;
+}
+
+/** Default caller-visible ceiling for batch content operations. */
+export const DEFAULT_CONTENT_BATCH_MAX_ITEMS = 200;
+
+export interface ContentReadResult<
+  TProvider extends Provider,
+  TVersion extends ProviderVersion<TProvider>,
+> {
+  readonly path: string;
+  readonly content?: ContentData<TProvider, TVersion>;
+  readonly unavailable?: "missing" | "too-large" | "not-a-file";
+}
+
+export interface ListDirectoryOptions extends BoundedOperationOptions {
+  readonly ref?: string;
+  /** Flatten descendants through `maxDepth`; false performs exactly one directory request. */
+  readonly recursive?: boolean;
+  /** Required when recursive traversal or single-folder collapsing is requested. */
+  readonly maxDepth?: number;
+  /** Required for recursive traversal; bounds the total returned provider entries. */
+  readonly maxItems?: number;
+  /** Follow only the leading one-directory/no-file chain, stopping at `maxDepth`. */
+  readonly collapseSingleFolders?: boolean;
+}
+
+export interface ReadPathMetadataBatchOptions extends BoundedOperationOptions {
+  readonly ref?: string;
+  readonly compareFirstParent?: boolean;
+}
+
+export type FileChange =
+  | {
+    readonly operation: "create" | "upsert";
+    readonly path: string;
+    readonly content: string | Uint8Array;
+  }
+  | {
+    readonly operation: "update";
+    readonly path: string;
+    readonly content: string | Uint8Array;
+    readonly sha?: string;
+  }
+  | { readonly operation: "delete"; readonly path: string; readonly sha?: string }
+  | {
+    readonly operation: "move";
+    readonly fromPath: string;
+    readonly path: string;
+    readonly sha?: string;
+  };
+
+export interface CommitFileChangesInput {
+  readonly branch: string;
+  readonly newBranch?: string;
+  readonly message: string;
+  readonly changes: readonly FileChange[];
+  readonly author?: GitActor;
+}
+
+/** Gitea-only authorship and branch-update controls for one atomic file-change commit. */
+export interface GiteaCommitFileChangesExtension {
+  readonly forcePush?: boolean;
+  readonly signoff?: boolean;
+  readonly committer?: GitActor;
+  readonly authorDate?: string;
+  readonly committerDate?: string;
+}
+
+/** Immutable operation context visible to a Gitea file-change extension callback. */
+export interface GiteaCommitFileChangesExtensionContext {
+  readonly repositoryFullName: string;
+  readonly branch: string;
+  readonly changeCount: number;
+}
+
+export type CommitFileChangesExtension<TProvider extends Provider> = TProvider extends "gitea"
+  ? GiteaCommitFileChangesExtension
+  : never;
+
+export interface CommitFileChangesOptions<TProvider extends Provider = Provider>
+  extends OperationOptions {
+  readonly extension?: CommitFileChangesExtension<TProvider>;
+}
+
+export interface ContentAdapter<
+  TProvider extends Provider,
+  TVersion extends ProviderVersion<TProvider>,
+> {
+  readContent(
+    repository: RepositoryData<TProvider, TVersion>,
+    path: string,
+    options?: ReadContentOptions,
+  ): Promise<ContentData<TProvider, TVersion>>;
+  readFiles(
+    repository: RepositoryData<TProvider, TVersion>,
+    paths: readonly string[],
+    options?: ReadFilesOptions,
+  ): Promise<readonly ContentReadResult<TProvider, TVersion>[]>;
+  getDirectory(
+    repository: RepositoryData<TProvider, TVersion>,
+    path: string,
+    options?: ReadContentOptions,
+  ): Promise<ContentData<TProvider, TVersion>>;
+  listDirectory(
+    repository: RepositoryData<TProvider, TVersion>,
+    path: string,
+    options?: ListDirectoryOptions,
+  ): Promise<readonly ContentData<TProvider, TVersion>[]>;
+  readPathMetadataBatch(
+    repository: RepositoryData<TProvider, TVersion>,
+    paths: readonly string[],
+    options?: ReadPathMetadataBatchOptions,
+  ): Promise<readonly ContentReadResult<TProvider, TVersion>[]>;
+  readSymlink(
+    repository: RepositoryData<TProvider, TVersion>,
+    path: string,
+    options?: ReadLinkedContentOptions,
+  ): Promise<ContentData<TProvider, TVersion>>;
+  readSubmodule(
+    repository: RepositoryData<TProvider, TVersion>,
+    path: string,
+    options?: ReadLinkedContentOptions,
+  ): Promise<ContentData<TProvider, TVersion>>;
+  commitFileChanges(
+    repository: RepositoryData<TProvider, TVersion>,
+    input: CommitFileChangesInput,
+    options?: CommitFileChangesOptions<TProvider>,
+  ): Promise<CommitData<TProvider, TVersion>>;
+}

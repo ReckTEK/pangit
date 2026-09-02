@@ -11,11 +11,21 @@ export type HandWrittenFluentApiContractsSummary = {
   gitHost: string;
   version: string;
   kind: "hand-written-fluent-api-contracts";
+  selectedContractIds: string[];
   passed: boolean;
   contracts: Array<{
-    name: string;
+    id: string;
     passed: boolean;
     assertions: string[];
+    requestEvidence: Array<{
+      operation: string;
+      expectedOperationIds: string[];
+      requests: Array<{
+        operationId: string;
+        method: string;
+        path: string;
+      }>;
+    }>;
   }>;
 };
 export type LiveTestSummary = {
@@ -47,6 +57,7 @@ export type LiveTestSummary = {
     missing: number;
     failedCases: number;
     cases: number;
+    requests: number;
   };
   sourceCoverage: { lines: CoverageMetric; branches: CoverageMetric; functions: CoverageMetric };
   handWrittenFluentApiContracts?: HandWrittenFluentApiContractsSummary;
@@ -62,6 +73,54 @@ export type LiveTestReportSnapshot = LiveTestRelease & {
 
 function isCount(value: unknown): value is number {
   return typeof value === "number" && Number.isSafeInteger(value) && value >= 0;
+}
+
+function isText(value: unknown): value is string {
+  return typeof value === "string" && value.length > 0;
+}
+
+function isTextArray(value: unknown): value is string[] {
+  return Array.isArray(value) && value.every(isText);
+}
+
+function isRequestEvidence(value: unknown): boolean {
+  const evidence = value as
+    | HandWrittenFluentApiContractsSummary["contracts"][number][
+      "requestEvidence"
+    ][number]
+    | null;
+  return evidence !== null && isText(evidence.operation) &&
+    isTextArray(evidence.expectedOperationIds) && Array.isArray(evidence.requests) &&
+    evidence.requests.every((request) =>
+      isText(request?.operationId) && isText(request.method) && isText(request.path)
+    );
+}
+
+function isContractEvidence(value: unknown): boolean {
+  const contract = value as HandWrittenFluentApiContractsSummary["contracts"][number] | null;
+  return contract !== null && isText(contract.id) && typeof contract.passed === "boolean" &&
+    isTextArray(contract.assertions) && contract.assertions.length > 0 &&
+    Array.isArray(contract.requestEvidence) && contract.requestEvidence.every(isRequestEvidence);
+}
+
+function isContractsSummary(
+  contracts: HandWrittenFluentApiContractsSummary,
+  gitHost: string,
+  version: string,
+): boolean {
+  if (
+    contracts.schemaVersion !== 1 || contracts.gitHost !== gitHost ||
+    contracts.version !== version || contracts.kind !== "hand-written-fluent-api-contracts" ||
+    typeof contracts.passed !== "boolean" || !isTextArray(contracts.selectedContractIds) ||
+    contracts.selectedContractIds.length === 0 ||
+    new Set(contracts.selectedContractIds).size !== contracts.selectedContractIds.length ||
+    !Array.isArray(contracts.contracts) || contracts.contracts.length === 0 ||
+    !contracts.contracts.every(isContractEvidence)
+  ) return false;
+  const contractIds = contracts.contracts.map((contract) => contract.id);
+  return new Set(contractIds).size === contractIds.length &&
+    JSON.stringify(contractIds) === JSON.stringify(contracts.selectedContractIds) &&
+    contracts.passed === contracts.contracts.every((contract) => contract.passed);
 }
 
 function validateSummary(
@@ -103,6 +162,7 @@ function validateSummary(
       endpoints.missing,
       endpoints.failedCases,
       endpoints.cases,
+      endpoints.requests,
     ].every(isCount) ||
     endpoints.operations === 0 || endpoints.passed + endpoints.missing > endpoints.operations ||
     endpoints.positive + endpoints.negativeOnly !== endpoints.passed ||
@@ -111,15 +171,7 @@ function validateSummary(
       (endpoints.passed !== endpoints.operations || endpoints.missing !== 0 ||
         endpoints.failedCases !== 0)) ||
     (contracts !== undefined &&
-      (contracts.schemaVersion !== 1 || contracts.gitHost !== gitHost ||
-        contracts.version !== version || contracts.kind !== "hand-written-fluent-api-contracts" ||
-        typeof contracts.passed !== "boolean" || !Array.isArray(contracts.contracts) ||
-        contracts.contracts.length === 0 ||
-        contracts.contracts.some((contract) =>
-          typeof contract.name !== "string" || typeof contract.passed !== "boolean" ||
-          !Array.isArray(contract.assertions) || contract.assertions.length === 0 ||
-          contract.assertions.some((assertion) => typeof assertion !== "string")
-        ) || contracts.passed !== contracts.contracts.every((contract) => contract.passed) ||
+      (!isContractsSummary(contracts, gitHost, version) ||
         handWrittenFluentTest?.passed !== contracts.passed)) ||
     !["lines", "branches", "functions"].every((key) => {
       const metric = summary?.sourceCoverage?.[key as keyof LiveTestSummary["sourceCoverage"]];
@@ -177,6 +229,8 @@ async function validateSuiteEvidence(
     evidence?.schemaVersion !== contracts.schemaVersion ||
     evidence.gitHost !== contracts.gitHost || evidence.version !== contracts.version ||
     evidence.kind !== contracts.kind || evidence.passed !== contracts.passed ||
+    JSON.stringify(evidence.selectedContractIds) !==
+      JSON.stringify(contracts.selectedContractIds) ||
     JSON.stringify(evidence.contracts) !== JSON.stringify(contracts.contracts)
   ) {
     throw new Error(

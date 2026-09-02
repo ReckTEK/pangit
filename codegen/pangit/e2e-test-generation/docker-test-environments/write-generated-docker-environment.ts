@@ -108,7 +108,14 @@ export async function writeGeneratedDockerTestEnvironment(input: {
 
   const relativeRoot = bindPath(outputDirectory, paths.root);
   const relativeResults = bindPath(outputDirectory, results);
+  const selectedResults = `\${PANGIT_E2E_RESULTS_SOURCE:-${relativeResults}}`;
   const projectName = `pangit-e2e-${gitHost}-${version.replaceAll(".", "-")}`;
+  const fixtureDependencies = Object.fromEntries(
+    Object.entries(environment.services ?? {}).map(([name, service]) => [
+      name,
+      { condition: service.healthcheck === undefined ? "service_started" : "service_healthy" },
+    ]),
+  );
   const compose = {
     name: projectName,
     services: {
@@ -154,7 +161,7 @@ export async function writeGeneratedDockerTestEnvironment(input: {
           "--allow-read",
           `--allow-write=${environment.runner.results}`,
           "--allow-run=deno",
-          "--allow-env=PANGIT_E2E_TEST_RUN",
+          "--allow-env=PANGIT_E2E_TEST_RUN,PANGIT_E2E_SUITE,PANGIT_E2E_CONTRACT",
           "tests/e2e/runner/run-tests-inside-docker.ts",
         ],
         environment: {
@@ -164,9 +171,12 @@ export async function writeGeneratedDockerTestEnvironment(input: {
         volumes: [
           `${relativeRoot}:${environment.runner.workspace}:ro`,
           `./.auth:${environment.runner.credentials}:ro`,
-          `${relativeResults}:${environment.runner.results}`,
+          `${selectedResults}:${environment.runner.results}`,
         ],
-        depends_on: { [environment.service.name]: { condition: "service_healthy" } },
+        depends_on: {
+          [environment.service.name]: { condition: "service_healthy" },
+          ...fixtureDependencies,
+        },
         restart: "no",
       },
     },

@@ -47,9 +47,10 @@ async function clearResultDirectory(directory: URL): Promise<void> {
 export async function prepareResultDirectories(
   resultsRoot: URL,
   releases: readonly LiveTestRelease[],
+  options: { readonly pruneUnselected?: boolean } = {},
 ): Promise<void> {
   const expected = new Set(releases.map((release) => release.results.href));
-  if (await pathExists(resultsRoot)) {
+  if (options.pruneUnselected !== false && await pathExists(resultsRoot)) {
     for (const gitHost of await sortedEntries(resultsRoot)) {
       const gitHostDirectory = new URL(
         `${encodeURIComponent(gitHost.name)}${gitHost.isDirectory ? "/" : ""}`,

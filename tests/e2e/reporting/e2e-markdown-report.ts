@@ -7,6 +7,14 @@ import type { LiveTestReportSnapshot } from "./e2e-report-snapshots.ts";
 
 type Endpoint = { id: string; passed: boolean; positive: boolean };
 
+function code(value: string): string {
+  return `\`${value.replaceAll("|", "\\|").replaceAll("`", "\\`")}\``;
+}
+
+function operationIds(values: readonly string[]): string {
+  return values.length === 0 ? "none" : values.map(code).join(", ");
+}
+
 /** Render the raw HTML endpoint table as stable GitHub-flavored Markdown. */
 export function renderEndpointTableMarkdown(html: string): string {
   const converter = new TurndownService({
@@ -92,10 +100,26 @@ export async function renderE2EMarkdownReport(report: LiveTestReportSnapshot): P
       }** hand-written contracts against the same live Git-host environment:`,
       "",
       ...summary.handWrittenFluentApiContracts.contracts.flatMap((contract) => [
-        `### ${contract.name}`,
+        `### ${code(contract.id)}`,
         "",
         ...contract.assertions.map((assertion) => `- ${assertion}`),
         "",
+        ...(contract.requestEvidence.length === 0
+          ? ["Request-budget evidence: no provider request applies to this version.", ""]
+          : [
+            "#### Request-budget evidence",
+            "",
+            "| Fluent operation | Expected provider operations | Observed provider operations |",
+            "| :--- | :--- | :--- |",
+            ...contract.requestEvidence.map((evidence) =>
+              `| ${code(evidence.operation)} | ${
+                operationIds(evidence.expectedOperationIds)
+              } | ${evidence.requests.length}: ${
+                operationIds(evidence.requests.map((request) => request.operationId))
+              } |`
+            ),
+            "",
+          ]),
       ]),
     ]),
     "## Generated client coverage",

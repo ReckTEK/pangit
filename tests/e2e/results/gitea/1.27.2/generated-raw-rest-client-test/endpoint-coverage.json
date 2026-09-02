@@ -12,7 +12,7 @@
     "missing": 0,
     "failedCases": 0,
     "cases": 543,
-    "requests": 563
+    "requests": 562
   },
   "endpoints": [
     {
@@ -5038,7 +5038,7 @@
             200
           ],
           "status": 200,
-          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/git/tags/0cd401029839a752189a82f4d68fbf2a8ba741ba",
+          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/git/tags/65fface9f4cc131fb247cf8716e3526c8b03b083",
           "method": "GET"
         }
       ]
@@ -7196,7 +7196,7 @@
             200
           ],
           "status": 200,
-          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/git/trees/3d774c1689dea41d6a1d1ff3bacd37e2d32c1d3d",
+          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/git/trees/1148b2ef4af3a05919a72ad746884be5ee57c6f6",
           "method": "GET"
         }
       ]
@@ -22385,7 +22385,7 @@
             201
           ],
           "status": 201,
-          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/pulls/3/comments/37/replies",
+          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/pulls/3/comments/36/replies",
           "method": "POST"
         }
       ]
@@ -22841,7 +22841,7 @@
             201
           ],
           "status": 201,
-          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/statuses/3d774c1689dea41d6a1d1ff3bacd37e2d32c1d3d",
+          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/statuses/1148b2ef4af3a05919a72ad746884be5ee57c6f6",
           "method": "POST"
         }
       ]
@@ -22887,6 +22887,15 @@
       "responses": [
         {
           "status": 200,
+          "mediaTypes": [
+            "application/json"
+          ],
+          "decoders": {
+            "application/json": "json"
+          }
+        },
+        {
+          "status": 201,
           "mediaTypes": [
             "application/json"
           ],
@@ -24110,7 +24119,7 @@
             204
           ],
           "status": 204,
-          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/push_mirrors/remote_mirror_e8WymXxbcL",
+          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/push_mirrors/remote_mirror_xejCLeISRl",
           "method": "DELETE"
         }
       ]
@@ -24918,7 +24927,7 @@
             200
           ],
           "status": 200,
-          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/git/commits/3d774c1689dea41d6a1d1ff3bacd37e2d32c1d3d.diff",
+          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/git/commits/1148b2ef4af3a05919a72ad746884be5ee57c6f6.diff",
           "method": "GET"
         }
       ]
@@ -25922,6 +25931,7 @@
           "attempts": [
             200,
             200,
+            200,
             200
           ],
           "status": 200,
@@ -26502,7 +26512,7 @@
             200
           ],
           "status": 200,
-          "url": "http://gitea:3000/api/v1/repositories/1",
+          "url": "http://gitea:3000/api/v1/repositories/3",
           "method": "GET"
         }
       ]
@@ -26670,7 +26680,7 @@
             200
           ],
           "status": 200,
-          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/commits/5ddf27707a699486c767503cf644dff8dbc18b6f/pull",
+          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/commits/a08193f3540b00dc39ab58f8736fd240d23a21ff/pull",
           "method": "GET"
         }
       ]
@@ -27826,7 +27836,7 @@
             404
           ],
           "status": 404,
-          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/git/notes/3d774c1689dea41d6a1d1ff3bacd37e2d32c1d3d",
+          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/git/notes/1148b2ef4af3a05919a72ad746884be5ee57c6f6",
           "method": "GET"
         }
       ]
@@ -27919,7 +27929,6 @@
             200,
             200,
             200,
-            200,
             200
           ],
           "status": 200,
@@ -27935,7 +27944,6 @@
           ],
           "passed": true,
           "attempts": [
-            200,
             200,
             200,
             200,
@@ -28501,7 +28509,7 @@
             200
           ],
           "status": 200,
-          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/push_mirrors/remote_mirror_e8WymXxbcL",
+          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/push_mirrors/remote_mirror_xejCLeISRl",
           "method": "GET"
         }
       ]
@@ -29140,7 +29148,7 @@
             200
           ],
           "status": 200,
-          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/git/commits/3d774c1689dea41d6a1d1ff3bacd37e2d32c1d3d",
+          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/git/commits/1148b2ef4af3a05919a72ad746884be5ee57c6f6",
           "method": "GET"
         }
       ]
@@ -31148,7 +31156,7 @@
             200
           ],
           "status": 200,
-          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/statuses/3d774c1689dea41d6a1d1ff3bacd37e2d32c1d3d",
+          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/statuses/1148b2ef4af3a05919a72ad746884be5ee57c6f6",
           "method": "GET"
         }
       ]
@@ -31703,6 +31711,10 @@
       "responses": [
         {
           "status": 200,
+          "mediaTypes": []
+        },
+        {
+          "status": 201,
           "mediaTypes": []
         },
         {
@@ -32410,7 +32422,7 @@
             204
           ],
           "status": 204,
-          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/pulls/comments/37/resolve",
+          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/pulls/comments/36/resolve",
           "method": "POST"
         }
       ]
@@ -33262,7 +33274,7 @@
             204
           ],
           "status": 204,
-          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/pulls/comments/37/unresolve",
+          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/pulls/comments/36/unresolve",
           "method": "POST"
         }
       ]

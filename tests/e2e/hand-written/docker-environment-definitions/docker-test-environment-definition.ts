@@ -19,6 +19,8 @@ export type DockerTestEnvironmentDefinition = {
     results: string;
     credentials: string;
     timeoutMs: number;
+    /** Additional fixture-service authorities available to hand-written live contracts. */
+    networkHosts?: string[];
   };
   credentials: {
     username: string;

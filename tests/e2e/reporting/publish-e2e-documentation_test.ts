@@ -46,6 +46,7 @@ async function fixture(
     missing: 0,
     failedCases: 0,
     cases: 3,
+    requests: 3,
   };
   const identity = {
     gitHost: "fixture",
@@ -129,11 +130,17 @@ async function fixture(
       gitHost: "fixture",
       version: "1.0.0",
       kind: "hand-written-fluent-api-contracts",
+      selectedContractIds: ["core/repository-containers"],
       passed: true,
       contracts: [{
-        name: "repository-container",
+        id: "core/repository-containers",
         passed: true,
         assertions: ["Git-host adapter reached the live fixture"],
+        requestEvidence: [{
+          operation: "getRepository",
+          expectedOperationIds: ["repoGet"],
+          requests: [{ operationId: "repoGet", method: "GET", path: "/repos/acme/project" }],
+        }],
       }],
     };
     await writeJson(new URL("summary.json", raw), {
@@ -241,6 +248,11 @@ Deno.test("E2E documentation publication is deterministic and removes orphan out
       first.includes("Git-host adapter reached the live fixture"),
       "Hand-written fluent API assertions are missing",
     );
+    assert(first.includes("core/repository-containers"), "Stable contract ID is missing");
+    assert(
+      first.includes("getRepository") && first.includes("repoGet"),
+      "Request evidence is missing",
+    );
     assert(first.includes("2 / 2"), "Endpoint totals are missing");
     assert(first.includes("95.00%") && first.includes("80.00%"), "Coverage is missing");
     assert(first.includes("- `getAbsent`"), "Negative-only operation is hidden");
@@ -324,6 +336,22 @@ Deno.test("declared hand-written fluent API E2E requires independent evidence", 
         error.message.includes("Invalid live-test report summary");
     }
     assert(rejected, "Missing hand-written fluent API evidence was accepted");
+  }, true);
+
+  await fixture(async (paths, raw, release) => {
+    const summaryPath = new URL("summary.json", raw);
+    const summary = JSON.parse(await Deno.readTextFile(summaryPath));
+    summary.handWrittenFluentApiContracts.selectedContractIds = ["wrong/contract"];
+    await writeJson(summaryPath, summary);
+
+    let rejected = false;
+    try {
+      await publishE2EDocumentation(paths, [release]);
+    } catch (error) {
+      rejected = error instanceof Error &&
+        error.message.includes("Invalid live-test report summary");
+    }
+    assert(rejected, "Mismatched fluent contract IDs were accepted");
   }, true);
 
   await fixture(async (paths, raw, release) => {

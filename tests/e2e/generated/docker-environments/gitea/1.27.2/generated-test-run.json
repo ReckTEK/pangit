@@ -41,7 +41,10 @@
     "workspace": "/workspace",
     "results": "/results",
     "credentials": "/sandbox-auth",
-    "timeoutMs": 20000
+    "timeoutMs": 20000,
+    "networkHosts": [
+      "webhook-journal:8080"
+    ]
   },
   "credentials": {
     "username": "sandbox",
@@ -52,6 +55,33 @@
     "tokenPrefix": "token "
   },
   "services": {
+    "webhook-journal": {
+      "image": "denoland/deno:alpine-2.9.5",
+      "user": "1000:1000",
+      "working_dir": "/fixture",
+      "entrypoint": [
+        "deno"
+      ],
+      "command": [
+        "run",
+        "--no-config",
+        "--allow-net=0.0.0.0:8080",
+        "/fixture/webhook-journal.ts"
+      ],
+      "volumes": [
+        "./webhook-journal.ts:/fixture/webhook-journal.ts:ro"
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "deno eval 'const r=await fetch(\"http://127.0.0.1:8080/health\");if(!r.ok)Deno.exit(1)'"
+        ],
+        "interval": "1s",
+        "timeout": "2s",
+        "retries": 30
+      },
+      "restart": "no"
+    },
     "actions": {
       "user": "1000:1000",
       "working_dir": "/data",

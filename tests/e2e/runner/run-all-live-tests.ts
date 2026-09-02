@@ -2,22 +2,45 @@ import { relativePath, workspace, type WorkspacePaths } from "../../../codegen/w
 import { publishE2EDocumentation } from "../reporting/publish-e2e-documentation.ts";
 import { prepareResultDirectories } from "../result-management/prepare-result-directories.ts";
 import { discoverGeneratedLiveTests } from "./discover-generated-live-tests.ts";
+import {
+  filterE2EReleases,
+  parseE2ERunSelection,
+  resolveE2EResultDirectory,
+  shouldPublishE2EResults,
+} from "./e2e-run-selection.ts";
+import { liveE2ERunCatalog } from "./live-e2e-run-catalog.ts";
 
 /** Replace temporary authentication artifacts while retaining their generated ignore file. */
 async function clearAuthenticationDirectory(directory: URL): Promise<void> {
   await Deno.mkdir(directory, { recursive: true });
   for await (const entry of Deno.readDir(directory)) {
     if (entry.name !== ".gitignore") {
-      await Deno.remove(new URL(encodeURIComponent(entry.name), directory), { recursive: true });
+      await Deno.remove(new URL(encodeURIComponent(entry.name), directory), {
+        recursive: true,
+      });
     }
   }
 }
 
-/** Run every manifest-declared suite and publish its complete Markdown evidence tree. */
-export async function runAllLiveTests(paths: WorkspacePaths = workspace): Promise<void> {
+/** Run selected manifest suites; publish only an argument-free complete run. */
+export async function runAllLiveTests(
+  paths: WorkspacePaths = workspace,
+  args: readonly string[] = Deno.args,
+): Promise<void> {
   const root = paths.root;
-  const releases = await discoverGeneratedLiveTests(paths);
-  await prepareResultDirectories(new URL("tests/e2e/results/", root), releases);
+  const selection = parseE2ERunSelection(args, liveE2ERunCatalog);
+  const discovered = await discoverGeneratedLiveTests(paths);
+  const releases = filterE2EReleases(discovered, selection).map((release) => ({
+    ...release,
+    results: resolveE2EResultDirectory(root, release, selection),
+  }));
+  const resultsRoot = new URL(
+    selection.focused ? "tests/e2e/.focused-results/" : "tests/e2e/results/",
+    root,
+  );
+  await prepareResultDirectories(resultsRoot, releases, {
+    pruneUnselected: !selection.focused,
+  });
 
   const decoder = new TextDecoder();
   let failed = false;
@@ -40,11 +63,17 @@ export async function runAllLiveTests(paths: WorkspacePaths = workspace): Promis
     signal("SIGTERM");
     interruptTimer = setTimeout(() => signal("SIGKILL"), 2_000);
   };
-  const docker = async (args: string[], capture = false, interruptible = false) => {
+  const docker = async (
+    args: string[],
+    capture = false,
+    interruptible = false,
+    environment: Readonly<Record<string, string>> = {},
+  ) => {
     if (interruptible && interrupted) throw new Error("E2E interrupted");
     const child = new Deno.Command("docker", {
       args,
       detached: true,
+      env: environment,
       stdout: capture ? "piped" : "inherit",
       stderr: capture ? "piped" : "inherit",
     }).spawn();
@@ -53,7 +82,9 @@ export async function runAllLiveTests(paths: WorkspacePaths = workspace): Promis
       const result = capture ? await child.output() : await child.status;
       if (!result.success) {
         const detail = capture ? decoder.decode((result as Deno.CommandOutput).stderr).trim() : "";
-        throw new Error(`docker ${args[0]} failed (${result.code})${detail ? `: ${detail}` : ""}`);
+        throw new Error(
+          `docker ${args[0]} failed (${result.code})${detail ? `: ${detail}` : ""}`,
+        );
       }
       return result;
     } finally {
@@ -70,54 +101,88 @@ export async function runAllLiveTests(paths: WorkspacePaths = workspace): Promis
     for (const release of releases) {
       if (interrupted) break;
       const { gitHost, version, compose, results, auth, run } = release;
-      const composeArgs = ["compose", "-f", decodeURIComponent(compose.pathname)];
+      const composeArgs = [
+        "compose",
+        "-f",
+        decodeURIComponent(compose.pathname),
+      ];
+      const dockerEnvironment = {
+        PANGIT_E2E_RESULTS_SOURCE: decodeURIComponent(results.pathname).replace(
+          /\/$/,
+          "",
+        ),
+      };
+      const runDocker = (
+        dockerArgs: string[],
+        capture = false,
+        interruptible = false,
+      ) => docker(dockerArgs, capture, interruptible, dockerEnvironment);
       let project: string | undefined;
       let started = false;
       let versionFailed = false;
       const reportError = (error: unknown) => {
         failed = versionFailed = true;
-        console.error(`${gitHost} ${version}: ${error instanceof Error ? error.message : error}`);
+        console.error(
+          `${gitHost} ${version}: ${error instanceof Error ? error.message : error}`,
+        );
       };
       const teardown = async () => {
         if (!project) return;
         const errors: string[] = [];
         try {
-          await docker([...composeArgs, "down", "--volumes", "--remove-orphans"]);
+          await runDocker([
+            ...composeArgs,
+            "down",
+            "--volumes",
+            "--remove-orphans",
+          ]);
         } catch (error) {
           errors.push(String(error));
         }
         for (
           const [kind, listArgs, removeArgs] of [
-            ["container", ["ls", "--all", "--quiet"], ["rm", "--force", "--volumes"]],
+            ["container", ["ls", "--all", "--quiet"], [
+              "rm",
+              "--force",
+              "--volumes",
+            ]],
             ["network", ["ls", "--quiet"], ["rm"]],
             ["volume", ["ls", "--quiet"], ["rm"]],
           ] as const
         ) {
           const list = async () => {
-            const output = await docker([
+            const output = await runDocker([
               kind,
               ...listArgs,
               "--filter",
               `label=com.docker.compose.project=${project}`,
             ], true) as Deno.CommandOutput;
-            return decoder.decode(output.stdout).trim().split(/\s+/).filter(Boolean);
+            return decoder.decode(output.stdout).trim().split(/\s+/).filter(
+              Boolean,
+            );
           };
           try {
             const remaining = await list();
-            if (remaining.length) await docker([kind, ...removeArgs, ...remaining]);
+            if (remaining.length) {
+              await runDocker([kind, ...removeArgs, ...remaining]);
+            }
             const retained = await list();
             if (retained.length) {
-              throw new Error(`Retained ${kind} resources: ${retained.join(", ")}`);
+              throw new Error(
+                `Retained ${kind} resources: ${retained.join(", ")}`,
+              );
             }
           } catch (error) {
             errors.push(String(error));
           }
         }
-        if (errors.length) throw new Error(`Compose cleanup failed: ${errors.join("; ")}`);
+        if (errors.length) {
+          throw new Error(`Compose cleanup failed: ${errors.join("; ")}`);
+        }
       };
 
       try {
-        const output = await docker(
+        const output = await runDocker(
           [...composeArgs, "config", "--format", "json"],
           true,
         ) as Deno.CommandOutput;
@@ -128,12 +193,14 @@ export async function runAllLiveTests(paths: WorkspacePaths = workspace): Promis
         }
         project = name;
         composeArgs.push("--project-name", project);
-        const mounts: Array<{ type?: string; source?: string; target?: string }> =
-          composeConfig.services?.[run.runner.name]?.volumes ?? [];
+        const mounts: Array<
+          { type?: string; source?: string; target?: string }
+        > = composeConfig.services?.[run.runner.name]?.volumes ?? [];
         const outputMount = mounts.find((mount) => mount.target === run.runner.results);
         if (
           outputMount?.type !== "bind" ||
-          outputMount.source !== decodeURIComponent(results.pathname).replace(/\/$/, "")
+          outputMount.source !==
+            decodeURIComponent(results.pathname).replace(/\/$/, "")
         ) {
           throw new Error(
             "Compose results mount differs from the manifest; run deno task generate",
@@ -142,7 +209,7 @@ export async function runAllLiveTests(paths: WorkspacePaths = workspace): Promis
         await teardown();
         await clearAuthenticationDirectory(auth);
         started = true;
-        await docker(
+        await runDocker(
           [
             ...composeArgs,
             "up",
@@ -156,7 +223,7 @@ export async function runAllLiveTests(paths: WorkspacePaths = workspace): Promis
           false,
           true,
         );
-        await docker(
+        await runDocker(
           [
             ...composeArgs,
             "run",
@@ -164,6 +231,11 @@ export async function runAllLiveTests(paths: WorkspacePaths = workspace): Promis
             "--no-deps",
             "--no-tty",
             "--interactive=false",
+            "--env",
+            `PANGIT_E2E_SUITE=${selection.suite}`,
+            ...(selection.contract === undefined
+              ? []
+              : ["--env", `PANGIT_E2E_CONTRACT=${selection.contract}`]),
             run.runner.name,
           ],
           false,
@@ -174,16 +246,22 @@ export async function runAllLiveTests(paths: WorkspacePaths = workspace): Promis
       } finally {
         try {
           if (started) {
-            const logs = await docker(
+            const logs = await runDocker(
               [...composeArgs, "logs", "--no-color", run.service.name],
               true,
             ) as Deno.CommandOutput;
             const serverLog = decoder.decode(
               new Uint8Array([...logs.stdout, ...logs.stderr]),
             ).replace(/[ \t]+$/gm, "");
-            const environmentResults = new URL("live-test-environment/", results);
+            const environmentResults = new URL(
+              "live-test-environment/",
+              results,
+            );
             await Deno.mkdir(environmentResults, { recursive: true });
-            await Deno.writeTextFile(new URL("server.log", environmentResults), serverLog);
+            await Deno.writeTextFile(
+              new URL("server.log", environmentResults),
+              serverLog,
+            );
           }
         } catch (error) {
           reportError(error);
@@ -201,9 +279,9 @@ export async function runAllLiveTests(paths: WorkspacePaths = workspace): Promis
       }
       if (!versionFailed && !interrupted) {
         console.log(
-          `${gitHost} ${version}: generated raw REST-client and hand-written fluent API tests passed; environment removed; ${
+          `${gitHost} ${version}: ${selection.suite} E2E suite passed; environment removed; ${
             relativePath(root, results)
-          }/generated-raw-rest-client-test/index.html`,
+          }/summary.json`,
         );
       }
     }
@@ -212,18 +290,26 @@ export async function runAllLiveTests(paths: WorkspacePaths = workspace): Promis
     Deno.removeSignalListener("SIGTERM", interrupt);
   }
 
-  try {
-    await publishE2EDocumentation(paths, releases);
-    console.log(`Published ${releases.length} deterministic E2E Markdown reports.`);
-  } catch (error) {
-    failed = true;
-    console.error(
-      `E2E documentation publication failed: ${error instanceof Error ? error.message : error}`,
+  if (shouldPublishE2EResults(selection)) {
+    try {
+      await publishE2EDocumentation(paths, releases);
+      console.log(
+        `Published ${releases.length} deterministic E2E Markdown reports.`,
+      );
+    } catch (error) {
+      failed = true;
+      console.error(
+        `E2E documentation publication failed: ${error instanceof Error ? error.message : error}`,
+      );
+    }
+  } else {
+    console.log(
+      "Focused E2E results were kept separate and were not published.",
     );
   }
   if (failed || interrupted) {
     throw new Error(
-      "Real API E2E and documentation publication did not complete for every manifest version.",
+      "Selected real API E2E execution did not complete successfully.",
     );
   }
 }
