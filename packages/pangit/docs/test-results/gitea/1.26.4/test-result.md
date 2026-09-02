@@ -12,6 +12,19 @@
 | :------: | ----: | --------: | -------: | ------------: | -------: |
 | **PASS** |   532 | 471 / 471 |      468 |             3 |        0 |
 
+## Fluent organization/repository contract
+
+**PASS** against the same live provider sandbox:
+
+- token authorization retains the selected fluent client
+- organization discovery returns accessible organizations
+- organization(name) fetches the organization entity
+- repository discovery is independent from organization discovery
+- repository(owner, name) performs direct lookup
+- organization repositories list and fetch as real entities
+- organization and repository native.gitea use exact generated contexts
+- organization repository create, rename, refresh, and delete succeed
+
 ## Generated client coverage
 
 Measured by Deno against the generated REST client, not the provider server.

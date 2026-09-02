@@ -11,6 +11,7 @@
     "generate:pangit": "deno run --allow-read --allow-write --allow-net --allow-env --allow-run=deno codegen/pangit/pangit-generator.ts",
     "generate:pangit-site": "deno run --allow-read --allow-write --allow-env --allow-run=deno codegen/pangit-site/pangit-site-generator.ts",
     "e2e": "deno run --allow-read --allow-write --allow-run tests/e2e-runner.ts",
+    "example": "deno task --cwd packages/pangit-examples example",
     "dev": "deno task --recursive --filter @mannsion/pangit-site dev",
     "build": "deno task --recursive --filter @mannsion/pangit-site build",
     "start": "deno task --recursive --filter @mannsion/pangit-site start",

@@ -5,7 +5,6 @@ export type {
   AuthBranch,
   BasicAuthorization,
   MaybePromise,
-  TokenAuthorization,
 } from "./authentication-contracts.ts";
 export { AuthAdapterNotImplementedError } from "./AuthAdapterNotImplementedError.ts";
 export type {

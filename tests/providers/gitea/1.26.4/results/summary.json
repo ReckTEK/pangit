@@ -11,7 +11,7 @@
     "missing": 0,
     "failedCases": 0,
     "cases": 532,
-    "requests": 553
+    "requests": 552
   },
   "sourceCoverage": {
     "lines": {
@@ -29,5 +29,22 @@
       "covered": 473,
       "percent": 99.58
     }
+  },
+  "organizationRepositoryContract": {
+    "schemaVersion": 1,
+    "provider": "gitea",
+    "version": "1.26.4",
+    "kind": "fluent-organization-repository",
+    "passed": true,
+    "assertions": [
+      "token authorization retains the selected fluent client",
+      "organization discovery returns accessible organizations",
+      "organization(name) fetches the organization entity",
+      "repository discovery is independent from organization discovery",
+      "repository(owner, name) performs direct lookup",
+      "organization repositories list and fetch as real entities",
+      "organization and repository native.gitea use exact generated contexts",
+      "organization repository create, rename, refresh, and delete succeed"
+    ]
   }
 }

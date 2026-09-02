@@ -97,6 +97,13 @@
     "peerPassword": "e2e-peer-password",
     "baseUrl": "http://gitea:3000"
   },
+  "repositoryContainerContract": {
+    "user": "${owner}",
+    "userRepository": "${repo}",
+    "organization": "${org}",
+    "organizationRepository": "org-repo",
+    "mutationRepository": "fluent-contract-repository"
+  },
   "parameterDefaults": {
     "owner": "${owner}",
     "repo": "${repo}",

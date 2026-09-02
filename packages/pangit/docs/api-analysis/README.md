@@ -8,6 +8,12 @@ provider-specific**. It proposes interfaces; it does not implement them.
 | [Core](core.md)               | 25 capability groups shared by every included client, with native method bindings. |
 | [Supplements](supplements.md) | Optional shared modules and provider-only capabilities.                            |
 
+## Fluent API design
+
+[Repository-container fluent API](repository-containers-fluent-api.md) defines explicit owning
+containers, direct repository lookup, provider adapters, ordinary-language methods, and the native
+escape door.
+
 The exact reviewed bindings for every proposed core method are in the
 [provider method map](core-method-map.md).
 

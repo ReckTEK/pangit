@@ -31,7 +31,18 @@ if (reportingPassed) {
     return { total, covered, percent: total === 0 ? 100 : Number((100 * covered / total).toFixed(2)) };
   };
   const endpoint = JSON.parse(await Deno.readTextFile(`${results}/endpoint-coverage.json`));
-  await Deno.writeTextFile(`${results}/summary.json`, JSON.stringify({ provider: manifest.provider, version: manifest.version, kind: "real-http-e2e", passed: test.success, endpoints: endpoint.totals, sourceCoverage: { lines: metric("LF", "LH"), branches: metric("BRF", "BRH"), functions: metric("FNF", "FNH") } }, null, 2) + "\n");
+  let repositoryContainerContract: unknown;
+  if (manifest.repositoryContainerContract !== undefined) {
+    try {
+      repositoryContainerContract = JSON.parse(await Deno.readTextFile(`${results}/repository-container-contract.json`));
+    } catch (error) {
+      console.error(`Cannot read fluent contract evidence: ${error instanceof Error ? error.message : error}`);
+      reportingPassed = false;
+    }
+  }
+  if (reportingPassed) {
+    await Deno.writeTextFile(`${results}/summary.json`, JSON.stringify({ provider: manifest.provider, version: manifest.version, kind: "real-http-e2e", passed: test.success, endpoints: endpoint.totals, sourceCoverage: { lines: metric("LF", "LH"), branches: metric("BRF", "BRH"), functions: metric("FNF", "FNH") }, ...(repositoryContainerContract === undefined ? {} : { repositoryContainerContract }) }, null, 2) + "\n");
+  }
   for await (const entry of Deno.readDir(`${results}/coverage`)) {
     if (!entry.name.endsWith(".html")) continue;
     const path = `${results}/coverage/${entry.name}`;

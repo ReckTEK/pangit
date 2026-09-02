@@ -28,6 +28,9 @@ Keep `packages/pangit` understandable from Ctrl+P, import statements, and the pu
   can be derived from the manifest, schema, generated registry, or generated REST client.
 - Keep provider implementations lazy. Runtime value imports must not eagerly load every provider;
   provider/version selection uses literal deferred imports.
+- Select one provider adapter when the fluent client is created and delegate the whole domain
+  contract to it. Provider endpoint names and mapping logic belong in that provider's adapter, not
+  in shared entities or repeated per-operation switches.
 - Keep reusable modules import-safe: importing PanGit must not start I/O, read environment state, or
   initialize a provider.
 
@@ -39,6 +42,15 @@ Keep `packages/pangit` understandable from Ctrl+P, import statements, and the pu
   Keep internal-only factories out of public barrels.
 - The package root exports only the `api` namespace and `createProviderClient` factory. Fluent types
   stay under `api`; generated provider-native types stay in a provider/version module.
+- Treat usability as a hard API constraint: singular nouns fetch real entities, plural nouns list
+  them, verbs mutate them, and required identities are direct parameters. Do not expose generic
+  `get`, `in`, container-locator, or terminal `execute` ceremony in fluent domain flows.
+- Provider switches are optional `native` escape hatches. Only the branch matching the client's
+  selected provider may execute; unselected branches must not load provider modules.
+- Model the repository owner as a fetched `RepositoryContainer`: a user, organization, group,
+  workspace, project, or provider equivalent. Repository listing is always container-scoped, never
+  global or access-wide, and exact lookup/existence must use an efficient provider operation rather
+  than listing every repository.
 - All package runtime source lives under `packages/pangit/src`. Tests, generated E2E/Docker assets,
   reports, and maintainer documentation stay outside the published package.
 - Add concise JSDoc to authored public abstractions and non-obvious boundaries. Do not hand-document

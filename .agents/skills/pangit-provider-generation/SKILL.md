@@ -52,6 +52,9 @@ provider-native OpenAPI type.
   `codegen/generate.ts` runs both in dependency order.
 - Generated provider E2E/Docker suites live at `tests/providers/<provider>/<version>`, never under
   `packages/pangit`, `src/providers`, or the publish set.
+- Provider-adapter contract E2E belongs in the provider test map and shared generator templates.
+  Emit it into every configured provider/version suite and run it after the raw-client scenarios so
+  both layers reuse the same live fixtures; never hand-add it to emitted suites.
 - Generation owns suite assets but never runs Docker, reads or writes E2E results, publishes result
   Markdown, or rewrites a README. `tests/e2e-runner.ts` owns fresh containers, manifest-authorized
   raw results, complete-tree Markdown replacement, and validation of human-authored README links.

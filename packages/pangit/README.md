@@ -22,12 +22,25 @@ import * as PanGit from "@mannsion/pangit";
 Create a provider-neutral fluent client:
 
 ```ts
-const git = PanGit.api.createClient("gitea", "1.27.2", {
-  baseUrl: "https://git.example.com/api/v1",
-});
+const git = PanGit.api.createClient(
+  "gitea",
+  "1.27.2",
+  "https://git.example.com/api/v1",
+);
 
-const authorized = await git.auth.token({ token: "example" });
+const authorized = await git.auth.token("example");
+
+const container = await authorized.container("acme");
+const repositories = await container.repositories();
+const repository = await container.repository("website");
+const existing = await container.findRepository("optional-repository");
+const exists = await container.hasRepository("website");
 ```
+
+A repository container is the provider's repository-owning scope: a Gitea user or organization,
+GitHub organization, GitLab group, Bitbucket workspace, Azure DevOps project, or equivalent. Exact
+lookup and existence checks call the provider adapter directly; they do not download every
+repository first.
 
 Create exactly one provider-native client without evaluating the other providers:
 

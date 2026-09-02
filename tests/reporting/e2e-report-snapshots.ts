@@ -3,6 +3,14 @@ import { assertE2EResultOwnership } from "../e2e-result-tree.ts";
 import { type E2ERelease, readE2EReleases } from "../e2e-releases.ts";
 
 export type CoverageMetric = { total: number; covered: number; percent: number };
+export type RepositoryContainerContractSummary = {
+  schemaVersion: 1;
+  provider: string;
+  version: string;
+  kind: "fluent-repository-container";
+  passed: boolean;
+  assertions: string[];
+};
 export type E2EReportSummary = {
   provider: string;
   version: string;
@@ -18,6 +26,7 @@ export type E2EReportSummary = {
     cases: number;
   };
   sourceCoverage: { lines: CoverageMetric; branches: CoverageMetric; functions: CoverageMetric };
+  repositoryContainerContract?: RepositoryContainerContractSummary;
 };
 
 /** Validated raw evidence plus its deterministic Markdown and README destinations. */
@@ -40,6 +49,7 @@ function validateSummary(
 ): E2EReportSummary {
   const summary = value as E2EReportSummary | null;
   const endpoints = summary?.endpoints;
+  const contract = summary?.repositoryContainerContract;
   if (
     summary?.provider !== provider || summary.version !== version ||
     summary.kind !== "real-http-e2e" || typeof summary.passed !== "boolean" ||
@@ -58,6 +68,13 @@ function validateSummary(
     endpoints.cases < endpoints.passed || endpoints.failedCases > endpoints.cases ||
     (summary.passed && (endpoints.passed !== endpoints.operations || endpoints.missing !== 0 ||
       endpoints.failedCases !== 0)) ||
+    (contract !== undefined &&
+      (contract.schemaVersion !== 1 || contract.provider !== provider ||
+        contract.version !== version || contract.kind !== "fluent-repository-container" ||
+        typeof contract.passed !== "boolean" || !Array.isArray(contract.assertions) ||
+        contract.assertions.length === 0 ||
+        contract.assertions.some((assertion) => typeof assertion !== "string") ||
+        (summary.passed && !contract.passed))) ||
     !["lines", "branches", "functions"].every((key) => {
       const metric = summary?.sourceCoverage?.[key as keyof E2EReportSummary["sourceCoverage"]];
       return metric && isCount(metric.total) && isCount(metric.covered) &&

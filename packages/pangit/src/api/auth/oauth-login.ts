@@ -1,10 +1,10 @@
 import type { ClientOptions } from "../../providers/managed-client.ts";
 import type { Provider, ProviderVersion } from "../../providers/provider.ts";
-import { createProviderClient } from "../../providers/registry.ts";
 import type {
   Login,
   LoginOptions,
   OAuthAuthorizedClient,
+  OAuthClientAuthorizer,
   OAuthLoginStart,
   OAuthLoginTransaction,
 } from "./oauth-contracts.ts";
@@ -27,12 +27,14 @@ class LoginImpl<
 > implements Login<TProvider, TVersion> {
   readonly options: LoginOptions;
   readonly #clientOptions: ClientOptions;
+  readonly #authorizeClient: OAuthClientAuthorizer<TProvider, TVersion>;
 
   constructor(
     readonly provider: TProvider,
     readonly version: TVersion,
     options: LoginOptions,
     clientOptions: ClientOptions,
+    authorizeClient: OAuthClientAuthorizer<TProvider, TVersion>,
   ) {
     if (options.clientId.length === 0) throw new TypeError("clientId cannot be empty");
     const callbackUrl = new URL(options.callbackUrl);
@@ -47,6 +49,7 @@ class LoginImpl<
       scopes: options.scopes === undefined ? undefined : Object.freeze([...options.scopes]),
     });
     this.#clientOptions = clientOptions;
+    this.#authorizeClient = authorizeClient;
   }
 
   async start(): Promise<OAuthLoginStart<TProvider, TVersion>> {
@@ -124,39 +127,23 @@ class LoginImpl<
     const accessToken = requiredString(payload.access_token, "access_token");
     const tokenType = requiredString(payload.token_type, "token_type");
 
-    const client = await createProviderClient(
-      "gitea",
-      this.version as ProviderVersion<"gitea">,
-      {
-        ...this.#clientOptions,
-        headers: { Authorization: `${tokenType} ${accessToken}` },
-        throwOnError: false,
-      },
-    );
-    const currentUser = await client.userGetCurrent({}, { signal: callback.signal });
-    if (!currentUser.ok || currentUser.status !== 200 || !currentUser.documented) {
-      throw new OAuthCallbackError(
-        "token_verification_failed",
-        `Gitea OAuth authorization failed: GET /user returned HTTP ${currentUser.status}`,
-      );
-    }
-
     const expiresIn = numberValue(payload.expires_in);
     const refreshToken = stringValue(payload.refresh_token);
     const scope = stringValue(payload.scope);
-    return Object.freeze({
-      provider: this.provider,
-      version: this.version,
-      rest: client as OAuthAuthorizedClient<TProvider, TVersion>["rest"],
-      authorization: Object.freeze({
-        method: "oauth" as const,
-        accessToken,
-        tokenType,
-        ...(expiresIn === undefined ? {} : { expiresIn }),
-        ...(refreshToken === undefined ? {} : { refreshToken }),
-        ...(scope === undefined ? {} : { scope }),
-      }),
+    const authorization = Object.freeze({
+      method: "oauth" as const,
+      accessToken,
+      tokenType,
+      ...(expiresIn === undefined ? {} : { expiresIn }),
+      ...(refreshToken === undefined ? {} : { refreshToken }),
+      ...(scope === undefined ? {} : { scope }),
     });
+    return await this.#authorizeClient(
+      accessToken,
+      tokenType,
+      authorization,
+      callback.signal,
+    );
   }
 
   #requireGitea(): void {
@@ -175,8 +162,9 @@ export function createOAuthLogin<
   version: TVersion,
   options: LoginOptions,
   clientOptions: ClientOptions,
+  authorizeClient: OAuthClientAuthorizer<TProvider, TVersion>,
 ): Login<TProvider, TVersion> {
-  return new LoginImpl(provider, version, options, clientOptions);
+  return new LoginImpl(provider, version, options, clientOptions, authorizeClient);
 }
 
 function validateTransaction<

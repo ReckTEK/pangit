@@ -1,6 +1,5 @@
-import type { RestClientTypeMap } from "../../providers/clients.ts";
-import type { AuthorizedClient } from "../../providers/managed-client.ts";
 import type { Provider, ProviderVersion } from "../../providers/provider.ts";
+import type { FluentClient } from "../FluentClient.ts";
 
 /** Common inputs needed to begin a provider-hosted OAuth login. */
 export interface LoginOptions {
@@ -44,11 +43,20 @@ export interface OAuthAuthorization {
 export interface OAuthAuthorizedClient<
   TProvider extends Provider,
   TVersion extends ProviderVersion<TProvider>,
-> extends AuthorizedClient<TProvider, TVersion> {
+> extends FluentClient<TProvider, TVersion> {
   readonly authorization: OAuthAuthorization;
-  /** The selected provider's authenticated, generated REST client. */
-  readonly rest: RestClientTypeMap[TProvider][TVersion];
 }
+
+/** Build a fluent client after a provider OAuth flow acquires credentials. */
+export type OAuthClientAuthorizer<
+  TProvider extends Provider,
+  TVersion extends ProviderVersion<TProvider>,
+> = (
+  token: string,
+  tokenType: string,
+  authorization: OAuthAuthorization,
+  signal?: AbortSignal,
+) => Promise<OAuthAuthorizedClient<TProvider, TVersion>>;
 
 /** Two-part OAuth flow: begin the login hop, then authorize its native callback request. */
 export interface Login<

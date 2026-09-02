@@ -82,6 +82,16 @@ export async function renderE2EMarkdownReport(report: E2EReportSnapshot): Promis
       summary.passed ? "PASS" : "FAIL"
     }** | ${summary.endpoints.cases} | ${summary.endpoints.passed} / ${summary.endpoints.operations} | ${summary.endpoints.positive} | ${summary.endpoints.negativeOnly} | ${summary.endpoints.missing} |`,
     "",
+    ...(summary.repositoryContainerContract === undefined ? [] : [
+      "## Fluent repository-container contract",
+      "",
+      `**${
+        summary.repositoryContainerContract.passed ? "PASS" : "FAIL"
+      }** against the same live provider sandbox:`,
+      "",
+      ...summary.repositoryContainerContract.assertions.map((assertion) => `- ${assertion}`),
+      "",
+    ]),
     "## Generated client coverage",
     "",
     "Measured by Deno against the generated REST client, not the provider server.",

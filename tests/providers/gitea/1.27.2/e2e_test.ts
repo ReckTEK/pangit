@@ -2,4 +2,5 @@
 import { GiteaRestClient } from "../../../../packages/pangit/src/providers/gitea/1.27.2/mod.ts";
 import manifest from "./manifest.json" with { type: "json" };
 import { runSuite } from "./runtime.ts";
-Deno.test("gitea 1.27.2 real API E2E", async (t) => { await runSuite(t, manifest, GiteaRestClient); });
+import { runRepositoryContainerContract } from "./repository-container-contract.ts";
+Deno.test("gitea 1.27.2 real API E2E", async (t) => { await runSuite(t, manifest, GiteaRestClient); await runRepositoryContainerContract(t, manifest); });

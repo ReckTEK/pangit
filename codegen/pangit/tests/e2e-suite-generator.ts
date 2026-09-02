@@ -174,11 +174,17 @@ export async function generateClientTests(paths: WorkspacePaths = workspace): Pr
         new URL("manifest.json", output),
         `${JSON.stringify(generated, null, 2)}\n`,
       );
+      const fluentContractImport = config.repositoryContainerContract === undefined
+        ? ""
+        : 'import { runRepositoryContainerContract } from "./repository-container-contract.ts";\n';
+      const fluentContractRun = config.repositoryContainerContract === undefined
+        ? ""
+        : " await runRepositoryContainerContract(t, manifest);";
       const test = `import { ${definition.client.className} } from ${
         JSON.stringify(moduleSpecifier(output, clientFile))
-      };\nimport manifest from "./manifest.json" with { type: "json" };\nimport { runSuite } from "./runtime.ts";\nDeno.test(${
+      };\nimport manifest from "./manifest.json" with { type: "json" };\nimport { runSuite } from "./runtime.ts";\n${fluentContractImport}Deno.test(${
         JSON.stringify(`${provider} ${version} real API E2E`)
-      }, async (t) => { await runSuite(t, manifest, ${definition.client.className}); });\n`;
+      }, async (t) => { await runSuite(t, manifest, ${definition.client.className});${fluentContractRun} });\n`;
       await Deno.writeTextFile(
         new URL("e2e_test.ts", output),
         markGenerated(test, "//"),
@@ -200,6 +206,29 @@ export async function generateClientTests(paths: WorkspacePaths = workspace): Pr
         await Deno.writeTextFile(
           new URL(template, output),
           template.endsWith(".ts") ? markGenerated(source, "//") : source,
+        );
+      }
+      if (config.repositoryContainerContract !== undefined) {
+        let source = await Deno.readTextFile(
+          new URL("repository-container-contract.ts.tpl", templateDirectory),
+        );
+        const replacements = new Map([
+          [
+            "__PANGIT_API_MODULE__",
+            JSON.stringify(moduleSpecifier(output, new URL("src/api/mod.ts", packageRoot))),
+          ],
+          ["__PANGIT_PROVIDER__", JSON.stringify(provider)],
+          ["__PANGIT_VERSION__", JSON.stringify(version)],
+        ]);
+        for (const [token, replacement] of replacements) {
+          if (source.split(token).length !== 2) {
+            throw new Error(`Repository-container template must contain one ${token}`);
+          }
+          source = source.replace(token, replacement);
+        }
+        await Deno.writeTextFile(
+          new URL("repository-container-contract.ts", output),
+          markGenerated(source, "//"),
         );
       }
       await Deno.writeTextFile(

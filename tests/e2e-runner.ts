@@ -178,10 +178,10 @@ export async function runGeneratedClientTests(paths: WorkspacePaths = workspace)
               [...composeArgs, "logs", "--no-color", manifest.service.name],
               true,
             ) as Deno.CommandOutput;
-            await Deno.writeFile(
-              new URL("server.log", results),
+            const serverLog = decoder.decode(
               new Uint8Array([...logs.stdout, ...logs.stderr]),
-            );
+            ).replace(/[ \t]+$/gm, "");
+            await Deno.writeTextFile(new URL("server.log", results), serverLog);
           }
         } catch (error) {
           reportError(error);

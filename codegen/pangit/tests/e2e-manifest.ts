@@ -24,6 +24,15 @@ export type E2EStep = {
   note?: string;
 };
 
+/** Fluent repository-container contract exercised after the raw generated-client suite. */
+export type RepositoryContainerE2EContract = {
+  user: string;
+  userRepository: string;
+  organization: string;
+  organizationRepository: string;
+  mutationRepository: string;
+};
+
 export type E2EManifest = {
   schemaVersion: 1;
   service: {
@@ -57,6 +66,7 @@ export type E2EManifest = {
   services?: Record<string, JsonRecord>;
   files?: Record<string, string>;
   parameterDefaults: JsonRecord;
+  repositoryContainerContract?: RepositoryContainerE2EContract;
   scenarios: Array<{ name: string; steps: E2EStep[] }>;
   negativeCases: E2EStep[];
 };
