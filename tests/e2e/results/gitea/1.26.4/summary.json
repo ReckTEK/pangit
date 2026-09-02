@@ -1,0 +1,77 @@
+{
+  "gitHost": "gitea",
+  "version": "1.26.4",
+  "containerImage": "docker.gitea.com/gitea:1.26.4",
+  "kind": "real-http-e2e",
+  "passed": true,
+  "suites": {
+    "generatedRawRestClientTest": {
+      "kind": "generated-raw-rest-client-test",
+      "passed": true,
+      "junit": "generated-raw-rest-client-test/junit.xml",
+      "log": "generated-raw-rest-client-test/test.log"
+    },
+    "handWrittenFluentApiTest": {
+      "kind": "hand-written-fluent-api-test",
+      "passed": true,
+      "junit": "hand-written-fluent-api-test/junit.xml",
+      "log": "hand-written-fluent-api-test/test.log",
+      "evidence": "hand-written-fluent-api-test/fluent-api-contracts.json"
+    }
+  },
+  "endpoints": {
+    "operations": 471,
+    "passed": 471,
+    "positive": 468,
+    "negativeOnly": 3,
+    "missing": 0,
+    "failedCases": 0,
+    "cases": 532,
+    "requests": 561
+  },
+  "sourceCoverage": {
+    "lines": {
+      "total": 14587,
+      "covered": 14581,
+      "percent": 99.96
+    },
+    "branches": {
+      "total": 2,
+      "covered": 2,
+      "percent": 100
+    },
+    "functions": {
+      "total": 475,
+      "covered": 473,
+      "percent": 99.58
+    }
+  },
+  "handWrittenFluentApiContracts": {
+    "schemaVersion": 1,
+    "gitHost": "gitea",
+    "version": "1.26.4",
+    "kind": "hand-written-fluent-api-contracts",
+    "passed": true,
+    "contracts": [
+      {
+        "name": "repository-container",
+        "passed": true,
+        "assertions": [
+          "token authorization retains the selected client",
+          "container discovery returns normalized user and organization owners",
+          "container(name) resolves normalized user and organization owners",
+          "repository existence, optional lookup, and required lookup are direct",
+          "container-scoped repository listing and lookup return normalized entities",
+          "repository create, rename, refresh, and delete succeed"
+        ]
+      },
+      {
+        "name": "gitea-native-context",
+        "passed": true,
+        "assertions": [
+          "native.gitea retains exact generated container and repository contexts"
+        ]
+      }
+    ]
+  }
+}

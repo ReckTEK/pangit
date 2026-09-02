@@ -3,31 +3,35 @@
 # Gitea 1.26.4 — real API E2E
 
 > **Provenance:** `deno task e2e` ran docker.gitea.com/gitea:1.26.4 and replaced this report from
-> [its raw evidence](../../../../../../tests/providers/gitea/1.26.4/results). No timestamps or
-> runtime log noise are copied into this Markdown.
+> [its raw evidence](../../../../../../tests/e2e/results/gitea/1.26.4). No timestamps or runtime log
+> noise are copied into this Markdown.
 
-## Result rollup
+## Generated raw REST client E2E
 
 |  Result  | Cases | Endpoints | Positive | Negative-only | Untested |
 | :------: | ----: | --------: | -------: | ------------: | -------: |
 | **PASS** |   532 | 471 / 471 |      468 |             3 |        0 |
 
-## Fluent organization/repository contract
+## Hand-written fluent API E2E
 
-**PASS** against the same live provider sandbox:
+**PASS** hand-written contracts against the same live Git-host environment:
 
-- token authorization retains the selected fluent client
-- organization discovery returns accessible organizations
-- organization(name) fetches the organization entity
-- repository discovery is independent from organization discovery
-- repository(owner, name) performs direct lookup
-- organization repositories list and fetch as real entities
-- organization and repository native.gitea use exact generated contexts
-- organization repository create, rename, refresh, and delete succeed
+### repository-container
+
+- token authorization retains the selected client
+- container discovery returns normalized user and organization owners
+- container(name) resolves normalized user and organization owners
+- repository existence, optional lookup, and required lookup are direct
+- container-scoped repository listing and lookup return normalized entities
+- repository create, rename, refresh, and delete succeed
+
+### gitea-native-context
+
+- native.gitea retains exact generated container and repository contexts
 
 ## Generated client coverage
 
-Measured by Deno against the generated REST client, not the provider server.
+Measured by Deno against the generated REST client, not the Git host.
 
 | Metric    | Covered / total | Coverage |
 | :-------- | --------------: | -------: |
@@ -48,7 +52,7 @@ API behavior or server implementation path.
 ## Endpoint results
 
 PASS = positive-response coverage; NEGATIVE = expected-error-only coverage; FAIL = a failed or
-missing check. Responses below came from the real provider container.
+missing check. Responses below came from the real Git-host container.
 
 | Result   | Endpoint                                                                                                      | Real responses and assertions                                                                                                           |
 | -------- | ------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |

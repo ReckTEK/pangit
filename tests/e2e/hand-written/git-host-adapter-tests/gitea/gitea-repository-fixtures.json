@@ -1,0 +1,11 @@
+{
+  "user": {
+    "name": "sandbox",
+    "repository": "e2e-repository"
+  },
+  "organization": {
+    "name": "e2e-organization",
+    "repository": "org-repo"
+  },
+  "mutationRepository": "fluent-contract-repository"
+}

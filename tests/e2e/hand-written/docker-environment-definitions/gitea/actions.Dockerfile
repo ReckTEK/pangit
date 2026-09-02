@@ -1,0 +1,4 @@
+FROM docker.io/gitea/runner:3.0.0@sha256:e4b1a4b99272b78f2f06ac60feefc8de176c49ab4be845960bb2956eaac1be04
+USER root
+RUN apk add --no-cache curl jq zip
+USER 1000:1000

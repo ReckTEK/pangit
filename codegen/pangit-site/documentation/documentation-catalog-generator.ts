@@ -3,15 +3,18 @@ import { workspace, type WorkspacePaths } from "../../workspace-layout.ts";
 import {
   describeClientOperations,
   type RestClientPublicNamesManifest,
-} from "../../pangit/generator/rest-client-generator.ts";
+} from "../../pangit/raw-rest-client-generation/generate-rest-clients.ts";
 import {
   asObject,
   httpMethods,
   objectEntries,
   parseOpenApiDocument,
-} from "../../pangit/generator/openapi.ts";
-import { compareText } from "../../pangit/generator/naming.ts";
-import { type RawSpecManifest, sha256 } from "../../pangit/specs/fetch.ts";
+} from "../../pangit/raw-rest-client-generation/openapi.ts";
+import { compareText } from "../../pangit/raw-rest-client-generation/naming.ts";
+import {
+  type GeneratedOpenApiManifest,
+  sha256,
+} from "../../pangit/raw-rest-client-generation/openapi-specifications/download-openapi-specifications.ts";
 import type {
   DocumentationManifest,
   DocumentationOperation,
@@ -26,11 +29,18 @@ export async function renderDocumentation(
   paths: WorkspacePaths = workspace,
 ): Promise<Map<string, string>> {
   const libraryRoot = paths.packages.pangit;
-  const specManifest: RawSpecManifest = JSON.parse(
-    await Deno.readTextFile(new URL("specs/raw/manifest.json", paths.codegen.pangit)),
+  const specManifest: GeneratedOpenApiManifest = JSON.parse(
+    await Deno.readTextFile(
+      new URL(
+        "raw-rest-client-generation/openapi-specifications/downloaded/generated-manifest.json",
+        paths.codegen.pangit,
+      ),
+    ),
   );
   const publicNames: RestClientPublicNamesManifest = JSON.parse(
-    await Deno.readTextFile(new URL("generator/public-names.json", paths.codegen.pangit)),
+    await Deno.readTextFile(
+      new URL("raw-rest-client-generation/public-names.json", paths.codegen.pangit),
+    ),
   );
   const config = JSON.parse(await Deno.readTextFile(new URL("deno.json", libraryRoot)));
   if (specManifest.schemaVersion !== 1 || publicNames.version !== 1) {
@@ -39,7 +49,7 @@ export async function renderDocumentation(
   const files = new Map<string, string>();
   const providers: DocumentationProvider[] = [];
   const operationImports: string[] = [];
-  for (const [id, provider] of Object.entries(specManifest.providers)) {
+  for (const [id, provider] of Object.entries(specManifest.gitHosts)) {
     if (!provider.versions[provider.selected] || !publicNames.providers[id]) {
       throw new Error(`Missing selected specification or public names for ${id}`);
     }

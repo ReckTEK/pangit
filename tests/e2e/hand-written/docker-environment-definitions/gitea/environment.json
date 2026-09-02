@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "service": {
+    "name": "gitea",
+    "apiUrl": "http://gitea:3000/api/v1",
+    "localApiUrl": "http://127.0.0.1:3000/api/v1",
+    "environment": {
+      "GITEA__actions__ENABLED": "true",
+      "GITEA__database__DB_TYPE": "sqlite3",
+      "GITEA__database__PATH": "/data/gitea/gitea.db",
+      "GITEA__mailer__ENABLED": "false",
+      "GITEA__security__INSTALL_LOCK": "true",
+      "GITEA__server__DOMAIN": "gitea",
+      "GITEA__server__ROOT_URL": "http://gitea:3000/",
+      "GITEA__server__SSH_DOMAIN": "gitea",
+      "GITEA__server__SSH_PORT": "22",
+      "GITEA__service__DISABLE_REGISTRATION": "true",
+      "GITEA__security__DISABLE_GIT_HOOKS": "false",
+      "GITEA__repository__ENABLE_PUSH_CREATE_USER": "true",
+      "GITEA__repository__DEFAULT_BRANCH": "main",
+      "GITEA__migrations__ALLOW_LOCALNETWORKS": "true",
+      "GITEA__webhook__ALLOWED_HOST_LIST": "private",
+      "USER_UID": "1000",
+      "USER_GID": "1000",
+      "GITEA__git__HOME_PATH": "/data/git"
+    },
+    "tmpfs": [
+      "/data:exec,mode=0750,uid=1000,gid=1000"
+    ],
+    "uid": "1000",
+    "gid": "1000",
+    "healthcheck": "test -f /sandbox-auth/ready && wget -qO- --header=\"Authorization: token $$(cat /sandbox-auth/api-token)\" http://127.0.0.1:3000/api/v1/user >/dev/null",
+    "bootstrapFile": "bootstrap.sh"
+  },
+  "runner": {
+    "name": "e2e",
+    "image": "denoland/deno:alpine-2.9.5",
+    "workspace": "/workspace",
+    "results": "/results",
+    "credentials": "/sandbox-auth",
+    "timeoutMs": 20000
+  },
+  "credentials": {
+    "username": "sandbox",
+    "password": "gitea-sandbox-password",
+    "email": "sandbox@example.invalid",
+    "tokenFile": "api-token",
+    "authorizationHeader": "authorization",
+    "tokenPrefix": "token "
+  },
+  "services": {
+    "actions": {
+      "user": "1000:1000",
+      "working_dir": "/data",
+      "tmpfs": [
+        "/data:exec,mode=0750,uid=1000,gid=1000"
+      ],
+      "entrypoint": [
+        "/bin/sh",
+        "-ec"
+      ],
+      "command": [
+        "gitea-runner register --no-interactive --config /config.yaml --instance http://gitea:3000 --token \"$$(cat /sandbox-auth/runner-token)\" --name e2e-executor --labels sandbox:host && exec gitea-runner daemon --config /config.yaml"
+      ],
+      "volumes": [
+        "./.auth:/sandbox-auth:ro",
+        "./actions-config.yaml:/config.yaml:ro",
+        "./upload-artifact.sh:/fixtures/upload-artifact.sh:ro"
+      ],
+      "depends_on": {
+        "gitea": {
+          "condition": "service_healthy"
+        }
+      },
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "wget -qO- http://127.0.0.1:9101/readyz >/dev/null"
+        ],
+        "interval": "1s",
+        "timeout": "2s",
+        "retries": 60
+      },
+      "restart": "no",
+      "stop_grace_period": "10s",
+      "build": {
+        "context": ".",
+        "dockerfile": "actions.Dockerfile"
+      }
+    }
+  },
+  "assets": [
+    "bootstrap.sh",
+    "actions-config.yaml",
+    "actions.Dockerfile",
+    "upload-artifact.sh",
+    ".dockerignore"
+  ]
+}

@@ -114,35 +114,36 @@ future provider-neutral API is the
 
 ## Development
 
-Generation lives in [`codegen/generate.ts`](codegen/generate.ts), outside the published packages.
-[`codegen/workspace-layout.ts`](codegen/workspace-layout.ts) resolves package names from the root
-`deno.json` workspace paths. Change package locations there; generators do not duplicate directory
-names. Use the root task for both generators or the explicit `generate:pangit` and
+Generation lives in [`codegen/generate-all.ts`](codegen/generate-all.ts), outside the published
+packages. [`codegen/workspace-layout.ts`](codegen/workspace-layout.ts) resolves package names from
+the root `deno.json` workspace paths. Change package locations there; generators do not duplicate
+directory names. Use the root task for both generators or the explicit `generate:pangit` and
 `generate:pangit-site` tasks when working on only one owner.
 
-- `deno task generate` — download and normalize specs, rebuild clients and generated E2E assets,
-  then rebuild site documentation, static assets, and route types. It never runs containers or
-  touches saved E2E evidence, result Markdown, or this README.
+- `deno task generate` — download and normalize specs, rebuild raw REST clients, generated
+  raw-client E2E entrypoints, and generated Docker test environments, then rebuild site
+  documentation, static assets, and route types. It never runs containers or touches saved E2E
+  evidence, result Markdown, or this README.
 - `deno task generate --cached` — run that entire pipeline using checked-in raw specs, without
   downloading schemas. Use after a fresh checkout or when editing generators or site asset settings.
 - `deno task generate --update-public-names` — explicitly update the reviewed public-name map as
   part of the full pipeline after reviewing an API change. Can be combined with `--cached`.
-- `deno task e2e` — replace every manifest-owned raw result under
-  `tests/providers/<provider>/<version>/results/`, run the generated suites against fresh Docker
-  Compose environments, remove every run resource, and atomically replace the Markdown report tree
-  under `packages/pangit/docs/test-results/`.
+- `deno task e2e` — replace every owned result under `tests/e2e/results/<git-host>/<version>/`, run
+  the generated raw REST-client test and hand-written fluent API test against fresh Docker Compose
+  environments, remove every run resource, and atomically replace the Markdown report tree under
+  `packages/pangit/docs/test-results/`.
 - `deno task check`, `deno task test`, `deno task lint` — check root codegen and both packages.
 - `deno task fmt` — format workspace sources.
 
 ## Real-provider E2E results
 
 ```text
-generated suite + fresh provider container
-                  │
-                  ├──> tests/providers/<provider>/<version>/results/       raw evidence
-                  └──> packages/pangit/docs/test-results/.../test-result.md clean Markdown
-                                      ▲
-                                      └── these human-authored links are validated, never rewritten
+generated raw REST-client test + hand-written fluent API test + fresh Git-host container
+                                      │
+                                      ├──> tests/e2e/results/<git-host>/<version>/
+                                      └──> packages/pangit/docs/test-results/.../test-result.md
+                                          ▲
+                                          └── these human-authored links are validated, never rewritten
 ```
 
 | Provider | Verified reports                                                                                                                                  |
@@ -151,5 +152,5 @@ generated suite + fresh provider container
 
 Each report contains the real-container endpoint rollup, generated-client coverage, negative-only
 boundaries, and the complete endpoint table. `deno task e2e` validates these links against the
-provider manifest before replacing the report tree. See the full
+hand-written live test plan before replacing the report tree. See the full
 [artifact ownership flow](packages/pangit/docs/Documentation.md#e2e-evidence-and-reporting).

@@ -6,21 +6,22 @@ not export website data.
 
 ## Sources and artifacts
 
-The source map is
-[`codegen/pangit/specs/providers.json`](../../../codegen/pangit/specs/providers.json). Fetching
-specs generates
-[`codegen/pangit/specs/raw/manifest.json`](../../../codegen/pangit/specs/raw/manifest.json), where
-each version maps its normalized specification, generated client, E2E assets, and documentation
-artifacts. Source, normalized-spec, test-map, E2E, and result paths are relative to the repository
-root; generated client paths are relative to the PanGit package. Documentation paths are relative to
-the site package. The shared [workspace resolver](../../../codegen/workspace-layout.ts) locates both
-packages through the root `deno.json` workspace configuration.
+The OpenAPI source map is
+[`git-hosts.json`](../../../codegen/pangit/raw-rest-client-generation/openapi-specifications/git-hosts.json).
+Fetching specifications generates
+[`generated-manifest.json`](../../../codegen/pangit/raw-rest-client-generation/openapi-specifications/downloaded/generated-manifest.json),
+where each Git-host version maps its downloaded and normalized specification, generated raw REST
+client, and documentation artifacts. The separate hand-written
+[`live-test-plan.json`](../../../tests/e2e/hand-written/live-test-plan.json) owns E2E case,
+fluent-test, Docker-definition, and container-image selection. The shared
+[workspace resolver](../../../codegen/workspace-layout.ts) locates packages through the root
+`deno.json` workspace configuration.
 
 ```text
-providers.json
-  → raw/manifest.json
+git-hosts.json
+  → downloaded/generated-manifest.json
   → normalized/<provider>/<version>.json
-  → packages/pangit/src/providers/<provider>/<version>/<Provider>RestClient.ts
+  → packages/pangit/src/generated-rest-clients/<provider>/<version>/<Provider>RestClient.ts
   → packages/pangit-site/app/documentation/generated/
       manifest.json
       loaders.ts
@@ -40,29 +41,34 @@ JavaScript bundle.
 
 ## E2E evidence and reporting
 
-Code generation owns the executable provider suites, but it does not own test execution or result
-publication:
+Code generation owns only disposable generated raw REST-client tests and generated Docker
+environments. Fluent API contracts and the Gitea adapter test are hand-written source:
 
 ```text
-codegen/pangit/specs/raw/manifest.json
+codegen/pangit/raw-rest-client-generation/openapi-specifications/downloaded/generated-manifest.json
   └── deno task generate
-        └── tests/providers/<provider>/<version>/        generated suite and Compose sandbox
-              └── deno task e2e
-                    ├── results/                         raw HTML, JSON, coverage, and logs
-                    └── packages/pangit/docs/test-results/
-                          └── <provider>/<version>/test-result.md
+        ├── tests/e2e/generated/raw-rest-client-tests/<git-host>/<version>/
+        └── tests/e2e/generated/docker-environments/<git-host>/<version>/
 
-README.md ── human-authored report links ── validated against the same manifest ──┘
+tests/e2e/hand-written/                                 contracts, cases, adapter tests, definitions
+  └── deno task e2e
+        ├── tests/e2e/results/<git-host>/<version>/      suite-separated evidence
+        └── packages/pangit/docs/test-results/
+              └── <git-host>/<version>/test-result.md
+
+README.md ── human-authored report links ── validated against the live test plan ──┘
 ```
 
-| Artifact                                            | Owner                | Replacement rule                                                                                                    |
-| :-------------------------------------------------- | :------------------- | :------------------------------------------------------------------------------------------------------------------ |
-| `tests/providers/<provider>/<version>/` suite files | `deno task generate` | Only generator-marker-owned files are replaced; `results/` is preserved.                                            |
-| `tests/providers/<provider>/<version>/results/`     | `deno task e2e`      | Every manifest-owned result directory is cleared before a run; obsolete E2E-owned results are removed.              |
-| `packages/pangit/docs/test-results/`                | `deno task e2e`      | Every snapshot is validated and rendered first, then the complete marker-owned tree is replaced as one transaction. |
-| Root README report links                            | Human                | E2E verifies exactly one link for every manifest-declared report and never rewrites the README.                     |
+| Artifact                                        | Owner                | Replacement rule                                                                                                    |
+| :---------------------------------------------- | :------------------- | :------------------------------------------------------------------------------------------------------------------ |
+| `tests/e2e/hand-written/`                       | Human                | Generation reads and validates this complete tree but never writes into it.                                         |
+| `tests/e2e/generated/raw-rest-client-tests/...` | `deno task generate` | Only marker-owned Git-host/version directories are replaced.                                                        |
+| `tests/e2e/generated/docker-environments/...`   | `deno task generate` | Only marker-owned Git-host/version directories are replaced.                                                        |
+| `tests/e2e/results/<git-host>/<version>/`       | `deno task e2e`      | Every active result directory is cleared before a run; obsolete owned results are removed.                          |
+| `packages/pangit/docs/test-results/`            | `deno task e2e`      | Every snapshot is validated and rendered first, then the complete marker-owned tree is replaced as one transaction. |
+| Root README report links                        | Human                | E2E verifies exactly one link for every declared live-test report and never rewrites the README.                    |
 
-The Markdown publisher reads only manifest-declared provider versions. It verifies summary totals,
+The Markdown publisher reads only live-test-plan Git-host versions. It verifies summary totals,
 endpoint identities, coverage arithmetic, the raw-results ownership marker, and the manually
 authored README links before touching published documentation. Runtime timestamps and logs stay in
 raw evidence, so repeated publication from the same evidence is byte-identical. Invalid or
@@ -77,20 +83,20 @@ From the repository root:
 deno task generate --cached
 ```
 
-[`codegen/generate.ts`](../../../codegen/generate.ts) is the root generation entry point. It runs
-the independent PanGit and PanGit-site generators in dependency order: specifications, clients, E2E
-suite assets, site documentation, static assets, and React Router route types. `--cached` uses the
-checked-in raw specifications; omit it to refresh upstream specs first. Generation never starts
+[`codegen/generate-all.ts`](../../../codegen/generate-all.ts) is the root generation entry point. It
+runs the independent PanGit and PanGit-site generators in dependency order: specifications, clients,
+E2E suite assets, site documentation, static assets, and React Router route types. `--cached` uses
+the checked-in raw specifications; omit it to refresh upstream specs first. Generation never starts
 Docker, reads raw E2E evidence, publishes result Markdown, or changes the root README.
 
-Run `deno task e2e` separately to execute every manifest-declared real-provider suite and publish
-its deterministic Markdown evidence. No second generation command is required after E2E.
+Run `deno task e2e` separately to execute every live-test-plan release and publish its deterministic
+Markdown evidence. No second generation command is required after E2E.
 
 The documentation stage reuses the client parser and public-name map. It renders everything before
 replacing its own output tree. The subsequent site stage reads the newly generated catalog and
 copies its assets into the site's configured public paths.
 
-When adding a provider or version, update the provider source map and regenerate. The new reference
+When adding a Git host or version, update the OpenAPI source map and regenerate. The new reference
 and navigation entries appear without another provider registration in the site. For a reviewed
 public-name change, use `deno task generate --update-public-names`.
 

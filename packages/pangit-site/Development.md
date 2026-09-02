@@ -67,10 +67,10 @@ visit. See [Vite dependency optimization](https://vite.dev/config/dep-optimizati
 | `/docs/raw/:provider/:version/methods` | Searchable index of every generated client method. |
 | `/docs/unified`                        | Reserved section for the future high-level API.    |
 
-The root [generation entry point](../../codegen/generate.ts) creates the site's `public/` reference,
-brand assets and React Router route types alongside the library's generated output. `dev`, `build`,
-and checks consume those artifacts; they do not run a separate preparation command. Run
-`deno task generate --cached` after a fresh checkout or changes to specs or asset settings. The
+The root [generation entry point](../../codegen/generate-all.ts) creates the site's `public/`
+reference, brand assets and React Router route types alongside the library's generated output.
+`dev`, `build`, and checks consume those artifacts; they do not run a separate preparation command.
+Run `deno task generate --cached` after a fresh checkout or changes to specs or asset settings. The
 copied assets and route types are ignored; the tracked reference authority remains in
 `packages/pangit-site/app/documentation/generated/`. The root `deno.json` workspace list configures
 package locations; the shared [resolver](../../codegen/workspace-layout.ts) supplies them to all

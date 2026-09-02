@@ -41,6 +41,10 @@ proof of equivalent behavior.
 | [Bitbucket Cloud](../../src/providers/bitbucket/latest/BitbucketRestClient.ts)       | Cached `latest`; not Bitbucket Server                                       |
 | [Azure DevOps Git](../../src/providers/azure-devops/latest/AzureDevOpsRestClient.ts) | Git 7.2-preview only                                                        |
 
+> **Source-location note:** Generated raw REST clients now live under
+> [`src/generated-rest-clients/`](../../src/generated-rest-clients/). The frozen analysis table
+> above is preserved verbatim as the reviewed snapshot.
+
 Based on the reviewed 5,364-operation snapshot across six providers and eight clients. The core
 groups collapse 106 shared tasks; options and aliases are not separate interfaces. These are source
 findings, not live interoperability tests. “Absent” means absent from these clients, not the entire

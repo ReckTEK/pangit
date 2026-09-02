@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "gitHost": "gitea",
+  "version": "1.26.4",
+  "kind": "hand-written-fluent-api-contracts",
+  "passed": true,
+  "contracts": [
+    {
+      "name": "repository-container",
+      "passed": true,
+      "assertions": [
+        "token authorization retains the selected client",
+        "container discovery returns normalized user and organization owners",
+        "container(name) resolves normalized user and organization owners",
+        "repository existence, optional lookup, and required lookup are direct",
+        "container-scoped repository listing and lookup return normalized entities",
+        "repository create, rename, refresh, and delete succeed"
+      ]
+    },
+    {
+      "name": "gitea-native-context",
+      "passed": true,
+      "assertions": [
+        "native.gitea retains exact generated container and repository contexts"
+      ]
+    }
+  ]
+}

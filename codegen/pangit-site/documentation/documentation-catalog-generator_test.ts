@@ -8,8 +8,11 @@ import {
   type DocumentationOperation,
   loadDocumentationOperations,
 } from "@mannsion/pangit-site/documentation";
-import { restClientVersions } from "../../../packages/pangit/src/providers/mod.ts";
-import { type RawSpecManifest, sha256 } from "../../pangit/specs/fetch.ts";
+import { restClientVersions } from "../../../packages/pangit/src/generated-rest-clients/mod.ts";
+import {
+  type GeneratedOpenApiManifest,
+  sha256,
+} from "../../pangit/raw-rest-client-generation/openapi-specifications/download-openapi-specifications.ts";
 
 const libraryRoot = workspace.packages.pangit;
 const siteRoot = workspace.packages.site;
@@ -18,8 +21,13 @@ function assert(value: unknown, message: string): asserts value {
 }
 
 Deno.test("documentation covers every shipped client, exact method allocation, and full specification", async () => {
-  const specs: RawSpecManifest = JSON.parse(
-    await Deno.readTextFile(new URL("specs/raw/manifest.json", workspace.codegen.pangit)),
+  const specs: GeneratedOpenApiManifest = JSON.parse(
+    await Deno.readTextFile(
+      new URL(
+        "raw-rest-client-generation/openapi-specifications/downloaded/generated-manifest.json",
+        workspace.codegen.pangit,
+      ),
+    ),
   );
   assert(
     JSON.stringify(documentation.providers.map((provider) => provider.id).sort()) ===
@@ -34,7 +42,7 @@ Deno.test("documentation covers every shipped client, exact method allocation, a
       `Version inventory differs for ${provider.id}`,
     );
     for (const version of provider.versions) {
-      const artifact = specs.providers[provider.id].versions[version.version].artifacts;
+      const artifact = specs.gitHosts[provider.id].versions[version.version].artifacts;
       const client = await import(new URL(artifact.client, libraryRoot).href);
       const registry = client[`${provider.client.variablePrefix}Operations`] as Record<
         string,
@@ -112,66 +120,79 @@ Deno.test("relocated workspace generates documentation and site assets determini
     };
     const urls = createSiteUrls(config);
     await write("components/sdk/docs/images/logo.svg", "<svg/>");
-    await write("codegen/pangit/generator/public-names.json", {
+    await write("codegen/pangit/raw-rest-client-generation/public-names.json", {
       version: 1,
       providers: { fixture: { methods: { "paths:get:/items": "stableItems" }, symbols: {} } },
     });
-    await write("codegen/pangit/specs/raw/manifest.json", {
-      schemaVersion: 1,
-      providers: {
-        fixture: {
-          name: "Fixture",
-          selected: "1.0",
-          kind: "release",
-          upstream: "https://example.invalid",
-          client: {
-            className: "FixtureClient",
-            displayName: "Fixture",
-            namespaceName: "Fixture",
-            variablePrefix: "fixture",
-          },
-          versions: {
-            "1.0": {
-              source: "https://example.invalid/spec",
-              sha256: "source-hash",
-              artifacts: {
-                normalized: "codegen/pangit/specs/normalized/fixture/1.0.json",
-                documentation: {
-                  openapi: "app/documentation/generated/fixture/1.0/openapi.json",
-                  operations: "app/documentation/generated/fixture/1.0/operations.json",
-                  route: "/docs/raw/fixture/1.0",
+    await write(
+      "codegen/pangit/raw-rest-client-generation/openapi-specifications/downloaded/generated-manifest.json",
+      {
+        schemaVersion: 1,
+        gitHosts: {
+          fixture: {
+            name: "Fixture",
+            selected: "1.0",
+            kind: "release",
+            upstream: "https://example.invalid",
+            client: {
+              className: "FixtureClient",
+              displayName: "Fixture",
+              namespaceName: "Fixture",
+              variablePrefix: "fixture",
+            },
+            versions: {
+              "1.0": {
+                source: "https://example.invalid/spec",
+                sha256: "source-hash",
+                artifacts: {
+                  normalized:
+                    "codegen/pangit/raw-rest-client-generation/openapi-specifications/normalized/fixture/1.0.json",
+                  documentation: {
+                    openapi: "app/documentation/generated/fixture/1.0/openapi.json",
+                    operations: "app/documentation/generated/fixture/1.0/operations.json",
+                    route: "/docs/raw/fixture/1.0",
+                  },
                 },
               },
             },
           },
         },
       },
-    });
-    await write("codegen/pangit/specs/normalized/fixture/1.0.json", {
-      openapi: "3.0.3",
-      info: { title: "Fixture", version: "1.0" },
-      paths: {
-        "/items": {
-          get: { operationId: "renamed-upstream", responses: { "200": { description: "Items" } } },
+    );
+    await write(
+      "codegen/pangit/raw-rest-client-generation/openapi-specifications/normalized/fixture/1.0.json",
+      {
+        openapi: "3.0.3",
+        info: { title: "Fixture", version: "1.0" },
+        paths: {
+          "/items": {
+            get: {
+              operationId: "renamed-upstream",
+              responses: { "200": { description: "Items" } },
+            },
+          },
         },
-      },
-      "x-ms-paths": {
-        "/items?name={name}": {
-          get: {
-            operationId: "renamed-upstream",
-            parameters: [{ in: "query", name: "name", schema: { type: "string" } }],
-            responses: { "200": { description: "Selected item" } },
+        "x-ms-paths": {
+          "/items?name={name}": {
+            get: {
+              operationId: "renamed-upstream",
+              parameters: [{ in: "query", name: "name", schema: { type: "string" } }],
+              responses: { "200": { description: "Selected item" } },
+            },
           },
         },
       },
-    });
+    );
     await generateDocumentation({ workspace: paths });
     const manifest = new URL("app/documentation/generated/manifest.json", site);
     const previous = await Deno.readTextFile(manifest);
     await generateSiteAssets(paths, config);
     const reference = new URL(`public${urls.spec("fixture", "1.0")}`, paths.packages.site);
     const expected = await Deno.readTextFile(
-      new URL("codegen/pangit/specs/normalized/fixture/1.0.json", fixture),
+      new URL(
+        "codegen/pangit/raw-rest-client-generation/openapi-specifications/normalized/fixture/1.0.json",
+        fixture,
+      ),
     );
     assert(
       await Deno.readTextFile(reference) === expected,
@@ -206,7 +227,10 @@ Deno.test("relocated workspace generates documentation and site assets determini
       await Deno.readTextFile(reference) === expected,
       "Repeat site generation changed the spec",
     );
-    await write("codegen/pangit/specs/normalized/fixture/1.0.json", "invalid JSON");
+    await write(
+      "codegen/pangit/raw-rest-client-generation/openapi-specifications/normalized/fixture/1.0.json",
+      "invalid JSON",
+    );
     let rejected = false;
     try {
       await generateDocumentation({ workspace: paths });

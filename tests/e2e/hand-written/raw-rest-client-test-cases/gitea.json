@@ -1,0 +1,8132 @@
+{
+  "schemaVersion": 1,
+  "variables": {
+    "owner": "sandbox",
+    "repo": "e2e-repository",
+    "org": "e2e-organization",
+    "peer": "e2e-peer",
+    "missing": "e2e-missing",
+    "secretname": "E2E_SECRET",
+    "variablename": "E2E_VAR",
+    "avatar": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jRZkAAAAASUVORK5CYII=",
+    "peerPassword": "e2e-peer-password",
+    "baseUrl": "http://gitea:3000"
+  },
+  "parameterDefaults": {
+    "owner": "${owner}",
+    "repo": "${repo}",
+    "org": "${org}",
+    "username": "${peer}",
+    "id": 2147483647,
+    "index": 2147483647,
+    "attachment_id": 2147483647,
+    "runner_id": 2147483647,
+    "artifact_id": 2147483647,
+    "job_id": 2147483647,
+    "run": 2147483647,
+    "attempt": 1,
+    "sha": "0000000000000000000000000000000000000000",
+    "ref": "main",
+    "branch": "e2e-missing",
+    "tag": "e2e-missing",
+    "type": "generic",
+    "name": "e2e-missing",
+    "version": "0.0.0",
+    "filepath": "missing.txt",
+    "diffType": "diff",
+    "archive": "main.zip",
+    "secretname": "E2E_MISSING",
+    "variablename": "E2E_MISSING",
+    "workflow_id": "missing.yaml",
+    "user": "e2e-missing",
+    "target": "e2e-missing",
+    "collaborator": "e2e-missing",
+    "assignee": "e2e-missing",
+    "team": "e2e-missing",
+    "token": 2147483647,
+    "task": "e2e-missing",
+    "pageName": "Missing",
+    "position": 1,
+    "template_owner": "${owner}",
+    "template_repo": "${missing}",
+    "repo_name": "${missing}",
+    "base": "main",
+    "head": "e2e-missing",
+    "basehead": "main...e2e-missing",
+    "topic": "e2e"
+  },
+  "scenarios": [
+    {
+      "name": "sandbox identity and fixtures",
+      "steps": [
+        {
+          "operationId": "getVersion",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.version": "${version}"
+            }
+          }
+        },
+        {
+          "operationId": "userGetCurrent",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.login": "${owner}"
+            }
+          }
+        },
+        {
+          "operationId": "adminEditUser",
+          "input": {
+            "path": {
+              "username": "${owner}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "login_name": "${owner}",
+                "allow_git_hook": true
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "adminCreateUser",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "username": "${peer}",
+                "email": "e2e-peer@example.invalid",
+                "password": "${peerPassword}",
+                "must_change_password": false
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ],
+            "equals": {
+              "body.login": "${peer}"
+            }
+          },
+          "capture": {
+            "peerId": "body.id"
+          }
+        },
+        {
+          "operationId": "userCreateToken",
+          "input": {
+            "path": {
+              "username": "${peer}"
+            },
+            "headers": {
+              "authorization": {
+                "$basic": "${peer}:${peerPassword}"
+              }
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "name": "e2e-peer",
+                "scopes": [
+                  "all"
+                ]
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "capture": {
+            "peerToken": "body.sha1"
+          },
+          "auth": "none"
+        },
+        {
+          "operationId": "createCurrentUserRepo",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "name": "${repo}",
+                "auto_init": true,
+                "default_branch": "main",
+                "license": "MIT",
+                "gitignores": "Go",
+                "readme": "Default"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ],
+            "equals": {
+              "body.name": "${repo}"
+            }
+          },
+          "capture": {
+            "repoId": "body.id"
+          }
+        },
+        {
+          "operationId": "repoEdit",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "description": "E2E fixture",
+                "has_wiki": true,
+                "has_actions": true,
+                "internal_tracker": {
+                  "enable_time_tracker": true,
+                  "allow_only_contributors_to_track_time": false,
+                  "enable_issue_dependencies": true
+                }
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.description": "E2E fixture"
+            }
+          }
+        },
+        {
+          "operationId": "repoGetBranch",
+          "input": {
+            "path": {
+              "branch": "main"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          },
+          "capture": {
+            "mainSha": "body.commit.id"
+          }
+        },
+        {
+          "operationId": "orgCreate",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "username": "${org}",
+                "full_name": "E2E organization"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "capture": {
+            "orgId": "body.id"
+          }
+        },
+        {
+          "operationId": "createOrgRepo",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "name": "org-repo",
+                "auto_init": true,
+                "default_branch": "main"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "instance and current-user read APIs",
+      "steps": [
+        {
+          "operationId": "adminCronList",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "adminGetAllEmails",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "adminSearchEmails",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "adminGetAllOrgs",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "adminSearchUsers",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "adminUnadoptedList",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "listGitignoresTemplates",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "listLabelTemplates",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "listLicenseTemplates",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "getGeneralAPISettings",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "getGeneralAttachmentSettings",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "getGeneralRepositorySettings",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "getGeneralUISettings",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "orgGetAll",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "notifyGetList",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "notifyNewAvailable",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "userCurrentListFollowers",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "userCurrentListFollowing",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "userCurrentListGPGKeys",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "userCurrentListKeys",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "userListEmails",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "orgListCurrentUserOrgs",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "userCurrentListRepos",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "userCurrentListStarred",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "userGetStopWatches",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "userCurrentListSubscriptions",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "userListTeams",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "userCurrentTrackedTimes",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "userSearch",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "getUserSettings",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "userGetOauth2Application",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "userListBlocks",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "adminListHooks",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "userListHooks",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "getGitignoreTemplateInfo",
+          "input": {
+            "path": {
+              "name": "Go"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "getLicenseTemplateInfo",
+          "input": {
+            "path": {
+              "name": "MIT"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "getLabelTemplateInfo",
+          "input": {
+            "path": {
+              "name": "Default"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "renderMarkdown",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "Text": "# e2e",
+                "Mode": "markdown"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "renderMarkdownRaw",
+          "input": {
+            "body": {
+              "mediaType": "text/plain",
+              "value": "# e2e"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "renderMarkup",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "Text": "# e2e",
+                "Mode": "markdown"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "notifyReadList",
+          "input": {},
+          "expect": {
+            "status": [
+              205
+            ]
+          }
+        },
+        {
+          "operationId": "updateUserSettings",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "description": "e2e settings"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "repository read APIs",
+      "steps": [
+        {
+          "operationId": "repoGet",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetAssignees",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoListActivityFeeds",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoListBranchProtection",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoListBranches",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoListCollaborators",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetAllCommits",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetContentsList",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "listForks",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoListAllGitRefs",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoListHooks",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoListGitHooks",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetIssueConfig",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoValidateIssueConfig",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetIssueTemplates",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "issueListIssues",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "issueGetRepoComments",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoListPinnedIssues",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoListKeys",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "issueListLabels",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetLanguages",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetLicenses",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "issueGetMilestonesList",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoNewPinAllowed",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "notifyGetRepoList",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoListPullRequests",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoListPinnedPullRequests",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoListPushMirrors",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoListReleases",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetReviewers",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoListStargazers",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoListSubscribers",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoListTagProtection",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoListTags",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoTrackedTimes",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoListTopics",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "getArtifacts",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "listWorkflowJobs",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "getRepoRunners",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "getWorkflowRuns",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoListActionsSecrets",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "getRepoVariablesList",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "ActionsListRepositoryWorkflows",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "ListActionTasks",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetByID",
+          "input": {
+            "path": {
+              "id": "${repoId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetCombinedStatusByRef",
+          "input": {
+            "path": {
+              "ref": "main"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoListStatusesByRef",
+          "input": {
+            "path": {
+              "ref": "main"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoListGitRefs",
+          "input": {
+            "path": {
+              "ref": "heads/main"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetContents",
+          "input": {
+            "path": {
+              "filepath": "README.md"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          },
+          "capture": {
+            "readmeSha": "body.sha"
+          }
+        },
+        {
+          "operationId": "repoGetRawFile",
+          "input": {
+            "path": {
+              "filepath": "README.md"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetRawFileOrLFS",
+          "input": {
+            "path": {
+              "filepath": "README.md"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetArchive",
+          "input": {
+            "path": {
+              "archive": "main.zip"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetSingleCommit",
+          "input": {
+            "path": {
+              "sha": "${mainSha}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          },
+          "capture": {
+            "treeSha": "body.commit.tree.sha"
+          }
+        },
+        {
+          "operationId": "GetTree",
+          "input": {
+            "path": {
+              "sha": "${mainSha}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "GetBlob",
+          "input": {
+            "path": {
+              "sha": "${readmeSha}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoDownloadCommitDiffOrPatch",
+          "input": {
+            "path": {
+              "sha": "${mainSha}",
+              "diffType": "diff"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoListStatuses",
+          "input": {
+            "path": {
+              "sha": "${mainSha}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoCreateStatus",
+          "input": {
+            "path": {
+              "sha": "${mainSha}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "state": "success",
+                "context": "e2e",
+                "description": "real API"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "notifyReadRepoList",
+          "input": {},
+          "expect": {
+            "status": [
+              205
+            ]
+          }
+        },
+        {
+          "operationId": "repoSearch",
+          "input": {
+            "query": {
+              "q": "${repo}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "issueSearchIssues",
+          "input": {
+            "query": {
+              "q": "e2e"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "topicSearch",
+          "input": {
+            "query": {
+              "q": "e2e"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetContentsExt",
+          "input": {
+            "path": {
+              "filepath": "README.md"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetFileContents",
+          "input": {
+            "query": {
+              "body": "{\"files\":[\"README.md\"]}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetFileContentsPost",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "files": [
+                  "README.md"
+                ]
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "social and permissions",
+      "steps": [
+        {
+          "operationId": "repoAddCollaborator",
+          "input": {
+            "path": {
+              "collaborator": "${peer}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "permission": "write"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "repoCheckCollaborator",
+          "input": {
+            "path": {
+              "collaborator": "${peer}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetRepoPermissions",
+          "input": {
+            "path": {
+              "collaborator": "${peer}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoCheckAssignee",
+          "input": {
+            "path": {
+              "assignee": "${peer}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          },
+          "optional": true
+        },
+        {
+          "operationId": "userCurrentPutFollow",
+          "input": {},
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "userCurrentCheckFollowing",
+          "input": {},
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "userCheckFollowing",
+          "input": {
+            "path": {
+              "username": "${owner}",
+              "target": "${peer}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "userCurrentDeleteFollow",
+          "input": {},
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "userCurrentPutStar",
+          "input": {},
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "userCurrentCheckStarring",
+          "input": {},
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "userCurrentDeleteStar",
+          "input": {},
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "userCurrentPutSubscription",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "userCurrentCheckSubscription",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "userCurrentDeleteSubscription",
+          "input": {},
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "userGet",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "userListActivityFeeds",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "userListFollowers",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "userListFollowing",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "userListGPGKeys",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "userGetHeatmapData",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "userListKeys",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "orgListUserOrgs",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "userListRepos",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "userListStarred",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "userListSubscriptions",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "userBlockUser",
+          "input": {},
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "userCheckUserBlock",
+          "input": {},
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "userUnblockUser",
+          "input": {},
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "repoDeleteCollaborator",
+          "input": {
+            "path": {
+              "collaborator": "${peer}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "organization APIs",
+      "steps": [
+        {
+          "operationId": "orgGet",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "orgListActivityFeeds",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "orgListHooks",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "orgListLabels",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "orgListMembers",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "orgListPublicMembers",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "orgListRepos",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "orgListTeams",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "teamSearch",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "organizationListBlocks",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "getOrgWorkflowJobs",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "getOrgRunners",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "getOrgWorkflowRuns",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "orgListActionsSecrets",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "getOrgVariablesList",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "orgEdit",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "description": "e2e organization"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.description": "e2e organization"
+            }
+          }
+        },
+        {
+          "operationId": "orgIsMember",
+          "input": {
+            "path": {
+              "username": "${owner}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "orgPublicizeMember",
+          "input": {
+            "path": {
+              "username": "${owner}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "orgIsPublicMember",
+          "input": {
+            "path": {
+              "username": "${owner}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "orgConcealMember",
+          "input": {
+            "path": {
+              "username": "${owner}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "orgGetUserPermissions",
+          "input": {
+            "path": {
+              "username": "${owner}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "organizationBlockUser",
+          "input": {},
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "organizationCheckUserBlock",
+          "input": {},
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "organizationUnblockUser",
+          "input": {},
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "orgCreateTeam",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "name": "e2e-team",
+                "permission": "write",
+                "units": [
+                  "repo.code",
+                  "repo.issues",
+                  "repo.pulls"
+                ]
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "capture": {
+            "teamId": "body.id"
+          }
+        },
+        {
+          "operationId": "orgGetTeam",
+          "input": {
+            "path": {
+              "id": "${teamId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "orgEditTeam",
+          "input": {
+            "path": {
+              "id": "${teamId}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "name": "e2e-team",
+                "description": "updated"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "orgAddTeamMember",
+          "input": {
+            "path": {
+              "id": "${teamId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "orgListTeamMembers",
+          "input": {
+            "path": {
+              "id": "${teamId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "orgListTeamMember",
+          "input": {
+            "path": {
+              "id": "${teamId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "orgAddTeamRepository",
+          "input": {
+            "path": {
+              "id": "${teamId}",
+              "repo": "org-repo"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "orgListTeamRepos",
+          "input": {
+            "path": {
+              "id": "${teamId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "orgListTeamRepo",
+          "input": {
+            "path": {
+              "id": "${teamId}",
+              "repo": "org-repo"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "orgListTeamActivityFeeds",
+          "input": {
+            "path": {
+              "id": "${teamId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoListTeams",
+          "input": {
+            "path": {
+              "owner": "${org}",
+              "repo": "org-repo"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoCheckTeam",
+          "input": {
+            "path": {
+              "owner": "${org}",
+              "repo": "org-repo",
+              "team": "e2e-team"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoDeleteTeam",
+          "input": {
+            "path": {
+              "owner": "${org}",
+              "repo": "org-repo",
+              "team": "e2e-team"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "repoAddTeam",
+          "input": {
+            "path": {
+              "owner": "${org}",
+              "repo": "org-repo",
+              "team": "e2e-team"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "orgRemoveTeamRepository",
+          "input": {
+            "path": {
+              "id": "${teamId}",
+              "repo": "org-repo"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "orgRemoveTeamMember",
+          "input": {
+            "path": {
+              "id": "${teamId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "orgDeleteTeam",
+          "input": {
+            "path": {
+              "id": "${teamId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "user Actions configuration",
+      "steps": [
+        {
+          "operationId": "userCreateRunnerRegistrationToken",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "getUserVariablesList",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "createUserVariable",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "value": "initial",
+                "description": "e2e"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "getUserVariable",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.data": "initial"
+            }
+          }
+        },
+        {
+          "operationId": "updateUserVariable",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "value": "changed"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "getUserVariable",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.data": "changed"
+            }
+          }
+        },
+        {
+          "operationId": "deleteUserVariable",
+          "input": {},
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "updateUserSecret",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "data": "ephemeral-secret"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "deleteUserSecret",
+          "input": {},
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "org Actions configuration",
+      "steps": [
+        {
+          "operationId": "orgCreateRunnerRegistrationToken",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "getOrgVariablesList",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "orgListActionsSecrets",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "createOrgVariable",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "value": "initial",
+                "description": "e2e"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "getOrgVariable",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.data": "initial"
+            }
+          }
+        },
+        {
+          "operationId": "updateOrgVariable",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "value": "changed"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "getOrgVariable",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.data": "changed"
+            }
+          }
+        },
+        {
+          "operationId": "deleteOrgVariable",
+          "input": {},
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "updateOrgSecret",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "data": "ephemeral-secret"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "deleteOrgSecret",
+          "input": {},
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "repo Actions configuration",
+      "steps": [
+        {
+          "operationId": "repoCreateRunnerRegistrationToken",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "getRepoVariablesList",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoListActionsSecrets",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "createRepoVariable",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "value": "initial",
+                "description": "e2e"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "getRepoVariable",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.data": "initial"
+            }
+          }
+        },
+        {
+          "operationId": "updateRepoVariable",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "value": "changed"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "getRepoVariable",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.data": "changed"
+            }
+          }
+        },
+        {
+          "operationId": "deleteRepoVariable",
+          "input": {},
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "updateRepoSecret",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "data": "ephemeral-secret"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "deleteRepoSecret",
+          "input": {},
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Actions instance and user reads",
+      "steps": [
+        {
+          "operationId": "listAdminWorkflowJobs",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "getAdminRunners",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "listAdminWorkflowRuns",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "getUserWorkflowJobs",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "getUserRunners",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "getUserWorkflowRuns",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "adminCreateRunnerRegistrationToken",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "issue label CRUD",
+      "steps": [
+        {
+          "operationId": "issueCreateLabel",
+          "input": {
+            "path": {},
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "name": "e2e-label",
+                "color": "abcdef",
+                "description": "e2e"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "capture": {
+            "labelId": "body.id"
+          }
+        },
+        {
+          "operationId": "issueListLabels",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "issueGetLabel",
+          "input": {
+            "path": {
+              "id": "${labelId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "issueEditLabel",
+          "input": {
+            "path": {
+              "id": "${labelId}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "name": "e2e-label-updated",
+                "color": "fedcba"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "org label CRUD",
+      "steps": [
+        {
+          "operationId": "orgCreateLabel",
+          "input": {
+            "path": {},
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "name": "e2e-label",
+                "color": "abcdef",
+                "description": "e2e"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "capture": {
+            "orgLabelId": "body.id"
+          }
+        },
+        {
+          "operationId": "orgListLabels",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "orgGetLabel",
+          "input": {
+            "path": {
+              "id": "${orgLabelId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "orgEditLabel",
+          "input": {
+            "path": {
+              "id": "${orgLabelId}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "name": "e2e-label-updated",
+                "color": "fedcba"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "milestone CRUD",
+      "steps": [
+        {
+          "operationId": "issueCreateMilestone",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "title": "e2e milestone"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "capture": {
+            "milestoneId": "body.id"
+          }
+        },
+        {
+          "operationId": "issueGetMilestonesList",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "issueGetMilestone",
+          "input": {
+            "path": {
+              "id": "${milestoneId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "issueEditMilestone",
+          "input": {
+            "path": {
+              "id": "${milestoneId}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "title": "updated milestone"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "issue lifecycle",
+      "steps": [
+        {
+          "operationId": "issueCreateIssue",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "title": "E2E issue",
+                "body": "real API",
+                "labels": [
+                  "${labelId}"
+                ],
+                "milestone": "${milestoneId}"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "capture": {
+            "issueIndex": "body.number",
+            "issueId": "body.id"
+          }
+        },
+        {
+          "operationId": "issueCreateIssue",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "title": "E2E dependency"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "capture": {
+            "dependencyIndex": "body.number"
+          }
+        },
+        {
+          "operationId": "issueGetIssue",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "issueGetComments",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "issueGetCommentsAndTimeline",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "issueGetLabels",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "issueListBlocks",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "issueListIssueDependencies",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "issueGetIssueReactions",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "issueSubscriptions",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "issueTrackedTimes",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "issueListIssueAttachments",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "issueEditIssue",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "title": "E2E updated"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ],
+            "equals": {
+              "body.title": "E2E updated"
+            }
+          }
+        },
+        {
+          "operationId": "issueAddAssignees",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "assignees": [
+                  "${owner}"
+                ]
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "optional": true
+        },
+        {
+          "operationId": "issueCheckAssignee",
+          "input": {
+            "path": {
+              "index": "${issueIndex}",
+              "assignee": "${owner}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          },
+          "optional": true
+        },
+        {
+          "operationId": "issueRemoveAssignees",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "assignees": [
+                  "${owner}"
+                ]
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          },
+          "optional": true
+        },
+        {
+          "operationId": "issueEditIssueDeadline",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "due_date": "2030-01-01T00:00:00Z"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "issueClearLabels",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "issueAddLabel",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "labels": [
+                  "${labelId}"
+                ]
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "issueReplaceLabels",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "labels": [
+                  "${labelId}"
+                ]
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "issueRemoveLabel",
+          "input": {
+            "path": {
+              "index": "${issueIndex}",
+              "id": "${labelId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "issuePostIssueReaction",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "content": "+1"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "issueDeleteIssueReaction",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "content": "+1"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "issueAddTime",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "time": 60
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          },
+          "capture": {
+            "timeId": "body.id"
+          }
+        },
+        {
+          "operationId": "userTrackedTimes",
+          "input": {
+            "path": {
+              "user": "${owner}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "issueDeleteTime",
+          "input": {
+            "path": {
+              "index": "${issueIndex}",
+              "id": "${timeId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "issueStartStopWatch",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "issueStopStopWatch",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "issueStartStopWatch",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "issueDeleteStopWatch",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "issueAddTime",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "time": 60
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "issueResetTime",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "pinIssue",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "moveIssuePin",
+          "input": {
+            "path": {
+              "index": "${issueIndex}",
+              "position": 1
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "unpinIssue",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "issueLockIssue",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "reason": "resolved"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "issueUnlockIssue",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "issueAddSubscription",
+          "input": {
+            "path": {
+              "index": "${issueIndex}",
+              "user": "${peer}"
+            }
+          },
+          "expect": {
+            "status": [
+              200,
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "issueCheckSubscription",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "issueDeleteSubscription",
+          "input": {
+            "path": {
+              "index": "${issueIndex}",
+              "user": "${peer}"
+            }
+          },
+          "expect": {
+            "status": [
+              200,
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "issueCreateIssueDependencies",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "owner": "${owner}",
+                "repo": "${repo}",
+                "index": "${dependencyIndex}"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "issueRemoveIssueDependencies",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "owner": "${owner}",
+                "repo": "${repo}",
+                "index": "${dependencyIndex}"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "note": "Both released servers return HTTP 201; the published schema lists HTTP 200."
+        },
+        {
+          "operationId": "issueCreateIssueBlocking",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "owner": "${owner}",
+                "repo": "${repo}",
+                "index": "${dependencyIndex}"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "issueRemoveIssueBlocking",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "owner": "${owner}",
+                "repo": "${repo}",
+                "index": "${dependencyIndex}"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "note": "Both released servers return HTTP 201; the published schema lists HTTP 200."
+        }
+      ]
+    },
+    {
+      "name": "issue comments and attachments",
+      "steps": [
+        {
+          "operationId": "issueCreateComment",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "body": "E2E comment"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "capture": {
+            "commentId": "body.id"
+          }
+        },
+        {
+          "operationId": "issueGetComment",
+          "input": {
+            "path": {
+              "id": "${commentId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "issueEditComment",
+          "input": {
+            "path": {
+              "id": "${commentId}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "body": "updated"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "issueEditCommentDeprecated",
+          "input": {
+            "path": {
+              "index": "${issueIndex}",
+              "id": "${commentId}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "body": "deprecated route"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "issuePostCommentReaction",
+          "input": {
+            "path": {
+              "id": "${commentId}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "content": "+1"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "issueGetCommentReactions",
+          "input": {
+            "path": {
+              "id": "${commentId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "issueDeleteCommentReaction",
+          "input": {
+            "path": {
+              "id": "${commentId}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "content": "+1"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "issueCreateIssueAttachment",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            },
+            "query": {
+              "name": "e2e.txt"
+            },
+            "body": {
+              "mediaType": "multipart/form-data",
+              "value": {
+                "attachment": {
+                  "$bytes": [
+                    101,
+                    50,
+                    101
+                  ]
+                }
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "capture": {
+            "issueAttachmentId": "body.id"
+          }
+        },
+        {
+          "operationId": "issueGetIssueAttachment",
+          "input": {
+            "path": {
+              "index": "${issueIndex}",
+              "attachment_id": "${issueAttachmentId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "issueEditIssueAttachment",
+          "input": {
+            "path": {
+              "index": "${issueIndex}",
+              "attachment_id": "${issueAttachmentId}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "name": "renamed.txt"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "issueDeleteIssueAttachment",
+          "input": {
+            "path": {
+              "index": "${issueIndex}",
+              "attachment_id": "${issueAttachmentId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "issueCreateIssueCommentAttachment",
+          "input": {
+            "path": {
+              "id": "${commentId}"
+            },
+            "query": {
+              "name": "e2e.txt"
+            },
+            "body": {
+              "mediaType": "multipart/form-data",
+              "value": {
+                "attachment": {
+                  "$bytes": [
+                    101,
+                    50,
+                    101
+                  ]
+                }
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "capture": {
+            "commentAttachmentId": "body.id"
+          }
+        },
+        {
+          "operationId": "issueListIssueCommentAttachments",
+          "input": {
+            "path": {
+              "id": "${commentId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "issueGetIssueCommentAttachment",
+          "input": {
+            "path": {
+              "id": "${commentId}",
+              "attachment_id": "${commentAttachmentId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "issueEditIssueCommentAttachment",
+          "input": {
+            "path": {
+              "id": "${commentId}",
+              "attachment_id": "${commentAttachmentId}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "name": "renamed.txt"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "issueDeleteIssueCommentAttachment",
+          "input": {
+            "path": {
+              "id": "${commentId}",
+              "attachment_id": "${commentAttachmentId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "issueDeleteCommentDeprecated",
+          "input": {
+            "path": {
+              "index": "${issueIndex}",
+              "id": "${commentId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "issueCreateComment",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "body": "delete directly"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "capture": {
+            "commentId": "body.id"
+          }
+        },
+        {
+          "operationId": "issueDeleteComment",
+          "input": {
+            "path": {
+              "id": "${commentId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "admin webhook CRUD",
+      "steps": [
+        {
+          "operationId": "adminCreateHook",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "type": "gitea",
+                "config": {
+                  "url": "${apiUrl}/version",
+                  "content_type": "json"
+                },
+                "events": [
+                  "push"
+                ],
+                "active": false
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "capture": {
+            "adminHookId": "body.id"
+          }
+        },
+        {
+          "operationId": "adminGetHook",
+          "input": {
+            "path": {
+              "id": "${adminHookId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "adminEditHook",
+          "input": {
+            "path": {
+              "id": "${adminHookId}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "active": false,
+                "config": {
+                  "url": "${apiUrl}/version",
+                  "content_type": "json"
+                }
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "adminDeleteHook",
+          "input": {
+            "path": {
+              "id": "${adminHookId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "org webhook CRUD",
+      "steps": [
+        {
+          "operationId": "orgCreateHook",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "type": "gitea",
+                "config": {
+                  "url": "${apiUrl}/version",
+                  "content_type": "json"
+                },
+                "events": [
+                  "push"
+                ],
+                "active": false
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "capture": {
+            "orgHookId": "body.id"
+          }
+        },
+        {
+          "operationId": "orgGetHook",
+          "input": {
+            "path": {
+              "id": "${orgHookId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "orgEditHook",
+          "input": {
+            "path": {
+              "id": "${orgHookId}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "active": false,
+                "config": {
+                  "url": "${apiUrl}/version",
+                  "content_type": "json"
+                }
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "orgDeleteHook",
+          "input": {
+            "path": {
+              "id": "${orgHookId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "repo webhook CRUD",
+      "steps": [
+        {
+          "operationId": "repoCreateHook",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "type": "gitea",
+                "config": {
+                  "url": "${apiUrl}/version",
+                  "content_type": "json"
+                },
+                "events": [
+                  "push"
+                ],
+                "active": false
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "capture": {
+            "repoHookId": "body.id"
+          }
+        },
+        {
+          "operationId": "repoGetHook",
+          "input": {
+            "path": {
+              "id": "${repoHookId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoEditHook",
+          "input": {
+            "path": {
+              "id": "${repoHookId}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "active": false,
+                "config": {
+                  "url": "${apiUrl}/version",
+                  "content_type": "json"
+                }
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoTestHook",
+          "input": {
+            "path": {
+              "id": "${repoHookId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "repoDeleteHook",
+          "input": {
+            "path": {
+              "id": "${repoHookId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "user webhook CRUD",
+      "steps": [
+        {
+          "operationId": "userCreateHook",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "type": "gitea",
+                "config": {
+                  "url": "${apiUrl}/version",
+                  "content_type": "json"
+                },
+                "events": [
+                  "push"
+                ],
+                "active": false
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "capture": {
+            "userHookId": "body.id"
+          }
+        },
+        {
+          "operationId": "userGetHook",
+          "input": {
+            "path": {
+              "id": "${userHookId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "userEditHook",
+          "input": {
+            "path": {
+              "id": "${userHookId}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "active": false,
+                "config": {
+                  "url": "${apiUrl}/version",
+                  "content_type": "json"
+                }
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "userDeleteHook",
+          "input": {
+            "path": {
+              "id": "${userHookId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "git file and branch lifecycle",
+      "steps": [
+        {
+          "operationId": "repoCreateFile",
+          "input": {
+            "path": {
+              "filepath": ".editorconfig"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "content": {
+                  "$base64": "root = true\n[*]\nindent_style = space\nindent_size = 2\n"
+                },
+                "message": "E2E editorconfig"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetEditorConfig",
+          "input": {
+            "path": {
+              "filepath": "example.ts"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoCreateFile",
+          "input": {
+            "path": {
+              "filepath": "e2e.txt"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "content": {
+                  "$base64": "initial\n"
+                },
+                "message": "create"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "capture": {
+            "fileSha": "body.content.sha"
+          }
+        },
+        {
+          "operationId": "repoUpdateFile",
+          "input": {
+            "path": {
+              "filepath": "e2e.txt"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "sha": "${fileSha}",
+                "content": {
+                  "$base64": "updated\n"
+                },
+                "message": "update"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          },
+          "capture": {
+            "fileSha": "body.content.sha"
+          }
+        },
+        {
+          "operationId": "repoDeleteFile",
+          "input": {
+            "path": {
+              "filepath": "e2e.txt"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "sha": "${fileSha}",
+                "message": "delete"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoChangeFiles",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "message": "batch",
+                "files": [
+                  {
+                    "operation": "create",
+                    "path": "batch.txt",
+                    "content": {
+                      "$base64": "batch\n"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "repoApplyDiffPatch",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "content": "diff --git a/patch.txt b/patch.txt\nnew file mode 100644\n--- /dev/null\n+++ b/patch.txt\n@@ -0,0 +1 @@\n+patch\n",
+                "message": "patch"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "note": "Both released servers return HTTP 201; the published schema lists HTTP 200."
+        },
+        {
+          "operationId": "repoCreateBranch",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "new_branch_name": "e2e-branch",
+                "old_ref_name": "main"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ],
+            "equals": {
+              "body.name": "e2e-branch"
+            }
+          }
+        },
+        {
+          "operationId": "repoGetBranch",
+          "input": {
+            "path": {
+              "branch": "e2e-branch"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.name": "e2e-branch"
+            }
+          },
+          "poll": {
+            "timeoutMs": 15000,
+            "intervalMs": 150,
+            "retryStatuses": [
+              404
+            ]
+          },
+          "name": "wait for created branch"
+        },
+        {
+          "operationId": "repoUpdateBranch",
+          "input": {
+            "path": {
+              "branch": "e2e-branch"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "new_commit_id": "${mainSha}",
+                "force": true
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "repoRenameBranch",
+          "input": {
+            "path": {
+              "branch": "e2e-branch"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "name": "e2e-renamed"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "repoCompareDiff",
+          "input": {
+            "path": {
+              "basehead": "e2e-renamed...main"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoDeleteBranch",
+          "input": {
+            "path": {
+              "branch": "e2e-renamed"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "repoCreateBranchProtection",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "rule_name": "protected-e2e",
+                "enable_push": true
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetBranchProtection",
+          "input": {
+            "path": {
+              "name": "protected-e2e"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoEditBranchProtection",
+          "input": {
+            "path": {
+              "name": "protected-e2e"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "required_approvals": 1
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoUpdateBranchProtectionPriories",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "rule_names": [
+                  "protected-e2e"
+                ]
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "repoDeleteBranchProtection",
+          "input": {
+            "path": {
+              "name": "protected-e2e"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "repoCreateTagProtection",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "name_pattern": "e2e-protected-*",
+                "whitelist_usernames": [
+                  "${owner}"
+                ]
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "capture": {
+            "tagProtectionId": "body.id"
+          }
+        },
+        {
+          "operationId": "repoGetTagProtection",
+          "input": {
+            "path": {
+              "id": "${tagProtectionId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoEditTagProtection",
+          "input": {
+            "path": {
+              "id": "${tagProtectionId}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "name_pattern": "e2e-protected-updated-*"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoDeleteTagProtection",
+          "input": {
+            "path": {
+              "id": "${tagProtectionId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "repoCreateTag",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "tag_name": "e2e-tag",
+                "target": "main",
+                "message": "annotated tag"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "capture": {
+            "tagSha": "body.id"
+          },
+          "note": "Both released servers return HTTP 201; the published schema lists HTTP 200."
+        },
+        {
+          "operationId": "repoGetTag",
+          "input": {
+            "path": {
+              "tag": "e2e-tag"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "GetAnnotatedTag",
+          "input": {
+            "path": {
+              "sha": "${tagSha}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoDeleteTag",
+          "input": {
+            "path": {
+              "tag": "e2e-tag"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetGitHook",
+          "input": {
+            "path": {
+              "id": "pre-receive"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoEditGitHook",
+          "input": {
+            "path": {
+              "id": "pre-receive"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "content": "#!/bin/sh\nexit 0\n"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoDeleteGitHook",
+          "input": {
+            "path": {
+              "id": "pre-receive"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "release and binary attachment lifecycle",
+      "steps": [
+        {
+          "operationId": "repoCreateRelease",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "tag_name": "e2e-release",
+                "target_commitish": "main",
+                "name": "E2E release",
+                "body": "real release"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "capture": {
+            "releaseId": "body.id"
+          }
+        },
+        {
+          "operationId": "repoGetLatestRelease",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetReleaseByTag",
+          "input": {
+            "path": {
+              "tag": "e2e-release"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetRelease",
+          "input": {
+            "path": {
+              "id": "${releaseId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoEditRelease",
+          "input": {
+            "path": {
+              "id": "${releaseId}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "name": "Updated release"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoCreateReleaseAttachment",
+          "input": {
+            "path": {
+              "id": "${releaseId}"
+            },
+            "query": {
+              "name": "artifact.bin"
+            },
+            "body": {
+              "mediaType": "multipart/form-data",
+              "value": {
+                "attachment": {
+                  "$bytes": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    255
+                  ]
+                }
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "capture": {
+            "releaseAttachmentId": "body.id"
+          }
+        },
+        {
+          "operationId": "repoListReleaseAttachments",
+          "input": {
+            "path": {
+              "id": "${releaseId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetReleaseAttachment",
+          "input": {
+            "path": {
+              "id": "${releaseId}",
+              "attachment_id": "${releaseAttachmentId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoEditReleaseAttachment",
+          "input": {
+            "path": {
+              "id": "${releaseId}",
+              "attachment_id": "${releaseAttachmentId}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "name": "renamed.bin"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "repoDeleteReleaseAttachment",
+          "input": {
+            "path": {
+              "id": "${releaseId}",
+              "attachment_id": "${releaseAttachmentId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "repoDeleteRelease",
+          "input": {
+            "path": {
+              "id": "${releaseId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "repoCreateRelease",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "tag_name": "e2e-release2",
+                "target_commitish": "main",
+                "name": "Delete by tag"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "repoDeleteReleaseByTag",
+          "input": {
+            "path": {
+              "tag": "e2e-release2"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "wiki and topics",
+      "steps": [
+        {
+          "operationId": "repoCreateWikiPage",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "title": "E2E",
+                "content_base64": {
+                  "$base64": "# E2E wiki\n"
+                },
+                "message": "create wiki"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetWikiPage",
+          "input": {
+            "path": {
+              "pageName": "E2E"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetWikiPages",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetWikiPageRevisions",
+          "input": {
+            "path": {
+              "pageName": "E2E"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoEditWikiPage",
+          "input": {
+            "path": {
+              "pageName": "E2E"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "title": "E2E",
+                "content_base64": {
+                  "$base64": "# updated wiki\n"
+                },
+                "message": "update wiki"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoDeleteWikiPage",
+          "input": {
+            "path": {
+              "pageName": "E2E"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "repoUpdateTopics",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "topics": [
+                  "e2e",
+                  "generated"
+                ]
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "repoAddTopic",
+          "input": {
+            "path": {
+              "topic": "live-api"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "repoListTopics",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.topics": [
+                "e2e",
+                "generated",
+                "live-api"
+              ]
+            }
+          }
+        },
+        {
+          "operationId": "repoDeleteTopic",
+          "input": {
+            "path": {
+              "topic": "live-api"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "SSH key CRUD",
+      "steps": [
+        {
+          "operationId": "userCurrentPostKey",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "title": "e2e-user-key",
+                "key": {
+                  "$file": "id_ed25519.pub"
+                }
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "capture": {
+            "userKeyId": "body.id"
+          }
+        },
+        {
+          "operationId": "userCurrentGetKey",
+          "input": {
+            "path": {
+              "id": "${userKeyId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "userCurrentDeleteKey",
+          "input": {
+            "path": {
+              "id": "${userKeyId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "adminCreatePublicKey",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "title": "e2e-admin-key",
+                "key": {
+                  "$file": "admin_key.pub"
+                }
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "capture": {
+            "adminKeyId": "body.id"
+          }
+        },
+        {
+          "operationId": "adminDeleteUserPublicKey",
+          "input": {
+            "path": {
+              "id": "${adminKeyId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "repoCreateKey",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "title": "e2e-deploy-key",
+                "key": {
+                  "$file": "deploy_key.pub"
+                },
+                "read_only": true
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "capture": {
+            "deployKeyId": "body.id"
+          }
+        },
+        {
+          "operationId": "repoGetKey",
+          "input": {
+            "path": {
+              "id": "${deployKeyId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoDeleteKey",
+          "input": {
+            "path": {
+              "id": "${deployKeyId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GPG key lifecycle",
+      "steps": [
+        {
+          "operationId": "getVerificationToken",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ],
+            "nonempty": [
+              "body"
+            ]
+          }
+        },
+        {
+          "operationId": "userCurrentPostGPGKey",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "armored_public_key": {
+                  "$file": "gpg-public.asc"
+                }
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "capture": {
+            "gpgId": "body.id",
+            "gpgKeyId": "body.key_id"
+          }
+        },
+        {
+          "operationId": "userCurrentGetGPGKey",
+          "input": {
+            "path": {
+              "id": "${gpgId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.id": "${gpgId}"
+            }
+          }
+        },
+        {
+          "operationId": "userVerifyGPGKey",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "key_id": "${gpgKeyId}",
+                "armored_signature": {
+                  "$file": "gpg-signature.asc"
+                }
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.verified": true
+            }
+          }
+        },
+        {
+          "operationId": "userCurrentDeleteGPGKey",
+          "input": {
+            "path": {
+              "id": "${gpgId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "repoSigningKey",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ],
+            "contains": {
+              "body": "BEGIN PGP PUBLIC KEY BLOCK"
+            }
+          }
+        },
+        {
+          "operationId": "getSigningKey",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ],
+            "contains": {
+              "body": "BEGIN PGP PUBLIC KEY BLOCK"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "OAuth email avatar and API tokens",
+      "steps": [
+        {
+          "operationId": "userCreateOAuth2Application",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "name": "e2e-oauth",
+                "redirect_uris": [
+                  "http://localhost/callback"
+                ],
+                "confidential_client": true
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "capture": {
+            "oauthId": "body.id"
+          }
+        },
+        {
+          "operationId": "userGetOAuth2Application",
+          "input": {
+            "path": {
+              "id": "${oauthId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "userUpdateOAuth2Application",
+          "input": {
+            "path": {
+              "id": "${oauthId}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "name": "e2e-oauth-updated",
+                "redirect_uris": [
+                  "http://localhost/callback"
+                ]
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "userDeleteOAuth2Application",
+          "input": {
+            "path": {
+              "id": "${oauthId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "userAddEmail",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "emails": [
+                  "e2e-secondary@example.invalid"
+                ]
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "userDeleteEmail",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "emails": [
+                  "e2e-secondary@example.invalid"
+                ]
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "userUpdateAvatar",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "image": "${avatar}"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "userDeleteAvatar",
+          "input": {},
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "orgUpdateAvatar",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "image": "${avatar}"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "orgDeleteAvatar",
+          "input": {},
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "repoUpdateAvatar",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "image": "${avatar}"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "repoDeleteAvatar",
+          "input": {},
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "userCreateToken",
+          "input": {
+            "path": {
+              "username": "${owner}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "name": "e2e-disposable",
+                "scopes": [
+                  "all"
+                ]
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "capture": {
+            "disposableToken": "body.sha1",
+            "disposableTokenId": "body.id"
+          },
+          "auth": "basic"
+        },
+        {
+          "operationId": "userGetTokens",
+          "input": {
+            "path": {
+              "username": "${owner}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          },
+          "auth": "basic"
+        },
+        {
+          "operationId": "getCurrentToken",
+          "input": {
+            "headers": {
+              "authorization": "token ${disposableToken}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          },
+          "optional": true
+        },
+        {
+          "operationId": "deleteCurrentToken",
+          "input": {
+            "headers": {
+              "authorization": "token ${disposableToken}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          },
+          "optional": true
+        },
+        {
+          "operationId": "userCreateToken",
+          "input": {
+            "path": {
+              "username": "${owner}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "name": "e2e-second-token",
+                "scopes": [
+                  "all"
+                ]
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "capture": {
+            "secondTokenId": "body.id"
+          },
+          "auth": "basic"
+        },
+        {
+          "operationId": "userDeleteAccessToken",
+          "input": {
+            "path": {
+              "username": "${owner}",
+              "token": "${secondTokenId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          },
+          "auth": "basic"
+        }
+      ]
+    },
+    {
+      "name": "pull-request lifecycle",
+      "steps": [
+        {
+          "operationId": "repoAddCollaborator",
+          "input": {
+            "path": {
+              "collaborator": "${peer}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "permission": "write"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "repoCreateBranch",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "new_branch_name": "e2e-pr",
+                "old_ref_name": "main"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ],
+            "equals": {
+              "body.name": "e2e-pr"
+            }
+          }
+        },
+        {
+          "operationId": "repoGetBranch",
+          "input": {
+            "path": {
+              "branch": "e2e-pr"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.name": "e2e-pr"
+            }
+          },
+          "poll": {
+            "timeoutMs": 15000,
+            "intervalMs": 150,
+            "retryStatuses": [
+              404
+            ]
+          },
+          "name": "wait for created branch"
+        },
+        {
+          "operationId": "repoCreateFile",
+          "input": {
+            "path": {
+              "filepath": "pr.txt"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "branch": "e2e-pr",
+                "content": {
+                  "$base64": "pull request change\n"
+                },
+                "message": "pr change"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "capture": {
+            "prSha": "body.commit.sha"
+          }
+        },
+        {
+          "operationId": "repoCreatePullRequest",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "base": "main",
+                "head": "e2e-pr",
+                "title": "E2E pull request",
+                "body": "real request"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "capture": {
+            "prIndex": "body.number"
+          }
+        },
+        {
+          "operationId": "repoGetPullRequest",
+          "input": {
+            "path": {
+              "index": "${prIndex}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.mergeable": true
+            }
+          },
+          "poll": {
+            "timeoutMs": 15000,
+            "intervalMs": 150,
+            "retryStatuses": []
+          }
+        },
+        {
+          "operationId": "repoGetPullRequestByBaseHead",
+          "input": {
+            "path": {
+              "base": "main",
+              "head": "e2e-pr"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoEditPullRequest",
+          "input": {
+            "path": {
+              "index": "${prIndex}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "title": "Updated pull request"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetPullRequestCommits",
+          "input": {
+            "path": {
+              "index": "${prIndex}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetPullRequestFiles",
+          "input": {
+            "path": {
+              "index": "${prIndex}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoDownloadPullDiffOrPatch",
+          "input": {
+            "path": {
+              "index": "${prIndex}",
+              "diffType": "diff"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoCreatePullReviewRequests",
+          "input": {
+            "path": {
+              "index": "${prIndex}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "reviewers": [
+                  "${peer}"
+                ]
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "repoDeletePullReviewRequests",
+          "input": {
+            "path": {
+              "index": "${prIndex}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "reviewers": [
+                  "${peer}"
+                ]
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "repoListPullReviews",
+          "input": {
+            "path": {
+              "index": "${prIndex}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoCreatePullReview",
+          "input": {
+            "path": {
+              "index": "${prIndex}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "body": "E2E draft review",
+                "event": "PENDING",
+                "comments": [
+                  {
+                    "path": "pr.txt",
+                    "body": "Real code review",
+                    "new_position": 1
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "authorization": "token ${peerToken}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          },
+          "capture": {
+            "reviewId": "body.id"
+          }
+        },
+        {
+          "operationId": "repoGetPullReview",
+          "input": {
+            "path": {
+              "index": "${prIndex}",
+              "id": "${reviewId}"
+            },
+            "headers": {
+              "authorization": "token ${peerToken}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetPullReviewComments",
+          "input": {
+            "path": {
+              "index": "${prIndex}",
+              "id": "${reviewId}"
+            },
+            "headers": {
+              "authorization": "token ${peerToken}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ],
+            "nonempty": [
+              "body"
+            ]
+          },
+          "capture": {
+            "reviewCommentId": "body.0.id"
+          }
+        },
+        {
+          "operationId": "repoCreatePullReviewCommentReply",
+          "input": {
+            "path": {
+              "index": "${prIndex}",
+              "id": "${reviewCommentId}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "body": "Real reply"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ],
+            "equals": {
+              "body.body": "Real reply"
+            }
+          },
+          "optional": true
+        },
+        {
+          "operationId": "repoResolvePullReviewComment",
+          "input": {
+            "path": {
+              "id": "${reviewCommentId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "repoUnresolvePullReviewComment",
+          "input": {
+            "path": {
+              "id": "${reviewCommentId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "repoSubmitPullReview",
+          "input": {
+            "path": {
+              "index": "${prIndex}",
+              "id": "${reviewId}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "body": "Submitted review",
+                "event": "APPROVED"
+              }
+            },
+            "headers": {
+              "authorization": "token ${peerToken}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoDismissPullReview",
+          "input": {
+            "path": {
+              "index": "${prIndex}",
+              "id": "${reviewId}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "message": "E2E dismissal"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoUnDismissPullReview",
+          "input": {
+            "path": {
+              "index": "${prIndex}",
+              "id": "${reviewId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoCreateFile",
+          "input": {
+            "path": {
+              "filepath": "base-change.txt"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "content": {
+                  "$base64": "advance base branch\n"
+                },
+                "branch": "main",
+                "message": "advance base for pull update"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "repoUpdatePullRequest",
+          "input": {
+            "path": {
+              "index": "${prIndex}"
+            },
+            "query": {
+              "style": "merge"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetPullRequest",
+          "input": {
+            "path": {
+              "index": "${prIndex}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.mergeable": true
+            }
+          },
+          "poll": {
+            "timeoutMs": 15000,
+            "intervalMs": 150,
+            "retryStatuses": []
+          }
+        },
+        {
+          "operationId": "repoDeletePullReview",
+          "input": {
+            "path": {
+              "index": "${prIndex}",
+              "id": "${reviewId}"
+            },
+            "headers": {
+              "authorization": "token ${peerToken}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "repoCreateBranchProtection",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "rule_name": "main",
+                "enable_push": true,
+                "enable_status_check": true,
+                "status_check_contexts": [
+                  "e2e/pending"
+                ]
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetPullRequest",
+          "name": "wait for merge readiness",
+          "input": {
+            "path": {
+              "index": "${prIndex}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.mergeable": true
+            }
+          },
+          "poll": {
+            "timeoutMs": 15000,
+            "intervalMs": 200,
+            "retryStatuses": [],
+            "consecutiveSuccesses": 3
+          }
+        },
+        {
+          "operationId": "repoMergePullRequest",
+          "input": {
+            "path": {
+              "index": "${prIndex}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "do": "merge",
+                "merge_when_checks_succeed": true
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "repoCancelScheduledAutoMerge",
+          "input": {
+            "path": {
+              "index": "${prIndex}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "repoDeleteBranchProtection",
+          "input": {
+            "path": {
+              "name": "main"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetPullRequest",
+          "name": "wait for merge readiness",
+          "input": {
+            "path": {
+              "index": "${prIndex}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.mergeable": true
+            }
+          },
+          "poll": {
+            "timeoutMs": 15000,
+            "intervalMs": 200,
+            "retryStatuses": [],
+            "consecutiveSuccesses": 3
+          }
+        },
+        {
+          "operationId": "repoMergePullRequest",
+          "input": {
+            "path": {
+              "index": "${prIndex}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "do": "merge",
+                "merge_when_checks_succeed": false
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoPullRequestIsMerged",
+          "input": {
+            "path": {
+              "index": "${prIndex}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "repoGetPullRequest",
+          "input": {
+            "path": {
+              "index": "${prIndex}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.merged": true
+            }
+          },
+          "capture": {
+            "mergeSha": "body.merge_commit_sha"
+          }
+        },
+        {
+          "operationId": "repoGetCommitPullRequest",
+          "input": {
+            "path": {
+              "sha": "${mergeSha}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "package lifecycle",
+      "steps": [
+        {
+          "operationId": "listPackageVersions",
+          "input": {
+            "path": {
+              "owner": "${owner}",
+              "type": "generic",
+              "name": "e2e-package"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "getLatestPackageVersion",
+          "input": {
+            "path": {
+              "owner": "${owner}",
+              "type": "generic",
+              "name": "e2e-package"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "getPackage",
+          "input": {
+            "path": {
+              "owner": "${owner}",
+              "type": "generic",
+              "name": "e2e-package",
+              "version": "1.0.0"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.name": "e2e-package",
+              "body.version": "1.0.0"
+            }
+          }
+        },
+        {
+          "operationId": "listPackageFiles",
+          "input": {
+            "path": {
+              "owner": "${owner}",
+              "type": "generic",
+              "name": "e2e-package",
+              "version": "1.0.0"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "linkPackage",
+          "input": {
+            "path": {
+              "owner": "${owner}",
+              "type": "generic",
+              "name": "e2e-package",
+              "repo_name": "${repo}"
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "unlinkPackage",
+          "input": {
+            "path": {
+              "owner": "${owner}",
+              "type": "generic",
+              "name": "e2e-package"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "deletePackageVersion",
+          "input": {
+            "path": {
+              "owner": "${owner}",
+              "type": "generic",
+              "name": "e2e-package",
+              "version": "1.0.0"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "deletePackage",
+          "input": {
+            "path": {
+              "owner": "${owner}",
+              "type": "generic",
+              "name": "e2e-package"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "repository fork migration mirror template and transfer",
+      "steps": [
+        {
+          "operationId": "createFork",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "name": "e2e-fork",
+                "organization": "${org}"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              202
+            ]
+          }
+        },
+        {
+          "operationId": "repoGet",
+          "input": {
+            "path": {
+              "owner": "${org}",
+              "repo": "e2e-fork"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.empty": false
+            }
+          },
+          "poll": {
+            "timeoutMs": 15000,
+            "intervalMs": 150,
+            "retryStatuses": [
+              404
+            ]
+          }
+        },
+        {
+          "operationId": "repoCreateFile",
+          "input": {
+            "path": {
+              "filepath": "upstream.txt"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "content": {
+                  "$base64": "upstream change\n"
+                },
+                "message": "advance upstream"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "repoMergeUpstream",
+          "input": {
+            "path": {
+              "owner": "${org}",
+              "repo": "e2e-fork"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "branch": "main",
+                "ff_only": true
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoMigrate",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "clone_addr": "${baseUrl}/${owner}/${repo}.git",
+                "repo_name": "e2e-mirror",
+                "repo_owner": "${owner}",
+                "service": "git",
+                "mirror": true
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "repoGet",
+          "input": {
+            "path": {
+              "repo": "e2e-mirror"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.mirror": true
+            }
+          },
+          "poll": {
+            "timeoutMs": 15000,
+            "intervalMs": 150,
+            "retryStatuses": [
+              404
+            ]
+          }
+        },
+        {
+          "operationId": "repoMirrorSync",
+          "input": {
+            "path": {
+              "repo": "e2e-mirror"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "createCurrentUserRepo",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "name": "e2e-push-target"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "repoAddPushMirror",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "remote_address": "${baseUrl}/${owner}/e2e-push-target.git",
+                "remote_username": "${username}",
+                "remote_password": "${password}",
+                "interval": "8h",
+                "sync_on_commit": false
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          },
+          "capture": {
+            "pushRemote": "body.remote_name"
+          }
+        },
+        {
+          "operationId": "repoGetPushMirrorByRemoteName",
+          "input": {
+            "path": {
+              "name": "${pushRemote}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoPushMirrorSync",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoGet",
+          "input": {
+            "path": {
+              "repo": "e2e-push-target"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.empty": false
+            }
+          },
+          "poll": {
+            "timeoutMs": 15000,
+            "intervalMs": 150,
+            "retryStatuses": [
+              404
+            ]
+          }
+        },
+        {
+          "operationId": "repoDeletePushMirror",
+          "input": {
+            "path": {
+              "name": "${pushRemote}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "createCurrentUserRepo",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "name": "e2e-template",
+                "auto_init": true,
+                "template": true
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "generateRepo",
+          "input": {
+            "path": {
+              "template_owner": "${owner}",
+              "template_repo": "e2e-template"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "owner": "${owner}",
+                "name": "e2e-from-template",
+                "git_content": true
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "repoGet",
+          "input": {
+            "path": {
+              "repo": "e2e-from-template"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.name": "e2e-from-template"
+            }
+          }
+        },
+        {
+          "operationId": "repoDelete",
+          "input": {
+            "path": {
+              "repo": "e2e-from-template"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "createCurrentUserRepo",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "name": "e2e-transfer",
+                "auto_init": true
+              }
+            },
+            "headers": {
+              "authorization": "token ${peerToken}"
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "repoTransfer",
+          "input": {
+            "path": {
+              "owner": "${peer}",
+              "repo": "e2e-transfer"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "new_owner": "${owner}"
+              }
+            },
+            "headers": {
+              "authorization": "token ${peerToken}"
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "note": "Pending transfer returns 201; direct transfer returns 202."
+        },
+        {
+          "operationId": "rejectRepoTransfer",
+          "input": {
+            "path": {
+              "owner": "${peer}",
+              "repo": "e2e-transfer"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "repoTransfer",
+          "input": {
+            "path": {
+              "owner": "${peer}",
+              "repo": "e2e-transfer"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "new_owner": "${owner}"
+              }
+            },
+            "headers": {
+              "authorization": "token ${peerToken}"
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          },
+          "note": "Pending transfer returns 201; direct transfer returns 202."
+        },
+        {
+          "operationId": "acceptRepoTransfer",
+          "input": {
+            "path": {
+              "owner": "${peer}",
+              "repo": "e2e-transfer"
+            }
+          },
+          "expect": {
+            "status": [
+              202
+            ]
+          }
+        },
+        {
+          "operationId": "repoGet",
+          "input": {
+            "path": {
+              "repo": "e2e-transfer"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.owner.login": "${owner}"
+            }
+          }
+        },
+        {
+          "operationId": "repoDelete",
+          "input": {
+            "path": {
+              "repo": "e2e-transfer"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "runner registration and management",
+      "steps": [
+        {
+          "operationId": "adminCreateRunnerRegistrationToken",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          },
+          "capture": {
+            "AdminRegistrationToken": "body.token"
+          }
+        },
+        {
+          "operationId": "$fixture/registerAdmin",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          },
+          "capture": {
+            "AdminRunnerId": "body.runner.id"
+          },
+          "fixture": {
+            "method": "POST",
+            "url": "${baseUrl}/api/actions/runner.v1.RunnerService/Register",
+            "json": {
+              "name": "e2e-admin",
+              "version": "e2e-fixture",
+              "token": "${AdminRegistrationToken}",
+              "labels": [
+                "fixture-only"
+              ]
+            }
+          },
+          "auth": "none"
+        },
+        {
+          "operationId": "getAdminRunner",
+          "input": {
+            "path": {
+              "runner_id": "${AdminRunnerId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "updateAdminRunner",
+          "input": {
+            "path": {
+              "runner_id": "${AdminRunnerId}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "disabled": true
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.disabled": true
+            }
+          }
+        },
+        {
+          "operationId": "deleteAdminRunner",
+          "input": {
+            "path": {
+              "runner_id": "${AdminRunnerId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "orgCreateRunnerRegistrationToken",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          },
+          "capture": {
+            "OrgRegistrationToken": "body.token"
+          }
+        },
+        {
+          "operationId": "$fixture/registerOrg",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          },
+          "capture": {
+            "OrgRunnerId": "body.runner.id"
+          },
+          "fixture": {
+            "method": "POST",
+            "url": "${baseUrl}/api/actions/runner.v1.RunnerService/Register",
+            "json": {
+              "name": "e2e-org",
+              "version": "e2e-fixture",
+              "token": "${OrgRegistrationToken}",
+              "labels": [
+                "fixture-only"
+              ]
+            }
+          },
+          "auth": "none"
+        },
+        {
+          "operationId": "getOrgRunner",
+          "input": {
+            "path": {
+              "runner_id": "${OrgRunnerId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "updateOrgRunner",
+          "input": {
+            "path": {
+              "runner_id": "${OrgRunnerId}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "disabled": true
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.disabled": true
+            }
+          }
+        },
+        {
+          "operationId": "deleteOrgRunner",
+          "input": {
+            "path": {
+              "runner_id": "${OrgRunnerId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "repoCreateRunnerRegistrationToken",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          },
+          "capture": {
+            "RepoRegistrationToken": "body.token"
+          }
+        },
+        {
+          "operationId": "$fixture/registerRepo",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          },
+          "capture": {
+            "RepoRunnerId": "body.runner.id"
+          },
+          "fixture": {
+            "method": "POST",
+            "url": "${baseUrl}/api/actions/runner.v1.RunnerService/Register",
+            "json": {
+              "name": "e2e-repo",
+              "version": "e2e-fixture",
+              "token": "${RepoRegistrationToken}",
+              "labels": [
+                "fixture-only"
+              ]
+            }
+          },
+          "auth": "none"
+        },
+        {
+          "operationId": "getRepoRunner",
+          "input": {
+            "path": {
+              "runner_id": "${RepoRunnerId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "updateRepoRunner",
+          "input": {
+            "path": {
+              "runner_id": "${RepoRunnerId}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "disabled": true
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.disabled": true
+            }
+          }
+        },
+        {
+          "operationId": "deleteRepoRunner",
+          "input": {
+            "path": {
+              "runner_id": "${RepoRunnerId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "userCreateRunnerRegistrationToken",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          },
+          "capture": {
+            "UserRegistrationToken": "body.token"
+          }
+        },
+        {
+          "operationId": "$fixture/registerUser",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          },
+          "capture": {
+            "UserRunnerId": "body.runner.id"
+          },
+          "fixture": {
+            "method": "POST",
+            "url": "${baseUrl}/api/actions/runner.v1.RunnerService/Register",
+            "json": {
+              "name": "e2e-user",
+              "version": "e2e-fixture",
+              "token": "${UserRegistrationToken}",
+              "labels": [
+                "fixture-only"
+              ]
+            }
+          },
+          "auth": "none"
+        },
+        {
+          "operationId": "getUserRunner",
+          "input": {
+            "path": {
+              "runner_id": "${UserRunnerId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "updateUserRunner",
+          "input": {
+            "path": {
+              "runner_id": "${UserRunnerId}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "disabled": true
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.disabled": true
+            }
+          }
+        },
+        {
+          "operationId": "deleteUserRunner",
+          "input": {
+            "path": {
+              "runner_id": "${UserRunnerId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "workflow lifecycle",
+      "steps": [
+        {
+          "operationId": "repoCreateFile",
+          "input": {
+            "path": {
+              "filepath": ".gitea/workflows/e2e.yaml"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "content": {
+                  "$base64": "name: E2E workflow\non:\n  workflow_dispatch:\njobs:\n  real-api-fixture:\n    runs-on: sandbox\n    steps:\n      - run: bash /fixtures/upload-artifact.sh\n      - run: exit 1\n"
+                },
+                "message": "add workflow fixture"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "ActionsGetWorkflow",
+          "input": {
+            "path": {
+              "workflow_id": "e2e.yaml"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          },
+          "poll": {
+            "timeoutMs": 15000,
+            "intervalMs": 150,
+            "retryStatuses": [
+              404
+            ]
+          }
+        },
+        {
+          "operationId": "ActionsDisableWorkflow",
+          "input": {
+            "path": {
+              "workflow_id": "e2e.yaml"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "ActionsEnableWorkflow",
+          "input": {
+            "path": {
+              "workflow_id": "e2e.yaml"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "ActionsDispatchWorkflow",
+          "input": {
+            "path": {
+              "workflow_id": "e2e.yaml"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "ref": "main"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "getWorkflowRuns",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ],
+            "nonempty": [
+              "body.workflow_runs"
+            ]
+          },
+          "capture": {
+            "runId": "body.workflow_runs.0.id",
+            "runNumber": "body.workflow_runs.0.run_number"
+          },
+          "poll": {
+            "timeoutMs": 15000,
+            "intervalMs": 150,
+            "retryStatuses": [
+              404
+            ]
+          }
+        },
+        {
+          "operationId": "GetWorkflowRun",
+          "input": {
+            "path": {
+              "run": "${runId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "getWorkflowRunAttempt",
+          "input": {
+            "path": {
+              "run": "${runId}",
+              "attempt": 1
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          },
+          "optional": true
+        },
+        {
+          "operationId": "getArtifactsOfRun",
+          "input": {
+            "path": {
+              "run": "${runId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "listWorkflowRunJobs",
+          "input": {
+            "path": {
+              "run": "${runId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          },
+          "capture": {
+            "jobId": "body.jobs.0.id"
+          }
+        },
+        {
+          "operationId": "listWorkflowRunAttemptJobs",
+          "input": {
+            "path": {
+              "run": "${runId}",
+              "attempt": 1
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          },
+          "optional": true
+        },
+        {
+          "operationId": "ActionsListWorkflowRuns",
+          "input": {
+            "path": {
+              "workflow_id": "e2e.yaml"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          },
+          "optional": true
+        },
+        {
+          "operationId": "getWorkflowJob",
+          "input": {
+            "path": {
+              "job_id": "${jobId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "GetWorkflowRun",
+          "input": {
+            "path": {
+              "run": "${runId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.status": "completed",
+              "body.conclusion": "failure"
+            }
+          },
+          "poll": {
+            "timeoutMs": 30000,
+            "intervalMs": 250,
+            "retryStatuses": []
+          }
+        },
+        {
+          "operationId": "getArtifacts",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          },
+          "capture": {
+            "artifactId": "body.artifacts.0.id"
+          }
+        },
+        {
+          "operationId": "getArtifact",
+          "input": {
+            "path": {
+              "artifact_id": "${artifactId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.name": "e2e-artifact"
+            }
+          }
+        },
+        {
+          "operationId": "downloadArtifact",
+          "input": {
+            "path": {
+              "artifact_id": "${artifactId}"
+            }
+          },
+          "expect": {
+            "status": [
+              302
+            ]
+          }
+        },
+        {
+          "operationId": "deleteArtifact",
+          "input": {
+            "path": {
+              "artifact_id": "${artifactId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "downloadActionsRunJobLogs",
+          "input": {
+            "path": {
+              "job_id": "${jobId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ],
+            "contains": {
+              "body": "real Gitea workflow"
+            }
+          }
+        },
+        {
+          "operationId": "rerunWorkflowJob",
+          "input": {
+            "path": {
+              "run": "${runId}",
+              "job_id": "${jobId}"
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "GetWorkflowRun",
+          "input": {
+            "path": {
+              "run": "${runId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.status": "completed",
+              "body.conclusion": "failure"
+            }
+          },
+          "poll": {
+            "timeoutMs": 30000,
+            "intervalMs": 250,
+            "retryStatuses": []
+          }
+        },
+        {
+          "operationId": "rerunWorkflowRun",
+          "input": {
+            "path": {
+              "run": "${runId}"
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "GetWorkflowRun",
+          "input": {
+            "path": {
+              "run": "${runId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.status": "completed",
+              "body.conclusion": "failure"
+            }
+          },
+          "poll": {
+            "timeoutMs": 30000,
+            "intervalMs": 250,
+            "retryStatuses": []
+          }
+        },
+        {
+          "operationId": "rerunFailedWorkflowRun",
+          "input": {
+            "path": {
+              "run": "${runId}"
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "GetWorkflowRun",
+          "input": {
+            "path": {
+              "run": "${runId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.status": "completed",
+              "body.conclusion": "failure"
+            }
+          },
+          "poll": {
+            "timeoutMs": 30000,
+            "intervalMs": 250,
+            "retryStatuses": []
+          }
+        },
+        {
+          "operationId": "deleteActionRun",
+          "input": {
+            "path": {
+              "run": "${runId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "notification lifecycle",
+      "steps": [
+        {
+          "operationId": "issueCreateComment",
+          "input": {
+            "path": {
+              "index": "${issueIndex}"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "body": "@${owner} E2E notification"
+              }
+            },
+            "headers": {
+              "authorization": "token ${peerToken}"
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "notifyGetList",
+          "input": {
+            "query": {
+              "all": true
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ],
+            "nonempty": [
+              "body"
+            ]
+          },
+          "capture": {
+            "notificationId": "body.0.id"
+          },
+          "poll": {
+            "timeoutMs": 15000,
+            "intervalMs": 150,
+            "retryStatuses": [
+              404
+            ]
+          }
+        },
+        {
+          "operationId": "notifyGetThread",
+          "input": {
+            "path": {
+              "id": "${notificationId}"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "notifyReadThread",
+          "input": {
+            "path": {
+              "id": "${notificationId}"
+            }
+          },
+          "expect": {
+            "status": [
+              205
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "secondary resources and administrative cleanup",
+      "steps": [
+        {
+          "operationId": "adminAdoptRepository",
+          "input": {
+            "path": {
+              "repo": "e2e-adopt"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "repoGet",
+          "input": {
+            "path": {
+              "repo": "e2e-adopt"
+            }
+          },
+          "expect": {
+            "status": [
+              200
+            ],
+            "equals": {
+              "body.name": "e2e-adopt"
+            }
+          }
+        },
+        {
+          "operationId": "adminDeleteUnadoptedRepository",
+          "input": {
+            "path": {
+              "repo": "e2e-unadopted"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "adminCronRun",
+          "input": {
+            "path": {
+              "task": "update_mirrors"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "adminCreateRepo",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "name": "admin-created",
+                "auto_init": true
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "adminCreateOrg",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "username": "e2e-secondary-org",
+                "full_name": "secondary"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "createOrgRepoDeprecated",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "name": "deprecated-repo",
+                "auto_init": true
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              201
+            ]
+          }
+        },
+        {
+          "operationId": "adminAddUserBadges",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "badge_slugs": [
+                  "e2e"
+                ]
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "adminListUserBadges",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "adminDeleteUserBadges",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "badge_slugs": [
+                  "e2e"
+                ]
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "orgDeleteMember",
+          "input": {},
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "listPackages",
+          "input": {},
+          "expect": {
+            "status": [
+              200
+            ]
+          }
+        },
+        {
+          "operationId": "adminRenameUser",
+          "input": {
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "new_username": "e2e-renamed-peer"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "renameOrg",
+          "input": {
+            "path": {
+              "org": "e2e-secondary-org"
+            },
+            "body": {
+              "mediaType": "application/json",
+              "value": {
+                "new_name": "e2e-renamed-org"
+              }
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "orgDeleteRepos",
+          "input": {
+            "path": {
+              "org": "e2e-renamed-org"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          },
+          "optional": true
+        },
+        {
+          "operationId": "orgDelete",
+          "input": {
+            "path": {
+              "org": "e2e-renamed-org"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "issueDelete",
+          "input": {
+            "path": {
+              "index": "${dependencyIndex}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "issueDeleteLabel",
+          "input": {
+            "path": {
+              "id": "${labelId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "orgDeleteLabel",
+          "input": {
+            "path": {
+              "id": "${orgLabelId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "issueDeleteMilestone",
+          "input": {
+            "path": {
+              "id": "${milestoneId}"
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        },
+        {
+          "operationId": "adminDeleteUser",
+          "input": {
+            "path": {
+              "username": "e2e-renamed-peer"
+            },
+            "query": {
+              "purge": true
+            }
+          },
+          "expect": {
+            "status": [
+              204
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "negativeCases": [
+    {
+      "operationId": "repoGetNote",
+      "input": {
+        "path": {
+          "owner": "${owner}",
+          "repo": "${repo}",
+          "sha": "${mainSha}"
+        }
+      },
+      "expect": {
+        "status": [
+          404
+        ]
+      },
+      "name": "existing commit without a Git note returns not found"
+    },
+    {
+      "operationId": "repoSigningKeySSH",
+      "input": {
+        "path": {
+          "owner": "${owner}",
+          "repo": "${repo}"
+        }
+      },
+      "expect": {
+        "status": [
+          404
+        ]
+      },
+      "name": "repoSigningKeySSH: missing resource contract",
+      "note": "This sandbox selects OpenPGP signing; Gitea returns 404 for the unselected SSH signing format."
+    },
+    {
+      "operationId": "getSigningKeySSH",
+      "input": {
+        "path": {}
+      },
+      "expect": {
+        "status": [
+          404
+        ]
+      },
+      "name": "getSigningKeySSH: missing resource contract",
+      "note": "This sandbox selects OpenPGP signing; Gitea returns 404 for the unselected SSH signing format."
+    }
+  ]
+}

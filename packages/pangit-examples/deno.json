@@ -9,7 +9,7 @@
     "cli": "deno run --allow-run=docker,deno sandbox/launch.ts cli",
     "example": "deno run --env-file=.env --allow-env --allow-net main.ts",
     "check": "deno check main.ts oauth cli sandbox",
-    "test": "deno test main.ts sandbox",
+    "test": "deno test --permit-no-files",
     "lint": "deno lint main.ts oauth cli sandbox"
   }
 }

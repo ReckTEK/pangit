@@ -1,0 +1,9 @@
+[0m[38;5;245mrunning 1 test from ./tests/e2e/hand-written/git-host-adapter-tests/gitea/gitea-fluent-api-e2e_test.ts[0m
+gitea 1.26.4 hand-written fluent API E2E ...
+  repository-container contract ... [0m[32mok[0m [0m[38;5;245m(188ms)[0m
+  Gitea native-context contract ... [0m[32mok[0m [0m[38;5;245m(9ms)[0m
+gitea 1.26.4 hand-written fluent API E2E ... [0m[32mok[0m [0m[38;5;245m(198ms)[0m
+
+[0m[32mok[0m | 1 passed (2 steps) | 0 failed [0m[38;5;245m(199ms)[0m
+
+[0m[32mCheck[0m tests/e2e/hand-written/git-host-adapter-tests/gitea/gitea-fluent-api-e2e_test.ts

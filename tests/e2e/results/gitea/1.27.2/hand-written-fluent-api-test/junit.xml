@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="deno test" tests="3" failures="0" errors="0" time="0.202">
+    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/gitea/gitea-fluent-api-e2e_test.ts" tests="1" disabled="0" errors="0" failures="0">
+        <testcase name="gitea 1.27.2 hand-written fluent API E2E" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitea/gitea-fluent-api-e2e_test.ts" time="0.201" line="21" col="6">
+        </testcase>
+    </testsuite>
+    <testsuite name="./tests/e2e/hand-written/fluent-api-contracts/repository-container-api-contract.ts" tests="1" disabled="0" errors="0" failures="0">
+        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; repository-container contract" classname="./tests/e2e/hand-written/fluent-api-contracts/repository-container-api-contract.ts" time="0.190" line="49" col="26">
+        </testcase>
+    </testsuite>
+    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/gitea/gitea-native-rest-client-access-contract.ts" tests="1" disabled="0" errors="0" failures="0">
+        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; Gitea native-context contract" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitea/gitea-native-rest-client-access-contract.ts" time="0.010" line="25" col="26">
+        </testcase>
+    </testsuite>
+</testsuites>
