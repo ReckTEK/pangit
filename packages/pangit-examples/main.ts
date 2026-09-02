@@ -1,36 +1,21 @@
 import * as PanGit from "@mannsion/pangit";
 
-const pangit = PanGit.api.createClient("gitea", "1.27.2", {
-  baseUrl: "https://git.example.com/api/v1",
+const apiUrl = Deno.env.get("PANGIT_GITEA_API_URL")?.trim();
+const token = Deno.env.get("PANGIT_GITEA_PAT")?.trim();
+const containerName = Deno.env.get("PANGIT_GITEA_CONTAINER")?.trim();
+const repositoryName = Deno.env.get("PANGIT_GITEA_REPOSITORY")?.trim();
+
+if (!apiUrl || !token || !containerName || !repositoryName) {
+  throw new Error("PanGit example configuration is incomplete");
+}
+
+const client = PanGit.api.createClient("gitea", "1.27.2", apiUrl);
+const git = await client.auth.token(token);
+const container = await git.container(containerName);
+const existingRepository = await container.findRepository(repositoryName);
+const repository = existingRepository ?? await container.createRepository(repositoryName, {
+  initialize: true,
+  defaultBranch: "main",
 });
 
-export async function authorizeWithToken(
-  token: string,
-): Promise<PanGit.api.AuthorizedClient<"gitea", "1.27.2">> {
-  const authorized = await pangit.auth.token({ token });
-
-  // Later: authorized.repositories.list(...)
-  return authorized;
-}
-
-export async function authorizeWithBasic(
-  username: string,
-  password: string,
-): Promise<PanGit.api.AuthorizedClient<"gitea", "1.27.2">> {
-  return await pangit.auth
-    .basic()
-    .gitea(() => ({ username, password }))
-    .codeberg(() => ({ username, password }))
-    .bitbucket(() => ({ username, appPassword: password }))
-    .authorize();
-}
-
-export function createLogin(
-  clientId = "pangit-example",
-  callbackUrl = "https://example.com/auth/callback",
-): PanGit.api.auth.Login<"gitea", "1.27.2"> {
-  return pangit.auth.login({
-    clientId,
-    callbackUrl,
-  });
-}
+console.log(repository.url ?? repository.fullName);
