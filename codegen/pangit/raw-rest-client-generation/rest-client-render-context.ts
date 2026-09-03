@@ -18,6 +18,17 @@ export type ProviderRenderOptions = {
   runtimeModulePath?: string;
   /** Backward-compatible alias for runtimeModulePath. */
   restModulePath?: string;
+  provenance?: ProviderSourceProvenance;
+};
+
+export type ProviderSourceProvenance = {
+  specificationSource: string;
+  specificationSha256: string;
+  licenseSpdx: "MIT" | null;
+  licenseSource: string | null;
+  licenseSha256: string | null;
+  licenseDeclaration: { name: string; url: string } | null;
+  attribution: string | null;
 };
 
 export type RenderedOperation = OperationModel & {
@@ -32,6 +43,7 @@ export type ProviderRenderContext = {
   names: ProviderNames;
   operations: readonly RenderedOperation[];
   operationsName: string;
+  provenance?: ProviderSourceProvenance;
   rootServers: readonly string[];
   runtimeModulePath: string;
   schemaRenderer: SchemaRenderer;
@@ -75,6 +87,7 @@ export function createProviderRenderContext(
     names,
     operations: renderedOperations,
     operationsName: allocated.operationsName,
+    provenance: options.provenance,
     rootServers: Array.isArray(document.servers)
       ? document.servers.flatMap((server) => {
         const url = asString(asObject(server)?.url);

@@ -29,20 +29,22 @@ clients are loaded only when selected.
 This matrix tracks what can be used from the current source tree and what has been exercised against
 a real provider. "Not present" means that no live suite exists; it does not mean a suite failed.
 
-| Provider           | API contract      | Fluent API        | Fluent E2E                                                        | Generated REST client       | REST E2E                                                     |
-| ------------------ | ----------------- | ----------------- | ----------------------------------------------------------------- | --------------------------- | ------------------------------------------------------------ |
-| Gitea              | `1.26.4`          | Available (alpha) | [Pass: 32 contracts](tests/e2e/results/gitea/1.26.4/summary.json) | Available: 471 operations   | [Pass: 471/471](tests/e2e/results/gitea/1.26.4/summary.json) |
-| Gitea              | `1.27.2`          | Available (alpha) | [Pass: 32 contracts](tests/e2e/results/gitea/1.27.2/summary.json) | Available: 482 operations   | [Pass: 482/482](tests/e2e/results/gitea/1.27.2/summary.json) |
-| Codeberg (Forgejo) | `latest` snapshot | Not implemented   | Not present                                                       | Available: 506 operations   | Not present                                                  |
-| GitHub             | `latest` snapshot | Not implemented   | Not present                                                       | Available: 1,222 operations | Not present                                                  |
-| GitLab             | `18.11.11`        | Not implemented   | Not present                                                       | Available: 1,126 operations | Not present                                                  |
-| GitLab             | `19.3.1`          | Not implemented   | Not present                                                       | Available: 1,148 operations | Not present                                                  |
-| Bitbucket Cloud    | `latest` snapshot | Not implemented   | Not present                                                       | Available: 297 operations   | Not present                                                  |
-| Azure DevOps Git   | `latest` snapshot | Not implemented   | Not present                                                       | Available: 112 operations   | Not present                                                  |
+| Provider           | API contract      | Fluent API        | Fluent E2E                                                        | Generated REST client       | REST E2E                                                     | Distribution                            |
+| ------------------ | ----------------- | ----------------- | ----------------------------------------------------------------- | --------------------------- | ------------------------------------------------------------ | --------------------------------------- |
+| Gitea              | `1.26.4`          | Available (alpha) | [Pass: 32 contracts](tests/e2e/results/gitea/1.26.4/summary.json) | Available: 471 operations   | [Pass: 471/471](tests/e2e/results/gitea/1.26.4/summary.json) | MIT evidence recorded                   |
+| Gitea              | `1.27.2`          | Available (alpha) | [Pass: 32 contracts](tests/e2e/results/gitea/1.27.2/summary.json) | Available: 482 operations   | [Pass: 482/482](tests/e2e/results/gitea/1.27.2/summary.json) | MIT evidence recorded                   |
+| Codeberg (Forgejo) | `latest` snapshot | Not implemented   | Not present                                                       | Available: 506 operations   | Not present                                                  | MIT evidence recorded                   |
+| GitHub             | `latest` snapshot | Not implemented   | Not present                                                       | Available: 1,222 operations | Not present                                                  | MIT evidence recorded                   |
+| GitLab             | `18.11.11`        | Not implemented   | Not present                                                       | Available: 1,126 operations | Not present                                                  | Included; license evidence not recorded |
+| GitLab             | `19.3.1`          | Not implemented   | Not present                                                       | Available: 1,148 operations | Not present                                                  | Included; license evidence not recorded |
+| Bitbucket Cloud    | `latest` snapshot | Not implemented   | Not present                                                       | Available: 297 operations   | Not present                                                  | Included; license evidence not recorded |
+| Azure DevOps Git   | `latest` snapshot | Not implemented   | Not present                                                       | Available: 112 operations   | Not present                                                  | Included; license evidence not recorded |
 
 In total, the repository contains **6 providers, 8 generated REST clients, and 5,364 generated
 operations**. `latest` identifies the checked-in specification snapshot used for generation; PanGit
-does not download or negotiate a newer contract at runtime.
+does not download or negotiate a newer contract at runtime. Every schema is hash-pinned. Available
+license evidence is downloaded, verified, and shipped in generated notices; missing evidence is
+stated explicitly without removing the client.
 
 ## Use the alpha from source
 
@@ -171,4 +173,5 @@ Open `http://localhost:5173`. See
 [`packages/pangit-site/Development.md`](packages/pangit-site/Development.md) for build and explorer
 details.
 
-PanGit is licensed under the MIT License.
+PanGit is licensed under the [MIT License](LICENSE). Upstream schema attribution and license texts
+are shipped in [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).

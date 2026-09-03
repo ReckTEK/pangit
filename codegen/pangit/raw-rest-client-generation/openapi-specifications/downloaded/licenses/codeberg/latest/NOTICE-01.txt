@@ -1,0 +1,31 @@
+From 5e923cfbddb59eb7afaed1bc3b5724c1b2bc0844 Mon Sep 17 00:00:00 2001
+From: Earl Warren <contact@earl-warren.org>
+Date: Fri, 23 Aug 2024 17:40:33 +0200
+Subject: [PATCH] chore(license): clarify the API swagger file is and stays MIT
+
+It is not an original work and enforcing copyright on that file would
+probably be difficult. To clarify that the intent of the Forgejo
+authors is that it is used for interoperability with no restriction,
+explicitly release it under MIT and display the intent in the swagger
+web page.
+
+There is a contradiction in claiming it is under MIT while claiming
+copyright is unlikely to be enforceable, but it efficiently conveys
+the intention.
+---
+ templates/swagger/v1_json.tmpl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/templates/swagger/v1_json.tmpl b/templates/swagger/v1_json.tmpl
+index cee797761f..7f9f90a665 100644
+--- a/templates/swagger/v1_json.tmpl
++++ b/templates/swagger/v1_json.tmpl
+@@ -16,7 +16,7 @@
+     "description": "This documentation describes the Forgejo API.",
+     "title": "Forgejo API",
+     "license": {
+-      "name": "MIT",
++      "name": "This file is distributed under the MIT license for the purpose of interoperability",
+       "url": "http://opensource.org/licenses/MIT"
+     },
+     "version": "{{AppVer | JSEscape}}"

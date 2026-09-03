@@ -4,10 +4,29 @@ export type OpenApiFormat = "json" | "yaml";
 export type OpenApiSourceKind = "release" | "live";
 export type OpenApiTransform = "gitea-template";
 
+export type OpenApiNoticeSource = {
+  url: string;
+  expectedSha256: string;
+};
+
+export type OpenApiLicenseSource = {
+  spdx: "MIT";
+  url: string;
+  expectedSha256: string;
+  attribution: string;
+  declaration?: {
+    name: string;
+    url: string;
+  };
+  notices?: OpenApiNoticeSource[];
+};
+
 export type OpenApiVersionSource = {
   url: string;
+  expectedSha256: string;
   ref?: string;
   transform?: OpenApiTransform;
+  license?: OpenApiLicenseSource;
 };
 
 export type GitHostOpenApiSource = {
@@ -35,6 +54,20 @@ function assertHttpsUrl(value: unknown, field: string): asserts value is string 
   if (typeof value !== "string") throw new Error(`${field} must be a string`);
   const url = new URL(value);
   if (url.protocol !== "https:") throw new Error(`${field} must use HTTPS`);
+}
+
+function assertWebUrl(value: unknown, field: string): asserts value is string {
+  if (typeof value !== "string") throw new Error(`${field} must be a string`);
+  const url = new URL(value);
+  if (url.protocol !== "https:" && url.protocol !== "http:") {
+    throw new Error(`${field} must use HTTP or HTTPS`);
+  }
+}
+
+function assertSha256(value: unknown, field: string): asserts value is string {
+  if (typeof value !== "string" || !/^sha256:[a-f0-9]{64}$/.test(value)) {
+    throw new Error(`${field} must be a SHA-256 digest`);
+  }
 }
 
 function validateGitHostMap(
@@ -85,6 +118,78 @@ function validateGitHostMap(
       }
       const versionSource = untypedVersionSource as Record<string, unknown>;
       assertHttpsUrl(versionSource.url, `${gitHost}.versions.${version}.url`);
+      assertSha256(
+        versionSource.expectedSha256,
+        `${gitHost}.versions.${version}.expectedSha256`,
+      );
+      if (versionSource.license !== undefined) {
+        if (!isRecord(versionSource.license)) {
+          throw new Error(`${gitHost}.versions.${version}.license must be an object`);
+        }
+        if (versionSource.license.spdx !== "MIT") {
+          throw new Error(`${gitHost}.versions.${version}.license.spdx must be MIT`);
+        }
+        assertHttpsUrl(
+          versionSource.license.url,
+          `${gitHost}.versions.${version}.license.url`,
+        );
+        assertSha256(
+          versionSource.license.expectedSha256,
+          `${gitHost}.versions.${version}.license.expectedSha256`,
+        );
+        if (
+          typeof versionSource.license.attribution !== "string" ||
+          versionSource.license.attribution.trim().length === 0
+        ) {
+          throw new Error(
+            `${gitHost}.versions.${version}.license.attribution must be a non-empty string`,
+          );
+        }
+        if (versionSource.license.notices !== undefined) {
+          if (!Array.isArray(versionSource.license.notices)) {
+            throw new Error(`${gitHost}.versions.${version}.license.notices must be an array`);
+          }
+          const noticeUrls = new Set<string>();
+          for (const [index, notice] of versionSource.license.notices.entries()) {
+            if (!isRecord(notice)) {
+              throw new Error(
+                `${gitHost}.versions.${version}.license.notices[${index}] must be an object`,
+              );
+            }
+            assertHttpsUrl(
+              notice.url,
+              `${gitHost}.versions.${version}.license.notices[${index}].url`,
+            );
+            assertSha256(
+              notice.expectedSha256,
+              `${gitHost}.versions.${version}.license.notices[${index}].expectedSha256`,
+            );
+            if (noticeUrls.has(notice.url)) {
+              throw new Error(
+                `${gitHost}.versions.${version}.license.notices contains duplicate ${notice.url}`,
+              );
+            }
+            noticeUrls.add(notice.url as string);
+          }
+        }
+        if (versionSource.license.declaration !== undefined) {
+          if (!isRecord(versionSource.license.declaration)) {
+            throw new Error(`${gitHost}.versions.${version}.license.declaration must be an object`);
+          }
+          if (
+            typeof versionSource.license.declaration.name !== "string" ||
+            !/\bMIT\b/i.test(versionSource.license.declaration.name)
+          ) {
+            throw new Error(
+              `${gitHost}.versions.${version}.license.declaration.name must identify MIT`,
+            );
+          }
+          assertWebUrl(
+            versionSource.license.declaration.url,
+            `${gitHost}.versions.${version}.license.declaration.url`,
+          );
+        }
+      }
 
       if (source.kind === "release") {
         if (!/^\d+\.\d+\.\d+$/.test(version)) {
@@ -98,6 +203,14 @@ function validateGitHostMap(
         }
         if (!versionSource.url.includes(`/${versionSource.ref}/`)) {
           throw new Error(`${gitHost} release URL is not pinned to ${versionSource.ref}`);
+        }
+        if (
+          isRecord(versionSource.license) &&
+          !(versionSource.license.url as string).includes(`/${versionSource.ref}/`)
+        ) {
+          throw new Error(
+            `${gitHost} release license URL is not pinned to ${versionSource.ref}`,
+          );
         }
       } else if (versionSource.ref !== undefined) {
         throw new Error(`${gitHost} live source must not declare a ref`);

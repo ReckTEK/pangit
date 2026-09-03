@@ -23,13 +23,35 @@ export type RestClientPublicNamesManifest = {
   version: 1;
 };
 
+export type LicensedSourceArtifact = {
+  source: string;
+  destination: string;
+  bytes: number;
+  sha256: string;
+};
+
+export type RestClientLicenseManifest = {
+  spdx: "MIT";
+  attribution: string;
+  declaration: { name: string; url: string } | null;
+  text: LicensedSourceArtifact;
+  notices: readonly LicensedSourceArtifact[];
+};
+
 export type RestClientSpecManifest = {
   gitHosts: Record<string, {
     selected: string;
     client: ProviderNames;
     versions: Record<
       string,
-      { destination: string; artifacts: { client: string; normalized: string } }
+      {
+        source: string;
+        destination: string;
+        bytes: number;
+        sha256: string;
+        license: RestClientLicenseManifest | null;
+        artifacts: { client: string; normalized: string };
+      }
     >;
   }>;
   schemaVersion: 1;
@@ -82,11 +104,18 @@ export async function readSpecManifest(file: URL): Promise<RestClientSpecManifes
     if (client === undefined) throw new Error(`Missing client naming manifest for ${provider}`);
     const parsedVersions: RestClientSpecManifest["gitHosts"][string]["versions"] = {};
     for (const [version, versionValue] of objectEntries(versions)) {
-      const destination = asString(asObject(versionValue)?.destination);
-      if (destination === undefined) {
+      const versionManifest = asObject(versionValue);
+      const source = asString(versionManifest?.source);
+      const destination = asString(versionManifest?.destination);
+      const bytes = versionManifest?.bytes;
+      const sha256 = asString(versionManifest?.sha256);
+      if (
+        !isHttpsUrl(source) || destination === undefined ||
+        !Number.isSafeInteger(bytes) || (bytes as number) < 0 || !isSha256(sha256)
+      ) {
         throw new Error(`Invalid API specification manifest version ${provider} ${version}`);
       }
-      const artifacts = asObject(asObject(versionValue)?.artifacts) as {
+      const artifacts = asObject(versionManifest?.artifacts) as {
         client: string;
         normalized: string;
       } | undefined;
@@ -97,11 +126,101 @@ export async function readSpecManifest(file: URL): Promise<RestClientSpecManifes
           "codegen/pangit/raw-rest-client-generation/openapi-specifications/normalized/",
         )
       ) throw new Error(`Missing generated artifact paths for ${provider} ${version}`);
-      parsedVersions[version] = { destination, artifacts };
+      if (versionManifest === undefined || !("license" in versionManifest)) {
+        throw new Error(`Missing license status for ${provider} ${version}`);
+      }
+      const license = versionManifest.license === null
+        ? null
+        : parseLicenseManifest(provider, version, versionManifest.license);
+      parsedVersions[version] = {
+        source,
+        destination,
+        bytes: bytes as number,
+        sha256,
+        license,
+        artifacts,
+      };
     }
     parsedGitHosts[provider] = { selected, client, versions: parsedVersions };
   }
   return { schemaVersion: 1, gitHosts: parsedGitHosts };
+}
+
+function parseLicenseManifest(
+  provider: string,
+  version: string,
+  value: unknown,
+): RestClientLicenseManifest {
+  const license = asObject(value);
+  const spdx = asString(license?.spdx);
+  const attribution = asString(license?.attribution);
+  if (spdx !== "MIT" || attribution === undefined || attribution.trim() === "") {
+    throw new Error(`Provider ${provider} ${version} has invalid MIT license evidence`);
+  }
+  const prefix =
+    `codegen/pangit/raw-rest-client-generation/openapi-specifications/downloaded/licenses/${provider}/${version}/`;
+  const text = parseLicensedSourceArtifact(license?.text, `${provider} ${version} license`, prefix);
+  const untypedDeclaration = license?.declaration;
+  let declaration: RestClientLicenseManifest["declaration"] = null;
+  if (untypedDeclaration !== null) {
+    const declarationRecord = asObject(untypedDeclaration);
+    const name = asString(declarationRecord?.name);
+    const url = asString(declarationRecord?.url);
+    if (name === undefined || !/\bMIT\b/i.test(name) || !isWebUrl(url)) {
+      throw new Error(`Invalid embedded license declaration for ${provider} ${version}`);
+    }
+    declaration = { name, url };
+  }
+  if (!Array.isArray(license?.notices)) {
+    throw new Error(`Invalid notice manifest for ${provider} ${version}`);
+  }
+  const notices = license.notices.map((notice, index) =>
+    parseLicensedSourceArtifact(notice, `${provider} ${version} notice ${index + 1}`, prefix)
+  );
+  return { spdx, attribution, declaration, text, notices };
+}
+
+function parseLicensedSourceArtifact(
+  value: unknown,
+  label: string,
+  destinationPrefix: string,
+): LicensedSourceArtifact {
+  const artifact = asObject(value);
+  const source = asString(artifact?.source);
+  const destination = asString(artifact?.destination);
+  const bytes = artifact?.bytes;
+  const sha256 = asString(artifact?.sha256);
+  if (
+    !isHttpsUrl(source) || destination === undefined ||
+    !destination.startsWith(destinationPrefix) ||
+    !Number.isSafeInteger(bytes) || (bytes as number) < 0 || !isSha256(sha256)
+  ) {
+    throw new Error(`Invalid ${label} provenance`);
+  }
+  return { source, destination, bytes: bytes as number, sha256 };
+}
+
+function isHttpsUrl(value: string | undefined): value is string {
+  if (value === undefined) return false;
+  try {
+    return new URL(value).protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
+function isWebUrl(value: string | undefined): value is string {
+  if (value === undefined) return false;
+  try {
+    const protocol = new URL(value).protocol;
+    return protocol === "https:" || protocol === "http:";
+  } catch {
+    return false;
+  }
+}
+
+function isSha256(value: string | undefined): value is string {
+  return value !== undefined && /^sha256:[a-f0-9]{64}$/.test(value);
 }
 
 export function namesForProvider(provider: string): ProviderNames {

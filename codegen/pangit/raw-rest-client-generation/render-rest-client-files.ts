@@ -8,6 +8,7 @@ import {
   createProviderRenderContext,
   type ProviderRenderOptions,
 } from "./rest-client-render-context.ts";
+import { renderProvenanceComment } from "./render-license-provenance.ts";
 import { renderProviderClientModule } from "./render-rest-client.ts";
 
 export type ClientOperationDescriptor = {
@@ -35,8 +36,12 @@ export function renderProviderClientFiles(
     options,
   );
   const clientFile = `${context.names.className}.ts`;
+  const provenance = renderProvenanceComment(context.provenance);
   return new Map([
-    ["mod.ts", `${generatedComment("//")}export * from ${JSON.stringify(`./${clientFile}`)};\n`],
+    [
+      "mod.ts",
+      `${generatedComment("//")}${provenance}export * from ${JSON.stringify(`./${clientFile}`)};\n`,
+    ],
     [clientFile, renderProviderClientModule(context, document)],
   ]);
 }

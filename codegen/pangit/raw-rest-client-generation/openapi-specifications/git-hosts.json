@@ -15,12 +15,26 @@
       "1.26.4": {
         "ref": "v1.26.4",
         "url": "https://raw.githubusercontent.com/go-gitea/gitea/v1.26.4/templates/swagger/v1_json.tmpl",
-        "transform": "gitea-template"
+        "expectedSha256": "sha256:0b69d8398ae3557ff8480c55ee3abebd21131ddac39c23621264a69f13cd893d",
+        "transform": "gitea-template",
+        "license": {
+          "spdx": "MIT",
+          "url": "https://raw.githubusercontent.com/go-gitea/gitea/v1.26.4/LICENSE",
+          "expectedSha256": "sha256:ed2f10a9d78b8c6c9ef33f1420d0eb266981891caf2f15d630553f02dc60d3ae",
+          "attribution": "Copyright (c) 2016 The Gitea Authors; Copyright (c) 2015 The Gogs Authors"
+        }
       },
       "1.27.2": {
         "ref": "v1.27.2",
         "url": "https://raw.githubusercontent.com/go-gitea/gitea/v1.27.2/templates/swagger/v1_openapi3_json.tmpl",
-        "transform": "gitea-template"
+        "expectedSha256": "sha256:0f5a90ebce4a7efff9e338a8944894283c14757d759b28fab4940c461cf2f120",
+        "transform": "gitea-template",
+        "license": {
+          "spdx": "MIT",
+          "url": "https://raw.githubusercontent.com/go-gitea/gitea/v1.27.2/LICENSE",
+          "expectedSha256": "sha256:ed2f10a9d78b8c6c9ef33f1420d0eb266981891caf2f15d630553f02dc60d3ae",
+          "attribution": "Copyright (c) 2016 The Gitea Authors; Copyright (c) 2015 The Gogs Authors"
+        }
       }
     }
   },
@@ -38,7 +52,14 @@
     "upstream": "https://github.com/github/rest-api-description",
     "versions": {
       "latest": {
-        "url": "https://raw.githubusercontent.com/github/rest-api-description/main/descriptions/api.github.com/api.github.com.yaml"
+        "url": "https://raw.githubusercontent.com/github/rest-api-description/085fb86b030e75ae7ba65a2523f8729fdcae19d4/descriptions/api.github.com/api.github.com.yaml",
+        "expectedSha256": "sha256:0ca05b6840052d8d1971523a6c243e36765e2264c797fc56a8f7b5e04ce4a147",
+        "license": {
+          "spdx": "MIT",
+          "url": "https://raw.githubusercontent.com/github/rest-api-description/085fb86b030e75ae7ba65a2523f8729fdcae19d4/LICENSE.md",
+          "expectedSha256": "sha256:3243761cbac07e6d169a5a2f4e7c25cc544da85248e735df74c3672e055cc87b",
+          "attribution": "Copyright (c) 2020 GitHub"
+        }
       }
     }
   },
@@ -56,7 +77,24 @@
     "upstream": "https://codeberg.org",
     "versions": {
       "latest": {
-        "url": "https://codeberg.org/swagger.v1.json"
+        "url": "https://codeberg.org/swagger.v1.json",
+        "expectedSha256": "sha256:bb988ce779fbd7c332391d5abd93b0e6080e12a233945a756aa85093759ad56a",
+        "license": {
+          "spdx": "MIT",
+          "url": "https://spdx.org/licenses/MIT.txt",
+          "expectedSha256": "sha256:c3b1b78bc8bd3ea13aa4bc9778442d16560270afa235006d816e5e88cef24db4",
+          "attribution": "Copyright (c) Forgejo contributors",
+          "declaration": {
+            "name": "This file is distributed under the MIT license for the purpose of interoperability",
+            "url": "http://opensource.org/licenses/MIT"
+          },
+          "notices": [
+            {
+              "url": "https://codeberg.org/forgejo/forgejo/commit/5e923cfbddb59eb7afaed1bc3b5724c1b2bc0844.patch",
+              "expectedSha256": "sha256:633609919b93847156e4830222877cbc7e361f8fdd3c7dff132bfe64228c595c"
+            }
+          ]
+        }
       }
     }
   },
@@ -75,11 +113,13 @@
     "versions": {
       "18.11.11": {
         "ref": "v18.11.11-ee",
-        "url": "https://gitlab.com/gitlab-org/gitlab/-/raw/v18.11.11-ee/doc/api/openapi/openapi_v2.yaml"
+        "url": "https://gitlab.com/gitlab-org/gitlab/-/raw/v18.11.11-ee/doc/api/openapi/openapi_v2.yaml",
+        "expectedSha256": "sha256:4ec241f083a00372d2eb1629b2cac0b1877463e453d2a961c31057a99206ed4a"
       },
       "19.3.1": {
         "ref": "v19.3.1-ee",
-        "url": "https://gitlab.com/gitlab-org/gitlab/-/raw/v19.3.1-ee/doc/api/openapi/openapi_v2.yaml"
+        "url": "https://gitlab.com/gitlab-org/gitlab/-/raw/v19.3.1-ee/doc/api/openapi/openapi_v2.yaml",
+        "expectedSha256": "sha256:17a1d86d6d6da7255f71ad9828c4378a16e48b505f0959896cc0f23e9fd5ee17"
       }
     }
   },
@@ -97,7 +137,8 @@
     "upstream": "https://developer.atlassian.com/cloud/bitbucket",
     "versions": {
       "latest": {
-        "url": "https://dac-static.atlassian.com/cloud/bitbucket/swagger.v3.json"
+        "url": "https://dac-static.atlassian.com/cloud/bitbucket/swagger.v3.json",
+        "expectedSha256": "sha256:3dbfe6a80143511a287e58c21a193d3551ab5d41e8b60e65c1ae121b7000dec3"
       }
     }
   },
@@ -115,7 +156,8 @@
     "upstream": "https://github.com/MicrosoftDocs/vsts-rest-api-specs",
     "versions": {
       "latest": {
-        "url": "https://raw.githubusercontent.com/MicrosoftDocs/vsts-rest-api-specs/master/specification/git/7.2/git.json"
+        "url": "https://raw.githubusercontent.com/MicrosoftDocs/vsts-rest-api-specs/master/specification/git/7.2/git.json",
+        "expectedSha256": "sha256:7e7b5bd1af4b486a1af498c78150ca1083b7c6d621671bde26967406e3d75d6d"
       }
     }
   }

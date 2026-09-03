@@ -10,11 +10,41 @@ import { extractExportedTypeAliases } from "./generated-type-oracle.ts";
 import { parseOpenApiDocument } from "./openapi.ts";
 import { renderProviderRegistryFiles } from "./render-rest-client-registry.ts";
 
+const fixtureSha256 = "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+
+function licensedVersion(
+  provider: string,
+  version: string,
+  destination: string,
+  artifacts: { client: string; normalized: string },
+): RestClientSpecManifest["gitHosts"][string]["versions"][string] {
+  return {
+    source: `https://example.invalid/${provider}/${version}/openapi`,
+    destination,
+    bytes: 1,
+    sha256: fixtureSha256,
+    license: {
+      spdx: "MIT",
+      attribution: "Example copyright holder",
+      declaration: null,
+      text: {
+        source: `https://example.invalid/${provider}/${version}/LICENSE`,
+        destination:
+          `codegen/pangit/raw-rest-client-generation/openapi-specifications/downloaded/licenses/${provider}/${version}/LICENSE`,
+        bytes: 1,
+        sha256: fixtureSha256,
+      },
+      notices: [],
+    },
+    artifacts,
+  };
+}
+
 Deno.test("complete provider set is always required", () => {
   assertExpectedProviderSet(expectedRestClientProviders);
   assertThrows(
     () => assertExpectedProviderSet(expectedRestClientProviders.slice(1)),
-    "missing=[azure-devops]",
+    `missing=[${expectedRestClientProviders[0]}]`,
   );
   assertThrows(
     () => assertExpectedProviderSet([...expectedRestClientProviders, "unexpected"]),
@@ -66,24 +96,26 @@ Deno.test("generated module ships raw clients behind literal dynamic imports", (
           variablePrefix: "gitea",
         },
         versions: {
-          "1.26.4": {
-            destination:
-              "codegen/pangit/raw-rest-client-generation/openapi-specifications/downloaded/gitea/1.26.4.json",
-            artifacts: {
+          "1.26.4": licensedVersion(
+            "gitea",
+            "1.26.4",
+            "codegen/pangit/raw-rest-client-generation/openapi-specifications/downloaded/gitea/1.26.4.json",
+            {
               client: "src/generated-rest-clients/gitea/1.26.4/mod.ts",
               normalized:
                 "codegen/pangit/raw-rest-client-generation/openapi-specifications/normalized/gitea/1.26.4.json",
             },
-          },
-          "1.27.2": {
-            destination:
-              "codegen/pangit/raw-rest-client-generation/openapi-specifications/downloaded/gitea/1.27.2.json",
-            artifacts: {
+          ),
+          "1.27.2": licensedVersion(
+            "gitea",
+            "1.27.2",
+            "codegen/pangit/raw-rest-client-generation/openapi-specifications/downloaded/gitea/1.27.2.json",
+            {
               client: "src/generated-rest-clients/gitea/1.27.2/mod.ts",
               normalized:
                 "codegen/pangit/raw-rest-client-generation/openapi-specifications/normalized/gitea/1.27.2.json",
             },
-          },
+          ),
         },
       },
       github: {
@@ -95,15 +127,16 @@ Deno.test("generated module ships raw clients behind literal dynamic imports", (
           variablePrefix: "gitHub",
         },
         versions: {
-          latest: {
-            destination:
-              "codegen/pangit/raw-rest-client-generation/openapi-specifications/downloaded/github/latest.yaml",
-            artifacts: {
+          latest: licensedVersion(
+            "github",
+            "latest",
+            "codegen/pangit/raw-rest-client-generation/openapi-specifications/downloaded/github/latest.yaml",
+            {
               client: "src/generated-rest-clients/github/latest/mod.ts",
               normalized:
                 "codegen/pangit/raw-rest-client-generation/openapi-specifications/normalized/github/latest.json",
             },
-          },
+          ),
         },
       },
     },
@@ -757,14 +790,11 @@ Deno.test("provider-version publication is isolated, marked, retired safely, and
           variablePrefix: "gitea",
         },
         versions: {
-          "1.27.2": {
-            destination: "gitea.json",
-            artifacts: {
-              client: "src/generated-rest-clients/gitea/1.27.2/mod.ts",
-              normalized:
-                "codegen/pangit/raw-rest-client-generation/openapi-specifications/normalized/gitea/1.27.2.json",
-            },
-          },
+          "1.27.2": licensedVersion("gitea", "1.27.2", "gitea.json", {
+            client: "src/generated-rest-clients/gitea/1.27.2/mod.ts",
+            normalized:
+              "codegen/pangit/raw-rest-client-generation/openapi-specifications/normalized/gitea/1.27.2.json",
+          }),
         },
       },
       github: {
@@ -776,14 +806,11 @@ Deno.test("provider-version publication is isolated, marked, retired safely, and
           variablePrefix: "gitHub",
         },
         versions: {
-          latest: {
-            destination: "github.json",
-            artifacts: {
-              client: "src/generated-rest-clients/github/latest/mod.ts",
-              normalized:
-                "codegen/pangit/raw-rest-client-generation/openapi-specifications/normalized/github/latest.json",
-            },
-          },
+          latest: licensedVersion("github", "latest", "github.json", {
+            client: "src/generated-rest-clients/github/latest/mod.ts",
+            normalized:
+              "codegen/pangit/raw-rest-client-generation/openapi-specifications/normalized/github/latest.json",
+          }),
         },
       },
     },

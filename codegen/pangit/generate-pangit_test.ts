@@ -14,6 +14,7 @@ Deno.test("PanGit generation runs REST-client and E2E-asset phases in dependency
     paths: workspace,
     downloadOpenApiSpecifications: record("download"),
     reuseDownloadedOpenApiSpecifications: record("reuse-downloaded"),
+    generateLicenseArtifacts: record("generate-license-artifacts"),
     normalizeOpenApiSpecifications: record("normalize"),
     cleanGeneratedE2EArtifacts: record("clean-generated-e2e"),
     generateRestClients: record("generate-clients"),
@@ -28,6 +29,7 @@ Deno.test("PanGit generation runs REST-client and E2E-asset phases in dependency
 
   assertSequence(calls, [
     "reuse-downloaded",
+    "generate-license-artifacts",
     "normalize",
     "generate-clients",
     "clean-generated-e2e",

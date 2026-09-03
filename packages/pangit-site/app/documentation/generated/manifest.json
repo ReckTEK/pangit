@@ -570,7 +570,7 @@
           "version": "latest",
           "route": "/docs/raw/github/latest",
           "specUrl": "/openapi/github/latest.json",
-          "source": "https://raw.githubusercontent.com/github/rest-api-description/main/descriptions/api.github.com/api.github.com.yaml",
+          "source": "https://raw.githubusercontent.com/github/rest-api-description/085fb86b030e75ae7ba65a2523f8729fdcae19d4/descriptions/api.github.com/api.github.com.yaml",
           "sourceSha256": "sha256:0ca05b6840052d8d1971523a6c243e36765e2264c797fc56a8f7b5e04ce4a147",
           "sha256": "sha256:36810f74084aed2a0da95ac61587b1bd28780c90c78cb920e2580295baf15f63",
           "openapi": "3.0.3",

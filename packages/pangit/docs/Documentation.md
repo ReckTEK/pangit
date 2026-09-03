@@ -20,9 +20,10 @@ codegen/pangit/raw-rest-client-generation/openapi-specifications/git-hosts.json
 ```
 
 The generated manifest records every provider, API version, selected version, upstream source,
-checksum, generated client, and site artifact. The documentation stage reuses the REST-client
-operation parser and reviewed public-name map, so the searchable method index matches the methods
-actually emitted by each generated client.
+reviewed checksum, license status, generated client, and site artifact. Where available, it also
+records the license source, checksum, embedded declaration, and attribution. The documentation stage
+reuses the REST-client operation parser and reviewed public-name map, so the searchable method index
+matches the methods actually emitted by each generated client.
 
 Each generated OpenAPI document is a byte-for-byte copy of its normalized specification.
 Descriptions, parameters, schemas, authentication, response contracts, and vendor extensions are

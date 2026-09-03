@@ -8,6 +8,7 @@ import {
 import { workspace, type WorkspacePaths } from "../workspace-layout.ts";
 import { cleanGeneratedE2EArtifacts } from "./e2e-test-generation/clean-generated-e2e-output.ts";
 import { generateE2ETestAssets } from "./e2e-test-generation/generate-e2e-test-assets.ts";
+import { generateLicenseArtifacts } from "./generate-license-artifacts.ts";
 import { generateRestClients } from "./raw-rest-client-generation/generate-rest-clients.ts";
 import {
   downloadOpenApiSpecifications,
@@ -26,6 +27,7 @@ export interface PanGitGenerationDependencies {
   paths: WorkspacePaths;
   downloadOpenApiSpecifications: typeof downloadOpenApiSpecifications;
   reuseDownloadedOpenApiSpecifications: typeof reuseDownloadedOpenApiSpecifications;
+  generateLicenseArtifacts: typeof generateLicenseArtifacts;
   normalizeOpenApiSpecifications: typeof normalizeOpenApiSpecifications;
   cleanGeneratedE2EArtifacts: typeof cleanGeneratedE2EArtifacts;
   generateRestClients: typeof generateRestClients;
@@ -36,6 +38,7 @@ const defaultDependencies: PanGitGenerationDependencies = {
   paths: workspace,
   downloadOpenApiSpecifications,
   reuseDownloadedOpenApiSpecifications,
+  generateLicenseArtifacts,
   normalizeOpenApiSpecifications,
   cleanGeneratedE2EArtifacts,
   generateRestClients,
@@ -55,6 +58,10 @@ export function createPanGitGenerationPhases(
         options.cached
           ? dependencies.reuseDownloadedOpenApiSpecifications()
           : dependencies.downloadOpenApiSpecifications(),
+    },
+    {
+      title: "Generate package license evidence",
+      run: () => dependencies.generateLicenseArtifacts(paths),
     },
     {
       title: "Normalize downloaded OpenAPI specifications",

@@ -21,7 +21,23 @@ Deno.test("provider-client export generation replaces legacy paths and omits run
         },
         versions: {
           "1.27.2": {
+            source: "https://example.invalid/gitea.json",
             destination: "gitea.json",
+            bytes: 1,
+            sha256: "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            license: {
+              spdx: "MIT",
+              attribution: "Example",
+              declaration: null,
+              text: {
+                source: "https://example.invalid/LICENSE",
+                destination:
+                  "codegen/pangit/raw-rest-client-generation/openapi-specifications/downloaded/licenses/gitea/1.27.2/LICENSE",
+                bytes: 1,
+                sha256: "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              },
+              notices: [],
+            },
             artifacts: {
               client: "src/generated-rest-clients/gitea/1.27.2/mod.ts",
               normalized:

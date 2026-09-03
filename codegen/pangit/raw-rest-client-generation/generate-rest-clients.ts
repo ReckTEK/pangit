@@ -101,7 +101,8 @@ export async function generateRestClients(
   for (const provider of providers) {
     const providerManifest = manifest.gitHosts[provider];
     for (const version of Object.keys(providerManifest.versions).toSorted(compareText)) {
-      const artifacts = providerManifest.versions[version].artifacts;
+      const versionManifest = providerManifest.versions[version];
+      const artifacts = versionManifest.artifacts;
       const document = parseOpenApiDocument(
         await Deno.readTextFile(
           new URL(
@@ -123,6 +124,25 @@ export async function generateRestClients(
             ? (names) => capturedProviders[provider] = names
             : undefined,
           lockedNames: lockedNames.providers[provider],
+          provenance: versionManifest.license === null
+            ? {
+              specificationSource: versionManifest.source,
+              specificationSha256: versionManifest.sha256,
+              licenseSpdx: null,
+              licenseSource: null,
+              licenseSha256: null,
+              licenseDeclaration: null,
+              attribution: null,
+            }
+            : {
+              specificationSource: versionManifest.source,
+              specificationSha256: versionManifest.sha256,
+              licenseSpdx: versionManifest.license.spdx,
+              licenseSource: versionManifest.license.text.source,
+              licenseSha256: versionManifest.license.text.sha256,
+              licenseDeclaration: versionManifest.license.declaration,
+              attribution: versionManifest.license.attribution,
+            },
           restModulePath: "../../runtime/mod.ts",
         })
       ) {

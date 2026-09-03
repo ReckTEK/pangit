@@ -444,10 +444,15 @@ function assertGeneratedSourceLayout(sources: ReadonlyMap<string, string>): void
       );
     }
     const clientFile = clientModules[0].slice(versionPath.length + 1);
-    const expectedBarrel = `${generatedComment("//")}export * from ${
-      JSON.stringify(`./${clientFile}`)
-    };\n`;
-    if (sources.get(`${versionPath}/mod.ts`) !== expectedBarrel) {
+    const barrel = sources.get(`${versionPath}/mod.ts`);
+    const expectedExport = `export * from ${JSON.stringify(`./${clientFile}`)};\n`;
+    if (
+      barrel === undefined || !barrel.startsWith(generatedComment("//")) ||
+      !barrel.endsWith(expectedExport) ||
+      barrel.slice(generatedComment("//").length, -expectedExport.length).split("\n").some(
+        (line) => line !== "" && !line.startsWith("// "),
+      )
+    ) {
       throw new Error(
         `Generated provider barrel does not re-export its REST client: ${versionPath}`,
       );

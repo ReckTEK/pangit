@@ -4,10 +4,17 @@ PanGit provides generated, typed TypeScript REST clients for Git hosting provide
 preserves its provider's request fields, response bodies, status codes, operation names, and API
 version.
 
-## Install
+> [!IMPORTANT]
+> **Status: alpha development.** The fluent API is implemented and live-tested for Gitea only. Raw
+> REST clients are generated for every provider listed below, with live E2E coverage for Gitea. The
+> package is not published to JSR yet.
+
+## Use from source
 
 ```bash
-deno add jsr:@mannsion/pangit
+git clone https://github.com/mannsion/pangit.git
+cd pangit
+deno task check
 ```
 
 ## Create a client
@@ -85,4 +92,5 @@ src/generated-rest-clients/
 Generated clients are rebuilt from checked-in OpenAPI inputs with `deno task generate --cached` at
 the repository root. Do not edit `src/generated-rest-clients/` directly.
 
-PanGit is licensed under the MIT License.
+PanGit is licensed under the [MIT License](LICENSE). Upstream schema sources, license status, and
+available license texts are included in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

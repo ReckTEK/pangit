@@ -4,6 +4,7 @@ import { asString } from "./openapi.ts";
 import type { OpenApiDocument } from "./openapi.ts";
 import { renderOperationDefinition } from "./render-operation-metadata.ts";
 import { renderOperationTypes } from "./render-operation-types.ts";
+import { renderProvenanceComment } from "./render-license-provenance.ts";
 import { typeIdentifiers } from "./rest-client-render-context.ts";
 import type { ProviderRenderContext, RenderedOperation } from "./rest-client-render-context.ts";
 
@@ -90,7 +91,7 @@ Object.defineProperties(${context.names.className}, {
     .map((name) => `  type ${name},`)
     .join("\n");
 
-  return `${generatedComment("//")}${header}
+  return `${generatedComment("//")}${renderProvenanceComment(context.provenance)}${header}
 
 import {
   deepFreezeRestMetadata,
