@@ -50,6 +50,7 @@ git switch --create your-change upstream/main
 The following are generator-owned:
 
 - `packages/pangit/src/generated-rest-clients/`
+- `packages/pangit/src/fluent-api/generated-media-types.ts`
 - `packages/pangit/LICENSE`
 - `packages/pangit/THIRD_PARTY_NOTICES.md`
 - `THIRD_PARTY_NOTICES.md`
@@ -63,12 +64,16 @@ Edit the source manifest, normalizer, renderer, template, or hand-written E2E in
 deno task generate --cached
 ```
 
-This uses the checked-in OpenAPI downloads and does not start Docker. Run `deno task generate`
-without `--cached` only when intentionally refreshing upstream specifications. If reviewed upstream
-changes alter public generated names, inspect that API change before running
+This uses the checked-in OpenAPI and MIME database downloads and does not start Docker. Run
+`deno task generate` without `--cached` only when intentionally refreshing upstream inputs. If
+reviewed upstream changes alter public generated names, inspect that API change before running
 `deno task generate --update-public-names`. Commit the authoritative input and regenerated tracked
 output together, preserve upstream license and attribution information, and review the complete
 diff.
+
+MIME inference belongs in the shared fluent layer. Update the pinned registry and its license
+evidence through `codegen/pangit/media-type-generation/`; do not maintain provider-specific
+extension lists. Provider adapters only identify whether their file MIME metadata is reliable.
 
 Do not edit a file carrying an `@generated` / `DO NOT EDIT` header. See
 [`codegen/README.md`](codegen/README.md) for generator ownership.

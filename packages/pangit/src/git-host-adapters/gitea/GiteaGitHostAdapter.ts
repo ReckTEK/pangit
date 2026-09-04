@@ -31,6 +31,10 @@ import {
   getGiteaDirectory,
   listGiteaDirectory,
   readGiteaContent,
+  readGiteaContentBlob,
+  readGiteaContentBytes,
+  readGiteaContentJson,
+  readGiteaContentText,
   readGiteaFiles,
   readGiteaPathMetadataBatch,
   readGiteaSubmodule,
@@ -40,7 +44,14 @@ import { createGiteaFork, listGiteaForks } from "./forks.ts";
 import { GiteaAdapterContext, type GiteaAdapterOptions } from "./GiteaAdapterContext.ts";
 import { createGiteaClientNative } from "./native/GiteaClientNative.ts";
 import type { GiteaVersion } from "./native/GiteaEntityNative.ts";
-import { getGiteaBlob, giteaBlobReadSupport } from "./optional-capabilities/blob-reads.ts";
+import {
+  getGiteaBlob,
+  giteaBlobReadSupport,
+  readGiteaBlob,
+  readGiteaBlobBytes,
+  readGiteaBlobJson,
+  readGiteaBlobText,
+} from "./optional-capabilities/blob-reads.ts";
 import {
   createGiteaBranchRule,
   deleteGiteaBranchRule,
@@ -291,6 +302,18 @@ export class GiteaGitHostAdapter<TVersion extends GiteaVersion> implements Adapt
 
   readContent: Adapter<TVersion>["readContent"] = (repository, path, options) =>
     readGiteaContent(this.#context, repository, path, options);
+
+  readContentBytes: Adapter<TVersion>["readContentBytes"] = (repository, path, options) =>
+    readGiteaContentBytes(this.#context, repository, path, options);
+
+  readContentText: Adapter<TVersion>["readContentText"] = (repository, path, options) =>
+    readGiteaContentText(this.#context, repository, path, options);
+
+  readContentJson: Adapter<TVersion>["readContentJson"] = (repository, path, options) =>
+    readGiteaContentJson(this.#context, repository, path, options);
+
+  readContentBlob: Adapter<TVersion>["readContentBlob"] = (repository, path, options) =>
+    readGiteaContentBlob(this.#context, repository, path, options);
 
   readFiles: Adapter<TVersion>["readFiles"] = (repository, paths, options) =>
     readGiteaFiles(this.#context, repository, paths, options);
@@ -562,6 +585,18 @@ export class GiteaGitHostAdapter<TVersion extends GiteaVersion> implements Adapt
 
   getBlob: Adapter<TVersion>["getBlob"] = (repository, sha, options) =>
     getGiteaBlob(this.#context, repository, sha, options);
+
+  readBlobBytes: Adapter<TVersion>["readBlobBytes"] = (repository, sha, options) =>
+    readGiteaBlobBytes(this.#context, repository, sha, options);
+
+  readBlobText: Adapter<TVersion>["readBlobText"] = (repository, sha, options) =>
+    readGiteaBlobText(this.#context, repository, sha, options);
+
+  readBlobJson: Adapter<TVersion>["readBlobJson"] = (repository, sha, options) =>
+    readGiteaBlobJson(this.#context, repository, sha, options);
+
+  readBlob: Adapter<TVersion>["readBlob"] = (repository, sha, options) =>
+    readGiteaBlob(this.#context, repository, sha, options);
 
   listPullRequestReviews: Adapter<TVersion>["listPullRequestReviews"] = (
     repository,

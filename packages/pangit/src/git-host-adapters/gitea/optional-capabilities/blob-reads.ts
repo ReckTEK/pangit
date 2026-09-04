@@ -2,20 +2,34 @@ import { ProviderInvariantError } from "../../../fluent-api/adapter-contract/err
 import type {
   BlobData,
   BlobReadCapabilitySupport,
+  ReadGitBlobOptions,
 } from "../../../fluent-api/adapter-contract/optional/blob-reads.ts";
 import type { OperationOptions } from "../../../fluent-api/adapter-contract/operation-options.ts";
 import { requireIdentity } from "../../../fluent-api/adapter-contract/operation-options.ts";
 import type { RepositoryData } from "../../../fluent-api/adapter-contract/repositories.ts";
+import {
+  createWebBlob,
+  decodeContentText,
+  parseContentJson,
+  requireContentBytes,
+  validateContentBlobOptions,
+} from "../../../fluent-api/content-body.ts";
 import type { GiteaAdapterContext } from "../GiteaAdapterContext.ts";
 import { createGiteaBlobNative, type GiteaBlobPayload } from "../native/GiteaBlobNative.ts";
 import type { GiteaVersion } from "../native/GiteaEntityNative.ts";
-import { requestGiteaBody } from "../response.ts";
+import { type GiteaOperationIdentity, requestGiteaBody } from "../response.ts";
 
 type AnyGiteaBlob = GiteaBlobPayload<GiteaVersion>;
 
 export const giteaBlobReadSupport = Object.freeze({
   supported: true,
-  operations: Object.freeze({ get: "direct" }),
+  operations: Object.freeze({
+    get: "direct",
+    readBytes: "direct",
+    readText: "direct",
+    readJson: "direct",
+    readBlob: "direct",
+  }),
 }) satisfies BlobReadCapabilitySupport;
 
 /** Read one Git blob directly by object ID. */
@@ -24,8 +38,8 @@ export async function getGiteaBlob<TVersion extends GiteaVersion>(
   repository: RepositoryData<"gitea", TVersion>,
   requestedSha: string,
   options: OperationOptions = {},
+  operation: GiteaOperationIdentity = { universal: "getBlob", native: "GetBlob" },
 ): Promise<BlobData<"gitea", TVersion>> {
-  const operation = { universal: "getBlob", native: "GetBlob" } as const;
   const sha = requireGitObjectId(requestedSha);
   const client = await context.client();
   const payload = await requestGiteaBody<AnyGiteaBlob, TVersion>(
@@ -62,6 +76,62 @@ export async function getGiteaBlob<TVersion extends GiteaVersion>(
     bytes,
     native: createGiteaBlobNative(client, payload as GiteaBlobPayload<TVersion>),
   });
+}
+
+/** Read one Git blob as a defensive byte copy with one direct request. */
+export async function readGiteaBlobBytes<TVersion extends GiteaVersion>(
+  context: GiteaAdapterContext<TVersion>,
+  repository: RepositoryData<"gitea", TVersion>,
+  sha: string,
+  options: OperationOptions = {},
+  operation = "readBlobBytes",
+): Promise<Uint8Array> {
+  const blob = await getGiteaBlob(context, repository, sha, options, {
+    universal: operation,
+    native: "GetBlob",
+  });
+  return requireContentBytes(blob, { provider: "gitea", version: context.version, operation });
+}
+
+/** Read one Git blob as strict UTF-8 text. */
+export async function readGiteaBlobText<TVersion extends GiteaVersion>(
+  context: GiteaAdapterContext<TVersion>,
+  repository: RepositoryData<"gitea", TVersion>,
+  sha: string,
+  options: OperationOptions = {},
+): Promise<string> {
+  const operation = "readBlobText";
+  const bytes = await readGiteaBlobBytes(context, repository, sha, options, operation);
+  return decodeContentText(bytes, { provider: "gitea", version: context.version, operation });
+}
+
+/** Read one Git blob as JSON without asserting a caller-specific schema. */
+export async function readGiteaBlobJson<TVersion extends GiteaVersion>(
+  context: GiteaAdapterContext<TVersion>,
+  repository: RepositoryData<"gitea", TVersion>,
+  sha: string,
+  options: OperationOptions = {},
+): Promise<unknown> {
+  const operation = "readBlobJson";
+  const bytes = await readGiteaBlobBytes(context, repository, sha, options, operation);
+  return parseContentJson(bytes, { provider: "gitea", version: context.version, operation });
+}
+
+/** Git objects have no filename or file MIME type; the caller supplies a name or explicit type. */
+export async function readGiteaBlob<TVersion extends GiteaVersion>(
+  context: GiteaAdapterContext<TVersion>,
+  repository: RepositoryData<"gitea", TVersion>,
+  sha: string,
+  options: ReadGitBlobOptions = {},
+): Promise<globalThis.Blob> {
+  const operation = "readBlob";
+  const errorContext = { provider: "gitea" as const, version: context.version, operation };
+  validateContentBlobOptions(options, errorContext);
+  const blob = await getGiteaBlob(context, repository, sha, options, {
+    universal: operation,
+    native: "GetBlob",
+  });
+  return createWebBlob(blob, options, errorContext);
 }
 
 function requireGitObjectId(value: string): string {

@@ -51,6 +51,30 @@ const gitea = await PanGit.createProviderClient(
 );
 ```
 
+## Fluent file reads
+
+The provider-neutral fluent API currently supports Gitea:
+
+```ts
+const connection = PanGit.api.createClient("gitea", "1.27.2", {
+  baseUrl: "https://git.example.com/api/v1",
+});
+const git = await connection.auth.token(token);
+const owner = await git.container("acme");
+const repository = await owner.repository("website");
+
+const readme = await repository.content.readText("README.md", { ref: "main" });
+const image = await repository.content.readBlob("logo.png", { ref: "main" });
+console.log(readme, image.type, image.size); // image is a standard web Blob
+```
+
+`readBytes()` and `readJson()` are also available. Loaded content has synchronous `text()`,
+`json()`, `arrayBuffer()`, and `blob()` conversions with no further requests. Web Blob MIME
+resolution uses a reliable provider type, then the standard filename-extension registry; unresolved
+types throw `PanGit.api.errors.ContentReadError`. Supply `{ type: "image/png" }` to override the
+type or a `fileName` hint when reading a filename-free Git blob with
+`repository.blobs.readBlob(sha, options)`.
+
 ## Provider clients
 
 | Provider           | Key            | API versions         |

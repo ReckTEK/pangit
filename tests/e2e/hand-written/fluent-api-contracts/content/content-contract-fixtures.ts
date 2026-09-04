@@ -2,11 +2,21 @@
 export type ContentContractFixtures = {
   readonly repository: { readonly owner: string; readonly name: string };
   readonly ref: string;
+  readonly branch: string;
   readonly parentRef: string;
   readonly text: { readonly path: string; readonly value: string };
   readonly binary: { readonly path: string; readonly value: readonly number[] };
   readonly emptyPath: string;
   readonly unicodePath: string;
+  readonly unicodeValue: string;
+  readonly json: { readonly path: string; readonly value: unknown };
+  readonly invalidJsonPath: string;
+  readonly image: {
+    readonly path: string;
+    readonly extensionlessPath: string;
+    readonly bytes: readonly number[];
+  };
+  readonly unknownBinaryPath: string;
   readonly nestedDirectory: string;
   readonly nestedPath: string;
   readonly deepPath: string;

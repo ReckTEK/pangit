@@ -1,4 +1,5 @@
 import type { Provider } from "../../generated-rest-clients/git-host.ts";
+import type { ContentReadFailure } from "./content-body.ts";
 
 /** Safe context retained by every fluent operation error. */
 export interface FluentErrorContext {
@@ -71,6 +72,16 @@ export class OperationTimeoutError extends ProviderOperationError {}
 export class IncompleteHistoryError extends ProviderOperationError {}
 /** Requested file bytes exist but are unavailable through the provider content response. */
 export class ContentUnavailableError extends ProviderOperationError {}
+/** A local body conversion failed; provider read errors retain their existing error types. */
+export class ContentReadError extends FluentOperationError {
+  constructor(
+    message: string,
+    readonly reason: ContentReadFailure,
+    context: ValidationErrorContext,
+  ) {
+    super(message, context);
+  }
+}
 export class ProviderInvariantError extends ProviderOperationError {}
 
 /** A high-level capability is unavailable without probing a provider. */

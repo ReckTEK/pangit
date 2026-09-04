@@ -76,10 +76,10 @@ const git = await connection.auth.token(token);
 
 const owner = await git.container("acme");
 const repository = await owner.repository("website");
-const readme = await repository.content.read("README.md", { ref: "main" });
+const readme = await repository.content.readText("README.md", { ref: "main" });
 
 console.log(repository.fullName);
-console.log(new TextDecoder().decode(readme.bytes ?? new Uint8Array()));
+console.log(readme);
 ```
 
 ```bash
@@ -92,6 +92,85 @@ content reads and file-change commits; pull requests, reviews, comments, and mer
 statuses; current-user profiles; issues; releases; webhooks; CI run discovery; packages; blobs; and
 branch rules. Exact provider payloads and narrower provider operations remain available through
 typed native access and Gitea-specific operation extensions.
+
+### Reading files and blobs
+
+| What you need     | Repository path                               | Git blob SHA                                   |
+| ----------------- | --------------------------------------------- | ---------------------------------------------- |
+| UTF-8 text        | `repository.content.readText(path, { ref })`  | `repository.blobs.readText(sha)`               |
+| Raw bytes         | `repository.content.readBytes(path, { ref })` | `repository.blobs.readBytes(sha)`              |
+| Parsed JSON       | `repository.content.readJson(path, { ref })`  | `repository.blobs.readJson(sha)`               |
+| Web `Blob`        | `repository.content.readBlob(path, { ref })`  | `repository.blobs.readBlob(sha, { fileName })` |
+| Metadata and body | `repository.content.read(path, { ref })`      | `repository.blobs.get(sha)`                    |
+
+Text, bytes, JSON, and Git blob SHA reads make one provider request. Gitea path `readBlob()` makes
+two: file metadata, then raw bytes pinned to that file's commit and verified against its blob SHA.
+JSON returns `unknown`; validate its shape before using it as application data. Text and JSON use
+strict UTF-8 and strip a UTF-8 BOM.
+
+When you need metadata too, returned file and blob entities expose synchronous, repeatable `text()`,
+`json()`, `arrayBuffer()`, and `blob()` methods. These read the loaded snapshot without more HTTP
+requests; byte arrays and buffers are defensive copies. The same methods work on `readFiles()` batch
+results and on explicitly dereferenced file content:
+
+```ts
+const file = await repository.content.read("README.md", { ref: "main" });
+console.log(file.sha, file.text());
+
+const files = await repository.content.readFiles(["README.md", "missing.txt"], { ref: "main" });
+for (const result of files) {
+  if (result.unavailable) continue;
+  console.log(result.path, result.content?.text());
+}
+```
+
+Empty files return empty text or bytes. Missing paths retain provider errors; unavailable batch
+entries retain their status and input order. Converting a metadata-only result, directory, or link
+throws `PanGit.api.errors.ContentReadError`, as does invalid UTF-8 or JSON. Read helpers never
+silently substitute empty content or follow links. Use
+`readSymlink(..., { dereference: "internal" })` when explicit internal dereferencing is intended,
+then read the returned `dereferenced` file.
+
+#### Images, downloads, and Web Blobs
+
+`readBlob()` and entity `.blob()` return a standard Web `Blob`, not PanGit's SHA-addressed Git blob
+entity. Its `type` identifies the file format; its bytes remain unchanged:
+
+```ts
+const image = await repository.content.readBlob("logo.png", { ref: "main" });
+console.log(image.type); // image/png
+const bytes = new Uint8Array(await image.arrayBuffer());
+
+const loaded = await repository.content.read("logo.png", { ref: "main" });
+const webBlob = loaded.blob(); // No additional request.
+```
+
+MIME selection uses an explicit `type`, then reliable provider MIME, then the `fileName` hint or
+repository path extension using a generated `mime-db` extension map. Unknown formats throw
+`PanGit.api.errors.ContentReadError` with reason `unknown-media-type`; supply a known `fileName` or
+an explicit `type`. SHA-only reads have no filename. Use `type: "application/octet-stream"` when
+generic binary is intentional; PanGit does not silently assume it. Invalid MIME or empty filename
+hints fail before any request.
+
+Extension inference describes the expected format; it does not validate the file contents. MIME
+parameters such as `charset` are discarded from the Blob's normalized `type`.
+
+Browser-direct Gitea calls require CORS to expose `ETag` and `X-Gitea-Object-Type` so PanGit can
+verify the raw response. This does not affect Deno calls or using the returned Blob in a browser.
+
+In the browser, revoke object URLs after use:
+
+```ts
+const url = URL.createObjectURL(image);
+const preview = new Image();
+try {
+  preview.src = url;
+  await preview.decode();
+  document.body.append(preview);
+} finally {
+  URL.revokeObjectURL(url);
+}
+```
 
 ## Generated REST clients
 

@@ -125,7 +125,7 @@ async function writeFixture(root: URL, withFluentApiTest = true): Promise<Worksp
         },
         runner: {
           name: "e2e",
-          image: "denoland/deno:alpine",
+          image: "denoland/deno:2.9.5",
           workspace: "/workspace",
           results: "/results",
           credentials: "/credentials",
@@ -139,12 +139,26 @@ async function writeFixture(root: URL, withFluentApiTest = true): Promise<Worksp
           authorizationHeader: "authorization",
           tokenPrefix: "token ",
         },
-        assets: ["bootstrap.sh"],
+        services: {
+          "webhook-journal": {
+            image: "denoland/deno:2.9.5",
+            init: true,
+            stop_grace_period: "10s",
+            command: ["run", "/fixture/webhook-journal.ts"],
+            volumes: ["./webhook-journal.ts:/fixture/webhook-journal.ts:ro"],
+            healthcheck: { test: ["CMD", "true"] },
+          },
+        },
+        assets: ["bootstrap.sh", "webhook-journal.ts"],
       }),
     );
     await write(
       new URL("bootstrap.sh", new URL(testPlan.dockerEnvironmentDefinition, root)),
       "#!/bin/sh\nset -eu\n",
+    );
+    await write(
+      new URL("webhook-journal.ts", new URL(testPlan.dockerEnvironmentDefinition, root)),
+      "// Hand-written webhook journal with graceful shutdown.\n",
     );
     if (withFluentApiTest && testPlan.handWrittenFluentApiTest !== undefined) {
       await write(
@@ -212,9 +226,44 @@ Deno.test("generated raw test and Docker environment reference the hand-written 
     );
     const composeSource = await Deno.readTextFile(new URL("compose.yaml", docker));
     const compose = parseYaml(composeSource) as {
-      services: Record<string, { working_dir?: string; volumes?: string[]; command?: string[] }>;
+      services: Record<string, {
+        working_dir?: string;
+        volumes?: string[];
+        command?: string[];
+        image?: string;
+        init?: boolean;
+        stop_grace_period?: string;
+        depends_on?: Record<string, { condition: string }>;
+      }>;
     };
     assert(compose.services.e2e.working_dir === "/workspace", "Runner is not workspace-rooted");
+    assert(compose.services.e2e.init === true, "Runner omitted its signal-forwarding init");
+    assert(
+      compose.services.e2e.image === "denoland/deno:2.9.5",
+      "Runner changed the authored Deno image",
+    );
+    const journal = compose.services["webhook-journal"];
+    assert(journal.init === true, "Fixture lost its signal-forwarding init");
+    assert(journal.stop_grace_period === "10s", "Fixture lost its graceful shutdown period");
+    assert(journal.image === "denoland/deno:2.9.5", "Fixture changed the authored Deno image");
+    assert(
+      journal.volumes?.includes("./webhook-journal.ts:/fixture/webhook-journal.ts:ro") === true,
+      "Fixture lost its authored script mount",
+    );
+    assert(
+      compose.services.e2e.depends_on?.["webhook-journal"]?.condition === "service_healthy",
+      "Runner does not wait for the fixture to become healthy",
+    );
+    assert(
+      await Deno.readTextFile(new URL("webhook-journal.ts", docker)) ===
+        "// Hand-written webhook journal with graceful shutdown.\n",
+      "Generator changed the authored fixture script",
+    );
+    assert(
+      run.services["webhook-journal"].init === true &&
+        run.services["webhook-journal"].stop_grace_period === "10s",
+      "Run manifest lost the fixture shutdown settings",
+    );
     assert(
       compose.services.e2e.command?.at(-1) === "tests/e2e/runner/run-tests-inside-docker.ts",
       "Compose does not use the explicit E2E runner",

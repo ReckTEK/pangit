@@ -15,6 +15,10 @@ Deno.test("PanGit generation runs REST-client and E2E-asset phases in dependency
     downloadOpenApiSpecifications: record("download"),
     reuseDownloadedOpenApiSpecifications: record("reuse-downloaded"),
     generateLicenseArtifacts: record("generate-license-artifacts"),
+    generateMediaTypes: (options, paths) => {
+      if (!options.cached || paths !== workspace) throw new Error("MIME generator options differ");
+      return record("generate-media-types")();
+    },
     normalizeOpenApiSpecifications: record("normalize"),
     cleanGeneratedE2EArtifacts: record("clean-generated-e2e"),
     generateRestClients: record("generate-clients"),
@@ -29,6 +33,7 @@ Deno.test("PanGit generation runs REST-client and E2E-asset phases in dependency
 
   assertSequence(calls, [
     "reuse-downloaded",
+    "generate-media-types",
     "generate-license-artifacts",
     "normalize",
     "generate-clients",

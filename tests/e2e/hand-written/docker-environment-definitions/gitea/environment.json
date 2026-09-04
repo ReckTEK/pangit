@@ -34,7 +34,7 @@
   },
   "runner": {
     "name": "e2e",
-    "image": "denoland/deno:alpine-2.9.5",
+    "image": "denoland/deno:2.9.5",
     "workspace": "/workspace",
     "results": "/results",
     "credentials": "/sandbox-auth",
@@ -53,7 +53,9 @@
   },
   "services": {
     "webhook-journal": {
-      "image": "denoland/deno:alpine-2.9.5",
+      "image": "denoland/deno:2.9.5",
+      "init": true,
+      "stop_grace_period": "10s",
       "user": "1000:1000",
       "working_dir": "/fixture",
       "entrypoint": [

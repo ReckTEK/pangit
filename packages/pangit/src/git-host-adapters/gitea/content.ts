@@ -1,5 +1,6 @@
 import {
   ConflictError,
+  ContentReadError,
   ContentUnavailableError,
   NotFoundError,
   OperationTimeoutError,
@@ -14,12 +15,23 @@ import {
   DEFAULT_CONTENT_BATCH_MAX_ITEMS,
   type FileChange,
   type ListDirectoryOptions,
+  type ReadContentBlobOptions,
   type ReadContentOptions,
+  type ReadFileOptions,
   type ReadFilesOptions,
   type ReadLinkedContentOptions,
   type ReadPathMetadataBatchOptions,
   type RepositoryContentKind,
 } from "../../fluent-api/adapter-contract/content.ts";
+import {
+  createWebBlob,
+  decodeContentText,
+  parseContentJson,
+  requireContentBytes,
+  validateContentBlobOptions,
+} from "../../fluent-api/content-body.ts";
+import { giteaOperations as gitea126Operations } from "../../generated-rest-clients/gitea/1.26.4/GiteaRestClient.ts";
+import { giteaOperations as gitea127Operations } from "../../generated-rest-clients/gitea/1.27.2/GiteaRestClient.ts";
 import type { CommitData, GitActor } from "../../fluent-api/adapter-contract/commits.ts";
 import {
   requireIdentity,
@@ -43,6 +55,7 @@ import {
   type GiteaOperationIdentity,
   mapGiteaBounded,
   requestGiteaBody,
+  requestGiteaBytes,
   requestOptionalGiteaBody,
 } from "./response.ts";
 
@@ -91,6 +104,7 @@ export async function readGiteaContent<TVersion extends GiteaVersion>(
       client,
       payload.file_contents as GiteaEntityPayload<TVersion, "content">,
       options.includeBytes ?? true,
+      operation.universal,
     );
   }
   return normalizeDirectoryWrapper(
@@ -98,6 +112,133 @@ export async function readGiteaContent<TVersion extends GiteaVersion>(
     requestedPath,
     payload as GiteaContentsExtPayload<TVersion>,
   );
+}
+
+/** Read an exact file path as bytes with one contents-ext request. */
+export async function readGiteaContentBytes<TVersion extends GiteaVersion>(
+  context: GiteaAdapterContext<TVersion>,
+  repository: RepositoryData<"gitea", TVersion>,
+  path: string,
+  options: ReadFileOptions = {},
+  operation = "readContentBytes",
+): Promise<Uint8Array> {
+  const content = await readGiteaContent(
+    context,
+    repository,
+    path,
+    { ...options, includeBytes: true },
+    { universal: operation, native: "repoGetContentsExt" },
+  );
+  return requireContentBytes(content, validationContext(context, operation));
+}
+
+/** Read an exact file path as strict UTF-8 text, without following links. */
+export async function readGiteaContentText<TVersion extends GiteaVersion>(
+  context: GiteaAdapterContext<TVersion>,
+  repository: RepositoryData<"gitea", TVersion>,
+  path: string,
+  options: ReadFileOptions = {},
+): Promise<string> {
+  const operation = "readContentText";
+  const bytes = await readGiteaContentBytes(context, repository, path, options, operation);
+  return decodeContentText(bytes, validationContext(context, operation));
+}
+
+/** Read an exact file path as JSON without asserting a caller-specific schema. */
+export async function readGiteaContentJson<TVersion extends GiteaVersion>(
+  context: GiteaAdapterContext<TVersion>,
+  repository: RepositoryData<"gitea", TVersion>,
+  path: string,
+  options: ReadFileOptions = {},
+): Promise<unknown> {
+  const operation = "readContentJson";
+  const bytes = await readGiteaContentBytes(context, repository, path, options, operation);
+  return parseContentJson(bytes, validationContext(context, operation));
+}
+
+/** Read metadata, then the same immutable file's raw bytes and provider MIME type. */
+export async function readGiteaContentBlob<TVersion extends GiteaVersion>(
+  context: GiteaAdapterContext<TVersion>,
+  repository: RepositoryData<"gitea", TVersion>,
+  path: string,
+  options: ReadContentBlobOptions = {},
+): Promise<globalThis.Blob> {
+  const operation = "readContentBlob";
+  const errorContext = validationContext(context, operation);
+  validateContentBlobOptions(options, errorContext);
+  const requestedPath = requireIdentity(path, "content path", errorContext);
+  // Gitea's raw endpoint infers branches from path prefixes and silently accepts unknown refs.
+  // Resolve the exact path first, then pin the download to its last change's immutable commit.
+  const content = await readGiteaContent(
+    context,
+    repository,
+    requestedPath,
+    { ...options, includeBytes: false, includeCommitMetadata: true },
+    { universal: operation, native: "repoGetContentsExt" },
+  );
+  if (content.kind !== "file") {
+    throw new ContentReadError("Only file content has a readable body", "not-a-file", errorContext);
+  }
+  if (
+    content.path !== requestedPath ||
+    !isFullGitObjectId(content.sha) || !isFullGitObjectId(content.lastCommitSha)
+  ) {
+    throw invariant(
+      context,
+      operation,
+      "returned incomplete or mismatched immutable file metadata",
+    );
+  }
+  const client = await context.client();
+  const rawOperation = context.version === "1.26.4"
+    ? gitea126Operations.repoGetRawFile
+    : gitea127Operations.repoGetRawFile;
+  const response = await requestGiteaBytes(
+    context,
+    { universal: operation, native: "repoGetRawFile" },
+    () =>
+      client.rest.request(
+        rawOperation,
+        {
+          path: { ...repositoryPath(repository), filepath: requestedPath },
+          query: { ref: content.lastCommitSha },
+        },
+        { ...requestOptions(options.signal), parseAs: "bytes" },
+      ),
+    options.signal,
+  );
+  const objectType = response.headers.get("x-gitea-object-type");
+  if (objectType !== "file") {
+    throw invariant(context, operation, "raw response did not identify a regular file");
+  }
+  if (response.headers.get("etag")?.toLowerCase() !== `"${content.sha.toLowerCase()}"`) {
+    throw invariant(context, operation, "raw response did not match the requested file's blob SHA");
+  }
+  if (content.size !== undefined && content.size !== response.body.byteLength) {
+    throw invariant(context, operation, "raw response length did not match the file metadata");
+  }
+  const mediaType = response.headers.get("content-type");
+  const essence = mediaType?.split(";", 1)[0].trim().toLowerCase();
+  return createWebBlob(
+    {
+      kind: "file",
+      path: content.path,
+      bytes: response.body,
+      ...(mediaType === null ? {} : {
+        mediaType: {
+          value: mediaType,
+          // Gitea deliberately coerces text (including HTML/source) and unknown binary to these.
+          reliable: essence !== "text/plain" && essence !== "application/octet-stream",
+        },
+      }),
+    },
+    options,
+    errorContext,
+  );
+}
+
+function isFullGitObjectId(value: string | undefined): value is string {
+  return value !== undefined && /^(?:[0-9a-f]{40}|[0-9a-f]{64})$/i.test(value);
 }
 
 /** Batch only requested unique paths, then reconstruct duplicates in stable input order. */
@@ -601,6 +742,7 @@ export function normalizeGiteaContent<TVersion extends GiteaVersion>(
   client: GiteaClient<TVersion>,
   payload: GiteaEntityPayload<TVersion, "content">,
   includeBytes: boolean,
+  operation = "readContent",
 ): ContentData<"gitea", TVersion> {
   const kind = contentKind(payload);
   const path = requiredText(payload.path, "content path");
@@ -609,7 +751,7 @@ export function normalizeGiteaContent<TVersion extends GiteaVersion>(
   const size = optionalNonNegativeInteger(payload.size);
   const lastCommitSha = optionalText(payload.last_commit_sha);
   const bytes = includeBytes && kind === "file"
-    ? decodeContentBytes(context, payload, path)
+    ? decodeContentBytes(context, payload, path, operation)
     : undefined;
   return Object.freeze({
     kind,
@@ -1102,33 +1244,34 @@ function decodeContentBytes<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
   payload: AnyGiteaContent,
   path: string,
+  operation: string,
 ): Uint8Array {
   if (payload.content == null) {
     if ((optionalNonNegativeInteger(payload.size) ?? 0) > 0) {
       throw new ContentUnavailableError(`content bytes for ${path} exceed the Gitea API limit`, {
         provider: "gitea",
         version: context.version,
-        operation: "readContent",
+        operation,
       });
     }
-    throw invariant(context, "readContent", `file ${path} returned no encoded content`, payload);
+    throw invariant(context, operation, `file ${path} returned no encoded content`, payload);
   }
   if (payload.encoding !== "base64") {
     throw invariant(
       context,
-      "readContent",
+      operation,
       `file ${path} returned unsupported encoding ${String(payload.encoding)}`,
       payload,
     );
   }
   const encoded = payload.content.replace(/\s/g, "");
   if (!/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(encoded)) {
-    throw invariant(context, "readContent", `file ${path} returned malformed base64`, payload);
+    throw invariant(context, operation, `file ${path} returned malformed base64`, payload);
   }
   try {
     return Uint8Array.from(atob(encoded), (character) => character.charCodeAt(0));
   } catch (cause) {
-    throw invariant(context, "readContent", `file ${path} returned malformed base64`, cause);
+    throw invariant(context, operation, `file ${path} returned malformed base64`, cause);
   }
 }
 

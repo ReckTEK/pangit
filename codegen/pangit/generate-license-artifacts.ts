@@ -1,5 +1,9 @@
 import { generatedComment } from "../generated-notices.ts";
 import { workspace, type WorkspacePaths } from "../workspace-layout.ts";
+import {
+  mediaTypeSource,
+  readMediaTypeInputs,
+} from "./media-type-generation/generate-media-types.ts";
 import type { GeneratedOpenApiManifest } from "./raw-rest-client-generation/openapi-specifications/download-openapi-specifications.ts";
 import { sha256 } from "./raw-rest-client-generation/openapi-specifications/download-openapi-specifications.ts";
 
@@ -96,6 +100,22 @@ ${textFence(licenseText)}${upstreamNotices.length === 0 ? "" : `\n\n${upstreamNo
     }
   }
 
+  const mediaTypes = await readMediaTypeInputs(root);
+  sections.push(`## MIME extension registry (mime-db ${mediaTypeSource.version})
+
+${markdownUrlItem("Database source", mediaTypeSource.database.source)}
+- Database SHA-256: \`${mediaTypeSource.database.sha256}\`
+- License: \`MIT\`
+${markdownUrlItem("License source", mediaTypeSource.license.source)}
+- Downloaded license SHA-256:
+  \`${mediaTypeSource.license.sha256}\`
+- Modification notice: PanGit generates a compact extension-to-media-type lookup from the complete
+  pinned database. The runtime lookup is distributed with the fluent API.
+
+### License text
+
+${textFence(mediaTypes.license)}`);
+
   return `${generatedComment("<!--")}\n# Third-Party Notices
 
 PanGit's original source code is licensed under the MIT License. The generated REST clients and
@@ -104,7 +124,8 @@ license evidence is available, PanGit preserves the downloaded evidence, attribu
 content hash here. Generic license templates are completed with the recorded attribution, with the
 distributed text hashed separately. Entries without separate license evidence remain identified by
 source and content hash. Provider names and trademarks belong to their owners; compatibility does
-not imply affiliation or endorsement.
+not imply affiliation or endorsement. The bundled MIME extension registry and its upstream license
+are also documented below.
 
 ${sections.join("\n\n")}
 `;

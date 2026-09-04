@@ -151,6 +151,7 @@ export async function writeGeneratedDockerTestEnvironment(input: {
       },
       [environment.runner.name]: {
         image: environment.runner.image,
+        init: true,
         user: `${environment.service.uid}:${environment.service.gid}`,
         working_dir: environment.runner.workspace,
         entrypoint: ["deno"],

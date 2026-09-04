@@ -1,5 +1,6 @@
 import type { WorkspacePaths } from "../workspace-layout.ts";
 import { generateLicenseArtifacts, renderThirdPartyNotices } from "./generate-license-artifacts.ts";
+import { mediaTypeSource } from "./media-type-generation/generate-media-types.ts";
 import {
   type GeneratedOpenApiManifest,
   sha256,
@@ -106,6 +107,7 @@ Deno.test("license artifacts preserve verified upstream license and notice bodie
   };
 
   try {
+    await copyMediaTypeInputs(root);
     await Deno.mkdir(new URL("./", new URL(licenseDestination, root)), { recursive: true });
     await Deno.mkdir(new URL("./", new URL(manifestDestination, root)), { recursive: true });
     await Deno.mkdir(packageRoot, { recursive: true });
@@ -120,7 +122,10 @@ Deno.test("license artifacts preserve verified upstream license and notice bodie
       !notices.includes("## Example latest") || !notices.includes(licenseSha256) ||
       !notices.includes(fixtureLicense.trimEnd()) || !notices.includes(noticeSha256) ||
       !notices.includes(fixtureNotice.trimEnd()) ||
-      !notices.includes("This schema is distributed under the MIT license")
+      !notices.includes("This schema is distributed under the MIT license") ||
+      !notices.includes(`mime-db ${mediaTypeSource.version}`) ||
+      !notices.includes(mediaTypeSource.database.sha256) ||
+      !notices.includes(mediaTypeSource.license.sha256)
     ) {
       throw new Error("Generated notices omit provenance or a full verified upstream body");
     }
@@ -148,6 +153,7 @@ Deno.test("license artifacts complete canonical MIT template placeholders", asyn
   const destination =
     "codegen/pangit/raw-rest-client-generation/openapi-specifications/downloaded/licenses/example/latest/LICENSE.txt";
   try {
+    await copyMediaTypeInputs(root);
     await Deno.mkdir(new URL("./", new URL(destination, root)), { recursive: true });
     await Deno.writeTextFile(new URL(destination, root), template);
     const manifest = {
@@ -197,6 +203,15 @@ Deno.test("license artifacts complete canonical MIT template placeholders", asyn
     await Deno.remove(root, { recursive: true });
   }
 });
+
+async function copyMediaTypeInputs(root: URL): Promise<void> {
+  const sourceRoot = new URL("../../", import.meta.url);
+  for (const artifact of [mediaTypeSource.database, mediaTypeSource.license]) {
+    const target = new URL(artifact.destination, root);
+    await Deno.mkdir(new URL("./", target), { recursive: true });
+    await Deno.copyFile(new URL(artifact.destination, sourceRoot), target);
+  }
+}
 
 Deno.test("license notice generation rejects changed cached license text", async () => {
   const directory = await Deno.makeTempDir({ dir: Deno.cwd(), prefix: ".license-hash-" });

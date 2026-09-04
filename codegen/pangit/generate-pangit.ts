@@ -9,6 +9,7 @@ import { workspace, type WorkspacePaths } from "../workspace-layout.ts";
 import { cleanGeneratedE2EArtifacts } from "./e2e-test-generation/clean-generated-e2e-output.ts";
 import { generateE2ETestAssets } from "./e2e-test-generation/generate-e2e-test-assets.ts";
 import { generateLicenseArtifacts } from "./generate-license-artifacts.ts";
+import { generateMediaTypes } from "./media-type-generation/generate-media-types.ts";
 import { generateRestClients } from "./raw-rest-client-generation/generate-rest-clients.ts";
 import {
   downloadOpenApiSpecifications,
@@ -28,6 +29,7 @@ export interface PanGitGenerationDependencies {
   downloadOpenApiSpecifications: typeof downloadOpenApiSpecifications;
   reuseDownloadedOpenApiSpecifications: typeof reuseDownloadedOpenApiSpecifications;
   generateLicenseArtifacts: typeof generateLicenseArtifacts;
+  generateMediaTypes: typeof generateMediaTypes;
   normalizeOpenApiSpecifications: typeof normalizeOpenApiSpecifications;
   cleanGeneratedE2EArtifacts: typeof cleanGeneratedE2EArtifacts;
   generateRestClients: typeof generateRestClients;
@@ -39,6 +41,7 @@ const defaultDependencies: PanGitGenerationDependencies = {
   downloadOpenApiSpecifications,
   reuseDownloadedOpenApiSpecifications,
   generateLicenseArtifacts,
+  generateMediaTypes,
   normalizeOpenApiSpecifications,
   cleanGeneratedE2EArtifacts,
   generateRestClients,
@@ -58,6 +61,10 @@ export function createPanGitGenerationPhases(
         options.cached
           ? dependencies.reuseDownloadedOpenApiSpecifications()
           : dependencies.downloadOpenApiSpecifications(),
+    },
+    {
+      title: "Generate standard extension media types",
+      run: () => dependencies.generateMediaTypes({ cached: options.cached }, paths),
     },
     {
       title: "Generate package license evidence",

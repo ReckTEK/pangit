@@ -4,6 +4,57 @@ import { GiteaRestClient } from "@mannsion/pangit/providers/gitea/1.27.2";
 
 const packageRoot = new URL("../../packages/pangit/", import.meta.url);
 
+Deno.test("file and blob body helpers have explicit public contracts", () => {
+  const verifyTypes = (
+    repository: api.Repository<"gitea", "1.27.2">,
+    content: api.Content<"gitea", "1.27.2">,
+    blob: api.Blob<"gitea", "1.27.2">,
+  ) => {
+    const options: api.ReadFileOptions = { ref: "main", signal: new AbortController().signal };
+    const text: Promise<string> = repository.content.readText("README.md", options);
+    const bytes: Promise<Uint8Array> = repository.content.readBytes("image.png", options);
+    const json: Promise<unknown> = repository.content.readJson("deno.json", options);
+    const webOptions: api.ReadContentBlobOptions = { ref: "main", fileName: "image.png" };
+    const webBlob: Promise<globalThis.Blob> = repository.content.readBlob("image.png", webOptions);
+    const shaOptions: api.ReadGitBlobOptions = { fileName: "image.png" };
+    const shaWebBlob: Promise<globalThis.Blob> = repository.blobs.readBlob(blob.sha, shaOptions);
+    const blobText: Promise<string> = repository.blobs.readText(blob.sha);
+    const blobBytes: Promise<Uint8Array> = repository.blobs.readBytes(blob.sha);
+    const blobJson: Promise<unknown> = repository.blobs.readJson(blob.sha);
+    const body: api.ReadableContentBody = content;
+    const parsed: unknown = body.json();
+    const decoded: string = blob.text();
+    const buffer: ArrayBuffer = content.arrayBuffer();
+    const snapshotBlob: globalThis.Blob = content.blob();
+    const shaSnapshotBlob: globalThis.Blob = blob.blob({ type: "image/png" });
+    // @ts-expect-error Web Blob reads always load bytes.
+    repository.content.readBlob("image.png", { includeBytes: false });
+    // @ts-expect-error Body convenience reads cannot opt out of loading bytes.
+    repository.content.readText("README.md", { includeBytes: false });
+    // @ts-expect-error JSON does not pretend to validate an arbitrary application type.
+    repository.content.readJson<{ enabled: boolean }>("config.json");
+    // @ts-expect-error Unknown JSON must be validated before typed use.
+    const unvalidated: { enabled: boolean } = body.json();
+    void [
+      text,
+      bytes,
+      json,
+      webBlob,
+      shaWebBlob,
+      snapshotBlob,
+      shaSnapshotBlob,
+      blobText,
+      blobBytes,
+      blobJson,
+      parsed,
+      decoded,
+      buffer,
+      unvalidated,
+    ];
+  };
+  assertEquals(typeof verifyTypes, "function", "Body helper types are unavailable");
+});
+
 function assertEquals(actual: unknown, expected: unknown, message: string): void {
   if (JSON.stringify(actual) !== JSON.stringify(expected)) {
     throw new Error(`${message}: ${JSON.stringify(actual)} != ${JSON.stringify(expected)}`);

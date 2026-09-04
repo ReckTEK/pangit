@@ -8,7 +8,8 @@ license evidence is available, PanGit preserves the downloaded evidence, attribu
 content hash here. Generic license templates are completed with the recorded attribution, with the
 distributed text hashed separately. Entries without separate license evidence remain identified by
 source and content hash. Provider names and trademarks belong to their owners; compatibility does
-not imply affiliation or endorsement.
+not imply affiliation or endorsement. The bundled MIME extension registry and its upstream license
+are also documented below.
 
 ## Azure DevOps Git latest
 
@@ -235,3 +236,42 @@ SOFTWARE.
 - Schema license evidence: No separate license file is recorded.
 - Modification notice: PanGit downloaded and normalized the schema, then generated TypeScript types,
   operation metadata, REST-client methods, tests, and reference documentation.
+
+## MIME extension registry (mime-db 1.54.0)
+
+- Database source: https://raw.githubusercontent.com/jshttp/mime-db/v1.54.0/db.json
+- Database SHA-256: `sha256:96b8a5746867c832ab56743c05e46e73c9facb04879677df0b356f20496cb6cd`
+- License: `MIT`
+- License source: https://raw.githubusercontent.com/jshttp/mime-db/v1.54.0/LICENSE
+- Downloaded license SHA-256:
+  `sha256:cc1dfd4dafa27271e8212cd3b274eeb3f262e40a6fdab36ddc3f9696f706f58b`
+- Modification notice: PanGit generates a compact extension-to-media-type lookup from the complete
+  pinned database. The runtime lookup is distributed with the fluent API.
+
+### License text
+
+```text
+(The MIT License)
+
+Copyright (c) 2014 Jonathan Ong <me@jongleberry.com>
+Copyright (c) 2015-2022 Douglas Christopher Wilson <doug@somethingdoug.com>
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+```

@@ -2,7 +2,9 @@
 name: pangit-e2e-gitea-1-26-4
 services:
   webhook-journal:
-    image: 'denoland/deno:alpine-2.9.5'
+    image: 'denoland/deno:2.9.5'
+    init: true
+    stop_grace_period: 10s
     user: '1000:1000'
     working_dir: /fixture
     entrypoint:
@@ -107,7 +109,8 @@ services:
     restart: 'no'
     stop_grace_period: 10s
   e2e:
-    image: 'denoland/deno:alpine-2.9.5'
+    image: 'denoland/deno:2.9.5'
+    init: true
     user: '1000:1000'
     working_dir: /workspace
     entrypoint:

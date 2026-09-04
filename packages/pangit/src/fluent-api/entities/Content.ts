@@ -1,12 +1,14 @@
 import type { ProviderVersion } from "../../generated-rest-clients/git-host.ts";
 import type { ContentData, RepositoryContentKind } from "../adapter-contract/content.ts";
+import type { ReadableContentBody } from "../adapter-contract/content-body.ts";
+import { createContentBody } from "../content-body.ts";
 import type { ProviderEntityNative } from "../native-access/ProviderNativeRegistry.ts";
 import type { FluentProvider } from "../provider-registry.ts";
 
 export interface Content<
   TProvider extends FluentProvider,
   TVersion extends ProviderVersion<TProvider>,
-> {
+> extends ReadableContentBody {
   readonly kind: RepositoryContentKind;
   readonly path: string;
   readonly name: string;
@@ -27,6 +29,12 @@ export function createContent<
 >(data: ContentData<TProvider, TVersion>): Content<TProvider, TVersion> {
   const bytes = data.bytes === undefined ? undefined : data.bytes.slice();
   const content: Content<TProvider, TVersion> = {
+    ...createContentBody({
+      kind: data.kind,
+      bytes,
+      path: data.path,
+      ...(data.mediaType === undefined ? {} : { mediaType: { ...data.mediaType } }),
+    }, "content"),
     kind: data.kind,
     path: data.path,
     name: data.name,

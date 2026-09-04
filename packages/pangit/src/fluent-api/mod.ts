@@ -16,6 +16,12 @@ export type { Branch } from "./entities/Branch.ts";
 export type { Tag } from "./entities/Tag.ts";
 export type { Commit } from "./entities/Commit.ts";
 export type { Content } from "./entities/Content.ts";
+export type {
+  ContentBlobOptions,
+  ContentReadFailure,
+  ProviderMediaType,
+  ReadableContentBody,
+} from "./adapter-contract/content-body.ts";
 export type { PullRequest } from "./entities/PullRequest.ts";
 export type { CommitStatus } from "./entities/CommitStatus.ts";
 export type { BranchDivergence, CreateBranchInput } from "./adapter-contract/branches.ts";
@@ -41,7 +47,9 @@ export type {
   GiteaCommitFileChangesExtension,
   GiteaCommitFileChangesExtensionContext,
   ListDirectoryOptions,
+  ReadContentBlobOptions,
   ReadContentOptions,
+  ReadFileOptions,
   ReadFilesOptions,
   ReadLinkedContentOptions,
   ReadPathMetadataBatchOptions,
@@ -137,7 +145,10 @@ export type {
 export type {
   UnsupportedOptionalCapabilities,
 } from "./capabilities/optional/UnsupportedOptionalCapabilities.ts";
-export type { BlobReadCapabilitySupport } from "./adapter-contract/optional/blob-reads.ts";
+export type {
+  BlobReadCapabilitySupport,
+  ReadGitBlobOptions,
+} from "./adapter-contract/optional/blob-reads.ts";
 export type {
   BranchRuleCapabilitySupport,
   BranchRuleFields,

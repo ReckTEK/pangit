@@ -64,6 +64,26 @@ export async function requestGiteaText<TVersion extends GiteaVersion>(
   return result.body;
 }
 
+/**
+ * Read a complete raw file whose actual MIME type is more specific than OpenAPI's binary type.
+ * The caller selects byte parsing on the generated operation; no text decoding may alter its body.
+ */
+export async function requestGiteaBytes<TVersion extends GiteaVersion>(
+  context: GiteaAdapterContext<TVersion>,
+  operation: GiteaOperation,
+  execute: () => Promise<AnyRestResponse>,
+  signal?: AbortSignal,
+): Promise<GiteaSuccessResponse & { readonly body: Uint8Array }> {
+  const result = await executeGitea(context, operation, execute, signal);
+  if (result.status !== 200 || !(result.body instanceof Uint8Array)) {
+    throw new ProviderInvariantError(
+      `${universalOperation(operation)} returned a malformed or incomplete binary success body`,
+      errorContext(context, operation, result),
+    );
+  }
+  return result as GiteaSuccessResponse & { readonly body: Uint8Array };
+}
+
 /** Run one generated operation and return its body after optional shape validation. */
 export async function requestGiteaBody<TBody, TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,

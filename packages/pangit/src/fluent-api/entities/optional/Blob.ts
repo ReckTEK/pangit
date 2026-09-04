@@ -1,11 +1,13 @@
 import type { ProviderVersion } from "../../../generated-rest-clients/git-host.ts";
 import type { BlobData, ProviderBlobNative } from "../../adapter-contract/optional/blob-reads.ts";
+import type { ReadableContentBody } from "../../adapter-contract/content-body.ts";
+import { createContentBody } from "../../content-body.ts";
 import type { FluentProvider } from "../../provider-registry.ts";
 
 export interface Blob<
   TProvider extends FluentProvider,
   TVersion extends ProviderVersion<TProvider>,
-> {
+> extends ReadableContentBody {
   readonly sha: string;
   readonly size: number;
   readonly bytes: Readonly<Uint8Array>;
@@ -19,6 +21,10 @@ export function createBlob<
   const bytes = data.bytes.slice();
   return Object.freeze({
     ...data,
+    ...createContentBody({
+      bytes,
+      ...(data.mediaType === undefined ? {} : { mediaType: { ...data.mediaType } }),
+    }, "blob"),
     get bytes(): Readonly<Uint8Array> {
       return bytes.slice();
     },

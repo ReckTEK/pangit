@@ -55,6 +55,16 @@ export type GiteaContractCatalogEntry = {
   ) => Promise<FluentApiContractResult>;
 };
 
+/** Complete one-pixel PNG, including its image data and end chunk. */
+function pngFixture(): Uint8Array {
+  return Uint8Array.from(
+    atob(
+      "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=",
+    ),
+    (character) => character.charCodeAt(0),
+  );
+}
+
 const runners: Record<GiteaFluentContractId, GiteaContractCatalogEntry["run"]> = {
   "core/authentication": async (t, context) => {
     const authenticationFixtures = await GiteaAuthenticationFixtureDriver.create({
@@ -203,6 +213,10 @@ const runners: Record<GiteaFluentContractId, GiteaContractCatalogEntry["run"]> =
     );
     const text = { path: "text.txt", value: "hello from PanGit\n" };
     const binary = { path: "binary.bin", value: [0, 1, 2, 127, 128, 255] };
+    const unicodeValue = "Hello, 世界 🌍 café\n";
+    const json = { path: "config.json", value: { title: "世界 🌍", enabled: true, count: 2 } };
+    const image = { path: "image.png", extensionlessPath: "image", bytes: [...pngFixture()] };
+    const unknownBinaryPath = "unknown-content";
     const nestedPath = "nested/a.txt";
     const deepPath = "nested/deeper/b.txt";
     const parentRef = await context.fixtures.commitFiles(repository, {
@@ -212,7 +226,16 @@ const runners: Record<GiteaFluentContractId, GiteaContractCatalogEntry["run"]> =
         { operation: "create", path: text.path, content: text.value },
         { operation: "create", path: binary.path, content: new Uint8Array(binary.value) },
         { operation: "create", path: "empty.txt", content: "" },
-        { operation: "create", path: "unicodé-文件.txt", content: "unicode\n" },
+        { operation: "create", path: "unicodé-文件.txt", content: unicodeValue },
+        { operation: "create", path: json.path, content: JSON.stringify(json.value) },
+        { operation: "create", path: "invalid.json", content: "{not JSON}" },
+        { operation: "create", path: image.path, content: new Uint8Array(image.bytes) },
+        {
+          operation: "create",
+          path: image.extensionlessPath,
+          content: new Uint8Array(image.bytes),
+        },
+        { operation: "create", path: unknownBinaryPath, content: new Uint8Array(binary.value) },
         { operation: "create", path: nestedPath, content: "parent\n" },
         { operation: "create", path: deepPath, content: "deep\n" },
         { operation: "create", path: "chain/one/two/file.txt", content: "chain\n" },
@@ -237,11 +260,17 @@ const runners: Record<GiteaFluentContractId, GiteaContractCatalogEntry["run"]> =
       fixtures: {
         repository: { owner: repository.owner, name: repository.name },
         ref,
+        branch: repository.defaultBranch,
         parentRef,
         text,
         binary,
         emptyPath: "empty.txt",
         unicodePath: "unicodé-文件.txt",
+        unicodeValue,
+        json,
+        invalidJsonPath: "invalid.json",
+        image,
+        unknownBinaryPath,
         nestedDirectory: "nested",
         nestedPath,
         deepPath,
@@ -756,10 +785,20 @@ const runners: Record<GiteaFluentContractId, GiteaContractCatalogEntry["run"]> =
     const repository = await context.fixtures.createInitializedRepository("blob-reads");
     const bytes = new Uint8Array([0, 1, 2, 127, 128, 255]);
     const path = "known-blob.bin";
+    const text = "Hello, 世界 🌍 café\n";
+    const json = { title: "世界 🌍", enabled: true, count: 2 };
+    const image = pngFixture();
     const ref = await context.fixtures.commitFiles(repository, {
       branch: repository.defaultBranch,
       message: "add known blob fixture",
-      changes: [{ operation: "create", path, content: bytes }],
+      changes: [
+        { operation: "create", path, content: bytes },
+        { operation: "create", path: "text.txt", content: text },
+        { operation: "create", path: "empty.txt", content: "" },
+        { operation: "create", path: "config.json", content: JSON.stringify(json) },
+        { operation: "create", path: "invalid.json", content: "{not JSON}" },
+        { operation: "create", path: "image.png", content: image },
+      ],
     });
     const sha = await context.fixtures.getFileSha(repository, path, ref);
     return await runBlobReadContract(t, {
@@ -770,6 +809,17 @@ const runners: Record<GiteaFluentContractId, GiteaContractCatalogEntry["run"]> =
       fixtures: {
         repository: { owner: repository.owner, name: repository.name },
         blob: { sha, bytes },
+        text: { sha: await context.fixtures.getFileSha(repository, "text.txt", ref), value: text },
+        emptySha: await context.fixtures.getFileSha(repository, "empty.txt", ref),
+        json: {
+          sha: await context.fixtures.getFileSha(repository, "config.json", ref),
+          value: json,
+        },
+        invalidJsonSha: await context.fixtures.getFileSha(repository, "invalid.json", ref),
+        image: {
+          sha: await context.fixtures.getFileSha(repository, "image.png", ref),
+          bytes: image,
+        },
         missingSha: "ffffffffffffffffffffffffffffffffffffffff",
       },
     });

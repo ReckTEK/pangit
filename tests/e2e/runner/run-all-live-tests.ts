@@ -8,6 +8,30 @@ import {
 } from "./e2e-run-selection.ts";
 import { liveE2ERunCatalog } from "./live-e2e-run-catalog.ts";
 
+/** Treat fixture crashes and forced kills as failures, even when Compose cleanup succeeds. */
+export function assertCleanServiceShutdown(
+  containers: readonly {
+    Name: string;
+    State: { Running: boolean; ExitCode: number; Error?: string };
+  }[],
+): void {
+  const failed = containers.filter(({ State }) =>
+    State.Running || (State.ExitCode !== 0 && State.ExitCode !== 143) ||
+    State.Error
+  );
+  if (failed.length > 0) {
+    throw new Error(
+      `Unclean E2E service shutdown: ${
+        failed.map(({ Name, State }) =>
+          `${Name.replace(/^\//, "")} (${
+            State.Running ? "still running" : `exit ${State.ExitCode}`
+          }${State.Error ? `: ${State.Error}` : ""})`
+        ).join("; ")
+      }`,
+    );
+  }
+}
+
 /** Replace temporary authentication artifacts while retaining their generated ignore file. */
 async function clearAuthenticationDirectory(directory: URL): Promise<void> {
   await Deno.mkdir(directory, { recursive: true });
@@ -124,9 +148,33 @@ export async function runAllLiveTests(
           `${gitHost} ${version}: ${error instanceof Error ? error.message : error}`,
         );
       };
-      const teardown = async () => {
+      const teardown = async (verifyShutdown = false) => {
         if (!project) return;
         const errors: string[] = [];
+        if (verifyShutdown) {
+          try {
+            await runDocker([...composeArgs, "stop"]);
+            const output = await runDocker([
+              ...composeArgs,
+              "ps",
+              "--all",
+              "--quiet",
+            ], true) as Deno.CommandOutput;
+            const containers = decoder.decode(output.stdout).trim().split(/\s+/)
+              .filter(Boolean);
+            if (containers.length > 0) {
+              const inspection = await runDocker([
+                "inspect",
+                ...containers,
+              ], true) as Deno.CommandOutput;
+              assertCleanServiceShutdown(
+                JSON.parse(decoder.decode(inspection.stdout)),
+              );
+            }
+          } catch (error) {
+            errors.push(String(error));
+          }
+        }
         try {
           await runDocker([
             ...composeArgs,
@@ -265,7 +313,7 @@ export async function runAllLiveTests(
           reportError(error);
         }
         try {
-          await teardown();
+          await teardown(started);
         } catch (error) {
           reportError(error);
         }

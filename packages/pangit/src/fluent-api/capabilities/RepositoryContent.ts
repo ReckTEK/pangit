@@ -4,7 +4,9 @@ import type {
   CommitFileChangesOptions,
   ContentReadResult,
   ListDirectoryOptions,
+  ReadContentBlobOptions,
   ReadContentOptions,
+  ReadFileOptions,
   ReadFilesOptions,
   ReadLinkedContentOptions,
   ReadPathMetadataBatchOptions,
@@ -15,6 +17,7 @@ import { requireIdentity, requirePositiveInteger } from "../adapter-contract/ope
 import type { RepositoryData } from "../adapter-contract/repositories.ts";
 import { type Commit, createCommit } from "../entities/Commit.ts";
 import { type Content, createContent } from "../entities/Content.ts";
+import { validateContentBlobOptions } from "../content-body.ts";
 import type { FluentProvider } from "../provider-registry.ts";
 import {
   createOperationExtension,
@@ -42,6 +45,14 @@ export interface RepositoryContent<
   TProvider extends FluentProvider,
   TVersion extends ProviderVersion<TProvider>,
 > {
+  /** Read a standard web Blob with a resolved MIME type. */
+  readBlob(path: string, options?: ReadContentBlobOptions): Promise<globalThis.Blob>;
+  /** Read a file as independent bytes. Always loads its body. */
+  readBytes(path: string, options?: ReadFileOptions): Promise<Uint8Array>;
+  /** Read a file as strict UTF-8 text. Empty files return an empty string. */
+  readText(path: string, options?: ReadFileOptions): Promise<string>;
+  /** Read UTF-8 JSON, returning unknown until the caller validates its shape. */
+  readJson(path: string, options?: ReadFileOptions): Promise<unknown>;
   read(path: string, options?: ReadContentOptions): Promise<Content<TProvider, TVersion>>;
   readFiles(
     paths: readonly string[],
@@ -83,6 +94,43 @@ export function createRepositoryContent<
       })
     ));
   return Object.freeze({
+    async readBlob(path: string, options: ReadContentBlobOptions = {}) {
+      const context = validationContext(adapter, "readContentBlob");
+      validateRef(options.ref, context);
+      validateContentBlobOptions(options, context);
+      return await adapter.readContentBlob(
+        repository,
+        requireIdentity(path, "content path", context),
+        options,
+      );
+    },
+    async readBytes(path: string, options: ReadFileOptions = {}) {
+      const context = validationContext(adapter, "readContentBytes");
+      validateRef(options.ref, context);
+      return await adapter.readContentBytes(
+        repository,
+        requireIdentity(path, "content path", context),
+        options,
+      );
+    },
+    async readText(path: string, options: ReadFileOptions = {}) {
+      const context = validationContext(adapter, "readContentText");
+      validateRef(options.ref, context);
+      return await adapter.readContentText(
+        repository,
+        requireIdentity(path, "content path", context),
+        options,
+      );
+    },
+    async readJson(path: string, options: ReadFileOptions = {}) {
+      const context = validationContext(adapter, "readContentJson");
+      validateRef(options.ref, context);
+      return await adapter.readContentJson(
+        repository,
+        requireIdentity(path, "content path", context),
+        options,
+      );
+    },
     async read(path: string, options: ReadContentOptions = {}) {
       const context = validationContext(adapter, "readContent");
       validateRef(options.ref, context);

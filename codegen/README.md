@@ -10,6 +10,7 @@ codegen/
 ├── pangit/
 │   ├── generate-pangit.ts                  # PanGit library pipeline
 │   ├── generate-license-artifacts.ts        # root + package license evidence
+│   ├── media-type-generation/              # pinned MIME database + offline extension lookup
 │   ├── raw-rest-client-generation/
 │   │   ├── openapi-specifications/         # sources, downloads, normalization
 │   │   ├── generated-runtime-template/     # copied into generated client output
@@ -24,13 +25,14 @@ codegen/
 ```
 
 `deno task generate` runs both pipelines. `deno task generate:pangit` and
-`deno task generate:pangit-site` run one owner. Add `--cached` to reuse the checked-in OpenAPI
-downloads.
+`deno task generate:pangit-site` run one owner. Add `--cached` to reuse the checked-in OpenAPI and
+MIME database downloads, including their license evidence.
 
 ## What generation owns
 
 ```text
 packages/pangit/src/generated-rest-clients/
+packages/pangit/src/fluent-api/generated-media-types.ts
 THIRD_PARTY_NOTICES.md
 packages/pangit/LICENSE
 packages/pangit/THIRD_PARTY_NOTICES.md
@@ -46,3 +48,9 @@ and upstream-notice files are also downloaded, pinned, verified, emitted as clie
 shipped in full. When a schema carries a configured license declaration, it is matched exactly and
 preserved. Missing separate license evidence is recorded in the generated notices without removing
 the supported client.
+
+The MIME extension lookup is generated from the complete pinned `mime-db` database. Its source
+version and database/license hashes live in `pangit/media-type-generation/generate-media-types.ts`;
+update those reviewed pins together when upgrading the registry. The generated table has no runtime
+dependencies, and its MIT license is included in the package notices. Do not add ad hoc extension
+mappings to provider adapters or edit the generated lookup.

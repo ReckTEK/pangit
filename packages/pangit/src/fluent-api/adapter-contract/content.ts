@@ -1,6 +1,7 @@
 import type { Provider, ProviderVersion } from "../../generated-rest-clients/git-host.ts";
 import type { ProviderEntityNative } from "../native-access/ProviderNativeRegistry.ts";
 import type { CommitData, GitActor } from "./commits.ts";
+import type { ContentBlobOptions, ProviderMediaType } from "./content-body.ts";
 import type { BoundedOperationOptions, OperationOptions } from "./operation-options.ts";
 import type { RepositoryData } from "./repositories.ts";
 
@@ -16,6 +17,7 @@ export interface ContentData<
   readonly sha?: string;
   readonly size?: number;
   readonly bytes?: Uint8Array;
+  readonly mediaType?: ProviderMediaType;
   readonly target?: string;
   readonly submoduleUrl?: string;
   /** One explicitly dereferenced target that was proven to stay inside this provider. */
@@ -32,6 +34,12 @@ export interface ReadContentOptions extends OperationOptions {
   readonly includeBytes?: boolean;
   readonly includeCommitMetadata?: boolean;
 }
+
+/** Body reads always load file bytes; directories and links are not implicitly dereferenced. */
+export interface ReadFileOptions extends Omit<ReadContentOptions, "includeBytes"> {}
+
+/** Read a standard web Blob using provider MIME evidence, then a filename-extension fallback. */
+export interface ReadContentBlobOptions extends ReadFileOptions, ContentBlobOptions {}
 
 /** Linked content is metadata-only unless this internal-only mode is selected. */
 export interface ReadLinkedContentOptions extends ReadContentOptions {
@@ -128,6 +136,30 @@ export interface ContentAdapter<
   TProvider extends Provider,
   TVersion extends ProviderVersion<TProvider>,
 > {
+  /** Read a file as a standard web Blob; may resolve metadata before fetching raw bytes. */
+  readContentBlob(
+    repository: RepositoryData<TProvider, TVersion>,
+    path: string,
+    options?: ReadContentBlobOptions,
+  ): Promise<globalThis.Blob>;
+  /** One direct file read returning an independent byte array. */
+  readContentBytes(
+    repository: RepositoryData<TProvider, TVersion>,
+    path: string,
+    options?: ReadFileOptions,
+  ): Promise<Uint8Array>;
+  /** One direct file read decoded as strict UTF-8, with its BOM removed. */
+  readContentText(
+    repository: RepositoryData<TProvider, TVersion>,
+    path: string,
+    options?: ReadFileOptions,
+  ): Promise<string>;
+  /** One direct file read parsed as UTF-8 JSON; callers validate the returned value. */
+  readContentJson(
+    repository: RepositoryData<TProvider, TVersion>,
+    path: string,
+    options?: ReadFileOptions,
+  ): Promise<unknown>;
   readContent(
     repository: RepositoryData<TProvider, TVersion>,
     path: string,
