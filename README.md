@@ -61,7 +61,7 @@ The examples below use the workspace package name and can be run from the reposi
 
 ## Fluent API: Gitea
 
-Save this as `fluent-example.ts`, then replace the URL and repository names:
+Save this as `fluent-example.ts`, then replace the URL, repository names, and image path:
 
 ```ts
 import * as PanGit from "@mannsion/pangit";
@@ -76,10 +76,12 @@ const git = await connection.auth.token(token);
 
 const owner = await git.container("acme");
 const repository = await owner.repository("website");
-const readme = await repository.content.readText("README.md", { ref: "main" });
+const image = await repository.content.readBlob("logo.png", { ref: "main" });
 
-console.log(repository.fullName);
-console.log(readme);
+console.log(image.type, image.size); // image/png, size in bytes
+
+// Response uses the Blob's MIME type automatically. Open http://127.0.0.1:8000 to see the image.
+Deno.serve({ hostname: "127.0.0.1", port: 8000 }, () => new Response(image));
 ```
 
 ```bash

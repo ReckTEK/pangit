@@ -63,16 +63,21 @@ const git = await connection.auth.token(token);
 const owner = await git.container("acme");
 const repository = await owner.repository("website");
 
-const readme = await repository.content.readText("README.md", { ref: "main" });
 const image = await repository.content.readBlob("logo.png", { ref: "main" });
-console.log(readme, image.type, image.size); // image is a standard web Blob
+console.log(image.type, image.size); // image/png, size in bytes
+
+// Response uses the Blob's MIME type automatically. Open http://127.0.0.1:8000 to see the image.
+Deno.serve({ hostname: "127.0.0.1", port: 8000 }, () => new Response(image));
 ```
 
-`readBytes()` and `readJson()` are also available. Loaded content has synchronous `text()`,
-`json()`, `arrayBuffer()`, and `blob()` conversions with no further requests. Web Blob MIME
-resolution uses a reliable provider type, then the standard filename-extension registry; unresolved
-types throw `PanGit.api.errors.ContentReadError`. Supply `{ type: "image/png" }` to override the
-type or a `fileName` hint when reading a filename-free Git blob with
+Run with Deno's network and environment permissions, then open `http://127.0.0.1:8000` to view the
+image. The Blob is fetched once; serving it requires no further provider requests.
+
+`readText()`, `readBytes()`, and `readJson()` are also available. Loaded content has synchronous
+`text()`, `json()`, `arrayBuffer()`, and `blob()` conversions with no further requests. Web Blob
+MIME resolution uses a reliable provider type, then the standard filename-extension registry;
+unresolved types throw `PanGit.api.errors.ContentReadError`. Supply `{ type: "image/png" }` to
+override the type or a `fileName` hint when reading a filename-free Git blob with
 `repository.blobs.readBlob(sha, options)`.
 
 ## Provider clients
