@@ -109,10 +109,13 @@ export function createPullRequestReviews<
       );
     },
     create(input: CreatePullRequestReviewInput = {}) {
+      const operationInput = structuredClone(input);
       const context = { provider, version, operation: "createPullRequestReview" } as const;
-      if (input.body !== undefined) requireIdentity(input.body, "review body", context);
-      if (input.commitSha !== undefined) {
-        requireIdentity(input.commitSha, "review commit SHA", context);
+      if (operationInput.body !== undefined) {
+        requireIdentity(operationInput.body, "review body", context);
+      }
+      if (operationInput.commitSha !== undefined) {
+        requireIdentity(operationInput.commitSha, "review commit SHA", context);
       }
       return createOperationExtension<
         "pullRequestReviews.create",
@@ -132,7 +135,7 @@ export function createPullRequestReviews<
         }),
         execute: async (extension, options) => {
           return createPullRequestReview(
-            await adapter.createPullRequestReview(repository, pullRequestData(), input, {
+            await adapter.createPullRequestReview(repository, pullRequestData(), operationInput, {
               ...options,
               ...(extension === undefined ? {} : { extension }),
             } as CreatePullRequestReviewOptions<TProvider>),

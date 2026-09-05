@@ -1,6 +1,7 @@
-import { requirePositiveInteger } from "../../../fluent-api/adapter-contract/operation-options.ts";
+import type { BoundedOperationOptions } from "../../../fluent-api/adapter-contract/operation-options.ts";
 import {
   createPage,
+  resolveBoundedPageLimit,
   type ResolvedPageRequest,
 } from "../../../fluent-api/adapter-contract/pagination.ts";
 
@@ -25,14 +26,14 @@ export function path<V extends GitLabVersion>(r: Repo<V>) {
 export function pageQuery(
   c: GitLabAdapterContext<GitLabVersion>,
   operation: string,
-  request: ResolvedPageRequest,
+  request: ResolvedPageRequest & BoundedOperationOptions,
 ) {
   const cursor = decodeGitLabPageCursor(request.cursor, {
     version: c.version,
     operation: { universal: operation },
   });
   const per_page = Math.min(
-    cursor.effectiveLimit ?? requirePositiveInteger(request.limit, "limit", context(c, operation)),
+    resolveBoundedPageLimit(request, cursor.effectiveLimit, context(c, operation)),
     100,
   );
   return { page: cursor.page, per_page };
@@ -43,8 +44,8 @@ export async function page<V extends GitLabVersion, M extends Method, T>(
   operation: string,
   method: M,
   input: Input<M>,
-  request: ResolvedPageRequest,
-  normalize: (value: Dto) => T | Promise<T>,
+  request: ResolvedPageRequest & BoundedOperationOptions,
+  normalize: (value: Dto, signal: AbortSignal) => T | Promise<T>,
 ) {
   const query = pageQuery(c, operation, request);
   const response = await call(c, operation, method, {
@@ -59,12 +60,22 @@ export async function page<V extends GitLabVersion, M extends Method, T>(
     c,
     { universal: operation },
     response,
-    { page: query.page, effectiveLimit: query.per_page },
+    decodeGitLabPageCursor(request.cursor, {
+      version: c.version,
+      operation: { universal: operation },
+    }),
     query.per_page,
     rows.length,
   );
   return createPage(
-    await batch(c, operation, rows, {}, 100, async (row) => await normalize(row)),
+    await batch(
+      c,
+      operation,
+      rows,
+      { signal: request.signal, concurrency: request.concurrency },
+      100,
+      async (row, signal) => await normalize(row, signal),
+    ),
     metadata,
   );
 }
@@ -75,8 +86,8 @@ export async function extraPage<V extends GitLabVersion, T>(
   operation: string,
   route: string,
   input: RestOperationInput,
-  request: ResolvedPageRequest,
-  normalize: (p: Dto) => T | Promise<T>,
+  request: ResolvedPageRequest & BoundedOperationOptions,
+  normalize: (p: Dto, signal: AbortSignal) => T | Promise<T>,
 ) {
   const query = pageQuery(c, operation, request);
   const response = await extra(c, operation, "GET", route, {
@@ -87,15 +98,26 @@ export async function extraPage<V extends GitLabVersion, T>(
   if (rows.length > query.per_page) {
     invariant(c, operation, "GitLab exceeded the requested page size");
   }
+  const metadata = gitlabPagination(
+    c,
+    { universal: operation },
+    response,
+    decodeGitLabPageCursor(request.cursor, {
+      version: c.version,
+      operation: { universal: operation },
+    }),
+    query.per_page,
+    rows.length,
+  );
   return createPage(
-    await batch(c, operation, rows, {}, 100, async (row) => await normalize(row)),
-    gitlabPagination(
+    await batch(
       c,
-      { universal: operation },
-      response,
-      { page: query.page, effectiveLimit: query.per_page },
-      query.per_page,
-      rows.length,
+      operation,
+      rows,
+      { signal: request.signal, concurrency: request.concurrency },
+      100,
+      async (row, signal) => await normalize(row, signal),
     ),
+    metadata,
   );
 }

@@ -234,3 +234,64 @@ Deno.test("provider extensions are operation-, provider-, and version-scoped in 
     "Provider extension public type proof was erased",
   );
 });
+
+Deno.test("raw client construction captures mutable settings before loading the version", async () => {
+  const baseUrl = new URL("https://original.invalid/api/v1");
+  const headers = new Headers({ "x-fixture": "original" });
+  const query = { fixture: ["original"] };
+  const requests: Request[] = [];
+  const pending = PanGit.createProviderClient("gitea", "1.27.2", {
+    baseUrl,
+    headers,
+    query,
+    fetch(input: Request | URL | string, init?: RequestInit) {
+      requests.push(new Request(input, init));
+      return Promise.resolve(Response.json({ version: "1.27.2" }));
+    },
+  });
+  baseUrl.hostname = "changed.invalid";
+  headers.set("x-fixture", "changed");
+  query.fixture[0] = "changed";
+  const client = await pending;
+  await client.getVersion();
+  assertEquals(requests.length, 1, "Expected one request");
+  assertEquals(
+    new URL(requests[0].url).hostname,
+    "original.invalid",
+    "Factory retained mutable URL",
+  );
+  assertEquals(
+    requests[0].headers.get("x-fixture"),
+    "original",
+    "Factory retained mutable headers",
+  );
+  assertEquals(
+    new URL(requests[0].url).searchParams.get("fixture"),
+    "original",
+    "Factory retained mutable query",
+  );
+});
+
+Deno.test("raw factory rejects inherited and unknown registry keys", async () => {
+  for (
+    const [provider, version] of [["unknown", "latest"], ["constructor", "latest"], [
+      "gitea",
+      "toString",
+    ]]
+  ) {
+    let caught: unknown;
+    try {
+      // Exercise untyped JavaScript callers without weakening the public TypeScript contract.
+      // @ts-expect-error Invalid provider/version is deliberately rejected at runtime.
+      await PanGit.createProviderClient(provider, version, "https://provider.invalid");
+    } catch (error) {
+      caught = error;
+    }
+    assertEquals(
+      caught instanceof Error &&
+        caught.message === `Unknown provider client version ${provider} ${version}`,
+      true,
+      "Factory accepted an inherited or unknown registry key",
+    );
+  }
+});

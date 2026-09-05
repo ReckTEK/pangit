@@ -92,8 +92,11 @@ export function branches<V extends GitLabVersion>(
         p.items,
         q,
         q.limit,
-        async (b) =>
-          Object.freeze({ branch: b, divergence: await ops.getDivergence(r, q.base, b.sha, q) }),
+        async (b, signal) =>
+          Object.freeze({
+            branch: b,
+            divergence: await ops.getDivergence(r, q.base, b.sha, { ...q, signal }),
+          }),
       );
       return createPage(values, p);
     },

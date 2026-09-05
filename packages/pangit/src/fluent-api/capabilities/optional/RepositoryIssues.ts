@@ -194,11 +194,14 @@ export function createRepositoryIssues<
       return createIssueEntity(await adapter.createIssue(repository, input, options));
     },
     update(issue: Issue<TProvider, TVersion>, input: UpdateIssueInput) {
+      const operationInput = structuredClone(input);
       const context = validationContext("updateIssue");
-      if (input.title === undefined && input.description === undefined) {
+      if (operationInput.title === undefined && operationInput.description === undefined) {
         throw new ValidationError("issue update requires a title or description", context);
       }
-      if (input.title !== undefined) requireIdentity(input.title, "issue title", context);
+      if (operationInput.title !== undefined) {
+        requireIdentity(operationInput.title, "issue title", context);
+      }
       return createOperationExtension<
         "issues.update",
         TProvider,
@@ -216,7 +219,7 @@ export function createRepositoryIssues<
             await adapter.updateIssue(
               repository,
               issueData(issue),
-              input,
+              operationInput,
               {
                 ...options,
                 ...(extension === undefined ? {} : { extension }),

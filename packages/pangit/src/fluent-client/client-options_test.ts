@@ -11,7 +11,7 @@ for (
     const baseUrl = new URL(`https://${provider}.invalid`);
     const query = { hint: ["original"] };
     const requests: URL[] = [];
-    const client = await createClient(provider, version, {
+    const pending = createClient(provider, version, {
       baseUrl,
       query,
       fetch(input, init) {
@@ -21,6 +21,7 @@ for (
     });
     baseUrl.hostname = "changed.invalid";
     query.hint[0] = "changed";
+    const client = await pending;
     await client.auth.token("test-token");
     if (requests.length !== 1 || requests[0].hostname !== `${provider}.invalid`) {
       throw new Error("Caller mutation redirected authentication to another server");
@@ -30,3 +31,23 @@ for (
     }
   });
 }
+
+Deno.test("Codeberg snapshots options before loading its provider", async () => {
+  const { createCodebergClient } = await import("./create-codeberg-client.ts");
+  const query = { hint: ["original"] };
+  const requests: Request[] = [];
+  const options = {
+    query,
+    fetch(input: Request | URL | string, init?: RequestInit) {
+      requests.push(new Request(input, init));
+      return Promise.resolve(Response.json({ id: 1, login: "user" }));
+    },
+  };
+  const pending = createCodebergClient("16.0.3", options);
+  query.hint[0] = "changed";
+  const client = await pending;
+  await client.auth.token("test-token");
+  if (requests.length !== 1 || new URL(requests[0].url).searchParams.get("hint") !== "original") {
+    throw new Error("Codeberg configuration changed during provider loading");
+  }
+});

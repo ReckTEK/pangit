@@ -1,6 +1,7 @@
 import type { ValidationErrorContext } from "../adapter-contract/errors.ts";
 import { type ExtensionSupport, supportsExtension } from "./ExtensionSupport.ts";
 import type { OperationOptions } from "../adapter-contract/operation-options.ts";
+import { snapshotExtensionData } from "./snapshot-extension-data.ts";
 import type {
   ProviderExtensionContext,
   ProviderExtensionOptions,
@@ -34,6 +35,7 @@ type ProviderExtensionMethod<
 /**
  * Common operation plus only the extension method registered for its selected provider/version.
  * Configuring an extension returns the terminal form, so one callback cannot run twice.
+ * Context and option data are structured-cloned; their records and arrays are frozen.
  */
 export type OperationExtension<
   TOperation extends RegisteredOperation,
@@ -97,13 +99,13 @@ export function createOperationExtension<
           );
         }
         configured = true;
-        extension = Object.freeze({
-          ...configure(
-            Object.freeze({ ...input.context }) as Readonly<
+        extension = snapshotExtensionData(
+          configure(
+            snapshotExtensionData(input.context) as Readonly<
               ProviderExtensionContext<TOperation, TProvider>
             >,
           ),
-        });
+        );
         return executable;
       },
     }

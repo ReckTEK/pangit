@@ -1,3 +1,4 @@
+import { ProviderInvariantError } from "../../../../fluent-api/adapter-contract/errors.ts";
 import type { ForgejoAdapterContext } from "../ForgejoAdapterContext.ts";
 import type { ForgejoVersion } from "../../native/ForgejoEntityNative.ts";
 import type { ForgejoOperation, ForgejoSuccessResponse } from "./operation.ts";
@@ -69,6 +70,18 @@ export function forgejoPagination<TVersion extends ForgejoVersion>(
       : itemCount > 0 && totalCount !== undefined && consumed < totalCount
       ? cursor.page + 1
       : undefined);
+  if (
+    nextPage !== undefined &&
+    (itemCount === 0 || !Number.isSafeInteger(nextPage) || nextPage <= cursor.page)
+  ) {
+    throw new ProviderInvariantError("Forgejo returned a non-progressing pagination continuation", {
+      provider: "forgejo",
+      version: context.version,
+      operation: operation.universal,
+      status: response.status,
+      cause: response,
+    });
+  }
   return Object.freeze({
     ...(nextPage === undefined ? {} : {
       nextCursor: encodeForgejoPageCursor(

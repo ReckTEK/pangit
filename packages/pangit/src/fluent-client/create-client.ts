@@ -6,6 +6,8 @@ import type { FluentClientOptions } from "../fluent-api/adapter-contract/client-
 import type { FluentClient } from "../fluent-api/client/FluentClient.ts";
 import { ProviderAdapterUnavailableError } from "../fluent-api/adapter-contract/errors.ts";
 
+import { snapshotClientOptions } from "./snapshot-client-options.ts";
+
 const providers = {
   forgejo: (): Promise<typeof import("../fluent-providers/forgejo/mod.ts")> =>
     import("../fluent-providers/forgejo/mod.ts"),
@@ -33,11 +35,12 @@ export async function createClient<
   const options = typeof baseUrlOrOptions === "string" || baseUrlOrOptions instanceof URL
     ? { baseUrl: baseUrlOrOptions }
     : baseUrlOrOptions;
+  const snapshot = snapshotClientOptions(options);
   const implementation = await providers[provider]();
   // The catalog key binds the implementation to P; each provider validates its own version.
   const create = implementation.createClient as unknown as (
     version: V,
     options: FluentClientOptions,
   ) => FluentClient<P, V>;
-  return create(version, options);
+  return create(version, snapshot);
 }

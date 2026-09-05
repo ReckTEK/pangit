@@ -180,7 +180,10 @@ export async function runFetchWithSignal(
     cancelRequestBody(request, signal.reason);
     throw signal.reason;
   }
-  const pending = Promise.resolve().then(callback);
+  const pending = Promise.resolve().then(() => {
+    throwIfAborted(signal);
+    return callback();
+  });
   if (signal === undefined) {
     try {
       return await pending;
@@ -261,7 +264,10 @@ async function runReplacementHookWithSignal<TValue extends object>(
     throw signal.reason;
   }
 
-  const pending = Promise.resolve().then(callback);
+  const pending = Promise.resolve().then(() => {
+    throwIfAborted(signal);
+    return callback();
+  });
   return await new Promise<TValue>((resolve, reject) => {
     let aborted = false;
     let settled = false;
@@ -313,7 +319,10 @@ export async function runWithSignal<T>(
   signal: AbortSignal | undefined,
 ): Promise<T> {
   throwIfAborted(signal);
-  const value = Promise.resolve().then(callback);
+  const value = Promise.resolve().then(() => {
+    throwIfAborted(signal);
+    return callback();
+  });
   if (signal === undefined) return await value;
 
   return await new Promise<T>((resolve, reject) => {

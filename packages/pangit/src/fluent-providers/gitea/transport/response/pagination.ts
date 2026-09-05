@@ -1,3 +1,4 @@
+import { ProviderInvariantError } from "../../../../fluent-api/adapter-contract/errors.ts";
 import type { GiteaAdapterContext } from "../GiteaAdapterContext.ts";
 import type { GiteaVersion } from "../../native/GiteaEntityNative.ts";
 import type { GiteaOperation, GiteaSuccessResponse } from "./operation.ts";
@@ -69,6 +70,18 @@ export function giteaPagination<TVersion extends GiteaVersion>(
       : itemCount > 0 && totalCount !== undefined && consumed < totalCount
       ? cursor.page + 1
       : undefined);
+  if (
+    nextPage !== undefined &&
+    (itemCount === 0 || !Number.isSafeInteger(nextPage) || nextPage <= cursor.page)
+  ) {
+    throw new ProviderInvariantError("Gitea returned a non-progressing pagination continuation", {
+      provider: "gitea",
+      version: context.version,
+      operation: operation.universal,
+      status: response.status,
+      cause: response,
+    });
+  }
   return Object.freeze({
     ...(nextPage === undefined ? {} : {
       nextCursor: encodeGiteaPageCursor(

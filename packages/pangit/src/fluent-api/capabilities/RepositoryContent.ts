@@ -204,8 +204,23 @@ export function createRepositoryContent<
       );
     },
     commitChanges(input: CommitFileChangesInput) {
+      const operationInput: CommitFileChangesInput = {
+        ...input,
+        ...(input.author === undefined ? {} : { author: { ...input.author } }),
+        changes: input.changes.map((change) =>
+          "content" in change
+            ? {
+              ...change,
+              // Copy bytes explicitly: structuredClone retains shared-buffer backing memory.
+              content: typeof change.content === "string"
+                ? change.content
+                : Uint8Array.from(change.content),
+            }
+            : { ...change }
+        ),
+      };
       validateCommitFileChangesInput(
-        input,
+        operationInput,
         validationContext(adapter, "commitFileChanges"),
       );
       return createOperationExtension<
@@ -221,12 +236,12 @@ export function createRepositoryContent<
         version: adapter.version,
         context: Object.freeze({
           repositoryFullName: repository.fullName,
-          branch: input.branch,
-          changeCount: input.changes.length,
+          branch: operationInput.branch,
+          changeCount: operationInput.changes.length,
         }),
         execute: async (extension, options) =>
           createCommit(
-            await adapter.commitFileChanges(repository, input, {
+            await adapter.commitFileChanges(repository, operationInput, {
               ...options,
               ...(extension === undefined ? {} : { extension }),
             } as CommitFileChangesOptions<TProvider>),

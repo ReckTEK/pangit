@@ -23,12 +23,20 @@ export function metadataOperations<V extends GitLabVersion>(
       const parent = o.compareFirstParent
         ? (await commits(c).getCommit(r, ref, o)).parents[0]
         : undefined;
-      return await batch(c, "readPathMetadataBatch", paths, o, 200, async (p) => {
+      return await batch(c, "readPathMetadataBatch", paths, o, 200, async (p, signal) => {
         const value = await optional(() =>
-          readContent(c, r, p, { ...o, ref, includeBytes: false, includeCommitMetadata: true })
+          readContent(c, r, p, {
+            ...o,
+            ref,
+            signal,
+            includeBytes: false,
+            includeCommitMetadata: true,
+          })
         );
         if (!value) return { path: p, unavailable: "missing" as const };
-        const before = parent ? await optional(() => entry(c, r, p, parent, o)) : undefined;
+        const before = parent
+          ? await optional(() => entry(c, r, p, parent, { ...o, signal }))
+          : undefined;
         return {
           path: p,
           content: Object.freeze({

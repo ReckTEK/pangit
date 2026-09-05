@@ -108,17 +108,18 @@ export function createRepositoryCommitStatuses<
       });
     },
     set(reference: CommitStatusReference, input: SetCommitStatusInput) {
+      const operationInput = structuredClone(input);
       const context = validationContext(adapter, "setCommitStatus");
       const target = validateStatusReference(reference, context);
       const statusContext = requireIdentity(
-        input.context,
+        operationInput.context,
         "status context",
         context,
       );
       if (
-        input.state !== "pending" &&
-        input.state !== "success" &&
-        input.state !== "failure"
+        operationInput.state !== "pending" &&
+        operationInput.state !== "success" &&
+        operationInput.state !== "failure"
       ) {
         throw new ValidationError(
           "invalid portable commit-status state",
@@ -140,7 +141,7 @@ export function createRepositoryCommitStatuses<
           repositoryFullName: repository.fullName,
           reference: target,
           context: statusContext,
-          portableState: input.state,
+          portableState: operationInput.state,
         }),
         execute: async (extension, options) => {
           const resolvedReference = await resolveStatusReference(
@@ -154,7 +155,7 @@ export function createRepositoryCommitStatuses<
             await adapter.setCommitStatus(
               repository,
               resolvedReference,
-              input,
+              operationInput,
               {
                 ...options,
                 ...(extension === undefined ? {} : { extension }),

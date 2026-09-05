@@ -1,11 +1,11 @@
 import { type OperationOptions, requirePositiveInteger } from "./operation-options.ts";
-import type { ValidationErrorContext } from "./errors.ts";
+import { ValidationError, type ValidationErrorContext } from "./errors.ts";
 
 /** One caller-controlled provider page request. */
 export interface PageRequest extends OperationOptions {
-  /** Maximum items requested from this provider page. */
+  /** Maximum items requested when starting pagination; a cursor retains its native page size. */
   readonly limit?: number;
-  /** Opaque continuation cursor returned by the preceding page. */
+  /** Opaque continuation cursor returned by the preceding page; retains its native page size. */
   readonly cursor?: string;
 }
 
@@ -53,4 +53,22 @@ export function createPage<TItem>(
     ...(metadata.nextCursor === undefined ? {} : { nextCursor: metadata.nextCursor }),
     ...(metadata.totalCount === undefined ? {} : { totalCount: metadata.totalCount }),
   });
+}
+
+/** Preserve offset continuity while enforcing the caller's inspection ceiling. */
+export function resolveBoundedPageLimit(
+  request: ResolvedPageRequest & { readonly maxItems?: number },
+  cursorLimit: number | undefined,
+  context: ValidationErrorContext,
+): number {
+  const limit = requirePositiveInteger(request.limit, "page limit", context);
+  if (request.maxItems === undefined) return cursorLimit ?? limit;
+  const maximum = requirePositiveInteger(request.maxItems, "maxItems", context);
+  if (cursorLimit !== undefined && cursorLimit > maximum) {
+    throw new ValidationError(
+      "maxItems cannot be smaller than the continuation page size",
+      context,
+    );
+  }
+  return cursorLimit ?? Math.min(limit, maximum);
 }

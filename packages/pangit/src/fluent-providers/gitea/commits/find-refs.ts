@@ -7,7 +7,11 @@ import {
   requireIdentity,
   requirePositiveInteger,
 } from "../../../fluent-api/adapter-contract/operation-options.ts";
-import { createPage, type Page } from "../../../fluent-api/adapter-contract/pagination.ts";
+import {
+  createPage,
+  type Page,
+  resolveBoundedPageLimit,
+} from "../../../fluent-api/adapter-contract/pagination.ts";
 import type { RepositoryData } from "../../../fluent-api/adapter-contract/repositories.ts";
 import { listGiteaBranches } from "../branches/mod.ts";
 import type { GiteaAdapterContext } from "../transport/GiteaAdapterContext.ts";
@@ -41,10 +45,14 @@ export async function findGiteaRefsForCommit<TVersion extends GiteaVersion>(
   const commitSha = requireIdentity(sha, "commit SHA");
   const kinds = validateRefKinds(context, request.kinds, operation);
   const cursor = decodeRefCursor(context, request.cursor, kinds, operation);
-  const maxItems = request.maxItems === undefined
-    ? request.limit
-    : requirePositiveInteger(request.maxItems, "maximum ref items");
-  const limit = Math.min(request.limit, maxItems);
+  const limit = resolveBoundedPageLimit(
+    request,
+    decodeGiteaPageCursor(cursor.providerCursor, {
+      version: context.version,
+      operation,
+    }).effectiveLimit,
+    { provider: "gitea", version: context.version, operation: operation.universal },
+  );
   if (request.match === "contains") {
     // The universal fallback bound remains required. Gitea answers each candidate with a
     // count-only limit=1 probe, so it never downloads that many commit objects.

@@ -57,9 +57,9 @@ export async function commitFiles<V extends GitLabVersion>(
     c,
     "commitFileChanges",
     i.changes,
-    { maxItems: 100, concurrency: 4 },
+    { maxItems: 100, concurrency: 4, signal: o.signal },
     100,
-    async (change) => {
+    async (change, signal) => {
       let action = change.operation;
       let last_commit_id: string | undefined;
       if (action === "upsert" || "sha" in change && change.sha !== undefined) {
@@ -68,7 +68,7 @@ export async function commitFiles<V extends GitLabVersion>(
           call(c, "commitFileChanges.preflight", "getApiV4ProjectsIdRepositoryFilesFilePath", {
             path: { ...path(r), file_path: oldPath },
             query: { ref: o.extension?.startSha ?? i.branch },
-          }, o)
+          }, { ...o, signal })
         );
         const old = response ? object(c, "commitFileChanges", response.body) : undefined;
         if (

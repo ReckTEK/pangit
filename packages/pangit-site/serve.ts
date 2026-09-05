@@ -27,14 +27,17 @@ export async function serve(request: Request): Promise<Response> {
     } catch {
       return new Response("Invalid URL", { status: 400 });
     }
-    const file = new URL(`.${pathname}`, clientRoot);
+    if (pathname.includes("\0")) return new Response("Invalid URL", { status: 400 });
+    const file = new URL(`.${pathname.split("/").map(encodeURIComponent).join("/")}`, clientRoot);
     if (!file.href.startsWith(clientRoot.href)) return new Response("Not found", { status: 404 });
     try {
       const stat = await Deno.stat(file);
       if (stat.isFile) {
         const extension = file.pathname.split(".").at(-1) ?? "";
         const headers = new Headers({
-          "Content-Type": contentTypes[extension] ?? "application/octet-stream",
+          "Content-Type": Object.hasOwn(contentTypes, extension)
+            ? contentTypes[extension]
+            : "application/octet-stream",
           "Content-Length": String(stat.size),
           "X-Content-Type-Options": "nosniff",
           "Cache-Control": pathname.startsWith("/assets/")
@@ -46,7 +49,11 @@ export async function serve(request: Request): Promise<Response> {
         });
       }
     } catch (error) {
-      if (!(error instanceof Deno.errors.NotFound)) throw error;
+      if (
+        !(error instanceof Deno.errors.NotFound) && !(error instanceof Deno.errors.NotADirectory)
+      ) {
+        throw error;
+      }
     }
   }
   return handleRequest(request);

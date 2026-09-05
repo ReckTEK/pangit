@@ -117,6 +117,9 @@ export interface FindCommitRefsRequest extends ResolvedPageRequest, BoundedOpera
   readonly maxCommitsPerRef?: number;
 }
 
+/** Authors group by case-insensitive email, or exact name when email is absent.
+ * Missing identities are omitted; the first identity in provider order supplies display fields.
+ */
 export interface ContributorData {
   readonly name?: string;
   readonly email?: string;

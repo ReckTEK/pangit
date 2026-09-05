@@ -1,18 +1,20 @@
+import { aggregateContributors } from "../../../fluent-api/adapter-contract/contributor-aggregation.ts";
 import type {
   ContributorData,
   ListContributorsRequest,
 } from "../../../fluent-api/adapter-contract/commits.ts";
 
+import { requireIdentity } from "../../../fluent-api/adapter-contract/operation-options.ts";
 import {
-  requireIdentity,
-  requirePositiveInteger,
-} from "../../../fluent-api/adapter-contract/operation-options.ts";
-import type { ScanPage } from "../../../fluent-api/adapter-contract/pagination.ts";
+  resolveBoundedPageLimit,
+  type ScanPage,
+} from "../../../fluent-api/adapter-contract/pagination.ts";
 import type { RepositoryData } from "../../../fluent-api/adapter-contract/repositories.ts";
 
 import type { GiteaAdapterContext } from "../transport/GiteaAdapterContext.ts";
 import type { GiteaVersion } from "../native/GiteaEntityNative.ts";
 
+import { decodeGiteaPageCursor } from "../transport/response/mod.ts";
 import { validationError } from "./errors.ts";
 import { listGiteaCommits } from "./read-commits.ts";
 
@@ -32,9 +34,14 @@ export async function listGiteaContributors<TVersion extends GiteaVersion>(
       "contributor aggregation requires maxItems, since, or until as an explicit history boundary",
     );
   }
-  const maxItems = request.maxItems === undefined
-    ? request.limit
-    : requirePositiveInteger(request.maxItems, "maximum contributor history items");
+  const limit = resolveBoundedPageLimit(
+    request,
+    decodeGiteaPageCursor(request.cursor, {
+      version: context.version,
+      operation,
+    }).effectiveLimit,
+    { provider: "gitea", version: context.version, operation: operation.universal },
+  );
   const ref = request.ref ?? repository.defaultBranch;
   if (ref === undefined) {
     throw validationError(
@@ -47,7 +54,7 @@ export async function listGiteaContributors<TVersion extends GiteaVersion>(
     context,
     repository,
     {
-      limit: Math.min(request.limit, maxItems),
+      limit,
       ...(request.cursor === undefined ? {} : { cursor: request.cursor }),
       ...(request.signal === undefined ? {} : { signal: request.signal }),
       ref: requireIdentity(ref, "contributor history ref"),
@@ -59,20 +66,8 @@ export async function listGiteaContributors<TVersion extends GiteaVersion>(
     },
     operation,
   );
-  const contributors = new Map<string, { name?: string; email?: string; commits: number }>();
-  for (const commit of page.items) {
-    const name = commit.author?.name;
-    const email = commit.author?.email;
-    if (name === undefined && email === undefined) continue;
-    const key = email === undefined ? `name:${name}` : `email:${email.toLowerCase()}`;
-    const contributor = contributors.get(key);
-    if (contributor === undefined) contributors.set(key, { name, email, commits: 1 });
-    else contributor.commits++;
-  }
   return Object.freeze({
-    items: Object.freeze(
-      [...contributors.values()].map((contributor) => Object.freeze({ ...contributor })),
-    ),
+    items: aggregateContributors(page.items),
     ...(page.nextCursor === undefined ? {} : { nextCursor: page.nextCursor }),
     complete: page.nextCursor === undefined,
   });

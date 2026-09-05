@@ -74,3 +74,33 @@ Deno.test("version-restricted extensions are absent at runtime on unsupported ve
   });
   assert("gitea" in current, "Gitea 1.27.2 omitted its compare extension");
 });
+
+Deno.test("operation extensions own nested options without freezing caller data", async () => {
+  const comments = [{ body: "original", path: "file.ts", newPosition: 2 }];
+  const operation = createOperationExtension<
+    "pullRequestReviews.create",
+    "gitea",
+    "1.27.2",
+    string
+  >({
+    operation: "pullRequestReviews.create",
+    support: giteaExtensions["pullRequestReviews.create"],
+    provider: "gitea",
+    version: "1.27.2",
+    context: { repositoryFullName: "acme/project", pullRequestNumber: 1 },
+    execute(extension) {
+      assertEquals(
+        extension?.comments,
+        [{ body: "original", path: "file.ts", newPosition: 2 }],
+        "caller mutation changed configured review comments",
+      );
+      assert(Object.isFrozen(extension?.comments), "nested comment array was mutable");
+      assert(Object.isFrozen(extension?.comments?.[0]), "nested comment was mutable");
+      return Promise.resolve("created");
+    },
+  });
+  const configured = operation.gitea(() => ({ comments }));
+  comments[0].body = "changed";
+  comments.length = 0;
+  await configured.execute();
+});

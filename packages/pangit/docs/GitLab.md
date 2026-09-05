@@ -54,6 +54,10 @@ available for optional modules. Provider differences do not change the shared me
 | CI filtering                       | Runs are pipelines; historical configuration-path filtering unavailable. Artifact IDs are `job:<id>`.                                                                                                                                                                                                                                |
 | Packages                           | `owner` identifies a project by ID or full path. Upload/download remain native operations.                                                                                                                                                                                                                                           |
 
+Package-version lookups inspect at most 10 pages of 100 entries. Package-file reads enforce
+`maxFiles` and reject an empty page that advertises continuation, so incomplete results cannot be
+reported as complete.
+
 List methods return one bounded page and an opaque continuation cursor. Commit file lists traverse
 provider pages; GitLab's server diff limits still apply. Merge-base traversal and other
 multi-request operations enforce their explicit bounds. File reads pin refs and verify blob hashes;

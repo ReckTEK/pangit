@@ -42,7 +42,7 @@ export async function scanExclusiveHistory<TVersion extends ForgejoVersion>(
       version: context.version,
       operation: FIND_MERGE_BASES_LIST_OPERATION,
     });
-    const limit = Math.min(50, budget.remainingItems);
+    const limit = decoded.effectiveLimit ?? Math.min(50, budget.remainingItems);
     consumeMergeBaseRequests(context, budget, 1);
     const response = await requestForgejo(
       context,
@@ -70,13 +70,16 @@ export async function scanExclusiveHistory<TVersion extends ForgejoVersion>(
       FIND_MERGE_BASES_LIST_OPERATION,
       response,
     );
-    if (payloads.length > budget.remainingItems) {
+    if (payloads.length > limit) {
       throw invariant(
         context,
         FIND_MERGE_BASES_LIST_OPERATION,
-        "exclusive-history page exceeded its requested inspection budget",
+        "exclusive-history page exceeded its requested page size",
         response,
       );
+    }
+    if (payloads.length > budget.remainingItems) {
+      throw incompleteHistory(context, include, exclude, commits.length);
     }
     commits.push(...payloads.map((payload) =>
       normalizeForgejoCommit(

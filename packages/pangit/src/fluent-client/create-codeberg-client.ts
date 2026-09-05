@@ -7,6 +7,10 @@ export async function createCodebergClient<const V extends ForgejoVersion>(
   version: V,
   options: CodebergClientOptions = {},
 ): Promise<FluentClient<"forgejo", V>> {
+  const snapshot = {
+    ...options,
+    ...(options.query === undefined ? {} : { query: structuredClone(options.query) }),
+  };
   const provider = await import("../fluent-providers/forgejo/mod.ts");
-  return provider.createCodebergClient(version, options);
+  return provider.createCodebergClient(version, snapshot);
 }

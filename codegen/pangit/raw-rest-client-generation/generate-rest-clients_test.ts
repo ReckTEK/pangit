@@ -148,8 +148,8 @@ Deno.test("generated module ships raw clients behind literal dynamic imports", (
   assert(source !== undefined, "generated provider registry was not rendered");
   assert(clients !== undefined, "generated provider type map was not rendered");
   assert(
-    source.includes('import type { RestClient, RestClientOptions } from "./runtime/mod.ts"'),
-    "generated registry must import only generated runtime types",
+    source.includes('import { RestClient, type RestClientOptions } from "./runtime/mod.ts"'),
+    "generated registry must capture configuration through its shared runtime",
   );
   assert(
     source.includes("baseUrl: string | URL") &&

@@ -1,3 +1,4 @@
+import { ProviderInvariantError } from "../../../../fluent-api/adapter-contract/errors.ts";
 import type { GitLabAdapterContext } from "../GitLabAdapterContext.ts";
 import type { GitLabVersion } from "../../native/GitLabNative.ts";
 import type { GitLabOperation, GitLabSuccessResponse } from "./operation.ts";
@@ -60,6 +61,19 @@ export function gitlabPagination<TVersion extends GitLabVersion>(
   const consumed = (cursor.page - 1) * effectiveLimit + itemCount;
   const currentPage = reportedPage === undefined || reportedPage < 1 ? cursor.page : reportedPage;
   const explicitNext = response.headers.get("x-next-page");
+  if (
+    explicitNext !== null && explicitNext !== "" &&
+    (!/^\d+$/.test(explicitNext) || !Number.isSafeInteger(Number(explicitNext)) ||
+      Number(explicitNext) <= cursor.page)
+  ) {
+    throw new ProviderInvariantError("GitLab returned an invalid x-next-page continuation", {
+      provider: "gitlab",
+      version: context.version,
+      operation: operation.universal,
+      status: response.status,
+      cause: response,
+    });
+  }
   const nextPage = explicitNext === "" ? undefined : linkedPage ??
     (explicitNext !== null && /^\d+$/.test(explicitNext) && Number(explicitNext) > currentPage
       ? Number(explicitNext)
@@ -75,6 +89,18 @@ export function gitlabPagination<TVersion extends GitLabVersion>(
       : itemCount === effectiveLimit && totalCount === undefined && pageCount === undefined
       ? currentPage + 1
       : undefined);
+  if (
+    nextPage !== undefined &&
+    (itemCount === 0 || !Number.isSafeInteger(nextPage) || nextPage <= cursor.page)
+  ) {
+    throw new ProviderInvariantError("GitLab returned a non-progressing pagination continuation", {
+      provider: "gitlab",
+      version: context.version,
+      operation: operation.universal,
+      status: response.status,
+      cause: response,
+    });
+  }
   return Object.freeze({
     ...(nextPage === undefined ? {} : {
       nextCursor: encodeGitLabPageCursor(

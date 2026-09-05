@@ -81,7 +81,7 @@ export type ClientOptions = Omit<RestClientOptions, "headers">;
   RestClientTypeMap,
   RestClientVersion,
 } from "./rest-client-type-map.ts";
-import type { RestClient, RestClientOptions } from ${JSON.stringify(runtimeModulePath)};
+import { RestClient, type RestClientOptions } from ${JSON.stringify(runtimeModulePath)};
 
 type RestClientConfiguration = RestClientOptions | RestClient;
 
@@ -115,7 +115,10 @@ export function createProviderClient<
   version: TVersion,
   baseUrlOrConfiguration: string | URL | RestClientConfiguration,
 ): Promise<RestClientTypeMap[TProvider][TVersion]> {
-  const loader = (restClientLoaders[provider] as Record<string, RestClientLoader>)[version];
+  const providerLoaders = Object.hasOwn(restClientLoaders, provider)
+    ? restClientLoaders[provider] as Record<string, RestClientLoader> : undefined;
+  const loader = providerLoaders !== undefined && Object.hasOwn(providerLoaders, version)
+    ? providerLoaders[version] : undefined;
   if (loader === undefined) {
     throw new Error(\`Unknown provider client version \${provider} \${version}\`);
   }
@@ -125,7 +128,7 @@ export function createProviderClient<
   } else {
     configuration = baseUrlOrConfiguration;
   }
-  return loader(configuration) as Promise<RestClientTypeMap[TProvider][TVersion]>;
+  return loader(configuration instanceof RestClient ? configuration : new RestClient(configuration)) as Promise<RestClientTypeMap[TProvider][TVersion]>;
 }
 `,
     ],

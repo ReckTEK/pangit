@@ -232,10 +232,11 @@ export function createRepositoryPullRequests<
       pullRequest: PullRequest<TProvider, TVersion>,
       input: MergePullRequestInput = {},
     ) {
+      const operationInput = structuredClone(input);
       const context = validationContext(adapter, "mergePullRequest");
       if (
-        input.method !== undefined && input.method !== "provider-default" &&
-        input.method !== "squash"
+        operationInput.method !== undefined && operationInput.method !== "provider-default" &&
+        operationInput.method !== "squash"
       ) {
         throw new ValidationError("invalid pull-request merge method", context);
       }
@@ -258,7 +259,7 @@ export function createRepositoryPullRequests<
         execute: async (extension, options) => {
           return createPullRequest(
             await adapter.mergePullRequest(repository, data(pullRequest), {
-              ...input,
+              ...operationInput,
               ...options,
               ...(extension === undefined ? {} : { extension }),
             } as MergePullRequestOptions<TProvider>),

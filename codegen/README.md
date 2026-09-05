@@ -15,7 +15,9 @@ codegen/
 │   │   ├── openapi-specifications/         # sources, downloads, normalization
 │   │   ├── generated-runtime-template/     # copied into generated client output
 │   │   ├── generate-rest-clients.ts
-│   │   └── publish-generated-rest-clients.ts
+│   │   ├── generated-source-tree.ts        # filesystem and ownership conventions
+│   │   ├── validate-generated-sources.ts    # layout, types, dependency boundaries
+│   │   └── publish-generated-rest-clients.ts # staged publication and recovery
 │   └── e2e-test-generation/
 │       ├── generate-e2e-test-assets.ts     # generated raw tests + Docker only
 │       ├── clean-generated-e2e-output.ts
@@ -42,6 +44,10 @@ tests/e2e/generated/docker-environments/<git-host>/<version>/
 
 Generated raw-client tests import generated REST clients directly. Code generation does not start
 Docker or touch runtime evidence under `tests/e2e/results/`.
+
+Client publication restores its previous files if a swap fails. If restoration also fails, the error
+identifies a retained transaction directory. Its `recovery.json` maps original locations to backup
+URLs; backups already restored are absent. Preserve that directory until recovery is complete.
 
 Every active schema is pinned by a reviewed SHA-256 value in `git-hosts.json`. Configured license
 and upstream-notice files are also downloaded, pinned, verified, emitted as client provenance, and

@@ -65,7 +65,7 @@ async function pkg<V extends GitLabVersion>(
 export function packages<V extends GitLabVersion>(c: GitLabAdapterContext<V>) {
   const find = async (i: PackageVersionIdentity, o: { signal?: AbortSignal } = {}) => {
     let cursor: string | undefined;
-    let inspected = 0;
+    let pages = 0;
     let found: PackageVersionData<"gitlab", V> | undefined;
     do {
       const values = await page(
@@ -90,10 +90,9 @@ export function packages<V extends GitLabVersion>(c: GitLabAdapterContext<V>) {
         invalid(c, "findPackageVersion", "GitLab returned ambiguous package coordinates");
       }
       if (matches.length) found = matches[0];
-      inspected += values.items.length;
       cursor = values.nextCursor;
-      if (inspected >= 1000 && cursor) {
-        invalid(c, "findPackageVersion", "Package lookup exceeds 1000 entries");
+      if (++pages >= 10 && cursor) {
+        invalid(c, "findPackageVersion", "Package lookup exceeds 10 pages of 100 entries");
       }
     } while (cursor);
     return found;
@@ -153,13 +152,14 @@ export function packages<V extends GitLabVersion>(c: GitLabAdapterContext<V>) {
           V
         >[] = [];
       let cursor: string | undefined;
+      const limit = Math.min(100, o.maxFiles + 1);
       do {
         const values = await page(
           c,
           "listPackageFiles",
           "getApiV4ProjectsIdPackagesPackageIdPackageFiles",
           { path: { id: i.owner, package_id: numericId(c, "listPackageFiles", version.id) } },
-          { limit: Math.min(100, o.maxFiles - result.length + 1), cursor, ...o },
+          { limit, cursor, ...o },
           async (p) =>
             Object.freeze({
               id: id(c, "normalizePackageFile", p.id),

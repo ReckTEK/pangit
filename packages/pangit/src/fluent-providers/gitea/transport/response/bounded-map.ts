@@ -34,6 +34,7 @@ export async function mapGiteaBounded<
         assertNotAborted(context, operation, effectiveSignal);
         const index = next++;
         output[index] = await map(values[index], index, effectiveSignal);
+        assertNotAborted(context, operation, effectiveSignal);
       } catch (error) {
         if (!failed) {
           failed = true;

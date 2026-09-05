@@ -22,9 +22,9 @@ export function readFilesOperations<V extends GitLabVersion>(
       if (paths.length > (o.maxItems ?? 200)) invalid(c, "readFiles", "Batch exceeds maxItems");
       if (paths.length === 0) return Object.freeze([]);
       const ref = await pin(c, r, o.ref, o);
-      return await batch(c, "readFiles", paths, o, 200, async (p) => {
+      return await batch(c, "readFiles", paths, o, 200, async (p, signal) => {
         try {
-          const result = await readContent(c, r, p, { ...o, ref });
+          const result = await readContent(c, r, p, { ...o, ref, signal });
           return result.kind === "file"
             ? Object.freeze({ path: p, content: result })
             : Object.freeze({ path: p, unavailable: "not-a-file" as const });

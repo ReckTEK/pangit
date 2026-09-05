@@ -1,3 +1,4 @@
+import { aggregateContributors } from "../../../fluent-api/adapter-contract/contributor-aggregation.ts";
 import type { GitLabAdapterContext } from "../transport/GitLabAdapterContext.ts";
 import type { GitLabVersion } from "../native/GitLabNative.ts";
 import type {
@@ -122,9 +123,11 @@ export function commits<V extends GitLabVersion>(c: GitLabAdapterContext<V>) {
           },
         },
         q,
-        async (p) => {
+        async (p, signal) => {
           const normalized = await commit(c, p, q);
-          return q.files || q.verification ? await ops.getCommit(r, normalized.sha, q) : normalized;
+          return q.files || q.verification
+            ? await ops.getCommit(r, normalized.sha, { ...q, signal })
+            : normalized;
         },
       ),
     getCommit: async (r, sha, o = {}) => {
@@ -164,7 +167,7 @@ export function commits<V extends GitLabVersion>(c: GitLabAdapterContext<V>) {
         unique,
         o,
         100,
-        (sha) => ops.getCommit(r, sha, o),
+        (sha, signal) => ops.getCommit(r, sha, { ...o, signal }),
       );
       const map = new Map(unique.map((sha, i) => [sha, values[i]]));
       return Object.freeze(shas.map((sha) => map.get(sha)!));
@@ -213,7 +216,7 @@ export function commits<V extends GitLabVersion>(c: GitLabAdapterContext<V>) {
         "getApiV4ProjectsIdRepositoryCommitsShaRefs",
         { path: { ...path(r), sha }, query: { type: kind } },
         q,
-        async (p) => {
+        async (p, signal) => {
           const name = required(c, "findRefsForCommit", p.name);
           const k = p.type === "tag" ? "tag" as const : "branch" as const;
           const raw = object(
@@ -222,10 +225,10 @@ export function commits<V extends GitLabVersion>(c: GitLabAdapterContext<V>) {
             (await (k === "tag"
               ? call(c, "findRefsForCommit", "getApiV4ProjectsIdRepositoryTagsTagName", {
                 path: { ...path(r), tag_name: name },
-              }, q)
+              }, { ...q, signal })
               : call(c, "findRefsForCommit", "getApiV4ProjectsIdRepositoryBranchesBranch", {
                 path: { id: r.id, branch: name },
-              }, q))).body,
+              }, { ...q, signal }))).body,
           );
           const head = id(c, "findRefsForCommit", object(c, "findRefsForCommit", raw.commit).id);
           return Object.freeze({ kind: k, name, sha: head });
@@ -246,16 +249,8 @@ export function commits<V extends GitLabVersion>(c: GitLabAdapterContext<V>) {
         ...q,
         limit: Math.min(q.limit, q.maxItems ?? q.limit),
       });
-      const counts = new Map<string, { name?: string; email?: string; commits: number }>();
-      for (const commit of result.items) {
-        const key = JSON.stringify([commit.author?.name, commit.author?.email]);
-        const entry = counts.get(key) ??
-          { name: commit.author?.name, email: commit.author?.email, commits: 0 };
-        entry.commits++;
-        counts.set(key, entry);
-      }
       return Object.freeze({
-        ...createPage([...counts.values()], result),
+        ...createPage(aggregateContributors(result.items), result),
         complete: !result.nextCursor,
       });
     },

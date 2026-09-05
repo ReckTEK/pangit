@@ -3,6 +3,8 @@ import { requirePositiveInteger } from "../../../fluent-api/adapter-contract/ope
 import type { GitLabAdapterContext } from "./GitLabAdapterContext.ts";
 import type { GitLabVersion } from "../native/GitLabNative.ts";
 
+import { assertNotAborted } from "./response/errors.ts";
+
 import { context, invalid } from "./errors.ts";
 
 /** Bound batch work and preserve input order, including duplicates. */
@@ -10,9 +12,9 @@ export async function batch<T, R>(
   c: GitLabAdapterContext<GitLabVersion>,
   operation: string,
   values: readonly T[],
-  options: { maxItems?: number; concurrency?: number },
+  options: { maxItems?: number; concurrency?: number; signal?: AbortSignal },
   maximum: number,
-  map: (v: T) => Promise<R>,
+  map: (v: T, signal: AbortSignal) => Promise<R>,
 ) {
   const bound = requirePositiveInteger(
     options.maxItems ?? maximum,
@@ -24,6 +26,11 @@ export async function batch<T, R>(
     4,
   );
   if (values.length > bound) invalid(c, operation, "Batch exceeds maxItems");
+  assertNotAborted(c, { universal: operation }, options.signal);
+  const ownedAbort = new AbortController();
+  const signal = options.signal === undefined
+    ? ownedAbort.signal
+    : AbortSignal.any([options.signal, ownedAbort.signal]);
   const result: R[] = new Array(values.length);
   let next = 0;
   let stopped = false;
@@ -33,13 +40,17 @@ export async function batch<T, R>(
     while (!stopped && next < values.length) {
       const index = next++;
       try {
-        result[index] = await map(values[index]);
+        assertNotAborted(c, { universal: operation }, signal);
+        result[index] = await map(values[index], signal);
+        assertNotAborted(c, { universal: operation }, signal);
       } catch (error) {
         if (!failed) {
           failed = true;
           failure = error;
+          stopped = true;
+          ownedAbort.abort(error);
         }
-        stopped = true;
+        return;
       }
     }
   }));

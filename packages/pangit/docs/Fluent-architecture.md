@@ -26,9 +26,9 @@ const git = await connection.auth.token(token);
 ```
 
 `createClient` is asynchronous. Awaiting it loads only the selected provider implementation, with no
-network request. URL and default-query options are copied at construction. Its generated REST client
-loads on the first operation that needs that exact version. Authentication returns a separate
-immutable client.
+network request. URL and default-query options are copied before the provider import yields. Its
+generated REST client loads on the first operation that needs that exact version. Authentication
+returns a separate immutable client.
 
 A provider can also be imported independently of the catalog:
 
@@ -49,10 +49,23 @@ explicit operation callback, such as `operation.gitea(...)`, `operation.gitlab(.
 callbacks also expose the original response payload. Both preserve the exact selected version's
 generated types.
 
+Deferred operations copy their inputs when constructed, including file bytes. Extension callbacks
+receive copied context and return structured-cloneable option data; nested records and arrays are
+copied and frozen when configured. Later changes to caller-owned inputs cannot change the prepared
+operation. Cancellation signals are supplied to `execute({ signal })`.
+
 Provider-specific types are exported from `@mannsion/pangit/fluent/<provider>`. They are not
 exported from the universal API. Provider-owned `registration.ts` files augment the abstract type
 registries; these imports are erased at runtime. Runtime extension availability and validation live
 beside the provider's extension types.
+
+Pagination cursors retain the provider page size so continuation cannot skip or repeat offsets.
+Bounded scans reject `maxItems` below that size before starting HTTP. Invalid, backward, or empty
+continuations fail with provider evidence. Concurrent reads cancel sibling requests on failure and
+retain the first error.
+
+Contributor aggregation groups authors by case-insensitive email, falling back to exact name when
+email is absent. Missing identities are omitted; the first occurrence supplies display fields.
 
 ## Adding a provider
 

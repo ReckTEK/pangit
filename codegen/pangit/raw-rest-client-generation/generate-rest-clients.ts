@@ -1,4 +1,8 @@
 /** REST-client generation: coordinate manifests, rendering, validation, and publication. */
+import {
+  typeCheckGeneratedDirectory,
+  validateGeneratedSources,
+} from "./validate-generated-sources.ts";
 import { workspace } from "../../workspace-layout.ts";
 import type { WorkspacePaths } from "../../workspace-layout.ts";
 import {
@@ -23,8 +27,6 @@ import {
   assertGeneratedSourcesCurrent,
   formatGeneratedSources,
   publishGeneratedClientOutput,
-  typeCheckGeneratedDirectory,
-  validateGeneratedSources,
   withGeneratedOwnershipMarkers,
 } from "./publish-generated-rest-clients.ts";
 import { renderProviderClientFiles } from "./render-rest-client-files.ts";
