@@ -6250,7 +6250,7 @@
             "name": "event",
             "in": "query",
             "style": "form",
-            "explode": false,
+            "explode": true,
             "schema": {
               "type": "array",
               "items": {
@@ -6263,7 +6263,7 @@
             "name": "status",
             "in": "query",
             "style": "form",
-            "explode": false,
+            "explode": true,
             "schema": {
               "type": "array",
               "items": {
@@ -6877,7 +6877,7 @@
             "name": "status",
             "in": "query",
             "style": "form",
-            "explode": false,
+            "explode": true,
             "schema": {
               "type": "array",
               "items": {

@@ -123,6 +123,42 @@ export async function runCiRunDiscoveryContract<
     assert(Object.isFrozen(run), "CI run entity is mutable");
     assertions.push("known workflow/run reads and one filtered run page each use one request");
 
+    const queued = await prove(
+      "repository.ciRuns.runs.queued",
+      ["ListActionRuns"],
+      () => ci.runs({ headSha: input.fixtures.run.sha, status: "queued", limit: 5 }),
+    );
+    assert(queued.items.length === 0, "Queued run filter included the completed fixture");
+    assertions.push("queued run filtering accepts all corresponding native states");
+
+    const multiFilter = await prove(
+      "repository.native.forgejo.multiFilterRuns",
+      ["ListActionRuns"],
+      () =>
+        repository.native.forgejo(({ client, repository: native }) =>
+          client.listActionRuns({
+            path: { owner: input.fixtures.repository.owner, repo: native.name! },
+            query: {
+              head_sha: input.fixtures.run.sha,
+              event: ["workflow_dispatch", "push"],
+              status: ["failure", "success"],
+              limit: 5,
+            },
+          })
+        ),
+    );
+    assert(multiFilter?.ok, "Native multi-event/status query failed");
+    assert(
+      multiFilter.body !== null && typeof multiFilter.body === "object" &&
+        "workflow_runs" in multiFilter.body && Array.isArray(multiFilter.body.workflow_runs),
+      "Native multi-event/status query returned malformed runs",
+    );
+    assert(
+      multiFilter.body.workflow_runs.some((item) => String(item.id) === input.fixtures.run.id),
+      "Native multi-event/status query omitted the known completed run",
+    );
+    assertions.push("native multi-event/status filters retain a known matching run");
+
     if (input.version === "15.0.7") {
       for (
         const action of [

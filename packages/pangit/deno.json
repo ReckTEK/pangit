@@ -26,6 +26,9 @@
       "docs/images/pangit-banner.png",
       "THIRD_PARTY_NOTICES.md",
       "src"
+    ],
+    "exclude": [
+      "src/**/*_test.ts"
     ]
   },
   "tasks": {

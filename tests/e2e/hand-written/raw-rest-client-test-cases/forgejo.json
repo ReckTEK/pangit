@@ -1199,7 +1199,17 @@
         {
           "operationId": "ListActionRuns",
           "input": {
-            "path": {}
+            "path": {},
+            "query": {
+              "event": [
+                "push",
+                "workflow_dispatch"
+              ],
+              "status": [
+                "waiting",
+                "blocked"
+              ]
+            }
           },
           "expect": {
             "status": [
@@ -1232,7 +1242,13 @@
         {
           "operationId": "ListActionTasks",
           "input": {
-            "path": {}
+            "path": {},
+            "query": {
+              "status": [
+                "waiting",
+                "blocked"
+              ]
+            }
           },
           "expect": {
             "status": [
@@ -7203,7 +7219,13 @@
         {
           "operationId": "ListActionRuns",
           "input": {
-            "path": {}
+            "path": {},
+            "query": {
+              "event": [
+                "push",
+                "workflow_dispatch"
+              ]
+            }
           },
           "expect": {
             "status": [

@@ -54,19 +54,21 @@ Deno.test("authored documentation links resolve to repository files", async () =
   }
 });
 
-Deno.test("README passing E2E claims match the recorded complete-run evidence", async () => {
+Deno.test("README passing and failing E2E claims match their recorded suite evidence", async () => {
   const links = markdownLinks(await Deno.readTextFile(new URL("README.md", root)));
   const claims = links.filter(({ label, target }) =>
-    label.startsWith("Pass:") && target.startsWith("tests/e2e/results/")
+    (label.startsWith("Pass:") || label.startsWith("Failed:")) &&
+    target.startsWith("tests/e2e/results/")
   );
   assert(claims.length > 0, "README has no verifiable passing E2E claims");
   for (const { label, target } of claims) {
     const summary = JSON.parse(await Deno.readTextFile(new URL(target, root)));
     assert(
-      summary.passed && summary.selection.suite === "all",
-      `${target} is not a passing full run`,
+      summary.selection.suite === "all",
+      `${target} is not a complete run`,
     );
     const fluent = /^Pass: ([\d,]+) contracts$/.exec(label);
+    const failedFluent = /^Failed: ([\d,]+)\/([\d,]+) contracts$/.exec(label);
     const raw = /^Pass: ([\d,]+)\/([\d,]+)$/.exec(label);
     const count = (value: string) => Number(value.replaceAll(",", ""));
     if (fluent) {
@@ -74,6 +76,15 @@ Deno.test("README passing E2E claims match the recorded complete-run evidence", 
       assert(
         evidence?.passed && evidence.contracts.length === count(fluent[1]) &&
           evidence.contracts.every((contract: { passed: boolean }) => contract.passed),
+        `${label} disagrees with ${target}`,
+      );
+    } else if (failedFluent) {
+      const evidence = summary.handWrittenFluentApiContracts;
+      assert(
+        !summary.passed && evidence?.passed === false &&
+          evidence.contracts.length === count(failedFluent[2]) &&
+          evidence.contracts.filter((contract: { passed: boolean }) => contract.passed).length ===
+            count(failedFluent[1]),
         `${label} disagrees with ${target}`,
       );
     } else {

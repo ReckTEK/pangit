@@ -20,7 +20,7 @@ import { repositoryPath, requestOptions } from "./request-options.ts";
 import {
   normalizeConclusion,
   normalizeExecutionStatus,
-  toForgejoStatus,
+  toForgejoStatuses,
 } from "./execution-state.ts";
 import {
   type AnyRun,
@@ -55,7 +55,7 @@ export async function listForgejoCiRuns<V extends ForgejoVersion>(
           ref: request.branch.startsWith("refs/") ? request.branch : `refs/heads/${request.branch}`,
         }),
         ...(request.event === undefined ? {} : { event: [request.event] }),
-        ...(request.status === undefined ? {} : { status: [toForgejoStatus(request.status)] }),
+        ...(request.status === undefined ? {} : { status: toForgejoStatuses(request.status) }),
       },
     }, requestOptions(request.signal)), request.signal);
   const body = response.body;

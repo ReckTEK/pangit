@@ -51,7 +51,7 @@ class OAuthHandlerImpl<TProvider extends FluentProvider> implements OAuthHandler
   }
 
   #login(provider: FluentProvider): RuntimeLogin {
-    const login = this.#logins[provider];
+    const login = Object.hasOwn(this.#logins, provider) ? this.#logins[provider] : undefined;
     if (login === undefined) {
       throw new OAuthCallbackError(
         "provider_not_configured",

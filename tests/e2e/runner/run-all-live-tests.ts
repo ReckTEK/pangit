@@ -1,3 +1,4 @@
+import { finalizeLiveResult } from "./finalize-live-result.ts";
 import { relativePath, workspace, type WorkspacePaths } from "../../../codegen/workspace-layout.ts";
 import { prepareResultDirectories } from "../result-management/prepare-result-directories.ts";
 import { discoverGeneratedLiveTests } from "./discover-generated-live-tests.ts";
@@ -329,6 +330,11 @@ export async function runAllLiveTests(
         }
         try {
           await clearAuthenticationDirectory(auth);
+        } catch (error) {
+          reportError(error);
+        }
+        try {
+          await finalizeLiveResult(results, !versionFailed && !interrupted);
         } catch (error) {
           reportError(error);
         }

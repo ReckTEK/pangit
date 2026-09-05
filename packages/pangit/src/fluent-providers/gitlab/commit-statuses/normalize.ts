@@ -8,11 +8,10 @@ import type {
 import { type Dto, id, object, required, text } from "../transport/mod.ts";
 import { door } from "../native/door.ts";
 
-export const states: Readonly<Record<string, CommitStatusState | undefined>> = {
-  pending: "pending",
-  success: "success",
-  failed: "failure",
-};
+export function normalizeCommitStatusState(value: string): CommitStatusState | undefined {
+  if (value === "pending" || value === "success") return value;
+  return value === "failed" ? "failure" : undefined;
+}
 
 export async function status<V extends GitLabVersion>(
   c: GitLabAdapterContext<V>,
@@ -24,7 +23,7 @@ export async function status<V extends GitLabVersion>(
     id: id(c, "normalizeCommitStatus", p.id),
     ref,
     context: required(c, "normalizeCommitStatus", p.name),
-    state: states[providerState],
+    state: normalizeCommitStatusState(providerState),
     providerState,
     description: text(p.description),
     targetUrl: text(p.target_url),

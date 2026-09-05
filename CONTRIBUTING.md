@@ -119,6 +119,12 @@ Filtered runs write ignored evidence under `tests/e2e/.focused-results/`. An unf
 evidence under `tests/e2e/results/`, and removes its disposable Compose environments afterward. Run
 the complete suite before changing a public readiness or E2E claim.
 
+Provider contract implementations and catalog entries belong under
+`tests/e2e/hand-written/git-host-adapter-tests/<provider>/`. Keep
+`tests/e2e/hand-written/fluent-api-contracts/` limited to provider-neutral fixtures and evidence
+tools. The host finalizes each summary after teardown; `hostExecution.passed` includes execution and
+cleanup failures that the test container cannot report.
+
 Keep provider defect reproductions, candidate patches and upstream follow-up together under
 [`tests/e2e/hand-written/diagnostics`](tests/e2e/hand-written/diagnostics). The GitLab
 protection-cache investigation records its upstream fix checklist there; normal E2E environments

@@ -26,7 +26,7 @@ import { type AnyJob, isJobPayload, parseForgejoId } from "./validate-payload.ts
 import {
   normalizeConclusion,
   normalizeExecutionStatus,
-  toForgejoStatus,
+  toForgejoStatuses,
 } from "./execution-state.ts";
 
 /** Forgejo returns all jobs of one run. Bound the result and paginate that exact run locally. */
@@ -69,7 +69,8 @@ export async function listForgejoCiRunJobs<V extends ForgejoVersion>(
   const limit = cursor.effectiveLimit ?? request.limit;
   const jobs = (await readRunJobs(context, repository, runId, operation.universal, request.signal))
     .filter((job) =>
-      request.status === undefined || job.status === toForgejoStatus(request.status)
+      request.status === undefined ||
+      toForgejoStatuses(request.status).some((status) => status === job.status)
     );
   const offset = (cursor.page - 1) * limit;
   const client = await context.client();

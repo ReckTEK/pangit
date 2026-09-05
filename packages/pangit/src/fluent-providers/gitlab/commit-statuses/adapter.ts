@@ -5,7 +5,7 @@ import type { CommitStatusData } from "../../../fluent-api/adapter-contract/comm
 import { IncompleteHistoryError } from "../../../fluent-api/adapter-contract/errors.ts";
 import { body, call, context, object, page, path } from "../transport/mod.ts";
 import type { Adapter } from "../adapter.ts";
-import { states, status } from "./normalize.ts";
+import { normalizeCommitStatusState, status } from "./normalize.ts";
 
 export function commitStatuses<V extends GitLabVersion>(
   c: GitLabAdapterContext<V>,
@@ -59,7 +59,7 @@ export function commitStatuses<V extends GitLabVersion>(
         statuses: Object.freeze(latest),
         totalCount: latest.length,
         providerState,
-        state: states[providerState],
+        state: normalizeCommitStatusState(providerState),
       });
     },
     setCommitStatus: async (r, ref, i, o) => {

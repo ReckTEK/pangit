@@ -68,6 +68,44 @@ Deno.test("standalone providers cannot import each other", async () => {
   }
 });
 
+Deno.test("shared E2E contracts contain no concrete provider policy", async () => {
+  const shared = new URL("tests/e2e/hand-written/fluent-api-contracts/", projectRoot);
+  for (const file of await sourceFiles(shared, true)) {
+    const source = await Deno.readTextFile(file);
+    assert(
+      !/\b(?:Gitea|GitLab|GitHub|Forgejo|Bitbucket|Codeberg|AzureDevOps)\w*|\b(?:gitea|gitlab|github|forgejo|bitbucket|azure-devops|codeberg)\b/
+        .test(source),
+      `${file.pathname} contains provider-specific test behavior`,
+    );
+    for (const match of source.matchAll(/\b(?:from\s*|import\s*\(\s*)["']([^"']+)["']/g)) {
+      const dependency = new URL(match[1], file).pathname;
+      assert(
+        !dependency.includes("/git-host-adapter-tests/") &&
+          !dependency.includes("/fluent-providers/"),
+        `${file.pathname} depends on a concrete provider`,
+      );
+    }
+  }
+});
+
+Deno.test("provider E2E implementations cannot import another provider's tests", async () => {
+  const providers = new URL("tests/e2e/hand-written/git-host-adapter-tests/", projectRoot);
+  for await (const provider of Deno.readDir(providers)) {
+    if (!provider.isDirectory) continue;
+    const directory = new URL(`${provider.name}/`, providers);
+    for (const file of await sourceFiles(directory, true)) {
+      const source = await Deno.readTextFile(file);
+      for (const match of source.matchAll(/\b(?:from\s*|import\s*\(\s*)["']([^"']+)["']/g)) {
+        const target = new URL(match[1], file);
+        assert(
+          !target.href.startsWith(providers.href) || target.href.startsWith(directory.href),
+          `${file.pathname} imports another provider's E2E implementation: ${match[1]}`,
+        );
+      }
+    }
+  }
+});
+
 Deno.test("provider implementations remain bounded concern modules", async () => {
   for (const file of await sourceFiles(new URL("fluent-providers/", sourceRoot))) {
     const lines = (await Deno.readTextFile(file)).split("\n").length;

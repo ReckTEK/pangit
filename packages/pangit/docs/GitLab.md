@@ -57,9 +57,12 @@ available for optional modules. Provider differences do not change the shared me
 List methods return one bounded page and an opaque continuation cursor. Commit file lists traverse
 provider pages; GitLab's server diff limits still apply. Merge-base traversal and other
 multi-request operations enforce their explicit bounds. File reads pin refs and verify blob hashes;
-atomic writes use GitLab commit actions and `last_commit_id` for checked paths. Fork and merge
-completion is polled with cancellation and a timeout. Approvals require an edition exposing the
-approvals API; the E2E environment uses the free tier of the EE image without a paid license.
+atomic writes use GitLab commit actions and `last_commit_id` for checked paths. Upserts and blob
+preconditions read the selected `startSha` when creating a branch from an earlier commit; that
+immutable SHA pins the checked content. Native `last_commit_id` guards apply to mutable branch
+sources. Fork and merge completion is polled with cancellation and a timeout. Approvals require an
+edition exposing the approvals API; the E2E environment uses the free tier of the EE image without a
+paid license.
 
 GitLab 19.3.1 also rejected a commit immediately after successfully creating its branch in the
 recorded E2E run. PanGit preserves that server error; it does not retry the mutation. The focused

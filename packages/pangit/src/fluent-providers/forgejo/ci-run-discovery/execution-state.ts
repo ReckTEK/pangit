@@ -15,8 +15,9 @@ export function normalizeConclusion(status?: string): CiExecutionConclusion | un
   ) return status;
   return undefined;
 }
-export function toForgejoStatus(
+export function toForgejoStatuses(
   status: CiExecutionFilterStatus,
-): "waiting" | "running" | "failure" | "success" | "skipped" {
-  return status === "pending" || status === "queued" ? "waiting" : status;
+): ("waiting" | "blocked" | "running" | "failure" | "success" | "skipped")[] {
+  if (status === "queued") return ["waiting", "blocked"];
+  return [status === "pending" ? "waiting" : status];
 }

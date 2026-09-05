@@ -22,7 +22,12 @@ export class ForgejoAdapterContext<TVersion extends ForgejoVersion> {
     client?: ForgejoClient<TVersion>,
     currentUser?: ForgejoUserPayload<TVersion>,
   ) {
-    this.#options = Object.freeze({ ...options, throwOnError: false });
+    this.#options = Object.freeze({
+      ...options,
+      baseUrl: new URL(options.baseUrl).href,
+      ...(options.query === undefined ? {} : { query: structuredClone(options.query) }),
+      throwOnError: false,
+    });
     this.#webBaseUrl = resolveWebBaseUrl(
       options.baseUrl,
       "webBaseUrl" in options ? options.webBaseUrl : undefined,

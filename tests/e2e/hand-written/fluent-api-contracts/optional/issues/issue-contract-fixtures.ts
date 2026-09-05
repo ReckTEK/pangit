@@ -1,4 +1,4 @@
-/** Disposable repository used by the shared issue and Gitea concurrency contracts. */
+/** Disposable repository used by issue contracts. */
 export type IssueContractFixtures = {
   readonly repository: { readonly owner: string; readonly name: string };
 };

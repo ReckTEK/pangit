@@ -26,8 +26,9 @@ const git = await connection.auth.token(token);
 ```
 
 `createClient` is asynchronous. Awaiting it loads only the selected provider implementation, with no
-network request. Its generated REST client loads on the first operation that needs that exact
-version. Authentication returns a separate immutable client.
+network request. URL and default-query options are copied at construction. Its generated REST client
+loads on the first operation that needs that exact version. Authentication returns a separate
+immutable client.
 
 A provider can also be imported independently of the catalog:
 

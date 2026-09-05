@@ -54,6 +54,8 @@ flow with PKCE are supported.
 | Workflow state    | A workflow is a repository file; its activation state is `unknown`.                                                                                                                                                                                                                             |
 | Package deletion  | Version deletion is direct. Whole-package deletion snapshots exact matching versions within 10 pages of 100 entries before deleting anything. An exceeded bound fails without mutation.                                                                                                         |
 
+Queued run and job filters include both waiting and blocked executions.
+
 Capability metadata describes these distinctions. Unsupported operations fail explicitly instead of
 approximating server behavior. Gitea-specific compare-output, rule-priority, and issue-version
 extensions are not part of the Forgejo API.

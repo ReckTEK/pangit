@@ -27,9 +27,10 @@ clients are loaded only when selected.
 
 ## Provider status
 
-This matrix tracks what can be used from the current source tree and what has been exercised against
-a real provider. "Not present" means that no live suite exists; it does not mean a suite failed.
-GitLab 19.3.1 failed one fixture setup after accepting a new branch; see the
+This matrix tracks current implementation and the retained results of the last complete E2E run.
+Focused checks do not replace that evidence. "Not present" means that no live suite exists; it does
+not mean a suite failed. GitLab 19.3.1 failed one fixture setup after accepting a new branch; see
+the
 [branch-cache investigation](tests/e2e/hand-written/diagnostics/gitlab/branch-names-cache/README.md).
 
 | Provider           | API contract          | Fluent API                                                                                | Fluent E2E                                                              | Generated REST client       | REST E2E                                                            | Distribution                            |
@@ -41,7 +42,7 @@ GitLab 19.3.1 failed one fixture setup after accepting a new branch; see the
 | Codeberg (Forgejo) | `latest` raw snapshot | [Hosted Forgejo configuration](packages/pangit/docs/Forgejo.md#codeberg-compatibility)    | Tested on local Forgejo                                                 | Available: 506 operations   | Not present                                                         | MIT evidence recorded                   |
 | GitHub             | `latest` snapshot     | Not implemented                                                                           | Not present                                                             | Available: 1,222 operations | Not present                                                         | MIT evidence recorded                   |
 | GitLab             | `18.11.11`            | [Available with gaps](packages/pangit/docs/GitLab.md#provider-differences)                | [Pass: 26 contracts](tests/e2e/results/gitlab/18.11.11/summary.json)    | Available: 1,126 operations | [Pass: 1,126/1,126](tests/e2e/results/gitlab/18.11.11/summary.json) | Included; license evidence not recorded |
-| GitLab             | `19.3.1`              | [Available with gaps](packages/pangit/docs/GitLab.md#provider-differences)                | [Failed: 25/26 contracts](tests/e2e/results/gitlab/19.3.1/summary.json) | Available: 1,148 operations | [1,148/1,148 passed](tests/e2e/results/gitlab/19.3.1/summary.json)  | Included; license evidence not recorded |
+| GitLab             | `19.3.1`              | [Available with gaps](packages/pangit/docs/GitLab.md#provider-differences)                | [Failed: 25/26 contracts](tests/e2e/results/gitlab/19.3.1/summary.json) | Available: 1,148 operations | [Pass: 1,148/1,148](tests/e2e/results/gitlab/19.3.1/summary.json)   | Included; license evidence not recorded |
 | Bitbucket Cloud    | `latest` snapshot     | Not implemented                                                                           | Not present                                                             | Available: 297 operations   | Not present                                                         | Included; license evidence not recorded |
 | Azure DevOps Git   | `latest` snapshot     | Not implemented                                                                           | Not present                                                             | Available: 112 operations   | Not present                                                         | Included; license evidence not recorded |
 

@@ -20,14 +20,15 @@ export function state(
   providerConclusion?: string;
 } {
   const raw = text(p.status) ?? "unknown";
-  const conclusions: Record<string, CiExecutionConclusion> = {
-    success: "success",
-    failed: "failure",
-    canceled: "cancelled",
-    skipped: "skipped",
-  };
+  const conclusion: CiExecutionConclusion | undefined = raw === "success" || raw === "skipped"
+    ? raw
+    : raw === "failed"
+    ? "failure"
+    : raw === "canceled"
+    ? "cancelled"
+    : undefined;
   return {
-    status: conclusions[raw]
+    status: conclusion
       ? "completed"
       : raw === "running"
       ? "running"
@@ -36,9 +37,9 @@ export function state(
       : ["created", "waiting_for_resource", "preparing", "scheduled"].includes(raw)
       ? "queued"
       : "unknown",
-    conclusion: conclusions[raw],
+    conclusion: conclusion,
     providerStatus: raw,
-    providerConclusion: conclusions[raw] ? raw : undefined,
+    providerConclusion: conclusion ? raw : undefined,
   };
 }
 

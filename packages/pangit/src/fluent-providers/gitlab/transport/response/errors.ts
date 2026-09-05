@@ -75,7 +75,7 @@ export function errorFromResponse<TVersion extends GitLabVersion>(
     : result.status === 404
     ? NotFoundError
     : result.status === 405 || result.status === 409 || result.status === 412 ||
-        result.status === 423
+        result.status === 423 || isFileGuardConflict(operation, result)
     ? ConflictError
     : result.status === 400 || result.status === 422
     ? ValidationError
@@ -86,6 +86,15 @@ export function errorFromResponse<TVersion extends GitLabVersion>(
     `${universalOperation(operation)} failed with HTTP ${result.status}`,
     errorContext(context, operation, result),
   );
+}
+
+/** GitLab reports optimistic file conflicts as HTTP 400 rather than HTTP 409. */
+function isFileGuardConflict(operation: GitLabOperation, result: AnyRestResponse): boolean {
+  if (result.status !== 400 || universalOperation(operation) !== "commitFileChanges") return false;
+  const body = result.body;
+  return body !== null && typeof body === "object" && "message" in body &&
+    typeof body.message === "string" &&
+    body.message.startsWith("The file has changed since you started editing it:");
 }
 
 export function errorContext<TVersion extends GitLabVersion>(

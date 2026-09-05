@@ -1320,6 +1320,16 @@
             "path": {
               "owner": "${owner}",
               "repo": "${repo}"
+            },
+            "query": {
+              "event": [
+                "push",
+                "workflow_dispatch"
+              ],
+              "status": [
+                "waiting",
+                "blocked"
+              ]
             }
           },
           "expect": {
@@ -1362,6 +1372,12 @@
             "path": {
               "owner": "${owner}",
               "repo": "${repo}"
+            },
+            "query": {
+              "status": [
+                "waiting",
+                "blocked"
+              ]
             }
           },
           "expect": {
@@ -7952,6 +7968,12 @@
             "path": {
               "owner": "${owner}",
               "repo": "${repo}"
+            },
+            "query": {
+              "event": [
+                "push",
+                "workflow_dispatch"
+              ]
             }
           },
           "expect": {
@@ -22404,7 +22426,7 @@
         {
           "name": "event",
           "style": "form",
-          "explode": false
+          "explode": true
         },
         {
           "name": "head_sha",
@@ -22434,7 +22456,7 @@
         {
           "name": "status",
           "style": "form",
-          "explode": false
+          "explode": true
         },
         {
           "name": "workflow_id",
@@ -22522,7 +22544,7 @@
         {
           "name": "status",
           "style": "form",
-          "explode": false
+          "explode": true
         }
       ],
       "security": [

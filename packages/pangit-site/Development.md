@@ -7,8 +7,8 @@ published PanGit library contains only library code and does not export this sit
 
 Edit [site.config.ts](site.config.ts) for site links, route segments, branding, static asset paths,
 theme-cookie settings, and the snippet files shown on the home page. Provider/version inventories,
-operation metadata, and upstream URLs come from the library's generated catalog. The config is a
-plain module so React Router can load its route settings before Vite initializes the Deno package
+operation metadata, and upstream URLs come from the site's generated catalog. The config is a plain
+module so React Router can load its route settings before Vite initializes the Deno package
 resolver.
 
 [urls.ts](app/urls.ts) derives router patterns and URLs from those settings. Components and asset

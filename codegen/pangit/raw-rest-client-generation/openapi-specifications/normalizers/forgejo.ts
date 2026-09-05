@@ -1,7 +1,11 @@
 import { type JsonObject, normalizeSwagger2 } from "./normalize-openapi-document.ts";
+import { normalizeForgejoActionsQuery } from "./forgejo-actions-query.ts";
 
 export function normalizeForgejo(version: string): Promise<void> {
-  return normalizeSwagger2("forgejo", version, includeObservedResponses);
+  return normalizeSwagger2("forgejo", version, (document) => {
+    includeObservedResponses(document);
+    normalizeForgejoActionsQuery(document);
+  });
 }
 
 /** Correct responses confirmed by live contracts and the release's API handlers. */

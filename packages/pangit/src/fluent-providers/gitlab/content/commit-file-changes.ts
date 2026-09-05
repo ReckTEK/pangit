@@ -67,7 +67,7 @@ export async function commitFiles<V extends GitLabVersion>(
         const response = await optional(() =>
           call(c, "commitFileChanges.preflight", "getApiV4ProjectsIdRepositoryFilesFilePath", {
             path: { ...path(r), file_path: oldPath },
-            query: { ref: i.branch },
+            query: { ref: o.extension?.startSha ?? i.branch },
           }, o)
         );
         const old = response ? object(c, "commitFileChanges", response.body) : undefined;
@@ -80,7 +80,12 @@ export async function commitFiles<V extends GitLabVersion>(
           );
         }
         if (action === "upsert") action = old ? "update" : "create";
-        last_commit_id = text(old?.last_commit_id);
+        // A full start SHA pins the checked blob. GitLab's last_commit_id validator instead
+        // compares against the source branch, even when start_sha selects an older commit.
+        // Retain that native concurrency guard only when the source is a mutable branch.
+        last_commit_id = o.extension?.startSha === undefined
+          ? text(old?.last_commit_id)
+          : undefined;
       }
       return {
         action: action as "create" | "update" | "delete" | "move",

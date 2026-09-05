@@ -24,7 +24,12 @@ export class GitLabAdapterContext<TVersion extends GitLabVersion> {
   ) {
     const baseUrl = new URL(options.baseUrl);
     baseUrl.pathname = baseUrl.pathname.replace(/\/api\/v4\/?$/, "/");
-    this.#options = Object.freeze({ ...options, baseUrl, throwOnError: false });
+    this.#options = Object.freeze({
+      ...options,
+      baseUrl: baseUrl.href,
+      ...(options.query === undefined ? {} : { query: structuredClone(options.query) }),
+      throwOnError: false,
+    });
     this.#webBaseUrl = resolveWebBaseUrl(
       options.baseUrl,
       "webBaseUrl" in options ? options.webBaseUrl : undefined,

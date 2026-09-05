@@ -56,7 +56,7 @@ class LoginImpl<
     callbackUrl.searchParams.set("type", provider);
     this.options = Object.freeze({
       ...options,
-      callbackUrl,
+      callbackUrl: callbackUrl.href,
       scopes: options.scopes === undefined ? undefined : Object.freeze([...options.scopes]),
     });
     this.#beginOAuth = beginOAuth;

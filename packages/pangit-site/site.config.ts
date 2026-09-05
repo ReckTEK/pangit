@@ -1,7 +1,7 @@
 const wordmark = { prefix: "Pan", accent: "Git" };
 const packageName = "@mannsion/pangit";
 
-/** Site-owned settings. Provider/version inventories remain in the generated package catalog. */
+/** Site-owned settings. Provider/version inventories remain in the generated site catalog. */
 export const siteConfig = {
   name: `${wordmark.prefix}${wordmark.accent}`,
   wordmark,

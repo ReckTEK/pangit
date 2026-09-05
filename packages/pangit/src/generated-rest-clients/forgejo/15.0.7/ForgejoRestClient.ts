@@ -20385,13 +20385,13 @@ const forgejoOperationsSource = {
     path: "/repos/{owner}/{repo}/actions/runs",
     pathParameters: [{ "name": "owner" }, { "name": "repo" }],
     queryParameters: [
-      { "name": "event", "style": "form", "explode": false },
+      { "name": "event", "style": "form", "explode": true },
       { "name": "head_sha", "style": "form", "explode": true },
       { "name": "limit", "style": "form", "explode": true },
       { "name": "page", "style": "form", "explode": true },
       { "name": "ref", "style": "form", "explode": true },
       { "name": "run_number", "style": "form", "explode": true },
-      { "name": "status", "style": "form", "explode": false },
+      { "name": "status", "style": "form", "explode": true },
       { "name": "workflow_id", "style": "form", "explode": true },
     ],
     security: [{ "BasicAuth": [] }, { "AuthorizationHeaderToken": [] }, { "SudoParam": [] }, {
@@ -20420,7 +20420,7 @@ const forgejoOperationsSource = {
       "name": "page",
       "style": "form",
       "explode": true,
-    }, { "name": "status", "style": "form", "explode": false }],
+    }, { "name": "status", "style": "form", "explode": true }],
     security: [{ "BasicAuth": [] }, { "AuthorizationHeaderToken": [] }, { "SudoParam": [] }, {
       "SudoHeader": [],
     }, { "TOTPHeader": [] }],
