@@ -15,15 +15,17 @@ contract, standalone provider boundaries, and loading guarantees.
 ## Prerequisites
 
 - Git
-- GitHub CLI (`gh`), authenticated with `gh auth login`
 - Deno 2
 - Docker with Compose v2, only when running live E2E tests
 
 ## Set up a checkout
 
+Fork `mannsion/pangit` on GitHub, then replace `YOUR-USERNAME` below with your GitHub username:
+
 ```bash
-gh repo fork mannsion/pangit --clone
+git clone https://github.com/YOUR-USERNAME/pangit.git
 cd pangit
+git remote add upstream https://github.com/mannsion/pangit.git
 deno install --frozen
 deno task generate --cached
 deno task check
