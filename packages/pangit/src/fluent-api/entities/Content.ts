@@ -1,4 +1,9 @@
-import type { FluentProvider, ProviderVersion } from "../adapter-contract/provider.ts";
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../adapter-contract/provider.ts";
+
 import type { ContentData, RepositoryContentKind } from "../adapter-contract/content.ts";
 import type { ReadableContentBody } from "../adapter-contract/content-body.ts";
 import { createContentBody } from "../content-body.ts";
@@ -6,7 +11,8 @@ import type { ProviderEntityNative } from "../native-access/ProviderNativeRegist
 
 export interface Content<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > extends ReadableContentBody {
   readonly kind: RepositoryContentKind;
   readonly path: string;
@@ -16,18 +22,19 @@ export interface Content<
   readonly bytes?: Readonly<Uint8Array>;
   readonly target?: string;
   readonly submoduleUrl?: string;
-  readonly dereferenced?: Content<TProvider, TVersion>;
+  readonly dereferenced?: Content<TProvider, TVersion, TRegistry>;
   readonly lastCommitSha?: string;
   readonly firstParentSha?: string;
-  readonly native: ProviderEntityNative<TProvider, TVersion, "content">;
+  readonly native: ProviderEntityNative<TProvider, TVersion, "content", TRegistry>;
 }
 
 export function createContent<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
->(data: ContentData<TProvider, TVersion>): Content<TProvider, TVersion> {
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+>(data: ContentData<TProvider, TVersion, TRegistry>): Content<TProvider, TVersion, TRegistry> {
   const bytes = data.bytes === undefined ? undefined : data.bytes.slice();
-  const content: Content<TProvider, TVersion> = {
+  const content: Content<TProvider, TVersion, TRegistry> = {
     ...createContentBody({
       kind: data.kind,
       bytes,

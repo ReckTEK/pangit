@@ -1,4 +1,9 @@
-import type { FluentProvider, ProviderVersion } from "../adapter-contract/provider.ts";
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../adapter-contract/provider.ts";
+
 import type { CommitFileData } from "../adapter-contract/commits.ts";
 import { ValidationError, type ValidationErrorContext } from "../adapter-contract/errors.ts";
 import type { GitHostAdapter } from "../adapter-contract/GitHostAdapter.ts";
@@ -40,12 +45,14 @@ import {
 
 export type MergePullRequestOperation<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > = OperationExtension<
   "pullRequests.merge",
   TProvider,
   TVersion,
-  PullRequest<TProvider, TVersion>
+  PullRequest<TProvider, TVersion, TRegistry>,
+  TRegistry
 >;
 
 export interface ListPullRequestsOptions
@@ -53,69 +60,80 @@ export interface ListPullRequestsOptions
 
 export interface RepositoryPullRequests<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
-  list(options?: ListPullRequestsOptions): Promise<Page<PullRequest<TProvider, TVersion>>>;
-  get(number: number, options?: OperationOptions): Promise<PullRequest<TProvider, TVersion>>;
+  list(
+    options?: ListPullRequestsOptions,
+  ): Promise<Page<PullRequest<TProvider, TVersion, TRegistry>>>;
+  get(
+    number: number,
+    options?: OperationOptions,
+  ): Promise<PullRequest<TProvider, TVersion, TRegistry>>;
   find(
     input: FindPullRequestInput,
     options?: OperationOptions,
-  ): Promise<PullRequest<TProvider, TVersion> | undefined>;
+  ): Promise<PullRequest<TProvider, TVersion, TRegistry> | undefined>;
   isMerged(
-    pullRequest: PullRequest<TProvider, TVersion>,
+    pullRequest: PullRequest<TProvider, TVersion, TRegistry>,
     options?: OperationOptions & { readonly refresh?: boolean },
   ): Promise<boolean>;
   commits(
-    pullRequest: PullRequest<TProvider, TVersion>,
+    pullRequest: PullRequest<TProvider, TVersion, TRegistry>,
     request?: PageRequest,
-  ): Promise<Page<Commit<TProvider, TVersion>>>;
+  ): Promise<Page<Commit<TProvider, TVersion, TRegistry>>>;
   files(
-    pullRequest: PullRequest<TProvider, TVersion>,
+    pullRequest: PullRequest<TProvider, TVersion, TRegistry>,
     request?: PageRequest,
   ): Promise<Page<Readonly<CommitFileData>>>;
   create(
     input: CreatePullRequestInput,
     options?: OperationOptions,
-  ): Promise<PullRequest<TProvider, TVersion>>;
+  ): Promise<PullRequest<TProvider, TVersion, TRegistry>>;
   update(
-    pullRequest: PullRequest<TProvider, TVersion>,
+    pullRequest: PullRequest<TProvider, TVersion, TRegistry>,
     input: UpdatePullRequestInput,
     options?: OperationOptions,
-  ): Promise<PullRequest<TProvider, TVersion>>;
+  ): Promise<PullRequest<TProvider, TVersion, TRegistry>>;
   close(
-    pullRequest: PullRequest<TProvider, TVersion>,
+    pullRequest: PullRequest<TProvider, TVersion, TRegistry>,
     options?: OperationOptions,
-  ): Promise<PullRequest<TProvider, TVersion>>;
+  ): Promise<PullRequest<TProvider, TVersion, TRegistry>>;
   merge(
-    pullRequest: PullRequest<TProvider, TVersion>,
+    pullRequest: PullRequest<TProvider, TVersion, TRegistry>,
     input?: MergePullRequestInput,
-  ): MergePullRequestOperation<TProvider, TVersion>;
+  ): MergePullRequestOperation<TProvider, TVersion, TRegistry>;
   requestReviewers(
-    pullRequest: PullRequest<TProvider, TVersion>,
+    pullRequest: PullRequest<TProvider, TVersion, TRegistry>,
     reviewers: readonly string[],
     options?: OperationOptions,
   ): Promise<void>;
   approve(
-    pullRequest: PullRequest<TProvider, TVersion>,
+    pullRequest: PullRequest<TProvider, TVersion, TRegistry>,
     body?: string,
     options?: OperationOptions,
   ): Promise<void>;
   comment(
-    pullRequest: PullRequest<TProvider, TVersion>,
+    pullRequest: PullRequest<TProvider, TVersion, TRegistry>,
     input: PullRequestCommentInput,
     options?: OperationOptions,
   ): Promise<void>;
-  reviews(pullRequest: PullRequest<TProvider, TVersion>): PullRequestReviews<TProvider, TVersion>;
+  reviews(
+    pullRequest: PullRequest<TProvider, TVersion, TRegistry>,
+  ): PullRequestReviews<TProvider, TVersion, TRegistry>;
 }
 
 export function createRepositoryPullRequests<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
-  adapter: GitHostAdapter<TProvider, TVersion>,
-  repository: RepositoryData<TProvider, TVersion>,
-): RepositoryPullRequests<TProvider, TVersion> {
-  const data = (pull: PullRequest<TProvider, TVersion>): PullRequestData<TProvider, TVersion> => ({
+  adapter: GitHostAdapter<TProvider, TVersion, TRegistry>,
+  repository: RepositoryData<TProvider, TVersion, TRegistry>,
+): RepositoryPullRequests<TProvider, TVersion, TRegistry> {
+  const data = (
+    pull: PullRequest<TProvider, TVersion, TRegistry>,
+  ): PullRequestData<TProvider, TVersion, TRegistry> => ({
     ...pull,
     source: { ...pull.source },
     target: { ...pull.target },
@@ -158,7 +176,7 @@ export function createRepositoryPullRequests<
       return found === undefined ? undefined : createPullRequest(found);
     },
     isMerged(
-      pullRequest: PullRequest<TProvider, TVersion>,
+      pullRequest: PullRequest<TProvider, TVersion, TRegistry>,
       options: OperationOptions & { readonly refresh?: boolean } = {},
     ) {
       return adapter.isPullRequestMerged(
@@ -169,7 +187,7 @@ export function createRepositoryPullRequests<
       );
     },
     async commits(
-      pullRequest: PullRequest<TProvider, TVersion>,
+      pullRequest: PullRequest<TProvider, TVersion, TRegistry>,
       request: PageRequest = {},
     ) {
       const context = validationContext(adapter, "listPullRequestCommits");
@@ -180,7 +198,10 @@ export function createRepositoryPullRequests<
       );
       return createPage(page.items.map(createCommit), page);
     },
-    async files(pullRequest: PullRequest<TProvider, TVersion>, request: PageRequest = {}) {
+    async files(
+      pullRequest: PullRequest<TProvider, TVersion, TRegistry>,
+      request: PageRequest = {},
+    ) {
       const context = validationContext(adapter, "listPullRequestFiles");
       const page = await adapter.listPullRequestFiles(
         repository,
@@ -199,7 +220,7 @@ export function createRepositoryPullRequests<
       return createPullRequest(await adapter.createPullRequest(repository, input, options));
     },
     async update(
-      pullRequest: PullRequest<TProvider, TVersion>,
+      pullRequest: PullRequest<TProvider, TVersion, TRegistry>,
       input: UpdatePullRequestInput,
       options: OperationOptions = {},
     ) {
@@ -221,7 +242,7 @@ export function createRepositoryPullRequests<
       );
     },
     async close(
-      pullRequest: PullRequest<TProvider, TVersion>,
+      pullRequest: PullRequest<TProvider, TVersion, TRegistry>,
       options: OperationOptions = {},
     ) {
       return createPullRequest(
@@ -229,7 +250,7 @@ export function createRepositoryPullRequests<
       );
     },
     merge(
-      pullRequest: PullRequest<TProvider, TVersion>,
+      pullRequest: PullRequest<TProvider, TVersion, TRegistry>,
       input: MergePullRequestInput = {},
     ) {
       const operationInput = structuredClone(input);
@@ -244,7 +265,8 @@ export function createRepositoryPullRequests<
         "pullRequests.merge",
         TProvider,
         TVersion,
-        PullRequest<TProvider, TVersion>
+        PullRequest<TProvider, TVersion, TRegistry>,
+        TRegistry
       >({
         operation: "pullRequests.merge",
         support: adapter.extensions["pullRequests.merge"],
@@ -262,13 +284,13 @@ export function createRepositoryPullRequests<
               ...operationInput,
               ...options,
               ...(extension === undefined ? {} : { extension }),
-            } as MergePullRequestOptions<TProvider>),
+            } as MergePullRequestOptions<TProvider, TRegistry>),
           );
         },
       });
     },
     requestReviewers(
-      pullRequest: PullRequest<TProvider, TVersion>,
+      pullRequest: PullRequest<TProvider, TVersion, TRegistry>,
       reviewers: readonly string[],
       options: OperationOptions = {},
     ) {
@@ -285,14 +307,14 @@ export function createRepositoryPullRequests<
       );
     },
     approve(
-      pullRequest: PullRequest<TProvider, TVersion>,
+      pullRequest: PullRequest<TProvider, TVersion, TRegistry>,
       body?: string,
       options: OperationOptions = {},
     ) {
       return adapter.approvePullRequest(repository, data(pullRequest), body, options);
     },
     comment(
-      pullRequest: PullRequest<TProvider, TVersion>,
+      pullRequest: PullRequest<TProvider, TVersion, TRegistry>,
       input: PullRequestCommentInput,
       options: OperationOptions = {},
     ) {
@@ -307,7 +329,7 @@ export function createRepositoryPullRequests<
       }
       return adapter.publishPullRequestComment(repository, data(pullRequest), input, options);
     },
-    reviews(pullRequest: PullRequest<TProvider, TVersion>) {
+    reviews(pullRequest: PullRequest<TProvider, TVersion, TRegistry>) {
       return createPullRequestReviews(
         adapter.provider,
         adapter.version,
@@ -321,9 +343,10 @@ export function createRepositoryPullRequests<
 
 function validationContext<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
-  adapter: GitHostAdapter<TProvider, TVersion>,
+  adapter: GitHostAdapter<TProvider, TVersion, TRegistry>,
   operation: string,
 ): ValidationErrorContext<TProvider, TVersion> {
   return { provider: adapter.provider, version: adapter.version, operation };

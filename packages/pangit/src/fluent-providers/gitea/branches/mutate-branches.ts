@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type {
   BranchData,
   CreateBranchInput,
@@ -19,10 +20,10 @@ import { type AnyGiteaBranch, isBranchPayload, normalizeGiteaBranch } from "./no
 /** Create one branch directly from the caller's explicit ref or SHA. */
 export async function createGiteaBranch<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   input: CreateBranchInput,
   options: OperationOptions = {},
-): Promise<BranchData<"gitea", TVersion>> {
+): Promise<BranchData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = { universal: "createBranch", native: "repoCreateBranch" } as const;
   const name = requireIdentity(input.name, "new branch name");
   const source = requireIdentity(input.source, "branch source");
@@ -51,8 +52,8 @@ export async function createGiteaBranch<TVersion extends GiteaVersion>(
 /** Rename one non-default branch with the provider's direct 204 mutation. */
 export async function renameGiteaBranch<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  branch: BranchData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  branch: BranchData<"gitea", TVersion, GiteaProviderTypes>,
   name: string,
   options: OperationOptions = {},
 ): Promise<void> {
@@ -80,8 +81,8 @@ export async function renameGiteaBranch<TVersion extends GiteaVersion>(
 /** Delete one non-default branch directly. */
 export async function deleteGiteaBranch<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  branch: BranchData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  branch: BranchData<"gitea", TVersion, GiteaProviderTypes>,
   options: OperationOptions = {},
 ): Promise<void> {
   const operation = { universal: "deleteBranch", native: "repoDeleteBranch" } as const;
@@ -103,8 +104,8 @@ export async function deleteGiteaBranch<TVersion extends GiteaVersion>(
 
 function assertMutableBranch<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  branch: BranchData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  branch: BranchData<"gitea", TVersion, GiteaProviderTypes>,
   operation: string,
 ): void {
   if (repository.defaultBranch !== undefined && branch.name === repository.defaultBranch) {

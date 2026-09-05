@@ -1,4 +1,8 @@
-import type { FluentProvider, ProviderVersion } from "../../adapter-contract/provider.ts";
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../../adapter-contract/provider.ts";
 
 import type { ValidationErrorContext } from "../../adapter-contract/errors.ts";
 import {
@@ -35,37 +39,41 @@ export interface ListPackagesOptions extends PageRequest {
 
 export interface Packages<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly support: PackageCapabilitySupport;
   list(
     owner: string,
     options?: ListPackagesOptions,
-  ): Promise<Page<PackageVersion<TProvider, TVersion>>>;
+  ): Promise<Page<PackageVersion<TProvider, TVersion, TRegistry>>>;
   versions(
     coordinates: PackageCoordinates,
     request?: PageRequest,
-  ): Promise<Page<PackageVersion<TProvider, TVersion>>>;
+  ): Promise<Page<PackageVersion<TProvider, TVersion, TRegistry>>>;
   get(
     identity: PackageVersionIdentity,
     options?: OperationOptions,
-  ): Promise<PackageVersion<TProvider, TVersion>>;
+  ): Promise<PackageVersion<TProvider, TVersion, TRegistry>>;
   find(
     identity: PackageVersionIdentity,
     options?: OperationOptions,
-  ): Promise<PackageVersion<TProvider, TVersion> | undefined>;
+  ): Promise<PackageVersion<TProvider, TVersion, TRegistry> | undefined>;
   files(
     identity: PackageVersionIdentity,
     options: ListPackageFilesOptions,
-  ): Promise<readonly PackageFile<TProvider, TVersion>[]>;
+  ): Promise<readonly PackageFile<TProvider, TVersion, TRegistry>[]>;
   deleteVersion(identity: PackageVersionIdentity, options?: OperationOptions): Promise<void>;
   delete(coordinates: PackageCoordinates, options?: OperationOptions): Promise<void>;
 }
 
 export function createPackages<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
->(adapter: PackageAdapter<TProvider, TVersion>): Packages<TProvider, TVersion> {
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+>(
+  adapter: PackageAdapter<TProvider, TVersion, TRegistry>,
+): Packages<TProvider, TVersion, TRegistry> {
   return Object.freeze({
     support: adapter.packageSupport,
     async list(owner: string, options: ListPackagesOptions = {}) {
@@ -142,12 +150,13 @@ function validateIdentity(
 
 function adapterValidationContext<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
-  adapter: PackageAdapter<TProvider, TVersion>,
+  adapter: PackageAdapter<TProvider, TVersion, TRegistry>,
   operation: string,
 ): ValidationErrorContext<TProvider, TVersion> {
-  const identity = adapter as PackageAdapter<TProvider, TVersion> & {
+  const identity = adapter as PackageAdapter<TProvider, TVersion, TRegistry> & {
     readonly provider?: TProvider;
     readonly version?: TVersion;
   };

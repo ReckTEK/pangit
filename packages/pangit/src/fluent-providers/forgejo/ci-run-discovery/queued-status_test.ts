@@ -1,4 +1,4 @@
-import type {} from "../registration.ts";
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import { ForgejoAdapterContext } from "../transport/ForgejoAdapterContext.ts";
 import { listForgejoCiRuns } from "./runs.ts";
 import { listForgejoCiRunJobs } from "./jobs.ts";
@@ -27,7 +27,7 @@ for (const version of ["15.0.7", "16.0.3"] as const) {
       name: "repo",
       fullName: "owner/repo",
       native: null as never,
-    } satisfies RepositoryData<"forgejo", typeof version>;
+    } satisfies RepositoryData<"forgejo", typeof version, ForgejoProviderTypes>;
     const runs = await listForgejoCiRuns(context, repo, { limit: 10, status: "queued" });
     if (runs.items.length !== 2 || runs.items.some((run) => run.status !== "queued")) {
       throw new Error("Queued run discovery omitted blocked executions");

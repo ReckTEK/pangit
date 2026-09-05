@@ -1,6 +1,4 @@
-import type {} from "../fluent-providers/forgejo/registration.ts";
-import type {} from "../fluent-providers/gitea/registration.ts";
-import type {} from "../fluent-providers/gitlab/registration.ts";
+import type { FluentProviderTypes } from "./provider-types.ts";
 import type { ProviderVersion } from "../fluent-api/adapter-contract/provider.ts";
 import type { FluentClientOptions } from "../fluent-api/adapter-contract/client-options.ts";
 import type { FluentClient } from "../fluent-api/client/FluentClient.ts";
@@ -18,17 +16,20 @@ const providers = {
 } as const;
 
 export type FluentProvider = keyof typeof providers;
-export type FluentProviderVersion<P extends FluentProvider> = ProviderVersion<P>;
+export type FluentProviderVersion<P extends FluentProvider> = ProviderVersion<
+  P,
+  FluentProviderTypes
+>;
 
 /** Load only the selected standalone provider. Generated transports remain version-lazy. */
 export async function createClient<
   const P extends keyof typeof providers,
-  const V extends ProviderVersion<P>,
+  const V extends ProviderVersion<P, FluentProviderTypes>,
 >(
   provider: P,
   version: V,
   baseUrlOrOptions: string | URL | FluentClientOptions,
-): Promise<FluentClient<P, V>> {
+): Promise<FluentClient<P, V, FluentProviderTypes>> {
   if (!Object.hasOwn(providers, provider)) {
     throw new ProviderAdapterUnavailableError(provider, version);
   }
@@ -41,6 +42,6 @@ export async function createClient<
   const create = implementation.createClient as unknown as (
     version: V,
     options: FluentClientOptions,
-  ) => FluentClient<P, V>;
+  ) => FluentClient<P, V, FluentProviderTypes>;
   return create(version, snapshot);
 }

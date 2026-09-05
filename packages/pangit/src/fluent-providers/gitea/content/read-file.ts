@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type {
   ContentData,
   ReadContentOptions,
@@ -27,14 +28,14 @@ import { normalizeDirectoryWrapper } from "./read-directory.ts";
 /** Read one exact path with one contents-ext request and no external dereferencing. */
 export async function readGiteaContent<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   path: string,
   options: ReadContentOptions = {},
   operation: GiteaOperationIdentity = {
     universal: "readContent",
     native: "repoGetContentsExt",
   },
-): Promise<ContentData<"gitea", TVersion>> {
+): Promise<ContentData<"gitea", TVersion, GiteaProviderTypes>> {
   const requestedPath = requireIdentity(
     path,
     "content path",
@@ -73,7 +74,7 @@ export async function readGiteaContent<TVersion extends GiteaVersion>(
 /** Read an exact file path as bytes with one contents-ext request. */
 export async function readGiteaContentBytes<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   path: string,
   options: ReadFileOptions = {},
   operation = "readContentBytes",
@@ -91,7 +92,7 @@ export async function readGiteaContentBytes<TVersion extends GiteaVersion>(
 /** Read an exact file path as strict UTF-8 text, without following links. */
 export async function readGiteaContentText<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   path: string,
   options: ReadFileOptions = {},
 ): Promise<string> {
@@ -103,7 +104,7 @@ export async function readGiteaContentText<TVersion extends GiteaVersion>(
 /** Read an exact file path as JSON without asserting a caller-specific schema. */
 export async function readGiteaContentJson<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   path: string,
   options: ReadFileOptions = {},
 ): Promise<unknown> {

@@ -1,5 +1,6 @@
+import type { Provider, ProviderTypeRegistry, ProviderVersion } from "./provider.ts";
 import type { ProviderExtensionOptions } from "../provider-extensions/ProviderExtensionRegistry.ts";
-import type { Provider, ProviderVersion } from "./provider.ts";
+
 import type { ProviderEntityNative } from "../native-access/ProviderNativeRegistry.ts";
 import type { CommitData, CommitFileData } from "./commits.ts";
 import type { OperationOptions } from "./operation-options.ts";
@@ -17,7 +18,8 @@ export interface PullRequestRef {
 
 export interface PullRequestData<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly id: string;
   readonly number: number;
@@ -32,7 +34,7 @@ export interface PullRequestData<
   readonly mergeBaseSha?: string;
   readonly mergeCommitSha?: string;
   readonly url?: string;
-  readonly native: ProviderEntityNative<TProvider, TVersion, "pullRequest">;
+  readonly native: ProviderEntityNative<TProvider, TVersion, "pullRequest", TRegistry>;
 }
 
 export interface ListPullRequestsRequest extends ResolvedPageRequest {
@@ -75,14 +77,20 @@ export interface MergePullRequestInput {
   readonly deleteSourceBranch?: boolean;
 }
 
-export type MergePullRequestExtension<TProvider extends Provider> = ProviderExtensionOptions<
+export type MergePullRequestExtension<
+  TProvider extends Provider,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> = ProviderExtensionOptions<
   "pullRequests.merge",
-  TProvider
+  TProvider,
+  TRegistry
 >;
 
-export interface MergePullRequestOptions<TProvider extends Provider = Provider>
-  extends OperationOptions, MergePullRequestInput {
-  readonly extension?: MergePullRequestExtension<TProvider>;
+export interface MergePullRequestOptions<
+  TProvider extends Provider = Provider,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> extends OperationOptions, MergePullRequestInput {
+  readonly extension?: MergePullRequestExtension<TProvider, TRegistry>;
 }
 
 export interface PullRequestCommentInput {
@@ -96,74 +104,75 @@ export interface PullRequestCommentInput {
 
 export interface PullRequestAdapter<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   listPullRequests(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     request: ListPullRequestsRequest,
-  ): Promise<Page<PullRequestData<TProvider, TVersion>>>;
+  ): Promise<Page<PullRequestData<TProvider, TVersion, TRegistry>>>;
   getPullRequest(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     number: number,
     options?: OperationOptions,
-  ): Promise<PullRequestData<TProvider, TVersion>>;
+  ): Promise<PullRequestData<TProvider, TVersion, TRegistry>>;
   findPullRequest(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     input: FindPullRequestInput,
     options?: OperationOptions,
-  ): Promise<PullRequestData<TProvider, TVersion> | undefined>;
+  ): Promise<PullRequestData<TProvider, TVersion, TRegistry> | undefined>;
   isPullRequestMerged(
-    repository: RepositoryData<TProvider, TVersion>,
-    pullRequest: PullRequestData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
+    pullRequest: PullRequestData<TProvider, TVersion, TRegistry>,
     refresh: boolean,
     options?: OperationOptions,
   ): Promise<boolean>;
   listPullRequestCommits(
-    repository: RepositoryData<TProvider, TVersion>,
-    pullRequest: PullRequestData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
+    pullRequest: PullRequestData<TProvider, TVersion, TRegistry>,
     request: ResolvedPageRequest,
-  ): Promise<Page<CommitData<TProvider, TVersion>>>;
+  ): Promise<Page<CommitData<TProvider, TVersion, TRegistry>>>;
   listPullRequestFiles(
-    repository: RepositoryData<TProvider, TVersion>,
-    pullRequest: PullRequestData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
+    pullRequest: PullRequestData<TProvider, TVersion, TRegistry>,
     request: ResolvedPageRequest,
   ): Promise<Page<CommitFileData>>;
   createPullRequest(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     input: CreatePullRequestInput,
     options?: OperationOptions,
-  ): Promise<PullRequestData<TProvider, TVersion>>;
+  ): Promise<PullRequestData<TProvider, TVersion, TRegistry>>;
   updatePullRequest(
-    repository: RepositoryData<TProvider, TVersion>,
-    pullRequest: PullRequestData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
+    pullRequest: PullRequestData<TProvider, TVersion, TRegistry>,
     input: UpdatePullRequestInput,
     options?: OperationOptions,
-  ): Promise<PullRequestData<TProvider, TVersion>>;
+  ): Promise<PullRequestData<TProvider, TVersion, TRegistry>>;
   closePullRequest(
-    repository: RepositoryData<TProvider, TVersion>,
-    pullRequest: PullRequestData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
+    pullRequest: PullRequestData<TProvider, TVersion, TRegistry>,
     options?: OperationOptions,
-  ): Promise<PullRequestData<TProvider, TVersion>>;
+  ): Promise<PullRequestData<TProvider, TVersion, TRegistry>>;
   mergePullRequest(
-    repository: RepositoryData<TProvider, TVersion>,
-    pullRequest: PullRequestData<TProvider, TVersion>,
-    options?: MergePullRequestOptions<TProvider>,
-  ): Promise<PullRequestData<TProvider, TVersion>>;
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
+    pullRequest: PullRequestData<TProvider, TVersion, TRegistry>,
+    options?: MergePullRequestOptions<TProvider, TRegistry>,
+  ): Promise<PullRequestData<TProvider, TVersion, TRegistry>>;
   requestPullRequestReviewers(
-    repository: RepositoryData<TProvider, TVersion>,
-    pullRequest: PullRequestData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
+    pullRequest: PullRequestData<TProvider, TVersion, TRegistry>,
     reviewers: readonly string[],
     options?: OperationOptions,
   ): Promise<void>;
   approvePullRequest(
-    repository: RepositoryData<TProvider, TVersion>,
-    pullRequest: PullRequestData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
+    pullRequest: PullRequestData<TProvider, TVersion, TRegistry>,
     body?: string,
     options?: OperationOptions,
   ): Promise<void>;
   publishPullRequestComment(
-    repository: RepositoryData<TProvider, TVersion>,
-    pullRequest: PullRequestData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
+    pullRequest: PullRequestData<TProvider, TVersion, TRegistry>,
     input: PullRequestCommentInput,
     options?: OperationOptions,
   ): Promise<void>;

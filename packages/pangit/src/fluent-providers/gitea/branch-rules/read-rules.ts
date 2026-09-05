@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import { ValidationError } from "../../../fluent-api/adapter-contract/errors.ts";
 import type {
   BranchRuleData,
@@ -22,9 +23,9 @@ import { normalizeGiteaBranchRule } from "./normalize.ts";
 /** Read Gitea's unpaginated configured-rule result once and enforce the caller's hard bound. */
 export async function listGiteaBranchRules<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   options: ListBranchRulesOptions,
-): Promise<readonly BranchRuleData<"gitea", TVersion>[]> {
+): Promise<readonly BranchRuleData<"gitea", TVersion, GiteaProviderTypes>[]> {
   const operation = {
     universal: "listBranchRules",
     native: "repoListBranchProtection",
@@ -59,10 +60,10 @@ export async function listGiteaBranchRules<TVersion extends GiteaVersion>(
 /** Fetch one configured rule directly by its name or pattern. */
 export async function getGiteaBranchRule<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   name: string,
   options: OperationOptions = {},
-): Promise<BranchRuleData<"gitea", TVersion>> {
+): Promise<BranchRuleData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = { universal: "getBranchRule", native: "repoGetBranchProtection" } as const;
   const client = await context.client();
   const payload = await requestGiteaBody<AnyGiteaRule, TVersion>(

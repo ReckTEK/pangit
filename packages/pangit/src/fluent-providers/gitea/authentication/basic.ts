@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type {
   BasicAuthorizationInput,
   BasicAuthorizationOptions,
@@ -12,7 +13,7 @@ import { requireSecret, validationError, verifyGiteaCredentials } from "./creden
 export async function authorizeGiteaBasic<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
   input: BasicAuthorizationInput,
-  options: BasicAuthorizationOptions<"gitea"> = {},
+  options: BasicAuthorizationOptions<"gitea", GiteaProviderTypes> = {},
 ): Promise<GiteaAdapterContext<TVersion>> {
   const operation = { universal: "authorizeBasic", native: "userGetCurrent" } as const;
   if (input.username.trim().length === 0) {

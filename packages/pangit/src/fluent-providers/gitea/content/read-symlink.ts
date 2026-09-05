@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type {
   ContentData,
   ReadLinkedContentOptions,
@@ -16,10 +17,10 @@ import { directoryName, displayPath } from "./paths.ts";
 /** Return one raw symlink target; never follow it. */
 export async function readGiteaSymlink<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   path: string,
   options: ReadLinkedContentOptions = {},
-): Promise<ContentData<"gitea", TVersion>> {
+): Promise<ContentData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = { universal: "readSymlink", native: "repoGetContentsExt" } as const;
   const content = await readGiteaContent(
     context,

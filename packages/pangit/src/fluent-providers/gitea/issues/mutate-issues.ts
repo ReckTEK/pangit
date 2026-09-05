@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type {
   CreateIssueInput,
   IssueData,
@@ -30,10 +31,10 @@ import { normalizeGiteaIssue } from "./normalize.ts";
 /** Create one issue using only common title and description fields. */
 export async function createGiteaIssue<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   input: CreateIssueInput,
   options: OperationOptions = {},
-): Promise<IssueData<"gitea", TVersion>> {
+): Promise<IssueData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = { universal: "createIssue", native: "issueCreateIssue" } as const;
   const title = requireIdentity(input.title, "issue title");
   const client = await context.client();
@@ -63,11 +64,11 @@ export async function createGiteaIssue<TVersion extends GiteaVersion>(
 /** Update common issue fields with an optional, typed Gitea content-version guard. */
 export async function updateGiteaIssue<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  issue: IssueData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  issue: IssueData<"gitea", TVersion, GiteaProviderTypes>,
   input: UpdateIssueInput,
-  options: IssueUpdateOptions<"gitea"> = {},
-): Promise<IssueData<"gitea", TVersion>> {
+  options: IssueUpdateOptions<"gitea", GiteaProviderTypes> = {},
+): Promise<IssueData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = { universal: "updateIssue", native: "issueEditIssue" } as const;
   if (input.title === undefined && input.description === undefined) {
     throw new TypeError("issue update requires a title or description");
@@ -106,11 +107,11 @@ export async function updateGiteaIssue<TVersion extends GiteaVersion>(
 /** Close or reopen one known issue with a single direct mutation. */
 export async function setGiteaIssueState<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  issue: IssueData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  issue: IssueData<"gitea", TVersion, GiteaProviderTypes>,
   state: IssueState,
   options: OperationOptions = {},
-): Promise<IssueData<"gitea", TVersion>> {
+): Promise<IssueData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = { universal: "setIssueState", native: "issueEditIssue" } as const;
   if (state !== "open" && state !== "closed") throw new TypeError("invalid issue state");
   const client = await context.client();

@@ -1,4 +1,5 @@
-import type { Provider, ProviderVersion } from "../provider.ts";
+import type { Provider, ProviderTypeRegistry, ProviderVersion } from "../provider.ts";
+
 import type { ProviderPackageEntityNative } from "../../native-access/ProviderNativeRegistry.ts";
 import type { OperationOptions } from "../operation-options.ts";
 import type { Page, ResolvedPageRequest } from "../pagination.ts";
@@ -19,14 +20,15 @@ export interface PackageVersionIdentity extends PackageCoordinates {
 
 export interface PackageVersionData<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > extends PackageVersionIdentity {
   readonly id: string;
   readonly createdAt?: string;
   readonly creator?: string;
   readonly repositoryFullName?: string;
   readonly url?: string;
-  readonly native: ProviderPackageEntityNative<TProvider, TVersion, "package">;
+  readonly native: ProviderPackageEntityNative<TProvider, TVersion, "package", TRegistry>;
 }
 
 export interface PackageFileDigests {
@@ -38,13 +40,14 @@ export interface PackageFileDigests {
 
 export interface PackageFileData<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly id: string;
   readonly name: string;
   readonly size?: number;
   readonly digests: Readonly<PackageFileDigests>;
-  readonly native: ProviderPackageEntityNative<TProvider, TVersion, "packageFile">;
+  readonly native: ProviderPackageEntityNative<TProvider, TVersion, "packageFile", TRegistry>;
 }
 
 export interface ListPackagesRequest extends ResolvedPageRequest {
@@ -80,29 +83,30 @@ export interface PackageCapabilitySupport {
 /** Optional package metadata and destructive lifecycle contract. */
 export interface PackageAdapter<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly packageSupport: PackageCapabilitySupport;
   listPackages(
     owner: string,
     request: ListPackagesRequest,
-  ): Promise<Page<PackageVersionData<TProvider, TVersion>>>;
+  ): Promise<Page<PackageVersionData<TProvider, TVersion, TRegistry>>>;
   listPackageVersions(
     coordinates: PackageCoordinates,
     request: ResolvedPageRequest,
-  ): Promise<Page<PackageVersionData<TProvider, TVersion>>>;
+  ): Promise<Page<PackageVersionData<TProvider, TVersion, TRegistry>>>;
   getPackageVersion(
     identity: PackageVersionIdentity,
     options?: OperationOptions,
-  ): Promise<PackageVersionData<TProvider, TVersion>>;
+  ): Promise<PackageVersionData<TProvider, TVersion, TRegistry>>;
   findPackageVersion(
     identity: PackageVersionIdentity,
     options?: OperationOptions,
-  ): Promise<PackageVersionData<TProvider, TVersion> | undefined>;
+  ): Promise<PackageVersionData<TProvider, TVersion, TRegistry> | undefined>;
   listPackageFiles(
     identity: PackageVersionIdentity,
     options: ListPackageFilesOptions,
-  ): Promise<readonly PackageFileData<TProvider, TVersion>[]>;
+  ): Promise<readonly PackageFileData<TProvider, TVersion, TRegistry>[]>;
   deletePackageVersion(
     identity: PackageVersionIdentity,
     options?: OperationOptions,

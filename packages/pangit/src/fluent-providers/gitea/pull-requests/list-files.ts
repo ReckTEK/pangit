@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type { CommitFileData } from "../../../fluent-api/adapter-contract/commits.ts";
 
 import { requirePositiveInteger } from "../../../fluent-api/adapter-contract/operation-options.ts";
@@ -26,8 +27,8 @@ import type { AnyGiteaChangedFile } from "./payload-types.ts";
 /** Read exactly one page of files changed by a pull request. */
 export async function listGiteaPullRequestFiles<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  pullRequest: PullRequestData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  pullRequest: PullRequestData<"gitea", TVersion, GiteaProviderTypes>,
   request: ResolvedPageRequest,
 ): Promise<Page<CommitFileData>> {
   const operation = {

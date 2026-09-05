@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type {
   CiRunData,
   ListCiRunsRequest,
@@ -34,9 +35,9 @@ import { normalizeWorkflowPath } from "./workflows.ts";
 
 export async function listForgejoCiRuns<V extends ForgejoVersion>(
   context: ForgejoAdapterContext<V>,
-  repository: RepositoryData<"forgejo", V>,
+  repository: RepositoryData<"forgejo", V, ForgejoProviderTypes>,
   request: ListCiRunsRequest,
-): Promise<Page<CiRunData<"forgejo", V>>> {
+): Promise<Page<CiRunData<"forgejo", V, ForgejoProviderTypes>>> {
   const operation = { universal: "listCiRuns", native: "ListActionRuns" } as const;
   const client = await context.client();
   const cursor = decodeForgejoPageCursor(request.cursor, { version: context.version, operation });
@@ -79,10 +80,10 @@ export async function listForgejoCiRuns<V extends ForgejoVersion>(
 
 export async function getForgejoCiRun<V extends ForgejoVersion>(
   context: ForgejoAdapterContext<V>,
-  repository: RepositoryData<"forgejo", V>,
+  repository: RepositoryData<"forgejo", V, ForgejoProviderTypes>,
   runId: string,
   options: OperationOptions = {},
-): Promise<CiRunData<"forgejo", V>> {
+): Promise<CiRunData<"forgejo", V, ForgejoProviderTypes>> {
   const client = await context.client();
   const payload = await requestForgejoBody<AnyRun, V>(
     context,
@@ -100,7 +101,7 @@ export async function getForgejoCiRun<V extends ForgejoVersion>(
 export function normalizeForgejoCiRun<V extends ForgejoVersion>(
   client: ForgejoClient<V>,
   payload: ForgejoCiEntityPayload<V, "run">,
-): CiRunData<"forgejo", V> {
+): CiRunData<"forgejo", V, ForgejoProviderTypes> {
   const conclusion = normalizeConclusion(payload.status);
   return Object.freeze({
     id: String(payload.id),

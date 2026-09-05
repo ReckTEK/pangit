@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type { RepositoryData } from "../../../fluent-api/adapter-contract/repositories.ts";
 import { ConflictError } from "../../../fluent-api/adapter-contract/errors.ts";
 import { ForgejoAdapterContext } from "../transport/ForgejoAdapterContext.ts";
@@ -38,7 +39,7 @@ for (const version of ["15.0.7", "16.0.3"] as const) {
       name: "project",
       fullName: "sandbox/project",
       native: null as never,
-    } satisfies RepositoryData<"forgejo", typeof version>;
+    } satisfies RepositoryData<"forgejo", typeof version, ForgejoProviderTypes>;
     await commitForgejoFileChanges(context, repository, {
       branch: "main",
       message: "atomic",

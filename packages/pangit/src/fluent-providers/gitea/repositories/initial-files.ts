@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import { requireIdentity } from "../../../fluent-api/adapter-contract/operation-options.ts";
 
 import type {
@@ -14,7 +15,7 @@ import { requestOptions, validationError } from "./request-options.ts";
 export async function createGiteaInitialFiles<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
   client: GiteaClient<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   files: readonly InitialRepositoryFile[],
   branch: string | undefined,
   message: string | undefined,

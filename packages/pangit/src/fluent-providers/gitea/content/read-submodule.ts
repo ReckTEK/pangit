@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type {
   ContentData,
   ReadLinkedContentOptions,
@@ -23,10 +24,10 @@ import type { AnyGiteaContent } from "./payload-types.ts";
 /** Return one submodule URL/SHA metadata record; never contact its remote. */
 export async function readGiteaSubmodule<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   path: string,
   options: ReadLinkedContentOptions = {},
-): Promise<ContentData<"gitea", TVersion>> {
+): Promise<ContentData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = { universal: "readSubmodule", native: "repoGetContentsExt" } as const;
   const content = await readGiteaContent(
     context,

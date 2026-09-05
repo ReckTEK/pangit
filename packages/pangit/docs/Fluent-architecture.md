@@ -55,9 +55,20 @@ copied and frozen when configured. Later changes to caller-owned inputs cannot c
 operation. Cancellation signals are supplied to `execute({ signal })`.
 
 Provider-specific types are exported from `@recktek/pangit/fluent/<provider>`. They are not exported
-from the universal API. Provider-owned `registration.ts` files augment the abstract type registries;
-these imports are erased at runtime. Runtime extension availability and validation live beside the
-provider's extension types.
+from the universal API. Each implementation declares its versions, operation extensions, and native
+type families in `provider-types.ts`, then supplies that definition to the shared contract's
+`TRegistry` parameter. Native families retain the selected version through a type-level mapping.
+Importing a provider never changes the universal contract or another provider's types.
+
+The `fluent-client/provider-types.ts` composition combines these definitions using type-only
+imports. Its `contracts/` barrel binds the registry for public types such as
+`Repository<Provider, Version>`; its `auth/` factories bind the same registry for shared
+authentication helpers. Callers never need to provide the registry themselves. Contract bindings are
+erased at runtime; authentication factories delegate to the shared helpers. Runtime extension
+availability and validation remain beside each provider's extension types.
+
+Module and global augmentation are prohibited, including by JSR. Architecture tests enforce this
+constraint and check that each standalone provider's complete type graph excludes other providers.
 
 Pagination cursors retain the provider page size so continuation cannot skip or repeat offsets.
 Bounded scans reject `maxItems` below that size before starting HTTP. Invalid, backward, or empty
@@ -69,10 +80,11 @@ email is absent. Missing identities are omitted; the first occurrence supplies d
 
 ## Adding a provider
 
-1. Add a standalone folder with `versions.ts`, `registration.ts`, and `mod.ts`.
+1. Add a standalone folder with `versions.ts`, `provider-types.ts`, and `mod.ts`.
 2. Implement `GitHostAdapter` through concern modules; compose them in `create-adapter.ts`.
-3. Register native type families and operation extensions in that provider's `registration.ts`.
-4. Add its dynamic loader and type-only registration at the `fluent-client/` composition boundary.
+3. Define its versions, native type families, and operation extensions in `provider-types.ts`;
+   supply that definition to its shared contract types.
+4. Add its dynamic loader and type-only definition at the `fluent-client/` composition boundary.
 5. Add its standalone package export, contract tests, and exact-version loading checks.
 
 The universal contract needs no concrete provider names or switches. Architecture tests reject

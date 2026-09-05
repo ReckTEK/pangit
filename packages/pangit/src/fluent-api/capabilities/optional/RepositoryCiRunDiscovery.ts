@@ -1,4 +1,9 @@
-import type { FluentProvider, ProviderVersion } from "../../adapter-contract/provider.ts";
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../../adapter-contract/provider.ts";
+
 import type { ValidationErrorContext } from "../../adapter-contract/errors.ts";
 import {
   type OperationOptions,
@@ -44,32 +49,40 @@ export interface ListCiJobsOptions extends PageRequest {
 
 export interface RepositoryCiRunDiscovery<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly support: CiRunDiscoveryCapabilitySupport;
-  workflow(id: string, options?: OperationOptions): Promise<CiWorkflow<TProvider, TVersion>>;
-  runs(options?: ListCiRunsOptions): Promise<Page<CiRun<TProvider, TVersion>>>;
-  run(id: string, options?: OperationOptions): Promise<CiRun<TProvider, TVersion>>;
+  workflow(
+    id: string,
+    options?: OperationOptions,
+  ): Promise<CiWorkflow<TProvider, TVersion, TRegistry>>;
+  runs(options?: ListCiRunsOptions): Promise<Page<CiRun<TProvider, TVersion, TRegistry>>>;
+  run(id: string, options?: OperationOptions): Promise<CiRun<TProvider, TVersion, TRegistry>>;
   jobs(
     runId: string,
     options?: ListCiJobsOptions,
-  ): Promise<Page<CiJob<TProvider, TVersion>>>;
-  job(id: string, options?: OperationOptions): Promise<CiJob<TProvider, TVersion>>;
+  ): Promise<Page<CiJob<TProvider, TVersion, TRegistry>>>;
+  job(id: string, options?: OperationOptions): Promise<CiJob<TProvider, TVersion, TRegistry>>;
   findArtifact(
     runId: string,
     name: string,
     options?: OperationOptions,
-  ): Promise<CiArtifact<TProvider, TVersion> | undefined>;
-  artifact(id: string, options?: OperationOptions): Promise<CiArtifact<TProvider, TVersion>>;
+  ): Promise<CiArtifact<TProvider, TVersion, TRegistry> | undefined>;
+  artifact(
+    id: string,
+    options?: OperationOptions,
+  ): Promise<CiArtifact<TProvider, TVersion, TRegistry>>;
 }
 
 export function createRepositoryCiRunDiscovery<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
-  adapter: CiRunDiscoveryAdapter<TProvider, TVersion>,
-  repository: RepositoryData<TProvider, TVersion>,
-): RepositoryCiRunDiscovery<TProvider, TVersion> {
+  adapter: CiRunDiscoveryAdapter<TProvider, TVersion, TRegistry>,
+  repository: RepositoryData<TProvider, TVersion, TRegistry>,
+): RepositoryCiRunDiscovery<TProvider, TVersion, TRegistry> {
   return Object.freeze({
     support: adapter.ciRunDiscoverySupport,
     async workflow(id: string, options: OperationOptions = {}) {
@@ -161,12 +174,13 @@ export function createRepositoryCiRunDiscovery<
 
 function adapterValidationContext<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
-  adapter: CiRunDiscoveryAdapter<TProvider, TVersion>,
+  adapter: CiRunDiscoveryAdapter<TProvider, TVersion, TRegistry>,
   operation: string,
 ): ValidationErrorContext<TProvider, TVersion> {
-  const identity = adapter as CiRunDiscoveryAdapter<TProvider, TVersion> & {
+  const identity = adapter as CiRunDiscoveryAdapter<TProvider, TVersion, TRegistry> & {
     readonly provider?: TProvider;
     readonly version?: TVersion;
   };

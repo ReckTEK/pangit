@@ -1,4 +1,4 @@
-import type {} from "../registration.ts";
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type { GiteaBlobNative } from "./GiteaBlobNative.ts";
 import type { GiteaBranchRuleEntityNative } from "./GiteaBranchRuleNative.ts";
 import type { GiteaCiEntityNative } from "./GiteaCiRunDiscoveryNative.ts";
@@ -70,7 +70,8 @@ type RegistryAssertions = readonly [
       {
         readonly [K in keyof ExpectedGiteaRegistry<"1.26.4">]: ProviderNativeRegistry<
           "1.26.4",
-          K
+          K,
+          GiteaProviderTypes
         >["gitea"];
       },
       ExpectedGiteaRegistry<"1.26.4">
@@ -81,69 +82,82 @@ type RegistryAssertions = readonly [
       {
         readonly [K in keyof ExpectedGiteaRegistry<"1.27.2">]: ProviderNativeRegistry<
           "1.27.2",
-          K
+          K,
+          GiteaProviderTypes
         >["gitea"];
       },
       ExpectedGiteaRegistry<"1.27.2">
     >
   >,
-  Assert<Equal<ProviderClientNative<"gitea", "1.27.2">, GiteaClientNative<"1.27.2">>>,
+  Assert<
+    Equal<ProviderClientNative<"gitea", "1.27.2", GiteaProviderTypes>, GiteaClientNative<"1.27.2">>
+  >,
   Assert<
     Equal<
-      ProviderRepositoryContainerNative<"gitea", "1.27.2">,
+      ProviderRepositoryContainerNative<"gitea", "1.27.2", GiteaProviderTypes>,
       GiteaRepositoryContainerNative<"1.27.2">
     >
   >,
-  Assert<Equal<ProviderRepositoryNative<"gitea", "1.27.2">, GiteaRepositoryNative<"1.27.2">>>,
-  Assert<
-    Equal<ProviderEntityNative<"gitea", "1.27.2", "branch">, GiteaEntityNative<"1.27.2", "branch">>
-  >,
-  Assert<Equal<ProviderBlobNative<"gitea", "1.27.2">, GiteaBlobNative<"1.27.2">>>,
   Assert<
     Equal<
-      ProviderBranchRuleEntityNative<"gitea", "1.27.2", "configuredRule">,
+      ProviderRepositoryNative<"gitea", "1.27.2", GiteaProviderTypes>,
+      GiteaRepositoryNative<"1.27.2">
+    >
+  >,
+  Assert<
+    Equal<
+      ProviderEntityNative<"gitea", "1.27.2", "branch", GiteaProviderTypes>,
+      GiteaEntityNative<"1.27.2", "branch">
+    >
+  >,
+  Assert<
+    Equal<ProviderBlobNative<"gitea", "1.27.2", GiteaProviderTypes>, GiteaBlobNative<"1.27.2">>
+  >,
+  Assert<
+    Equal<
+      ProviderBranchRuleEntityNative<"gitea", "1.27.2", "configuredRule", GiteaProviderTypes>,
       GiteaBranchRuleEntityNative<"1.27.2", "configuredRule">
     >
   >,
   Assert<
     Equal<
-      ProviderCiEntityNative<"gitea", "1.27.2", "artifact">,
+      ProviderCiEntityNative<"gitea", "1.27.2", "artifact", GiteaProviderTypes>,
       GiteaCiEntityNative<"1.27.2", "artifact">
     >
   >,
   Assert<
     Equal<
-      ProviderCurrentUserProfileNative<"gitea", "1.27.2">,
+      ProviderCurrentUserProfileNative<"gitea", "1.27.2", GiteaProviderTypes>,
       GiteaCurrentUserProfileNative<"1.27.2">
     >
   >,
   Assert<
     Equal<
-      ProviderIssueEntityNative<"gitea", "1.27.2", "issueComment">,
+      ProviderIssueEntityNative<"gitea", "1.27.2", "issueComment", GiteaProviderTypes>,
       GiteaIssueEntityNative<"1.27.2", "issueComment">
     >
   >,
   Assert<
     Equal<
-      ProviderPackageEntityNative<"gitea", "1.27.2", "packageFile">,
+      ProviderPackageEntityNative<"gitea", "1.27.2", "packageFile", GiteaProviderTypes>,
       GiteaPackageEntityNative<"1.27.2", "packageFile">
     >
   >,
   Assert<
     Equal<
-      ProviderPullRequestReviewNative<"gitea", "1.27.2">,
+      ProviderPullRequestReviewNative<"gitea", "1.27.2", GiteaProviderTypes>,
       GiteaPullRequestReviewNative<"1.27.2">
     >
   >,
   Assert<
     Equal<
-      ProviderReleaseEntityNative<"gitea", "1.27.2", "releaseAsset">,
+      ProviderReleaseEntityNative<"gitea", "1.27.2", "releaseAsset", GiteaProviderTypes>,
       GiteaReleaseEntityNative<"1.27.2", "releaseAsset">
     >
   >,
   Assert<
     Equal<
-      ProviderRepositoryWebhookNative<"gitea", "1.27.2">,
+      ProviderRepositoryWebhookNative<"gitea", "1.27.2", GiteaProviderTypes>,
       GiteaRepositoryWebhookNative<"1.27.2">
     >
   >,

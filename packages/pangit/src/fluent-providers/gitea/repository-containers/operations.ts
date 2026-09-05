@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type { AnyRestResponse } from "../../../generated-rest-clients/runtime/mod.ts";
 import {
   AuthenticationError,
@@ -43,7 +44,7 @@ interface ContainerCursor {
 export async function listGiteaRepositoryContainers<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
   request: ResolvedPageRequest,
-): Promise<Page<RepositoryContainerData<"gitea", TVersion>>> {
+): Promise<Page<RepositoryContainerData<"gitea", TVersion, GiteaProviderTypes>>> {
   const operation = {
     universal: "listRepositoryContainers",
     native: "orgListCurrentUserOrgs",
@@ -59,7 +60,7 @@ export async function listGiteaRepositoryContainers<TVersion extends GiteaVersio
 
   const cursor = decodeContainerCursor(context, request.cursor);
   const client = await context.client();
-  const containers: RepositoryContainerData<"gitea", TVersion>[] = [];
+  const containers: RepositoryContainerData<"gitea", TVersion, GiteaProviderTypes>[] = [];
   if (!cursor.userEmitted) {
     containers.push(normalizeGiteaUserContainer(client, currentUser as AnyGiteaUser));
   }
@@ -130,7 +131,7 @@ export async function getGiteaRepositoryContainer<TVersion extends GiteaVersion>
   context: GiteaAdapterContext<TVersion>,
   name: string,
   options: OperationOptions = {},
-): Promise<RepositoryContainerData<"gitea", TVersion>> {
+): Promise<RepositoryContainerData<"gitea", TVersion, GiteaProviderTypes>> {
   const organizationOperation = {
     universal: "getRepositoryContainer",
     native: "orgGet",
@@ -179,7 +180,7 @@ export async function getGiteaRepositoryContainer<TVersion extends GiteaVersion>
 export function normalizeGiteaUserContainer<TVersion extends GiteaVersion>(
   client: GiteaClient<TVersion>,
   user: AnyGiteaUser,
-): RepositoryContainerData<"gitea", TVersion> {
+): RepositoryContainerData<"gitea", TVersion, GiteaProviderTypes> {
   const name = requiredText(user.login, "user login");
   return Object.freeze({
     kind: "user",
@@ -203,7 +204,7 @@ export function normalizeGiteaUserContainer<TVersion extends GiteaVersion>(
 export function normalizeGiteaOrganizationContainer<TVersion extends GiteaVersion>(
   client: GiteaClient<TVersion>,
   organization: AnyGiteaOrganization,
-): RepositoryContainerData<"gitea", TVersion> {
+): RepositoryContainerData<"gitea", TVersion, GiteaProviderTypes> {
   const name = requiredText(
     optionalText(organization.name) ?? optionalText(organization.username),
     "organization name",

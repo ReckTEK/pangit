@@ -1,10 +1,16 @@
-import type { FluentProvider, ProviderVersion } from "../adapter-contract/provider.ts";
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../adapter-contract/provider.ts";
+
 import type { CommitData, CommitFileData, GitActor } from "../adapter-contract/commits.ts";
 import type { ProviderEntityNative } from "../native-access/ProviderNativeRegistry.ts";
 
 export interface Commit<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly sha: string;
   readonly message: string;
@@ -17,13 +23,14 @@ export interface Commit<
   readonly deletions?: number;
   readonly changedFiles?: number;
   readonly verified?: boolean;
-  readonly native: ProviderEntityNative<TProvider, TVersion, "commit">;
+  readonly native: ProviderEntityNative<TProvider, TVersion, "commit", TRegistry>;
 }
 
 export function createCommit<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
->(data: CommitData<TProvider, TVersion>): Commit<TProvider, TVersion> {
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+>(data: CommitData<TProvider, TVersion, TRegistry>): Commit<TProvider, TVersion, TRegistry> {
   return Object.freeze({
     sha: data.sha,
     message: data.message,

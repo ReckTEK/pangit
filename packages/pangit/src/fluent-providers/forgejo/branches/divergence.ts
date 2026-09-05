@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type { AnyRestResponse } from "../../../generated-rest-clients/runtime/mod.ts";
 import type {
   BranchDivergence,
@@ -26,7 +27,7 @@ import { listForgejoBranches } from "./read-branches.ts";
 /** Count the two set differences with two count-only commit-list probes. */
 export async function getForgejoBranchDivergence<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   base: string,
   head: string,
   options: OperationOptions = {},
@@ -63,9 +64,9 @@ export async function getForgejoBranchDivergence<TVersion extends ForgejoVersion
 /** Derive divergence for one bounded branch page with stable output order and concurrency at most four. */
 export async function listForgejoBranchDivergences<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   request: ListBranchDivergencesRequest,
-): Promise<Page<BranchDivergenceData<"forgejo", TVersion>>> {
+): Promise<Page<BranchDivergenceData<"forgejo", TVersion, ForgejoProviderTypes>>> {
   const listOperation = {
     universal: "listBranchDivergences",
     native: "repoListBranches",

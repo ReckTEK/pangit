@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type {
   ContentData,
   ReadContentOptions,
@@ -24,14 +25,14 @@ import { normalizeDirectoryWrapper } from "./read-directory.ts";
 /** Read one exact path with one contents request and no external dereferencing. */
 export async function readForgejoContent<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   path: string,
   options: ReadContentOptions = {},
   operation: ForgejoOperationIdentity = {
     universal: "readContent",
     native: "repoGetContents",
   },
-): Promise<ContentData<"forgejo", TVersion>> {
+): Promise<ContentData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const requestedPath = requireIdentity(
     path,
     "content path",
@@ -66,7 +67,7 @@ export async function readForgejoContent<TVersion extends ForgejoVersion>(
 /** Read an exact file path as bytes with one contents request. */
 export async function readForgejoContentBytes<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   path: string,
   options: ReadFileOptions = {},
   operation = "readContentBytes",
@@ -84,7 +85,7 @@ export async function readForgejoContentBytes<TVersion extends ForgejoVersion>(
 /** Read an exact file path as strict UTF-8 text, without following links. */
 export async function readForgejoContentText<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   path: string,
   options: ReadFileOptions = {},
 ): Promise<string> {
@@ -96,7 +97,7 @@ export async function readForgejoContentText<TVersion extends ForgejoVersion>(
 /** Read an exact file path as JSON without asserting a caller-specific schema. */
 export async function readForgejoContentJson<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   path: string,
   options: ReadFileOptions = {},
 ): Promise<unknown> {

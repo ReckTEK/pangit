@@ -1,4 +1,4 @@
-import type {} from "./registration.ts";
+import type { GiteaProviderTypes } from "./provider-types.ts";
 import { createGiteaAdapter } from "./create-adapter.ts";
 import { type GiteaVersion, versions } from "./versions.ts";
 import { createFluentClient } from "../../fluent-api/client/create-fluent-client.ts";
@@ -10,7 +10,7 @@ import { ProviderAdapterUnavailableError } from "../../fluent-api/adapter-contra
 export function createClient<const V extends GiteaVersion>(
   version: V,
   options: FluentClientOptions,
-): FluentClient<"gitea", V> {
+): FluentClient<"gitea", V, GiteaProviderTypes> {
   if (!(versions as readonly string[]).includes(version)) {
     throw new ProviderAdapterUnavailableError("gitea", version);
   }

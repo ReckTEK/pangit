@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type {
   CurrentUserProfileCapabilitySupport,
   CurrentUserProfileData,
@@ -22,7 +23,7 @@ export const giteaCurrentUserProfileSupport: CurrentUserProfileCapabilitySupport
 export async function getGiteaCurrentUserProfile<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
   options: OperationOptions = {},
-): Promise<CurrentUserProfileData<"gitea", TVersion>> {
+): Promise<CurrentUserProfileData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = { universal: "getCurrentUserProfile", native: "userGetCurrent" } as const;
   const client = await context.client();
   const payload = await requestGiteaBody<AnyGiteaUser, TVersion>(
@@ -38,7 +39,7 @@ export async function getGiteaCurrentUserProfile<TVersion extends GiteaVersion>(
 export function normalizeGiteaCurrentUserProfile<TVersion extends GiteaVersion>(
   client: GiteaClient<TVersion>,
   payload: AnyGiteaUser,
-): CurrentUserProfileData<"gitea", TVersion> {
+): CurrentUserProfileData<"gitea", TVersion, GiteaProviderTypes> {
   const username = requiredText(payload.login, "current-user login");
   return Object.freeze({
     id: requiredText(payload.id, `current user ${username} id`),

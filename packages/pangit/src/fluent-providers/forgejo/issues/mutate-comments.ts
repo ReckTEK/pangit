@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type {
   IssueCommentData,
   IssueCommentInput,
@@ -30,11 +31,11 @@ import { getForgejoIssueComment } from "./read-comments.ts";
 /** Add one comment directly to a known issue. */
 export async function createForgejoIssueComment<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  issue: IssueData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  issue: IssueData<"forgejo", TVersion, ForgejoProviderTypes>,
   input: IssueCommentInput,
   options: OperationOptions = {},
-): Promise<IssueCommentData<"forgejo", TVersion>> {
+): Promise<IssueCommentData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = { universal: "createIssueComment", native: "issueCreateComment" } as const;
   const body = requireIdentity(input.body, "issue comment body");
   const client = await context.client();
@@ -61,11 +62,11 @@ export async function createForgejoIssueComment<TVersion extends ForgejoVersion>
 /** Edit one comment directly; refresh it only when Forgejo returns its documented empty 204. */
 export async function updateForgejoIssueComment<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  comment: IssueCommentData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  comment: IssueCommentData<"forgejo", TVersion, ForgejoProviderTypes>,
   input: IssueCommentInput,
   options: OperationOptions = {},
-): Promise<IssueCommentData<"forgejo", TVersion>> {
+): Promise<IssueCommentData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = { universal: "updateIssueComment", native: "issueEditComment" } as const;
   const body = requireIdentity(input.body, "issue comment body");
   const id = parsePositiveInt64(comment.id, "issue comment id");
@@ -96,8 +97,8 @@ export async function updateForgejoIssueComment<TVersion extends ForgejoVersion>
 /** Delete one known issue comment directly without a lookup. */
 export async function deleteForgejoIssueComment<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  comment: IssueCommentData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  comment: IssueCommentData<"forgejo", TVersion, ForgejoProviderTypes>,
   options: OperationOptions = {},
 ): Promise<void> {
   const operation = { universal: "deleteIssueComment", native: "issueDeleteComment" } as const;

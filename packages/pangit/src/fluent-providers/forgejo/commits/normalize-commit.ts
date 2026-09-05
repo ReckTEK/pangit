@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type {
   CommitData,
   CommitFacets,
@@ -24,7 +25,7 @@ export function normalizeForgejoCommit<TVersion extends ForgejoVersion>(
   client: ForgejoClient<TVersion>,
   commit: ForgejoEntityPayload<TVersion, "commit">,
   facets: CommitFacets = {},
-): CommitData<"forgejo", TVersion> {
+): CommitData<"forgejo", TVersion, ForgejoProviderTypes> {
   const sha = requiredText(commit.sha, "commit SHA");
   if (!isRecord(commit.commit) || typeof commit.commit.message !== "string") {
     throw new TypeError(`commit ${sha} has no message`);

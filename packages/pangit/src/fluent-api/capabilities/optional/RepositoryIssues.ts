@@ -1,5 +1,10 @@
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../../adapter-contract/provider.ts";
 import type { ProviderExtensions } from "../../provider-extensions/ExtensionSupport.ts";
-import type { FluentProvider, ProviderVersion } from "../../adapter-contract/provider.ts";
+
 import type {
   CreateIssueInput,
   IssueAdapter,
@@ -44,49 +49,58 @@ export interface ListIssuesOptions
 
 export type IssueUpdateOperation<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > = OperationExtension<
   "issues.update",
   TProvider,
   TVersion,
-  Issue<TProvider, TVersion>
+  Issue<TProvider, TVersion, TRegistry>,
+  TRegistry
 >;
 
 export interface RepositoryIssues<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly support: IssueCapabilitySupport;
-  list(options?: ListIssuesOptions): Promise<Page<Issue<TProvider, TVersion>>>;
-  get(number: number, options?: OperationOptions): Promise<Issue<TProvider, TVersion>>;
-  create(input: CreateIssueInput, options?: OperationOptions): Promise<Issue<TProvider, TVersion>>;
+  list(options?: ListIssuesOptions): Promise<Page<Issue<TProvider, TVersion, TRegistry>>>;
+  get(number: number, options?: OperationOptions): Promise<Issue<TProvider, TVersion, TRegistry>>;
+  create(
+    input: CreateIssueInput,
+    options?: OperationOptions,
+  ): Promise<Issue<TProvider, TVersion, TRegistry>>;
   update(
-    issue: Issue<TProvider, TVersion>,
+    issue: Issue<TProvider, TVersion, TRegistry>,
     input: UpdateIssueInput,
-  ): IssueUpdateOperation<TProvider, TVersion>;
+  ): IssueUpdateOperation<TProvider, TVersion, TRegistry>;
   setState(
-    issue: Issue<TProvider, TVersion>,
+    issue: Issue<TProvider, TVersion, TRegistry>,
     state: IssueState,
     options?: OperationOptions,
-  ): Promise<Issue<TProvider, TVersion>>;
+  ): Promise<Issue<TProvider, TVersion, TRegistry>>;
   comments: Readonly<{
     list(
-      issue: Issue<TProvider, TVersion>,
+      issue: Issue<TProvider, TVersion, TRegistry>,
       request?: PageRequest,
-    ): Promise<ScanPage<IssueComment<TProvider, TVersion>>>;
-    get(id: string, options?: OperationOptions): Promise<IssueComment<TProvider, TVersion>>;
+    ): Promise<ScanPage<IssueComment<TProvider, TVersion, TRegistry>>>;
+    get(
+      id: string,
+      options?: OperationOptions,
+    ): Promise<IssueComment<TProvider, TVersion, TRegistry>>;
     create(
-      issue: Issue<TProvider, TVersion>,
+      issue: Issue<TProvider, TVersion, TRegistry>,
       input: IssueCommentInput,
       options?: OperationOptions,
-    ): Promise<IssueComment<TProvider, TVersion>>;
+    ): Promise<IssueComment<TProvider, TVersion, TRegistry>>;
     update(
-      comment: IssueComment<TProvider, TVersion>,
+      comment: IssueComment<TProvider, TVersion, TRegistry>,
       input: IssueCommentInput,
       options?: OperationOptions,
-    ): Promise<IssueComment<TProvider, TVersion>>;
+    ): Promise<IssueComment<TProvider, TVersion, TRegistry>>;
     delete(
-      comment: IssueComment<TProvider, TVersion>,
+      comment: IssueComment<TProvider, TVersion, TRegistry>,
       options?: OperationOptions,
     ): Promise<void>;
   }>;
@@ -94,15 +108,16 @@ export interface RepositoryIssues<
 
 export function createRepositoryIssues<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
   provider: TProvider,
   version: TVersion,
-  adapter: IssueAdapter<TProvider, TVersion> & {
-    readonly extensions: ProviderExtensions<TProvider>;
+  adapter: IssueAdapter<TProvider, TVersion, TRegistry> & {
+    readonly extensions: ProviderExtensions<TProvider, TRegistry>;
   },
-  repository: RepositoryData<TProvider, TVersion>,
-): RepositoryIssues<TProvider, TVersion> {
+  repository: RepositoryData<TProvider, TVersion, TRegistry>,
+): RepositoryIssues<TProvider, TVersion, TRegistry> {
   const validationContext = (operation: string) => ({ provider, version, operation });
   const resolveRequest = (request: PageRequest, operation: string) => {
     if (request.limit !== undefined) {
@@ -110,17 +125,19 @@ export function createRepositoryIssues<
     }
     return resolvePageRequest(request, 50, validationContext(operation));
   };
-  const issueData = (issue: Issue<TProvider, TVersion>): IssueData<TProvider, TVersion> => ({
+  const issueData = (
+    issue: Issue<TProvider, TVersion, TRegistry>,
+  ): IssueData<TProvider, TVersion, TRegistry> => ({
     ...issue,
     assignees: [...issue.assignees],
     labels: [...issue.labels],
     native: issue.native,
   });
   const commentData = (
-    comment: IssueComment<TProvider, TVersion>,
-  ): IssueCommentData<TProvider, TVersion> => ({ ...comment, native: comment.native });
+    comment: IssueComment<TProvider, TVersion, TRegistry>,
+  ): IssueCommentData<TProvider, TVersion, TRegistry> => ({ ...comment, native: comment.native });
   const comments = Object.freeze({
-    async list(issue: Issue<TProvider, TVersion>, request: PageRequest = {}) {
+    async list(issue: Issue<TProvider, TVersion, TRegistry>, request: PageRequest = {}) {
       const page = await adapter.listIssueComments(
         repository,
         issueData(issue),
@@ -136,7 +153,7 @@ export function createRepositoryIssues<
       return createIssueCommentEntity(await adapter.getIssueComment(repository, id, options));
     },
     async create(
-      issue: Issue<TProvider, TVersion>,
+      issue: Issue<TProvider, TVersion, TRegistry>,
       input: IssueCommentInput,
       options: OperationOptions = {},
     ) {
@@ -150,7 +167,7 @@ export function createRepositoryIssues<
       );
     },
     async update(
-      comment: IssueComment<TProvider, TVersion>,
+      comment: IssueComment<TProvider, TVersion, TRegistry>,
       input: IssueCommentInput,
       options: OperationOptions = {},
     ) {
@@ -164,7 +181,7 @@ export function createRepositoryIssues<
       );
     },
     delete(
-      comment: IssueComment<TProvider, TVersion>,
+      comment: IssueComment<TProvider, TVersion, TRegistry>,
       options: OperationOptions = {},
     ) {
       return adapter.deleteIssueComment(repository, commentData(comment), options);
@@ -193,7 +210,7 @@ export function createRepositoryIssues<
       requireIdentity(input.title, "issue title", validationContext("createIssue"));
       return createIssueEntity(await adapter.createIssue(repository, input, options));
     },
-    update(issue: Issue<TProvider, TVersion>, input: UpdateIssueInput) {
+    update(issue: Issue<TProvider, TVersion, TRegistry>, input: UpdateIssueInput) {
       const operationInput = structuredClone(input);
       const context = validationContext("updateIssue");
       if (operationInput.title === undefined && operationInput.description === undefined) {
@@ -206,7 +223,8 @@ export function createRepositoryIssues<
         "issues.update",
         TProvider,
         TVersion,
-        Issue<TProvider, TVersion>
+        Issue<TProvider, TVersion, TRegistry>,
+        TRegistry
       >({
         operation: "issues.update",
         support: adapter.extensions["issues.update"],
@@ -223,14 +241,14 @@ export function createRepositoryIssues<
               {
                 ...options,
                 ...(extension === undefined ? {} : { extension }),
-              } as IssueUpdateOptions<TProvider>,
+              } as IssueUpdateOptions<TProvider, TRegistry>,
             ),
           );
         },
       });
     },
     async setState(
-      issue: Issue<TProvider, TVersion>,
+      issue: Issue<TProvider, TVersion, TRegistry>,
       state: IssueState,
       options: OperationOptions = {},
     ) {

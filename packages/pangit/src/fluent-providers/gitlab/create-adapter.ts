@@ -1,4 +1,3 @@
-import type {} from "./registration.ts";
 import { gitlabExtensions } from "./extensions/runtime.ts";
 import { gitlabUnsupportedOptionalCapabilities } from "./unsupported-capabilities.ts";
 import type { GitLabVersion } from "./native/GitLabNative.ts";

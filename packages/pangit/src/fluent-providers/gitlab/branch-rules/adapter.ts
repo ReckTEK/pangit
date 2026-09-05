@@ -1,3 +1,4 @@
+import type { GitLabProviderTypes } from "../provider-types.ts";
 import type { GitLabAdapterContext } from "../transport/GitLabAdapterContext.ts";
 import type { GitLabVersion } from "../native/GitLabNative.ts";
 import { rejectGitLabProtectionDefect } from "../known-defects.ts";
@@ -58,7 +59,7 @@ export function branchRules<V extends GitLabVersion>(
       orderedPriority: "unsupported",
     }),
     listBranchRules: async (r, o) => {
-      const values: BranchRuleData<"gitlab", V>[] = [];
+      const values: BranchRuleData<"gitlab", V, GitLabProviderTypes>[] = [];
       let cursor: string | undefined;
       do {
         const p = await page(

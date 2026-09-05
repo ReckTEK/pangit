@@ -1,4 +1,9 @@
-import type { Provider, ProviderVersion } from "../adapter-contract/provider.ts";
+import type {
+  Provider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../adapter-contract/provider.ts";
+
 /** Core normalized entity kinds with provider-native doors. */
 export type ProviderCoreEntityNativeKind =
   | "branch"
@@ -24,9 +29,15 @@ export type ProviderPackageEntityNativeKind = "package" | "packageFile";
 /** Optional release and release-asset native entity kinds. */
 export type ProviderReleaseEntityNativeKind = "release" | "releaseAsset";
 
-/** Provider-owned native families indexed only through abstract registration. */
-// deno-lint-ignore no-empty-interface
-export interface ProviderNativeRegistry<V extends string, K extends ProviderNativeKind> {}
+/** Provider-owned native families selected from the explicit type composition. */
+export type ProviderNativeRegistry<
+  V extends string,
+  K extends ProviderNativeKind,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> = {
+  readonly [P in keyof TRegistry]:
+    (TRegistry[P]["native"] & { readonly version: V; readonly kind: K })["type"];
+};
 export type ProviderNativeKind =
   | ProviderCoreEntityNativeKind
   | ProviderBranchRuleEntityNativeKind
@@ -43,91 +54,106 @@ export type ProviderNativeKind =
   | "repositoryWebhook";
 type RegisteredProviderNative<
   P extends Provider,
-  V extends ProviderVersion<P>,
+  V extends ProviderVersion<P, TRegistry>,
   K extends ProviderNativeKind,
-> = P extends keyof ProviderNativeRegistry<V, K> ? ProviderNativeRegistry<V, K>[P]
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> = P extends keyof ProviderNativeRegistry<V, K, TRegistry>
+  ? ProviderNativeRegistry<V, K, TRegistry>[P]
   : Record<never, never>;
 
 /** Fluent-client native door narrowed to the selected implemented provider. */
 export type ProviderClientNative<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
-> = RegisteredProviderNative<TProvider, TVersion, "client">;
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> = RegisteredProviderNative<TProvider, TVersion, "client", TRegistry>;
 
 /** Repository-container native door narrowed to the selected implemented provider. */
 export type ProviderRepositoryContainerNative<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
-> = RegisteredProviderNative<TProvider, TVersion, "repositoryContainer">;
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> = RegisteredProviderNative<TProvider, TVersion, "repositoryContainer", TRegistry>;
 
 /** Repository native door narrowed to the selected implemented provider. */
 export type ProviderRepositoryNative<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
-> = RegisteredProviderNative<TProvider, TVersion, "repository">;
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> = RegisteredProviderNative<TProvider, TVersion, "repository", TRegistry>;
 
 /** Core entity native door narrowed to the selected provider, version, and entity kind. */
 export type ProviderEntityNative<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
   TKind extends ProviderCoreEntityNativeKind,
-> = RegisteredProviderNative<TProvider, TVersion, TKind>;
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> = RegisteredProviderNative<TProvider, TVersion, TKind, TRegistry>;
 
 /** Optional SHA-addressed blob native door. */
 export type ProviderBlobNative<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
-> = RegisteredProviderNative<TProvider, TVersion, "blob">;
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> = RegisteredProviderNative<TProvider, TVersion, "blob", TRegistry>;
 
 /** Optional branch-rule native door narrowed by normalized entity kind. */
 export type ProviderBranchRuleEntityNative<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
   TKind extends ProviderBranchRuleEntityNativeKind,
-> = RegisteredProviderNative<TProvider, TVersion, TKind>;
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> = RegisteredProviderNative<TProvider, TVersion, TKind, TRegistry>;
 
 /** Optional CI discovery native door narrowed by normalized entity kind. */
 export type ProviderCiEntityNative<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
   TKind extends ProviderCiEntityNativeKind,
-> = RegisteredProviderNative<TProvider, TVersion, TKind>;
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> = RegisteredProviderNative<TProvider, TVersion, TKind, TRegistry>;
 
 /** Optional authenticated-user-profile native door. */
 export type ProviderCurrentUserProfileNative<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
-> = RegisteredProviderNative<TProvider, TVersion, "currentUserProfile">;
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> = RegisteredProviderNative<TProvider, TVersion, "currentUserProfile", TRegistry>;
 
 /** Optional issue native door narrowed by normalized entity kind. */
 export type ProviderIssueEntityNative<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
   TKind extends ProviderIssueEntityNativeKind,
-> = RegisteredProviderNative<TProvider, TVersion, TKind>;
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> = RegisteredProviderNative<TProvider, TVersion, TKind, TRegistry>;
 
 /** Optional package native door narrowed by normalized entity kind. */
 export type ProviderPackageEntityNative<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
   TKind extends ProviderPackageEntityNativeKind,
-> = RegisteredProviderNative<TProvider, TVersion, TKind>;
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> = RegisteredProviderNative<TProvider, TVersion, TKind, TRegistry>;
 
 /** Optional submitted pull-request review native door. */
 export type ProviderPullRequestReviewNative<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
-> = RegisteredProviderNative<TProvider, TVersion, "pullRequestReview">;
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> = RegisteredProviderNative<TProvider, TVersion, "pullRequestReview", TRegistry>;
 
 /** Optional release native door narrowed by normalized entity kind. */
 export type ProviderReleaseEntityNative<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
   TKind extends ProviderReleaseEntityNativeKind,
-> = RegisteredProviderNative<TProvider, TVersion, TKind>;
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> = RegisteredProviderNative<TProvider, TVersion, TKind, TRegistry>;
 
 /** Optional repository-webhook native door. */
 export type ProviderRepositoryWebhookNative<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
-> = RegisteredProviderNative<TProvider, TVersion, "repositoryWebhook">;
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> = RegisteredProviderNative<TProvider, TVersion, "repositoryWebhook", TRegistry>;

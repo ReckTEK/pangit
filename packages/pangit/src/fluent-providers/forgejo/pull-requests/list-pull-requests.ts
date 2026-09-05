@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import { createPage, type Page } from "../../../fluent-api/adapter-contract/pagination.ts";
 import {
   type ListPullRequestsRequest,
@@ -31,9 +32,9 @@ import { normalizeForgejoPullRequest, normalizePullRequestRef } from "./normaliz
 /** Read one bounded Forgejo pull-request page; text search uses Forgejo's server-side search. */
 export async function listForgejoPullRequests<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   request: ListPullRequestsRequest,
-): Promise<Page<PullRequestData<"forgejo", TVersion>>> {
+): Promise<Page<PullRequestData<"forgejo", TVersion, ForgejoProviderTypes>>> {
   const searchOperation = {
     universal: "listPullRequests",
     native: "issueSearchIssues",

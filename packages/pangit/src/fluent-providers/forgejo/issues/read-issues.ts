@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type {
   IssueData,
   ListIssuesRequest,
@@ -32,9 +33,9 @@ import { normalizeForgejoIssue } from "./normalize.ts";
 /** Read exactly one provider page containing issues, never pull requests. */
 export async function listForgejoIssues<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   request: ListIssuesRequest,
-): Promise<Page<IssueData<"forgejo", TVersion>>> {
+): Promise<Page<IssueData<"forgejo", TVersion, ForgejoProviderTypes>>> {
   const operation = { universal: "listIssues", native: "issueListIssues" } as const;
   const client = await context.client();
   const cursor = decodeForgejoPageCursor(request.cursor, { version: context.version, operation });
@@ -72,10 +73,10 @@ export async function listForgejoIssues<TVersion extends ForgejoVersion>(
 /** Fetch one issue directly by repository and number. */
 export async function getForgejoIssue<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   number: number,
   options: OperationOptions = {},
-): Promise<IssueData<"forgejo", TVersion>> {
+): Promise<IssueData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = { universal: "getIssue", native: "issueGetIssue" } as const;
   const index = requirePositiveInteger(number, "issue number");
   const client = await context.client();

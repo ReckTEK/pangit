@@ -1,4 +1,9 @@
-import type { FluentProvider, ProviderVersion } from "../adapter-contract/provider.ts";
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../adapter-contract/provider.ts";
+
 import type {
   OAuthTokenData,
   TokenAuthorizationInput,
@@ -34,21 +39,22 @@ import type { ProviderClientNative } from "../native-access/ProviderNativeRegist
 import type { FluentClient } from "./FluentClient.ts";
 class FluentClientImpl<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
   TAuthorization extends OAuthAuthorization | undefined = undefined,
-> implements FluentClient<TProvider, TVersion> {
-  readonly #adapter: GitHostAdapter<TProvider, TVersion>;
-  readonly auth: Auth<TProvider, TVersion>;
-  readonly native: ProviderClientNative<TProvider, TVersion>;
-  readonly currentUserProfile: CurrentUserProfileCapability<TProvider, TVersion>;
-  readonly packages: Packages<TProvider, TVersion>;
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> implements FluentClient<TProvider, TVersion, TRegistry> {
+  readonly #adapter: GitHostAdapter<TProvider, TVersion, TRegistry>;
+  readonly auth: Auth<TProvider, TVersion, TRegistry>;
+  readonly native: ProviderClientNative<TProvider, TVersion, TRegistry>;
+  readonly currentUserProfile: CurrentUserProfileCapability<TProvider, TVersion, TRegistry>;
+  readonly packages: Packages<TProvider, TVersion, TRegistry>;
   readonly unsupportedOptionalCapabilities: UnsupportedOptionalCapabilities;
   readonly authorization: TAuthorization;
 
   constructor(
     readonly provider: TProvider,
     readonly version: TVersion,
-    adapter: GitHostAdapter<TProvider, TVersion>,
+    adapter: GitHostAdapter<TProvider, TVersion, TRegistry>,
     authorization: TAuthorization,
   ) {
     this.#adapter = adapter;
@@ -77,7 +83,7 @@ class FluentClientImpl<
 
   async containers(
     request: PageRequest = {},
-  ): Promise<Page<RepositoryContainer<TProvider, TVersion>>> {
+  ): Promise<Page<RepositoryContainer<TProvider, TVersion, TRegistry>>> {
     const adapter = this.#adapter;
     const page = await adapter.listRepositoryContainers(
       resolvePageRequest(request, 50, {
@@ -95,7 +101,7 @@ class FluentClientImpl<
   async container(
     name: string,
     options: OperationOptions = {},
-  ): Promise<RepositoryContainer<TProvider, TVersion>> {
+  ): Promise<RepositoryContainer<TProvider, TVersion, TRegistry>> {
     requireIdentity(name, "container name", {
       provider: this.provider,
       version: this.version,
@@ -111,7 +117,7 @@ class FluentClientImpl<
   async #authorizeToken(
     input: TokenAuthorizationInput,
     options: OperationOptions = {},
-  ): Promise<FluentClient<TProvider, TVersion>> {
+  ): Promise<FluentClient<TProvider, TVersion, TRegistry>> {
     const adapter = this.#adapter;
     return this.#withAdapter(await adapter.authorizeToken(input, options), undefined);
   }
@@ -120,7 +126,7 @@ class FluentClientImpl<
     token: OAuthTokenData,
     authorization: OAuthAuthorization,
     signal?: AbortSignal,
-  ): Promise<OAuthAuthorizedClient<TProvider, TVersion>> {
+  ): Promise<OAuthAuthorizedClient<TProvider, TVersion, TRegistry>> {
     const adapter = this.#adapter;
     const authorized = await adapter.authorizeToken(
       { token: token.accessToken, tokenType: token.tokenType },
@@ -130,9 +136,9 @@ class FluentClientImpl<
   }
 
   #withAdapter<TDetails extends OAuthAuthorization | undefined>(
-    adapter: GitHostAdapter<TProvider, TVersion>,
+    adapter: GitHostAdapter<TProvider, TVersion, TRegistry>,
     authorization: TDetails,
-  ): FluentClientImpl<TProvider, TVersion, TDetails> {
+  ): FluentClientImpl<TProvider, TVersion, TDetails, TRegistry> {
     return new FluentClientImpl(
       this.provider,
       this.version,
@@ -143,8 +149,12 @@ class FluentClientImpl<
 }
 
 /** Construct provider-neutral behavior around an already selected implementation. */
-export function createFluentClient<P extends FluentProvider, V extends ProviderVersion<P>>(
-  adapter: GitHostAdapter<P, V>,
-): FluentClient<P, V> {
+export function createFluentClient<
+  P extends FluentProvider,
+  V extends ProviderVersion<P, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+>(
+  adapter: GitHostAdapter<P, V, TRegistry>,
+): FluentClient<P, V, TRegistry> {
   return new FluentClientImpl(adapter.provider, adapter.version, adapter, undefined);
 }

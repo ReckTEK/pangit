@@ -1,3 +1,4 @@
+import type { GitLabProviderTypes } from "../provider-types.ts";
 import type { GitLabAdapterContext } from "../transport/GitLabAdapterContext.ts";
 import type { GitLabVersion } from "../native/GitLabNative.ts";
 import type {
@@ -17,7 +18,7 @@ export async function status<V extends GitLabVersion>(
   c: GitLabAdapterContext<V>,
   p: Dto,
   ref: string,
-): Promise<CommitStatusData<"gitlab", V>> {
+): Promise<CommitStatusData<"gitlab", V, GitLabProviderTypes>> {
   const providerState = required(c, "normalizeCommitStatus", p.status);
   return Object.freeze({
     id: id(c, "normalizeCommitStatus", p.id),

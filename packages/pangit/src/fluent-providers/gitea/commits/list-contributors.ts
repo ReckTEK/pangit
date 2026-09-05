@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import { aggregateContributors } from "../../../fluent-api/adapter-contract/contributor-aggregation.ts";
 import type {
   ContributorData,
@@ -21,7 +22,7 @@ import { listGiteaCommits } from "./read-commits.ts";
 /** Aggregate one explicitly bounded commit-history slice by documented Git author identity. */
 export async function listGiteaContributors<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   request: ListContributorsRequest,
 ): Promise<ScanPage<ContributorData>> {
   const operation = { universal: "listContributors", native: "repoGetAllCommits" } as const;

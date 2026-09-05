@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import { ConflictError } from "../../../fluent-api/adapter-contract/errors.ts";
 import type {
   CommitFileChangesInput,
@@ -28,10 +29,10 @@ import { normalizeFilesResponseCommit } from "./normalize-commit.ts";
  */
 export async function commitGiteaFileChanges<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   input: CommitFileChangesInput,
-  options: CommitFileChangesOptions<"gitea"> = {},
-): Promise<CommitData<"gitea", TVersion>> {
+  options: CommitFileChangesOptions<"gitea", GiteaProviderTypes> = {},
+): Promise<CommitData<"gitea", TVersion, GiteaProviderTypes>> {
   const preReadOperation = {
     universal: "commitFileChanges",
     native: "repoGetFileContentsPost",

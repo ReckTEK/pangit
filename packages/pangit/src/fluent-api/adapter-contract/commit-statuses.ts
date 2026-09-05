@@ -1,5 +1,6 @@
+import type { Provider, ProviderTypeRegistry, ProviderVersion } from "./provider.ts";
 import type { ProviderExtensionOptions } from "../provider-extensions/ProviderExtensionRegistry.ts";
-import type { Provider, ProviderVersion } from "./provider.ts";
+
 import type { ProviderEntityNative } from "../native-access/ProviderNativeRegistry.ts";
 import type { OperationOptions } from "./operation-options.ts";
 import type { Page, ResolvedPageRequest } from "./pagination.ts";
@@ -27,7 +28,8 @@ export interface CommitStatusStateData {
 
 export interface CommitStatusData<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > extends CommitStatusStateData {
   readonly id?: string;
   readonly ref: string;
@@ -37,15 +39,16 @@ export interface CommitStatusData<
   readonly creator?: string;
   readonly createdAt?: string;
   readonly updatedAt?: string;
-  readonly native: ProviderEntityNative<TProvider, TVersion, "commitStatus">;
+  readonly native: ProviderEntityNative<TProvider, TVersion, "commitStatus", TRegistry>;
 }
 
 export interface CombinedCommitStatus<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > extends CommitStatusStateData {
   readonly ref: string;
-  readonly statuses: readonly CommitStatusData<TProvider, TVersion>[];
+  readonly statuses: readonly CommitStatusData<TProvider, TVersion, TRegistry>[];
   readonly totalCount?: number;
 }
 
@@ -56,34 +59,41 @@ export interface SetCommitStatusInput {
   readonly targetUrl?: string;
 }
 
-export type SetCommitStatusExtension<TProvider extends Provider> = ProviderExtensionOptions<
+export type SetCommitStatusExtension<
+  TProvider extends Provider,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> = ProviderExtensionOptions<
   "statuses.set",
-  TProvider
+  TProvider,
+  TRegistry
 >;
 
-export interface SetCommitStatusOptions<TProvider extends Provider = Provider>
-  extends OperationOptions {
-  readonly extension?: SetCommitStatusExtension<TProvider>;
+export interface SetCommitStatusOptions<
+  TProvider extends Provider = Provider,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> extends OperationOptions {
+  readonly extension?: SetCommitStatusExtension<TProvider, TRegistry>;
 }
 
 export interface CommitStatusAdapter<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   listCommitStatuses(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     ref: string,
     request: ResolvedPageRequest,
-  ): Promise<Page<CommitStatusData<TProvider, TVersion>>>;
+  ): Promise<Page<CommitStatusData<TProvider, TVersion, TRegistry>>>;
   getCommitStatus(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     ref: string,
     options?: OperationOptions,
-  ): Promise<CombinedCommitStatus<TProvider, TVersion>>;
+  ): Promise<CombinedCommitStatus<TProvider, TVersion, TRegistry>>;
   setCommitStatus(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     ref: string,
     input: SetCommitStatusInput,
-    options?: SetCommitStatusOptions<TProvider>,
-  ): Promise<CommitStatusData<TProvider, TVersion>>;
+    options?: SetCommitStatusOptions<TProvider, TRegistry>,
+  ): Promise<CommitStatusData<TProvider, TVersion, TRegistry>>;
 }

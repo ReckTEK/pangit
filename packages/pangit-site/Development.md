@@ -6,7 +6,7 @@ published PanGit library contains only library code and does not export this sit
 ## Configuration and snippets
 
 Edit [site.config.ts](site.config.ts) for site links, route segments, branding, static asset paths,
-theme-cookie settings, and the source-setup snippet. Provider/version inventories, operation
+theme-cookie settings, and the installation snippet. Provider/version inventories, operation
 metadata, and upstream URLs come from the site's generated catalog. The config is a plain module so
 React Router can load its route settings before Vite initializes the Deno package resolver.
 
@@ -78,8 +78,8 @@ dependencies before initial hydration. These compatibility settings are exercise
 development startup; removing them can cause module-loader errors or a reload during the first
 visit. See [Vite dependency optimization](https://vite.dev/config/dep-optimization-options).
 
-The home page links to the source repository and uses its workspace setup commands while the package
-is unpublished. REST references remain available independently of package publication.
+The home page and getting-started guide share an explicit JSR alpha installation snippet. Update
+`app/snippets/install.sh` with each package release, alongside the root and package READMEs.
 
 ## Pages and generated content
 

@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import {
   type CommitData,
   DEFAULT_COMMIT_MULTI_GET_MAX_ITEMS,
@@ -41,13 +42,13 @@ import { validationError } from "./errors.ts";
 /** Read exactly one bounded commit page, with every expensive Gitea facet disabled by default. */
 export async function listGiteaCommits<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   request: ListCommitsRequest,
   operation: GiteaOperationIdentity = {
     universal: "listCommits",
     native: "repoGetAllCommits",
   },
-): Promise<Page<CommitData<"gitea", TVersion>>> {
+): Promise<Page<CommitData<"gitea", TVersion, GiteaProviderTypes>>> {
   const client = await context.client();
   const path = repositoryPath(repository);
   const cursor = decodeGiteaPageCursor(request.cursor, {
@@ -96,14 +97,14 @@ export async function listGiteaCommits<TVersion extends GiteaVersion>(
 /** Fetch one commit directly and request only the explicitly selected facets. */
 export async function getGiteaCommit<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   sha: string,
   options: GetCommitOptions = {},
   operation: GiteaOperationIdentity = {
     universal: "getCommit",
     native: "repoGetSingleCommit",
   },
-): Promise<CommitData<"gitea", TVersion>> {
+): Promise<CommitData<"gitea", TVersion, GiteaProviderTypes>> {
   const commitSha = requireIdentity(sha, "commit SHA");
   const client = await context.client();
   const payload = await requestGiteaBody<AnyGiteaCommit, TVersion>(
@@ -130,10 +131,10 @@ export async function getGiteaCommit<TVersion extends GiteaVersion>(
 /** Fetch only the requested unique SHAs with bounded concurrency, then restore input order. */
 export async function getGiteaCommits<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   shas: readonly string[],
   options: GetCommitsOptions = {},
-): Promise<readonly CommitData<"gitea", TVersion>[]> {
+): Promise<readonly CommitData<"gitea", TVersion, GiteaProviderTypes>[]> {
   const operation = { universal: "getCommits", native: "repoGetSingleCommit" } as const;
   const maxItems = requirePositiveInteger(
     options.maxItems ?? DEFAULT_COMMIT_MULTI_GET_MAX_ITEMS,

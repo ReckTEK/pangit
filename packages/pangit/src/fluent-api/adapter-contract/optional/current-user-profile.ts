@@ -1,4 +1,5 @@
-import type { Provider, ProviderVersion } from "../provider.ts";
+import type { Provider, ProviderTypeRegistry, ProviderVersion } from "../provider.ts";
+
 import type {
   ProviderCurrentUserProfileNative,
 } from "../../native-access/ProviderNativeRegistry.ts";
@@ -16,7 +17,8 @@ export interface CurrentUserProfileCapabilitySupport {
 /** Provider-neutral authenticated-user identity. */
 export interface CurrentUserProfileData<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly id: string;
   readonly username: string;
@@ -24,15 +26,16 @@ export interface CurrentUserProfileData<
   readonly email?: string;
   readonly avatarUrl?: string;
   readonly webUrl?: string;
-  readonly native: ProviderCurrentUserProfileNative<TProvider, TVersion>;
+  readonly native: ProviderCurrentUserProfileNative<TProvider, TVersion, TRegistry>;
 }
 
 export interface CurrentUserProfileAdapter<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly currentUserProfileSupport: CurrentUserProfileCapabilitySupport;
   getCurrentUserProfile(
     options?: OperationOptions,
-  ): Promise<CurrentUserProfileData<TProvider, TVersion>>;
+  ): Promise<CurrentUserProfileData<TProvider, TVersion, TRegistry>>;
 }

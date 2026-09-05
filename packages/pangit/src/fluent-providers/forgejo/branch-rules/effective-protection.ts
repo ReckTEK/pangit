@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type { EffectiveBranchProtectionData } from "../../../fluent-api/adapter-contract/optional/branch-rules.ts";
 import {
   type OperationOptions,
@@ -28,10 +29,10 @@ import {
 /** Ask Forgejo for effective enforcement on one concrete branch; never infer it from rule fields. */
 export async function getForgejoEffectiveBranchProtection<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   branch: string,
   options: OperationOptions = {},
-): Promise<EffectiveBranchProtectionData<"forgejo", TVersion>> {
+): Promise<EffectiveBranchProtectionData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = {
     universal: "getEffectiveBranchProtection",
     native: "repoGetBranch",
@@ -59,7 +60,7 @@ export async function getForgejoEffectiveBranchProtection<TVersion extends Forge
 export function normalizeForgejoEffectiveBranchProtection<TVersion extends ForgejoVersion>(
   client: ForgejoClient<TVersion>,
   payload: AnyForgejoBranch,
-): EffectiveBranchProtectionData<"forgejo", TVersion> {
+): EffectiveBranchProtectionData<"forgejo", TVersion, ForgejoProviderTypes> {
   return Object.freeze({
     branch: requiredText(payload.name, "branch name"),
     protected: requiredBoolean(payload.protected, "effective branch protection"),

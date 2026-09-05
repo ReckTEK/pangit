@@ -1,4 +1,9 @@
-import type { FluentProvider, ProviderVersion } from "../adapter-contract/provider.ts";
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../adapter-contract/provider.ts";
+
 import type {
   CommitFileChangesInput,
   CommitFileChangesOptions,
@@ -26,24 +31,28 @@ import {
 
 export type CommitFileChangesOperation<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > = OperationExtension<
   "content.commitChanges",
   TProvider,
   TVersion,
-  Commit<TProvider, TVersion>
+  Commit<TProvider, TVersion, TRegistry>,
+  TRegistry
 >;
 
 export interface ContentRead<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
-> extends Omit<ContentReadResult<TProvider, TVersion>, "content"> {
-  readonly content?: Content<TProvider, TVersion>;
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> extends Omit<ContentReadResult<TProvider, TVersion, TRegistry>, "content"> {
+  readonly content?: Content<TProvider, TVersion, TRegistry>;
 }
 
 export interface RepositoryContent<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   /** Read a standard web Blob with a resolved MIME type. */
   readBlob(path: string, options?: ReadContentBlobOptions): Promise<globalThis.Blob>;
@@ -53,39 +62,48 @@ export interface RepositoryContent<
   readText(path: string, options?: ReadFileOptions): Promise<string>;
   /** Read UTF-8 JSON, returning unknown until the caller validates its shape. */
   readJson(path: string, options?: ReadFileOptions): Promise<unknown>;
-  read(path: string, options?: ReadContentOptions): Promise<Content<TProvider, TVersion>>;
+  read(
+    path: string,
+    options?: ReadContentOptions,
+  ): Promise<Content<TProvider, TVersion, TRegistry>>;
   readFiles(
     paths: readonly string[],
     options?: ReadFilesOptions,
-  ): Promise<readonly ContentRead<TProvider, TVersion>[]>;
-  getDirectory(path: string, options?: ReadContentOptions): Promise<Content<TProvider, TVersion>>;
+  ): Promise<readonly ContentRead<TProvider, TVersion, TRegistry>[]>;
+  getDirectory(
+    path: string,
+    options?: ReadContentOptions,
+  ): Promise<Content<TProvider, TVersion, TRegistry>>;
   listDirectory(
     path: string,
     options?: ListDirectoryOptions,
-  ): Promise<readonly Content<TProvider, TVersion>[]>;
+  ): Promise<readonly Content<TProvider, TVersion, TRegistry>[]>;
   readPathMetadataBatch(
     paths: readonly string[],
     options?: ReadPathMetadataBatchOptions,
-  ): Promise<readonly ContentRead<TProvider, TVersion>[]>;
+  ): Promise<readonly ContentRead<TProvider, TVersion, TRegistry>[]>;
   readSymlink(
     path: string,
     options?: ReadLinkedContentOptions,
-  ): Promise<Content<TProvider, TVersion>>;
+  ): Promise<Content<TProvider, TVersion, TRegistry>>;
   readSubmodule(
     path: string,
     options?: ReadLinkedContentOptions,
-  ): Promise<Content<TProvider, TVersion>>;
-  commitChanges(input: CommitFileChangesInput): CommitFileChangesOperation<TProvider, TVersion>;
+  ): Promise<Content<TProvider, TVersion, TRegistry>>;
+  commitChanges(
+    input: CommitFileChangesInput,
+  ): CommitFileChangesOperation<TProvider, TVersion, TRegistry>;
 }
 
 export function createRepositoryContent<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
-  adapter: GitHostAdapter<TProvider, TVersion>,
-  repository: RepositoryData<TProvider, TVersion>,
-): RepositoryContent<TProvider, TVersion> {
-  const reads = (results: readonly ContentReadResult<TProvider, TVersion>[]) =>
+  adapter: GitHostAdapter<TProvider, TVersion, TRegistry>,
+  repository: RepositoryData<TProvider, TVersion, TRegistry>,
+): RepositoryContent<TProvider, TVersion, TRegistry> {
+  const reads = (results: readonly ContentReadResult<TProvider, TVersion, TRegistry>[]) =>
     Object.freeze(results.map((result) =>
       Object.freeze({
         path: result.path,
@@ -227,7 +245,8 @@ export function createRepositoryContent<
         "content.commitChanges",
         TProvider,
         TVersion,
-        Commit<TProvider, TVersion>
+        Commit<TProvider, TVersion, TRegistry>,
+        TRegistry
       >({
         operation: "content.commitChanges",
         support: adapter.extensions["content.commitChanges"],
@@ -244,7 +263,7 @@ export function createRepositoryContent<
             await adapter.commitFileChanges(repository, operationInput, {
               ...options,
               ...(extension === undefined ? {} : { extension }),
-            } as CommitFileChangesOptions<TProvider>),
+            } as CommitFileChangesOptions<TProvider, TRegistry>),
           ),
       });
     },
@@ -312,9 +331,10 @@ function validateActor(
 
 function validationContext<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
-  adapter: GitHostAdapter<TProvider, TVersion>,
+  adapter: GitHostAdapter<TProvider, TVersion, TRegistry>,
   operation: string,
 ): ValidationErrorContext<TProvider, TVersion> {
   return { provider: adapter.provider, version: adapter.version, operation };

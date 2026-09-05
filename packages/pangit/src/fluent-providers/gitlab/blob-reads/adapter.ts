@@ -1,3 +1,4 @@
+import type { GitLabProviderTypes } from "../provider-types.ts";
 import type { GitLabAdapterContext } from "../transport/GitLabAdapterContext.ts";
 import type { GitLabVersion } from "../native/GitLabNative.ts";
 
@@ -20,7 +21,7 @@ export async function getBlob<V extends GitLabVersion>(
   r: Repo<V>,
   sha: string,
   o: { signal?: AbortSignal } = {},
-): Promise<BlobData<"gitlab", V>> {
+): Promise<BlobData<"gitlab", V, GitLabProviderTypes>> {
   if (!/^[a-f0-9]{40}$/i.test(sha)) invalid(c, "getBlob", "Git blob ID must be a full SHA-1");
   const p = object(
     c,

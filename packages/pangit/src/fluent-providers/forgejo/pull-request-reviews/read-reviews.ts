@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type { PullRequestReviewData } from "../../../fluent-api/adapter-contract/optional/pull-request-reviews.ts";
 
 import type { OperationOptions } from "../../../fluent-api/adapter-contract/operation-options.ts";
@@ -33,10 +34,10 @@ import { normalizeForgejoPullRequestReview } from "./normalize.ts";
 /** Fetch exactly one provider page of submitted or pending review objects. */
 export async function listForgejoPullRequestReviews<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  pullRequest: PullRequestData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  pullRequest: PullRequestData<"forgejo", TVersion, ForgejoProviderTypes>,
   request: ResolvedPageRequest,
-): Promise<Page<PullRequestReviewData<"forgejo", TVersion>>> {
+): Promise<Page<PullRequestReviewData<"forgejo", TVersion, ForgejoProviderTypes>>> {
   const operation = {
     universal: "listPullRequestReviews",
     native: "repoListPullReviews",
@@ -70,11 +71,11 @@ export async function listForgejoPullRequestReviews<TVersion extends ForgejoVers
 /** Fetch one known review directly by pull-request number and review ID. */
 export async function getForgejoPullRequestReview<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  pullRequest: PullRequestData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  pullRequest: PullRequestData<"forgejo", TVersion, ForgejoProviderTypes>,
   id: string,
   options: OperationOptions = {},
-): Promise<PullRequestReviewData<"forgejo", TVersion>> {
+): Promise<PullRequestReviewData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = { universal: "getPullRequestReview", native: "repoGetPullReview" } as const;
   const client = await context.client();
   const payload = await requestForgejoBody<AnyForgejoReview, TVersion>(

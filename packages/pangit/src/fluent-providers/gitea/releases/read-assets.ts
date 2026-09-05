@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import { ValidationError } from "../../../fluent-api/adapter-contract/errors.ts";
 import {
   type OperationOptions,
@@ -31,10 +32,10 @@ import { normalizeGiteaReleaseAsset } from "./normalize.ts";
  */
 export async function listGiteaReleaseAssets<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  release: ReleaseData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  release: ReleaseData<"gitea", TVersion, GiteaProviderTypes>,
   options: ListReleaseAssetsOptions,
-): Promise<readonly ReleaseAssetData<"gitea", TVersion>[]> {
+): Promise<readonly ReleaseAssetData<"gitea", TVersion, GiteaProviderTypes>[]> {
   const operation = {
     universal: "listReleaseAssets",
     native: "repoListReleaseAttachments",
@@ -74,11 +75,11 @@ export async function listGiteaReleaseAssets<TVersion extends GiteaVersion>(
 /** Fetch one release asset directly by release and asset ID. */
 export async function getGiteaReleaseAsset<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  release: ReleaseData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  release: ReleaseData<"gitea", TVersion, GiteaProviderTypes>,
   id: string,
   options: OperationOptions = {},
-): Promise<ReleaseAssetData<"gitea", TVersion>> {
+): Promise<ReleaseAssetData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = {
     universal: "getReleaseAsset",
     native: "repoGetReleaseAttachment",

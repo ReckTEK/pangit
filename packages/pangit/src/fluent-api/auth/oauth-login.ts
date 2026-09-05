@@ -1,4 +1,9 @@
-import type { FluentProvider, ProviderVersion } from "../adapter-contract/provider.ts";
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../adapter-contract/provider.ts";
+
 import type {
   OAuthBeginInput,
   OAuthBeginResult,
@@ -26,12 +31,13 @@ type OAuthExchange = (
 
 class LoginImpl<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
-> implements Login<TProvider, TVersion> {
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> implements Login<TProvider, TVersion, TRegistry> {
   readonly options: LoginOptions;
   readonly #beginOAuth: OAuthBegin;
   readonly #exchangeOAuthCode: OAuthExchange;
-  readonly #authorizeClient: OAuthClientAuthorizer<TProvider, TVersion>;
+  readonly #authorizeClient: OAuthClientAuthorizer<TProvider, TVersion, TRegistry>;
 
   constructor(
     readonly provider: TProvider,
@@ -39,7 +45,7 @@ class LoginImpl<
     options: LoginOptions,
     beginOAuth: OAuthBegin,
     exchangeOAuthCode: OAuthExchange,
-    authorizeClient: OAuthClientAuthorizer<TProvider, TVersion>,
+    authorizeClient: OAuthClientAuthorizer<TProvider, TVersion, TRegistry>,
   ) {
     const validationContext = { provider, version, operation: "beginOAuth" } as const;
     if (options.clientId.length === 0) {
@@ -64,7 +70,7 @@ class LoginImpl<
     this.#authorizeClient = authorizeClient;
   }
 
-  async start(): Promise<OAuthLoginStart<TProvider, TVersion>> {
+  async start(): Promise<OAuthLoginStart<TProvider, TVersion, TRegistry>> {
     const state = randomBase64Url(32);
     const codeVerifier = randomBase64Url(32);
     const codeChallenge = await sha256Base64Url(codeVerifier);
@@ -95,8 +101,8 @@ class LoginImpl<
 
   async authorize(
     callback: Request,
-    transaction: OAuthLoginTransaction<TProvider, TVersion>,
-  ): Promise<OAuthAuthorizedClient<TProvider, TVersion>> {
+    transaction: OAuthLoginTransaction<TProvider, TVersion, TRegistry>,
+  ): Promise<OAuthAuthorizedClient<TProvider, TVersion, TRegistry>> {
     validateTransaction(this, callback, transaction);
     const callbackUrl = new URL(callback.url);
     const providerError = callbackUrl.searchParams.get("error");
@@ -142,15 +148,16 @@ class LoginImpl<
 /** @internal Build one selected provider login. */
 export function createOAuthLogin<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
   provider: TProvider,
   version: TVersion,
   options: LoginOptions,
   beginOAuth: OAuthBegin,
   exchangeOAuthCode: OAuthExchange,
-  authorizeClient: OAuthClientAuthorizer<TProvider, TVersion>,
-): Login<TProvider, TVersion> {
+  authorizeClient: OAuthClientAuthorizer<TProvider, TVersion, TRegistry>,
+): Login<TProvider, TVersion, TRegistry> {
   return new LoginImpl(
     provider,
     version,
@@ -163,11 +170,12 @@ export function createOAuthLogin<
 
 function validateTransaction<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
-  login: Login<TProvider, TVersion>,
+  login: Login<TProvider, TVersion, TRegistry>,
   callback: Request,
-  transaction: OAuthLoginTransaction<TProvider, TVersion>,
+  transaction: OAuthLoginTransaction<TProvider, TVersion, TRegistry>,
 ): void {
   if (transaction.provider !== login.provider || transaction.version !== login.version) {
     throw new OAuthCallbackError(

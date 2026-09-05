@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type {
   PullRequestReviewData,
   PullRequestReviewState,
@@ -14,7 +15,7 @@ import { type AnyForgejoReview, optionalText, requiredPositiveId } from "./valid
 export function normalizeForgejoPullRequestReview<TVersion extends ForgejoVersion>(
   client: ForgejoClient<TVersion>,
   payload: AnyForgejoReview,
-): PullRequestReviewData<"forgejo", TVersion> {
+): PullRequestReviewData<"forgejo", TVersion, ForgejoProviderTypes> {
   const id = requiredPositiveId(payload.id, "pull-request review id");
   const providerState = optionalText(payload.state);
   return Object.freeze({

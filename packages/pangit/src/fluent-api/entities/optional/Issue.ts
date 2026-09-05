@@ -1,4 +1,9 @@
-import type { FluentProvider, ProviderVersion } from "../../adapter-contract/provider.ts";
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../../adapter-contract/provider.ts";
+
 import type {
   IssueCommentData,
   IssueData,
@@ -8,7 +13,8 @@ import type {
 
 export interface Issue<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly id: string;
   readonly number: number;
@@ -23,12 +29,13 @@ export interface Issue<
   readonly updatedAt?: string;
   readonly closedAt?: string;
   readonly url?: string;
-  readonly native: ProviderIssueEntityNative<TProvider, TVersion, "issue">;
+  readonly native: ProviderIssueEntityNative<TProvider, TVersion, "issue", TRegistry>;
 }
 
 export interface IssueComment<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly id: string;
   readonly body: string;
@@ -36,13 +43,14 @@ export interface IssueComment<
   readonly createdAt?: string;
   readonly updatedAt?: string;
   readonly url?: string;
-  readonly native: ProviderIssueEntityNative<TProvider, TVersion, "issueComment">;
+  readonly native: ProviderIssueEntityNative<TProvider, TVersion, "issueComment", TRegistry>;
 }
 
 export function createIssueEntity<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
->(data: IssueData<TProvider, TVersion>): Issue<TProvider, TVersion> {
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+>(data: IssueData<TProvider, TVersion, TRegistry>): Issue<TProvider, TVersion, TRegistry> {
   return Object.freeze({
     ...data,
     assignees: Object.freeze([...data.assignees]),
@@ -53,7 +61,10 @@ export function createIssueEntity<
 
 export function createIssueCommentEntity<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
->(data: IssueCommentData<TProvider, TVersion>): IssueComment<TProvider, TVersion> {
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+>(
+  data: IssueCommentData<TProvider, TVersion, TRegistry>,
+): IssueComment<TProvider, TVersion, TRegistry> {
   return Object.freeze({ ...data, native: data.native });
 }

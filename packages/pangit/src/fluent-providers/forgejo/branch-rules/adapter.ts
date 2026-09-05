@@ -1,5 +1,3 @@
-import type {} from "../registration.ts";
-
 import type { ForgejoAdapterContext } from "../transport/ForgejoAdapterContext.ts";
 
 import type { ForgejoVersion } from "../native/ForgejoEntityNative.ts";

@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import {
   type OperationOptions,
   requireIdentity,
@@ -18,8 +19,8 @@ import { pullRequestPath, requestOptions } from "./request-options.ts";
 /** Publish an issue-level PR comment or one inline review comment with one direct request. */
 export async function publishForgejoPullRequestComment<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  pullRequest: PullRequestData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  pullRequest: PullRequestData<"forgejo", TVersion, ForgejoProviderTypes>,
   input: PullRequestCommentInput,
   options: OperationOptions = {},
 ): Promise<void> {

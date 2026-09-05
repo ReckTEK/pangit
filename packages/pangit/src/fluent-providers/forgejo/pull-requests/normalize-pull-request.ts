@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type {
   PullRequestData,
   PullRequestRef,
@@ -22,7 +23,7 @@ import {
 export function normalizeForgejoPullRequest<TVersion extends ForgejoVersion>(
   client: ForgejoClient<TVersion>,
   pullRequest: AnyForgejoPullRequest,
-): PullRequestData<"forgejo", TVersion> {
+): PullRequestData<"forgejo", TVersion, ForgejoProviderTypes> {
   const number = requiredPositiveInteger(pullRequest.number, "pull-request number");
   const state = pullRequest.state;
   if (state !== "open" && state !== "closed") throw new TypeError("pull-request state is missing");

@@ -1,4 +1,9 @@
-import type { FluentProvider, ProviderVersion } from "../adapter-contract/provider.ts";
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../adapter-contract/provider.ts";
+
 import type {
   BranchDivergence,
   CreateBranchInput,
@@ -35,42 +40,45 @@ export interface ListBranchDivergencesOptions extends ListBranchesOptions {
 
 export interface BranchDivergenceResult<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
-  readonly branch: Branch<TProvider, TVersion>;
+  readonly branch: Branch<TProvider, TVersion, TRegistry>;
   readonly divergence: BranchDivergence;
 }
 
 export interface RepositoryBranches<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
-  list(options?: ListBranchesOptions): Promise<Page<Branch<TProvider, TVersion>>>;
-  get(name: string, options?: OperationOptions): Promise<Branch<TProvider, TVersion>>;
+  list(options?: ListBranchesOptions): Promise<Page<Branch<TProvider, TVersion, TRegistry>>>;
+  get(name: string, options?: OperationOptions): Promise<Branch<TProvider, TVersion, TRegistry>>;
   exists(name: string, options?: OperationOptions): Promise<boolean>;
   create(
     input: CreateBranchInput,
     options?: OperationOptions,
-  ): Promise<Branch<TProvider, TVersion>>;
+  ): Promise<Branch<TProvider, TVersion, TRegistry>>;
   rename(
-    branch: Branch<TProvider, TVersion>,
+    branch: Branch<TProvider, TVersion, TRegistry>,
     name: string,
     options?: OperationOptions,
   ): Promise<void>;
-  delete(branch: Branch<TProvider, TVersion>, options?: OperationOptions): Promise<void>;
+  delete(branch: Branch<TProvider, TVersion, TRegistry>, options?: OperationOptions): Promise<void>;
   divergence(base: string, head: string, options?: OperationOptions): Promise<BranchDivergence>;
   listDivergences(
     options: ListBranchDivergencesOptions,
-  ): Promise<Page<BranchDivergenceResult<TProvider, TVersion>>>;
+  ): Promise<Page<BranchDivergenceResult<TProvider, TVersion, TRegistry>>>;
 }
 
 export function createRepositoryBranches<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
-  adapter: GitHostAdapter<TProvider, TVersion>,
-  repository: RepositoryData<TProvider, TVersion>,
-): RepositoryBranches<TProvider, TVersion> {
+  adapter: GitHostAdapter<TProvider, TVersion, TRegistry>,
+  repository: RepositoryData<TProvider, TVersion, TRegistry>,
+): RepositoryBranches<TProvider, TVersion, TRegistry> {
   return Object.freeze({
     async list(options: ListBranchesOptions = {}) {
       const context = validationContext(adapter, "listBranches");
@@ -106,7 +114,7 @@ export function createRepositoryBranches<
       return createBranch(await adapter.createBranch(repository, input, options));
     },
     rename(
-      branch: Branch<TProvider, TVersion>,
+      branch: Branch<TProvider, TVersion, TRegistry>,
       name: string,
       options: OperationOptions = {},
     ) {
@@ -118,7 +126,7 @@ export function createRepositoryBranches<
         options,
       );
     },
-    delete(branch: Branch<TProvider, TVersion>, options: OperationOptions = {}) {
+    delete(branch: Branch<TProvider, TVersion, TRegistry>, options: OperationOptions = {}) {
       const context = validationContext(adapter, "deleteBranch");
       return adapter.deleteBranch(repository, branchData(branch, context), options);
     },
@@ -168,9 +176,10 @@ export function createRepositoryBranches<
 
 function branchData<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
-  branch: Branch<TProvider, TVersion>,
+  branch: Branch<TProvider, TVersion, TRegistry>,
   context: ValidationErrorContext<TProvider, TVersion>,
 ) {
   return {
@@ -183,9 +192,10 @@ function branchData<
 
 function validationContext<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
-  adapter: GitHostAdapter<TProvider, TVersion>,
+  adapter: GitHostAdapter<TProvider, TVersion, TRegistry>,
   operation: string,
 ): ValidationErrorContext<TProvider, TVersion> {
   return { provider: adapter.provider, version: adapter.version, operation };

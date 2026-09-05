@@ -1,4 +1,4 @@
-import type {} from "./registration.ts";
+import type { ForgejoProviderTypes } from "./provider-types.ts";
 import { createForgejoAdapter } from "./create-adapter.ts";
 import { type ForgejoVersion, versions } from "./versions.ts";
 import { createFluentClient } from "../../fluent-api/client/create-fluent-client.ts";
@@ -12,7 +12,7 @@ export type { ForgejoVersion } from "./versions.ts";
 export function createClient<const V extends ForgejoVersion>(
   version: V,
   options: FluentClientOptions,
-): FluentClient<"forgejo", V> {
+): FluentClient<"forgejo", V, ForgejoProviderTypes> {
   if (!(versions as readonly string[]).includes(version)) {
     throw new ProviderAdapterUnavailableError("forgejo", version);
   }

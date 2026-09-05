@@ -1,4 +1,3 @@
-import type {} from "../registration.ts";
 import { normalizeWorkflowPath } from "./workflows.ts";
 import { normalizeForgejoCiRun } from "./runs.ts";
 import { ForgejoAdapterContext } from "../transport/ForgejoAdapterContext.ts";

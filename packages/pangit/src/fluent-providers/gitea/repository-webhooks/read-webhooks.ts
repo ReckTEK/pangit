@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type { RepositoryWebhookData } from "../../../fluent-api/adapter-contract/optional/repository-webhooks.ts";
 
 import type { OperationOptions } from "../../../fluent-api/adapter-contract/operation-options.ts";
@@ -31,9 +32,9 @@ import { normalizeGiteaRepositoryWebhook } from "./normalize.ts";
 /** Fetch exactly one requested page of repository webhooks. */
 export async function listGiteaRepositoryWebhooks<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   request: ResolvedPageRequest,
-): Promise<Page<RepositoryWebhookData<"gitea", TVersion>>> {
+): Promise<Page<RepositoryWebhookData<"gitea", TVersion, GiteaProviderTypes>>> {
   const operation = { universal: "listRepositoryWebhooks", native: "repoListHooks" } as const;
   const client = await context.client();
   const cursor = decodeGiteaPageCursor(request.cursor, {
@@ -64,10 +65,10 @@ export async function listGiteaRepositoryWebhooks<TVersion extends GiteaVersion>
 /** Fetch one known webhook directly by exact ID. */
 export async function getGiteaRepositoryWebhook<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   id: string,
   options: OperationOptions = {},
-): Promise<RepositoryWebhookData<"gitea", TVersion>> {
+): Promise<RepositoryWebhookData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = { universal: "getRepositoryWebhook", native: "repoGetHook" } as const;
   const hookId = parseGiteaId(id, "webhook id");
   const client = await context.client();

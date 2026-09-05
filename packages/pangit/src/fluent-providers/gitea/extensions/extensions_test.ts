@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type { CompareCommitsOptions } from "../../../fluent-api/adapter-contract/commits.ts";
 import type { GiteaCommitComparisonOutput } from "./commits.ts";
 
@@ -71,7 +72,11 @@ Deno.test("Gitea 1.27.2 compare extension returns raw text through repoCompareDi
       fixtureRepository("1.26.4"),
       "main",
       "feature",
-      { extension: { output: "diff" } } as unknown as CompareCommitsOptions<"gitea", "1.26.4">,
+      { extension: { output: "diff" } } as unknown as CompareCommitsOptions<
+        "gitea",
+        "1.26.4",
+        GiteaProviderTypes
+      >,
     );
   } catch (error) {
     rejected = error instanceof ValidationError;
@@ -231,19 +236,19 @@ Deno.test("Gitea content extension and concurrency validation retain operation c
 
 function fixtureRepository<TVersion extends GiteaVersion>(
   _version: TVersion,
-): RepositoryData<"gitea", TVersion> {
+): RepositoryData<"gitea", TVersion, GiteaProviderTypes> {
   return {
     id: "1",
     owner: "acme",
     name: "project",
     fullName: "acme/project",
     native: {},
-  } as RepositoryData<"gitea", TVersion>;
+  } as RepositoryData<"gitea", TVersion, GiteaProviderTypes>;
 }
 
 function fixturePullRequest<TVersion extends GiteaVersion>(
   _version: TVersion,
-): PullRequestData<"gitea", TVersion> {
+): PullRequestData<"gitea", TVersion, GiteaProviderTypes> {
   return {
     id: "5",
     number: 5,
@@ -258,7 +263,7 @@ function fixturePullRequest<TVersion extends GiteaVersion>(
     target: { owner: "acme", repository: "project", branch: "main", sha: "base-sha" },
     merged: false,
     native: {},
-  } as PullRequestData<"gitea", TVersion>;
+  } as PullRequestData<"gitea", TVersion, GiteaProviderTypes>;
 }
 
 function pullRequestPayload(merged: boolean) {

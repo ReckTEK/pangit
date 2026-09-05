@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import {
   type OperationOptions,
   requireIdentity,
@@ -18,10 +19,10 @@ import { normalizeGiteaRepository } from "./normalize-repository.ts";
 /** Rename one repository with one mutation and retain the complete returned provider payload. */
 export async function renameGiteaRepository<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   name: string,
   options: OperationOptions = {},
-): Promise<RepositoryData<"gitea", TVersion>> {
+): Promise<RepositoryData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = { universal: "renameRepository", native: "repoEdit" } as const;
   const repositoryName = requireIdentity(name, "repository name");
   const path = repositoryPath(repository);
@@ -46,7 +47,7 @@ export async function renameGiteaRepository<TVersion extends GiteaVersion>(
 /** Delete one repository directly without an existence preflight. */
 export async function deleteGiteaRepository<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   options: OperationOptions = {},
 ): Promise<void> {
   const operation = { universal: "deleteRepository", native: "repoDelete" } as const;

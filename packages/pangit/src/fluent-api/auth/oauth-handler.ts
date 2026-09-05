@@ -1,4 +1,8 @@
-import type { FluentProvider, ProviderVersion } from "../adapter-contract/provider.ts";
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../adapter-contract/provider.ts";
 
 import type {
   OAuthAuthorizedClientFor,
@@ -14,25 +18,28 @@ type RuntimeLogin = {
   authorize(callback: Request, transaction: unknown): Promise<unknown>;
 };
 
-class OAuthHandlerImpl<TProvider extends FluentProvider> implements OAuthHandler<TProvider> {
-  readonly #logins: OAuthLoginRegistry;
+class OAuthHandlerImpl<
+  TProvider extends FluentProvider,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> implements OAuthHandler<TProvider, TRegistry> {
+  readonly #logins: OAuthLoginRegistry<TRegistry>;
 
-  constructor(logins: OAuthLoginRegistry) {
+  constructor(logins: OAuthLoginRegistry<TRegistry>) {
     this.#logins = Object.freeze({ ...logins });
   }
 
   start<TSelected extends TProvider>(
     provider: TSelected,
-  ): Promise<OAuthLoginStart<TSelected, ProviderVersion<TSelected>>> {
+  ): Promise<OAuthLoginStart<TSelected, ProviderVersion<TSelected, TRegistry>, TRegistry>> {
     return this.#login(provider).start() as Promise<
-      OAuthLoginStart<TSelected, ProviderVersion<TSelected>>
+      OAuthLoginStart<TSelected, ProviderVersion<TSelected, TRegistry>, TRegistry>
     >;
   }
 
   authorize(
     callback: Request,
-    transaction: OAuthLoginTransactionFor<TProvider>,
-  ): Promise<OAuthAuthorizedClientFor<TProvider>> {
+    transaction: OAuthLoginTransactionFor<TProvider, TRegistry>,
+  ): Promise<OAuthAuthorizedClientFor<TProvider, TRegistry>> {
     const callbackType = new URL(callback.url).searchParams.get("type");
     if (callbackType === null) {
       return Promise.reject(new OAuthCallbackError("missing_type", "OAuth callback has no type"));
@@ -46,7 +53,7 @@ class OAuthHandlerImpl<TProvider extends FluentProvider> implements OAuthHandler
       );
     }
     return this.#login(transaction.provider).authorize(callback, transaction) as Promise<
-      OAuthAuthorizedClientFor<TProvider>
+      OAuthAuthorizedClientFor<TProvider, TRegistry>
     >;
   }
 
@@ -63,8 +70,11 @@ class OAuthHandlerImpl<TProvider extends FluentProvider> implements OAuthHandler
 }
 
 /** Build one OAuth callback dispatcher over the configured provider logins. */
-export function createOAuthHandler<const TLogins extends OAuthLoginRegistry>(
+export function createOAuthHandler<
+  const TLogins extends OAuthLoginRegistry<TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+>(
   logins: TLogins,
-): OAuthHandler<Extract<keyof TLogins, FluentProvider>> {
+): OAuthHandler<Extract<keyof TLogins, FluentProvider>, TRegistry> {
   return new OAuthHandlerImpl(logins);
 }

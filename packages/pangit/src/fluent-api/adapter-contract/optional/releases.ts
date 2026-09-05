@@ -1,4 +1,5 @@
-import type { Provider, ProviderVersion } from "../provider.ts";
+import type { Provider, ProviderTypeRegistry, ProviderVersion } from "../provider.ts";
+
 import type { ProviderReleaseEntityNative } from "../../native-access/ProviderNativeRegistry.ts";
 import type { OperationOptions } from "../operation-options.ts";
 import type { Page, ResolvedPageRequest } from "../pagination.ts";
@@ -8,7 +9,8 @@ export type { ProviderReleaseEntityNative } from "../../native-access/ProviderNa
 
 export interface ReleaseData<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly id: string;
   readonly tagName: string;
@@ -21,12 +23,13 @@ export interface ReleaseData<
   readonly createdAt?: string;
   readonly publishedAt?: string;
   readonly url?: string;
-  readonly native: ProviderReleaseEntityNative<TProvider, TVersion, "release">;
+  readonly native: ProviderReleaseEntityNative<TProvider, TVersion, "release", TRegistry>;
 }
 
 export interface ReleaseAssetData<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly id: string;
   readonly name: string;
@@ -34,7 +37,7 @@ export interface ReleaseAssetData<
   readonly downloadCount?: number | bigint;
   readonly downloadUrl?: string;
   readonly createdAt?: string;
-  readonly native: ProviderReleaseEntityNative<TProvider, TVersion, "releaseAsset">;
+  readonly native: ProviderReleaseEntityNative<TProvider, TVersion, "releaseAsset", TRegistry>;
 }
 
 export interface CreateReleaseInput {
@@ -92,67 +95,68 @@ export interface ReleaseCapabilitySupport {
 /** Optional shared releases and release-assets capability implemented by a provider adapter. */
 export interface ReleaseAdapter<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly releaseSupport: ReleaseCapabilitySupport;
   listReleases(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     request: ResolvedPageRequest,
-  ): Promise<Page<ReleaseData<TProvider, TVersion>>>;
+  ): Promise<Page<ReleaseData<TProvider, TVersion, TRegistry>>>;
   getRelease(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     id: string,
     options?: OperationOptions,
-  ): Promise<ReleaseData<TProvider, TVersion>>;
+  ): Promise<ReleaseData<TProvider, TVersion, TRegistry>>;
   getReleaseByTag(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     tagName: string,
     options?: OperationOptions,
-  ): Promise<ReleaseData<TProvider, TVersion>>;
+  ): Promise<ReleaseData<TProvider, TVersion, TRegistry>>;
   createRelease(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     input: CreateReleaseInput,
     options?: OperationOptions,
-  ): Promise<ReleaseData<TProvider, TVersion>>;
+  ): Promise<ReleaseData<TProvider, TVersion, TRegistry>>;
   updateRelease(
-    repository: RepositoryData<TProvider, TVersion>,
-    release: ReleaseData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
+    release: ReleaseData<TProvider, TVersion, TRegistry>,
     input: UpdateReleaseInput,
     options?: OperationOptions,
-  ): Promise<ReleaseData<TProvider, TVersion>>;
+  ): Promise<ReleaseData<TProvider, TVersion, TRegistry>>;
   deleteRelease(
-    repository: RepositoryData<TProvider, TVersion>,
-    release: ReleaseData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
+    release: ReleaseData<TProvider, TVersion, TRegistry>,
     options?: OperationOptions,
   ): Promise<void>;
   listReleaseAssets(
-    repository: RepositoryData<TProvider, TVersion>,
-    release: ReleaseData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
+    release: ReleaseData<TProvider, TVersion, TRegistry>,
     options: ListReleaseAssetsOptions,
-  ): Promise<readonly ReleaseAssetData<TProvider, TVersion>[]>;
+  ): Promise<readonly ReleaseAssetData<TProvider, TVersion, TRegistry>[]>;
   getReleaseAsset(
-    repository: RepositoryData<TProvider, TVersion>,
-    release: ReleaseData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
+    release: ReleaseData<TProvider, TVersion, TRegistry>,
     id: string,
     options?: OperationOptions,
-  ): Promise<ReleaseAssetData<TProvider, TVersion>>;
+  ): Promise<ReleaseAssetData<TProvider, TVersion, TRegistry>>;
   uploadReleaseAsset(
-    repository: RepositoryData<TProvider, TVersion>,
-    release: ReleaseData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
+    release: ReleaseData<TProvider, TVersion, TRegistry>,
     input: UploadReleaseAssetInput,
     options?: OperationOptions,
-  ): Promise<ReleaseAssetData<TProvider, TVersion>>;
+  ): Promise<ReleaseAssetData<TProvider, TVersion, TRegistry>>;
   updateReleaseAsset(
-    repository: RepositoryData<TProvider, TVersion>,
-    release: ReleaseData<TProvider, TVersion>,
-    asset: ReleaseAssetData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
+    release: ReleaseData<TProvider, TVersion, TRegistry>,
+    asset: ReleaseAssetData<TProvider, TVersion, TRegistry>,
     input: UpdateReleaseAssetInput,
     options?: OperationOptions,
-  ): Promise<ReleaseAssetData<TProvider, TVersion>>;
+  ): Promise<ReleaseAssetData<TProvider, TVersion, TRegistry>>;
   deleteReleaseAsset(
-    repository: RepositoryData<TProvider, TVersion>,
-    release: ReleaseData<TProvider, TVersion>,
-    asset: ReleaseAssetData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
+    release: ReleaseData<TProvider, TVersion, TRegistry>,
+    asset: ReleaseAssetData<TProvider, TVersion, TRegistry>,
     options?: OperationOptions,
   ): Promise<void>;
 }

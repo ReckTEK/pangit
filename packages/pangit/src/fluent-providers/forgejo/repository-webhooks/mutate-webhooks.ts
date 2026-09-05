@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type {
   CreateRepositoryWebhookInput,
   RepositoryWebhookData,
@@ -30,10 +31,10 @@ import { normalizeForgejoRepositoryWebhook } from "./normalize.ts";
 /** Create one portable JSON/form webhook; provider hook kinds remain internal. */
 export async function createForgejoRepositoryWebhook<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   input: CreateRepositoryWebhookInput,
   options: OperationOptions = {},
-): Promise<RepositoryWebhookData<"forgejo", TVersion>> {
+): Promise<RepositoryWebhookData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = { universal: "createRepositoryWebhook", native: "repoCreateHook" } as const;
   const url = validateUrl(input.url);
   const events = validateEvents(input.events);
@@ -76,11 +77,11 @@ export async function createForgejoRepositoryWebhook<TVersion extends ForgejoVer
 /** Update one known webhook in one request, retaining its known URL when config changes. */
 export async function updateForgejoRepositoryWebhook<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  webhook: RepositoryWebhookData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  webhook: RepositoryWebhookData<"forgejo", TVersion, ForgejoProviderTypes>,
   input: UpdateRepositoryWebhookInput,
   options: OperationOptions = {},
-): Promise<RepositoryWebhookData<"forgejo", TVersion>> {
+): Promise<RepositoryWebhookData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = { universal: "updateRepositoryWebhook", native: "repoEditHook" } as const;
   if (
     input.url === undefined && input.events === undefined && input.active === undefined &&
@@ -136,8 +137,8 @@ export async function updateForgejoRepositoryWebhook<TVersion extends ForgejoVer
 /** Delete one known webhook without an existence preflight. */
 export async function deleteForgejoRepositoryWebhook<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  webhook: RepositoryWebhookData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  webhook: RepositoryWebhookData<"forgejo", TVersion, ForgejoProviderTypes>,
   options: OperationOptions = {},
 ): Promise<void> {
   const operation = { universal: "deleteRepositoryWebhook", native: "repoDeleteHook" } as const;

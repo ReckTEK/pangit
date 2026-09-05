@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type { CommitFileData } from "../../../fluent-api/adapter-contract/commits.ts";
 
 import type { OperationOptions } from "../../../fluent-api/adapter-contract/operation-options.ts";
@@ -13,7 +14,7 @@ import { invariant } from "./errors.ts";
 /** Fetch one commit with files enabled and every unrelated expensive facet disabled. */
 export async function listGiteaCommitFiles<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   sha: string,
   options: OperationOptions = {},
 ): Promise<readonly CommitFileData[]> {

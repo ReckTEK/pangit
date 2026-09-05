@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import { requireIdentity } from "../../../fluent-api/adapter-contract/operation-options.ts";
 
 import type {
@@ -14,7 +15,7 @@ import { requestOptions, validationError } from "./request-options.ts";
 export async function createForgejoInitialFiles<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
   client: ForgejoClient<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   files: readonly InitialRepositoryFile[],
   branch: string | undefined,
   message: string | undefined,

@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import { ContentUnavailableError } from "../../../fluent-api/adapter-contract/errors.ts";
 import type {
   ContentData,
@@ -24,7 +25,7 @@ export function normalizeForgejoContent<TVersion extends ForgejoVersion>(
   payload: ForgejoEntityPayload<TVersion, "content">,
   includeBytes: boolean,
   operation = "readContent",
-): ContentData<"forgejo", TVersion> {
+): ContentData<"forgejo", TVersion, ForgejoProviderTypes> {
   const kind = contentKind(payload);
   const path = requiredText(payload.path, "content path");
   const name = requiredText(payload.name, `content ${path} name`);

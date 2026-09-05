@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type {
   RepositoryData,
   RepositoryParentData,
@@ -17,7 +18,7 @@ export function normalizeGiteaRepository<TVersion extends GiteaVersion>(
   _context: GiteaAdapterContext<TVersion>,
   client: GiteaClient<TVersion>,
   repository: AnyGiteaRepository,
-): RepositoryData<"gitea", TVersion> {
+): RepositoryData<"gitea", TVersion, GiteaProviderTypes> {
   const name = requiredText(repository.name, "repository name");
   const fullName = optionalText(repository.full_name);
   const owner = optionalText(repository.owner?.login) ?? fullName?.split("/")[0];
@@ -51,7 +52,9 @@ export function normalizeGiteaRepository<TVersion extends GiteaVersion>(
   });
 }
 
-function normalizeParent(repository: AnyGiteaRepository): RepositoryParentData<"gitea"> {
+function normalizeParent(
+  repository: AnyGiteaRepository,
+): RepositoryParentData<"gitea"> {
   const name = requiredText(repository.name, "fork parent repository name");
   const fullName = optionalText(repository.full_name);
   const owner = optionalText(repository.owner?.login) ?? fullName?.split("/")[0];

@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type {
   CreateRepositoryWebhookInput,
   RepositoryWebhookData,
@@ -30,10 +31,10 @@ import { normalizeGiteaRepositoryWebhook } from "./normalize.ts";
 /** Create one portable JSON/form webhook; provider hook kinds remain internal. */
 export async function createGiteaRepositoryWebhook<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   input: CreateRepositoryWebhookInput,
   options: OperationOptions = {},
-): Promise<RepositoryWebhookData<"gitea", TVersion>> {
+): Promise<RepositoryWebhookData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = { universal: "createRepositoryWebhook", native: "repoCreateHook" } as const;
   const url = validateUrl(input.url);
   const events = validateEvents(input.events);
@@ -76,11 +77,11 @@ export async function createGiteaRepositoryWebhook<TVersion extends GiteaVersion
 /** Update one known webhook in one request, retaining its known URL when config changes. */
 export async function updateGiteaRepositoryWebhook<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  webhook: RepositoryWebhookData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  webhook: RepositoryWebhookData<"gitea", TVersion, GiteaProviderTypes>,
   input: UpdateRepositoryWebhookInput,
   options: OperationOptions = {},
-): Promise<RepositoryWebhookData<"gitea", TVersion>> {
+): Promise<RepositoryWebhookData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = { universal: "updateRepositoryWebhook", native: "repoEditHook" } as const;
   if (
     input.url === undefined && input.events === undefined && input.active === undefined &&
@@ -136,8 +137,8 @@ export async function updateGiteaRepositoryWebhook<TVersion extends GiteaVersion
 /** Delete one known webhook without an existence preflight. */
 export async function deleteGiteaRepositoryWebhook<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  webhook: RepositoryWebhookData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  webhook: RepositoryWebhookData<"gitea", TVersion, GiteaProviderTypes>,
   options: OperationOptions = {},
 ): Promise<void> {
   const operation = { universal: "deleteRepositoryWebhook", native: "repoDeleteHook" } as const;

@@ -41,6 +41,39 @@ Deno.test("universal fluent code cannot import or name concrete providers", asyn
   }
 });
 
+Deno.test("published library uses no global or module augmentation", async () => {
+  for (const file of await sourceFiles(sourceRoot)) {
+    const source = await Deno.readTextFile(file);
+    assert(
+      !/(?:^|\n)\s*(?:export\s+)?declare\s+(?:global\b|module\s*["'])/.test(source),
+      `${file.pathname} uses ambient augmentation, which JSR rejects during upload`,
+    );
+  }
+});
+
+Deno.test("standalone provider type graphs include no other provider", async () => {
+  for (const provider of ["gitea", "gitlab", "forgejo"]) {
+    const entry = new URL(`fluent-providers/${provider}/mod.ts`, sourceRoot).href;
+    const result = await new Deno.Command(Deno.execPath(), {
+      cwd: projectRoot,
+      args: ["info", "--json", entry],
+      stdout: "piped",
+      stderr: "piped",
+    }).output();
+    assert(result.success, new TextDecoder().decode(result.stderr));
+    const graph = JSON.parse(new TextDecoder().decode(result.stdout)) as {
+      modules: { specifier: string }[];
+    };
+    for (const { specifier } of graph.modules) {
+      const match = /\/(?:fluent-providers|generated-rest-clients)\/([^/]+)\//.exec(specifier);
+      assert(
+        !match || match[1] === provider || match[1] === "runtime",
+        `${provider} loads foreign provider types or implementation: ${specifier}`,
+      );
+    }
+  }
+});
+
 Deno.test("standalone providers cannot import each other", async () => {
   const providers = new URL("fluent-providers/", sourceRoot);
   for await (const provider of Deno.readDir(providers)) {

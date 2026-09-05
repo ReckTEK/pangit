@@ -1,5 +1,3 @@
-import type {} from "../registration.ts";
-
 import { compareGiteaCommits } from "./compare-commits.ts";
 import { countGiteaReachableCommits } from "./count-reachable.ts";
 import { findGiteaMergeBases } from "./find-merge-bases.ts";

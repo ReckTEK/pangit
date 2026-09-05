@@ -1,5 +1,10 @@
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../../adapter-contract/provider.ts";
 import type { ProviderExtensions } from "../../provider-extensions/ExtensionSupport.ts";
-import type { FluentProvider, ProviderVersion } from "../../adapter-contract/provider.ts";
+
 import { ValidationError } from "../../adapter-contract/errors.ts";
 import {
   type OperationOptions,
@@ -37,52 +42,62 @@ import {
 
 export type CreatePullRequestReviewOperation<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > = OperationExtension<
   "pullRequestReviews.create",
   TProvider,
   TVersion,
-  PullRequestReview<TProvider, TVersion>
+  PullRequestReview<TProvider, TVersion, TRegistry>,
+  TRegistry
 >;
 
 export interface PullRequestReviews<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly support: PullRequestReviewCapabilitySupport;
-  list(request?: PageRequest): Promise<Page<PullRequestReview<TProvider, TVersion>>>;
-  get(id: string, options?: OperationOptions): Promise<PullRequestReview<TProvider, TVersion>>;
+  list(request?: PageRequest): Promise<Page<PullRequestReview<TProvider, TVersion, TRegistry>>>;
+  get(
+    id: string,
+    options?: OperationOptions,
+  ): Promise<PullRequestReview<TProvider, TVersion, TRegistry>>;
   create(
     input?: CreatePullRequestReviewInput,
-  ): CreatePullRequestReviewOperation<TProvider, TVersion>;
+  ): CreatePullRequestReviewOperation<TProvider, TVersion, TRegistry>;
   submit(
-    review: PullRequestReview<TProvider, TVersion>,
+    review: PullRequestReview<TProvider, TVersion, TRegistry>,
     input: SubmitPullRequestReviewInput,
     options?: OperationOptions,
-  ): Promise<PullRequestReview<TProvider, TVersion>>;
+  ): Promise<PullRequestReview<TProvider, TVersion, TRegistry>>;
 }
 
 export function createPullRequestReviews<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
   provider: TProvider,
   version: TVersion,
-  adapter: PullRequestReviewAdapter<TProvider, TVersion> & {
-    readonly extensions: ProviderExtensions<TProvider>;
+  adapter: PullRequestReviewAdapter<TProvider, TVersion, TRegistry> & {
+    readonly extensions: ProviderExtensions<TProvider, TRegistry>;
   },
-  repository: RepositoryData<TProvider, TVersion>,
-  pullRequest: PullRequest<TProvider, TVersion>,
-): PullRequestReviews<TProvider, TVersion> {
-  const pullRequestData = (): PullRequestData<TProvider, TVersion> => ({
+  repository: RepositoryData<TProvider, TVersion, TRegistry>,
+  pullRequest: PullRequest<TProvider, TVersion, TRegistry>,
+): PullRequestReviews<TProvider, TVersion, TRegistry> {
+  const pullRequestData = (): PullRequestData<TProvider, TVersion, TRegistry> => ({
     ...pullRequest,
     source: { ...pullRequest.source },
     target: { ...pullRequest.target },
     native: pullRequest.native,
   });
   const reviewData = (
-    review: PullRequestReview<TProvider, TVersion>,
-  ): PullRequestReviewData<TProvider, TVersion> => ({ ...review, native: review.native });
+    review: PullRequestReview<TProvider, TVersion, TRegistry>,
+  ): PullRequestReviewData<TProvider, TVersion, TRegistry> => ({
+    ...review,
+    native: review.native,
+  });
   return Object.freeze({
     support: adapter.pullRequestReviewSupport,
     async list(request: PageRequest = {}) {
@@ -121,7 +136,8 @@ export function createPullRequestReviews<
         "pullRequestReviews.create",
         TProvider,
         TVersion,
-        PullRequestReview<TProvider, TVersion>
+        PullRequestReview<TProvider, TVersion, TRegistry>,
+        TRegistry
       >({
         operation: "pullRequestReviews.create",
         support: adapter.extensions["pullRequestReviews.create"],
@@ -138,13 +154,13 @@ export function createPullRequestReviews<
             await adapter.createPullRequestReview(repository, pullRequestData(), operationInput, {
               ...options,
               ...(extension === undefined ? {} : { extension }),
-            } as CreatePullRequestReviewOptions<TProvider>),
+            } as CreatePullRequestReviewOptions<TProvider, TRegistry>),
           );
         },
       });
     },
     async submit(
-      review: PullRequestReview<TProvider, TVersion>,
+      review: PullRequestReview<TProvider, TVersion, TRegistry>,
       input: SubmitPullRequestReviewInput,
       options: OperationOptions = {},
     ) {

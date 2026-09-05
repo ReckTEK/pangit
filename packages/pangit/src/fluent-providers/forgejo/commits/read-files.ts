@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type { CommitFileData } from "../../../fluent-api/adapter-contract/commits.ts";
 
 import type { OperationOptions } from "../../../fluent-api/adapter-contract/operation-options.ts";
@@ -13,7 +14,7 @@ import { invariant } from "./errors.ts";
 /** Fetch one commit with files enabled and every unrelated expensive facet disabled. */
 export async function listForgejoCommitFiles<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   sha: string,
   options: OperationOptions = {},
 ): Promise<readonly CommitFileData[]> {

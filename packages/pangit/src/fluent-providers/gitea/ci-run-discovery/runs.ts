@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type {
   CiRunData,
   ListCiRunsRequest,
@@ -37,9 +38,9 @@ import { wrappedPagination } from "./pagination.ts";
 /** Read one repository-wide provider page and filter only within that page. */
 export async function listGiteaCiRuns<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   request: ListCiRunsRequest,
-): Promise<Page<CiRunData<"gitea", TVersion>>> {
+): Promise<Page<CiRunData<"gitea", TVersion, GiteaProviderTypes>>> {
   const operation = { universal: "listCiRuns", native: "getWorkflowRuns" } as const;
   const client = await context.client();
   const cursor = decodeGiteaPageCursor(request.cursor, { version: context.version, operation });
@@ -99,10 +100,10 @@ export async function listGiteaCiRuns<TVersion extends GiteaVersion>(
 /** Directly read one known workflow run. */
 export async function getGiteaCiRun<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   runId: string,
   options: OperationOptions = {},
-): Promise<CiRunData<"gitea", TVersion>> {
+): Promise<CiRunData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = { universal: "getCiRun", native: "GetWorkflowRun" } as const;
   const id = parseGiteaId(runId, "workflow run id");
   const client = await context.client();
@@ -123,7 +124,7 @@ export async function getGiteaCiRun<TVersion extends GiteaVersion>(
 export function normalizeGiteaCiRun<TVersion extends GiteaVersion>(
   client: GiteaClient<TVersion>,
   payload: GiteaCiEntityPayload<TVersion, "run">,
-): CiRunData<"gitea", TVersion> {
+): CiRunData<"gitea", TVersion, GiteaProviderTypes> {
   if (!isRunPayload(payload)) throw new TypeError("malformed Gitea workflow run payload");
   const conclusion = normalizeConclusion(payload.conclusion, payload.status);
   return Object.freeze({

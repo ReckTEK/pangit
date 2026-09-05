@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type {
   CommitComparison,
   CompareCommitsOptions,
@@ -21,11 +22,11 @@ import { normalizeForgejoCommit } from "./normalize-commit.ts";
 /** Compare two refs with one provider request, retaining the native comparison semantics. */
 export async function compareForgejoCommits<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   base: string,
   head: string,
-  options: CompareCommitsOptions<"forgejo", TVersion> = {},
-): Promise<CommitComparison<"forgejo", TVersion>> {
+  options: CompareCommitsOptions<"forgejo", TVersion, ForgejoProviderTypes> = {},
+): Promise<CommitComparison<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = { universal: "compareCommits", native: "repoCompareDiff" } as const;
   const baseRef = requireIdentity(base, "comparison base");
   const headRef = requireIdentity(head, "comparison head");

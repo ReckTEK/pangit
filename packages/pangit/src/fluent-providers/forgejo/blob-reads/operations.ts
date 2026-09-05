@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import { ProviderInvariantError } from "../../../fluent-api/adapter-contract/errors.ts";
 import type {
   BlobData,
@@ -38,11 +39,11 @@ export const forgejoBlobReadSupport = Object.freeze({
 /** Read one Git blob directly by object ID. */
 export async function getForgejoBlob<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   requestedSha: string,
   options: OperationOptions = {},
   operation: ForgejoOperationIdentity = { universal: "getBlob", native: "GetBlob" },
-): Promise<BlobData<"forgejo", TVersion>> {
+): Promise<BlobData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const sha = requireGitObjectId(requestedSha);
   const client = await context.client();
   const payload = await requestForgejoBody<AnyForgejoBlob, TVersion>(
@@ -84,7 +85,7 @@ export async function getForgejoBlob<TVersion extends ForgejoVersion>(
 /** Read one Git blob as a defensive byte copy with one direct request. */
 export async function readForgejoBlobBytes<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   sha: string,
   options: OperationOptions = {},
   operation = "readBlobBytes",
@@ -99,7 +100,7 @@ export async function readForgejoBlobBytes<TVersion extends ForgejoVersion>(
 /** Read one Git blob as strict UTF-8 text. */
 export async function readForgejoBlobText<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   sha: string,
   options: OperationOptions = {},
 ): Promise<string> {
@@ -111,7 +112,7 @@ export async function readForgejoBlobText<TVersion extends ForgejoVersion>(
 /** Read one Git blob as JSON without asserting a caller-specific schema. */
 export async function readForgejoBlobJson<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   sha: string,
   options: OperationOptions = {},
 ): Promise<unknown> {
@@ -123,7 +124,7 @@ export async function readForgejoBlobJson<TVersion extends ForgejoVersion>(
 /** Git objects have no filename or file MIME type; the caller supplies a name or explicit type. */
 export async function readForgejoBlob<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   sha: string,
   options: ReadGitBlobOptions = {},
 ): Promise<globalThis.Blob> {

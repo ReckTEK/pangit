@@ -1,5 +1,3 @@
-import type {} from "../registration.ts";
-
 import { authorizeGiteaBasic } from "./basic.ts";
 import { authorizeGiteaToken } from "./token.ts";
 import { beginGiteaOAuth, exchangeGiteaOAuthCode } from "./oauth.ts";

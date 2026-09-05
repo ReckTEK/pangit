@@ -1,3 +1,4 @@
+import type { GitLabProviderTypes } from "../provider-types.ts";
 import type { GitLabAdapterContext } from "../transport/GitLabAdapterContext.ts";
 import type { GitLabVersion } from "../native/GitLabNative.ts";
 
@@ -46,7 +47,7 @@ export function state(
 export async function run<V extends GitLabVersion>(
   c: GitLabAdapterContext<V>,
   p: Dto,
-): Promise<CiRunData<"gitlab", V>> {
+): Promise<CiRunData<"gitlab", V, GitLabProviderTypes>> {
   return Object.freeze({
     id: id(c, "normalizeCiRun", p.id),
     ...state(p),
@@ -65,7 +66,7 @@ export async function run<V extends GitLabVersion>(
 export async function job<V extends GitLabVersion>(
   c: GitLabAdapterContext<V>,
   p: Dto,
-): Promise<CiJobData<"gitlab", V>> {
+): Promise<CiJobData<"gitlab", V, GitLabProviderTypes>> {
   return Object.freeze({
     id: id(c, "normalizeCiJob", p.id),
     runId: p.pipeline
@@ -88,7 +89,7 @@ export async function job<V extends GitLabVersion>(
 export async function artifact<V extends GitLabVersion>(
   c: GitLabAdapterContext<V>,
   p: Dto,
-): Promise<CiArtifactData<"gitlab", V> | undefined> {
+): Promise<CiArtifactData<"gitlab", V, GitLabProviderTypes> | undefined> {
   if (!p.artifacts_file) return undefined;
   const file = object(c, "normalizeCiArtifact", p.artifacts_file);
   if (!file.filename) return undefined;

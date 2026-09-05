@@ -12,7 +12,7 @@
 > Forgejo. GitLab has
 > [explicit capability gaps and confirmed server defects](packages/pangit/docs/GitLab.md#provider-differences).
 > All ten raw clients are generated, exported and typechecked. Public APIs may change before a
-> stable release; the package is not published to JSR yet.
+> stable release. JSR releases use explicit `-alpha.N` versions.
 
 PanGit gives Deno applications two deliberately separate ways to work with Git hosts:
 
@@ -65,10 +65,18 @@ does not download or negotiate a newer contract at runtime. Every schema is hash
 license evidence is downloaded, verified, and shipped in generated notices; missing evidence is
 stated explicitly without removing the client.
 
-## Use the alpha from source
+## Install the alpha
 
-There is no registry install command until the first JSR publication. Clone the repository and use
-the Deno workspace package directly:
+Add the [JSR package](https://jsr.io/@recktek/pangit/versions) to your Deno project:
+
+```bash
+deno add jsr:@recktek/pangit@0.1.0-alpha.2
+```
+
+Select the alpha version explicitly; stable version ranges do not include prereleases. The examples
+below use the `@recktek/pangit` import registered by this command.
+
+To work on PanGit itself, clone the repository and use its workspace package:
 
 ```bash
 git clone https://github.com/ReckTEK/pangit.git
@@ -76,7 +84,7 @@ cd pangit
 deno task check
 ```
 
-The examples below use the workspace package name and can be run from the repository root.
+The same examples can be run from the repository root without installing the package from JSR.
 
 For GitLab setup, examples, capability differences and standalone tests, see the
 [GitLab adapter guide](packages/pangit/docs/GitLab.md).

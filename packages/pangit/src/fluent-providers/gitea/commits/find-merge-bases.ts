@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import { IncompleteHistoryError } from "../../../fluent-api/adapter-contract/errors.ts";
 import type {
   MergeBaseOptions,
@@ -42,11 +43,11 @@ const FIND_MERGE_BASES_GET_OPERATION = {
  */
 export async function findGiteaMergeBases<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   left: string,
   right: string,
   options: MergeBaseOptions,
-): Promise<MergeBasesResult<"gitea", TVersion>> {
+): Promise<MergeBasesResult<"gitea", TVersion, GiteaProviderTypes>> {
   const leftRef = requireIdentity(left, "left ref");
   const rightRef = requireIdentity(right, "right ref");
   const maximum = requirePositiveInteger(options.maxItems, "maximum inspected commits");
@@ -171,7 +172,7 @@ export async function findGiteaMergeBases<TVersion extends GiteaVersion>(
 
 function countMergeBaseReachable<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   include: string,
   exclude: string,
   budget: MergeBaseBudget,

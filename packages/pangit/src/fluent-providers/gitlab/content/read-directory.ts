@@ -1,3 +1,4 @@
+import type { GitLabProviderTypes } from "../provider-types.ts";
 import type { GitLabAdapterContext } from "../transport/GitLabAdapterContext.ts";
 import type { GitLabVersion } from "../native/GitLabNative.ts";
 import type { ContentData } from "../../../fluent-api/adapter-contract/content.ts";
@@ -28,7 +29,7 @@ export function directoryOperations<V extends GitLabVersion>(
       }
       const ref = await pin(c, r, o.ref, o);
       const max = o.maxItems ?? MAX_DIRECTORY_ENTRIES;
-      const values: ContentData<"gitlab", V>[] = [];
+      const values: ContentData<"gitlab", V, GitLabProviderTypes>[] = [];
       const visit = async (folder: string, depth: number): Promise<void> => {
         const rows = await tree(c, r, folder, ref, o, max - values.length);
         if (

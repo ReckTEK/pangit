@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type { AnyRestResponse } from "../../../generated-rest-clients/runtime/mod.ts";
 import type {
   BranchDivergence,
@@ -26,7 +27,7 @@ import { listGiteaBranches } from "./read-branches.ts";
 /** Count the two set differences with two count-only commit-list probes. */
 export async function getGiteaBranchDivergence<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   base: string,
   head: string,
   options: OperationOptions = {},
@@ -63,9 +64,9 @@ export async function getGiteaBranchDivergence<TVersion extends GiteaVersion>(
 /** Derive divergence for one bounded branch page with stable output order and concurrency at most four. */
 export async function listGiteaBranchDivergences<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   request: ListBranchDivergencesRequest,
-): Promise<Page<BranchDivergenceData<"gitea", TVersion>>> {
+): Promise<Page<BranchDivergenceData<"gitea", TVersion, GiteaProviderTypes>>> {
   const listOperation = {
     universal: "listBranchDivergences",
     native: "repoListBranches",

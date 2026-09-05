@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type { AnyRestResponse } from "../../../generated-rest-clients/runtime/mod.ts";
 import { ProviderInvariantError } from "../../../fluent-api/adapter-contract/errors.ts";
 import {
@@ -31,9 +32,9 @@ type AnyGiteaTag = GiteaEntityPayload<GiteaVersion, "tag">;
 /** Read exactly one provider tag page. */
 export async function listGiteaTags<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   request: ResolvedPageRequest,
-): Promise<Page<TagData<"gitea", TVersion>>> {
+): Promise<Page<TagData<"gitea", TVersion, GiteaProviderTypes>>> {
   const operation = { universal: "listTags", native: "repoListTags" } as const;
   const path = repositoryPath(repository);
   const client = await context.client();
@@ -65,10 +66,10 @@ export async function listGiteaTags<TVersion extends GiteaVersion>(
 /** Fetch one tag directly without fetching annotated-tag details implicitly. */
 export async function getGiteaTag<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   name: string,
   options: OperationOptions = {},
-): Promise<TagData<"gitea", TVersion>> {
+): Promise<TagData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = { universal: "getTag", native: "repoGetTag" } as const;
   const tagName = requireIdentity(name, "tag name");
   const path = repositoryPath(repository);
@@ -90,10 +91,10 @@ export async function getGiteaTag<TVersion extends GiteaVersion>(
 /** Create one annotated tag using only the common Gitea tag-create fields. */
 export async function createGiteaTag<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   input: CreateTagInput,
   options: OperationOptions = {},
-): Promise<TagData<"gitea", TVersion>> {
+): Promise<TagData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = { universal: "createTag", native: "repoCreateTag" } as const;
   const name = requireIdentity(input.name, "tag name");
   const target = requireIdentity(input.target, "tag target");
@@ -123,8 +124,8 @@ export async function createGiteaTag<TVersion extends GiteaVersion>(
 /** Delete one known tag directly without a lookup preflight. */
 export async function deleteGiteaTag<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  tag: TagData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  tag: TagData<"gitea", TVersion, GiteaProviderTypes>,
   options: OperationOptions = {},
 ): Promise<void> {
   const operation = { universal: "deleteTag", native: "repoDeleteTag" } as const;
@@ -148,7 +149,7 @@ export function normalizeGiteaTag<TVersion extends GiteaVersion>(
   client: GiteaClient<TVersion>,
   tag: AnyGiteaTag,
   annotated?: true,
-): TagData<"gitea", TVersion> {
+): TagData<"gitea", TVersion, GiteaProviderTypes> {
   const name = requiredText(tag.name, "tag name");
   const sha = requiredText(tag.commit?.sha, `tag ${name} target SHA`);
   const message = optionalText(tag.message);

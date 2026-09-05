@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type { EffectiveBranchProtectionData } from "../../../fluent-api/adapter-contract/optional/branch-rules.ts";
 import {
   type OperationOptions,
@@ -28,10 +29,10 @@ import {
 /** Ask Gitea for effective enforcement on one concrete branch; never infer it from rule fields. */
 export async function getGiteaEffectiveBranchProtection<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   branch: string,
   options: OperationOptions = {},
-): Promise<EffectiveBranchProtectionData<"gitea", TVersion>> {
+): Promise<EffectiveBranchProtectionData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = {
     universal: "getEffectiveBranchProtection",
     native: "repoGetBranch",
@@ -59,7 +60,7 @@ export async function getGiteaEffectiveBranchProtection<TVersion extends GiteaVe
 export function normalizeGiteaEffectiveBranchProtection<TVersion extends GiteaVersion>(
   client: GiteaClient<TVersion>,
   payload: AnyGiteaBranch,
-): EffectiveBranchProtectionData<"gitea", TVersion> {
+): EffectiveBranchProtectionData<"gitea", TVersion, GiteaProviderTypes> {
   return Object.freeze({
     branch: requiredText(payload.name, "branch name"),
     protected: requiredBoolean(payload.protected, "effective branch protection"),

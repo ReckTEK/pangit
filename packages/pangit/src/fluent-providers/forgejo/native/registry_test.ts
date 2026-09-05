@@ -1,4 +1,4 @@
-import type {} from "../registration.ts";
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type { ForgejoBlobNative } from "./ForgejoBlobNative.ts";
 import type { ForgejoBranchRuleEntityNative } from "./ForgejoBranchRuleNative.ts";
 import type { ForgejoCiEntityNative } from "./ForgejoCiRunDiscoveryNative.ts";
@@ -70,7 +70,8 @@ type RegistryAssertions = readonly [
       {
         readonly [K in keyof ExpectedForgejoRegistry<"15.0.7">]: ProviderNativeRegistry<
           "15.0.7",
-          K
+          K,
+          ForgejoProviderTypes
         >["forgejo"];
       },
       ExpectedForgejoRegistry<"15.0.7">
@@ -81,72 +82,88 @@ type RegistryAssertions = readonly [
       {
         readonly [K in keyof ExpectedForgejoRegistry<"16.0.3">]: ProviderNativeRegistry<
           "16.0.3",
-          K
+          K,
+          ForgejoProviderTypes
         >["forgejo"];
       },
       ExpectedForgejoRegistry<"16.0.3">
     >
   >,
-  Assert<Equal<ProviderClientNative<"forgejo", "16.0.3">, ForgejoClientNative<"16.0.3">>>,
   Assert<
     Equal<
-      ProviderRepositoryContainerNative<"forgejo", "16.0.3">,
+      ProviderClientNative<"forgejo", "16.0.3", ForgejoProviderTypes>,
+      ForgejoClientNative<"16.0.3">
+    >
+  >,
+  Assert<
+    Equal<
+      ProviderRepositoryContainerNative<"forgejo", "16.0.3", ForgejoProviderTypes>,
       ForgejoRepositoryContainerNative<"16.0.3">
     >
   >,
-  Assert<Equal<ProviderRepositoryNative<"forgejo", "16.0.3">, ForgejoRepositoryNative<"16.0.3">>>,
   Assert<
     Equal<
-      ProviderEntityNative<"forgejo", "16.0.3", "branch">,
+      ProviderRepositoryNative<"forgejo", "16.0.3", ForgejoProviderTypes>,
+      ForgejoRepositoryNative<"16.0.3">
+    >
+  >,
+  Assert<
+    Equal<
+      ProviderEntityNative<"forgejo", "16.0.3", "branch", ForgejoProviderTypes>,
       ForgejoEntityNative<"16.0.3", "branch">
     >
   >,
-  Assert<Equal<ProviderBlobNative<"forgejo", "16.0.3">, ForgejoBlobNative<"16.0.3">>>,
   Assert<
     Equal<
-      ProviderBranchRuleEntityNative<"forgejo", "16.0.3", "configuredRule">,
+      ProviderBlobNative<"forgejo", "16.0.3", ForgejoProviderTypes>,
+      ForgejoBlobNative<"16.0.3">
+    >
+  >,
+  Assert<
+    Equal<
+      ProviderBranchRuleEntityNative<"forgejo", "16.0.3", "configuredRule", ForgejoProviderTypes>,
       ForgejoBranchRuleEntityNative<"16.0.3", "configuredRule">
     >
   >,
   Assert<
     Equal<
-      ProviderCiEntityNative<"forgejo", "16.0.3", "artifact">,
+      ProviderCiEntityNative<"forgejo", "16.0.3", "artifact", ForgejoProviderTypes>,
       ForgejoCiEntityNative<"16.0.3", "artifact">
     >
   >,
   Assert<
     Equal<
-      ProviderCurrentUserProfileNative<"forgejo", "16.0.3">,
+      ProviderCurrentUserProfileNative<"forgejo", "16.0.3", ForgejoProviderTypes>,
       ForgejoCurrentUserProfileNative<"16.0.3">
     >
   >,
   Assert<
     Equal<
-      ProviderIssueEntityNative<"forgejo", "16.0.3", "issueComment">,
+      ProviderIssueEntityNative<"forgejo", "16.0.3", "issueComment", ForgejoProviderTypes>,
       ForgejoIssueEntityNative<"16.0.3", "issueComment">
     >
   >,
   Assert<
     Equal<
-      ProviderPackageEntityNative<"forgejo", "16.0.3", "packageFile">,
+      ProviderPackageEntityNative<"forgejo", "16.0.3", "packageFile", ForgejoProviderTypes>,
       ForgejoPackageEntityNative<"16.0.3", "packageFile">
     >
   >,
   Assert<
     Equal<
-      ProviderPullRequestReviewNative<"forgejo", "16.0.3">,
+      ProviderPullRequestReviewNative<"forgejo", "16.0.3", ForgejoProviderTypes>,
       ForgejoPullRequestReviewNative<"16.0.3">
     >
   >,
   Assert<
     Equal<
-      ProviderReleaseEntityNative<"forgejo", "16.0.3", "releaseAsset">,
+      ProviderReleaseEntityNative<"forgejo", "16.0.3", "releaseAsset", ForgejoProviderTypes>,
       ForgejoReleaseEntityNative<"16.0.3", "releaseAsset">
     >
   >,
   Assert<
     Equal<
-      ProviderRepositoryWebhookNative<"forgejo", "16.0.3">,
+      ProviderRepositoryWebhookNative<"forgejo", "16.0.3", ForgejoProviderTypes>,
       ForgejoRepositoryWebhookNative<"16.0.3">
     >
   >,

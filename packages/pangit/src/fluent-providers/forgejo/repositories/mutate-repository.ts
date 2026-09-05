@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import {
   type OperationOptions,
   requireIdentity,
@@ -18,10 +19,10 @@ import { normalizeForgejoRepository } from "./normalize-repository.ts";
 /** Rename one repository with one mutation and retain the complete returned provider payload. */
 export async function renameForgejoRepository<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   name: string,
   options: OperationOptions = {},
-): Promise<RepositoryData<"forgejo", TVersion>> {
+): Promise<RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = { universal: "renameRepository", native: "repoEdit" } as const;
   const repositoryName = requireIdentity(name, "repository name");
   const path = repositoryPath(repository);
@@ -46,7 +47,7 @@ export async function renameForgejoRepository<TVersion extends ForgejoVersion>(
 /** Delete one repository directly without an existence preflight. */
 export async function deleteForgejoRepository<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   options: OperationOptions = {},
 ): Promise<void> {
   const operation = { universal: "deleteRepository", native: "repoDelete" } as const;

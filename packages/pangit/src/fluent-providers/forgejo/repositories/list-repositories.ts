@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type { AnyRestResponse } from "../../../generated-rest-clients/runtime/mod.ts";
 
 import { requireIdentity } from "../../../fluent-api/adapter-contract/operation-options.ts";
@@ -28,9 +29,9 @@ import { normalizeForgejoRepository } from "./normalize-repository.ts";
 /** Read exactly one provider page from one already-resolved repository container. */
 export async function listForgejoRepositories<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  container: RepositoryContainerData<"forgejo", TVersion>,
+  container: RepositoryContainerData<"forgejo", TVersion, ForgejoProviderTypes>,
   request: ResolvedPageRequest,
-): Promise<Page<RepositoryData<"forgejo", TVersion>>> {
+): Promise<Page<RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>>> {
   const cursorOperation = { universal: "listRepositories" } as const;
   const containerName = requireIdentity(container.name, "repository container name");
   const client = await context.client();

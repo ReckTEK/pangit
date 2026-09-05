@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import { NotFoundError } from "../../../fluent-api/adapter-contract/errors.ts";
 import type {
   ContentReadResult,
@@ -19,22 +20,22 @@ export const FORGEJO_CONTENT_BATCH_SIZE = 50;
 
 export async function readForgejoFiles<V extends ForgejoVersion>(
   context: ForgejoAdapterContext<V>,
-  repository: RepositoryData<"forgejo", V>,
+  repository: RepositoryData<"forgejo", V, ForgejoProviderTypes>,
   paths: readonly string[],
   options: ReadFilesOptions = {},
-): Promise<readonly ContentReadResult<"forgejo", V>[]> {
+): Promise<readonly ContentReadResult<"forgejo", V, ForgejoProviderTypes>[]> {
   return await readFilesInternal(context, repository, paths, options, true, "readFiles");
 }
 
 /** Deduplicate requests and preserve input ordering, multiplicity, and individual absence. */
 export async function readFilesInternal<V extends ForgejoVersion>(
   context: ForgejoAdapterContext<V>,
-  repository: RepositoryData<"forgejo", V>,
+  repository: RepositoryData<"forgejo", V, ForgejoProviderTypes>,
   paths: readonly string[],
   options: ReadFilesOptions,
   includeBytes: boolean,
   operation: "readFiles" | "readPathMetadataBatch",
-): Promise<readonly ContentReadResult<"forgejo", V>[]> {
+): Promise<readonly ContentReadResult<"forgejo", V, ForgejoProviderTypes>[]> {
   const validated = validateBatchPaths(context, operation, paths, options.maxItems);
   const unique = [...new Set(validated)];
   const results = await mapForgejoBounded(
@@ -43,7 +44,11 @@ export async function readFilesInternal<V extends ForgejoVersion>(
     unique,
     boundedConcurrency(context, operation, options.concurrency),
     options.signal,
-    async (path, _index, signal): Promise<ContentReadResult<"forgejo", V>> => {
+    async (
+      path,
+      _index,
+      signal,
+    ): Promise<ContentReadResult<"forgejo", V, ForgejoProviderTypes>> => {
       try {
         const content = await readForgejoContent(context, repository, path, {
           ...options,
@@ -69,7 +74,7 @@ export async function readFilesInternal<V extends ForgejoVersion>(
 export async function readOneFileBatch<V extends ForgejoVersion>(
   context: ForgejoAdapterContext<V>,
   client: ForgejoClient<V>,
-  repository: RepositoryData<"forgejo", V>,
+  repository: RepositoryData<"forgejo", V, ForgejoProviderTypes>,
   paths: readonly string[],
   ref: string | undefined,
   operation: ForgejoOperationIdentity,

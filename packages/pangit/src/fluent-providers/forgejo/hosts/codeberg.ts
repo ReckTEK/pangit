@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import { createClient } from "../create-client.ts";
 import type { ForgejoVersion } from "../versions.ts";
 import type { FluentClientOptions } from "../../../fluent-api/adapter-contract/client-options.ts";
@@ -9,7 +10,7 @@ export type CodebergClientOptions = Omit<FluentClientOptions, "baseUrl" | "webBa
 export function createCodebergClient<const V extends ForgejoVersion>(
   version: V,
   options: CodebergClientOptions = {},
-): FluentClient<"forgejo", V> {
+): FluentClient<"forgejo", V, ForgejoProviderTypes> {
   return createClient(version, {
     ...options,
     baseUrl: "https://codeberg.org/api/v1",

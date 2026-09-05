@@ -1,4 +1,9 @@
-import type { FluentProvider, ProviderVersion } from "../../adapter-contract/provider.ts";
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../../adapter-contract/provider.ts";
+
 import type {
   ProviderReleaseEntityNative,
   ReleaseAssetData,
@@ -7,7 +12,8 @@ import type {
 
 export interface Release<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly id: string;
   readonly tagName: string;
@@ -20,12 +26,13 @@ export interface Release<
   readonly createdAt?: string;
   readonly publishedAt?: string;
   readonly url?: string;
-  readonly native: ProviderReleaseEntityNative<TProvider, TVersion, "release">;
+  readonly native: ProviderReleaseEntityNative<TProvider, TVersion, "release", TRegistry>;
 }
 
 export interface ReleaseAsset<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly id: string;
   readonly name: string;
@@ -33,19 +40,23 @@ export interface ReleaseAsset<
   readonly downloadCount?: number | bigint;
   readonly downloadUrl?: string;
   readonly createdAt?: string;
-  readonly native: ProviderReleaseEntityNative<TProvider, TVersion, "releaseAsset">;
+  readonly native: ProviderReleaseEntityNative<TProvider, TVersion, "releaseAsset", TRegistry>;
 }
 
 export function createReleaseEntity<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
->(data: ReleaseData<TProvider, TVersion>): Release<TProvider, TVersion> {
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+>(data: ReleaseData<TProvider, TVersion, TRegistry>): Release<TProvider, TVersion, TRegistry> {
   return Object.freeze({ ...data, native: data.native });
 }
 
 export function createReleaseAssetEntity<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
->(data: ReleaseAssetData<TProvider, TVersion>): ReleaseAsset<TProvider, TVersion> {
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+>(
+  data: ReleaseAssetData<TProvider, TVersion, TRegistry>,
+): ReleaseAsset<TProvider, TVersion, TRegistry> {
   return Object.freeze({ ...data, native: data.native });
 }

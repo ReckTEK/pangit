@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type {
   RepositoryWebhookData,
   RepositoryWebhookEvent,
@@ -15,7 +16,7 @@ import { fromGiteaEvent } from "./events.ts";
 export function normalizeGiteaRepositoryWebhook<TVersion extends GiteaVersion>(
   client: GiteaClient<TVersion>,
   payload: GiteaRepositoryWebhookPayload<TVersion>,
-): RepositoryWebhookData<"gitea", TVersion> {
+): RepositoryWebhookData<"gitea", TVersion, GiteaProviderTypes> {
   if (!isWebhookPayload(payload)) throw new TypeError("malformed Gitea webhook payload");
   const providerEvents = Object.freeze([...(payload.events ?? [])]);
   const events = Object.freeze(

@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type { ReadFileOptions } from "../../../fluent-api/adapter-contract/content.ts";
 import {
   ContentReadError,
@@ -510,7 +511,7 @@ function createFixture<TVersion extends GiteaVersion>(version: TVersion) {
     name: "project",
     fullName: "acme/project",
     native: {},
-  } as RepositoryData<"gitea", TVersion>;
+  } as RepositoryData<"gitea", TVersion, GiteaProviderTypes>;
   return {
     requests,
     content: createRepositoryContent(adapter, repository),

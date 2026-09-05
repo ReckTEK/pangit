@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import {
   type OperationOptions,
   requireIdentity,
@@ -24,10 +25,10 @@ import { normalizeForgejoRepository } from "./normalize-repository.ts";
 /** Fetch one repository by its known owner and name. */
 export async function getForgejoRepository<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  container: RepositoryContainerData<"forgejo", TVersion>,
+  container: RepositoryContainerData<"forgejo", TVersion, ForgejoProviderTypes>,
   name: string,
   options: OperationOptions = {},
-): Promise<RepositoryData<"forgejo", TVersion>> {
+): Promise<RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = { universal: "getRepository", native: "repoGet" } as const;
   const repositoryName = requireIdentity(name, "repository name");
   const owner = requireIdentity(container.name, "repository owner");
@@ -49,14 +50,14 @@ export async function getForgejoRepository<TVersion extends ForgejoVersion>(
 /** Fetch one repository by its known owner and name, translating only a confirmed 404. */
 export async function findForgejoRepository<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  container: RepositoryContainerData<"forgejo", TVersion>,
+  container: RepositoryContainerData<"forgejo", TVersion, ForgejoProviderTypes>,
   name: string,
   options: OperationOptions = {},
   operation: ForgejoOperationIdentity = {
     universal: "findRepository",
     native: "repoGet",
   },
-): Promise<RepositoryData<"forgejo", TVersion> | undefined> {
+): Promise<RepositoryData<"forgejo", TVersion, ForgejoProviderTypes> | undefined> {
   const repositoryName = requireIdentity(name, "repository name");
   const owner = requireIdentity(container.name, "repository owner");
   const client = await context.client();
@@ -77,7 +78,7 @@ export async function findForgejoRepository<TVersion extends ForgejoVersion>(
 /** Test one repository identity with one direct request. */
 export async function hasForgejoRepository<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  container: RepositoryContainerData<"forgejo", TVersion>,
+  container: RepositoryContainerData<"forgejo", TVersion, ForgejoProviderTypes>,
   name: string,
   options: OperationOptions = {},
 ): Promise<boolean> {

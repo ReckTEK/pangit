@@ -1,5 +1,3 @@
-import type {} from "../registration.ts";
-
 import { createForgejoFork, listForgejoForks } from "./operations.ts";
 import type { ForgejoAdapterContext } from "../transport/ForgejoAdapterContext.ts";
 

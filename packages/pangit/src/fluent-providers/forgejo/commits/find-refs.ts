@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type {
   CommitRefData,
   FindCommitRefsRequest,
@@ -29,7 +30,7 @@ import { validationError } from "./errors.ts";
 /** Inspect one branch/tag page and optionally test ancestry only for candidates in that page. */
 export async function findForgejoRefsForCommit<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   sha: string,
   request: FindCommitRefsRequest,
 ): Promise<Page<CommitRefData>> {

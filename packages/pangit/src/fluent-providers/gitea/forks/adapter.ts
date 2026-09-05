@@ -1,5 +1,3 @@
-import type {} from "../registration.ts";
-
 import { createGiteaFork, listGiteaForks } from "./operations.ts";
 import type { GiteaAdapterContext } from "../transport/GiteaAdapterContext.ts";
 

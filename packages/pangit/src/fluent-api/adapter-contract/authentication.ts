@@ -1,5 +1,6 @@
+import type { Provider, ProviderTypeRegistry, ProviderVersion } from "./provider.ts";
 import type { ProviderExtensionOptions } from "../provider-extensions/ProviderExtensionRegistry.ts";
-import type { Provider, ProviderVersion } from "./provider.ts";
+
 import type { OperationOptions } from "./operation-options.ts";
 
 export interface TokenAuthorizationInput {
@@ -12,8 +13,11 @@ export interface BasicAuthorizationInput {
   readonly password: string;
 }
 
-export interface BasicAuthorizationOptions<P extends Provider> extends OperationOptions {
-  readonly extension?: ProviderExtensionOptions<"auth.basic", P>;
+export interface BasicAuthorizationOptions<
+  P extends Provider,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> extends OperationOptions {
+  readonly extension?: ProviderExtensionOptions<"auth.basic", P, TRegistry>;
 }
 
 export interface OAuthBeginInput {
@@ -49,8 +53,9 @@ export interface OAuthTokenData {
 
 export interface AuthenticationAdapter<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
   TAuthorizedAdapter,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   authorizeToken(
     input: TokenAuthorizationInput,
@@ -58,7 +63,7 @@ export interface AuthenticationAdapter<
   ): Promise<TAuthorizedAdapter>;
   authorizeBasic(
     input: BasicAuthorizationInput,
-    options?: BasicAuthorizationOptions<TProvider>,
+    options?: BasicAuthorizationOptions<TProvider, TRegistry>,
   ): Promise<TAuthorizedAdapter>;
   beginOAuth(input: OAuthBeginInput): OAuthBeginResult;
   exchangeOAuthCode(

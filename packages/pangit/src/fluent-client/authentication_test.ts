@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../fluent-providers/gitea/provider-types.ts";
 import { giteaExtensions } from "../fluent-providers/gitea/extensions/runtime.ts";
 import type { FluentClient } from "../fluent-api/client/FluentClient.ts";
 import type { OAuthAuthorizedClient } from "../fluent-api/auth/oauth-contracts.ts";
@@ -27,23 +28,32 @@ async function assertRejects(
   throw new Error(`Expected ${errorType.name}`);
 }
 
-function fakeClient(): FluentClient<"gitea", "1.27.2"> {
-  return Object.freeze({ provider: "gitea", version: "1.27.2" }) as FluentClient<"gitea", "1.27.2">;
+function fakeClient(): FluentClient<"gitea", "1.27.2", GiteaProviderTypes> {
+  return Object.freeze({ provider: "gitea", version: "1.27.2" }) as FluentClient<
+    "gitea",
+    "1.27.2",
+    GiteaProviderTypes
+  >;
 }
 
 Deno.test("universal Basic operation invokes the Gitea branch at most once", async () => {
   let branchCalls = 0;
   const authorizedInputs: unknown[] = [];
-  const auth = createAuth("gitea", "1.27.2", giteaExtensions, {
-    token: () => Promise.resolve(fakeClient()),
-    basic: (input, options) => {
-      authorizedInputs.push({ input, options });
-      return Promise.resolve(fakeClient());
+  const auth = createAuth<"gitea", "1.27.2", GiteaProviderTypes>(
+    "gitea",
+    "1.27.2",
+    giteaExtensions,
+    {
+      token: () => Promise.resolve(fakeClient()),
+      basic: (input, options) => {
+        authorizedInputs.push({ input, options });
+        return Promise.resolve(fakeClient());
+      },
+      beginOAuth: () => Promise.reject(new Error("unused")),
+      exchangeOAuthCode: () => Promise.reject(new Error("unused")),
+      oauth: () => Promise.reject(new Error("unused")),
     },
-    beginOAuth: () => Promise.reject(new Error("unused")),
-    exchangeOAuthCode: () => Promise.reject(new Error("unused")),
-    oauth: () => Promise.reject(new Error("unused")),
-  });
+  );
   const operation = auth.basic({ username: "user", password: "password" }).gitea(() => {
     branchCalls++;
     return { oneTimePassword: "123456" };
@@ -62,25 +72,30 @@ Deno.test("universal Basic operation invokes the Gitea branch at most once", asy
 Deno.test("universal OAuth owns state, PKCE, transaction, and callback validation", async () => {
   const beginInputs: unknown[] = [];
   const exchangeInputs: unknown[] = [];
-  const auth = createAuth("gitea", "1.27.2", giteaExtensions, {
-    token: () => Promise.resolve(fakeClient()),
-    basic: () => Promise.resolve(fakeClient()),
-    beginOAuth: (input) => {
-      beginInputs.push(input);
-      return Promise.resolve({
-        authorizationUrl: new URL(`https://gitea.example.invalid/oauth?state=${input.state}`),
-      });
+  const auth = createAuth<"gitea", "1.27.2", GiteaProviderTypes>(
+    "gitea",
+    "1.27.2",
+    giteaExtensions,
+    {
+      token: () => Promise.resolve(fakeClient()),
+      basic: () => Promise.resolve(fakeClient()),
+      beginOAuth: (input) => {
+        beginInputs.push(input);
+        return Promise.resolve({
+          authorizationUrl: new URL(`https://gitea.example.invalid/oauth?state=${input.state}`),
+        });
+      },
+      exchangeOAuthCode: (input) => {
+        exchangeInputs.push(input);
+        return Promise.resolve({ accessToken: "access", tokenType: "Bearer" });
+      },
+      oauth: (_token, authorization) =>
+        Promise.resolve(Object.freeze({
+          ...fakeClient(),
+          authorization,
+        }) as OAuthAuthorizedClient<"gitea", "1.27.2", GiteaProviderTypes>),
     },
-    exchangeOAuthCode: (input) => {
-      exchangeInputs.push(input);
-      return Promise.resolve({ accessToken: "access", tokenType: "Bearer" });
-    },
-    oauth: (_token, authorization) =>
-      Promise.resolve(Object.freeze({
-        ...fakeClient(),
-        authorization,
-      }) as OAuthAuthorizedClient<"gitea", "1.27.2">),
-  });
+  );
   const login = auth.login({
     clientId: "client-id",
     callbackUrl: "https://app.example.invalid/callback?keep=yes",

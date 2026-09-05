@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import {
   type OperationOptions,
   requireIdentity,
@@ -18,7 +19,7 @@ import { invariant } from "./errors.ts";
 /** Count `include --not exclude` from one count-only provider request. */
 export async function countForgejoReachableCommits<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   include: string,
   exclude?: string,
   options: OperationOptions = {},

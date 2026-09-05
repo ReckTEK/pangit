@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import {
   requireIdentity,
   requirePositiveInteger,
@@ -9,8 +10,8 @@ import type { RepositoryData } from "../../../fluent-api/adapter-contract/reposi
 import type { ForgejoVersion } from "../native/ForgejoEntityNative.ts";
 
 export function pullRequestPath<TVersion extends ForgejoVersion>(
-  repository: RepositoryData<"forgejo", TVersion>,
-  pullRequest: PullRequestData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  pullRequest: PullRequestData<"forgejo", TVersion, ForgejoProviderTypes>,
 ) {
   return {
     ...repositoryPath(repository),

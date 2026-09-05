@@ -1,4 +1,9 @@
-import type { FluentProvider, ProviderVersion } from "../../adapter-contract/provider.ts";
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../../adapter-contract/provider.ts";
+
 import { ValidationError, type ValidationErrorContext } from "../../adapter-contract/errors.ts";
 import {
   type OperationOptions,
@@ -33,46 +38,53 @@ import {
 
 export interface RepositoryReleases<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly support: ReleaseCapabilitySupport;
-  list(request?: PageRequest): Promise<Page<Release<TProvider, TVersion>>>;
-  get(id: string, options?: OperationOptions): Promise<Release<TProvider, TVersion>>;
-  getByTag(tagName: string, options?: OperationOptions): Promise<Release<TProvider, TVersion>>;
+  list(request?: PageRequest): Promise<Page<Release<TProvider, TVersion, TRegistry>>>;
+  get(id: string, options?: OperationOptions): Promise<Release<TProvider, TVersion, TRegistry>>;
+  getByTag(
+    tagName: string,
+    options?: OperationOptions,
+  ): Promise<Release<TProvider, TVersion, TRegistry>>;
   create(
     input: CreateReleaseInput,
     options?: OperationOptions,
-  ): Promise<Release<TProvider, TVersion>>;
+  ): Promise<Release<TProvider, TVersion, TRegistry>>;
   update(
-    release: Release<TProvider, TVersion>,
+    release: Release<TProvider, TVersion, TRegistry>,
     input: UpdateReleaseInput,
     options?: OperationOptions,
-  ): Promise<Release<TProvider, TVersion>>;
-  delete(release: Release<TProvider, TVersion>, options?: OperationOptions): Promise<void>;
+  ): Promise<Release<TProvider, TVersion, TRegistry>>;
+  delete(
+    release: Release<TProvider, TVersion, TRegistry>,
+    options?: OperationOptions,
+  ): Promise<void>;
   assets: Readonly<{
     list(
-      release: Release<TProvider, TVersion>,
+      release: Release<TProvider, TVersion, TRegistry>,
       options: OperationOptions & { readonly maxItems: number },
-    ): Promise<readonly ReleaseAsset<TProvider, TVersion>[]>;
+    ): Promise<readonly ReleaseAsset<TProvider, TVersion, TRegistry>[]>;
     get(
-      release: Release<TProvider, TVersion>,
+      release: Release<TProvider, TVersion, TRegistry>,
       id: string,
       options?: OperationOptions,
-    ): Promise<ReleaseAsset<TProvider, TVersion>>;
+    ): Promise<ReleaseAsset<TProvider, TVersion, TRegistry>>;
     upload(
-      release: Release<TProvider, TVersion>,
+      release: Release<TProvider, TVersion, TRegistry>,
       input: UploadReleaseAssetInput,
       options?: OperationOptions,
-    ): Promise<ReleaseAsset<TProvider, TVersion>>;
+    ): Promise<ReleaseAsset<TProvider, TVersion, TRegistry>>;
     update(
-      release: Release<TProvider, TVersion>,
-      asset: ReleaseAsset<TProvider, TVersion>,
+      release: Release<TProvider, TVersion, TRegistry>,
+      asset: ReleaseAsset<TProvider, TVersion, TRegistry>,
       input: UpdateReleaseAssetInput,
       options?: OperationOptions,
-    ): Promise<ReleaseAsset<TProvider, TVersion>>;
+    ): Promise<ReleaseAsset<TProvider, TVersion, TRegistry>>;
     delete(
-      release: Release<TProvider, TVersion>,
-      asset: ReleaseAsset<TProvider, TVersion>,
+      release: Release<TProvider, TVersion, TRegistry>,
+      asset: ReleaseAsset<TProvider, TVersion, TRegistry>,
       options?: OperationOptions,
     ): Promise<void>;
   }>;
@@ -80,14 +92,15 @@ export interface RepositoryReleases<
 
 export function createRepositoryReleases<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
-  adapter: ReleaseAdapter<TProvider, TVersion> & {
+  adapter: ReleaseAdapter<TProvider, TVersion, TRegistry> & {
     readonly provider?: TProvider;
     readonly version?: TVersion;
   },
-  repository: RepositoryData<TProvider, TVersion>,
-): RepositoryReleases<TProvider, TVersion> {
+  repository: RepositoryData<TProvider, TVersion, TRegistry>,
+): RepositoryReleases<TProvider, TVersion, TRegistry> {
   const validationContext = (
     operation: string,
   ): ValidationErrorContext<TProvider, TVersion> => ({
@@ -102,14 +115,14 @@ export function createRepositoryReleases<
     return resolvePageRequest(request, 50, validationContext(operation));
   };
   const releaseData = (
-    release: Release<TProvider, TVersion>,
-  ): ReleaseData<TProvider, TVersion> => ({ ...release, native: release.native });
+    release: Release<TProvider, TVersion, TRegistry>,
+  ): ReleaseData<TProvider, TVersion, TRegistry> => ({ ...release, native: release.native });
   const assetData = (
-    asset: ReleaseAsset<TProvider, TVersion>,
-  ): ReleaseAssetData<TProvider, TVersion> => ({ ...asset, native: asset.native });
+    asset: ReleaseAsset<TProvider, TVersion, TRegistry>,
+  ): ReleaseAssetData<TProvider, TVersion, TRegistry> => ({ ...asset, native: asset.native });
   const assets = Object.freeze({
     async list(
-      release: Release<TProvider, TVersion>,
+      release: Release<TProvider, TVersion, TRegistry>,
       options: OperationOptions & { readonly maxItems: number },
     ) {
       requirePositiveInteger(
@@ -121,7 +134,7 @@ export function createRepositoryReleases<
       return Object.freeze(values.map(createReleaseAssetEntity));
     },
     async get(
-      release: Release<TProvider, TVersion>,
+      release: Release<TProvider, TVersion, TRegistry>,
       id: string,
       options: OperationOptions = {},
     ) {
@@ -131,7 +144,7 @@ export function createRepositoryReleases<
       );
     },
     async upload(
-      release: Release<TProvider, TVersion>,
+      release: Release<TProvider, TVersion, TRegistry>,
       input: UploadReleaseAssetInput,
       options: OperationOptions = {},
     ) {
@@ -145,8 +158,8 @@ export function createRepositoryReleases<
       );
     },
     async update(
-      release: Release<TProvider, TVersion>,
-      asset: ReleaseAsset<TProvider, TVersion>,
+      release: Release<TProvider, TVersion, TRegistry>,
+      asset: ReleaseAsset<TProvider, TVersion, TRegistry>,
       input: UpdateReleaseAssetInput,
       options: OperationOptions = {},
     ) {
@@ -166,8 +179,8 @@ export function createRepositoryReleases<
       );
     },
     delete(
-      release: Release<TProvider, TVersion>,
-      asset: ReleaseAsset<TProvider, TVersion>,
+      release: Release<TProvider, TVersion, TRegistry>,
+      asset: ReleaseAsset<TProvider, TVersion, TRegistry>,
       options: OperationOptions = {},
     ) {
       return adapter.deleteReleaseAsset(
@@ -203,7 +216,7 @@ export function createRepositoryReleases<
       return createReleaseEntity(await adapter.createRelease(repository, input, options));
     },
     async update(
-      release: Release<TProvider, TVersion>,
+      release: Release<TProvider, TVersion, TRegistry>,
       input: UpdateReleaseInput,
       options: OperationOptions = {},
     ) {
@@ -219,7 +232,7 @@ export function createRepositoryReleases<
         await adapter.updateRelease(repository, releaseData(release), input, options),
       );
     },
-    delete(release: Release<TProvider, TVersion>, options: OperationOptions = {}) {
+    delete(release: Release<TProvider, TVersion, TRegistry>, options: OperationOptions = {}) {
       return adapter.deleteRelease(repository, releaseData(release), options);
     },
     assets,

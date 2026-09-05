@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import {
   type OperationOptions,
   requireIdentity,
@@ -21,11 +22,11 @@ import { normalizeGiteaPullRequest } from "./normalize-pull-request.ts";
 /** Update only fields explicitly supplied by the caller. */
 export async function updateGiteaPullRequest<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  pullRequest: PullRequestData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  pullRequest: PullRequestData<"gitea", TVersion, GiteaProviderTypes>,
   input: UpdatePullRequestInput,
   options: OperationOptions = {},
-): Promise<PullRequestData<"gitea", TVersion>> {
+): Promise<PullRequestData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = { universal: "updatePullRequest", native: "repoEditPullRequest" } as const;
   if (
     input.title === undefined && input.description === undefined && input.targetBranch === undefined
@@ -64,10 +65,10 @@ export async function updateGiteaPullRequest<TVersion extends GiteaVersion>(
 /** Close one pull request directly through its edit endpoint. */
 export async function closeGiteaPullRequest<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  pullRequest: PullRequestData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  pullRequest: PullRequestData<"gitea", TVersion, GiteaProviderTypes>,
   options: OperationOptions = {},
-): Promise<PullRequestData<"gitea", TVersion>> {
+): Promise<PullRequestData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = { universal: "closePullRequest", native: "repoEditPullRequest" } as const;
   const client = await context.client();
   const payload = await requestGiteaBody<AnyGiteaPullRequest, TVersion>(

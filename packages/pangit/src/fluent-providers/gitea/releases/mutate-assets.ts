@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import {
   type OperationOptions,
   requireIdentity,
@@ -27,11 +28,11 @@ import { normalizeGiteaReleaseAsset } from "./normalize.ts";
 /** Upload one binary release asset with one direct request. */
 export async function uploadGiteaReleaseAsset<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  release: ReleaseData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  release: ReleaseData<"gitea", TVersion, GiteaProviderTypes>,
   input: UploadReleaseAssetInput,
   options: OperationOptions = {},
-): Promise<ReleaseAssetData<"gitea", TVersion>> {
+): Promise<ReleaseAssetData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = {
     universal: "uploadReleaseAsset",
     native: "repoCreateReleaseAttachment",
@@ -62,12 +63,12 @@ export async function uploadGiteaReleaseAsset<TVersion extends GiteaVersion>(
 /** Rename one known release asset directly. */
 export async function updateGiteaReleaseAsset<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  release: ReleaseData<"gitea", TVersion>,
-  asset: ReleaseAssetData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  release: ReleaseData<"gitea", TVersion, GiteaProviderTypes>,
+  asset: ReleaseAssetData<"gitea", TVersion, GiteaProviderTypes>,
   input: UpdateReleaseAssetInput,
   options: OperationOptions = {},
-): Promise<ReleaseAssetData<"gitea", TVersion>> {
+): Promise<ReleaseAssetData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = {
     universal: "updateReleaseAsset",
     native: "repoEditReleaseAttachment",
@@ -98,9 +99,9 @@ export async function updateGiteaReleaseAsset<TVersion extends GiteaVersion>(
 /** Delete one known release asset directly without a lookup. */
 export async function deleteGiteaReleaseAsset<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  release: ReleaseData<"gitea", TVersion>,
-  asset: ReleaseAssetData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  release: ReleaseData<"gitea", TVersion, GiteaProviderTypes>,
+  asset: ReleaseAssetData<"gitea", TVersion, GiteaProviderTypes>,
   options: OperationOptions = {},
 ): Promise<void> {
   const operation = {

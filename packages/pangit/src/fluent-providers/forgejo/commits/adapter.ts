@@ -1,5 +1,3 @@
-import type {} from "../registration.ts";
-
 import { compareForgejoCommits } from "./compare-commits.ts";
 import { countForgejoReachableCommits } from "./count-reachable.ts";
 import { findForgejoMergeBases } from "./find-merge-bases.ts";

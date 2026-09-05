@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import {
   type OperationOptions,
   requireIdentity,
@@ -24,10 +25,10 @@ import { normalizeGiteaRepository } from "./normalize-repository.ts";
 /** Fetch one repository by its known owner and name. */
 export async function getGiteaRepository<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  container: RepositoryContainerData<"gitea", TVersion>,
+  container: RepositoryContainerData<"gitea", TVersion, GiteaProviderTypes>,
   name: string,
   options: OperationOptions = {},
-): Promise<RepositoryData<"gitea", TVersion>> {
+): Promise<RepositoryData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = { universal: "getRepository", native: "repoGet" } as const;
   const repositoryName = requireIdentity(name, "repository name");
   const owner = requireIdentity(container.name, "repository owner");
@@ -49,14 +50,14 @@ export async function getGiteaRepository<TVersion extends GiteaVersion>(
 /** Fetch one repository by its known owner and name, translating only a confirmed 404. */
 export async function findGiteaRepository<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  container: RepositoryContainerData<"gitea", TVersion>,
+  container: RepositoryContainerData<"gitea", TVersion, GiteaProviderTypes>,
   name: string,
   options: OperationOptions = {},
   operation: GiteaOperationIdentity = {
     universal: "findRepository",
     native: "repoGet",
   },
-): Promise<RepositoryData<"gitea", TVersion> | undefined> {
+): Promise<RepositoryData<"gitea", TVersion, GiteaProviderTypes> | undefined> {
   const repositoryName = requireIdentity(name, "repository name");
   const owner = requireIdentity(container.name, "repository owner");
   const client = await context.client();
@@ -77,7 +78,7 @@ export async function findGiteaRepository<TVersion extends GiteaVersion>(
 /** Test one repository identity with one direct request. */
 export async function hasGiteaRepository<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  container: RepositoryContainerData<"gitea", TVersion>,
+  container: RepositoryContainerData<"gitea", TVersion, GiteaProviderTypes>,
   name: string,
   options: OperationOptions = {},
 ): Promise<boolean> {

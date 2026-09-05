@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type { GiteaCreatePullRequestReviewExtension } from "./pull-request-reviews.ts";
 import { giteaExtensions } from "./runtime.ts";
 import { ValidationError } from "../../../fluent-api/adapter-contract/errors.ts";
@@ -44,7 +45,7 @@ const repository = Object.freeze({
   private: false,
   archived: false,
   native: null as never,
-}) satisfies RepositoryData<"gitea", "1.27.2">;
+}) satisfies RepositoryData<"gitea", "1.27.2", GiteaProviderTypes>;
 
 const pullRequest = Object.freeze({
   id: "2",
@@ -65,13 +66,13 @@ const pullRequest = Object.freeze({
   }),
   merged: false,
   native: null as never,
-}) satisfies PullRequest<"gitea", "1.27.2">;
+}) satisfies PullRequest<"gitea", "1.27.2", GiteaProviderTypes>;
 
 const review = Object.freeze({
   id: "3",
   state: "pending",
   native: null as never,
-}) satisfies PullRequestReviewData<"gitea", "1.27.2">;
+}) satisfies PullRequestReviewData<"gitea", "1.27.2", GiteaProviderTypes>;
 
 Deno.test("review create extension validates every Gitea input before the adapter", async () => {
   let adapterCalls = 0;
@@ -93,7 +94,7 @@ Deno.test("review create extension validates every Gitea input before the adapte
       adapterCalls++;
       return Promise.resolve(review);
     },
-  } as unknown as PullRequestReviewAdapter<"gitea", "1.27.2">;
+  } as unknown as PullRequestReviewAdapter<"gitea", "1.27.2", GiteaProviderTypes>;
   const reviews = createPullRequestReviews(
     "gitea",
     "1.27.2",
@@ -128,7 +129,7 @@ const issue = Object.freeze({
   assignees: Object.freeze([]),
   labels: Object.freeze([]),
   native: null as never,
-}) satisfies Issue<"gitea", "1.27.2">;
+}) satisfies Issue<"gitea", "1.27.2", GiteaProviderTypes>;
 
 Deno.test("issue update extension validates Gitea content version before the adapter", async () => {
   let adapterCalls = 0;
@@ -156,8 +157,8 @@ Deno.test("issue update extension validates Gitea content version before the ada
       watchers: "native-only",
     }),
     updateIssue(
-      _repository: RepositoryData<"gitea", "1.27.2">,
-      value: IssueData<"gitea", "1.27.2">,
+      _repository: RepositoryData<"gitea", "1.27.2", GiteaProviderTypes>,
+      value: IssueData<"gitea", "1.27.2", GiteaProviderTypes>,
       _input: unknown,
       options: { extension?: { contentVersion: number | bigint } },
     ) {
@@ -165,7 +166,7 @@ Deno.test("issue update extension validates Gitea content version before the ada
       receivedVersions.push(options.extension?.contentVersion);
       return Promise.resolve(value);
     },
-  } as unknown as IssueAdapter<"gitea", "1.27.2">;
+  } as unknown as IssueAdapter<"gitea", "1.27.2", GiteaProviderTypes>;
   const issues = createRepositoryIssues("gitea", "1.27.2", {
     ...adapter,
     extensions: giteaExtensions,

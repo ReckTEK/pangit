@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type { CommitFileData } from "../../../fluent-api/adapter-contract/commits.ts";
 
 import { requirePositiveInteger } from "../../../fluent-api/adapter-contract/operation-options.ts";
@@ -30,8 +31,8 @@ import type { AnyForgejoChangedFile } from "./payload-types.ts";
 /** Read exactly one page of files changed by a pull request. */
 export async function listForgejoPullRequestFiles<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  pullRequest: PullRequestData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  pullRequest: PullRequestData<"forgejo", TVersion, ForgejoProviderTypes>,
   request: ResolvedPageRequest,
 ): Promise<Page<CommitFileData>> {
   const operation = {

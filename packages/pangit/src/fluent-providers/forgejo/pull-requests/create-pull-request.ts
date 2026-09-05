@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import {
   type OperationOptions,
   requireIdentity,
@@ -23,10 +24,10 @@ import { headPart } from "./head-selector.ts";
 /** Create a same-repository or fork pull request with an unambiguous Forgejo head encoding. */
 export async function createForgejoPullRequest<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   input: CreatePullRequestInput,
   options: OperationOptions = {},
-): Promise<PullRequestData<"forgejo", TVersion>> {
+): Promise<PullRequestData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = { universal: "createPullRequest", native: "repoCreatePullRequest" } as const;
   const title = requireIdentity(input.title, "pull-request title");
   const base = requireIdentity(input.targetBranch, "pull-request target branch");
@@ -59,7 +60,7 @@ export async function createForgejoPullRequest<TVersion extends ForgejoVersion>(
 
 function encodeCreateHead<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  target: RepositoryData<"forgejo", TVersion>,
+  target: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   source: PullRequestRef,
   operation: ForgejoOperationIdentity,
 ): string {

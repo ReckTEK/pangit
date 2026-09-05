@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type {
   CurrentUserProfileCapabilitySupport,
   CurrentUserProfileData,
@@ -22,7 +23,7 @@ export const forgejoCurrentUserProfileSupport: CurrentUserProfileCapabilitySuppo
 export async function getForgejoCurrentUserProfile<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
   options: OperationOptions = {},
-): Promise<CurrentUserProfileData<"forgejo", TVersion>> {
+): Promise<CurrentUserProfileData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = { universal: "getCurrentUserProfile", native: "userGetCurrent" } as const;
   const client = await context.client();
   const payload = await requestForgejoBody<AnyForgejoUser, TVersion>(
@@ -38,7 +39,7 @@ export async function getForgejoCurrentUserProfile<TVersion extends ForgejoVersi
 export function normalizeForgejoCurrentUserProfile<TVersion extends ForgejoVersion>(
   client: ForgejoClient<TVersion>,
   payload: AnyForgejoUser,
-): CurrentUserProfileData<"forgejo", TVersion> {
+): CurrentUserProfileData<"forgejo", TVersion, ForgejoProviderTypes> {
   const username = requiredText(payload.login, "current-user login");
   return Object.freeze({
     id: requiredText(payload.id, `current user ${username} id`),

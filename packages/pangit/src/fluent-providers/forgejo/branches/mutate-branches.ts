@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type {
   BranchData,
   CreateBranchInput,
@@ -23,10 +24,10 @@ import {
 /** Create one branch directly from the caller's explicit ref or SHA. */
 export async function createForgejoBranch<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   input: CreateBranchInput,
   options: OperationOptions = {},
-): Promise<BranchData<"forgejo", TVersion>> {
+): Promise<BranchData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = { universal: "createBranch", native: "repoCreateBranch" } as const;
   const name = requireIdentity(input.name, "new branch name");
   const source = requireIdentity(input.source, "branch source");
@@ -55,8 +56,8 @@ export async function createForgejoBranch<TVersion extends ForgejoVersion>(
 /** Rename one non-default branch with the provider's direct 204 mutation. */
 export async function renameForgejoBranch<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  branch: BranchData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  branch: BranchData<"forgejo", TVersion, ForgejoProviderTypes>,
   name: string,
   options: OperationOptions = {},
 ): Promise<void> {
@@ -84,8 +85,8 @@ export async function renameForgejoBranch<TVersion extends ForgejoVersion>(
 /** Delete one non-default branch directly. */
 export async function deleteForgejoBranch<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  branch: BranchData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  branch: BranchData<"forgejo", TVersion, ForgejoProviderTypes>,
   options: OperationOptions = {},
 ): Promise<void> {
   const operation = { universal: "deleteBranch", native: "repoDeleteBranch" } as const;
@@ -107,8 +108,8 @@ export async function deleteForgejoBranch<TVersion extends ForgejoVersion>(
 
 function assertMutableBranch<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  branch: BranchData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  branch: BranchData<"forgejo", TVersion, ForgejoProviderTypes>,
   operation: string,
 ): void {
   if (repository.defaultBranch !== undefined && branch.name === repository.defaultBranch) {

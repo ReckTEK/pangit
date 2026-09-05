@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type {
   CombinedStatus as CombinedStatus126,
   CommitStatus as CommitStatus126,
@@ -48,10 +49,10 @@ type GiteaStatusState = "error" | "failure" | "pending" | "skipped" | "success" 
 /** Read exactly one commit-status page for a branch, tag, or commit reference. */
 export async function listGiteaCommitStatuses<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   ref: string,
   request: ResolvedPageRequest,
-): Promise<Page<CommitStatusData<"gitea", TVersion>>> {
+): Promise<Page<CommitStatusData<"gitea", TVersion, GiteaProviderTypes>>> {
   const operation = { universal: "listCommitStatuses", native: "repoListStatusesByRef" } as const;
   const reference = requireIdentity(ref, "commit-status reference");
   const client = await context.client();
@@ -90,10 +91,10 @@ export async function listGiteaCommitStatuses<TVersion extends GiteaVersion>(
 /** Fetch the provider's bounded combined status without an implicit all-pages scan. */
 export async function getGiteaCommitStatus<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   ref: string,
   options: OperationOptions = {},
-): Promise<CombinedCommitStatus<"gitea", TVersion>> {
+): Promise<CombinedCommitStatus<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = {
     universal: "getCommitStatus",
     native: "repoGetCombinedStatusByRef",
@@ -138,11 +139,11 @@ export async function getGiteaCommitStatus<TVersion extends GiteaVersion>(
 /** Create one portable commit status; provider-only read states are intentionally not writable here. */
 export async function setGiteaCommitStatus<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   ref: string,
   input: SetCommitStatusInput,
-  options: SetCommitStatusOptions<"gitea"> = {},
-): Promise<CommitStatusData<"gitea", TVersion>> {
+  options: SetCommitStatusOptions<"gitea", GiteaProviderTypes> = {},
+): Promise<CommitStatusData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = { universal: "setCommitStatus", native: "repoCreateStatus" } as const;
   const reference = requireIdentity(ref, "commit-status reference");
   const statusContext = requireIdentity(input.context, "commit-status context");
@@ -177,7 +178,7 @@ export function normalizeGiteaCommitStatus<TVersion extends GiteaVersion>(
   client: GiteaClient<TVersion>,
   ref: string,
   status: AnyGiteaCommitStatus,
-): CommitStatusData<"gitea", TVersion> {
+): CommitStatusData<"gitea", TVersion, GiteaProviderTypes> {
   const id = optionalScalarText(status.id);
   const description = optionalText(status.description);
   const targetUrl = optionalText(status.target_url);

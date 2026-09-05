@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import {
   type OperationOptions,
   requireIdentity,
@@ -32,9 +33,9 @@ import { normalizeGiteaRelease } from "./normalize.ts";
 /** Read exactly one provider release page. */
 export async function listGiteaReleases<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   request: ResolvedPageRequest,
-): Promise<Page<ReleaseData<"gitea", TVersion>>> {
+): Promise<Page<ReleaseData<"gitea", TVersion, GiteaProviderTypes>>> {
   const operation = { universal: "listReleases", native: "repoListReleases" } as const;
   const client = await context.client();
   const cursor = decodeGiteaPageCursor(request.cursor, { version: context.version, operation });
@@ -59,10 +60,10 @@ export async function listGiteaReleases<TVersion extends GiteaVersion>(
 /** Fetch one release directly by ID. */
 export async function getGiteaRelease<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   id: string,
   options: OperationOptions = {},
-): Promise<ReleaseData<"gitea", TVersion>> {
+): Promise<ReleaseData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = { universal: "getRelease", native: "repoGetRelease" } as const;
   const releaseId = parsePositiveInt64(id, "release id");
   const client = await context.client();
@@ -83,10 +84,10 @@ export async function getGiteaRelease<TVersion extends GiteaVersion>(
 /** Fetch one release directly by tag name. */
 export async function getGiteaReleaseByTag<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   tagName: string,
   options: OperationOptions = {},
-): Promise<ReleaseData<"gitea", TVersion>> {
+): Promise<ReleaseData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = { universal: "getReleaseByTag", native: "repoGetReleaseByTag" } as const;
   const tag = requireIdentity(tagName, "release tag name");
   const client = await context.client();

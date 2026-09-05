@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type {
   PackageFileData,
   PackageVersionData,
@@ -21,7 +22,7 @@ export function normalizeForgejoPackage<TVersion extends ForgejoVersion>(
   client: ForgejoClient<TVersion>,
   payload: ForgejoPackageEntityPayload<TVersion, "package">,
   fallbackOwner: string,
-): PackageVersionData<"forgejo", TVersion> {
+): PackageVersionData<"forgejo", TVersion, ForgejoProviderTypes> {
   if (!isPackagePayload(payload)) throw new TypeError("malformed Forgejo package payload");
   const owner = payload.owner?.login ?? requireIdentity(fallbackOwner, "package owner");
   return Object.freeze({
@@ -43,7 +44,7 @@ export function normalizeForgejoPackage<TVersion extends ForgejoVersion>(
 export function normalizeForgejoPackageFile<TVersion extends ForgejoVersion>(
   client: ForgejoClient<TVersion>,
   payload: ForgejoPackageEntityPayload<TVersion, "packageFile">,
-): PackageFileData<"forgejo", TVersion> {
+): PackageFileData<"forgejo", TVersion, ForgejoProviderTypes> {
   if (!isPackageFilePayload(payload)) throw new TypeError("malformed Forgejo package-file payload");
   return Object.freeze({
     id: String(payload.id),

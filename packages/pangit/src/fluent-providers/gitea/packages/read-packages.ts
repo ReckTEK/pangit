@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type {
   ListPackagesRequest,
   PackageCoordinates,
@@ -35,7 +36,7 @@ export async function listGiteaPackages<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
   owner: string,
   request: ListPackagesRequest,
-): Promise<Page<PackageVersionData<"gitea", TVersion>>> {
+): Promise<Page<PackageVersionData<"gitea", TVersion, GiteaProviderTypes>>> {
   const operation = { universal: "listPackages", native: "listPackages" } as const;
   const packageOwner = requireIdentity(owner, "package owner");
   const cursor = decodeGiteaPageCursor(request.cursor, { version: context.version, operation });
@@ -72,7 +73,7 @@ export async function listGiteaPackageVersions<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
   coordinates: PackageCoordinates,
   request: ResolvedPageRequest,
-): Promise<Page<PackageVersionData<"gitea", TVersion>>> {
+): Promise<Page<PackageVersionData<"gitea", TVersion, GiteaProviderTypes>>> {
   const operation = {
     universal: "listPackageVersions",
     native: "listPackageVersions",
@@ -110,7 +111,7 @@ export async function getGiteaPackageVersion<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
   identity: PackageVersionIdentity,
   options: OperationOptions = {},
-): Promise<PackageVersionData<"gitea", TVersion>> {
+): Promise<PackageVersionData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = { universal: "getPackageVersion", native: "getPackage" } as const;
   const path = packageVersionPath(identity);
   const client = await context.client();
@@ -129,7 +130,7 @@ export async function findGiteaPackageVersion<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
   identity: PackageVersionIdentity,
   options: OperationOptions = {},
-): Promise<PackageVersionData<"gitea", TVersion> | undefined> {
+): Promise<PackageVersionData<"gitea", TVersion, GiteaProviderTypes> | undefined> {
   const operation = { universal: "findPackageVersion", native: "getPackage" } as const;
   const path = packageVersionPath(identity);
   const client = await context.client();

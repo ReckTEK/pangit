@@ -1,3 +1,4 @@
+import type { GitLabProviderTypes } from "../provider-types.ts";
 import type { GitLabAdapterContext } from "../transport/GitLabAdapterContext.ts";
 import type { GitLabVersion } from "../native/GitLabNative.ts";
 import type {
@@ -24,7 +25,7 @@ import { door } from "../native/door.ts";
 async function issue<V extends GitLabVersion>(
   c: GitLabAdapterContext<V>,
   p: Dto,
-): Promise<IssueData<"gitlab", V>> {
+): Promise<IssueData<"gitlab", V, GitLabProviderTypes>> {
   return Object.freeze({
     id: id(c, "normalizeIssue", p.id),
     number: number(c, "normalizeIssue", p.iid),
@@ -54,7 +55,7 @@ async function note<V extends GitLabVersion>(
   c: GitLabAdapterContext<V>,
   p: Dto,
   issueNumber?: number,
-): Promise<IssueCommentData<"gitlab", V>> {
+): Promise<IssueCommentData<"gitlab", V, GitLabProviderTypes>> {
   return Object.freeze({
     id: `${issueNumber ?? number(c, "normalizeIssueComment", p.noteable_iid)}:${
       id(c, "normalizeIssueComment", p.id)

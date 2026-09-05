@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import { ProviderInvariantError } from "../../../fluent-api/adapter-contract/errors.ts";
 import type {
   BlobData,
@@ -38,11 +39,11 @@ export const giteaBlobReadSupport = Object.freeze({
 /** Read one Git blob directly by object ID. */
 export async function getGiteaBlob<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   requestedSha: string,
   options: OperationOptions = {},
   operation: GiteaOperationIdentity = { universal: "getBlob", native: "GetBlob" },
-): Promise<BlobData<"gitea", TVersion>> {
+): Promise<BlobData<"gitea", TVersion, GiteaProviderTypes>> {
   const sha = requireGitObjectId(requestedSha);
   const client = await context.client();
   const payload = await requestGiteaBody<AnyGiteaBlob, TVersion>(
@@ -84,7 +85,7 @@ export async function getGiteaBlob<TVersion extends GiteaVersion>(
 /** Read one Git blob as a defensive byte copy with one direct request. */
 export async function readGiteaBlobBytes<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   sha: string,
   options: OperationOptions = {},
   operation = "readBlobBytes",
@@ -99,7 +100,7 @@ export async function readGiteaBlobBytes<TVersion extends GiteaVersion>(
 /** Read one Git blob as strict UTF-8 text. */
 export async function readGiteaBlobText<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   sha: string,
   options: OperationOptions = {},
 ): Promise<string> {
@@ -111,7 +112,7 @@ export async function readGiteaBlobText<TVersion extends GiteaVersion>(
 /** Read one Git blob as JSON without asserting a caller-specific schema. */
 export async function readGiteaBlobJson<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   sha: string,
   options: OperationOptions = {},
 ): Promise<unknown> {
@@ -123,7 +124,7 @@ export async function readGiteaBlobJson<TVersion extends GiteaVersion>(
 /** Git objects have no filename or file MIME type; the caller supplies a name or explicit type. */
 export async function readGiteaBlob<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   sha: string,
   options: ReadGitBlobOptions = {},
 ): Promise<globalThis.Blob> {

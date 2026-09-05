@@ -1,3 +1,4 @@
+import type { GitLabProviderTypes } from "../provider-types.ts";
 import type { GitLabAdapterContext } from "../transport/GitLabAdapterContext.ts";
 import type { GitLabVersion } from "../native/GitLabNative.ts";
 import type {
@@ -49,7 +50,7 @@ async function pkg<V extends GitLabVersion>(
   c: GitLabAdapterContext<V>,
   owner: string,
   p: Dto,
-): Promise<PackageVersionData<"gitlab", V>> {
+): Promise<PackageVersionData<"gitlab", V, GitLabProviderTypes>> {
   return Object.freeze({
     id: id(c, "normalizePackage", p.id),
     owner,
@@ -66,7 +67,7 @@ export function packages<V extends GitLabVersion>(c: GitLabAdapterContext<V>) {
   const find = async (i: PackageVersionIdentity, o: { signal?: AbortSignal } = {}) => {
     let cursor: string | undefined;
     let pages = 0;
-    let found: PackageVersionData<"gitlab", V> | undefined;
+    let found: PackageVersionData<"gitlab", V, GitLabProviderTypes> | undefined;
     do {
       const values = await page(
         c,
@@ -149,7 +150,8 @@ export function packages<V extends GitLabVersion>(c: GitLabAdapterContext<V>) {
       const result:
         import("../../../fluent-api/adapter-contract/optional/packages.ts").PackageFileData<
           "gitlab",
-          V
+          V,
+          GitLabProviderTypes
         >[] = [];
       let cursor: string | undefined;
       const limit = Math.min(100, o.maxFiles + 1);

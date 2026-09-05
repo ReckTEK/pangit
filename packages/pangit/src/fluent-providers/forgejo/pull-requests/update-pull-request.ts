@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import {
   type OperationOptions,
   requireIdentity,
@@ -21,11 +22,11 @@ import { normalizeForgejoPullRequest } from "./normalize-pull-request.ts";
 /** Update only fields explicitly supplied by the caller. */
 export async function updateForgejoPullRequest<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  pullRequest: PullRequestData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  pullRequest: PullRequestData<"forgejo", TVersion, ForgejoProviderTypes>,
   input: UpdatePullRequestInput,
   options: OperationOptions = {},
-): Promise<PullRequestData<"forgejo", TVersion>> {
+): Promise<PullRequestData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = { universal: "updatePullRequest", native: "repoEditPullRequest" } as const;
   if (
     input.title === undefined && input.description === undefined && input.targetBranch === undefined
@@ -64,10 +65,10 @@ export async function updateForgejoPullRequest<TVersion extends ForgejoVersion>(
 /** Close one pull request directly through its edit endpoint. */
 export async function closeForgejoPullRequest<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  pullRequest: PullRequestData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  pullRequest: PullRequestData<"forgejo", TVersion, ForgejoProviderTypes>,
   options: OperationOptions = {},
-): Promise<PullRequestData<"forgejo", TVersion>> {
+): Promise<PullRequestData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = { universal: "closePullRequest", native: "repoEditPullRequest" } as const;
   const client = await context.client();
   const payload = await requestForgejoBody<AnyForgejoPullRequest, TVersion>(

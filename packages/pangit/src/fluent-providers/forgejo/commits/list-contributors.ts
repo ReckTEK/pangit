@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import { aggregateContributors } from "../../../fluent-api/adapter-contract/contributor-aggregation.ts";
 import type {
   ContributorData,
@@ -21,7 +22,7 @@ import { listForgejoCommits } from "./read-commits.ts";
 /** Aggregate one explicitly bounded commit-history slice by documented Git author identity. */
 export async function listForgejoContributors<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   request: ListContributorsRequest,
 ): Promise<ScanPage<ContributorData>> {
   const operation = { universal: "listContributors", native: "repoGetAllCommits" } as const;

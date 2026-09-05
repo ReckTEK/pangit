@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import { loadRestClientModule } from "../transport/create-rest-client.ts";
 
 import type {
@@ -27,11 +28,11 @@ import { normalizeGiteaCommit } from "./normalize-commit.ts";
 /** Compare two refs with one provider request, including Gitea 1.27.2 raw diff/patch output. */
 export async function compareGiteaCommits<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   base: string,
   head: string,
-  options: CompareCommitsOptions<"gitea", TVersion> = {},
-): Promise<CommitComparison<"gitea", TVersion> | GiteaCommitComparisonOutput> {
+  options: CompareCommitsOptions<"gitea", TVersion, GiteaProviderTypes> = {},
+): Promise<CommitComparison<"gitea", TVersion, GiteaProviderTypes> | GiteaCommitComparisonOutput> {
   const operation = { universal: "compareCommits", native: "repoCompareDiff" } as const;
   const baseRef = requireIdentity(base, "comparison base");
   const headRef = requireIdentity(head, "comparison head");

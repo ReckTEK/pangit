@@ -1,3 +1,4 @@
+import type { GitLabProviderTypes } from "../provider-types.ts";
 import type { GitLabAdapterContext } from "../transport/GitLabAdapterContext.ts";
 import type { GitLabVersion } from "../native/GitLabNative.ts";
 import { NotFoundError } from "../../../fluent-api/adapter-contract/errors.ts";
@@ -146,7 +147,7 @@ export function ciRunDiscovery<V extends GitLabVersion>(
     findCiRunArtifact: async (r, n, name, o) => {
       let cursor: string | undefined;
       let count = 0;
-      let found: CiArtifactData<"gitlab", V> | undefined;
+      let found: CiArtifactData<"gitlab", V, GitLabProviderTypes> | undefined;
       do {
         const values = await page(
           c,

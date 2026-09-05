@@ -1,4 +1,9 @@
-import type { FluentProvider, ProviderVersion } from "../../adapter-contract/provider.ts";
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../../adapter-contract/provider.ts";
+
 import type {
   ProviderRepositoryWebhookNative,
   RepositoryWebhookContentType,
@@ -9,7 +14,8 @@ import type {
 /** Immutable normalized repository-webhook snapshot. */
 export interface RepositoryWebhook<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly id: string;
   readonly url: string;
@@ -21,15 +27,16 @@ export interface RepositoryWebhook<
   readonly providerContentType?: string;
   readonly createdAt?: string;
   readonly updatedAt?: string;
-  readonly native: ProviderRepositoryWebhookNative<TProvider, TVersion>;
+  readonly native: ProviderRepositoryWebhookNative<TProvider, TVersion, TRegistry>;
 }
 
 export function createRepositoryWebhook<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
-  data: RepositoryWebhookData<TProvider, TVersion>,
-): RepositoryWebhook<TProvider, TVersion> {
+  data: RepositoryWebhookData<TProvider, TVersion, TRegistry>,
+): RepositoryWebhook<TProvider, TVersion, TRegistry> {
   return Object.freeze({
     id: data.id,
     url: data.url,

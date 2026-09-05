@@ -1,3 +1,4 @@
+import type { GitLabProviderTypes } from "../provider-types.ts";
 import type { OperationOptions } from "../../../fluent-api/adapter-contract/operation-options.ts";
 import { ConflictError, NotFoundError } from "../../../fluent-api/adapter-contract/errors.ts";
 import type { GitLabAdapterContext } from "../transport/GitLabAdapterContext.ts";
@@ -31,7 +32,7 @@ export async function pullRequest<V extends GitLabVersion>(
   r: Repo<V>,
   p: Dto,
   o: OperationOptions = {},
-): Promise<PullRequestData<"gitlab", V>> {
+): Promise<PullRequestData<"gitlab", V, GitLabProviderTypes>> {
   const sourceId = id(c, "normalizePullRequest", p.source_project_id);
   let source = r;
   if (sourceId !== r.id) {

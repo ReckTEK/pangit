@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import { ValidationError } from "../../../fluent-api/adapter-contract/errors.ts";
 import type {
   BranchRuleData,
@@ -22,9 +23,9 @@ import { normalizeForgejoBranchRule } from "./normalize.ts";
 /** Read Forgejo's unpaginated configured-rule result once and enforce the caller's hard bound. */
 export async function listForgejoBranchRules<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   options: ListBranchRulesOptions,
-): Promise<readonly BranchRuleData<"forgejo", TVersion>[]> {
+): Promise<readonly BranchRuleData<"forgejo", TVersion, ForgejoProviderTypes>[]> {
   const operation = {
     universal: "listBranchRules",
     native: "repoListBranchProtection",
@@ -59,10 +60,10 @@ export async function listForgejoBranchRules<TVersion extends ForgejoVersion>(
 /** Fetch one configured rule directly by its name or pattern. */
 export async function getForgejoBranchRule<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   name: string,
   options: OperationOptions = {},
-): Promise<BranchRuleData<"forgejo", TVersion>> {
+): Promise<BranchRuleData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = { universal: "getBranchRule", native: "repoGetBranchProtection" } as const;
   const client = await context.client();
   const payload = await requestForgejoBody<AnyForgejoRule, TVersion>(

@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type { CommitData } from "../../../fluent-api/adapter-contract/commits.ts";
 
 import { requirePositiveInteger } from "../../../fluent-api/adapter-contract/operation-options.ts";
@@ -20,10 +21,10 @@ import { requireCommitArray } from "./validate-payload.ts";
 /** Read exactly one page of pull-request commits with expensive per-commit facets disabled. */
 export async function listGiteaPullRequestCommits<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  pullRequest: PullRequestData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  pullRequest: PullRequestData<"gitea", TVersion, GiteaProviderTypes>,
   request: ResolvedPageRequest,
-): Promise<Page<CommitData<"gitea", TVersion>>> {
+): Promise<Page<CommitData<"gitea", TVersion, GiteaProviderTypes>>> {
   const operation = {
     universal: "listPullRequestCommits",
     native: "repoGetPullRequestCommits",

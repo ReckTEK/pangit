@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type { OperationOptions } from "../../../fluent-api/adapter-contract/operation-options.ts";
 
 import type { PullRequestData } from "../../../fluent-api/adapter-contract/pull-requests.ts";
@@ -11,8 +12,8 @@ import { pullRequestPath, requestOptions } from "./request-options.ts";
 /** Publish an approval directly rather than creating and then submitting a pending review. */
 export async function approveGiteaPullRequest<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  pullRequest: PullRequestData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  pullRequest: PullRequestData<"gitea", TVersion, GiteaProviderTypes>,
   body?: string,
   options: OperationOptions = {},
 ): Promise<void> {

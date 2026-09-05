@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import {
   requireIdentity,
   requirePositiveInteger,
@@ -21,10 +22,10 @@ import { getGiteaPullRequest } from "./get-pull-request.ts";
 /** Merge directly, then perform the one hydration needed by the retained-data return contract. */
 export async function mergeGiteaPullRequest<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  pullRequest: PullRequestData<"gitea", TVersion>,
-  options: MergePullRequestOptions<"gitea"> = {},
-): Promise<PullRequestData<"gitea", TVersion>> {
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  pullRequest: PullRequestData<"gitea", TVersion, GiteaProviderTypes>,
+  options: MergePullRequestOptions<"gitea", GiteaProviderTypes> = {},
+): Promise<PullRequestData<"gitea", TVersion, GiteaProviderTypes>> {
   const mergeOperation = {
     universal: "mergePullRequest",
     native: "repoMergePullRequest",

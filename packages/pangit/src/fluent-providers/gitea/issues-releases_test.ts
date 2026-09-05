@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "./provider-types.ts";
 import type { RepositoryData } from "../../fluent-api/adapter-contract/repositories.ts";
 import { GiteaAdapterContext } from "./transport/GiteaAdapterContext.ts";
 import type { GiteaVersion } from "./native/GiteaEntityNative.ts";
@@ -313,14 +314,14 @@ for (const version of ["1.26.4", "1.27.2"] as const) {
 
 function fixtureRepository<TVersion extends GiteaVersion>(
   _version: TVersion,
-): RepositoryData<"gitea", TVersion> {
+): RepositoryData<"gitea", TVersion, GiteaProviderTypes> {
   return {
     id: "11",
     owner: "acme",
     name: "project",
     fullName: "acme/project",
     native: {},
-  } as RepositoryData<"gitea", TVersion>;
+  } as RepositoryData<"gitea", TVersion, GiteaProviderTypes>;
 }
 
 function issuePayload() {

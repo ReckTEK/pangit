@@ -1,3 +1,4 @@
+import type { GitLabProviderTypes } from "../provider-types.ts";
 import type { GitLabAdapterContext } from "../transport/GitLabAdapterContext.ts";
 import type { GitLabVersion } from "../native/GitLabNative.ts";
 
@@ -9,7 +10,7 @@ import { door } from "../native/door.ts";
 export async function tag<V extends GitLabVersion>(
   c: GitLabAdapterContext<V>,
   p: Dto,
-): Promise<TagData<"gitlab", V>> {
+): Promise<TagData<"gitlab", V, GitLabProviderTypes>> {
   return Object.freeze({
     name: required(c, "normalizeTag", p.name),
     sha: id(c, "normalizeTag", object(c, "normalizeTag", p.commit).id),

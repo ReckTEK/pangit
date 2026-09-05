@@ -1,4 +1,9 @@
-import type { FluentProvider, ProviderVersion } from "../adapter-contract/provider.ts";
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../adapter-contract/provider.ts";
+
 import type {
   PullRequestData,
   PullRequestRef,
@@ -8,7 +13,8 @@ import type { ProviderEntityNative } from "../native-access/ProviderNativeRegist
 
 export interface PullRequest<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly id: string;
   readonly number: number;
@@ -23,13 +29,16 @@ export interface PullRequest<
   readonly mergeBaseSha?: string;
   readonly mergeCommitSha?: string;
   readonly url?: string;
-  readonly native: ProviderEntityNative<TProvider, TVersion, "pullRequest">;
+  readonly native: ProviderEntityNative<TProvider, TVersion, "pullRequest", TRegistry>;
 }
 
 export function createPullRequest<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
->(data: PullRequestData<TProvider, TVersion>): PullRequest<TProvider, TVersion> {
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+>(
+  data: PullRequestData<TProvider, TVersion, TRegistry>,
+): PullRequest<TProvider, TVersion, TRegistry> {
   return Object.freeze({
     id: data.id,
     number: data.number,

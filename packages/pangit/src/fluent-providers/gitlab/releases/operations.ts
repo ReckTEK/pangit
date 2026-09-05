@@ -1,3 +1,4 @@
+import type { GitLabProviderTypes } from "../provider-types.ts";
 import type { GitLabAdapterContext } from "../transport/GitLabAdapterContext.ts";
 import type { GitLabVersion } from "../native/GitLabNative.ts";
 import type {
@@ -24,7 +25,7 @@ import { door } from "../native/door.ts";
 async function release<V extends GitLabVersion>(
   c: GitLabAdapterContext<V>,
   p: Dto,
-): Promise<ReleaseData<"gitlab", V>> {
+): Promise<ReleaseData<"gitlab", V, GitLabProviderTypes>> {
   const tagName = required(c, "normalizeRelease", p.tag_name);
   return Object.freeze({
     id: tagName,
@@ -44,7 +45,7 @@ async function release<V extends GitLabVersion>(
 async function asset<V extends GitLabVersion>(
   c: GitLabAdapterContext<V>,
   p: Dto,
-): Promise<ReleaseAssetData<"gitlab", V>> {
+): Promise<ReleaseAssetData<"gitlab", V, GitLabProviderTypes>> {
   return Object.freeze({
     id: id(c, "normalizeReleaseAsset", p.id),
     name: required(c, "normalizeReleaseAsset", p.name),
@@ -153,7 +154,7 @@ export function releases<V extends GitLabVersion>(c: GitLabAdapterContext<V>) {
       }, o);
     },
     listReleaseAssets: async (r, p, o) => {
-      const result: ReleaseAssetData<"gitlab", V>[] = [];
+      const result: ReleaseAssetData<"gitlab", V, GitLabProviderTypes>[] = [];
       let cursor: string | undefined;
       do {
         const values = await page(

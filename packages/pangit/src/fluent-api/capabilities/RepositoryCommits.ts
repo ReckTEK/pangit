@@ -1,4 +1,9 @@
-import type { FluentProvider, ProviderVersion } from "../adapter-contract/provider.ts";
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../adapter-contract/provider.ts";
+
 import {
   type CommitComparison,
   type CommitFileData,
@@ -49,48 +54,53 @@ export interface ListContributorsOptions
 
 export interface CommitComparisonResult<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
-> extends Omit<CommitComparison<TProvider, TVersion>, "commits"> {
-  readonly commits: readonly Commit<TProvider, TVersion>[];
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> extends Omit<CommitComparison<TProvider, TVersion, TRegistry>, "commits"> {
+  readonly commits: readonly Commit<TProvider, TVersion, TRegistry>[];
 }
 
 export interface MergeBases<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
-> extends Omit<MergeBasesResult<TProvider, TVersion>, "commits"> {
-  readonly commits: readonly Commit<TProvider, TVersion>[];
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> extends Omit<MergeBasesResult<TProvider, TVersion, TRegistry>, "commits"> {
+  readonly commits: readonly Commit<TProvider, TVersion, TRegistry>[];
 }
 
 export type CompareCommitsOperation<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > = OperationExtension<
   "commits.compare",
   TProvider,
   TVersion,
-  CommitComparisonResult<TProvider, TVersion>
+  CommitComparisonResult<TProvider, TVersion, TRegistry>,
+  TRegistry
 >;
 
 export interface RepositoryCommits<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
-  list(options?: ListCommitsOptions): Promise<Page<Commit<TProvider, TVersion>>>;
-  get(sha: string, options?: GetCommitOptions): Promise<Commit<TProvider, TVersion>>;
+  list(options?: ListCommitsOptions): Promise<Page<Commit<TProvider, TVersion, TRegistry>>>;
+  get(sha: string, options?: GetCommitOptions): Promise<Commit<TProvider, TVersion, TRegistry>>;
   getMany(
     shas: readonly string[],
     options?: GetCommitsOptions,
-  ): Promise<readonly Commit<TProvider, TVersion>[]>;
+  ): Promise<readonly Commit<TProvider, TVersion, TRegistry>[]>;
   compare(
     base: string,
     head: string,
-  ): CompareCommitsOperation<TProvider, TVersion>;
+  ): CompareCommitsOperation<TProvider, TVersion, TRegistry>;
   files(sha: string, options?: OperationOptions): Promise<readonly Readonly<CommitFileData>[]>;
   mergeBases(
     left: string,
     right: string,
     options: MergeBaseOptions,
-  ): Promise<MergeBases<TProvider, TVersion>>;
+  ): Promise<MergeBases<TProvider, TVersion, TRegistry>>;
   countReachable(include: string, exclude?: string, options?: OperationOptions): Promise<number>;
   findRefs(sha: string, options: FindCommitRefsOptions): Promise<Page<CommitRefData>>;
   contributors(options: ListContributorsOptions): Promise<ScanPage<ContributorData>>;
@@ -98,11 +108,12 @@ export interface RepositoryCommits<
 
 export function createRepositoryCommits<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
-  adapter: GitHostAdapter<TProvider, TVersion>,
-  repository: RepositoryData<TProvider, TVersion>,
-): RepositoryCommits<TProvider, TVersion> {
+  adapter: GitHostAdapter<TProvider, TVersion, TRegistry>,
+  repository: RepositoryData<TProvider, TVersion, TRegistry>,
+): RepositoryCommits<TProvider, TVersion, TRegistry> {
   return Object.freeze({
     async list(options: ListCommitsOptions = {}) {
       const context = validationContext(adapter, "listCommits");
@@ -148,7 +159,8 @@ export function createRepositoryCommits<
         "commits.compare",
         TProvider,
         TVersion,
-        CommitComparisonResult<TProvider, TVersion>
+        CommitComparisonResult<TProvider, TVersion, TRegistry>,
+        TRegistry
       >({
         operation: "commits.compare",
         support: adapter.extensions["commits.compare"],
@@ -164,7 +176,7 @@ export function createRepositoryCommits<
           const comparison = await adapter.compareCommits(repository, baseRef, headRef, {
             ...options,
             ...(extension === undefined ? {} : { extension }),
-          } as CompareCommitsOptions<TProvider, TVersion>);
+          } as CompareCommitsOptions<TProvider, TVersion, TRegistry>);
           if (!("commits" in comparison)) {
             return comparison;
           }
@@ -312,9 +324,10 @@ function commitListOptions(
 
 function validationContext<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
-  adapter: GitHostAdapter<TProvider, TVersion>,
+  adapter: GitHostAdapter<TProvider, TVersion, TRegistry>,
   operation: string,
 ): ValidationErrorContext<TProvider, TVersion> {
   return { provider: adapter.provider, version: adapter.version, operation };

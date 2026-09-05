@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type {
   CreatePullRequestReviewInput,
   CreatePullRequestReviewOptions,
@@ -35,11 +36,11 @@ import { normalizeGiteaPullRequestReview } from "./normalize.ts";
 /** Create one pending review without provider-specific inline positions. */
 export async function createGiteaPullRequestReview<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  pullRequest: PullRequestData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  pullRequest: PullRequestData<"gitea", TVersion, GiteaProviderTypes>,
   input: CreatePullRequestReviewInput,
-  options: CreatePullRequestReviewOptions<"gitea"> = {},
-): Promise<PullRequestReviewData<"gitea", TVersion>> {
+  options: CreatePullRequestReviewOptions<"gitea", GiteaProviderTypes> = {},
+): Promise<PullRequestReviewData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = {
     universal: "createPullRequestReview",
     native: "repoCreatePullReview",
@@ -98,12 +99,12 @@ export async function createGiteaPullRequestReview<TVersion extends GiteaVersion
 /** Submit one known pending review directly. */
 export async function submitGiteaPullRequestReview<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  pullRequest: PullRequestData<"gitea", TVersion>,
-  review: PullRequestReviewData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  pullRequest: PullRequestData<"gitea", TVersion, GiteaProviderTypes>,
+  review: PullRequestReviewData<"gitea", TVersion, GiteaProviderTypes>,
   input: SubmitPullRequestReviewInput,
   options: OperationOptions = {},
-): Promise<PullRequestReviewData<"gitea", TVersion>> {
+): Promise<PullRequestReviewData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = {
     universal: "submitPullRequestReview",
     native: "repoSubmitPullReview",

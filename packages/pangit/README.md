@@ -10,15 +10,17 @@ version.
 > **Status: alpha development.** Fluent and raw REST APIs are live-tested for Gitea, GitLab, and
 > Forgejo. GitLab has
 > [explicit capability gaps and confirmed server defects](https://github.com/ReckTEK/pangit/blob/main/packages/pangit/docs/GitLab.md#provider-differences).
-> Raw clients are generated for every provider below. The package is not published to JSR yet.
+> Raw clients are generated for every provider below. Public APIs may change between alpha releases.
 
-## Use from source
+## Install
 
 ```bash
-git clone https://github.com/ReckTEK/pangit.git
-cd pangit
-deno task check
+deno add jsr:@recktek/pangit@0.1.0-alpha.2
 ```
+
+Use Deno 2 and select the alpha version explicitly; stable version ranges do not include
+prereleases. The command registers `@recktek/pangit` for the imports below. See
+[available versions](https://jsr.io/@recktek/pangit/versions) on JSR.
 
 ## Documentation
 

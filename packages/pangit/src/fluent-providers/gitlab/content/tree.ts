@@ -1,3 +1,4 @@
+import type { GitLabProviderTypes } from "../provider-types.ts";
 import type { GitLabAdapterContext } from "../transport/GitLabAdapterContext.ts";
 import type { GitLabVersion } from "../native/GitLabNative.ts";
 import type { ContentData } from "../../../fluent-api/adapter-contract/content.ts";
@@ -65,7 +66,7 @@ export async function entry<V extends GitLabVersion>(
 export async function treeContent<V extends GitLabVersion>(
   c: GitLabAdapterContext<V>,
   p: Dto,
-): Promise<ContentData<"gitlab", V>> {
+): Promise<ContentData<"gitlab", V, GitLabProviderTypes>> {
   const mode = required(c, "readContent", p.mode);
   const kind = mode === "120000"
     ? "symlink"

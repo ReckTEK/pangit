@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import { IncompleteHistoryError } from "../../../fluent-api/adapter-contract/errors.ts";
 import type { CommitData } from "../../../fluent-api/adapter-contract/commits.ts";
 
@@ -21,14 +22,14 @@ import { normalizeGiteaCommit } from "./normalize-commit.ts";
 
 export async function scanExclusiveHistory<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   include: string,
   exclude: string,
   budget: MergeBaseBudget,
   signal?: AbortSignal,
-): Promise<readonly CommitData<"gitea", TVersion>[]> {
+): Promise<readonly CommitData<"gitea", TVersion, GiteaProviderTypes>[]> {
   const client = await context.client();
-  const commits: CommitData<"gitea", TVersion>[] = [];
+  const commits: CommitData<"gitea", TVersion, GiteaProviderTypes>[] = [];
   let cursor: string | undefined;
   do {
     if (budget.remainingItems < 1) {

@@ -1,5 +1,3 @@
-import type {} from "../registration.ts";
-
 import { createGiteaBranch, deleteGiteaBranch, renameGiteaBranch } from "./mutate-branches.ts";
 
 import { getGiteaBranch, giteaBranchExists, listGiteaBranches } from "./read-branches.ts";

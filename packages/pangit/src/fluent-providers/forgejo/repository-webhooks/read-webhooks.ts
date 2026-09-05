@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type { RepositoryWebhookData } from "../../../fluent-api/adapter-contract/optional/repository-webhooks.ts";
 
 import type { OperationOptions } from "../../../fluent-api/adapter-contract/operation-options.ts";
@@ -31,9 +32,9 @@ import { normalizeForgejoRepositoryWebhook } from "./normalize.ts";
 /** Fetch exactly one requested page of repository webhooks. */
 export async function listForgejoRepositoryWebhooks<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   request: ResolvedPageRequest,
-): Promise<Page<RepositoryWebhookData<"forgejo", TVersion>>> {
+): Promise<Page<RepositoryWebhookData<"forgejo", TVersion, ForgejoProviderTypes>>> {
   const operation = { universal: "listRepositoryWebhooks", native: "repoListHooks" } as const;
   const client = await context.client();
   const cursor = decodeForgejoPageCursor(request.cursor, {
@@ -64,10 +65,10 @@ export async function listForgejoRepositoryWebhooks<TVersion extends ForgejoVers
 /** Fetch one known webhook directly by exact ID. */
 export async function getForgejoRepositoryWebhook<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   id: string,
   options: OperationOptions = {},
-): Promise<RepositoryWebhookData<"forgejo", TVersion>> {
+): Promise<RepositoryWebhookData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = { universal: "getRepositoryWebhook", native: "repoGetHook" } as const;
   const hookId = parseForgejoId(id, "webhook id");
   const client = await context.client();

@@ -1,4 +1,9 @@
-import type { FluentProvider, ProviderVersion } from "../adapter-contract/provider.ts";
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../adapter-contract/provider.ts";
+
 import type { ValidationErrorContext } from "../adapter-contract/errors.ts";
 import type { GitHostAdapter } from "../adapter-contract/GitHostAdapter.ts";
 import type { CreateForkOptions } from "../adapter-contract/forks.ts";
@@ -16,22 +21,28 @@ import type { Repository } from "../entities/Repository.ts";
 
 export interface RepositoryForks<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   /** Fetch one bounded provider page of forks. */
-  list(request?: PageRequest): Promise<Page<Repository<TProvider, TVersion>>>;
+  list(request?: PageRequest): Promise<Page<Repository<TProvider, TVersion, TRegistry>>>;
   /** Create a fork and poll only its known destination until directly usable. */
-  create(options: CreateForkOptions<TProvider, TVersion>): Promise<Repository<TProvider, TVersion>>;
+  create(
+    options: CreateForkOptions<TProvider, TVersion, TRegistry>,
+  ): Promise<Repository<TProvider, TVersion, TRegistry>>;
 }
 
 export function createRepositoryForks<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
-  adapter: GitHostAdapter<TProvider, TVersion>,
-  repository: RepositoryData<TProvider, TVersion>,
-  wrapRepository: (data: RepositoryData<TProvider, TVersion>) => Repository<TProvider, TVersion>,
-): RepositoryForks<TProvider, TVersion> {
+  adapter: GitHostAdapter<TProvider, TVersion, TRegistry>,
+  repository: RepositoryData<TProvider, TVersion, TRegistry>,
+  wrapRepository: (
+    data: RepositoryData<TProvider, TVersion, TRegistry>,
+  ) => Repository<TProvider, TVersion, TRegistry>,
+): RepositoryForks<TProvider, TVersion, TRegistry> {
   return Object.freeze({
     async list(request: PageRequest = {}) {
       const page = await adapter.listForks(
@@ -40,7 +51,7 @@ export function createRepositoryForks<
       );
       return createPage(page.items.map(wrapRepository), page);
     },
-    async create(options: CreateForkOptions<TProvider, TVersion>) {
+    async create(options: CreateForkOptions<TProvider, TVersion, TRegistry>) {
       const context = validationContext(adapter, "createFork");
       requireIdentity(options.destination.name, "fork destination name", context);
       requireIdentity(options.name ?? repository.name, "fork repository name", context);
@@ -53,9 +64,10 @@ export function createRepositoryForks<
 
 function validationContext<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
-  adapter: GitHostAdapter<TProvider, TVersion>,
+  adapter: GitHostAdapter<TProvider, TVersion, TRegistry>,
   operation: string,
 ): ValidationErrorContext<TProvider, TVersion> {
   return { provider: adapter.provider, version: adapter.version, operation };

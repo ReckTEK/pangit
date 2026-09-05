@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import { ValidationError } from "../../../fluent-api/adapter-contract/errors.ts";
 import {
   type OperationOptions,
@@ -31,10 +32,10 @@ import { normalizeForgejoReleaseAsset } from "./normalize.ts";
  */
 export async function listForgejoReleaseAssets<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  release: ReleaseData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  release: ReleaseData<"forgejo", TVersion, ForgejoProviderTypes>,
   options: ListReleaseAssetsOptions,
-): Promise<readonly ReleaseAssetData<"forgejo", TVersion>[]> {
+): Promise<readonly ReleaseAssetData<"forgejo", TVersion, ForgejoProviderTypes>[]> {
   const operation = {
     universal: "listReleaseAssets",
     native: "repoListReleaseAttachments",
@@ -74,11 +75,11 @@ export async function listForgejoReleaseAssets<TVersion extends ForgejoVersion>(
 /** Fetch one release asset directly by release and asset ID. */
 export async function getForgejoReleaseAsset<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  release: ReleaseData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  release: ReleaseData<"forgejo", TVersion, ForgejoProviderTypes>,
   id: string,
   options: OperationOptions = {},
-): Promise<ReleaseAssetData<"forgejo", TVersion>> {
+): Promise<ReleaseAssetData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = {
     universal: "getReleaseAsset",
     native: "repoGetReleaseAttachment",

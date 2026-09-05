@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type {
   CiJobData,
   ListCiJobsRequest,
@@ -32,7 +33,7 @@ import {
 /** Forgejo returns all jobs of one run. Bound the result and paginate that exact run locally. */
 async function readRunJobs<V extends ForgejoVersion>(
   context: ForgejoAdapterContext<V>,
-  repository: RepositoryData<"forgejo", V>,
+  repository: RepositoryData<"forgejo", V, ForgejoProviderTypes>,
   runId: string,
   operation: string,
   signal?: AbortSignal,
@@ -60,10 +61,10 @@ async function readRunJobs<V extends ForgejoVersion>(
 
 export async function listForgejoCiRunJobs<V extends ForgejoVersion>(
   context: ForgejoAdapterContext<V>,
-  repository: RepositoryData<"forgejo", V>,
+  repository: RepositoryData<"forgejo", V, ForgejoProviderTypes>,
   runId: string,
   request: ListCiJobsRequest,
-): Promise<Page<CiJobData<"forgejo", V>>> {
+): Promise<Page<CiJobData<"forgejo", V, ForgejoProviderTypes>>> {
   const operation = { universal: "listCiRunJobs", native: "ListActionRunJobs" } as const;
   const cursor = decodeForgejoPageCursor(request.cursor, { version: context.version, operation });
   const limit = cursor.effectiveLimit ?? request.limit;
@@ -93,10 +94,10 @@ export async function listForgejoCiRunJobs<V extends ForgejoVersion>(
 /** Run-qualified identities allow exact lookup without scanning unrelated runs. */
 export async function getForgejoCiJob<V extends ForgejoVersion>(
   context: ForgejoAdapterContext<V>,
-  repository: RepositoryData<"forgejo", V>,
+  repository: RepositoryData<"forgejo", V, ForgejoProviderTypes>,
   jobId: string,
   options: OperationOptions = {},
-): Promise<CiJobData<"forgejo", V>> {
+): Promise<CiJobData<"forgejo", V, ForgejoProviderTypes>> {
   const match = /^run:([1-9][0-9]*):job:([1-9][0-9]*)$/.exec(jobId);
   if (!match) throw new TypeError("Forgejo job identity must be run:<run ID>:job:<job ID>");
   const jobs = await readRunJobs(context, repository, match[1], "getCiJob", options.signal);
@@ -114,7 +115,7 @@ export async function getForgejoCiJob<V extends ForgejoVersion>(
 export function normalizeForgejoCiJob<V extends ForgejoVersion>(
   client: ForgejoClient<V>,
   payload: ForgejoCiEntityPayload<V, "job">,
-): CiJobData<"forgejo", V> {
+): CiJobData<"forgejo", V, ForgejoProviderTypes> {
   const conclusion = normalizeConclusion(payload.status);
   return Object.freeze({
     id: `run:${payload.run_id}:job:${payload.id}`,

@@ -1,5 +1,6 @@
+import type { Provider, ProviderTypeRegistry, ProviderVersion } from "../provider.ts";
 import type { ProviderExtensionOptions } from "../../provider-extensions/ProviderExtensionRegistry.ts";
-import type { Provider, ProviderVersion } from "../provider.ts";
+
 import type { ProviderIssueEntityNative } from "../../native-access/ProviderNativeRegistry.ts";
 import type { OperationOptions } from "../operation-options.ts";
 import type { Page, ResolvedPageRequest, ScanPage } from "../pagination.ts";
@@ -11,7 +12,8 @@ export type IssueState = "open" | "closed";
 
 export interface IssueData<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly id: string;
   readonly number: number;
@@ -26,12 +28,13 @@ export interface IssueData<
   readonly updatedAt?: string;
   readonly closedAt?: string;
   readonly url?: string;
-  readonly native: ProviderIssueEntityNative<TProvider, TVersion, "issue">;
+  readonly native: ProviderIssueEntityNative<TProvider, TVersion, "issue", TRegistry>;
 }
 
 export interface IssueCommentData<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly id: string;
   readonly body: string;
@@ -39,7 +42,7 @@ export interface IssueCommentData<
   readonly createdAt?: string;
   readonly updatedAt?: string;
   readonly url?: string;
-  readonly native: ProviderIssueEntityNative<TProvider, TVersion, "issueComment">;
+  readonly native: ProviderIssueEntityNative<TProvider, TVersion, "issueComment", TRegistry>;
 }
 
 export interface ListIssuesRequest extends ResolvedPageRequest {
@@ -62,13 +65,20 @@ export interface IssueCommentInput {
   readonly body: string;
 }
 
-export type IssueUpdateExtension<TProvider extends Provider> = ProviderExtensionOptions<
+export type IssueUpdateExtension<
+  TProvider extends Provider,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> = ProviderExtensionOptions<
   "issues.update",
-  TProvider
+  TProvider,
+  TRegistry
 >;
 
-export interface IssueUpdateOptions<TProvider extends Provider> extends OperationOptions {
-  readonly extension?: IssueUpdateExtension<TProvider>;
+export interface IssueUpdateOptions<
+  TProvider extends Provider,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> extends OperationOptions {
+  readonly extension?: IssueUpdateExtension<TProvider, TRegistry>;
 }
 
 export type IssueCapabilityOperation =
@@ -100,60 +110,61 @@ export interface IssueCapabilitySupport {
 /** Optional shared issue capability implemented by a provider adapter. */
 export interface IssueAdapter<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly issueSupport: IssueCapabilitySupport;
   listIssues(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     request: ListIssuesRequest,
-  ): Promise<Page<IssueData<TProvider, TVersion>>>;
+  ): Promise<Page<IssueData<TProvider, TVersion, TRegistry>>>;
   getIssue(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     number: number,
     options?: OperationOptions,
-  ): Promise<IssueData<TProvider, TVersion>>;
+  ): Promise<IssueData<TProvider, TVersion, TRegistry>>;
   createIssue(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     input: CreateIssueInput,
     options?: OperationOptions,
-  ): Promise<IssueData<TProvider, TVersion>>;
+  ): Promise<IssueData<TProvider, TVersion, TRegistry>>;
   updateIssue(
-    repository: RepositoryData<TProvider, TVersion>,
-    issue: IssueData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
+    issue: IssueData<TProvider, TVersion, TRegistry>,
     input: UpdateIssueInput,
-    options?: IssueUpdateOptions<TProvider>,
-  ): Promise<IssueData<TProvider, TVersion>>;
+    options?: IssueUpdateOptions<TProvider, TRegistry>,
+  ): Promise<IssueData<TProvider, TVersion, TRegistry>>;
   setIssueState(
-    repository: RepositoryData<TProvider, TVersion>,
-    issue: IssueData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
+    issue: IssueData<TProvider, TVersion, TRegistry>,
     state: IssueState,
     options?: OperationOptions,
-  ): Promise<IssueData<TProvider, TVersion>>;
+  ): Promise<IssueData<TProvider, TVersion, TRegistry>>;
   listIssueComments(
-    repository: RepositoryData<TProvider, TVersion>,
-    issue: IssueData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
+    issue: IssueData<TProvider, TVersion, TRegistry>,
     request: ResolvedPageRequest,
-  ): Promise<ScanPage<IssueCommentData<TProvider, TVersion>>>;
+  ): Promise<ScanPage<IssueCommentData<TProvider, TVersion, TRegistry>>>;
   getIssueComment(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     id: string,
     options?: OperationOptions,
-  ): Promise<IssueCommentData<TProvider, TVersion>>;
+  ): Promise<IssueCommentData<TProvider, TVersion, TRegistry>>;
   createIssueComment(
-    repository: RepositoryData<TProvider, TVersion>,
-    issue: IssueData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
+    issue: IssueData<TProvider, TVersion, TRegistry>,
     input: IssueCommentInput,
     options?: OperationOptions,
-  ): Promise<IssueCommentData<TProvider, TVersion>>;
+  ): Promise<IssueCommentData<TProvider, TVersion, TRegistry>>;
   updateIssueComment(
-    repository: RepositoryData<TProvider, TVersion>,
-    comment: IssueCommentData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
+    comment: IssueCommentData<TProvider, TVersion, TRegistry>,
     input: IssueCommentInput,
     options?: OperationOptions,
-  ): Promise<IssueCommentData<TProvider, TVersion>>;
+  ): Promise<IssueCommentData<TProvider, TVersion, TRegistry>>;
   deleteIssueComment(
-    repository: RepositoryData<TProvider, TVersion>,
-    comment: IssueCommentData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
+    comment: IssueCommentData<TProvider, TVersion, TRegistry>,
     options?: OperationOptions,
   ): Promise<void>;
 }

@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type { AnyRestResponse } from "../../../generated-rest-clients/runtime/mod.ts";
 
 import { requireIdentity } from "../../../fluent-api/adapter-contract/operation-options.ts";
@@ -22,10 +23,10 @@ import { normalizeForgejoRepository } from "./normalize-repository.ts";
 /** Create a user- or organization-owned repository without enumerating either collection. */
 export async function createForgejoRepository<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  container: RepositoryContainerData<"forgejo", TVersion>,
+  container: RepositoryContainerData<"forgejo", TVersion, ForgejoProviderTypes>,
   name: string,
   options: CreateRepositoryOptions,
-): Promise<RepositoryData<"forgejo", TVersion>> {
+): Promise<RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const universalOperation = "createRepository";
   const repositoryName = requireIdentity(name, "repository name");
   const containerName = requireIdentity(container.name, "repository container name");

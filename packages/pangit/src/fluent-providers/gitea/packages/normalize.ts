@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type {
   PackageFileData,
   PackageVersionData,
@@ -21,7 +22,7 @@ export function normalizeGiteaPackage<TVersion extends GiteaVersion>(
   client: GiteaClient<TVersion>,
   payload: GiteaPackageEntityPayload<TVersion, "package">,
   fallbackOwner: string,
-): PackageVersionData<"gitea", TVersion> {
+): PackageVersionData<"gitea", TVersion, GiteaProviderTypes> {
   if (!isPackagePayload(payload)) throw new TypeError("malformed Gitea package payload");
   const owner = payload.owner?.login ?? requireIdentity(fallbackOwner, "package owner");
   return Object.freeze({
@@ -43,7 +44,7 @@ export function normalizeGiteaPackage<TVersion extends GiteaVersion>(
 export function normalizeGiteaPackageFile<TVersion extends GiteaVersion>(
   client: GiteaClient<TVersion>,
   payload: GiteaPackageEntityPayload<TVersion, "packageFile">,
-): PackageFileData<"gitea", TVersion> {
+): PackageFileData<"gitea", TVersion, GiteaProviderTypes> {
   if (!isPackageFilePayload(payload)) throw new TypeError("malformed Gitea package-file payload");
   return Object.freeze({
     id: String(payload.id),

@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type { AnyRestResponse } from "../../../generated-rest-clients/runtime/mod.ts";
 
 import { requireIdentity } from "../../../fluent-api/adapter-contract/operation-options.ts";
@@ -28,9 +29,9 @@ import { normalizeGiteaRepository } from "./normalize-repository.ts";
 /** Read exactly one provider page from one already-resolved repository container. */
 export async function listGiteaRepositories<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  container: RepositoryContainerData<"gitea", TVersion>,
+  container: RepositoryContainerData<"gitea", TVersion, GiteaProviderTypes>,
   request: ResolvedPageRequest,
-): Promise<Page<RepositoryData<"gitea", TVersion>>> {
+): Promise<Page<RepositoryData<"gitea", TVersion, GiteaProviderTypes>>> {
   const cursorOperation = { universal: "listRepositories" } as const;
   const containerName = requireIdentity(container.name, "repository container name");
   const client = await context.client();

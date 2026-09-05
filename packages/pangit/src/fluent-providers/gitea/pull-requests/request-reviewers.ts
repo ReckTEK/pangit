@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import {
   type OperationOptions,
   requireIdentity,
@@ -15,8 +16,8 @@ import { pullRequestPath, requestOptions } from "./request-options.ts";
 /** Request reviewers with one direct provider mutation and no discovery preflight. */
 export async function requestGiteaPullRequestReviewers<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  pullRequest: PullRequestData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  pullRequest: PullRequestData<"gitea", TVersion, GiteaProviderTypes>,
   reviewers: readonly string[],
   options: OperationOptions = {},
 ): Promise<void> {

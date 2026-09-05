@@ -1,4 +1,9 @@
-import type { FluentProvider, ProviderVersion } from "../../adapter-contract/provider.ts";
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../../adapter-contract/provider.ts";
+
 import { ValidationError, type ValidationErrorContext } from "../../adapter-contract/errors.ts";
 import {
   type OperationOptions,
@@ -29,36 +34,41 @@ import {
 
 export interface RepositoryWebhooks<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly support: RepositoryWebhookCapabilitySupport;
-  list(request?: PageRequest): Promise<Page<RepositoryWebhook<TProvider, TVersion>>>;
-  get(id: string, options?: OperationOptions): Promise<RepositoryWebhook<TProvider, TVersion>>;
+  list(request?: PageRequest): Promise<Page<RepositoryWebhook<TProvider, TVersion, TRegistry>>>;
+  get(
+    id: string,
+    options?: OperationOptions,
+  ): Promise<RepositoryWebhook<TProvider, TVersion, TRegistry>>;
   create(
     input: CreateRepositoryWebhookInput,
     options?: OperationOptions,
-  ): Promise<RepositoryWebhook<TProvider, TVersion>>;
+  ): Promise<RepositoryWebhook<TProvider, TVersion, TRegistry>>;
   update(
-    webhook: RepositoryWebhook<TProvider, TVersion>,
+    webhook: RepositoryWebhook<TProvider, TVersion, TRegistry>,
     input: UpdateRepositoryWebhookInput,
     options?: OperationOptions,
-  ): Promise<RepositoryWebhook<TProvider, TVersion>>;
+  ): Promise<RepositoryWebhook<TProvider, TVersion, TRegistry>>;
   delete(
-    webhook: RepositoryWebhook<TProvider, TVersion>,
+    webhook: RepositoryWebhook<TProvider, TVersion, TRegistry>,
     options?: OperationOptions,
   ): Promise<void>;
 }
 
 export function createRepositoryWebhooks<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
-  adapter: RepositoryWebhookAdapter<TProvider, TVersion> & {
+  adapter: RepositoryWebhookAdapter<TProvider, TVersion, TRegistry> & {
     readonly provider?: TProvider;
     readonly version?: TVersion;
   },
-  repository: RepositoryData<TProvider, TVersion>,
-): RepositoryWebhooks<TProvider, TVersion> {
+  repository: RepositoryData<TProvider, TVersion, TRegistry>,
+): RepositoryWebhooks<TProvider, TVersion, TRegistry> {
   const validationContext = (
     operation: string,
   ): ValidationErrorContext<TProvider, TVersion> => ({
@@ -73,8 +83,8 @@ export function createRepositoryWebhooks<
     return resolvePageRequest(request, 50, validationContext(operation));
   };
   const data = (
-    webhook: RepositoryWebhook<TProvider, TVersion>,
-  ): RepositoryWebhookData<TProvider, TVersion> => ({
+    webhook: RepositoryWebhook<TProvider, TVersion, TRegistry>,
+  ): RepositoryWebhookData<TProvider, TVersion, TRegistry> => ({
     ...webhook,
     events: [...webhook.events],
     providerEvents: [...webhook.providerEvents],
@@ -112,7 +122,7 @@ export function createRepositoryWebhooks<
       );
     },
     async update(
-      webhook: RepositoryWebhook<TProvider, TVersion>,
+      webhook: RepositoryWebhook<TProvider, TVersion, TRegistry>,
       input: UpdateRepositoryWebhookInput,
       options: OperationOptions = {},
     ) {
@@ -126,7 +136,7 @@ export function createRepositoryWebhooks<
       );
     },
     delete(
-      webhook: RepositoryWebhook<TProvider, TVersion>,
+      webhook: RepositoryWebhook<TProvider, TVersion, TRegistry>,
       options: OperationOptions = {},
     ) {
       return adapter.deleteRepositoryWebhook(repository, data(webhook), options);

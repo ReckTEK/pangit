@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import {
   requireIdentity,
   requirePositiveInteger,
@@ -21,10 +22,10 @@ import { getForgejoPullRequest } from "./get-pull-request.ts";
 /** Merge directly, then perform the one hydration needed by the retained-data return contract. */
 export async function mergeForgejoPullRequest<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  pullRequest: PullRequestData<"forgejo", TVersion>,
-  options: MergePullRequestOptions<"forgejo"> = {},
-): Promise<PullRequestData<"forgejo", TVersion>> {
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  pullRequest: PullRequestData<"forgejo", TVersion, ForgejoProviderTypes>,
+  options: MergePullRequestOptions<"forgejo", ForgejoProviderTypes> = {},
+): Promise<PullRequestData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const mergeOperation = {
     universal: "mergePullRequest",
     native: "repoMergePullRequest",

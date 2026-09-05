@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type {
   CiJobData,
   ListCiJobsRequest,
@@ -30,10 +31,10 @@ import { wrappedPagination } from "./pagination.ts";
 /** Fetch exactly one requested page of jobs for a known run. */
 export async function listGiteaCiRunJobs<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   runId: string,
   request: ListCiJobsRequest,
-): Promise<Page<CiJobData<"gitea", TVersion>>> {
+): Promise<Page<CiJobData<"gitea", TVersion, GiteaProviderTypes>>> {
   const operation = { universal: "listCiRunJobs", native: "listWorkflowRunJobs" } as const;
   const id = parseGiteaId(runId, "workflow run id");
   const client = await context.client();
@@ -77,10 +78,10 @@ export async function listGiteaCiRunJobs<TVersion extends GiteaVersion>(
 /** Directly read one job by exact ID. */
 export async function getGiteaCiJob<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   jobId: string,
   options: OperationOptions = {},
-): Promise<CiJobData<"gitea", TVersion>> {
+): Promise<CiJobData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = { universal: "getCiJob", native: "getWorkflowJob" } as const;
   const id = requireIdentity(jobId, "workflow job id");
   const client = await context.client();
@@ -106,7 +107,7 @@ export async function getGiteaCiJob<TVersion extends GiteaVersion>(
 export function normalizeGiteaCiJob<TVersion extends GiteaVersion>(
   client: GiteaClient<TVersion>,
   payload: GiteaCiEntityPayload<TVersion, "job">,
-): CiJobData<"gitea", TVersion> {
+): CiJobData<"gitea", TVersion, GiteaProviderTypes> {
   if (!isJobPayload(payload)) throw new TypeError("malformed Gitea workflow job payload");
   const conclusion = normalizeConclusion(payload.conclusion, payload.status);
   return Object.freeze({

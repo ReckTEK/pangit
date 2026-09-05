@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type { AnyRestResponse } from "../../../generated-rest-clients/runtime/mod.ts";
 import {
   AuthenticationError,
@@ -43,7 +44,7 @@ interface ContainerCursor {
 export async function listForgejoRepositoryContainers<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
   request: ResolvedPageRequest,
-): Promise<Page<RepositoryContainerData<"forgejo", TVersion>>> {
+): Promise<Page<RepositoryContainerData<"forgejo", TVersion, ForgejoProviderTypes>>> {
   const operation = {
     universal: "listRepositoryContainers",
     native: "orgListCurrentUserOrgs",
@@ -59,7 +60,7 @@ export async function listForgejoRepositoryContainers<TVersion extends ForgejoVe
 
   const cursor = decodeContainerCursor(context, request.cursor);
   const client = await context.client();
-  const containers: RepositoryContainerData<"forgejo", TVersion>[] = [];
+  const containers: RepositoryContainerData<"forgejo", TVersion, ForgejoProviderTypes>[] = [];
   if (!cursor.userEmitted) {
     containers.push(normalizeForgejoUserContainer(client, currentUser as AnyForgejoUser));
   }
@@ -130,7 +131,7 @@ export async function getForgejoRepositoryContainer<TVersion extends ForgejoVers
   context: ForgejoAdapterContext<TVersion>,
   name: string,
   options: OperationOptions = {},
-): Promise<RepositoryContainerData<"forgejo", TVersion>> {
+): Promise<RepositoryContainerData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const organizationOperation = {
     universal: "getRepositoryContainer",
     native: "orgGet",
@@ -179,7 +180,7 @@ export async function getForgejoRepositoryContainer<TVersion extends ForgejoVers
 export function normalizeForgejoUserContainer<TVersion extends ForgejoVersion>(
   client: ForgejoClient<TVersion>,
   user: AnyForgejoUser,
-): RepositoryContainerData<"forgejo", TVersion> {
+): RepositoryContainerData<"forgejo", TVersion, ForgejoProviderTypes> {
   const name = requiredText(user.login, "user login");
   return Object.freeze({
     kind: "user",
@@ -203,7 +204,7 @@ export function normalizeForgejoUserContainer<TVersion extends ForgejoVersion>(
 export function normalizeForgejoOrganizationContainer<TVersion extends ForgejoVersion>(
   client: ForgejoClient<TVersion>,
   organization: AnyForgejoOrganization,
-): RepositoryContainerData<"forgejo", TVersion> {
+): RepositoryContainerData<"forgejo", TVersion, ForgejoProviderTypes> {
   const name = requiredText(
     optionalText(organization.name) ?? optionalText(organization.username),
     "organization name",

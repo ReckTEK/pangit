@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type { AnyRestResponse } from "../../../generated-rest-clients/runtime/mod.ts";
 import type { BranchData } from "../../../fluent-api/adapter-contract/branches.ts";
 import { ProviderInvariantError } from "../../../fluent-api/adapter-contract/errors.ts";
@@ -16,7 +17,7 @@ export type AnyForgejoBranch = ForgejoEntityPayload<ForgejoVersion, "branch">;
 export function normalizeForgejoBranch<TVersion extends ForgejoVersion>(
   client: ForgejoClient<TVersion>,
   branch: AnyForgejoBranch,
-): BranchData<"forgejo", TVersion> {
+): BranchData<"forgejo", TVersion, ForgejoProviderTypes> {
   const name = requiredText(branch.name, "branch name");
   const sha = requiredText(branch.commit?.id, `branch ${name} commit SHA`);
   return Object.freeze({

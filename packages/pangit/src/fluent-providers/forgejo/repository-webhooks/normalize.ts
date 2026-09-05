@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type {
   RepositoryWebhookData,
   RepositoryWebhookEvent,
@@ -15,7 +16,7 @@ import { fromForgejoEvent } from "./events.ts";
 export function normalizeForgejoRepositoryWebhook<TVersion extends ForgejoVersion>(
   client: ForgejoClient<TVersion>,
   payload: ForgejoRepositoryWebhookPayload<TVersion>,
-): RepositoryWebhookData<"forgejo", TVersion> {
+): RepositoryWebhookData<"forgejo", TVersion, ForgejoProviderTypes> {
   if (!isWebhookPayload(payload)) throw new TypeError("malformed Forgejo webhook payload");
   const providerEvents = Object.freeze([...(payload.events ?? [])]);
   const events = Object.freeze(

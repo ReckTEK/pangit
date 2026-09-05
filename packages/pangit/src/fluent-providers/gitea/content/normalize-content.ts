@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import { ContentUnavailableError } from "../../../fluent-api/adapter-contract/errors.ts";
 import type {
   ContentData,
@@ -25,7 +26,7 @@ export function normalizeGiteaContent<TVersion extends GiteaVersion>(
   payload: GiteaEntityPayload<TVersion, "content">,
   includeBytes: boolean,
   operation = "readContent",
-): ContentData<"gitea", TVersion> {
+): ContentData<"gitea", TVersion, GiteaProviderTypes> {
   const kind = contentKind(payload);
   const path = requiredText(payload.path, "content path");
   const name = requiredText(payload.name, `content ${path} name`);
@@ -59,7 +60,7 @@ export function normalizeBatchRead<TVersion extends GiteaVersion>(
   path: string,
   payload: AnyGiteaContent | undefined,
   includeBytes: boolean,
-): ContentReadResult<"gitea", TVersion> {
+): ContentReadResult<"gitea", TVersion, GiteaProviderTypes> {
   if (payload === undefined) return Object.freeze({ path, unavailable: "missing" });
   const kind = contentKind(payload);
   if (kind !== "file") {

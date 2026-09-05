@@ -1,5 +1,10 @@
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../../adapter-contract/provider.ts";
 import type { ProviderExtensions } from "../../provider-extensions/ExtensionSupport.ts";
-import type { FluentProvider, ProviderVersion } from "../../adapter-contract/provider.ts";
+
 import type {
   BranchRuleAdapter,
   BranchRuleCapabilitySupport,
@@ -30,50 +35,64 @@ import {
 
 export type BranchRuleOrderOperation<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > = OperationExtension<
   "branchRules.setOrder",
   TProvider,
   TVersion,
-  void
+  void,
+  TRegistry
 >;
 
 export interface RepositoryBranchRules<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly support: BranchRuleCapabilitySupport;
-  list(options: ListBranchRulesOptions): Promise<readonly BranchRule<TProvider, TVersion>[]>;
-  get(name: string, options?: OperationOptions): Promise<BranchRule<TProvider, TVersion>>;
+  list(
+    options: ListBranchRulesOptions,
+  ): Promise<readonly BranchRule<TProvider, TVersion, TRegistry>[]>;
+  get(
+    name: string,
+    options?: OperationOptions,
+  ): Promise<BranchRule<TProvider, TVersion, TRegistry>>;
   create(
     input: CreateBranchRuleInput,
     options?: OperationOptions,
-  ): Promise<BranchRule<TProvider, TVersion>>;
+  ): Promise<BranchRule<TProvider, TVersion, TRegistry>>;
   update(
-    rule: BranchRule<TProvider, TVersion>,
+    rule: BranchRule<TProvider, TVersion, TRegistry>,
     input: UpdateBranchRuleInput,
     options?: OperationOptions,
-  ): Promise<BranchRule<TProvider, TVersion>>;
-  delete(rule: BranchRule<TProvider, TVersion>, options?: OperationOptions): Promise<void>;
+  ): Promise<BranchRule<TProvider, TVersion, TRegistry>>;
+  delete(
+    rule: BranchRule<TProvider, TVersion, TRegistry>,
+    options?: OperationOptions,
+  ): Promise<void>;
   effective(
     branch: string,
     options?: OperationOptions,
-  ): Promise<EffectiveBranchProtection<TProvider, TVersion>>;
-  setOrder(): BranchRuleOrderOperation<TProvider, TVersion>;
+  ): Promise<EffectiveBranchProtection<TProvider, TVersion, TRegistry>>;
+  setOrder(): BranchRuleOrderOperation<TProvider, TVersion, TRegistry>;
 }
 
 export function createRepositoryBranchRules<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
   provider: TProvider,
   version: TVersion,
-  adapter: BranchRuleAdapter<TProvider, TVersion> & {
-    readonly extensions: ProviderExtensions<TProvider>;
+  adapter: BranchRuleAdapter<TProvider, TVersion, TRegistry> & {
+    readonly extensions: ProviderExtensions<TProvider, TRegistry>;
   },
-  repository: RepositoryData<TProvider, TVersion>,
-): RepositoryBranchRules<TProvider, TVersion> {
-  const data = (rule: BranchRule<TProvider, TVersion>): BranchRuleData<TProvider, TVersion> => ({
+  repository: RepositoryData<TProvider, TVersion, TRegistry>,
+): RepositoryBranchRules<TProvider, TVersion, TRegistry> {
+  const data = (
+    rule: BranchRule<TProvider, TVersion, TRegistry>,
+  ): BranchRuleData<TProvider, TVersion, TRegistry> => ({
     ...rule,
     statusCheckContexts: [...rule.statusCheckContexts],
     native: rule.native,
@@ -104,7 +123,7 @@ export function createRepositoryBranchRules<
       );
     },
     async update(
-      rule: BranchRule<TProvider, TVersion>,
+      rule: BranchRule<TProvider, TVersion, TRegistry>,
       input: UpdateBranchRuleInput,
       options: OperationOptions = {},
     ) {
@@ -118,7 +137,7 @@ export function createRepositoryBranchRules<
         ),
       );
     },
-    delete(rule: BranchRule<TProvider, TVersion>, options: OperationOptions = {}) {
+    delete(rule: BranchRule<TProvider, TVersion, TRegistry>, options: OperationOptions = {}) {
       return adapter.deleteBranchRule(repository, data(rule), options);
     },
     async effective(branch: string, options: OperationOptions = {}) {
@@ -137,29 +156,31 @@ export function createRepositoryBranchRules<
     },
     setOrder() {
       const context = { provider, version, operation: "setBranchRuleOrder" } as const;
-      return createOperationExtension<"branchRules.setOrder", TProvider, TVersion, void>({
-        operation: "branchRules.setOrder",
-        support: adapter.extensions["branchRules.setOrder"],
-        validationContext: context,
-        provider,
-        version,
-        context: Object.freeze({ repositoryFullName: repository.fullName }),
-        execute: async (extension, options) => {
-          if (extension === undefined) {
-            throw new ValidationError(
-              "branch-rule ordering requires a provider extension",
-              context,
+      return createOperationExtension<"branchRules.setOrder", TProvider, TVersion, void, TRegistry>(
+        {
+          operation: "branchRules.setOrder",
+          support: adapter.extensions["branchRules.setOrder"],
+          validationContext: context,
+          provider,
+          version,
+          context: Object.freeze({ repositoryFullName: repository.fullName }),
+          execute: async (extension, options) => {
+            if (extension === undefined) {
+              throw new ValidationError(
+                "branch-rule ordering requires a provider extension",
+                context,
+              );
+            }
+            await adapter.setBranchRuleOrder(
+              repository,
+              {
+                ...options,
+                extension,
+              } as BranchRuleOrderOptions<TProvider, TRegistry>,
             );
-          }
-          await adapter.setBranchRuleOrder(
-            repository,
-            {
-              ...options,
-              extension,
-            } as BranchRuleOrderOptions<TProvider>,
-          );
+          },
         },
-      });
+      );
     },
   });
 }

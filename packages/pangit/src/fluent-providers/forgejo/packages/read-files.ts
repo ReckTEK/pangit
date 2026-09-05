@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import { ProviderInvariantError } from "../../../fluent-api/adapter-contract/errors.ts";
 import type {
   ListPackageFilesOptions,
@@ -22,7 +23,7 @@ export async function listForgejoPackageFiles<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
   identity: PackageVersionIdentity,
   options: ListPackageFilesOptions,
-): Promise<readonly PackageFileData<"forgejo", TVersion>[]> {
+): Promise<readonly PackageFileData<"forgejo", TVersion, ForgejoProviderTypes>[]> {
   const operation = { universal: "listPackageFiles", native: "listPackageFiles" } as const;
   const maximum = requirePositiveInteger(options.maxFiles, "maximum package files");
   const path = packageVersionPath(identity);

@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type {
   ContentReadResult,
   ReadFilesOptions,
@@ -29,21 +30,21 @@ export const GITEA_CONTENT_BATCH_SIZE = 50;
 /** Batch only requested unique paths, then reconstruct duplicates in stable input order. */
 export async function readGiteaFiles<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   paths: readonly string[],
   options: ReadFilesOptions = {},
-): Promise<readonly ContentReadResult<"gitea", TVersion>[]> {
+): Promise<readonly ContentReadResult<"gitea", TVersion, GiteaProviderTypes>[]> {
   return await readFilesInternal(context, repository, paths, options, true, "readFiles");
 }
 
 export async function readFilesInternal<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   paths: readonly string[],
   options: ReadFilesOptions,
   includeBytes: boolean,
   operation: "readFiles" | "readPathMetadataBatch",
-): Promise<readonly ContentReadResult<"gitea", TVersion>[]> {
+): Promise<readonly ContentReadResult<"gitea", TVersion, GiteaProviderTypes>[]> {
   const operationIdentity = { universal: operation, native: "repoGetFileContentsPost" } as const;
   const validated = validateBatchPaths(context, operation, paths, options.maxItems);
   if (validated.length === 0) return Object.freeze([]);
@@ -67,7 +68,7 @@ export async function readFilesInternal<TVersion extends GiteaVersion>(
         workerSignal,
       ),
   );
-  const results = new Map<string, ContentReadResult<"gitea", TVersion>>();
+  const results = new Map<string, ContentReadResult<"gitea", TVersion, GiteaProviderTypes>>();
   for (let index = 0; index < chunks.length; index++) {
     const requestPaths = chunks[index];
     const payloads = responses[index];
@@ -140,7 +141,7 @@ export async function getContentsExt<TVersion extends GiteaVersion>(
 export async function readOneFileBatch<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
   client: GiteaClient<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   paths: readonly string[],
   ref: string | undefined,
   operation: GiteaOperationIdentity,

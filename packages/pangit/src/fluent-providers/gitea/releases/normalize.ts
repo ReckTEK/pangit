@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type {
   ReleaseAssetData,
   ReleaseData,
@@ -20,7 +21,7 @@ import {
 export function normalizeGiteaRelease<TVersion extends GiteaVersion>(
   client: GiteaClient<TVersion>,
   payload: AnyGiteaRelease,
-): ReleaseData<"gitea", TVersion> {
+): ReleaseData<"gitea", TVersion, GiteaProviderTypes> {
   const tagName = requiredText(payload.tag_name, "release tag name");
   return Object.freeze({
     id: requiredText(payload.id, `release ${tagName} id`),
@@ -57,7 +58,7 @@ export function normalizeGiteaRelease<TVersion extends GiteaVersion>(
 export function normalizeGiteaReleaseAsset<TVersion extends GiteaVersion>(
   client: GiteaClient<TVersion>,
   payload: AnyGiteaReleaseAsset,
-): ReleaseAssetData<"gitea", TVersion> {
+): ReleaseAssetData<"gitea", TVersion, GiteaProviderTypes> {
   const id = requiredText(payload.id, "release asset id");
   return Object.freeze({
     id,

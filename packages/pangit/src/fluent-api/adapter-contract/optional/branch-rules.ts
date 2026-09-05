@@ -1,5 +1,6 @@
+import type { Provider, ProviderTypeRegistry, ProviderVersion } from "../provider.ts";
 import type { ProviderExtensionOptions } from "../../provider-extensions/ProviderExtensionRegistry.ts";
-import type { Provider, ProviderVersion } from "../provider.ts";
+
 import type { ProviderBranchRuleEntityNative } from "../../native-access/ProviderNativeRegistry.ts";
 import type { OperationOptions } from "../operation-options.ts";
 import type { RepositoryData } from "../repositories.ts";
@@ -9,7 +10,8 @@ export type { ProviderBranchRuleEntityNative } from "../../native-access/Provide
 /** Configured rule values whose meaning is shared across provider implementations. */
 export interface BranchRuleData<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly name: string;
   readonly pushAllowed?: boolean;
@@ -23,13 +25,14 @@ export interface BranchRuleData<
   readonly dismissStaleApprovals?: boolean;
   readonly createdAt?: string;
   readonly updatedAt?: string;
-  readonly native: ProviderBranchRuleEntityNative<TProvider, TVersion, "configuredRule">;
+  readonly native: ProviderBranchRuleEntityNative<TProvider, TVersion, "configuredRule", TRegistry>;
 }
 
 /** Effective enforcement resolved by the provider for one concrete branch. */
 export interface EffectiveBranchProtectionData<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly branch: string;
   readonly protected: boolean;
@@ -39,7 +42,12 @@ export interface EffectiveBranchProtectionData<
   readonly requiredApprovals?: number;
   readonly currentUserCanPush?: boolean;
   readonly currentUserCanMerge?: boolean;
-  readonly native: ProviderBranchRuleEntityNative<TProvider, TVersion, "effectiveProtection">;
+  readonly native: ProviderBranchRuleEntityNative<
+    TProvider,
+    TVersion,
+    "effectiveProtection",
+    TRegistry
+  >;
 }
 
 export interface BranchRuleFields {
@@ -65,13 +73,20 @@ export interface ListBranchRulesOptions extends OperationOptions {
   readonly maxRules: number;
 }
 
-export type BranchRuleOrderExtension<TProvider extends Provider> = ProviderExtensionOptions<
+export type BranchRuleOrderExtension<
+  TProvider extends Provider,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> = ProviderExtensionOptions<
   "branchRules.setOrder",
-  TProvider
+  TProvider,
+  TRegistry
 >;
 
-export interface BranchRuleOrderOptions<TProvider extends Provider> extends OperationOptions {
-  readonly extension?: BranchRuleOrderExtension<TProvider>;
+export interface BranchRuleOrderOptions<
+  TProvider extends Provider,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> extends OperationOptions {
+  readonly extension?: BranchRuleOrderExtension<TProvider, TRegistry>;
 }
 
 export type BranchRuleOperation = "list" | "get" | "create" | "update" | "delete";
@@ -93,41 +108,42 @@ export interface BranchRuleCapabilitySupport {
 /** Optional configured-rule and effective-enforcement adapter contracts. */
 export interface BranchRuleAdapter<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly branchRuleSupport: BranchRuleCapabilitySupport;
   listBranchRules(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     options: ListBranchRulesOptions,
-  ): Promise<readonly BranchRuleData<TProvider, TVersion>[]>;
+  ): Promise<readonly BranchRuleData<TProvider, TVersion, TRegistry>[]>;
   getBranchRule(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     name: string,
     options?: OperationOptions,
-  ): Promise<BranchRuleData<TProvider, TVersion>>;
+  ): Promise<BranchRuleData<TProvider, TVersion, TRegistry>>;
   createBranchRule(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     input: CreateBranchRuleInput,
     options?: OperationOptions,
-  ): Promise<BranchRuleData<TProvider, TVersion>>;
+  ): Promise<BranchRuleData<TProvider, TVersion, TRegistry>>;
   updateBranchRule(
-    repository: RepositoryData<TProvider, TVersion>,
-    rule: BranchRuleData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
+    rule: BranchRuleData<TProvider, TVersion, TRegistry>,
     input: UpdateBranchRuleInput,
     options?: OperationOptions,
-  ): Promise<BranchRuleData<TProvider, TVersion>>;
+  ): Promise<BranchRuleData<TProvider, TVersion, TRegistry>>;
   deleteBranchRule(
-    repository: RepositoryData<TProvider, TVersion>,
-    rule: BranchRuleData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
+    rule: BranchRuleData<TProvider, TVersion, TRegistry>,
     options?: OperationOptions,
   ): Promise<void>;
   getEffectiveBranchProtection(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     branch: string,
     options?: OperationOptions,
-  ): Promise<EffectiveBranchProtectionData<TProvider, TVersion>>;
+  ): Promise<EffectiveBranchProtectionData<TProvider, TVersion, TRegistry>>;
   setBranchRuleOrder(
-    repository: RepositoryData<TProvider, TVersion>,
-    options: BranchRuleOrderOptions<TProvider>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
+    options: BranchRuleOrderOptions<TProvider, TRegistry>,
   ): Promise<void>;
 }

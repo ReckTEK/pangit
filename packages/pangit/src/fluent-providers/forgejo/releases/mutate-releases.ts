@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import {
   type OperationOptions,
   requireIdentity,
@@ -27,10 +28,10 @@ import { normalizeForgejoRelease } from "./normalize.ts";
 /** Create one release, optionally creating its tag at the supplied target. */
 export async function createForgejoRelease<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   input: CreateReleaseInput,
   options: OperationOptions = {},
-): Promise<ReleaseData<"forgejo", TVersion>> {
+): Promise<ReleaseData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = { universal: "createRelease", native: "repoCreateRelease" } as const;
   const tagName = requireIdentity(input.tagName, "release tag name");
   const name = optionalIdentity(input.name, "release name");
@@ -66,11 +67,11 @@ export async function createForgejoRelease<TVersion extends ForgejoVersion>(
 /** Update only fields in the shared release contract. */
 export async function updateForgejoRelease<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  release: ReleaseData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  release: ReleaseData<"forgejo", TVersion, ForgejoProviderTypes>,
   input: UpdateReleaseInput,
   options: OperationOptions = {},
-): Promise<ReleaseData<"forgejo", TVersion>> {
+): Promise<ReleaseData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = { universal: "updateRelease", native: "repoEditRelease" } as const;
   if (
     input.name === undefined && input.description === undefined && input.draft === undefined &&
@@ -111,8 +112,8 @@ export async function updateForgejoRelease<TVersion extends ForgejoVersion>(
 /** Delete one known release directly without a preflight lookup. */
 export async function deleteForgejoRelease<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  release: ReleaseData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  release: ReleaseData<"forgejo", TVersion, ForgejoProviderTypes>,
   options: OperationOptions = {},
 ): Promise<void> {
   const operation = { universal: "deleteRelease", native: "repoDeleteRelease" } as const;

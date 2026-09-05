@@ -1,4 +1,9 @@
-import type { FluentProvider, ProviderVersion } from "../adapter-contract/provider.ts";
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../adapter-contract/provider.ts";
+
 import type { GitHostAdapter } from "../adapter-contract/GitHostAdapter.ts";
 import { type OperationOptions, requireIdentity } from "../adapter-contract/operation-options.ts";
 
@@ -54,7 +59,8 @@ import type { ProviderRepositoryNative } from "../native-access/ProviderNativeRe
 /** Immutable repository snapshot with concern-oriented capability handles. */
 export interface Repository<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly id: string;
   readonly owner: string;
@@ -65,31 +71,35 @@ export interface Repository<
   readonly private?: boolean;
   readonly url?: string;
   readonly parent?: Readonly<RepositoryParentData>;
-  readonly native: ProviderRepositoryNative<TProvider, TVersion>;
-  readonly forks: RepositoryForks<TProvider, TVersion>;
-  readonly branches: RepositoryBranches<TProvider, TVersion>;
-  readonly tags: RepositoryTags<TProvider, TVersion>;
-  readonly commits: RepositoryCommits<TProvider, TVersion>;
-  readonly content: RepositoryContent<TProvider, TVersion>;
-  readonly pullRequests: RepositoryPullRequests<TProvider, TVersion>;
-  readonly statuses: RepositoryCommitStatuses<TProvider, TVersion>;
-  readonly issues: RepositoryIssues<TProvider, TVersion>;
-  readonly releases: RepositoryReleases<TProvider, TVersion>;
-  readonly webhooks: RepositoryWebhooks<TProvider, TVersion>;
-  readonly ciRuns: RepositoryCiRunDiscovery<TProvider, TVersion>;
-  readonly blobs: RepositoryBlobs<TProvider, TVersion>;
-  readonly branchRules: RepositoryBranchRules<TProvider, TVersion>;
+  readonly native: ProviderRepositoryNative<TProvider, TVersion, TRegistry>;
+  readonly forks: RepositoryForks<TProvider, TVersion, TRegistry>;
+  readonly branches: RepositoryBranches<TProvider, TVersion, TRegistry>;
+  readonly tags: RepositoryTags<TProvider, TVersion, TRegistry>;
+  readonly commits: RepositoryCommits<TProvider, TVersion, TRegistry>;
+  readonly content: RepositoryContent<TProvider, TVersion, TRegistry>;
+  readonly pullRequests: RepositoryPullRequests<TProvider, TVersion, TRegistry>;
+  readonly statuses: RepositoryCommitStatuses<TProvider, TVersion, TRegistry>;
+  readonly issues: RepositoryIssues<TProvider, TVersion, TRegistry>;
+  readonly releases: RepositoryReleases<TProvider, TVersion, TRegistry>;
+  readonly webhooks: RepositoryWebhooks<TProvider, TVersion, TRegistry>;
+  readonly ciRuns: RepositoryCiRunDiscovery<TProvider, TVersion, TRegistry>;
+  readonly blobs: RepositoryBlobs<TProvider, TVersion, TRegistry>;
+  readonly branchRules: RepositoryBranchRules<TProvider, TVersion, TRegistry>;
 
-  rename(name: string, options?: OperationOptions): Promise<Repository<TProvider, TVersion>>;
+  rename(
+    name: string,
+    options?: OperationOptions,
+  ): Promise<Repository<TProvider, TVersion, TRegistry>>;
   delete(options?: OperationOptions): Promise<void>;
 }
 
 class RepositoryImpl<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
-> implements Repository<TProvider, TVersion> {
-  readonly #adapter: GitHostAdapter<TProvider, TVersion>;
-  readonly #data: RepositoryData<TProvider, TVersion>;
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> implements Repository<TProvider, TVersion, TRegistry> {
+  readonly #adapter: GitHostAdapter<TProvider, TVersion, TRegistry>;
+  readonly #data: RepositoryData<TProvider, TVersion, TRegistry>;
   readonly id: string;
   readonly owner: string;
   readonly name: string;
@@ -99,24 +109,24 @@ class RepositoryImpl<
   readonly private?: boolean;
   readonly url?: string;
   readonly parent?: Readonly<RepositoryParentData>;
-  readonly native: ProviderRepositoryNative<TProvider, TVersion>;
-  readonly forks: RepositoryForks<TProvider, TVersion>;
-  readonly branches: RepositoryBranches<TProvider, TVersion>;
-  readonly tags: RepositoryTags<TProvider, TVersion>;
-  readonly commits: RepositoryCommits<TProvider, TVersion>;
-  readonly content: RepositoryContent<TProvider, TVersion>;
-  readonly pullRequests: RepositoryPullRequests<TProvider, TVersion>;
-  readonly statuses: RepositoryCommitStatuses<TProvider, TVersion>;
-  readonly issues: RepositoryIssues<TProvider, TVersion>;
-  readonly releases: RepositoryReleases<TProvider, TVersion>;
-  readonly webhooks: RepositoryWebhooks<TProvider, TVersion>;
-  readonly ciRuns: RepositoryCiRunDiscovery<TProvider, TVersion>;
-  readonly blobs: RepositoryBlobs<TProvider, TVersion>;
-  readonly branchRules: RepositoryBranchRules<TProvider, TVersion>;
+  readonly native: ProviderRepositoryNative<TProvider, TVersion, TRegistry>;
+  readonly forks: RepositoryForks<TProvider, TVersion, TRegistry>;
+  readonly branches: RepositoryBranches<TProvider, TVersion, TRegistry>;
+  readonly tags: RepositoryTags<TProvider, TVersion, TRegistry>;
+  readonly commits: RepositoryCommits<TProvider, TVersion, TRegistry>;
+  readonly content: RepositoryContent<TProvider, TVersion, TRegistry>;
+  readonly pullRequests: RepositoryPullRequests<TProvider, TVersion, TRegistry>;
+  readonly statuses: RepositoryCommitStatuses<TProvider, TVersion, TRegistry>;
+  readonly issues: RepositoryIssues<TProvider, TVersion, TRegistry>;
+  readonly releases: RepositoryReleases<TProvider, TVersion, TRegistry>;
+  readonly webhooks: RepositoryWebhooks<TProvider, TVersion, TRegistry>;
+  readonly ciRuns: RepositoryCiRunDiscovery<TProvider, TVersion, TRegistry>;
+  readonly blobs: RepositoryBlobs<TProvider, TVersion, TRegistry>;
+  readonly branchRules: RepositoryBranchRules<TProvider, TVersion, TRegistry>;
 
   constructor(
-    adapter: GitHostAdapter<TProvider, TVersion>,
-    data: RepositoryData<TProvider, TVersion>,
+    adapter: GitHostAdapter<TProvider, TVersion, TRegistry>,
+    data: RepositoryData<TProvider, TVersion, TRegistry>,
   ) {
     this.#adapter = adapter;
     this.#data = data;
@@ -154,7 +164,7 @@ class RepositoryImpl<
   async rename(
     name: string,
     options: OperationOptions = {},
-  ): Promise<Repository<TProvider, TVersion>> {
+  ): Promise<Repository<TProvider, TVersion, TRegistry>> {
     return createRepository(
       this.#adapter,
       await this.#adapter.renameRepository(
@@ -176,10 +186,11 @@ class RepositoryImpl<
 
 export function createRepository<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
-  adapter: GitHostAdapter<TProvider, TVersion>,
-  data: RepositoryData<TProvider, TVersion>,
-): Repository<TProvider, TVersion> {
+  adapter: GitHostAdapter<TProvider, TVersion, TRegistry>,
+  data: RepositoryData<TProvider, TVersion, TRegistry>,
+): Repository<TProvider, TVersion, TRegistry> {
   return new RepositoryImpl(adapter, data);
 }

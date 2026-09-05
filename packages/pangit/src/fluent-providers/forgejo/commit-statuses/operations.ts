@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import { resolveStatusRef } from "./resolve-ref.ts";
 import type {
   CombinedStatus as CombinedStatus15,
@@ -49,10 +50,10 @@ type ForgejoStatusState = "error" | "failure" | "pending" | "skipped" | "success
 /** Read exactly one commit-status page for a branch, tag, or commit reference. */
 export async function listForgejoCommitStatuses<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   ref: string,
   request: ResolvedPageRequest,
-): Promise<Page<CommitStatusData<"forgejo", TVersion>>> {
+): Promise<Page<CommitStatusData<"forgejo", TVersion, ForgejoProviderTypes>>> {
   const operation = { universal: "listCommitStatuses", native: "repoListStatusesByRef" } as const;
   const reference = requireIdentity(ref, "commit-status reference");
   const client = await context.client();
@@ -99,10 +100,10 @@ export async function listForgejoCommitStatuses<TVersion extends ForgejoVersion>
 /** Fetch the provider's bounded combined status without an implicit all-pages scan. */
 export async function getForgejoCommitStatus<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   ref: string,
   options: OperationOptions = {},
-): Promise<CombinedCommitStatus<"forgejo", TVersion>> {
+): Promise<CombinedCommitStatus<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = {
     universal: "getCommitStatus",
     native: "repoGetCombinedStatusByRef",
@@ -157,11 +158,11 @@ export async function getForgejoCommitStatus<TVersion extends ForgejoVersion>(
 /** Create one portable commit status; provider-only read states are intentionally not writable here. */
 export async function setForgejoCommitStatus<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   ref: string,
   input: SetCommitStatusInput,
-  options: SetCommitStatusOptions<"forgejo"> = {},
-): Promise<CommitStatusData<"forgejo", TVersion>> {
+  options: SetCommitStatusOptions<"forgejo", ForgejoProviderTypes> = {},
+): Promise<CommitStatusData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = { universal: "setCommitStatus", native: "repoCreateStatus" } as const;
   const reference = requireIdentity(ref, "commit-status reference");
   const statusContext = requireIdentity(input.context, "commit-status context");
@@ -204,7 +205,7 @@ export function normalizeForgejoCommitStatus<TVersion extends ForgejoVersion>(
   client: ForgejoClient<TVersion>,
   ref: string,
   status: AnyForgejoCommitStatus,
-): CommitStatusData<"forgejo", TVersion> {
+): CommitStatusData<"forgejo", TVersion, ForgejoProviderTypes> {
   const id = optionalScalarText(status.id);
   const description = optionalText(status.description);
   const targetUrl = optionalText(status.target_url);

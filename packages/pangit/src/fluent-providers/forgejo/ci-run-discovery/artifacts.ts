@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type { CiArtifactData } from "../../../fluent-api/adapter-contract/optional/ci-run-discovery.ts";
 import {
   type OperationOptions,
@@ -23,11 +24,11 @@ import {
 
 export async function findForgejoCiRunArtifact<V extends ForgejoVersion>(
   context: ForgejoAdapterContext<V>,
-  repository: RepositoryData<"forgejo", V>,
+  repository: RepositoryData<"forgejo", V, ForgejoProviderTypes>,
   runId: string,
   name: string,
   options: OperationOptions = {},
-): Promise<CiArtifactData<"forgejo", V> | undefined> {
+): Promise<CiArtifactData<"forgejo", V, ForgejoProviderTypes> | undefined> {
   const client = await requireJobArtifactClient(context, "findCiRunArtifact");
   const artifactName = requireIdentity(name, "artifact name");
   const artifacts = await requestForgejoBody<readonly AnyArtifact[], V>(
@@ -57,10 +58,10 @@ export async function findForgejoCiRunArtifact<V extends ForgejoVersion>(
 
 export async function getForgejoCiArtifact<V extends ForgejoVersion>(
   context: ForgejoAdapterContext<V>,
-  repository: RepositoryData<"forgejo", V>,
+  repository: RepositoryData<"forgejo", V, ForgejoProviderTypes>,
   artifactId: string,
   options: OperationOptions = {},
-): Promise<CiArtifactData<"forgejo", V>> {
+): Promise<CiArtifactData<"forgejo", V, ForgejoProviderTypes>> {
   const client = await requireJobArtifactClient(context, "getCiArtifact");
   const payload = await requestForgejoBody<AnyArtifact, V>(
     context,
@@ -81,7 +82,7 @@ export async function getForgejoCiArtifact<V extends ForgejoVersion>(
 function normalizeForgejoCiArtifact<V extends ForgejoVersion>(
   client: ForgejoClient<V>,
   payload: AnyArtifact,
-): CiArtifactData<"forgejo", V> {
+): CiArtifactData<"forgejo", V, ForgejoProviderTypes> {
   return Object.freeze({
     id: String(payload.id),
     ...(payload.run_id === undefined ? {} : { runId: String(payload.run_id) }),

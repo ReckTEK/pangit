@@ -1,3 +1,4 @@
+import type { GitLabProviderTypes } from "../provider-types.ts";
 import type { GitLabAdapterContext } from "../transport/GitLabAdapterContext.ts";
 import type { GitLabVersion } from "../native/GitLabNative.ts";
 import type {
@@ -27,7 +28,7 @@ export async function readContent<V extends GitLabVersion>(
   r: Repo<V>,
   name: string,
   o: ReadContentOptions = {},
-): Promise<ContentData<"gitlab", V>> {
+): Promise<ContentData<"gitlab", V, GitLabProviderTypes>> {
   name = normalizePath(c, name, true);
   const ref = await pin(c, r, o.ref, o);
   if (name === "") {

@@ -1,3 +1,4 @@
+import type { GitLabProviderTypes } from "../provider-types.ts";
 import { aggregateContributors } from "../../../fluent-api/adapter-contract/contributor-aggregation.ts";
 import type { GitLabAdapterContext } from "../transport/GitLabAdapterContext.ts";
 import type { GitLabVersion } from "../native/GitLabNative.ts";
@@ -46,7 +47,7 @@ export async function commit<V extends GitLabVersion>(
   c: GitLabAdapterContext<V>,
   p: Dto,
   facets: CommitFacets = {},
-): Promise<CommitData<"gitlab", V>> {
+): Promise<CommitData<"gitlab", V, GitLabProviderTypes>> {
   const stats = p.stats ? object(c, "normalizeCommit", p.stats) : undefined;
   if (!Array.isArray(p.parent_ids) || !p.parent_ids.every((x) => typeof x === "string")) {
     invariant(c, "normalizeCommit", "Commit parents are missing");
@@ -266,7 +267,7 @@ async function mergeBases<V extends GitLabVersion>(
   o: MergeBaseOptions,
   get: Adapter<V>["getCommit"],
 ) {
-  const loaded = new Map<string, CommitData<"gitlab", V>>();
+  const loaded = new Map<string, CommitData<"gitlab", V, GitLabProviderTypes>>();
   const unique = new Set<string>();
   let requests = 0;
   const read = async (sha: string) => {

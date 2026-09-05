@@ -1,4 +1,4 @@
-import type {} from "../registration.ts";
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import { validateMergeExtension } from "./merge-validation.ts";
 
 import type { ProviderExtensions } from "../../../fluent-api/provider-extensions/ExtensionSupport.ts";
@@ -55,5 +55,5 @@ export const giteaExtensions = Object.freeze(
         }
       },
     },
-  } satisfies ProviderExtensions<"gitea">,
+  } satisfies ProviderExtensions<"gitea", GiteaProviderTypes>,
 );

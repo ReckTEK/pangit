@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import {
   type OperationOptions,
   requireIdentity,
@@ -18,7 +19,7 @@ import { invariant } from "./errors.ts";
 /** Count `include --not exclude` from one count-only provider request. */
 export async function countGiteaReachableCommits<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   include: string,
   exclude?: string,
   options: OperationOptions = {},

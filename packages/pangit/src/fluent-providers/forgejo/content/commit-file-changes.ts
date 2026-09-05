@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import { ConflictError } from "../../../fluent-api/adapter-contract/errors.ts";
 import type {
   CommitFileChangesInput,
@@ -28,10 +29,10 @@ import { normalizeFilesResponseCommit } from "./normalize-commit.ts";
  */
 export async function commitForgejoFileChanges<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   input: CommitFileChangesInput,
-  options: CommitFileChangesOptions<"forgejo"> = {},
-): Promise<CommitData<"forgejo", TVersion>> {
+  options: CommitFileChangesOptions<"forgejo", ForgejoProviderTypes> = {},
+): Promise<CommitData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const preReadOperation = {
     universal: "commitFileChanges",
     native: "repoGetContents",

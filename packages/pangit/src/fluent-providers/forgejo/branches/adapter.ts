@@ -1,5 +1,3 @@
-import type {} from "../registration.ts";
-
 import {
   createForgejoBranch,
   deleteForgejoBranch,

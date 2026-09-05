@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../fluent-providers/gitea/provider-types.ts";
 import { giteaExtensions } from "../fluent-providers/gitea/extensions/runtime.ts";
 import { createOperationExtension } from "../fluent-api/provider-extensions/OperationExtension.ts";
 
@@ -19,7 +20,8 @@ Deno.test("operation extensions expose only the selected provider and configure 
     "issues.update",
     "gitea",
     "1.27.2",
-    string
+    string,
+    GiteaProviderTypes
   >({
     operation: "issues.update",
     support: giteaExtensions["issues.update"],
@@ -61,14 +63,26 @@ Deno.test("version-restricted extensions are absent at runtime on unsupported ve
     context: { repositoryFullName: "owner/repository", base: "main", head: "feature" },
     execute: () => Promise.resolve("common comparison"),
   };
-  const legacy = createOperationExtension<"commits.compare", "gitea", "1.26.4", string>({
+  const legacy = createOperationExtension<
+    "commits.compare",
+    "gitea",
+    "1.26.4",
+    string,
+    GiteaProviderTypes
+  >({
     ...input,
     version: "1.26.4",
   });
   assert(!("gitea" in legacy), "Gitea 1.26.4 exposed the 1.27.2-only compare extension");
   assertEquals(await legacy.execute(), "common comparison", "common comparison was unavailable");
 
-  const current = createOperationExtension<"commits.compare", "gitea", "1.27.2", string>({
+  const current = createOperationExtension<
+    "commits.compare",
+    "gitea",
+    "1.27.2",
+    string,
+    GiteaProviderTypes
+  >({
     ...input,
     version: "1.27.2",
   });
@@ -81,7 +95,8 @@ Deno.test("operation extensions own nested options without freezing caller data"
     "pullRequestReviews.create",
     "gitea",
     "1.27.2",
-    string
+    string,
+    GiteaProviderTypes
   >({
     operation: "pullRequestReviews.create",
     support: giteaExtensions["pullRequestReviews.create"],

@@ -1,4 +1,9 @@
-import type { FluentProvider, ProviderVersion } from "../../adapter-contract/provider.ts";
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../../adapter-contract/provider.ts";
+
 import type {
   BlobReadAdapter,
   BlobReadCapabilitySupport,
@@ -17,7 +22,8 @@ import { validateContentBlobOptions } from "../../content-body.ts";
 
 export interface RepositoryBlobs<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly support: BlobReadCapabilitySupport;
   /** Read a standard web Blob. SHA-only objects may require a filename hint or explicit MIME type. */
@@ -28,16 +34,17 @@ export interface RepositoryBlobs<
   readText(sha: string, options?: OperationOptions): Promise<string>;
   /** Read an exact Git blob as UTF-8 JSON; callers validate its shape. */
   readJson(sha: string, options?: OperationOptions): Promise<unknown>;
-  get(sha: string, options?: OperationOptions): Promise<Blob<TProvider, TVersion>>;
+  get(sha: string, options?: OperationOptions): Promise<Blob<TProvider, TVersion, TRegistry>>;
 }
 
 export function createRepositoryBlobs<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
-  adapter: BlobReadAdapter<TProvider, TVersion>,
-  repository: RepositoryData<TProvider, TVersion>,
-): RepositoryBlobs<TProvider, TVersion> {
+  adapter: BlobReadAdapter<TProvider, TVersion, TRegistry>,
+  repository: RepositoryData<TProvider, TVersion, TRegistry>,
+): RepositoryBlobs<TProvider, TVersion, TRegistry> {
   return Object.freeze({
     support: adapter.blobReadSupport,
     async readBlob(sha: string, options: ReadGitBlobOptions = {}) {
@@ -82,12 +89,13 @@ export function requireGitObjectId(
 
 function adapterValidationContext<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
-  adapter: BlobReadAdapter<TProvider, TVersion>,
+  adapter: BlobReadAdapter<TProvider, TVersion, TRegistry>,
   operation: string,
 ): ValidationErrorContext<TProvider, TVersion> {
-  const identity = adapter as BlobReadAdapter<TProvider, TVersion> & {
+  const identity = adapter as BlobReadAdapter<TProvider, TVersion, TRegistry> & {
     readonly provider?: TProvider;
     readonly version?: TVersion;
   };

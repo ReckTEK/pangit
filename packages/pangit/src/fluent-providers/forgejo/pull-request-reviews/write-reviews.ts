@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type {
   CreatePullRequestReviewInput,
   CreatePullRequestReviewOptions,
@@ -35,11 +36,11 @@ import { normalizeForgejoPullRequestReview } from "./normalize.ts";
 /** Create one pending review without provider-specific inline positions. */
 export async function createForgejoPullRequestReview<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  pullRequest: PullRequestData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  pullRequest: PullRequestData<"forgejo", TVersion, ForgejoProviderTypes>,
   input: CreatePullRequestReviewInput,
-  options: CreatePullRequestReviewOptions<"forgejo"> = {},
-): Promise<PullRequestReviewData<"forgejo", TVersion>> {
+  options: CreatePullRequestReviewOptions<"forgejo", ForgejoProviderTypes> = {},
+): Promise<PullRequestReviewData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = {
     universal: "createPullRequestReview",
     native: "repoCreatePullReview",
@@ -98,12 +99,12 @@ export async function createForgejoPullRequestReview<TVersion extends ForgejoVer
 /** Submit one known pending review directly. */
 export async function submitForgejoPullRequestReview<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  pullRequest: PullRequestData<"forgejo", TVersion>,
-  review: PullRequestReviewData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  pullRequest: PullRequestData<"forgejo", TVersion, ForgejoProviderTypes>,
+  review: PullRequestReviewData<"forgejo", TVersion, ForgejoProviderTypes>,
   input: SubmitPullRequestReviewInput,
   options: OperationOptions = {},
-): Promise<PullRequestReviewData<"forgejo", TVersion>> {
+): Promise<PullRequestReviewData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = {
     universal: "submitPullRequestReview",
     native: "repoSubmitPullReview",

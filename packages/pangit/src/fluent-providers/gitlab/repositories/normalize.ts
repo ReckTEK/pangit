@@ -1,3 +1,4 @@
+import type { GitLabProviderTypes } from "../provider-types.ts";
 import type { GitLabAdapterContext } from "../transport/GitLabAdapterContext.ts";
 import type { GitLabVersion } from "../native/GitLabNative.ts";
 import type { RepositoryData } from "../../../fluent-api/adapter-contract/repositories.ts";
@@ -8,7 +9,7 @@ import { door } from "../native/door.ts";
 export async function repository<V extends GitLabVersion>(
   c: GitLabAdapterContext<V>,
   p: Dto,
-): Promise<RepositoryData<"gitlab", V>> {
+): Promise<RepositoryData<"gitlab", V, GitLabProviderTypes>> {
   const fullName = required(c, "normalizeRepository", p.path_with_namespace);
   const split = fullName.lastIndexOf("/");
   if (split < 1) invalid(c, "normalizeRepository", "Project has no namespace");

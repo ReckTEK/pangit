@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type { AnyRestResponse } from "../../../generated-rest-clients/runtime/mod.ts";
 import {
   ProviderInvariantError,
@@ -31,9 +32,9 @@ type AnyForgejoRepository = ForgejoRepositoryPayload<ForgejoVersion>;
 /** Read exactly one provider fork page. */
 export async function listForgejoForks<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   request: ResolvedPageRequest,
-): Promise<Page<RepositoryData<"forgejo", TVersion>>> {
+): Promise<Page<RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>>> {
   const operation = { universal: "listForks", native: "listForks" } as const;
   const path = repositoryPath(repository);
   const client = await context.client();
@@ -65,9 +66,9 @@ export async function listForgejoForks<TVersion extends ForgejoVersion>(
 /** Create one fork, then poll only its known direct destination until it is usable. */
 export async function createForgejoFork<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  options: CreateForkOptions<"forgejo", TVersion>,
-): Promise<RepositoryData<"forgejo", TVersion>> {
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  options: CreateForkOptions<"forgejo", TVersion, ForgejoProviderTypes>,
+): Promise<RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const createOperation = { universal: "createFork", native: "createFork" } as const;
   const readinessOperation = { universal: "createFork", native: "repoGet" } as const;
   const destinationName = requireIdentity(options.destination.name, "fork destination name");

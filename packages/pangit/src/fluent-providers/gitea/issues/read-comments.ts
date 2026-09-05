@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type {
   IssueCommentData,
   IssueData,
@@ -37,10 +38,10 @@ import { normalizeGiteaIssueComment } from "./normalize.ts";
  */
 export async function listGiteaIssueComments<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  issue: IssueData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  issue: IssueData<"gitea", TVersion, GiteaProviderTypes>,
   request: ResolvedPageRequest,
-): Promise<ScanPage<IssueCommentData<"gitea", TVersion>>> {
+): Promise<ScanPage<IssueCommentData<"gitea", TVersion, GiteaProviderTypes>>> {
   const operation = {
     universal: "listIssueComments",
     native: "issueGetRepoComments",
@@ -87,14 +88,14 @@ export async function listGiteaIssueComments<TVersion extends GiteaVersion>(
 /** Fetch one comment directly by repository and comment ID. */
 export async function getGiteaIssueComment<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   id: string,
   options: OperationOptions = {},
   operation: GiteaOperationIdentity = {
     universal: "getIssueComment",
     native: "issueGetComment",
   },
-): Promise<IssueCommentData<"gitea", TVersion>> {
+): Promise<IssueCommentData<"gitea", TVersion, GiteaProviderTypes>> {
   const commentId = parsePositiveInt64(id, "issue comment id");
   const client = await context.client();
   const payload = await requestGiteaBody<AnyGiteaComment, TVersion>(
@@ -113,7 +114,7 @@ export async function getGiteaIssueComment<TVersion extends GiteaVersion>(
 
 function commentBelongsToIssue<TVersion extends GiteaVersion>(
   comment: AnyGiteaComment,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   issueNumber: number,
 ): boolean {
   const raw = optionalText(comment.issue_url);

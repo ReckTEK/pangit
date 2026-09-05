@@ -1,3 +1,4 @@
+import type { ProviderNativeTypes } from "../../fluent-api/adapter-contract/provider.ts";
 import type { ProviderNativeKind } from "../../fluent-api/native-access/ProviderNativeRegistry.ts";
 import type { ProviderExtensionDefinition } from "../../fluent-api/provider-extensions/ProviderExtensionRegistry.ts";
 import type {
@@ -51,17 +52,19 @@ export interface ForgejoExtensionRegistry {
     never
   >;
 }
-declare module "../../fluent-api/adapter-contract/provider.ts" {
-  interface ProviderTypeRegistry {
-    readonly forgejo: {
-      readonly versions: ForgejoVersion;
-      readonly extensions: ForgejoExtensionRegistry;
-    };
-  }
-}
 
-declare module "../../fluent-api/native-access/ProviderNativeRegistry.ts" {
-  interface ProviderNativeRegistry<V extends string, K extends ProviderNativeKind> {
-    readonly forgejo: ForgejoProviderNativeRegistry<V & ForgejoVersion>[K];
-  }
+/** Explicit type families owned by the Forgejo implementation. */
+export type ForgejoProviderTypes = {
+  readonly forgejo: {
+    readonly versions: ForgejoVersion;
+    readonly extensions: ForgejoExtensionRegistry;
+    readonly native: ForgejoNativeTypes;
+  };
+};
+
+/** Preserve generic version inference while selecting one native type family. */
+export interface ForgejoNativeTypes extends ProviderNativeTypes {
+  readonly type: ForgejoProviderNativeRegistry<
+    this["version"] & ForgejoVersion
+  >[this["kind"] & ProviderNativeKind];
 }

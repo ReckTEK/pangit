@@ -1,4 +1,8 @@
-import type { FluentProvider, ProviderVersion } from "../../adapter-contract/provider.ts";
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../../adapter-contract/provider.ts";
 
 import type { OAuthLoginTransaction, OAuthLoginTransactionFor } from "../oauth-contracts.ts";
 
@@ -36,19 +40,20 @@ export interface OAuthTransactionCookieOptions {
  */
 export interface OAuthTransactionCookie<
   TProvider extends FluentProvider = FluentProvider,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly name: string;
 
   set<
     TSelected extends TProvider,
-    TVersion extends ProviderVersion<TSelected>,
+    TVersion extends ProviderVersion<TSelected, TRegistry>,
   >(
-    transaction: OAuthLoginTransaction<TSelected, TVersion>,
+    transaction: OAuthLoginTransaction<TSelected, TVersion, TRegistry>,
   ): Promise<string>;
 
   read(
     request: Request,
-  ): Promise<OAuthLoginTransactionFor<TProvider> | undefined>;
+  ): Promise<OAuthLoginTransactionFor<TProvider, TRegistry> | undefined>;
 
   clear(request: Request): string;
 }

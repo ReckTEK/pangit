@@ -1,4 +1,5 @@
-import type { Provider, ProviderVersion } from "../provider.ts";
+import type { Provider, ProviderTypeRegistry, ProviderVersion } from "../provider.ts";
+
 import type { ProviderCiEntityNative } from "../../native-access/ProviderNativeRegistry.ts";
 import type { OperationOptions } from "../operation-options.ts";
 import type { Page, ResolvedPageRequest } from "../pagination.ts";
@@ -20,7 +21,8 @@ export type CiExecutionConclusion =
 
 export interface CiWorkflowData<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly id: string;
   readonly name?: string;
@@ -30,12 +32,13 @@ export interface CiWorkflowData<
   readonly url?: string;
   readonly createdAt?: string;
   readonly updatedAt?: string;
-  readonly native: ProviderCiEntityNative<TProvider, TVersion, "workflow">;
+  readonly native: ProviderCiEntityNative<TProvider, TVersion, "workflow", TRegistry>;
 }
 
 export interface CiRunData<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly id: string;
   readonly workflowPath?: string;
@@ -53,12 +56,13 @@ export interface CiRunData<
   readonly startedAt?: string;
   readonly completedAt?: string;
   readonly url?: string;
-  readonly native: ProviderCiEntityNative<TProvider, TVersion, "run">;
+  readonly native: ProviderCiEntityNative<TProvider, TVersion, "run", TRegistry>;
 }
 
 export interface CiJobData<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly id: string;
   readonly runId?: string;
@@ -73,12 +77,13 @@ export interface CiJobData<
   readonly startedAt?: string;
   readonly completedAt?: string;
   readonly url?: string;
-  readonly native: ProviderCiEntityNative<TProvider, TVersion, "job">;
+  readonly native: ProviderCiEntityNative<TProvider, TVersion, "job", TRegistry>;
 }
 
 export interface CiArtifactData<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly id: string;
   readonly runId?: string;
@@ -88,7 +93,7 @@ export interface CiArtifactData<
   readonly createdAt?: string;
   readonly expiresAt?: string;
   readonly url?: string;
-  readonly native: ProviderCiEntityNative<TProvider, TVersion, "artifact">;
+  readonly native: ProviderCiEntityNative<TProvider, TVersion, "artifact", TRegistry>;
 }
 
 export type CiExecutionFilterStatus =
@@ -134,42 +139,43 @@ export interface CiRunDiscoveryCapabilitySupport {
 /** Optional read-only workflow/run/job/artifact discovery contract. */
 export interface CiRunDiscoveryAdapter<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly ciRunDiscoverySupport: CiRunDiscoveryCapabilitySupport;
   getCiWorkflow(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     workflowId: string,
     options?: OperationOptions,
-  ): Promise<CiWorkflowData<TProvider, TVersion>>;
+  ): Promise<CiWorkflowData<TProvider, TVersion, TRegistry>>;
   listCiRuns(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     request: ListCiRunsRequest,
-  ): Promise<Page<CiRunData<TProvider, TVersion>>>;
+  ): Promise<Page<CiRunData<TProvider, TVersion, TRegistry>>>;
   getCiRun(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     runId: string,
     options?: OperationOptions,
-  ): Promise<CiRunData<TProvider, TVersion>>;
+  ): Promise<CiRunData<TProvider, TVersion, TRegistry>>;
   listCiRunJobs(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     runId: string,
     request: ListCiJobsRequest,
-  ): Promise<Page<CiJobData<TProvider, TVersion>>>;
+  ): Promise<Page<CiJobData<TProvider, TVersion, TRegistry>>>;
   getCiJob(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     jobId: string,
     options?: OperationOptions,
-  ): Promise<CiJobData<TProvider, TVersion>>;
+  ): Promise<CiJobData<TProvider, TVersion, TRegistry>>;
   findCiRunArtifact(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     runId: string,
     name: string,
     options?: OperationOptions,
-  ): Promise<CiArtifactData<TProvider, TVersion> | undefined>;
+  ): Promise<CiArtifactData<TProvider, TVersion, TRegistry> | undefined>;
   getCiArtifact(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     artifactId: string,
     options?: OperationOptions,
-  ): Promise<CiArtifactData<TProvider, TVersion>>;
+  ): Promise<CiArtifactData<TProvider, TVersion, TRegistry>>;
 }

@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import { ProviderInvariantError } from "../../../fluent-api/adapter-contract/errors.ts";
 import type {
   ListPackageFilesOptions,
@@ -22,7 +23,7 @@ export async function listGiteaPackageFiles<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
   identity: PackageVersionIdentity,
   options: ListPackageFilesOptions,
-): Promise<readonly PackageFileData<"gitea", TVersion>[]> {
+): Promise<readonly PackageFileData<"gitea", TVersion, GiteaProviderTypes>[]> {
   const operation = { universal: "listPackageFiles", native: "listPackageFiles" } as const;
   const maximum = requirePositiveInteger(options.maxFiles, "maximum package files");
   const path = packageVersionPath(identity);

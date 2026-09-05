@@ -1,4 +1,9 @@
-import type { FluentProvider, ProviderVersion } from "../adapter-contract/provider.ts";
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../adapter-contract/provider.ts";
+
 import type { ValidationErrorContext } from "../adapter-contract/errors.ts";
 import type { GitHostAdapter } from "../adapter-contract/GitHostAdapter.ts";
 import { type OperationOptions, requireIdentity } from "../adapter-contract/operation-options.ts";
@@ -17,21 +22,26 @@ import { createTag, type Tag } from "../entities/Tag.ts";
 
 export interface RepositoryTags<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
-  list(request?: PageRequest): Promise<Page<Tag<TProvider, TVersion>>>;
-  get(name: string, options?: OperationOptions): Promise<Tag<TProvider, TVersion>>;
-  create(input: CreateTagInput, options?: OperationOptions): Promise<Tag<TProvider, TVersion>>;
-  delete(tag: Tag<TProvider, TVersion>, options?: OperationOptions): Promise<void>;
+  list(request?: PageRequest): Promise<Page<Tag<TProvider, TVersion, TRegistry>>>;
+  get(name: string, options?: OperationOptions): Promise<Tag<TProvider, TVersion, TRegistry>>;
+  create(
+    input: CreateTagInput,
+    options?: OperationOptions,
+  ): Promise<Tag<TProvider, TVersion, TRegistry>>;
+  delete(tag: Tag<TProvider, TVersion, TRegistry>, options?: OperationOptions): Promise<void>;
 }
 
 export function createRepositoryTags<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
-  adapter: GitHostAdapter<TProvider, TVersion>,
-  repository: RepositoryData<TProvider, TVersion>,
-): RepositoryTags<TProvider, TVersion> {
+  adapter: GitHostAdapter<TProvider, TVersion, TRegistry>,
+  repository: RepositoryData<TProvider, TVersion, TRegistry>,
+): RepositoryTags<TProvider, TVersion, TRegistry> {
   return Object.freeze({
     async list(request: PageRequest = {}) {
       const page = await adapter.listTags(
@@ -53,7 +63,7 @@ export function createRepositoryTags<
       requireIdentity(input.message, "tag message", context);
       return createTag(await adapter.createTag(repository, input, options));
     },
-    delete(tag: Tag<TProvider, TVersion>, options: OperationOptions = {}) {
+    delete(tag: Tag<TProvider, TVersion, TRegistry>, options: OperationOptions = {}) {
       const context = validationContext(adapter, "deleteTag");
       return adapter.deleteTag(
         repository,
@@ -71,9 +81,10 @@ export function createRepositoryTags<
 
 function validationContext<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
-  adapter: GitHostAdapter<TProvider, TVersion>,
+  adapter: GitHostAdapter<TProvider, TVersion, TRegistry>,
   operation: string,
 ): ValidationErrorContext<TProvider, TVersion> {
   return { provider: adapter.provider, version: adapter.version, operation };

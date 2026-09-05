@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "./provider-types.ts";
 import type { PullRequestData } from "../../fluent-api/adapter-contract/pull-requests.ts";
 import type { RepositoryData } from "../../fluent-api/adapter-contract/repositories.ts";
 import { GiteaAdapterContext } from "./transport/GiteaAdapterContext.ts";
@@ -177,19 +178,19 @@ for (const version of ["1.26.4", "1.27.2"] as const) {
 
 function fixtureRepository<TVersion extends GiteaVersion>(
   _version: TVersion,
-): RepositoryData<"gitea", TVersion> {
+): RepositoryData<"gitea", TVersion, GiteaProviderTypes> {
   return {
     id: "1",
     owner: "acme",
     name: "project",
     fullName: "acme/project",
     native: {},
-  } as RepositoryData<"gitea", TVersion>;
+  } as RepositoryData<"gitea", TVersion, GiteaProviderTypes>;
 }
 
 function fixturePullRequest<TVersion extends GiteaVersion>(
   _version: TVersion,
-): PullRequestData<"gitea", TVersion> {
+): PullRequestData<"gitea", TVersion, GiteaProviderTypes> {
   return {
     id: "5",
     number: 5,
@@ -199,7 +200,7 @@ function fixturePullRequest<TVersion extends GiteaVersion>(
     target: { owner: "acme", repository: "project", branch: "main" },
     merged: false,
     native: {},
-  } as PullRequestData<"gitea", TVersion>;
+  } as PullRequestData<"gitea", TVersion, GiteaProviderTypes>;
 }
 
 function reviewPayload(state: string) {

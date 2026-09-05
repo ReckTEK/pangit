@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type {
   PullRequestData,
   PullRequestRef,
@@ -22,7 +23,7 @@ import {
 export function normalizeGiteaPullRequest<TVersion extends GiteaVersion>(
   client: GiteaClient<TVersion>,
   pullRequest: AnyGiteaPullRequest,
-): PullRequestData<"gitea", TVersion> {
+): PullRequestData<"gitea", TVersion, GiteaProviderTypes> {
   const number = requiredPositiveInteger(pullRequest.number, "pull-request number");
   const state = pullRequest.state;
   if (state !== "open" && state !== "closed") throw new TypeError("pull-request state is missing");

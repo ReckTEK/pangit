@@ -1,4 +1,9 @@
-import type { FluentProvider, ProviderVersion } from "../../adapter-contract/provider.ts";
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../../adapter-contract/provider.ts";
+
 import type {
   CiArtifactData,
   CiExecutionConclusion,
@@ -12,7 +17,8 @@ import type {
 
 export interface CiWorkflow<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly id: string;
   readonly name?: string;
@@ -22,12 +28,13 @@ export interface CiWorkflow<
   readonly url?: string;
   readonly createdAt?: string;
   readonly updatedAt?: string;
-  readonly native: ProviderCiEntityNative<TProvider, TVersion, "workflow">;
+  readonly native: ProviderCiEntityNative<TProvider, TVersion, "workflow", TRegistry>;
 }
 
 export interface CiRun<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly id: string;
   readonly workflowPath?: string;
@@ -45,12 +52,13 @@ export interface CiRun<
   readonly startedAt?: string;
   readonly completedAt?: string;
   readonly url?: string;
-  readonly native: ProviderCiEntityNative<TProvider, TVersion, "run">;
+  readonly native: ProviderCiEntityNative<TProvider, TVersion, "run", TRegistry>;
 }
 
 export interface CiJob<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly id: string;
   readonly runId?: string;
@@ -65,12 +73,13 @@ export interface CiJob<
   readonly startedAt?: string;
   readonly completedAt?: string;
   readonly url?: string;
-  readonly native: ProviderCiEntityNative<TProvider, TVersion, "job">;
+  readonly native: ProviderCiEntityNative<TProvider, TVersion, "job", TRegistry>;
 }
 
 export interface CiArtifact<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly id: string;
   readonly runId?: string;
@@ -80,33 +89,41 @@ export interface CiArtifact<
   readonly createdAt?: string;
   readonly expiresAt?: string;
   readonly url?: string;
-  readonly native: ProviderCiEntityNative<TProvider, TVersion, "artifact">;
+  readonly native: ProviderCiEntityNative<TProvider, TVersion, "artifact", TRegistry>;
 }
 
 export function createCiWorkflow<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
->(data: CiWorkflowData<TProvider, TVersion>): CiWorkflow<TProvider, TVersion> {
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+>(
+  data: CiWorkflowData<TProvider, TVersion, TRegistry>,
+): CiWorkflow<TProvider, TVersion, TRegistry> {
   return Object.freeze({ ...data });
 }
 
 export function createCiRun<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
->(data: CiRunData<TProvider, TVersion>): CiRun<TProvider, TVersion> {
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+>(data: CiRunData<TProvider, TVersion, TRegistry>): CiRun<TProvider, TVersion, TRegistry> {
   return Object.freeze({ ...data });
 }
 
 export function createCiJob<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
->(data: CiJobData<TProvider, TVersion>): CiJob<TProvider, TVersion> {
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+>(data: CiJobData<TProvider, TVersion, TRegistry>): CiJob<TProvider, TVersion, TRegistry> {
   return Object.freeze({ ...data, labels: Object.freeze([...data.labels]) });
 }
 
 export function createCiArtifact<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
->(data: CiArtifactData<TProvider, TVersion>): CiArtifact<TProvider, TVersion> {
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+>(
+  data: CiArtifactData<TProvider, TVersion, TRegistry>,
+): CiArtifact<TProvider, TVersion, TRegistry> {
   return Object.freeze({ ...data });
 }

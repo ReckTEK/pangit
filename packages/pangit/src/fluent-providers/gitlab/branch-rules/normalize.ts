@@ -1,3 +1,4 @@
+import type { GitLabProviderTypes } from "../provider-types.ts";
 import type { GitLabAdapterContext } from "../transport/GitLabAdapterContext.ts";
 import type { GitLabVersion } from "../native/GitLabNative.ts";
 
@@ -8,7 +9,7 @@ import { door } from "../native/door.ts";
 export async function rule<V extends GitLabVersion>(
   c: GitLabAdapterContext<V>,
   p: Dto,
-): Promise<BranchRuleData<"gitlab", V>> {
+): Promise<BranchRuleData<"gitlab", V, GitLabProviderTypes>> {
   const levels = array(c, "normalizeBranchRule", p.push_access_levels);
   return Object.freeze({
     name: required(c, "normalizeBranchRule", p.name),

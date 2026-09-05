@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type {
   ReleaseAssetData,
   ReleaseData,
@@ -20,7 +21,7 @@ import {
 export function normalizeForgejoRelease<TVersion extends ForgejoVersion>(
   client: ForgejoClient<TVersion>,
   payload: AnyForgejoRelease,
-): ReleaseData<"forgejo", TVersion> {
+): ReleaseData<"forgejo", TVersion, ForgejoProviderTypes> {
   const tagName = requiredText(payload.tag_name, "release tag name");
   return Object.freeze({
     id: requiredText(payload.id, `release ${tagName} id`),
@@ -57,7 +58,7 @@ export function normalizeForgejoRelease<TVersion extends ForgejoVersion>(
 export function normalizeForgejoReleaseAsset<TVersion extends ForgejoVersion>(
   client: ForgejoClient<TVersion>,
   payload: AnyForgejoReleaseAsset,
-): ReleaseAssetData<"forgejo", TVersion> {
+): ReleaseAssetData<"forgejo", TVersion, ForgejoProviderTypes> {
   const id = requiredText(payload.id, "release asset id");
   return Object.freeze({
     id,

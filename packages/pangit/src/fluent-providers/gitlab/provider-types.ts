@@ -1,3 +1,4 @@
+import type { ProviderNativeTypes } from "../../fluent-api/adapter-contract/provider.ts";
 import type { ProviderNativeKind } from "../../fluent-api/native-access/ProviderNativeRegistry.ts";
 import type { ProviderExtensionDefinition } from "../../fluent-api/provider-extensions/ProviderExtensionRegistry.ts";
 import type {
@@ -34,17 +35,19 @@ export interface GitLabExtensionRegistry {
     never
   >;
 }
-declare module "../../fluent-api/adapter-contract/provider.ts" {
-  interface ProviderTypeRegistry {
-    readonly gitlab: {
-      readonly versions: GitLabVersion;
-      readonly extensions: GitLabExtensionRegistry;
-    };
-  }
-}
 
-declare module "../../fluent-api/native-access/ProviderNativeRegistry.ts" {
-  interface ProviderNativeRegistry<V extends string, K extends ProviderNativeKind> {
-    readonly gitlab: GitLabProviderNativeRegistry<V & GitLabVersion>[K];
-  }
+/** Explicit type families owned by the GitLab implementation. */
+export type GitLabProviderTypes = {
+  readonly gitlab: {
+    readonly versions: GitLabVersion;
+    readonly extensions: GitLabExtensionRegistry;
+    readonly native: GitLabNativeTypes;
+  };
+};
+
+/** Preserve generic version inference while selecting one native type family. */
+export interface GitLabNativeTypes extends ProviderNativeTypes {
+  readonly type: GitLabProviderNativeRegistry<
+    this["version"] & GitLabVersion
+  >[this["kind"] & ProviderNativeKind];
 }

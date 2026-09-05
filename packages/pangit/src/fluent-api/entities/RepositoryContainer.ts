@@ -1,4 +1,9 @@
-import type { FluentProvider, ProviderVersion } from "../adapter-contract/provider.ts";
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../adapter-contract/provider.ts";
+
 import type { GitHostAdapter } from "../adapter-contract/GitHostAdapter.ts";
 import { type OperationOptions, requireIdentity } from "../adapter-contract/operation-options.ts";
 import {
@@ -21,48 +26,50 @@ import { createRepository, type Repository } from "./Repository.ts";
 /** A fetched repository-owning user or organization. */
 export interface RepositoryContainer<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly kind: RepositoryContainerKind;
   readonly id: string;
   readonly name: string;
   readonly displayName?: string;
   readonly description?: string;
-  readonly native: ProviderRepositoryContainerNative<TProvider, TVersion>;
+  readonly native: ProviderRepositoryContainerNative<TProvider, TVersion, TRegistry>;
 
   /** Fetch one bounded provider page; this never drains the complete collection. */
-  repositories(request?: PageRequest): Promise<Page<Repository<TProvider, TVersion>>>;
+  repositories(request?: PageRequest): Promise<Page<Repository<TProvider, TVersion, TRegistry>>>;
   repository(
     name: string,
     options?: OperationOptions,
-  ): Promise<Repository<TProvider, TVersion>>;
+  ): Promise<Repository<TProvider, TVersion, TRegistry>>;
   findRepository(
     name: string,
     options?: OperationOptions,
-  ): Promise<Repository<TProvider, TVersion> | undefined>;
+  ): Promise<Repository<TProvider, TVersion, TRegistry> | undefined>;
   hasRepository(name: string, options?: OperationOptions): Promise<boolean>;
   createRepository(
     name: string,
     options?: CreateRepositoryOptions,
-  ): Promise<Repository<TProvider, TVersion>>;
+  ): Promise<Repository<TProvider, TVersion, TRegistry>>;
 }
 
 class RepositoryContainerImpl<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
-> implements RepositoryContainer<TProvider, TVersion> {
-  readonly #adapter: GitHostAdapter<TProvider, TVersion>;
-  readonly #data: RepositoryContainerData<TProvider, TVersion>;
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> implements RepositoryContainer<TProvider, TVersion, TRegistry> {
+  readonly #adapter: GitHostAdapter<TProvider, TVersion, TRegistry>;
+  readonly #data: RepositoryContainerData<TProvider, TVersion, TRegistry>;
   readonly kind: RepositoryContainerKind;
   readonly id: string;
   readonly name: string;
   readonly displayName?: string;
   readonly description?: string;
-  readonly native: ProviderRepositoryContainerNative<TProvider, TVersion>;
+  readonly native: ProviderRepositoryContainerNative<TProvider, TVersion, TRegistry>;
 
   constructor(
-    adapter: GitHostAdapter<TProvider, TVersion>,
-    data: RepositoryContainerData<TProvider, TVersion>,
+    adapter: GitHostAdapter<TProvider, TVersion, TRegistry>,
+    data: RepositoryContainerData<TProvider, TVersion, TRegistry>,
   ) {
     this.#adapter = adapter;
     this.#data = data;
@@ -75,7 +82,9 @@ class RepositoryContainerImpl<
     Object.freeze(this);
   }
 
-  async repositories(request: PageRequest = {}): Promise<Page<Repository<TProvider, TVersion>>> {
+  async repositories(
+    request: PageRequest = {},
+  ): Promise<Page<Repository<TProvider, TVersion, TRegistry>>> {
     const page = await this.#adapter.listRepositories(
       this.#data,
       resolvePageRequest(request, 50, this.#validationContext("listRepositories")),
@@ -89,7 +98,7 @@ class RepositoryContainerImpl<
   async repository(
     name: string,
     options: OperationOptions = {},
-  ): Promise<Repository<TProvider, TVersion>> {
+  ): Promise<Repository<TProvider, TVersion, TRegistry>> {
     return createRepository(
       this.#adapter,
       await this.#adapter.getRepository(
@@ -103,7 +112,7 @@ class RepositoryContainerImpl<
   async findRepository(
     name: string,
     options: OperationOptions = {},
-  ): Promise<Repository<TProvider, TVersion> | undefined> {
+  ): Promise<Repository<TProvider, TVersion, TRegistry> | undefined> {
     const found = await this.#adapter.findRepository(
       this.#data,
       requireIdentity(name, "repository name", this.#validationContext("findRepository")),
@@ -123,7 +132,7 @@ class RepositoryContainerImpl<
   async createRepository(
     name: string,
     options: CreateRepositoryOptions = {},
-  ): Promise<Repository<TProvider, TVersion>> {
+  ): Promise<Repository<TProvider, TVersion, TRegistry>> {
     return createRepository(
       this.#adapter,
       await this.#adapter.createRepository(
@@ -145,10 +154,11 @@ class RepositoryContainerImpl<
 
 export function createRepositoryContainer<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
-  adapter: GitHostAdapter<TProvider, TVersion>,
-  data: RepositoryContainerData<TProvider, TVersion>,
-): RepositoryContainer<TProvider, TVersion> {
+  adapter: GitHostAdapter<TProvider, TVersion, TRegistry>,
+  data: RepositoryContainerData<TProvider, TVersion, TRegistry>,
+): RepositoryContainer<TProvider, TVersion, TRegistry> {
   return new RepositoryContainerImpl(adapter, data);
 }

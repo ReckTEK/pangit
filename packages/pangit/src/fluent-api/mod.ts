@@ -1,4 +1,4 @@
-/** Provider-neutral contracts. Concrete registrations belong to standalone providers. */
+/** Provider-neutral contracts. Provider type definitions are supplied explicitly by their implementations. */
 export * as auth from "./auth/mod.ts";
 export * as errors from "./adapter-contract/errors.ts";
 export type * from "./adapter-contract/mod.ts";

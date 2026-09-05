@@ -1,4 +1,3 @@
-import type {} from "./registration.ts";
 import type { Adapter } from "./adapter.ts";
 import type { GiteaVersion } from "./versions.ts";
 import { GiteaAdapterContext, type GiteaAdapterOptions } from "./transport/GiteaAdapterContext.ts";

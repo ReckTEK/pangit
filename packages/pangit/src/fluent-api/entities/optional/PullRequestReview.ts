@@ -1,4 +1,9 @@
-import type { FluentProvider, ProviderVersion } from "../../adapter-contract/provider.ts";
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../../adapter-contract/provider.ts";
+
 import type {
   ProviderPullRequestReviewNative,
   PullRequestReviewData,
@@ -7,7 +12,8 @@ import type {
 
 export interface PullRequestReview<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly id: string;
   readonly state: PullRequestReviewState;
@@ -18,12 +24,15 @@ export interface PullRequestReview<
   readonly submittedAt?: string;
   readonly updatedAt?: string;
   readonly url?: string;
-  readonly native: ProviderPullRequestReviewNative<TProvider, TVersion>;
+  readonly native: ProviderPullRequestReviewNative<TProvider, TVersion, TRegistry>;
 }
 
 export function createPullRequestReview<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
->(data: PullRequestReviewData<TProvider, TVersion>): PullRequestReview<TProvider, TVersion> {
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+>(
+  data: PullRequestReviewData<TProvider, TVersion, TRegistry>,
+): PullRequestReview<TProvider, TVersion, TRegistry> {
   return Object.freeze({ ...data, native: data.native });
 }

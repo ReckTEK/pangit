@@ -1,6 +1,7 @@
+import type { Provider, ProviderTypeRegistry, ProviderVersion } from "./provider.ts";
 import type { ProviderExtensions } from "../provider-extensions/ExtensionSupport.ts";
 import type { UnsupportedOptionalCapabilityMap } from "./optional/unsupported-capabilities.ts";
-import type { Provider, ProviderVersion } from "./provider.ts";
+
 import type { AuthenticationAdapter } from "./authentication.ts";
 import type { BranchAdapter } from "./branches.ts";
 import type { CommitStatusAdapter } from "./commit-statuses.ts";
@@ -24,30 +25,36 @@ import type { ProviderClientNative } from "../native-access/ProviderNativeRegist
 /** One provider's complete implementation of the universal fluent Git-host contract. */
 export interface GitHostAdapter<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > extends
-  AuthenticationAdapter<TProvider, TVersion, GitHostAdapter<TProvider, TVersion>>,
-  RepositoryAdapter<TProvider, TVersion>,
-  ForkAdapter<TProvider, TVersion>,
-  BranchAdapter<TProvider, TVersion>,
-  TagAdapter<TProvider, TVersion>,
-  CommitAdapter<TProvider, TVersion>,
-  ContentAdapter<TProvider, TVersion>,
-  PullRequestAdapter<TProvider, TVersion>,
-  CommitStatusAdapter<TProvider, TVersion>,
-  CurrentUserProfileAdapter<TProvider, TVersion>,
-  IssueAdapter<TProvider, TVersion>,
-  ReleaseAdapter<TProvider, TVersion>,
-  RepositoryWebhookAdapter<TProvider, TVersion>,
-  CiRunDiscoveryAdapter<TProvider, TVersion>,
-  PackageAdapter<TProvider, TVersion>,
-  BlobReadAdapter<TProvider, TVersion>,
-  PullRequestReviewAdapter<TProvider, TVersion>,
-  BranchRuleAdapter<TProvider, TVersion> {
+  AuthenticationAdapter<
+    TProvider,
+    TVersion,
+    GitHostAdapter<TProvider, TVersion, TRegistry>,
+    TRegistry
+  >,
+  RepositoryAdapter<TProvider, TVersion, TRegistry>,
+  ForkAdapter<TProvider, TVersion, TRegistry>,
+  BranchAdapter<TProvider, TVersion, TRegistry>,
+  TagAdapter<TProvider, TVersion, TRegistry>,
+  CommitAdapter<TProvider, TVersion, TRegistry>,
+  ContentAdapter<TProvider, TVersion, TRegistry>,
+  PullRequestAdapter<TProvider, TVersion, TRegistry>,
+  CommitStatusAdapter<TProvider, TVersion, TRegistry>,
+  CurrentUserProfileAdapter<TProvider, TVersion, TRegistry>,
+  IssueAdapter<TProvider, TVersion, TRegistry>,
+  ReleaseAdapter<TProvider, TVersion, TRegistry>,
+  RepositoryWebhookAdapter<TProvider, TVersion, TRegistry>,
+  CiRunDiscoveryAdapter<TProvider, TVersion, TRegistry>,
+  PackageAdapter<TProvider, TVersion, TRegistry>,
+  BlobReadAdapter<TProvider, TVersion, TRegistry>,
+  PullRequestReviewAdapter<TProvider, TVersion, TRegistry>,
+  BranchRuleAdapter<TProvider, TVersion, TRegistry> {
   readonly provider: TProvider;
-  readonly extensions: ProviderExtensions<TProvider>;
+  readonly extensions: ProviderExtensions<TProvider, TRegistry>;
   readonly unsupportedOptionalCapabilities: UnsupportedOptionalCapabilityMap;
   readonly version: TVersion;
   /** Full exact-version generated client at the explicit native boundary. */
-  readonly native: ProviderClientNative<TProvider, TVersion>;
+  readonly native: ProviderClientNative<TProvider, TVersion, TRegistry>;
 }

@@ -1,3 +1,4 @@
+import type { GitLabProviderTypes } from "../provider-types.ts";
 import type { GitLabAdapterContext } from "../transport/GitLabAdapterContext.ts";
 import type { GitLabVersion } from "../native/GitLabNative.ts";
 
@@ -19,7 +20,7 @@ export const events = {
 export async function hook<V extends GitLabVersion>(
   c: GitLabAdapterContext<V>,
   p: Dto,
-): Promise<RepositoryWebhookData<"gitlab", V>> {
+): Promise<RepositoryWebhookData<"gitlab", V, GitLabProviderTypes>> {
   return Object.freeze({
     id: id(c, "normalizeWebhook", p.id),
     url: required(c, "normalizeWebhook", p.url),

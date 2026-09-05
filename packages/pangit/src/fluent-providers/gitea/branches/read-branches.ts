@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type { AnyRestResponse } from "../../../generated-rest-clients/runtime/mod.ts";
 import type {
   BranchData,
@@ -33,13 +34,13 @@ import {
 /** Read one provider branch page; Gitea 1.26 filtering remains deliberately page-local. */
 export async function listGiteaBranches<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   request: ListBranchesRequest,
   operation: GiteaOperationIdentity = {
     universal: "listBranches",
     native: "repoListBranches",
   },
-): Promise<Page<BranchData<"gitea", TVersion>>> {
+): Promise<Page<BranchData<"gitea", TVersion, GiteaProviderTypes>>> {
   const query = request.query === undefined
     ? undefined
     : requireIdentity(request.query, "branch query");
@@ -69,10 +70,10 @@ export async function listGiteaBranches<TVersion extends GiteaVersion>(
 /** Fetch one branch directly. */
 export async function getGiteaBranch<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   name: string,
   options: OperationOptions = {},
-): Promise<BranchData<"gitea", TVersion>> {
+): Promise<BranchData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = { universal: "getBranch", native: "repoGetBranch" } as const;
   const branchName = requireIdentity(name, "branch name");
   const path = repositoryPath(repository);
@@ -94,7 +95,7 @@ export async function getGiteaBranch<TVersion extends GiteaVersion>(
 /** Test one branch identity with one direct request and 404-only absence semantics. */
 export async function giteaBranchExists<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   name: string,
   options: OperationOptions = {},
 ): Promise<boolean> {

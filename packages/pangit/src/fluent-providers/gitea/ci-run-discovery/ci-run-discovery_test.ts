@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type { RepositoryData } from "../../../fluent-api/adapter-contract/repositories.ts";
 import { GiteaAdapterContext } from "../transport/GiteaAdapterContext.ts";
 import {
@@ -39,7 +40,7 @@ const repository = {
   name: "demo",
   fullName: "acme/demo",
   native: {},
-} as unknown as RepositoryData<"gitea", "1.26.4">;
+} as unknown as RepositoryData<"gitea", "1.26.4", GiteaProviderTypes>;
 
 const workflow = {
   id: "build.yml",

@@ -1,4 +1,9 @@
-import type { FluentProvider, ProviderVersion } from "../adapter-contract/provider.ts";
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../adapter-contract/provider.ts";
+
 import type {
   CombinedCommitStatus,
   CommitStatusReference,
@@ -26,46 +31,51 @@ import {
 
 export type SetCommitStatusOperation<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > = OperationExtension<
   "statuses.set",
   TProvider,
   TVersion,
-  CommitStatus<TProvider, TVersion>
+  CommitStatus<TProvider, TVersion, TRegistry>,
+  TRegistry
 >;
 
 export interface CombinedStatus<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
-> extends Omit<CombinedCommitStatus<TProvider, TVersion>, "statuses"> {
-  readonly statuses: readonly CommitStatus<TProvider, TVersion>[];
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> extends Omit<CombinedCommitStatus<TProvider, TVersion, TRegistry>, "statuses"> {
+  readonly statuses: readonly CommitStatus<TProvider, TVersion, TRegistry>[];
 }
 
 export interface RepositoryCommitStatuses<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   list(
     reference: CommitStatusReference,
     request?: PageRequest,
-  ): Promise<Page<CommitStatus<TProvider, TVersion>>>;
+  ): Promise<Page<CommitStatus<TProvider, TVersion, TRegistry>>>;
   get(
     reference: CommitStatusReference,
     options?: OperationOptions,
-  ): Promise<CombinedStatus<TProvider, TVersion>>;
+  ): Promise<CombinedStatus<TProvider, TVersion, TRegistry>>;
   set(
     reference: CommitStatusReference,
     input: SetCommitStatusInput,
-  ): SetCommitStatusOperation<TProvider, TVersion>;
+  ): SetCommitStatusOperation<TProvider, TVersion, TRegistry>;
 }
 
 export function createRepositoryCommitStatuses<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
-  adapter: GitHostAdapter<TProvider, TVersion>,
-  repository: RepositoryData<TProvider, TVersion>,
-): RepositoryCommitStatuses<TProvider, TVersion> {
+  adapter: GitHostAdapter<TProvider, TVersion, TRegistry>,
+  repository: RepositoryData<TProvider, TVersion, TRegistry>,
+): RepositoryCommitStatuses<TProvider, TVersion, TRegistry> {
   return Object.freeze({
     async list(reference: CommitStatusReference, request: PageRequest = {}) {
       const context = validationContext(adapter, "listCommitStatuses");
@@ -130,7 +140,8 @@ export function createRepositoryCommitStatuses<
         "statuses.set",
         TProvider,
         TVersion,
-        CommitStatus<TProvider, TVersion>
+        CommitStatus<TProvider, TVersion, TRegistry>,
+        TRegistry
       >({
         operation: "statuses.set",
         support: adapter.extensions["statuses.set"],
@@ -159,7 +170,7 @@ export function createRepositoryCommitStatuses<
               {
                 ...options,
                 ...(extension === undefined ? {} : { extension }),
-              } as SetCommitStatusOptions<TProvider>,
+              } as SetCommitStatusOptions<TProvider, TRegistry>,
             ),
           );
         },
@@ -206,10 +217,11 @@ function validateStatusReference(
 
 async function resolveStatusReference<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
-  adapter: GitHostAdapter<TProvider, TVersion>,
-  repository: RepositoryData<TProvider, TVersion>,
+  adapter: GitHostAdapter<TProvider, TVersion, TRegistry>,
+  repository: RepositoryData<TProvider, TVersion, TRegistry>,
   reference: CommitStatusReference,
   options: OperationOptions,
   context: ValidationErrorContext,
@@ -238,9 +250,10 @@ async function resolveStatusReference<
 
 function validationContext<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
-  adapter: GitHostAdapter<TProvider, TVersion>,
+  adapter: GitHostAdapter<TProvider, TVersion, TRegistry>,
   operation: string,
 ): ValidationErrorContext<TProvider, TVersion> {
   return { provider: adapter.provider, version: adapter.version, operation };

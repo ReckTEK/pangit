@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import {
   NotFoundError,
   OperationTimeoutError,
@@ -32,10 +33,10 @@ import type { AnyForgejoContent } from "./payload-types.ts";
 /** Require one direct contents result to be a directory and retain its exact wrapper. */
 export async function getForgejoDirectory<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   path: string,
   options: ReadContentOptions = {},
-): Promise<ContentData<"forgejo", TVersion>> {
+): Promise<ContentData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = { universal: "getDirectory", native: "repoGetContents" } as const;
   const requestedPath = normalizeDirectoryPath(context, "getDirectory", path);
   const client = await context.client();
@@ -68,10 +69,10 @@ export async function getForgejoDirectory<TVersion extends ForgejoVersion>(
  */
 export async function listForgejoDirectory<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   path: string,
   options: ListDirectoryOptions = {},
-): Promise<readonly ContentData<"forgejo", TVersion>[]> {
+): Promise<readonly ContentData<"forgejo", TVersion, ForgejoProviderTypes>[]> {
   const operation = { universal: "listDirectory", native: "repoGetContents" } as const;
   const requestedPath = normalizeDirectoryPath(context, "listDirectory", path);
   const traverses = options.recursive === true || options.collapseSingleFolders === true;
@@ -181,7 +182,7 @@ export async function listForgejoDirectory<TVersion extends ForgejoVersion>(
 async function readDirectoryEntries<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
   client: ForgejoClient<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   path: string,
   ref: string | undefined,
   operation: ForgejoOperationIdentity,
@@ -205,7 +206,7 @@ async function readDirectoryEntries<TVersion extends ForgejoVersion>(
 export async function readOptionalDirectoryEntries<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
   client: ForgejoClient<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   path: string,
   ref: string,
   operation: ForgejoOperationIdentity,
@@ -223,7 +224,7 @@ export function normalizeDirectoryWrapper<TVersion extends ForgejoVersion>(
   client: ForgejoClient<TVersion>,
   requestedPath: string,
   payload: readonly ForgejoEntityPayload<TVersion, "content">[],
-): ContentData<"forgejo", TVersion> {
+): ContentData<"forgejo", TVersion, ForgejoProviderTypes> {
   const path = requestedPath.replace(/^\/+|\/+$/g, "");
   return Object.freeze({
     kind: "directory",

@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import { NotFoundError } from "../../../fluent-api/adapter-contract/errors.ts";
 import type {
   ContentReadResult,
@@ -26,10 +27,10 @@ import type { AnyGiteaContent } from "./payload-types.ts";
  */
 export async function readGiteaPathMetadataBatch<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   paths: readonly string[],
   options: ReadPathMetadataBatchOptions = {},
-): Promise<readonly ContentReadResult<"gitea", TVersion>[]> {
+): Promise<readonly ContentReadResult<"gitea", TVersion, GiteaProviderTypes>[]> {
   const operation = {
     universal: "readPathMetadataBatch",
     native: "repoGetContentsExt",

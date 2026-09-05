@@ -23,19 +23,30 @@ export type RegisteredOperation =
   | "issues.update"
   | "branchRules.setOrder";
 
-export type ProviderExtensionRegistry = {
-  readonly [P in keyof ProviderTypeRegistry]: ProviderTypeRegistry[P] extends
-    { readonly extensions: infer E } ? E : never;
+export type ProviderExtensionRegistry<
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> = {
+  readonly [P in keyof TRegistry]: TRegistry[P] extends { readonly extensions: infer E } ? E
+    : never;
 };
-export type RegisteredProvider<O extends RegisteredOperation> =
+export type RegisteredProvider<
+  O extends RegisteredOperation,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> =
   & {
-    [P in keyof ProviderExtensionRegistry]: O extends keyof ProviderExtensionRegistry[P] ? P
+    [P in keyof ProviderExtensionRegistry<TRegistry>]: O extends
+      keyof ProviderExtensionRegistry<TRegistry>[P] ? P
       : never;
-  }[keyof ProviderExtensionRegistry]
+  }[keyof ProviderExtensionRegistry<TRegistry>]
   & string;
-type Definition<O extends RegisteredOperation, P extends string> = P extends
-  keyof ProviderExtensionRegistry
-  ? O extends keyof ProviderExtensionRegistry[P] ? ProviderExtensionRegistry[P][O] : never
+type Definition<
+  O extends RegisteredOperation,
+  P extends string,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> = P extends keyof ProviderExtensionRegistry<TRegistry>
+  ? O extends keyof ProviderExtensionRegistry<TRegistry>[P]
+    ? ProviderExtensionRegistry<TRegistry>[P][O]
+  : never
   : never;
 type ExtensionField<
   Definition,
@@ -43,21 +54,35 @@ type ExtensionField<
 > = Definition extends ProviderExtensionDefinition<object, object, object, string> ? Definition[Key]
   : never;
 
-export type ProviderExtensionContext<O extends RegisteredOperation, P extends string> =
-  ExtensionField<Definition<O, P>, "context">;
-export type ProviderExtensionOptions<O extends RegisteredOperation, P extends string> =
-  ExtensionField<Definition<O, P>, "options">;
-export type ProviderExtensionResult<O extends RegisteredOperation, P extends string, Default> =
-  [ExtensionField<Definition<O, P>, "result">] extends [never] ? Default
-    : ExtensionField<Definition<O, P>, "result">;
-export type ProviderExtensionSupportedVersion<O extends RegisteredOperation, P extends string> =
-  ExtensionField<Definition<O, P>, "supportedVersion">;
+export type ProviderExtensionContext<
+  O extends RegisteredOperation,
+  P extends string,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> = ExtensionField<Definition<O, P, TRegistry>, "context">;
+export type ProviderExtensionOptions<
+  O extends RegisteredOperation,
+  P extends string,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> = ExtensionField<Definition<O, P, TRegistry>, "options">;
+export type ProviderExtensionResult<
+  O extends RegisteredOperation,
+  P extends string,
+  Default,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> = [ExtensionField<Definition<O, P, TRegistry>, "result">] extends [never] ? Default
+  : ExtensionField<Definition<O, P, TRegistry>, "result">;
+export type ProviderExtensionSupportedVersion<
+  O extends RegisteredOperation,
+  P extends string,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> = ExtensionField<Definition<O, P, TRegistry>, "supportedVersion">;
 export type ProviderExtensionSupportsVersion<
   O extends RegisteredOperation,
   P extends string,
   V extends string,
-> = P extends RegisteredProvider<O>
-  ? [ProviderExtensionSupportedVersion<O, P>] extends [never] ? true
-  : [V] extends [ProviderExtensionSupportedVersion<O, P>] ? true
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> = P extends RegisteredProvider<O, TRegistry>
+  ? [ProviderExtensionSupportedVersion<O, P, TRegistry>] extends [never] ? true
+  : [V] extends [ProviderExtensionSupportedVersion<O, P, TRegistry>] ? true
   : false
   : false;

@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type { CommitData } from "../../../fluent-api/adapter-contract/commits.ts";
 
 import {
@@ -12,7 +13,7 @@ import { isRecord, optionalText, requiredText } from "./validate-payload.ts";
 export function normalizeFilesResponseCommit<TVersion extends GiteaVersion>(
   client: GiteaClient<TVersion>,
   payload: GiteaFilesResponsePayload<TVersion>,
-): CommitData<"gitea", TVersion> {
+): CommitData<"gitea", TVersion, GiteaProviderTypes> {
   if (!isRecord(payload.commit)) throw new TypeError("file-change response has no commit");
   const sha = requiredText(payload.commit.sha, "file-change commit SHA");
   const message = requiredText(payload.commit.message, `file-change commit ${sha} message`);

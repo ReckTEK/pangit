@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type { AnyRestResponse } from "../../../generated-rest-clients/runtime/mod.ts";
 import type {
   BranchData,
@@ -33,13 +34,13 @@ import {
 /** Read one provider branch page; Forgejo filtering remains deliberately page-local. */
 export async function listForgejoBranches<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   request: ListBranchesRequest,
   operation: ForgejoOperationIdentity = {
     universal: "listBranches",
     native: "repoListBranches",
   },
-): Promise<Page<BranchData<"forgejo", TVersion>>> {
+): Promise<Page<BranchData<"forgejo", TVersion, ForgejoProviderTypes>>> {
   const query = request.query === undefined
     ? undefined
     : requireIdentity(request.query, "branch query");
@@ -71,10 +72,10 @@ export async function listForgejoBranches<TVersion extends ForgejoVersion>(
 /** Fetch one branch directly. */
 export async function getForgejoBranch<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   name: string,
   options: OperationOptions = {},
-): Promise<BranchData<"forgejo", TVersion>> {
+): Promise<BranchData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = { universal: "getBranch", native: "repoGetBranch" } as const;
   const branchName = requireIdentity(name, "branch name");
   const path = repositoryPath(repository);
@@ -96,7 +97,7 @@ export async function getForgejoBranch<TVersion extends ForgejoVersion>(
 /** Test one branch identity with one direct request and 404-only absence semantics. */
 export async function forgejoBranchExists<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   name: string,
   options: OperationOptions = {},
 ): Promise<boolean> {

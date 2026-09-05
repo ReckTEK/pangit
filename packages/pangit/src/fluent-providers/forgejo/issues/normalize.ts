@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type {
   IssueCommentData,
   IssueData,
@@ -23,7 +24,7 @@ import {
 export function normalizeForgejoIssue<TVersion extends ForgejoVersion>(
   client: ForgejoClient<TVersion>,
   payload: AnyForgejoIssue,
-): IssueData<"forgejo", TVersion> {
+): IssueData<"forgejo", TVersion, ForgejoProviderTypes> {
   const number = requiredPositiveNumber(payload.number, "issue number");
   const state = requiredIssueState(payload.state, `issue ${number} state`);
   return Object.freeze({
@@ -71,7 +72,7 @@ export function normalizeForgejoIssue<TVersion extends ForgejoVersion>(
 export function normalizeForgejoIssueComment<TVersion extends ForgejoVersion>(
   client: ForgejoClient<TVersion>,
   payload: AnyForgejoComment,
-): IssueCommentData<"forgejo", TVersion> {
+): IssueCommentData<"forgejo", TVersion, ForgejoProviderTypes> {
   const id = requiredText(payload.id, "issue comment id");
   return Object.freeze({
     id,

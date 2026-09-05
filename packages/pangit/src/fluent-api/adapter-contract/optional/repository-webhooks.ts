@@ -1,4 +1,5 @@
-import type { Provider, ProviderVersion } from "../provider.ts";
+import type { Provider, ProviderTypeRegistry, ProviderVersion } from "../provider.ts";
+
 import type {
   ProviderRepositoryWebhookNative,
 } from "../../native-access/ProviderNativeRegistry.ts";
@@ -17,7 +18,8 @@ export type RepositoryWebhookContentType = "json" | "form";
 
 export interface RepositoryWebhookData<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly id: string;
   readonly url: string;
@@ -30,7 +32,7 @@ export interface RepositoryWebhookData<
   readonly providerContentType?: string;
   readonly createdAt?: string;
   readonly updatedAt?: string;
-  readonly native: ProviderRepositoryWebhookNative<TProvider, TVersion>;
+  readonly native: ProviderRepositoryWebhookNative<TProvider, TVersion, TRegistry>;
 }
 
 export interface CreateRepositoryWebhookInput {
@@ -65,32 +67,33 @@ export interface RepositoryWebhookCapabilitySupport {
 /** Optional shared repository-webhook adapter contract. */
 export interface RepositoryWebhookAdapter<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly repositoryWebhookSupport: RepositoryWebhookCapabilitySupport;
   listRepositoryWebhooks(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     request: ResolvedPageRequest,
-  ): Promise<Page<RepositoryWebhookData<TProvider, TVersion>>>;
+  ): Promise<Page<RepositoryWebhookData<TProvider, TVersion, TRegistry>>>;
   getRepositoryWebhook(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     id: string,
     options?: OperationOptions,
-  ): Promise<RepositoryWebhookData<TProvider, TVersion>>;
+  ): Promise<RepositoryWebhookData<TProvider, TVersion, TRegistry>>;
   createRepositoryWebhook(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     input: CreateRepositoryWebhookInput,
     options?: OperationOptions,
-  ): Promise<RepositoryWebhookData<TProvider, TVersion>>;
+  ): Promise<RepositoryWebhookData<TProvider, TVersion, TRegistry>>;
   updateRepositoryWebhook(
-    repository: RepositoryData<TProvider, TVersion>,
-    webhook: RepositoryWebhookData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
+    webhook: RepositoryWebhookData<TProvider, TVersion, TRegistry>,
     input: UpdateRepositoryWebhookInput,
     options?: OperationOptions,
-  ): Promise<RepositoryWebhookData<TProvider, TVersion>>;
+  ): Promise<RepositoryWebhookData<TProvider, TVersion, TRegistry>>;
   deleteRepositoryWebhook(
-    repository: RepositoryData<TProvider, TVersion>,
-    webhook: RepositoryWebhookData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
+    webhook: RepositoryWebhookData<TProvider, TVersion, TRegistry>,
     options?: OperationOptions,
   ): Promise<void>;
 }

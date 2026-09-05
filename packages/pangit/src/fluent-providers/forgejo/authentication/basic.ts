@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type {
   BasicAuthorizationInput,
   BasicAuthorizationOptions,
@@ -12,7 +13,7 @@ import { requireSecret, validationError, verifyForgejoCredentials } from "./cred
 export async function authorizeForgejoBasic<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
   input: BasicAuthorizationInput,
-  options: BasicAuthorizationOptions<"forgejo"> = {},
+  options: BasicAuthorizationOptions<"forgejo", ForgejoProviderTypes> = {},
 ): Promise<ForgejoAdapterContext<TVersion>> {
   const operation = { universal: "authorizeBasic", native: "userGetCurrent" } as const;
   if (input.username.trim().length === 0) {

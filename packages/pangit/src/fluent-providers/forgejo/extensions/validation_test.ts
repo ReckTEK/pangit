@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type { ForgejoCreatePullRequestReviewExtension } from "./pull-request-reviews.ts";
 import { forgejoExtensions } from "./runtime.ts";
 import { ValidationError } from "../../../fluent-api/adapter-contract/errors.ts";
@@ -38,7 +39,7 @@ const repository = Object.freeze({
   private: false,
   archived: false,
   native: null as never,
-}) satisfies RepositoryData<"forgejo", "16.0.3">;
+}) satisfies RepositoryData<"forgejo", "16.0.3", ForgejoProviderTypes>;
 
 const pullRequest = Object.freeze({
   id: "2",
@@ -59,13 +60,13 @@ const pullRequest = Object.freeze({
   }),
   merged: false,
   native: null as never,
-}) satisfies PullRequest<"forgejo", "16.0.3">;
+}) satisfies PullRequest<"forgejo", "16.0.3", ForgejoProviderTypes>;
 
 const review = Object.freeze({
   id: "3",
   state: "pending",
   native: null as never,
-}) satisfies PullRequestReviewData<"forgejo", "16.0.3">;
+}) satisfies PullRequestReviewData<"forgejo", "16.0.3", ForgejoProviderTypes>;
 
 Deno.test("review create extension validates every Forgejo input before the adapter", async () => {
   let adapterCalls = 0;
@@ -87,7 +88,7 @@ Deno.test("review create extension validates every Forgejo input before the adap
       adapterCalls++;
       return Promise.resolve(review);
     },
-  } as unknown as PullRequestReviewAdapter<"forgejo", "16.0.3">;
+  } as unknown as PullRequestReviewAdapter<"forgejo", "16.0.3", ForgejoProviderTypes>;
   const reviews = createPullRequestReviews(
     "forgejo",
     "16.0.3",

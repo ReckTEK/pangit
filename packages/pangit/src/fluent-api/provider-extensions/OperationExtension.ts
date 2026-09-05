@@ -1,3 +1,4 @@
+import type { ProviderTypeRegistry } from "../adapter-contract/provider.ts";
 import type { ValidationErrorContext } from "../adapter-contract/errors.ts";
 import { type ExtensionSupport, supportsExtension } from "./ExtensionSupport.ts";
 import type { OperationOptions } from "../adapter-contract/operation-options.ts";
@@ -21,13 +22,16 @@ type ProviderExtensionMethod<
   TProvider extends string,
   TVersion extends string,
   TDefaultResult,
-> = TProvider extends RegisteredProvider<TOperation>
-  ? ProviderExtensionSupportsVersion<TOperation, TProvider, TVersion> extends true ? {
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> = TProvider extends RegisteredProvider<TOperation, TRegistry>
+  ? ProviderExtensionSupportsVersion<TOperation, TProvider, TVersion, TRegistry> extends true ? {
       readonly [TKey in TProvider]: (
         configure: (
-          context: Readonly<ProviderExtensionContext<TOperation, TProvider>>,
-        ) => ProviderExtensionOptions<TOperation, TProvider>,
-      ) => ExecutableOperation<ProviderExtensionResult<TOperation, TProvider, TDefaultResult>>;
+          context: Readonly<ProviderExtensionContext<TOperation, TProvider, TRegistry>>,
+        ) => ProviderExtensionOptions<TOperation, TProvider, TRegistry>,
+      ) => ExecutableOperation<
+        ProviderExtensionResult<TOperation, TProvider, TDefaultResult, TRegistry>
+      >;
     }
   : Record<never, never>
   : Record<never, never>;
@@ -42,9 +46,10 @@ export type OperationExtension<
   TProvider extends string,
   TVersion extends string,
   TDefaultResult,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > =
   & ExecutableOperation<TDefaultResult>
-  & ProviderExtensionMethod<TOperation, TProvider, TVersion, TDefaultResult>;
+  & ProviderExtensionMethod<TOperation, TProvider, TVersion, TDefaultResult, TRegistry>;
 
 /** Build one immutable, single-configuration provider extension operation. */
 export function createOperationExtension<
@@ -52,9 +57,10 @@ export function createOperationExtension<
   TProvider extends string,
   TVersion extends string,
   TDefaultResult,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(input: {
   readonly operation: TOperation;
-  readonly support?: ExtensionSupport<ProviderExtensionOptions<TOperation, TProvider>>;
+  readonly support?: ExtensionSupport<ProviderExtensionOptions<TOperation, TProvider, TRegistry>>;
   readonly validationContext?: ValidationErrorContext;
   readonly provider: TProvider;
   /** Carries the exact selected version into the returned compile-time extension surface. */
@@ -62,17 +68,17 @@ export function createOperationExtension<
   readonly context: Readonly<object>;
   readonly execute: (
     extension:
-      | Readonly<ProviderExtensionOptions<TOperation, TProvider>>
+      | Readonly<ProviderExtensionOptions<TOperation, TProvider, TRegistry>>
       | undefined,
     options: OperationOptions,
   ) => Promise<
     | TDefaultResult
-    | ProviderExtensionResult<TOperation, TProvider, TDefaultResult>
+    | ProviderExtensionResult<TOperation, TProvider, TDefaultResult, TRegistry>
   >;
-}): OperationExtension<TOperation, TProvider, TVersion, TDefaultResult> {
+}): OperationExtension<TOperation, TProvider, TVersion, TDefaultResult, TRegistry> {
   let configured = false;
   let extension:
-    | Readonly<ProviderExtensionOptions<TOperation, TProvider>>
+    | Readonly<ProviderExtensionOptions<TOperation, TProvider, TRegistry>>
     | undefined;
   const execute = async (options: OperationOptions = {}) => {
     if (extension !== undefined) {
@@ -90,8 +96,8 @@ export function createOperationExtension<
       ...executable,
       [input.provider](
         configure: (
-          context: Readonly<ProviderExtensionContext<TOperation, TProvider>>,
-        ) => ProviderExtensionOptions<TOperation, TProvider>,
+          context: Readonly<ProviderExtensionContext<TOperation, TProvider, TRegistry>>,
+        ) => ProviderExtensionOptions<TOperation, TProvider, TRegistry>,
       ) {
         if (configured) {
           throw new TypeError(
@@ -102,7 +108,7 @@ export function createOperationExtension<
         extension = snapshotExtensionData(
           configure(
             snapshotExtensionData(input.context) as Readonly<
-              ProviderExtensionContext<TOperation, TProvider>
+              ProviderExtensionContext<TOperation, TProvider, TRegistry>
             >,
           ),
         );
@@ -114,6 +120,7 @@ export function createOperationExtension<
     TOperation,
     TProvider,
     TVersion,
-    TDefaultResult
+    TDefaultResult,
+    TRegistry
   >;
 }

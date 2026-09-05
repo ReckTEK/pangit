@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import {
   type OperationOptions,
   requireIdentity,
@@ -27,11 +28,11 @@ import { normalizeForgejoReleaseAsset } from "./normalize.ts";
 /** Upload one binary release asset with one direct request. */
 export async function uploadForgejoReleaseAsset<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  release: ReleaseData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  release: ReleaseData<"forgejo", TVersion, ForgejoProviderTypes>,
   input: UploadReleaseAssetInput,
   options: OperationOptions = {},
-): Promise<ReleaseAssetData<"forgejo", TVersion>> {
+): Promise<ReleaseAssetData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = {
     universal: "uploadReleaseAsset",
     native: "repoCreateReleaseAttachment",
@@ -62,12 +63,12 @@ export async function uploadForgejoReleaseAsset<TVersion extends ForgejoVersion>
 /** Rename one known release asset directly. */
 export async function updateForgejoReleaseAsset<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  release: ReleaseData<"forgejo", TVersion>,
-  asset: ReleaseAssetData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  release: ReleaseData<"forgejo", TVersion, ForgejoProviderTypes>,
+  asset: ReleaseAssetData<"forgejo", TVersion, ForgejoProviderTypes>,
   input: UpdateReleaseAssetInput,
   options: OperationOptions = {},
-): Promise<ReleaseAssetData<"forgejo", TVersion>> {
+): Promise<ReleaseAssetData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = {
     universal: "updateReleaseAsset",
     native: "repoEditReleaseAttachment",
@@ -98,9 +99,9 @@ export async function updateForgejoReleaseAsset<TVersion extends ForgejoVersion>
 /** Delete one known release asset directly without a lookup. */
 export async function deleteForgejoReleaseAsset<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  release: ReleaseData<"forgejo", TVersion>,
-  asset: ReleaseAssetData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  release: ReleaseData<"forgejo", TVersion, ForgejoProviderTypes>,
+  asset: ReleaseAssetData<"forgejo", TVersion, ForgejoProviderTypes>,
   options: OperationOptions = {},
 ): Promise<void> {
   const operation = {

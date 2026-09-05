@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import { NotFoundError } from "../../../fluent-api/adapter-contract/errors.ts";
 import type {
   ContentReadResult,
@@ -26,10 +27,10 @@ import type { AnyForgejoContent } from "./payload-types.ts";
  */
 export async function readForgejoPathMetadataBatch<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   paths: readonly string[],
   options: ReadPathMetadataBatchOptions = {},
-): Promise<readonly ContentReadResult<"forgejo", TVersion>[]> {
+): Promise<readonly ContentReadResult<"forgejo", TVersion, ForgejoProviderTypes>[]> {
   const operation = {
     universal: "readPathMetadataBatch",
     native: "repoGetContents",

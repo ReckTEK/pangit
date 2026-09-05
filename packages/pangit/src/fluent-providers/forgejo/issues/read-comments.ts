@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type {
   IssueCommentData,
   IssueData,
@@ -37,10 +38,10 @@ import { normalizeForgejoIssueComment } from "./normalize.ts";
  */
 export async function listForgejoIssueComments<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  issue: IssueData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  issue: IssueData<"forgejo", TVersion, ForgejoProviderTypes>,
   request: ResolvedPageRequest,
-): Promise<ScanPage<IssueCommentData<"forgejo", TVersion>>> {
+): Promise<ScanPage<IssueCommentData<"forgejo", TVersion, ForgejoProviderTypes>>> {
   const operation = {
     universal: "listIssueComments",
     native: "issueGetRepoComments",
@@ -87,14 +88,14 @@ export async function listForgejoIssueComments<TVersion extends ForgejoVersion>(
 /** Fetch one comment directly by repository and comment ID. */
 export async function getForgejoIssueComment<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   id: string,
   options: OperationOptions = {},
   operation: ForgejoOperationIdentity = {
     universal: "getIssueComment",
     native: "issueGetComment",
   },
-): Promise<IssueCommentData<"forgejo", TVersion>> {
+): Promise<IssueCommentData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const commentId = parsePositiveInt64(id, "issue comment id");
   const client = await context.client();
   const payload = await requestForgejoBody<AnyForgejoComment, TVersion>(
@@ -113,7 +114,7 @@ export async function getForgejoIssueComment<TVersion extends ForgejoVersion>(
 
 function commentBelongsToIssue<TVersion extends ForgejoVersion>(
   comment: AnyForgejoComment,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   issueNumber: number,
 ): boolean {
   const raw = optionalText(comment.issue_url);

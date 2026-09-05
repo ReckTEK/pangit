@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import {
   type OperationOptions,
   requireIdentity,
@@ -27,14 +28,14 @@ import { validateHeadSelector } from "./head-selector.ts";
 /** Fetch one pull request directly. */
 export async function getForgejoPullRequest<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   number: number,
   options: OperationOptions = {},
   operation: ForgejoOperationIdentity = {
     universal: "getPullRequest",
     native: "repoGetPullRequest",
   },
-): Promise<PullRequestData<"forgejo", TVersion>> {
+): Promise<PullRequestData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const index = requirePositiveInteger(number, "pull-request number");
   const client = await context.client();
   const payload = await requestForgejoBody<AnyForgejoPullRequest, TVersion>(
@@ -54,10 +55,10 @@ export async function getForgejoPullRequest<TVersion extends ForgejoVersion>(
 /** Find one base/head pair with the provider's direct lookup and 404-only absence. */
 export async function findForgejoPullRequest<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   input: FindPullRequestInput,
   options: OperationOptions = {},
-): Promise<PullRequestData<"forgejo", TVersion> | undefined> {
+): Promise<PullRequestData<"forgejo", TVersion, ForgejoProviderTypes> | undefined> {
   const operation = {
     universal: "findPullRequest",
     native: "repoGetPullRequestByBaseHead",
@@ -82,8 +83,8 @@ export async function findForgejoPullRequest<TVersion extends ForgejoVersion>(
 /** Return retained merge state, or explicitly refresh it with one direct lookup. */
 export async function isForgejoPullRequestMerged<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  pullRequest: PullRequestData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  pullRequest: PullRequestData<"forgejo", TVersion, ForgejoProviderTypes>,
   refresh: boolean,
   options: OperationOptions = {},
 ): Promise<boolean> {

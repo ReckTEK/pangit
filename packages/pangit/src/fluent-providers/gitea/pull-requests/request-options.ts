@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import {
   requireIdentity,
   requirePositiveInteger,
@@ -9,8 +10,8 @@ import type { RepositoryData } from "../../../fluent-api/adapter-contract/reposi
 import type { GiteaVersion } from "../native/GiteaEntityNative.ts";
 
 export function pullRequestPath<TVersion extends GiteaVersion>(
-  repository: RepositoryData<"gitea", TVersion>,
-  pullRequest: PullRequestData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  pullRequest: PullRequestData<"gitea", TVersion, GiteaProviderTypes>,
 ) {
   return {
     ...repositoryPath(repository),

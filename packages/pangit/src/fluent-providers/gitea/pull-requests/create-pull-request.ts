@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import {
   type OperationOptions,
   requireIdentity,
@@ -23,10 +24,10 @@ import { headPart } from "./head-selector.ts";
 /** Create a same-repository or fork pull request with an unambiguous Gitea head encoding. */
 export async function createGiteaPullRequest<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   input: CreatePullRequestInput,
   options: OperationOptions = {},
-): Promise<PullRequestData<"gitea", TVersion>> {
+): Promise<PullRequestData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = { universal: "createPullRequest", native: "repoCreatePullRequest" } as const;
   const title = requireIdentity(input.title, "pull-request title");
   const base = requireIdentity(input.targetBranch, "pull-request target branch");
@@ -59,7 +60,7 @@ export async function createGiteaPullRequest<TVersion extends GiteaVersion>(
 
 function encodeCreateHead<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  target: RepositoryData<"gitea", TVersion>,
+  target: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   source: PullRequestRef,
   operation: GiteaOperationIdentity,
 ): string {

@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import { unavailable } from "../unavailable.ts";
 import type {
   BranchRuleData,
@@ -25,10 +26,10 @@ import { normalizeForgejoBranchRule } from "./normalize.ts";
 /** Create one configured rule directly. */
 export async function createForgejoBranchRule<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   input: CreateBranchRuleInput,
   options: OperationOptions = {},
-): Promise<BranchRuleData<"forgejo", TVersion>> {
+): Promise<BranchRuleData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = {
     universal: "createBranchRule",
     native: "repoCreateBranchProtection",
@@ -61,11 +62,11 @@ export async function createForgejoBranchRule<TVersion extends ForgejoVersion>(
 /** Update one known configured rule without a lookup. */
 export async function updateForgejoBranchRule<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  rule: BranchRuleData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  rule: BranchRuleData<"forgejo", TVersion, ForgejoProviderTypes>,
   input: UpdateBranchRuleInput,
   options: OperationOptions = {},
-): Promise<BranchRuleData<"forgejo", TVersion>> {
+): Promise<BranchRuleData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = {
     universal: "updateBranchRule",
     native: "repoEditBranchProtection",
@@ -98,8 +99,8 @@ export async function updateForgejoBranchRule<TVersion extends ForgejoVersion>(
 /** Delete one known configured rule directly. */
 export async function deleteForgejoBranchRule<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  rule: BranchRuleData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  rule: BranchRuleData<"forgejo", TVersion, ForgejoProviderTypes>,
   options: OperationOptions = {},
 ): Promise<void> {
   const operation = {
@@ -127,8 +128,8 @@ export async function deleteForgejoBranchRule<TVersion extends ForgejoVersion>(
 /** Reject unsupported rule ordering before any request. */
 export function setForgejoBranchRuleOrder<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  _repository: RepositoryData<"forgejo", TVersion>,
-  _options: BranchRuleOrderOptions<"forgejo">,
+  _repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  _options: BranchRuleOrderOptions<"forgejo", ForgejoProviderTypes>,
 ): Promise<void> {
   return unavailable(
     context.version,

@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import { OperationTimeoutError } from "../../../fluent-api/adapter-contract/errors.ts";
 import type {
   ContentData,
@@ -40,10 +41,10 @@ import type { AnyGiteaContent, AnyGiteaContentsExt } from "./payload-types.ts";
 /** Require one direct contents-ext result to be a directory and retain its exact wrapper. */
 export async function getGiteaDirectory<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   path: string,
   options: ReadContentOptions = {},
-): Promise<ContentData<"gitea", TVersion>> {
+): Promise<ContentData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = { universal: "getDirectory", native: "repoGetContentsExt" } as const;
   const requestedPath = normalizeDirectoryPath(context, "getDirectory", path);
   const client = await context.client();
@@ -77,10 +78,10 @@ export async function getGiteaDirectory<TVersion extends GiteaVersion>(
  */
 export async function listGiteaDirectory<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   path: string,
   options: ListDirectoryOptions = {},
-): Promise<readonly ContentData<"gitea", TVersion>[]> {
+): Promise<readonly ContentData<"gitea", TVersion, GiteaProviderTypes>[]> {
   const operation = { universal: "listDirectory", native: "repoGetContentsExt" } as const;
   const requestedPath = normalizeDirectoryPath(context, "listDirectory", path);
   const traverses = options.recursive === true || options.collapseSingleFolders === true;
@@ -190,7 +191,7 @@ export async function listGiteaDirectory<TVersion extends GiteaVersion>(
 async function readDirectoryEntries<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
   client: GiteaClient<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   path: string,
   ref: string | undefined,
   operation: GiteaOperationIdentity,
@@ -215,7 +216,7 @@ async function readDirectoryEntries<TVersion extends GiteaVersion>(
 export async function readOptionalDirectoryEntries<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
   client: GiteaClient<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   path: string,
   ref: string,
   operation: GiteaOperationIdentity,
@@ -251,7 +252,7 @@ export function normalizeDirectoryWrapper<TVersion extends GiteaVersion>(
   client: GiteaClient<TVersion>,
   requestedPath: string,
   payload: GiteaContentsExtPayload<TVersion>,
-): ContentData<"gitea", TVersion> {
+): ContentData<"gitea", TVersion, GiteaProviderTypes> {
   const path = requestedPath.replace(/^\/+|\/+$/g, "");
   return Object.freeze({
     kind: "directory",

@@ -1,3 +1,4 @@
+import type { GitLabProviderTypes } from "../provider-types.ts";
 import { commits } from "../commits/mod.ts";
 import type { GitLabAdapterContext } from "../transport/GitLabAdapterContext.ts";
 import type { GitLabVersion } from "../native/GitLabNative.ts";
@@ -31,7 +32,7 @@ export function commitStatuses<V extends GitLabVersion>(
       const resolved = /^[a-f0-9]{40}$/i.test(ref)
         ? ref
         : (await commits(c).getCommit(r, ref, o)).sha;
-      const items: CommitStatusData<"gitlab", V>[] = [];
+      const items: CommitStatusData<"gitlab", V, GitLabProviderTypes>[] = [];
       let cursor: string | undefined;
       do {
         const p = await ops.listCommitStatuses(r, resolved, { limit: 100, cursor, ...o });

@@ -1,4 +1,4 @@
-import type {} from "./registration.ts";
+import type { GitLabProviderTypes } from "./provider-types.ts";
 import { createGitLabAdapter } from "./create-adapter.ts";
 import { type GitLabVersion, versions } from "./versions.ts";
 import { createFluentClient } from "../../fluent-api/client/create-fluent-client.ts";
@@ -10,7 +10,7 @@ import { ProviderAdapterUnavailableError } from "../../fluent-api/adapter-contra
 export function createClient<const V extends GitLabVersion>(
   version: V,
   options: FluentClientOptions,
-): FluentClient<"gitlab", V> {
+): FluentClient<"gitlab", V, GitLabProviderTypes> {
   if (!(versions as readonly string[]).includes(version)) {
     throw new ProviderAdapterUnavailableError("gitlab", version);
   }

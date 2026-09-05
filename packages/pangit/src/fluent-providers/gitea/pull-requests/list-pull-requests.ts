@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import { createPage, type Page } from "../../../fluent-api/adapter-contract/pagination.ts";
 import {
   type ListPullRequestsRequest,
@@ -31,9 +32,9 @@ import { normalizeGiteaPullRequest, normalizePullRequestRef } from "./normalize-
 /** Read one bounded Gitea pull-request page; text search uses Gitea's server-side search. */
 export async function listGiteaPullRequests<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   request: ListPullRequestsRequest,
-): Promise<Page<PullRequestData<"gitea", TVersion>>> {
+): Promise<Page<PullRequestData<"gitea", TVersion, GiteaProviderTypes>>> {
   const searchOperation = {
     universal: "listPullRequests",
     native: "issueSearchIssues",

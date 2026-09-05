@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import { IncompleteHistoryError } from "../../../fluent-api/adapter-contract/errors.ts";
 import type {
   MergeBaseOptions,
@@ -42,11 +43,11 @@ const FIND_MERGE_BASES_GET_OPERATION = {
  */
 export async function findForgejoMergeBases<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   left: string,
   right: string,
   options: MergeBaseOptions,
-): Promise<MergeBasesResult<"forgejo", TVersion>> {
+): Promise<MergeBasesResult<"forgejo", TVersion, ForgejoProviderTypes>> {
   const leftRef = requireIdentity(left, "left ref");
   const rightRef = requireIdentity(right, "right ref");
   const maximum = requirePositiveInteger(options.maxItems, "maximum inspected commits");
@@ -171,7 +172,7 @@ export async function findForgejoMergeBases<TVersion extends ForgejoVersion>(
 
 function countMergeBaseReachable<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   include: string,
   exclude: string,
   budget: MergeBaseBudget,

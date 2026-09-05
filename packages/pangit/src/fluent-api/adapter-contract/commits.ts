@@ -1,9 +1,10 @@
+import type { Provider, ProviderTypeRegistry, ProviderVersion } from "./provider.ts";
 import type {
   ProviderExtensionOptions,
   ProviderExtensionResult,
   ProviderExtensionSupportsVersion,
 } from "../provider-extensions/ProviderExtensionRegistry.ts";
-import type { Provider, ProviderVersion } from "./provider.ts";
+
 import type { ProviderEntityNative } from "../native-access/ProviderNativeRegistry.ts";
 import type { BoundedOperationOptions, OperationOptions } from "./operation-options.ts";
 import type { Page, ResolvedPageRequest, ScanPage } from "./pagination.ts";
@@ -26,7 +27,8 @@ export interface CommitFileData {
 
 export interface CommitData<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly sha: string;
   readonly message: string;
@@ -39,7 +41,7 @@ export interface CommitData<
   readonly deletions?: number;
   readonly changedFiles?: number;
   readonly verified?: boolean;
-  readonly native: ProviderEntityNative<TProvider, TVersion, "commit">;
+  readonly native: ProviderEntityNative<TProvider, TVersion, "commit", TRegistry>;
 }
 
 export interface CommitFacets {
@@ -66,31 +68,35 @@ export const MAX_COMMIT_READ_CONCURRENCY = 4;
 
 export type CompareCommitsExtension<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
-> = ProviderExtensionSupportsVersion<"commits.compare", TProvider, TVersion> extends true
-  ? ProviderExtensionOptions<"commits.compare", TProvider>
+  TVersion extends string,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> = ProviderExtensionSupportsVersion<"commits.compare", TProvider, TVersion, TRegistry> extends true
+  ? ProviderExtensionOptions<"commits.compare", TProvider, TRegistry>
   : never;
 
 export interface CompareCommitsOptions<
   TProvider extends Provider = Provider,
-  TVersion extends ProviderVersion<TProvider> = ProviderVersion<TProvider>,
+  TVersion extends string = ProviderVersion<TProvider>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > extends OperationOptions {
-  readonly extension?: CompareCommitsExtension<TProvider, TVersion>;
+  readonly extension?: CompareCommitsExtension<TProvider, TVersion, TRegistry>;
 }
 
 export interface CommitComparison<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
-  readonly commits: readonly CommitData<TProvider, TVersion>[];
+  readonly commits: readonly CommitData<TProvider, TVersion, TRegistry>[];
   readonly totalCommits?: number;
 }
 
 export interface MergeBasesResult<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
-  readonly commits: readonly CommitData<TProvider, TVersion>[];
+  readonly commits: readonly CommitData<TProvider, TVersion, TRegistry>[];
   readonly complete: true;
 }
 
@@ -138,55 +144,56 @@ export interface ListContributorsRequest extends ResolvedPageRequest, BoundedOpe
 
 export interface CommitAdapter<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   listCommits(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     request: ListCommitsRequest,
-  ): Promise<Page<CommitData<TProvider, TVersion>>>;
+  ): Promise<Page<CommitData<TProvider, TVersion, TRegistry>>>;
   getCommit(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     sha: string,
     options?: GetCommitOptions,
-  ): Promise<CommitData<TProvider, TVersion>>;
+  ): Promise<CommitData<TProvider, TVersion, TRegistry>>;
   getCommits(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     shas: readonly string[],
     options?: GetCommitsOptions,
-  ): Promise<readonly CommitData<TProvider, TVersion>[]>;
+  ): Promise<readonly CommitData<TProvider, TVersion, TRegistry>[]>;
   compareCommits(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     base: string,
     head: string,
-    options?: CompareCommitsOptions<TProvider, TVersion>,
+    options?: CompareCommitsOptions<TProvider, TVersion, TRegistry>,
   ): Promise<
-    | CommitComparison<TProvider, TVersion>
-    | ProviderExtensionResult<"commits.compare", TProvider, never>
+    | CommitComparison<TProvider, TVersion, TRegistry>
+    | ProviderExtensionResult<"commits.compare", TProvider, never, TRegistry>
   >;
   listCommitFiles(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     sha: string,
     options?: OperationOptions,
   ): Promise<readonly CommitFileData[]>;
   findMergeBases(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     left: string,
     right: string,
     options: MergeBaseOptions,
-  ): Promise<MergeBasesResult<TProvider, TVersion>>;
+  ): Promise<MergeBasesResult<TProvider, TVersion, TRegistry>>;
   countReachableCommits(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     include: string,
     exclude?: string,
     options?: OperationOptions,
   ): Promise<number>;
   findRefsForCommit(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     sha: string,
     request: FindCommitRefsRequest,
   ): Promise<Page<CommitRefData>>;
   listContributors(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     request: ListContributorsRequest,
   ): Promise<ScanPage<ContributorData>>;
 }

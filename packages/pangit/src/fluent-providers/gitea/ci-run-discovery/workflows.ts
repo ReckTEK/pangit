@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type { CiWorkflowData } from "../../../fluent-api/adapter-contract/optional/ci-run-discovery.ts";
 
 import {
@@ -22,10 +23,10 @@ import { normalizeWorkflowState } from "./execution-state.ts";
 /** Directly read a known workflow ID or workflow path. */
 export async function getGiteaCiWorkflow<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   workflowId: string,
   options: OperationOptions = {},
-): Promise<CiWorkflowData<"gitea", TVersion>> {
+): Promise<CiWorkflowData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = { universal: "getCiWorkflow", native: "ActionsGetWorkflow" } as const;
   const id = requireIdentity(workflowId, "workflow id");
   const client = await context.client();
@@ -51,7 +52,7 @@ export async function getGiteaCiWorkflow<TVersion extends GiteaVersion>(
 export function normalizeGiteaCiWorkflow<TVersion extends GiteaVersion>(
   client: GiteaClient<TVersion>,
   payload: GiteaCiEntityPayload<TVersion, "workflow">,
-): CiWorkflowData<"gitea", TVersion> {
+): CiWorkflowData<"gitea", TVersion, GiteaProviderTypes> {
   if (!isWorkflowPayload(payload)) throw new TypeError("malformed Gitea workflow payload");
   return Object.freeze({
     id: payload.id!,

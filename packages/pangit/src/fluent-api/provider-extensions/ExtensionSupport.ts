@@ -1,3 +1,4 @@
+import type { ProviderTypeRegistry } from "../adapter-contract/provider.ts";
 import type { ProviderExtensionOptions, RegisteredOperation } from "./ProviderExtensionRegistry.ts";
 import type { ValidationErrorContext } from "../adapter-contract/errors.ts";
 
@@ -7,10 +8,13 @@ export interface ExtensionSupport<Options extends object = object> {
   readonly validate?: (options: Readonly<Options>, context: ValidationErrorContext) => void;
 }
 
-export type ProviderExtensions<P extends string> = Readonly<
+export type ProviderExtensions<
+  P extends string,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> = Readonly<
   Partial<
     {
-      [O in RegisteredOperation]: ExtensionSupport<ProviderExtensionOptions<O, P>>;
+      [O in RegisteredOperation]: ExtensionSupport<ProviderExtensionOptions<O, P, TRegistry>>;
     }
   >
 >;

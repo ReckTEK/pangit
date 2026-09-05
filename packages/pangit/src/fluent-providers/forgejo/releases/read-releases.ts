@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import {
   type OperationOptions,
   requireIdentity,
@@ -32,9 +33,9 @@ import { normalizeForgejoRelease } from "./normalize.ts";
 /** Read exactly one provider release page. */
 export async function listForgejoReleases<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   request: ResolvedPageRequest,
-): Promise<Page<ReleaseData<"forgejo", TVersion>>> {
+): Promise<Page<ReleaseData<"forgejo", TVersion, ForgejoProviderTypes>>> {
   const operation = { universal: "listReleases", native: "repoListReleases" } as const;
   const client = await context.client();
   const cursor = decodeForgejoPageCursor(request.cursor, { version: context.version, operation });
@@ -59,10 +60,10 @@ export async function listForgejoReleases<TVersion extends ForgejoVersion>(
 /** Fetch one release directly by ID. */
 export async function getForgejoRelease<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   id: string,
   options: OperationOptions = {},
-): Promise<ReleaseData<"forgejo", TVersion>> {
+): Promise<ReleaseData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = { universal: "getRelease", native: "repoGetRelease" } as const;
   const releaseId = parsePositiveInt64(id, "release id");
   const client = await context.client();
@@ -83,10 +84,10 @@ export async function getForgejoRelease<TVersion extends ForgejoVersion>(
 /** Fetch one release directly by tag name. */
 export async function getForgejoReleaseByTag<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   tagName: string,
   options: OperationOptions = {},
-): Promise<ReleaseData<"forgejo", TVersion>> {
+): Promise<ReleaseData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = { universal: "getReleaseByTag", native: "repoGetReleaseByTag" } as const;
   const tag = requireIdentity(tagName, "release tag name");
   const client = await context.client();

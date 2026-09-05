@@ -1,4 +1,3 @@
-import type {} from "../registration.ts";
 import { GitLabAdapterContext } from "../transport/GitLabAdapterContext.ts";
 import { commitFiles } from "./commit-file-changes.ts";
 import type { Repo } from "../adapter.ts";

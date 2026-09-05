@@ -1,4 +1,4 @@
-import type {} from "../registration.ts";
+import type { GitLabProviderTypes } from "../provider-types.ts";
 import type { ProviderExtensions } from "../../../fluent-api/provider-extensions/ExtensionSupport.ts";
 import { ValidationError } from "../../../fluent-api/adapter-contract/errors.ts";
 
@@ -14,5 +14,5 @@ export const gitlabExtensions = Object.freeze(
         }
       },
     },
-  } satisfies ProviderExtensions<"gitlab">,
+  } satisfies ProviderExtensions<"gitlab", GitLabProviderTypes>,
 );

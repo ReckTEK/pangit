@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import {
   type OperationOptions,
   requireIdentity,
@@ -18,8 +19,8 @@ import { pullRequestPath, requestOptions } from "./request-options.ts";
 /** Publish an issue-level PR comment or one inline review comment with one direct request. */
 export async function publishGiteaPullRequestComment<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  pullRequest: PullRequestData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  pullRequest: PullRequestData<"gitea", TVersion, GiteaProviderTypes>,
   input: PullRequestCommentInput,
   options: OperationOptions = {},
 ): Promise<void> {

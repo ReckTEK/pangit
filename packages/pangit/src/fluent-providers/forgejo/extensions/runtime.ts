@@ -1,4 +1,4 @@
-import type {} from "../registration.ts";
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import { validateMergeExtension } from "./merge-validation.ts";
 
 import type { ProviderExtensions } from "../../../fluent-api/provider-extensions/ExtensionSupport.ts";
@@ -25,5 +25,5 @@ export const forgejoExtensions = Object.freeze(
         }
       },
     },
-  } satisfies ProviderExtensions<"forgejo">,
+  } satisfies ProviderExtensions<"forgejo", ForgejoProviderTypes>,
 );

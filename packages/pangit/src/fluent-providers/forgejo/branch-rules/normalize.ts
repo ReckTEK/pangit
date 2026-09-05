@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type { BranchRuleData } from "../../../fluent-api/adapter-contract/optional/branch-rules.ts";
 
 import {
@@ -18,7 +19,7 @@ import {
 export function normalizeForgejoBranchRule<TVersion extends ForgejoVersion>(
   client: ForgejoClient<TVersion>,
   payload: AnyForgejoRule,
-): BranchRuleData<"forgejo", TVersion> {
+): BranchRuleData<"forgejo", TVersion, ForgejoProviderTypes> {
   return Object.freeze({
     name: requiredText(payload.rule_name, "branch rule name"),
     ...optionalBoolean("pushAllowed", payload.enable_push),

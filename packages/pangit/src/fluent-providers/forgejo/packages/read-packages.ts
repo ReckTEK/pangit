@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type {
   ListPackagesRequest,
   PackageCoordinates,
@@ -39,7 +40,7 @@ export async function listForgejoPackages<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
   owner: string,
   request: ListPackagesRequest,
-): Promise<Page<PackageVersionData<"forgejo", TVersion>>> {
+): Promise<Page<PackageVersionData<"forgejo", TVersion, ForgejoProviderTypes>>> {
   const operation = { universal: "listPackages", native: "listPackages" } as const;
   const packageOwner = requireIdentity(owner, "package owner");
   const cursor = decodeForgejoPageCursor(request.cursor, { version: context.version, operation });
@@ -76,7 +77,7 @@ export async function listForgejoPackageVersions<TVersion extends ForgejoVersion
   context: ForgejoAdapterContext<TVersion>,
   coordinates: PackageCoordinates,
   request: ResolvedPageRequest,
-): Promise<Page<PackageVersionData<"forgejo", TVersion>>> {
+): Promise<Page<PackageVersionData<"forgejo", TVersion, ForgejoProviderTypes>>> {
   const operation = {
     universal: "listPackageVersions",
     native: "listPackages",
@@ -118,7 +119,7 @@ export async function getForgejoPackageVersion<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
   identity: PackageVersionIdentity,
   options: OperationOptions = {},
-): Promise<PackageVersionData<"forgejo", TVersion>> {
+): Promise<PackageVersionData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = { universal: "getPackageVersion", native: "getPackage" } as const;
   const path = packageVersionPath(identity);
   const client = await context.client();
@@ -137,7 +138,7 @@ export async function findForgejoPackageVersion<TVersion extends ForgejoVersion>
   context: ForgejoAdapterContext<TVersion>,
   identity: PackageVersionIdentity,
   options: OperationOptions = {},
-): Promise<PackageVersionData<"forgejo", TVersion> | undefined> {
+): Promise<PackageVersionData<"forgejo", TVersion, ForgejoProviderTypes> | undefined> {
   const operation = { universal: "findPackageVersion", native: "getPackage" } as const;
   const path = packageVersionPath(identity);
   const client = await context.client();

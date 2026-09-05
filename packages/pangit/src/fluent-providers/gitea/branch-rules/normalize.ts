@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type { BranchRuleData } from "../../../fluent-api/adapter-contract/optional/branch-rules.ts";
 
 import {
@@ -18,7 +19,7 @@ import {
 export function normalizeGiteaBranchRule<TVersion extends GiteaVersion>(
   client: GiteaClient<TVersion>,
   payload: AnyGiteaRule,
-): BranchRuleData<"gitea", TVersion> {
+): BranchRuleData<"gitea", TVersion, GiteaProviderTypes> {
   return Object.freeze({
     name: requiredText(payload.rule_name, "branch rule name"),
     ...optionalBoolean("pushAllowed", payload.enable_push),

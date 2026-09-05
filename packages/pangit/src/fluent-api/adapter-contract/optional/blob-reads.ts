@@ -1,4 +1,5 @@
-import type { Provider, ProviderVersion } from "../provider.ts";
+import type { Provider, ProviderTypeRegistry, ProviderVersion } from "../provider.ts";
+
 import type { ProviderBlobNative } from "../../native-access/ProviderNativeRegistry.ts";
 import type { OperationOptions } from "../operation-options.ts";
 import type { ContentBlobOptions, ProviderMediaType } from "../content-body.ts";
@@ -9,13 +10,14 @@ export type { ProviderBlobNative } from "../../native-access/ProviderNativeRegis
 /** Provider-neutral result of reading one Git blob by object ID. */
 export interface BlobData<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly sha: string;
   readonly size: number;
   readonly bytes: Uint8Array;
   readonly mediaType?: ProviderMediaType;
-  readonly native: ProviderBlobNative<TProvider, TVersion>;
+  readonly native: ProviderBlobNative<TProvider, TVersion, TRegistry>;
 }
 
 export interface BlobReadCapabilitySupport {
@@ -35,33 +37,34 @@ export interface ReadGitBlobOptions extends OperationOptions, ContentBlobOptions
 /** Optional, direct SHA-addressed blob-read contract. */
 export interface BlobReadAdapter<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly blobReadSupport: BlobReadCapabilitySupport;
   readBlob(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     sha: string,
     options?: ReadGitBlobOptions,
   ): Promise<globalThis.Blob>;
   /** Direct SHA-addressed reads using the same body rules as path-addressed content. */
   readBlobBytes(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     sha: string,
     options?: OperationOptions,
   ): Promise<Uint8Array>;
   readBlobText(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     sha: string,
     options?: OperationOptions,
   ): Promise<string>;
   readBlobJson(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     sha: string,
     options?: OperationOptions,
   ): Promise<unknown>;
   getBlob(
-    repository: RepositoryData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
     sha: string,
     options?: OperationOptions,
-  ): Promise<BlobData<TProvider, TVersion>>;
+  ): Promise<BlobData<TProvider, TVersion, TRegistry>>;
 }

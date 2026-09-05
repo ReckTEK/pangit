@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type { AnyRestResponse } from "../../../generated-rest-clients/runtime/mod.ts";
 import { ProviderInvariantError } from "../../../fluent-api/adapter-contract/errors.ts";
 import {
@@ -31,9 +32,9 @@ type AnyForgejoTag = ForgejoEntityPayload<ForgejoVersion, "tag">;
 /** Read exactly one provider tag page. */
 export async function listForgejoTags<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   request: ResolvedPageRequest,
-): Promise<Page<TagData<"forgejo", TVersion>>> {
+): Promise<Page<TagData<"forgejo", TVersion, ForgejoProviderTypes>>> {
   const operation = { universal: "listTags", native: "repoListTags" } as const;
   const path = repositoryPath(repository);
   const client = await context.client();
@@ -65,10 +66,10 @@ export async function listForgejoTags<TVersion extends ForgejoVersion>(
 /** Fetch one tag directly without fetching annotated-tag details implicitly. */
 export async function getForgejoTag<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   name: string,
   options: OperationOptions = {},
-): Promise<TagData<"forgejo", TVersion>> {
+): Promise<TagData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = { universal: "getTag", native: "repoGetTag" } as const;
   const tagName = requireIdentity(name, "tag name");
   const path = repositoryPath(repository);
@@ -90,10 +91,10 @@ export async function getForgejoTag<TVersion extends ForgejoVersion>(
 /** Create one annotated tag using only the common Forgejo tag-create fields. */
 export async function createForgejoTag<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   input: CreateTagInput,
   options: OperationOptions = {},
-): Promise<TagData<"forgejo", TVersion>> {
+): Promise<TagData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = { universal: "createTag", native: "repoCreateTag" } as const;
   const name = requireIdentity(input.name, "tag name");
   const target = requireIdentity(input.target, "tag target");
@@ -123,8 +124,8 @@ export async function createForgejoTag<TVersion extends ForgejoVersion>(
 /** Delete one known tag directly without a lookup preflight. */
 export async function deleteForgejoTag<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  tag: TagData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  tag: TagData<"forgejo", TVersion, ForgejoProviderTypes>,
   options: OperationOptions = {},
 ): Promise<void> {
   const operation = { universal: "deleteTag", native: "repoDeleteTag" } as const;
@@ -148,7 +149,7 @@ export function normalizeForgejoTag<TVersion extends ForgejoVersion>(
   client: ForgejoClient<TVersion>,
   tag: AnyForgejoTag,
   annotated?: true,
-): TagData<"forgejo", TVersion> {
+): TagData<"forgejo", TVersion, ForgejoProviderTypes> {
   const name = requiredText(tag.name, "tag name");
   const sha = requiredText(tag.commit?.sha, `tag ${name} target SHA`);
   const message = optionalText(tag.message);

@@ -1,4 +1,8 @@
-import type { FluentProvider, ProviderVersion } from "../adapter-contract/provider.ts";
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../adapter-contract/provider.ts";
 
 import {
   createOAuthTransactionCookie,
@@ -14,10 +18,13 @@ export interface OAuthCookieFlowOptions {
   readonly redirectStatus?: 302 | 303;
 }
 
-export type OAuthCookieCompletion<TProvider extends FluentProvider> =
+export type OAuthCookieCompletion<
+  TProvider extends FluentProvider,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> =
   | Readonly<{
     ok: true;
-    authorized: OAuthAuthorizedClientFor<TProvider>;
+    authorized: OAuthAuthorizedClientFor<TProvider, TRegistry>;
     /** Propagate these headers on the application response to clear the transaction cookie. */
     headers: Headers;
   }>
@@ -32,21 +39,27 @@ export type OAuthCookieCompletion<TProvider extends FluentProvider> =
  * Framework-neutral OAuth orchestration backed by a short-lived encrypted browser cookie.
  * It owns only protocol transaction state; application login sessions remain caller-owned.
  */
-export interface OAuthCookieFlow<TProvider extends FluentProvider> {
-  readonly oauth: OAuthHandler<TProvider>;
-  readonly cookie: OAuthTransactionCookie<TProvider>;
+export interface OAuthCookieFlow<
+  TProvider extends FluentProvider,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> {
+  readonly oauth: OAuthHandler<TProvider, TRegistry>;
+  readonly cookie: OAuthTransactionCookie<TProvider, TRegistry>;
   /** Begin login and return a native redirect Response containing the transaction cookie. */
   start<TSelected extends TProvider>(provider: TSelected): Promise<Response>;
   /** Consume the callback Request and return the authorization result plus clear-cookie headers. */
-  complete(request: Request): Promise<OAuthCookieCompletion<TProvider>>;
+  complete(request: Request): Promise<OAuthCookieCompletion<TProvider, TRegistry>>;
 }
 
 /** Add native cookie transaction handling to an existing low-level OAuth handler. */
-export function createOAuthCookieFlow<TProvider extends FluentProvider>(
-  oauth: OAuthHandler<TProvider>,
+export function createOAuthCookieFlow<
+  TProvider extends FluentProvider,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+>(
+  oauth: OAuthHandler<TProvider, TRegistry>,
   options: OAuthCookieFlowOptions,
-): OAuthCookieFlow<TProvider> {
-  const cookie = createOAuthTransactionCookie<TProvider>(options.cookie);
+): OAuthCookieFlow<TProvider, TRegistry> {
+  const cookie = createOAuthTransactionCookie<TProvider, TRegistry>(options.cookie);
   const redirectStatus = options.redirectStatus ?? 302;
   if (redirectStatus !== 302 && redirectStatus !== 303) {
     throw new TypeError("OAuth redirectStatus must be 302 or 303");
@@ -56,9 +69,10 @@ export function createOAuthCookieFlow<TProvider extends FluentProvider>(
     oauth,
     cookie,
     async start<TSelected extends TProvider>(provider: TSelected): Promise<Response> {
-      const started: OAuthLoginStart<TSelected, ProviderVersion<TSelected>> = await oauth.start(
-        provider,
-      );
+      const started: OAuthLoginStart<TSelected, ProviderVersion<TSelected, TRegistry>, TRegistry> =
+        await oauth.start(
+          provider,
+        );
       const headers = new Headers({
         "cache-control": "no-store",
         location: started.url.href,
@@ -66,7 +80,7 @@ export function createOAuthCookieFlow<TProvider extends FluentProvider>(
       });
       return new Response(null, { headers, status: redirectStatus });
     },
-    async complete(request: Request): Promise<OAuthCookieCompletion<TProvider>> {
+    async complete(request: Request): Promise<OAuthCookieCompletion<TProvider, TRegistry>> {
       const headers = new Headers({
         "cache-control": "no-store",
         "set-cookie": cookie.clear(request),

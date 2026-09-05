@@ -1,3 +1,4 @@
+import type { GitLabProviderTypes } from "../provider-types.ts";
 import type { GitLabAdapterContext } from "../transport/GitLabAdapterContext.ts";
 import type { GitLabVersion } from "../native/GitLabNative.ts";
 import type { BranchData } from "../../../fluent-api/adapter-contract/branches.ts";
@@ -8,7 +9,7 @@ import { door } from "../native/door.ts";
 export async function branch<V extends GitLabVersion>(
   c: GitLabAdapterContext<V>,
   p: Dto,
-): Promise<BranchData<"gitlab", V>> {
+): Promise<BranchData<"gitlab", V, GitLabProviderTypes>> {
   return Object.freeze({
     name: required(c, "normalizeBranch", p.name),
     sha: id(c, "normalizeBranch", object(c, "normalizeBranch", p.commit).id),

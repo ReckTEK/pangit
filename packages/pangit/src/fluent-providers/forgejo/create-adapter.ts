@@ -1,4 +1,3 @@
-import type {} from "./registration.ts";
 import type { Adapter } from "./adapter.ts";
 import type { ForgejoVersion } from "./versions.ts";
 import {

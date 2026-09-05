@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import {
   type CommitData,
   DEFAULT_COMMIT_MULTI_GET_MAX_ITEMS,
@@ -41,13 +42,13 @@ import { validationError } from "./errors.ts";
 /** Read exactly one bounded commit page, with every expensive Forgejo facet disabled by default. */
 export async function listForgejoCommits<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   request: ListCommitsRequest,
   operation: ForgejoOperationIdentity = {
     universal: "listCommits",
     native: "repoGetAllCommits",
   },
-): Promise<Page<CommitData<"forgejo", TVersion>>> {
+): Promise<Page<CommitData<"forgejo", TVersion, ForgejoProviderTypes>>> {
   const client = await context.client();
   const path = repositoryPath(repository);
   const cursor = decodeForgejoPageCursor(request.cursor, {
@@ -96,14 +97,14 @@ export async function listForgejoCommits<TVersion extends ForgejoVersion>(
 /** Fetch one commit directly and request only the explicitly selected facets. */
 export async function getForgejoCommit<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   sha: string,
   options: GetCommitOptions = {},
   operation: ForgejoOperationIdentity = {
     universal: "getCommit",
     native: "repoGetSingleCommit",
   },
-): Promise<CommitData<"forgejo", TVersion>> {
+): Promise<CommitData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const commitSha = requireIdentity(sha, "commit SHA");
   const client = await context.client();
   const payload = await requestForgejoBody<AnyForgejoCommit, TVersion>(
@@ -130,10 +131,10 @@ export async function getForgejoCommit<TVersion extends ForgejoVersion>(
 /** Fetch only the requested unique SHAs with bounded concurrency, then restore input order. */
 export async function getForgejoCommits<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   shas: readonly string[],
   options: GetCommitsOptions = {},
-): Promise<readonly CommitData<"forgejo", TVersion>[]> {
+): Promise<readonly CommitData<"forgejo", TVersion, ForgejoProviderTypes>[]> {
   const operation = { universal: "getCommits", native: "repoGetSingleCommit" } as const;
   const maxItems = requirePositiveInteger(
     options.maxItems ?? DEFAULT_COMMIT_MULTI_GET_MAX_ITEMS,

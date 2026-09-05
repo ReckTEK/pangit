@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type {
   BranchRuleData,
   BranchRuleFields,
@@ -24,10 +25,10 @@ import { normalizeGiteaBranchRule } from "./normalize.ts";
 /** Create one configured rule directly. */
 export async function createGiteaBranchRule<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   input: CreateBranchRuleInput,
   options: OperationOptions = {},
-): Promise<BranchRuleData<"gitea", TVersion>> {
+): Promise<BranchRuleData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = {
     universal: "createBranchRule",
     native: "repoCreateBranchProtection",
@@ -59,11 +60,11 @@ export async function createGiteaBranchRule<TVersion extends GiteaVersion>(
 /** Update one known configured rule without a lookup. */
 export async function updateGiteaBranchRule<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  rule: BranchRuleData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  rule: BranchRuleData<"gitea", TVersion, GiteaProviderTypes>,
   input: UpdateBranchRuleInput,
   options: OperationOptions = {},
-): Promise<BranchRuleData<"gitea", TVersion>> {
+): Promise<BranchRuleData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = {
     universal: "updateBranchRule",
     native: "repoEditBranchProtection",
@@ -96,8 +97,8 @@ export async function updateGiteaBranchRule<TVersion extends GiteaVersion>(
 /** Delete one known configured rule directly. */
 export async function deleteGiteaBranchRule<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  rule: BranchRuleData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  rule: BranchRuleData<"gitea", TVersion, GiteaProviderTypes>,
   options: OperationOptions = {},
 ): Promise<void> {
   const operation = {
@@ -125,8 +126,8 @@ export async function deleteGiteaBranchRule<TVersion extends GiteaVersion>(
 /** Apply the Gitea-only exact configured-rule order in one request. */
 export async function setGiteaBranchRuleOrder<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  options: BranchRuleOrderOptions<"gitea">,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  options: BranchRuleOrderOptions<"gitea", GiteaProviderTypes>,
 ): Promise<void> {
   const operation = {
     universal: "setBranchRuleOrder",

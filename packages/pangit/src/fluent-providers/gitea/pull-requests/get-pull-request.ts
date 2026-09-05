@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import {
   type OperationOptions,
   requireIdentity,
@@ -27,14 +28,14 @@ import { validateHeadSelector } from "./head-selector.ts";
 /** Fetch one pull request directly. */
 export async function getGiteaPullRequest<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   number: number,
   options: OperationOptions = {},
   operation: GiteaOperationIdentity = {
     universal: "getPullRequest",
     native: "repoGetPullRequest",
   },
-): Promise<PullRequestData<"gitea", TVersion>> {
+): Promise<PullRequestData<"gitea", TVersion, GiteaProviderTypes>> {
   const index = requirePositiveInteger(number, "pull-request number");
   const client = await context.client();
   const payload = await requestGiteaBody<AnyGiteaPullRequest, TVersion>(
@@ -54,10 +55,10 @@ export async function getGiteaPullRequest<TVersion extends GiteaVersion>(
 /** Find one base/head pair with the provider's direct lookup and 404-only absence. */
 export async function findGiteaPullRequest<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   input: FindPullRequestInput,
   options: OperationOptions = {},
-): Promise<PullRequestData<"gitea", TVersion> | undefined> {
+): Promise<PullRequestData<"gitea", TVersion, GiteaProviderTypes> | undefined> {
   const operation = {
     universal: "findPullRequest",
     native: "repoGetPullRequestByBaseHead",
@@ -82,8 +83,8 @@ export async function findGiteaPullRequest<TVersion extends GiteaVersion>(
 /** Return retained merge state, or explicitly refresh it with one direct lookup. */
 export async function isGiteaPullRequestMerged<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  pullRequest: PullRequestData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  pullRequest: PullRequestData<"gitea", TVersion, GiteaProviderTypes>,
   refresh: boolean,
   options: OperationOptions = {},
 ): Promise<boolean> {

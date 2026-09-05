@@ -1,5 +1,3 @@
-import type {} from "../registration.ts";
-
 import { commitForgejoFileChanges } from "./commit-file-changes.ts";
 import { getForgejoDirectory, listForgejoDirectory } from "./read-directory.ts";
 

@@ -1,4 +1,8 @@
-import type { FluentProvider, ProviderVersion } from "../adapter-contract/provider.ts";
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../adapter-contract/provider.ts";
 
 import type { OperationOptions } from "../adapter-contract/operation-options.ts";
 import type { Page, PageRequest } from "../adapter-contract/pagination.ts";
@@ -15,25 +19,29 @@ import type { ProviderClientNative } from "../native-access/ProviderNativeRegist
 /** Fluent API client selected for one implemented provider/version adapter. */
 export interface FluentClient<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly provider: TProvider;
   readonly version: TVersion;
-  readonly auth: Auth<TProvider, TVersion>;
-  readonly native: ProviderClientNative<TProvider, TVersion>;
-  readonly currentUserProfile: CurrentUserProfileCapability<TProvider, TVersion>;
-  readonly packages: Packages<TProvider, TVersion>;
+  readonly auth: Auth<TProvider, TVersion, TRegistry>;
+  readonly native: ProviderClientNative<TProvider, TVersion, TRegistry>;
+  readonly currentUserProfile: CurrentUserProfileCapability<TProvider, TVersion, TRegistry>;
+  readonly packages: Packages<TProvider, TVersion, TRegistry>;
   readonly unsupportedOptionalCapabilities: UnsupportedOptionalCapabilities;
 
   /** Fetch one bounded page of repository-owning containers. */
-  containers(request?: PageRequest): Promise<Page<RepositoryContainer<TProvider, TVersion>>>;
+  containers(
+    request?: PageRequest,
+  ): Promise<Page<RepositoryContainer<TProvider, TVersion, TRegistry>>>;
   container(
     name: string,
     options?: OperationOptions,
-  ): Promise<RepositoryContainer<TProvider, TVersion>>;
+  ): Promise<RepositoryContainer<TProvider, TVersion, TRegistry>>;
 }
 
 export type AuthorizedClient<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
-> = FluentClient<TProvider, TVersion>;
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> = FluentClient<TProvider, TVersion, TRegistry>;

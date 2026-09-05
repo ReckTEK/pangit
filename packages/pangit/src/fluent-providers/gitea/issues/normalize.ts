@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type {
   IssueCommentData,
   IssueData,
@@ -23,7 +24,7 @@ import {
 export function normalizeGiteaIssue<TVersion extends GiteaVersion>(
   client: GiteaClient<TVersion>,
   payload: AnyGiteaIssue,
-): IssueData<"gitea", TVersion> {
+): IssueData<"gitea", TVersion, GiteaProviderTypes> {
   const number = requiredPositiveNumber(payload.number, "issue number");
   const state = requiredIssueState(payload.state, `issue ${number} state`);
   return Object.freeze({
@@ -71,7 +72,7 @@ export function normalizeGiteaIssue<TVersion extends GiteaVersion>(
 export function normalizeGiteaIssueComment<TVersion extends GiteaVersion>(
   client: GiteaClient<TVersion>,
   payload: AnyGiteaComment,
-): IssueCommentData<"gitea", TVersion> {
+): IssueCommentData<"gitea", TVersion, GiteaProviderTypes> {
   const id = requiredText(payload.id, "issue comment id");
   return Object.freeze({
     id,

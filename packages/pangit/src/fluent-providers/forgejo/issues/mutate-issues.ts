@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type {
   CreateIssueInput,
   IssueData,
@@ -25,10 +26,10 @@ import { normalizeForgejoIssue } from "./normalize.ts";
 /** Create one issue using only common title and description fields. */
 export async function createForgejoIssue<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   input: CreateIssueInput,
   options: OperationOptions = {},
-): Promise<IssueData<"forgejo", TVersion>> {
+): Promise<IssueData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = { universal: "createIssue", native: "issueCreateIssue" } as const;
   const title = requireIdentity(input.title, "issue title");
   const client = await context.client();
@@ -58,11 +59,11 @@ export async function createForgejoIssue<TVersion extends ForgejoVersion>(
 /** Update common issue fields with an optional, typed Forgejo content-version guard. */
 export async function updateForgejoIssue<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  issue: IssueData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  issue: IssueData<"forgejo", TVersion, ForgejoProviderTypes>,
   input: UpdateIssueInput,
-  options: IssueUpdateOptions<"forgejo"> = {},
-): Promise<IssueData<"forgejo", TVersion>> {
+  options: IssueUpdateOptions<"forgejo", ForgejoProviderTypes> = {},
+): Promise<IssueData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = { universal: "updateIssue", native: "issueEditIssue" } as const;
   if (input.title === undefined && input.description === undefined) {
     throw new TypeError("issue update requires a title or description");
@@ -98,11 +99,11 @@ export async function updateForgejoIssue<TVersion extends ForgejoVersion>(
 /** Close or reopen one known issue with a single direct mutation. */
 export async function setForgejoIssueState<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  issue: IssueData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  issue: IssueData<"forgejo", TVersion, ForgejoProviderTypes>,
   state: IssueState,
   options: OperationOptions = {},
-): Promise<IssueData<"forgejo", TVersion>> {
+): Promise<IssueData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = { universal: "setIssueState", native: "issueEditIssue" } as const;
   if (state !== "open" && state !== "closed") throw new TypeError("invalid issue state");
   const client = await context.client();

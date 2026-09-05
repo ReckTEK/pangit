@@ -1,5 +1,6 @@
+import type { Provider, ProviderTypeRegistry, ProviderVersion } from "../provider.ts";
 import type { ProviderExtensionOptions } from "../../provider-extensions/ProviderExtensionRegistry.ts";
-import type { Provider, ProviderVersion } from "../provider.ts";
+
 import type {
   ProviderPullRequestReviewNative,
 } from "../../native-access/ProviderNativeRegistry.ts";
@@ -24,7 +25,8 @@ export type PullRequestReviewState =
 /** One provider-normalized pull-request review object. */
 export interface PullRequestReviewData<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly id: string;
   readonly state: PullRequestReviewState;
@@ -36,7 +38,7 @@ export interface PullRequestReviewData<
   readonly submittedAt?: string;
   readonly updatedAt?: string;
   readonly url?: string;
-  readonly native: ProviderPullRequestReviewNative<TProvider, TVersion>;
+  readonly native: ProviderPullRequestReviewNative<TProvider, TVersion, TRegistry>;
 }
 
 /** Create a pending review. Rich inline positions remain provider-specific. */
@@ -45,14 +47,20 @@ export interface CreatePullRequestReviewInput {
   readonly commitSha?: string;
 }
 
-export type CreatePullRequestReviewExtension<TProvider extends Provider> = ProviderExtensionOptions<
+export type CreatePullRequestReviewExtension<
+  TProvider extends Provider,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> = ProviderExtensionOptions<
   "pullRequestReviews.create",
-  TProvider
+  TProvider,
+  TRegistry
 >;
 
-export interface CreatePullRequestReviewOptions<TProvider extends Provider = Provider>
-  extends OperationOptions {
-  readonly extension?: CreatePullRequestReviewExtension<TProvider>;
+export interface CreatePullRequestReviewOptions<
+  TProvider extends Provider = Provider,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> extends OperationOptions {
+  readonly extension?: CreatePullRequestReviewExtension<TProvider, TRegistry>;
 }
 
 export type SubmitPullRequestReviewEvent = "approve" | "request-changes" | "comment";
@@ -79,31 +87,32 @@ export interface PullRequestReviewCapabilitySupport {
 /** Optional submitted-review-object lifecycle, separate from core reviewer actions. */
 export interface PullRequestReviewAdapter<
   TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly pullRequestReviewSupport: PullRequestReviewCapabilitySupport;
   listPullRequestReviews(
-    repository: RepositoryData<TProvider, TVersion>,
-    pullRequest: PullRequestData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
+    pullRequest: PullRequestData<TProvider, TVersion, TRegistry>,
     request: ResolvedPageRequest,
-  ): Promise<Page<PullRequestReviewData<TProvider, TVersion>>>;
+  ): Promise<Page<PullRequestReviewData<TProvider, TVersion, TRegistry>>>;
   getPullRequestReview(
-    repository: RepositoryData<TProvider, TVersion>,
-    pullRequest: PullRequestData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
+    pullRequest: PullRequestData<TProvider, TVersion, TRegistry>,
     id: string,
     options?: OperationOptions,
-  ): Promise<PullRequestReviewData<TProvider, TVersion>>;
+  ): Promise<PullRequestReviewData<TProvider, TVersion, TRegistry>>;
   createPullRequestReview(
-    repository: RepositoryData<TProvider, TVersion>,
-    pullRequest: PullRequestData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
+    pullRequest: PullRequestData<TProvider, TVersion, TRegistry>,
     input: CreatePullRequestReviewInput,
-    options?: CreatePullRequestReviewOptions<TProvider>,
-  ): Promise<PullRequestReviewData<TProvider, TVersion>>;
+    options?: CreatePullRequestReviewOptions<TProvider, TRegistry>,
+  ): Promise<PullRequestReviewData<TProvider, TVersion, TRegistry>>;
   submitPullRequestReview(
-    repository: RepositoryData<TProvider, TVersion>,
-    pullRequest: PullRequestData<TProvider, TVersion>,
-    review: PullRequestReviewData<TProvider, TVersion>,
+    repository: RepositoryData<TProvider, TVersion, TRegistry>,
+    pullRequest: PullRequestData<TProvider, TVersion, TRegistry>,
+    review: PullRequestReviewData<TProvider, TVersion, TRegistry>,
     input: SubmitPullRequestReviewInput,
     options?: OperationOptions,
-  ): Promise<PullRequestReviewData<TProvider, TVersion>>;
+  ): Promise<PullRequestReviewData<TProvider, TVersion, TRegistry>>;
 }

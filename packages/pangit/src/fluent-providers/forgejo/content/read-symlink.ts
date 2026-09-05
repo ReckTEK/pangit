@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type {
   ContentData,
   ReadLinkedContentOptions,
@@ -16,10 +17,10 @@ import { directoryName, displayPath } from "./paths.ts";
 /** Return one raw symlink target; never follow it. */
 export async function readForgejoSymlink<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   path: string,
   options: ReadLinkedContentOptions = {},
-): Promise<ContentData<"forgejo", TVersion>> {
+): Promise<ContentData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = { universal: "readSymlink", native: "repoGetContents" } as const;
   const content = await readForgejoContent(
     context,

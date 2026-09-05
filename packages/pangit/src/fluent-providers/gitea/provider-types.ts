@@ -1,3 +1,4 @@
+import type { ProviderNativeTypes } from "../../fluent-api/adapter-contract/provider.ts";
 import type { ProviderNativeKind } from "../../fluent-api/native-access/ProviderNativeRegistry.ts";
 import type { ProviderExtensionDefinition } from "../../fluent-api/provider-extensions/ProviderExtensionRegistry.ts";
 import type {
@@ -82,17 +83,19 @@ export interface GiteaExtensionRegistry {
     never
   >;
 }
-declare module "../../fluent-api/adapter-contract/provider.ts" {
-  interface ProviderTypeRegistry {
-    readonly gitea: {
-      readonly versions: GiteaVersion;
-      readonly extensions: GiteaExtensionRegistry;
-    };
-  }
-}
 
-declare module "../../fluent-api/native-access/ProviderNativeRegistry.ts" {
-  interface ProviderNativeRegistry<V extends string, K extends ProviderNativeKind> {
-    readonly gitea: GiteaProviderNativeRegistry<V & GiteaVersion>[K];
-  }
+/** Explicit type families owned by the Gitea implementation. */
+export type GiteaProviderTypes = {
+  readonly gitea: {
+    readonly versions: GiteaVersion;
+    readonly extensions: GiteaExtensionRegistry;
+    readonly native: GiteaNativeTypes;
+  };
+};
+
+/** Preserve generic version inference while selecting one native type family. */
+export interface GiteaNativeTypes extends ProviderNativeTypes {
+  readonly type: GiteaProviderNativeRegistry<
+    this["version"] & GiteaVersion
+  >[this["kind"] & ProviderNativeKind];
 }

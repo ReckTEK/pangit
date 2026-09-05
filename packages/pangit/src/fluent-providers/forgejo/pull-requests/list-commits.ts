@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type { CommitData } from "../../../fluent-api/adapter-contract/commits.ts";
 
 import { requirePositiveInteger } from "../../../fluent-api/adapter-contract/operation-options.ts";
@@ -24,10 +25,10 @@ import { requireCommitArray } from "./validate-payload.ts";
 /** Read exactly one page of pull-request commits with expensive per-commit facets disabled. */
 export async function listForgejoPullRequestCommits<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  pullRequest: PullRequestData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  pullRequest: PullRequestData<"forgejo", TVersion, ForgejoProviderTypes>,
   request: ResolvedPageRequest,
-): Promise<Page<CommitData<"forgejo", TVersion>>> {
+): Promise<Page<CommitData<"forgejo", TVersion, ForgejoProviderTypes>>> {
   const operation = {
     universal: "listPullRequestCommits",
     native: "repoGetPullRequestCommits",

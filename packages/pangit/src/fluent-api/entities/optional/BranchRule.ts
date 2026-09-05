@@ -1,4 +1,9 @@
-import type { FluentProvider, ProviderVersion } from "../../adapter-contract/provider.ts";
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../../adapter-contract/provider.ts";
+
 import type {
   BranchRuleData,
   EffectiveBranchProtectionData,
@@ -7,28 +12,38 @@ import type {
 
 export interface BranchRule<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
-> extends Omit<BranchRuleData<TProvider, TVersion>, "native" | "statusCheckContexts"> {
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> extends Omit<BranchRuleData<TProvider, TVersion, TRegistry>, "native" | "statusCheckContexts"> {
   readonly statusCheckContexts: readonly string[];
-  readonly native: ProviderBranchRuleEntityNative<TProvider, TVersion, "configuredRule">;
+  readonly native: ProviderBranchRuleEntityNative<TProvider, TVersion, "configuredRule", TRegistry>;
 }
 
 export interface EffectiveBranchProtection<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > extends
   Omit<
-    EffectiveBranchProtectionData<TProvider, TVersion>,
+    EffectiveBranchProtectionData<TProvider, TVersion, TRegistry>,
     "native" | "statusCheckContexts"
   > {
   readonly statusCheckContexts: readonly string[];
-  readonly native: ProviderBranchRuleEntityNative<TProvider, TVersion, "effectiveProtection">;
+  readonly native: ProviderBranchRuleEntityNative<
+    TProvider,
+    TVersion,
+    "effectiveProtection",
+    TRegistry
+  >;
 }
 
 export function createBranchRule<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
->(data: BranchRuleData<TProvider, TVersion>): BranchRule<TProvider, TVersion> {
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+>(
+  data: BranchRuleData<TProvider, TVersion, TRegistry>,
+): BranchRule<TProvider, TVersion, TRegistry> {
   return Object.freeze({
     ...data,
     statusCheckContexts: Object.freeze([...data.statusCheckContexts]),
@@ -38,10 +53,11 @@ export function createBranchRule<
 
 export function createEffectiveBranchProtection<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
-  data: EffectiveBranchProtectionData<TProvider, TVersion>,
-): EffectiveBranchProtection<TProvider, TVersion> {
+  data: EffectiveBranchProtectionData<TProvider, TVersion, TRegistry>,
+): EffectiveBranchProtection<TProvider, TVersion, TRegistry> {
   return Object.freeze({
     ...data,
     statusCheckContexts: Object.freeze([...data.statusCheckContexts]),

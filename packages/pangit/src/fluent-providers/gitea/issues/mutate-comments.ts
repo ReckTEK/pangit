@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type {
   IssueCommentData,
   IssueCommentInput,
@@ -30,11 +31,11 @@ import { getGiteaIssueComment } from "./read-comments.ts";
 /** Add one comment directly to a known issue. */
 export async function createGiteaIssueComment<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  issue: IssueData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  issue: IssueData<"gitea", TVersion, GiteaProviderTypes>,
   input: IssueCommentInput,
   options: OperationOptions = {},
-): Promise<IssueCommentData<"gitea", TVersion>> {
+): Promise<IssueCommentData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = { universal: "createIssueComment", native: "issueCreateComment" } as const;
   const body = requireIdentity(input.body, "issue comment body");
   const client = await context.client();
@@ -61,11 +62,11 @@ export async function createGiteaIssueComment<TVersion extends GiteaVersion>(
 /** Edit one comment directly; refresh it only when Gitea returns its documented empty 204. */
 export async function updateGiteaIssueComment<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  comment: IssueCommentData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  comment: IssueCommentData<"gitea", TVersion, GiteaProviderTypes>,
   input: IssueCommentInput,
   options: OperationOptions = {},
-): Promise<IssueCommentData<"gitea", TVersion>> {
+): Promise<IssueCommentData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = { universal: "updateIssueComment", native: "issueEditComment" } as const;
   const body = requireIdentity(input.body, "issue comment body");
   const id = parsePositiveInt64(comment.id, "issue comment id");
@@ -96,8 +97,8 @@ export async function updateGiteaIssueComment<TVersion extends GiteaVersion>(
 /** Delete one known issue comment directly without a lookup. */
 export async function deleteGiteaIssueComment<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  comment: IssueCommentData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  comment: IssueCommentData<"gitea", TVersion, GiteaProviderTypes>,
   options: OperationOptions = {},
 ): Promise<void> {
   const operation = { universal: "deleteIssueComment", native: "issueDeleteComment" } as const;

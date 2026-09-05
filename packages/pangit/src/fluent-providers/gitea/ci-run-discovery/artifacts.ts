@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type { CiArtifactData } from "../../../fluent-api/adapter-contract/optional/ci-run-discovery.ts";
 
 import {
@@ -26,11 +27,11 @@ import { repositoryPath, requestOptions } from "./request-options.ts";
 /** Find a named artifact for one known run without scanning other runs or artifacts. */
 export async function findGiteaCiRunArtifact<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   runId: string,
   name: string,
   options: OperationOptions = {},
-): Promise<CiArtifactData<"gitea", TVersion> | undefined> {
+): Promise<CiArtifactData<"gitea", TVersion, GiteaProviderTypes> | undefined> {
   const operation = { universal: "findCiRunArtifact", native: "getArtifactsOfRun" } as const;
   const artifactName = requireIdentity(name, "artifact name");
   const id = parseGiteaId(runId, "workflow run id");
@@ -62,10 +63,10 @@ export async function findGiteaCiRunArtifact<TVersion extends GiteaVersion>(
 /** Directly read one artifact by exact ID. */
 export async function getGiteaCiArtifact<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   artifactId: string,
   options: OperationOptions = {},
-): Promise<CiArtifactData<"gitea", TVersion>> {
+): Promise<CiArtifactData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = { universal: "getCiArtifact", native: "getArtifact" } as const;
   const id = requireIdentity(artifactId, "artifact id");
   const client = await context.client();
@@ -91,7 +92,7 @@ export async function getGiteaCiArtifact<TVersion extends GiteaVersion>(
 export function normalizeGiteaCiArtifact<TVersion extends GiteaVersion>(
   client: GiteaClient<TVersion>,
   payload: GiteaCiEntityPayload<TVersion, "artifact">,
-): CiArtifactData<"gitea", TVersion> {
+): CiArtifactData<"gitea", TVersion, GiteaProviderTypes> {
   if (!isArtifactPayload(payload)) throw new TypeError("malformed Gitea artifact payload");
   return Object.freeze({
     id: String(payload.id),

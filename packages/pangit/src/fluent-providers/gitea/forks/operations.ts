@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type { AnyRestResponse } from "../../../generated-rest-clients/runtime/mod.ts";
 import {
   ProviderInvariantError,
@@ -31,9 +32,9 @@ type AnyGiteaRepository = GiteaRepositoryPayload<GiteaVersion>;
 /** Read exactly one provider fork page. */
 export async function listGiteaForks<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   request: ResolvedPageRequest,
-): Promise<Page<RepositoryData<"gitea", TVersion>>> {
+): Promise<Page<RepositoryData<"gitea", TVersion, GiteaProviderTypes>>> {
   const operation = { universal: "listForks", native: "listForks" } as const;
   const path = repositoryPath(repository);
   const client = await context.client();
@@ -65,9 +66,9 @@ export async function listGiteaForks<TVersion extends GiteaVersion>(
 /** Create one fork, then poll only its known direct destination until it is usable. */
 export async function createGiteaFork<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  options: CreateForkOptions<"gitea", TVersion>,
-): Promise<RepositoryData<"gitea", TVersion>> {
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  options: CreateForkOptions<"gitea", TVersion, GiteaProviderTypes>,
+): Promise<RepositoryData<"gitea", TVersion, GiteaProviderTypes>> {
   const createOperation = { universal: "createFork", native: "createFork" } as const;
   const readinessOperation = { universal: "createFork", native: "repoGet" } as const;
   const destinationName = requireIdentity(options.destination.name, "fork destination name");

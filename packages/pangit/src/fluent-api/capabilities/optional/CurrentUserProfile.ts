@@ -1,4 +1,9 @@
-import type { FluentProvider, ProviderVersion } from "../../adapter-contract/provider.ts";
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../../adapter-contract/provider.ts";
+
 import type {
   CurrentUserProfileAdapter,
   CurrentUserProfileCapabilitySupport,
@@ -12,18 +17,20 @@ import {
 
 export interface CurrentUserProfileCapability<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 > {
   readonly support: CurrentUserProfileCapabilitySupport;
-  current(options?: OperationOptions): Promise<CurrentUserProfile<TProvider, TVersion>>;
+  current(options?: OperationOptions): Promise<CurrentUserProfile<TProvider, TVersion, TRegistry>>;
 }
 
 export function createCurrentUserProfileCapability<
   TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<TProvider, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
-  adapter: CurrentUserProfileAdapter<TProvider, TVersion>,
-): CurrentUserProfileCapability<TProvider, TVersion> {
+  adapter: CurrentUserProfileAdapter<TProvider, TVersion, TRegistry>,
+): CurrentUserProfileCapability<TProvider, TVersion, TRegistry> {
   return Object.freeze({
     support: adapter.currentUserProfileSupport,
     async current(options: OperationOptions = {}) {

@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import {
   type OperationOptions,
   requireIdentity,
@@ -15,8 +16,8 @@ import { pullRequestPath, requestOptions } from "./request-options.ts";
 /** Request reviewers with one direct provider mutation and no discovery preflight. */
 export async function requestForgejoPullRequestReviewers<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
-  pullRequest: PullRequestData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
+  pullRequest: PullRequestData<"forgejo", TVersion, ForgejoProviderTypes>,
   reviewers: readonly string[],
   options: OperationOptions = {},
 ): Promise<void> {

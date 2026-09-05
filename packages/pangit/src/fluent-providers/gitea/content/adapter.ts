@@ -1,5 +1,3 @@
-import type {} from "../registration.ts";
-
 import { commitGiteaFileChanges } from "./commit-file-changes.ts";
 import { getGiteaDirectory, listGiteaDirectory } from "./read-directory.ts";
 

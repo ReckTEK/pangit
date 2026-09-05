@@ -1,4 +1,9 @@
-import type { Provider, ProviderVersion } from "../adapter-contract/provider.ts";
+import type {
+  Provider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../adapter-contract/provider.ts";
+
 import type {
   BasicAuthorizationInput,
   BasicAuthorizationOptions,
@@ -12,21 +17,31 @@ import {
   supportsExtension,
 } from "../provider-extensions/ExtensionSupport.ts";
 
-export type BasicClientAuthorizer<P extends Provider, V extends ProviderVersion<P>> = (
+export type BasicClientAuthorizer<
+  P extends Provider,
+  V extends ProviderVersion<P, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> = (
   input: BasicAuthorizationInput,
-  options?: BasicAuthorizationOptions<P>,
-) => Promise<FluentClient<P, V>>;
+  options?: BasicAuthorizationOptions<P, TRegistry>,
+) => Promise<FluentClient<P, V, TRegistry>>;
 
 /** Defer credentials and extension evaluation until explicit authorization. */
-export function createBasicAuthorization<P extends Provider, V extends ProviderVersion<P>>(
+export function createBasicAuthorization<
+  P extends Provider,
+  V extends ProviderVersion<P, TRegistry>,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+>(
   provider: P,
   version: V,
-  support: ExtensionSupport<ProviderExtensionOptions<"auth.basic", P>> | undefined,
+  support: ExtensionSupport<ProviderExtensionOptions<"auth.basic", P, TRegistry>> | undefined,
   input: BasicAuthorizationInput,
-  authorizeClient: BasicClientAuthorizer<P, V>,
-): BasicAuthorization<P, V> {
+  authorizeClient: BasicClientAuthorizer<P, V, TRegistry>,
+): BasicAuthorization<P, V, TRegistry> {
   const credentials = Object.freeze({ ...input });
-  let configure: (() => MaybePromise<ProviderExtensionOptions<"auth.basic", P>>) | undefined;
+  let configure:
+    | (() => MaybePromise<ProviderExtensionOptions<"auth.basic", P, TRegistry>>)
+    | undefined;
   const operation = {
     async authorize(options: OperationOptions = {}) {
       const extension = configure === undefined ? undefined : await configure();
@@ -44,5 +59,5 @@ export function createBasicAuthorization<P extends Provider, V extends ProviderV
       }
       : {}),
   };
-  return Object.freeze(operation) as BasicAuthorization<P, V>;
+  return Object.freeze(operation) as BasicAuthorization<P, V, TRegistry>;
 }

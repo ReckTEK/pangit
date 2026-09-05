@@ -1,3 +1,4 @@
+import type { GitLabProviderTypes } from "../provider-types.ts";
 import type { GitLabAdapterContext } from "../transport/GitLabAdapterContext.ts";
 import type { GitLabVersion } from "../native/GitLabNative.ts";
 import type {
@@ -30,7 +31,7 @@ export async function commitFiles<V extends GitLabVersion>(
   c: GitLabAdapterContext<V>,
   r: Repo<V>,
   i: CommitFileChangesInput,
-  o: CommitFileChangesOptions<"gitlab"> = {},
+  o: CommitFileChangesOptions<"gitlab", GitLabProviderTypes> = {},
 ) {
   if (i.author?.date !== undefined) {
     unavailable(

@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type {
   IssueData,
   ListIssuesRequest,
@@ -32,9 +33,9 @@ import { normalizeGiteaIssue } from "./normalize.ts";
 /** Read exactly one provider page containing issues, never pull requests. */
 export async function listGiteaIssues<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   request: ListIssuesRequest,
-): Promise<Page<IssueData<"gitea", TVersion>>> {
+): Promise<Page<IssueData<"gitea", TVersion, GiteaProviderTypes>>> {
   const operation = { universal: "listIssues", native: "issueListIssues" } as const;
   const client = await context.client();
   const cursor = decodeGiteaPageCursor(request.cursor, { version: context.version, operation });
@@ -72,10 +73,10 @@ export async function listGiteaIssues<TVersion extends GiteaVersion>(
 /** Fetch one issue directly by repository and number. */
 export async function getGiteaIssue<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   number: number,
   options: OperationOptions = {},
-): Promise<IssueData<"gitea", TVersion>> {
+): Promise<IssueData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = { universal: "getIssue", native: "issueGetIssue" } as const;
   const index = requirePositiveInteger(number, "issue number");
   const client = await context.client();

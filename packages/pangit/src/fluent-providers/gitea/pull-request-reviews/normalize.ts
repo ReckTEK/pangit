@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type {
   PullRequestReviewData,
   PullRequestReviewState,
@@ -14,7 +15,7 @@ import { type AnyGiteaReview, optionalText, requiredPositiveId } from "./validat
 export function normalizeGiteaPullRequestReview<TVersion extends GiteaVersion>(
   client: GiteaClient<TVersion>,
   payload: AnyGiteaReview,
-): PullRequestReviewData<"gitea", TVersion> {
+): PullRequestReviewData<"gitea", TVersion, GiteaProviderTypes> {
   const id = requiredPositiveId(payload.id, "pull-request review id");
   const providerState = optionalText(payload.state);
   return Object.freeze({

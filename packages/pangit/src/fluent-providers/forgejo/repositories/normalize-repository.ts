@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type {
   RepositoryData,
   RepositoryParentData,
@@ -17,7 +18,7 @@ export function normalizeForgejoRepository<TVersion extends ForgejoVersion>(
   _context: ForgejoAdapterContext<TVersion>,
   client: ForgejoClient<TVersion>,
   repository: AnyForgejoRepository,
-): RepositoryData<"forgejo", TVersion> {
+): RepositoryData<"forgejo", TVersion, ForgejoProviderTypes> {
   const name = requiredText(repository.name, "repository name");
   const fullName = optionalText(repository.full_name);
   const owner = optionalText(repository.owner?.login) ?? fullName?.split("/")[0];
@@ -51,7 +52,9 @@ export function normalizeForgejoRepository<TVersion extends ForgejoVersion>(
   });
 }
 
-function normalizeParent(repository: AnyForgejoRepository): RepositoryParentData<"forgejo"> {
+function normalizeParent(
+  repository: AnyForgejoRepository,
+): RepositoryParentData<"forgejo"> {
   const name = requiredText(repository.name, "fork parent repository name");
   const fullName = optionalText(repository.full_name);
   const owner = optionalText(repository.owner?.login) ?? fullName?.split("/")[0];

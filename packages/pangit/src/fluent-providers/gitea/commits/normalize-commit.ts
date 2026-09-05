@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type {
   CommitData,
   CommitFacets,
@@ -24,7 +25,7 @@ export function normalizeGiteaCommit<TVersion extends GiteaVersion>(
   client: GiteaClient<TVersion>,
   commit: GiteaEntityPayload<TVersion, "commit">,
   facets: CommitFacets = {},
-): CommitData<"gitea", TVersion> {
+): CommitData<"gitea", TVersion, GiteaProviderTypes> {
   const sha = requiredText(commit.sha, "commit SHA");
   if (!isRecord(commit.commit) || typeof commit.commit.message !== "string") {
     throw new TypeError(`commit ${sha} has no message`);

@@ -1,4 +1,3 @@
-import type {} from "../fluent-providers/gitea/registration.ts";
 import { createOAuthLogin } from "../fluent-api/auth/oauth-login.ts";
 import { createOAuthHandler } from "../fluent-api/auth/oauth-handler.ts";
 import { OAuthCallbackError } from "../fluent-api/auth/OAuthCallbackError.ts";

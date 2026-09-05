@@ -1,5 +1,3 @@
-import type {} from "../registration.ts";
-
 import { authorizeForgejoBasic } from "./basic.ts";
 import { authorizeForgejoToken } from "./token.ts";
 import { beginForgejoOAuth, exchangeForgejoOAuthCode } from "./oauth.ts";

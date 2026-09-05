@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type {
   ContentData,
   ReadLinkedContentOptions,
@@ -23,10 +24,10 @@ import type { AnyForgejoContent } from "./payload-types.ts";
 /** Return one submodule URL/SHA metadata record; never contact its remote. */
 export async function readForgejoSubmodule<TVersion extends ForgejoVersion>(
   context: ForgejoAdapterContext<TVersion>,
-  repository: RepositoryData<"forgejo", TVersion>,
+  repository: RepositoryData<"forgejo", TVersion, ForgejoProviderTypes>,
   path: string,
   options: ReadLinkedContentOptions = {},
-): Promise<ContentData<"forgejo", TVersion>> {
+): Promise<ContentData<"forgejo", TVersion, ForgejoProviderTypes>> {
   const operation = { universal: "readSubmodule", native: "repoGetContents" } as const;
   const content = await readForgejoContent(
     context,

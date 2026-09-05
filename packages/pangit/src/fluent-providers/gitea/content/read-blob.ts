@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import { loadRestClientModule } from "../transport/create-rest-client.ts";
 import { ContentReadError } from "../../../fluent-api/adapter-contract/errors.ts";
 import type { ReadContentBlobOptions } from "../../../fluent-api/adapter-contract/content.ts";
@@ -17,7 +18,7 @@ import { repositoryPath } from "./paths.ts";
 /** Read metadata, then the same immutable file's raw bytes and provider MIME type. */
 export async function readGiteaContentBlob<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   path: string,
   options: ReadContentBlobOptions = {},
 ): Promise<globalThis.Blob> {

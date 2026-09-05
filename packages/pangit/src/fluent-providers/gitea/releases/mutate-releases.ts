@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import {
   type OperationOptions,
   requireIdentity,
@@ -27,10 +28,10 @@ import { normalizeGiteaRelease } from "./normalize.ts";
 /** Create one release, optionally creating its tag at the supplied target. */
 export async function createGiteaRelease<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   input: CreateReleaseInput,
   options: OperationOptions = {},
-): Promise<ReleaseData<"gitea", TVersion>> {
+): Promise<ReleaseData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = { universal: "createRelease", native: "repoCreateRelease" } as const;
   const tagName = requireIdentity(input.tagName, "release tag name");
   const name = optionalIdentity(input.name, "release name");
@@ -66,11 +67,11 @@ export async function createGiteaRelease<TVersion extends GiteaVersion>(
 /** Update only fields in the shared release contract. */
 export async function updateGiteaRelease<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  release: ReleaseData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  release: ReleaseData<"gitea", TVersion, GiteaProviderTypes>,
   input: UpdateReleaseInput,
   options: OperationOptions = {},
-): Promise<ReleaseData<"gitea", TVersion>> {
+): Promise<ReleaseData<"gitea", TVersion, GiteaProviderTypes>> {
   const operation = { universal: "updateRelease", native: "repoEditRelease" } as const;
   if (
     input.name === undefined && input.description === undefined && input.draft === undefined &&
@@ -111,8 +112,8 @@ export async function updateGiteaRelease<TVersion extends GiteaVersion>(
 /** Delete one known release directly without a preflight lookup. */
 export async function deleteGiteaRelease<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
-  release: ReleaseData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
+  release: ReleaseData<"gitea", TVersion, GiteaProviderTypes>,
   options: OperationOptions = {},
 ): Promise<void> {
   const operation = { universal: "deleteRelease", native: "repoDeleteRelease" } as const;

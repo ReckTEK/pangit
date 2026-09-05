@@ -1,3 +1,4 @@
+import type { GiteaProviderTypes } from "../provider-types.ts";
 import type {
   CommitRefData,
   FindCommitRefsRequest,
@@ -29,7 +30,7 @@ import { validationError } from "./errors.ts";
 /** Inspect one branch/tag page and optionally test ancestry only for candidates in that page. */
 export async function findGiteaRefsForCommit<TVersion extends GiteaVersion>(
   context: GiteaAdapterContext<TVersion>,
-  repository: RepositoryData<"gitea", TVersion>,
+  repository: RepositoryData<"gitea", TVersion, GiteaProviderTypes>,
   sha: string,
   request: FindCommitRefsRequest,
 ): Promise<Page<CommitRefData>> {

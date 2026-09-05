@@ -1,4 +1,8 @@
-import type { FluentProvider, ProviderVersion } from "../../adapter-contract/provider.ts";
+import type {
+  FluentProvider,
+  ProviderTypeRegistry,
+  ProviderVersion,
+} from "../../adapter-contract/provider.ts";
 
 import type { OAuthLoginTransaction, OAuthLoginTransactionFor } from "../oauth-contracts.ts";
 import { OAuthCallbackError } from "../OAuthCallbackError.ts";
@@ -37,14 +41,17 @@ const decoder = new TextDecoder();
 /** Build an encrypted OAuth transaction cookie using only standard Web APIs. */
 export function createOAuthTransactionCookie<
   TProvider extends FluentProvider = FluentProvider,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
 >(
   options: OAuthTransactionCookieOptions,
-): OAuthTransactionCookie<TProvider> {
-  return new OAuthTransactionCookieImpl<TProvider>(options);
+): OAuthTransactionCookie<TProvider, TRegistry> {
+  return new OAuthTransactionCookieImpl<TProvider, TRegistry>(options);
 }
 
-class OAuthTransactionCookieImpl<TProvider extends FluentProvider>
-  implements OAuthTransactionCookie<TProvider> {
+class OAuthTransactionCookieImpl<
+  TProvider extends FluentProvider,
+  TRegistry extends ProviderTypeRegistry = Record<never, never>,
+> implements OAuthTransactionCookie<TProvider, TRegistry> {
   readonly name: string;
   readonly #options: CookieOptions;
   readonly #key: Promise<CryptoKey>;
@@ -69,9 +76,9 @@ class OAuthTransactionCookieImpl<TProvider extends FluentProvider>
 
   async set<
     TSelected extends TProvider,
-    TVersion extends ProviderVersion<TSelected>,
+    TVersion extends ProviderVersion<TSelected, TRegistry>,
   >(
-    transaction: OAuthLoginTransaction<TSelected, TVersion>,
+    transaction: OAuthLoginTransaction<TSelected, TVersion, TRegistry>,
   ): Promise<string> {
     const validated = validateTransaction(transaction);
     const callbackUrl = parseHttpUrl(validated.callbackUrl, "OAuth transaction callbackUrl");
@@ -103,7 +110,7 @@ class OAuthTransactionCookieImpl<TProvider extends FluentProvider>
 
   async read(
     request: Request,
-  ): Promise<OAuthLoginTransactionFor<TProvider> | undefined> {
+  ): Promise<OAuthLoginTransactionFor<TProvider, TRegistry> | undefined> {
     const token = readCookieValue(request.headers.get("cookie") ?? "", this.name);
     if (token === undefined) return undefined;
 
@@ -144,7 +151,7 @@ class OAuthTransactionCookieImpl<TProvider extends FluentProvider>
         "OAuth transaction cookie expired",
       );
     }
-    return payload.transaction as OAuthLoginTransactionFor<TProvider>;
+    return payload.transaction as OAuthLoginTransactionFor<TProvider, TRegistry>;
   }
 
   clear(request: Request): string {

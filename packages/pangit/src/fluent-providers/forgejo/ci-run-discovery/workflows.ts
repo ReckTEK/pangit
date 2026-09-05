@@ -1,3 +1,4 @@
+import type { ForgejoProviderTypes } from "../provider-types.ts";
 import type { CiWorkflowData } from "../../../fluent-api/adapter-contract/optional/ci-run-discovery.ts";
 import type { OperationOptions } from "../../../fluent-api/adapter-contract/operation-options.ts";
 import { requireIdentity } from "../../../fluent-api/adapter-contract/operation-options.ts";
@@ -11,10 +12,10 @@ import { isContentArray } from "../content/validate-payload.ts";
 /** Resolve the known workflow file; Forgejo does not expose a workflow-state resource. */
 export async function getForgejoCiWorkflow<V extends ForgejoVersion>(
   context: ForgejoAdapterContext<V>,
-  repository: RepositoryData<"forgejo", V>,
+  repository: RepositoryData<"forgejo", V, ForgejoProviderTypes>,
   workflowId: string,
   options: OperationOptions = {},
-): Promise<CiWorkflowData<"forgejo", V>> {
+): Promise<CiWorkflowData<"forgejo", V, ForgejoProviderTypes>> {
   const path = normalizeWorkflowPath(workflowId);
   const client = await context.client();
   const payload = await getContents(context, client, repository, path, repository.defaultBranch, {
