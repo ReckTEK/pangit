@@ -19,7 +19,7 @@ contract implementations.
 ## Construction and loading
 
 ```ts
-import { createClient } from "@mannsion/pangit/api";
+import { createClient } from "@recktek/pangit/api";
 
 const connection = await createClient("gitlab", "19.3.1", "https://gitlab.example.com");
 const git = await connection.auth.token(token);
@@ -33,7 +33,7 @@ returns a separate immutable client.
 A provider can also be imported independently of the catalog:
 
 ```ts
-import { createClient } from "@mannsion/pangit/fluent/gitea";
+import { createClient } from "@recktek/pangit/fluent/gitea";
 
 const connection = createClient("1.27.2", { baseUrl: "https://git.example.com/api/v1" });
 ```
@@ -54,10 +54,10 @@ receive copied context and return structured-cloneable option data; nested recor
 copied and frozen when configured. Later changes to caller-owned inputs cannot change the prepared
 operation. Cancellation signals are supplied to `execute({ signal })`.
 
-Provider-specific types are exported from `@mannsion/pangit/fluent/<provider>`. They are not
-exported from the universal API. Provider-owned `registration.ts` files augment the abstract type
-registries; these imports are erased at runtime. Runtime extension availability and validation live
-beside the provider's extension types.
+Provider-specific types are exported from `@recktek/pangit/fluent/<provider>`. They are not exported
+from the universal API. Provider-owned `registration.ts` files augment the abstract type registries;
+these imports are erased at runtime. Runtime extension availability and validation live beside the
+provider's extension types.
 
 Pagination cursors retain the provider page size so continuation cannot skip or repeat offsets.
 Bounded scans reject `maxItems` below that size before starting HTTP. Invalid, backward, or empty

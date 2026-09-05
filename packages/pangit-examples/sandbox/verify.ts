@@ -1,4 +1,4 @@
-import * as PanGit from "@mannsion/pangit";
+import * as PanGit from "@recktek/pangit";
 
 const token = (await Deno.readTextFile("/sandbox-auth/gitea-token")).trim();
 if (token.length === 0) throw new Error("Gitea did not create a personal access token");

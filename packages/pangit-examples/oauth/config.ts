@@ -1,4 +1,4 @@
-import * as PanGit from "@mannsion/pangit";
+import * as PanGit from "@recktek/pangit";
 
 export const GITEA_API_URL = "http://127.0.0.1:3300/api/v1";
 export const GITEA_VERSION = "1.27.2";

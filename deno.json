@@ -12,12 +12,12 @@
     "generate:pangit-site": "deno run --allow-read --allow-write --allow-env --allow-run=deno codegen/pangit-site/pangit-site-generator.ts",
     "e2e": "deno run --config=deno.json --allow-read --allow-write --allow-run=deno,docker tests/e2e/runner/run-all-live-tests.ts",
     "example": "deno task --cwd packages/pangit-examples example",
-    "dev": "deno task --recursive --filter @mannsion/pangit-site dev",
-    "build": "deno task --recursive --filter @mannsion/pangit-site build",
-    "start": "deno task --recursive --filter @mannsion/pangit-site start",
-    "check": "deno check codegen tests/package tests/e2e && deno task --recursive --filter @mannsion/* check",
-    "test": "deno test --allow-env=NODE_DISABLE_COLORS --allow-read --allow-write --allow-run=deno codegen tests/package tests/e2e/result-management/prepare-result-directories_test.ts tests/e2e/runner/e2e-run-selection_test.ts tests/e2e/runner/run-all-live-tests_test.ts tests/e2e/runner/finalize-live-result_test.ts tests/e2e/hand-written/fluent-api-contracts/request-recorder_test.ts tests/e2e/hand-written/git-host-adapter-tests/gitea/gitea-contract-catalog_test.ts tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-contract-catalog_test.ts tests/e2e/hand-written/git-host-adapter-tests/forgejo/forgejo-contract-catalog_test.ts tests/e2e/hand-written/docker-environment-definitions/gitea/webhook-journal_test.ts && deno task --recursive --filter @mannsion/* test",
-    "lint": "deno lint codegen tests/package tests/e2e && deno task --recursive --filter @mannsion/* lint",
+    "dev": "deno task --recursive --filter @recktek/pangit-site dev",
+    "build": "deno task --recursive --filter @recktek/pangit-site build",
+    "start": "deno task --recursive --filter @recktek/pangit-site start",
+    "check": "deno check codegen tests/package tests/e2e && deno task --recursive --filter @recktek/* check",
+    "test": "deno test --allow-env=NODE_DISABLE_COLORS --allow-read --allow-write --allow-run=deno codegen tests/package tests/e2e/result-management/prepare-result-directories_test.ts tests/e2e/runner/e2e-run-selection_test.ts tests/e2e/runner/run-all-live-tests_test.ts tests/e2e/runner/finalize-live-result_test.ts tests/e2e/hand-written/fluent-api-contracts/request-recorder_test.ts tests/e2e/hand-written/git-host-adapter-tests/gitea/gitea-contract-catalog_test.ts tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-contract-catalog_test.ts tests/e2e/hand-written/git-host-adapter-tests/forgejo/forgejo-contract-catalog_test.ts tests/e2e/hand-written/docker-environment-definitions/gitea/webhook-journal_test.ts && deno task --recursive --filter @recktek/* test",
+    "lint": "deno lint codegen tests/package tests/e2e && deno task --recursive --filter @recktek/* lint",
     "fmt": "deno fmt"
   },
   "fmt": {
@@ -51,10 +51,10 @@
     "swagger2openapi": "npm:swagger2openapi@7.0.8",
     "turndown": "npm:turndown@7.2.4",
     "turndown-plugin-gfm": "npm:turndown-plugin-gfm@1.0.2",
-    "@mannsion/pangit": "jsr:@mannsion/pangit@^0.1.0",
-    "@mannsion/pangit-site/config": "jsr:@mannsion/pangit-site@^0.1.0/config",
-    "@mannsion/pangit-site/documentation": "jsr:@mannsion/pangit-site@^0.1.0/documentation",
-    "@mannsion/pangit-site/urls": "jsr:@mannsion/pangit-site@^0.1.0/urls"
+    "@recktek/pangit": "jsr:@recktek/pangit@^0.1.0",
+    "@recktek/pangit-site/config": "jsr:@recktek/pangit-site@^0.1.0/config",
+    "@recktek/pangit-site/documentation": "jsr:@recktek/pangit-site@^0.1.0/documentation",
+    "@recktek/pangit-site/urls": "jsr:@recktek/pangit-site@^0.1.0/urls"
   },
   "compilerOptions": {
     "lib": [

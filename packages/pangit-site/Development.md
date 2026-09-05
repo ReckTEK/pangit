@@ -6,21 +6,42 @@ published PanGit library contains only library code and does not export this sit
 ## Configuration and snippets
 
 Edit [site.config.ts](site.config.ts) for site links, route segments, branding, static asset paths,
-theme-cookie settings, and the snippet files shown on the home page. Provider/version inventories,
-operation metadata, and upstream URLs come from the site's generated catalog. The config is a plain
-module so React Router can load its route settings before Vite initializes the Deno package
-resolver.
+theme-cookie settings, and the source-setup snippet. Provider/version inventories, operation
+metadata, and upstream URLs come from the site's generated catalog. The config is a plain module so
+React Router can load its route settings before Vite initializes the Deno package resolver.
 
 [urls.ts](app/urls.ts) derives router patterns and URLs from those settings. Components and asset
 preparation use the same helpers, so changing a route or asset prefix does not require editing JSX.
 Upstream specification URLs come from the generated catalog.
 
 Code snippets live in [app/snippets](app/snippets). Edit the `.ts` or `.sh` file directly, or add a
-file and select its filename in `siteConfig.snippets`. The shared
+file and reference it with `CodeSnippet`. The shared
 [CodeSnippet component](app/components/code-snippet.tsx) uses
 [Vite's raw glob imports](https://vite.dev/guide/features#glob-import) to bundle the files as text
 for SSR and the browser. It never executes snippets or reads source files from the production
 filesystem.
+
+## Fluent guides
+
+The reader-facing handbook lives in [app/guides](app/guides). Each topic has a small TSX page under
+`pages/` and its method descriptions under `methods/`. The [catalog](app/guides/catalog.ts) owns
+reading order, summaries, route slugs, and navigation groups. React Router loads each guide as its
+own route. Shared page, method-reference, and directory components use the same catalog.
+
+To add a guide, add its catalog entry and matching page. Define sections once: the page component
+uses them for headings and both tables of contents. Use `GuideLink` for links to other guides and
+`siteUrls` for site routes. Keep workflow explanations in the site; implementation and upstream bug
+notes remain in the library's existing provider documents and focused diagnostics.
+
+Examples live in `app/snippets/fluent/`. They are real TypeScript checked by `deno task check`, and
+Vite bundles them as text without executing them. For a partial example, place type-only context and
+declarations before `// @example`; only the following code is displayed. State the assumed client or
+repository in the guide. Never put credentials in snippets.
+
+Method descriptions satisfy `MethodDescriptions<Contract>` so added, removed, or renamed methods
+require documentation changes. Tests check capability coverage, guide routes, snippet references,
+and contract source links. Parameter semantics and provider limitations still require editorial
+review when behavior changes; type checking alone cannot verify prose.
 
 ## Editor types
 
@@ -37,7 +58,7 @@ verify language-server diagnostics.
 From the repository root:
 
 ```bash
-deno task generate --cached
+deno task generate:pangit-site
 deno task dev
 deno task build
 deno task start
@@ -65,7 +86,8 @@ is unpublished. REST references remain available independently of package public
 | Route                                  | Content                                            |
 | -------------------------------------- | -------------------------------------------------- |
 | `/`                                    | PanGit landing page.                               |
-| `/docs`                                | Documentation overview and provider catalog.       |
+| `/docs`                                | Searchable fluent guides and provider catalog.     |
+| `/docs/fluent/:guide`                  | Workflow guides and complete method indexes.       |
 | `/docs/raw/:provider/:version`         | Complete interactive OpenAPI reference.            |
 | `/docs/raw/:provider/:version/methods` | Searchable index of every generated client method. |
 
@@ -146,6 +168,10 @@ deno task test
 deno task lint
 deno task build
 ```
+
+Before shipping site changes, also check guide navigation, code copying, empty search results,
+reference switching, keyboard focus, and narrow-screen layouts in both themes. A production build
+should serve every guide directly, including refreshes on nested routes.
 
 The tests compare the manifest with every generated client registry, retain byte-identical OpenAPI
 documents, and exercise explorer adaptation, method links, authorization boundaries, themes, and

@@ -1,5 +1,6 @@
 @layer scalar-base, scalar-theme, scalar-config, theme, base, components, utilities;
 @import "tailwindcss";
+@import "./styles/guides.css";
 
 @custom-variant dark {
   &:where(.dark, .dark *) {

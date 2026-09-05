@@ -3,6 +3,7 @@ import { Link, NavLink, Outlet, useLocation, useParams } from "react-router";
 import { documentation } from "../lib.ts";
 import { siteConfig } from "../../site.config.ts";
 import { isWithinPath, siteUrls } from "../urls.ts";
+import { guideGroups, guides } from "../guides/catalog.ts";
 
 function Sidebar() {
   const location = useLocation();
@@ -17,6 +18,24 @@ function Sidebar() {
           <Library size={16} />Overview
         </NavLink>
       </div>
+      {guideGroups.map((group) => (
+        <div key={group}>
+          <p className="mb-2 px-3 font-mono text-[10px] font-semibold uppercase tracking-widest text-muted">
+            {group}
+          </p>
+          <div className="space-y-0.5">
+            {guides.filter((guide) => guide.group === group).map((guide) => (
+              <NavLink
+                key={guide.slug}
+                to={siteUrls.guide(guide.slug)}
+                className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}
+              >
+                {guide.title}
+              </NavLink>
+            ))}
+          </div>
+        </div>
+      ))}
       <div>
         <p className="mb-3 px-3 font-mono text-[10px] font-semibold tracking-[0.13em] text-muted">
           RAW REST CLIENTS
@@ -50,6 +69,7 @@ export default function DocsLayout() {
   const params = useParams();
   const location = useLocation();
   const provider = documentation.providers.find((entry) => entry.id === params.provider);
+  const guide = guides.find((entry) => siteUrls.guide(entry.slug) === location.pathname);
   const explorer = provider && params.version &&
     location.pathname === siteUrls.reference(provider.id, params.version);
   return (
@@ -77,6 +97,14 @@ export default function DocsLayout() {
         </details>
         <div className="flex min-h-15 flex-wrap items-center gap-2 border-b border-line px-5 py-3 text-xs text-muted sm:px-10">
           <Link to={siteUrls.docs} className="hover:text-accent">Docs</Link>
+          {guide && (
+            <>
+              <ChevronRight size={12} />
+              <span>Fluent API</span>
+              <ChevronRight size={12} />
+              <span className="text-ink">{guide.title}</span>
+            </>
+          )}
           {provider && (
             <>
               <ChevronRight size={12} />

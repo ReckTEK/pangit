@@ -51,7 +51,7 @@ Deno.test("provider-client export generation replaces legacy paths and omits run
   const source = `${
     JSON.stringify(
       {
-        name: "@mannsion/pangit",
+        name: "@recktek/pangit",
         exports: {
           ".": "./src/mod.ts",
           "./api": "./src/fluent-client/mod.ts",

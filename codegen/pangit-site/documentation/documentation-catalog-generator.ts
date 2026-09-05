@@ -19,7 +19,7 @@ import type {
   DocumentationManifest,
   DocumentationOperation,
   DocumentationProvider,
-} from "@mannsion/pangit-site/documentation";
+} from "@recktek/pangit-site/documentation";
 
 const outputPrefix = "app/documentation/generated/";
 const json = (value: unknown) => `${JSON.stringify(value, null, 2)}\n`;

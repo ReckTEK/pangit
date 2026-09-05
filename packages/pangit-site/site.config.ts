@@ -1,13 +1,14 @@
 const wordmark = { prefix: "Pan", accent: "Git" };
-const packageName = "@mannsion/pangit";
+const packageName = "@recktek/pangit";
 
 /** Site-owned settings. Provider/version inventories remain in the generated site catalog. */
 export const siteConfig = {
   name: `${wordmark.prefix}${wordmark.accent}`,
+  organization: "ReckTEK",
   wordmark,
   packageName,
   links: {
-    repository: "https://github.com/mannsion/pangit",
+    repository: "https://github.com/ReckTEK/pangit",
   },
   routes: {
     home: "/",
@@ -15,6 +16,7 @@ export const siteConfig = {
     theme: "/theme",
     raw: "raw",
     methods: "methods",
+    fluent: "fluent",
   },
   assets: {
     openapi: "/openapi",

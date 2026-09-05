@@ -4,7 +4,7 @@ GitLab `18.11.11` and `19.3.1` use the shared fluent API with the exact selected
 Pass the host root or its `/api/v4` URL; nested namespace paths are supported.
 
 ```ts
-import { createClient } from "@mannsion/pangit/api";
+import { createClient } from "@recktek/pangit/api";
 
 const connection = await createClient("gitlab", "19.3.1", "https://gitlab.example.com");
 const git = await connection.auth.token(Deno.env.get("GITLAB_TOKEN")!);

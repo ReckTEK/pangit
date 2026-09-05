@@ -42,6 +42,7 @@ Deno.test("configured URL changes keep routes, navigation, and downloads aligned
       theme: "/appearance",
       raw: "rest",
       methods: "functions",
+      fluent: "guides",
     },
     assets: {
       ...siteConfig.assets,
@@ -55,7 +56,11 @@ Deno.test("configured URL changes keep routes, navigation, and downloads aligned
     {
       id: "docs",
       path: urls.docs,
-      children: Object.entries(urls.patterns).map(([id, path]) => ({ id, path })),
+      children: [
+        { id: "reference", path: urls.patterns.reference },
+        { id: "methods", path: urls.patterns.methods },
+        { id: "guide", path: urls.patterns.guide("files") },
+      ],
     },
   ];
   for (const provider of documentation.providers) {

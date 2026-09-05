@@ -1,4 +1,4 @@
-import * as PanGit from "@mannsion/pangit";
+import * as PanGit from "@recktek/pangit";
 
 const apiUrl = Deno.env.get("PANGIT_GITEA_API_URL")?.trim();
 const token = Deno.env.get("PANGIT_GITEA_PAT")?.trim();

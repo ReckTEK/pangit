@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "package": {
-    "name": "@mannsion/pangit",
+    "name": "@recktek/pangit",
     "version": "0.1.0"
   },
   "providers": [

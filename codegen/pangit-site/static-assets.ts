@@ -1,6 +1,6 @@
-import type { DocumentationManifest } from "@mannsion/pangit-site/documentation";
-import { type SiteConfig, siteConfig } from "@mannsion/pangit-site/config";
-import { createSiteUrls } from "@mannsion/pangit-site/urls";
+import type { DocumentationManifest } from "@recktek/pangit-site/documentation";
+import { type SiteConfig, siteConfig } from "@recktek/pangit-site/config";
+import { createSiteUrls } from "@recktek/pangit-site/urls";
 import { workspace, type WorkspacePaths } from "../workspace-layout.ts";
 
 export async function generateSiteAssets(

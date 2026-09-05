@@ -1,7 +1,7 @@
-import type { GiteaCommitComparisonOutput } from "@mannsion/pangit/fluent/gitea";
-import * as PanGit from "@mannsion/pangit";
-import * as api from "@mannsion/pangit/api";
-import { GiteaRestClient } from "@mannsion/pangit/providers/gitea/1.27.2";
+import type { GiteaCommitComparisonOutput } from "@recktek/pangit/fluent/gitea";
+import * as PanGit from "@recktek/pangit";
+import * as api from "@recktek/pangit/api";
+import { GiteaRestClient } from "@recktek/pangit/providers/gitea/1.27.2";
 
 const packageRoot = new URL("../../packages/pangit/", import.meta.url);
 

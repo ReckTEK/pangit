@@ -1,10 +1,10 @@
 {
-  "name": "@mannsion/pangit-example-site",
+  "name": "@recktek/pangit-example-site",
   "version": "0.1.0",
   "publish": false,
   "exports": "./app/root.tsx",
   "imports": {
-    "@mannsion/pangit": "../../pangit/src/mod.ts"
+    "@recktek/pangit": "../../pangit/src/mod.ts"
   },
   "compilerOptions": {
     "jsx": "react-jsx",

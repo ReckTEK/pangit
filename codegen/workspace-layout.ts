@@ -47,8 +47,8 @@ export async function readWorkspace(
       pangitSite: new URL("codegen/pangit-site/", root),
     },
     packages: {
-      pangit: resolve("@mannsion/pangit"),
-      site: resolve("@mannsion/pangit-site"),
+      pangit: resolve("@recktek/pangit"),
+      site: resolve("@recktek/pangit-site"),
     },
   };
 }

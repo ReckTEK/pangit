@@ -2,20 +2,22 @@ import { Code2, Terminal } from "lucide-react";
 import { ProviderVersionLinks } from "../components/provider-version-links.tsx";
 import { documentation, formatCount } from "../lib.ts";
 import { siteConfig } from "../../site.config.ts";
+import { GuideDirectory } from "../guides/guide-directory.tsx";
 
 export const meta = () => [{ title: `Documentation — ${siteConfig.name}` }];
 
 export default function DocsIndex() {
   return (
     <>
-      <p className="eyebrow">RAW REST CLIENT DOCUMENTATION</p>
+      <p className="eyebrow">THE PANGIT HANDBOOK</p>
       <h1 className="mt-4 text-4xl font-semibold tracking-[-1.5px] sm:text-5xl">
-        Find your way around.
+        One API. Find your way.
       </h1>
       <p className="mt-5 max-w-2xl text-base leading-8 text-muted">
-        Explore every generated PanGit REST client. Pick a provider and API version to inspect its
-        methods, schemas, and complete request contracts.
+        Start with a repository. Read a file, open a pull request, ship a release. Learn the fluent
+        API through practical workflows, or explore your provider’s complete REST contract.
       </p>
+      <GuideDirectory />
       <div className="mt-12 flex items-center justify-between">
         <h2 className="text-xl font-semibold tracking-tight">Raw REST clients</h2>
         <span className="font-mono text-xs text-muted">

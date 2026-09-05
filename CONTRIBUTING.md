@@ -6,7 +6,7 @@ Forgejo, while the generated REST layer covers the provider versions listed in t
 
 Small fixes and documentation improvements can go directly to a pull request. For a new provider,
 new fluent capability, public API change, or large refactor, please
-[open an issue](https://github.com/mannsion/pangit/issues) first so the contract and evidence plan
+[open an issue](https://github.com/ReckTEK/pangit/issues) first so the contract and evidence plan
 can be agreed before implementation.
 
 The [fluent architecture](packages/pangit/docs/Fluent-architecture.md) defines the universal
@@ -20,12 +20,12 @@ contract, standalone provider boundaries, and loading guarantees.
 
 ## Set up a checkout
 
-Fork `mannsion/pangit` on GitHub, then replace `YOUR-USERNAME` below with your GitHub username:
+Fork `ReckTEK/pangit` on GitHub, then replace `YOUR-USERNAME` below with your GitHub username:
 
 ```bash
 git clone https://github.com/YOUR-USERNAME/pangit.git
 cd pangit
-git remote add upstream https://github.com/mannsion/pangit.git
+git remote add upstream https://github.com/ReckTEK/pangit.git
 deno install --frozen
 deno task generate --cached
 deno task check

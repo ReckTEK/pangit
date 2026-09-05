@@ -1,9 +1,9 @@
 # PanGit
 
-![PanGit — baby Git providers cooking together in a pan — @mannsion/pangit](packages/pangit/docs/images/pangit-banner.png)
+![PanGit — baby Git providers cooking together in a pan — @recktek/pangit](packages/pangit/docs/images/pangit-banner.png)
 
 <p align="center">
-  <strong>Deno-native Git-host tooling.</strong><br>
+  <strong>Deno-native Git-host tooling by ReckTEK.</strong><br>
   One provider-neutral fluent API, plus generated provider-native REST clients.
 </p>
 
@@ -21,9 +21,17 @@ PanGit gives Deno applications two deliberately separate ways to work with Git h
 | `PanGit.api`                  | Portable, concern-oriented Git workflows through a provider adapter | Gitea, GitLab, and Forgejo (versions below) |
 | `PanGit.createProviderClient` | Exact generated REST methods, types, payloads, and status codes     | Seven providers and ten versioned clients   |
 
-The `@mannsion/pangit` library is Deno-native TypeScript built on standard Web APIs and native
+The `@recktek/pangit` library is Deno-native TypeScript built on standard Web APIs and native
 `fetch`. It has no Node runtime or third-party runtime dependency. Provider implementations and raw
 clients are loaded only when selected.
+
+## Documentation
+
+Run `deno task generate:pangit-site` and `deno task dev`, then open
+[the handbook](http://localhost:5173/docs). Start with
+[your first request](http://localhost:5173/docs/fluent/getting-started), follow the workflow guides,
+or search the generated REST references. The guides cover every fluent capability, authentication,
+pagination, errors, provider extensions, and explicit provider/version differences.
 
 ## Provider status
 
@@ -63,7 +71,7 @@ There is no registry install command until the first JSR publication. Clone the 
 the Deno workspace package directly:
 
 ```bash
-git clone https://github.com/mannsion/pangit.git
+git clone https://github.com/ReckTEK/pangit.git
 cd pangit
 deno task check
 ```
@@ -78,7 +86,7 @@ For GitLab setup, examples, capability differences and standalone tests, see the
 Save this as `fluent-example.ts`, then replace the URL, repository names, and image path:
 
 ```ts
-import * as PanGit from "@mannsion/pangit";
+import * as PanGit from "@recktek/pangit";
 
 const token = Deno.env.get("GITEA_TOKEN");
 if (!token) throw new Error("Set GITEA_TOKEN to your personal access token.");
@@ -197,7 +205,7 @@ Use the raw factory when the fluent API does not yet support a provider or when 
 REST contract:
 
 ```ts
-import * as PanGit from "@mannsion/pangit";
+import * as PanGit from "@recktek/pangit";
 
 const token = Deno.env.get("GITEA_TOKEN");
 if (!token) throw new Error("Set GITEA_TOKEN to your personal access token.");
@@ -220,7 +228,7 @@ native `Response` data. Exact clients and their native types are also exported f
 provider/version entry points such as:
 
 ```ts
-import { GiteaRestClient } from "@mannsion/pangit/providers/gitea/1.27.2";
+import { GiteaRestClient } from "@recktek/pangit/providers/gitea/1.27.2";
 ```
 
 ## Repository layout

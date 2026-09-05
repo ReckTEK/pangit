@@ -9,25 +9,41 @@ export const meta = () => [
   { title: `${siteConfig.name} — Documentation` },
   {
     name: "description",
-    content: `${siteConfig.name} generated REST-client documentation by provider and API version.`,
+    content:
+      "One fluent TypeScript API for Gitea, Forgejo, and GitLab, with complete generated REST clients when you need them.",
   },
 ];
 
 export default function Home() {
   return (
-    <main id={siteConfig.anchors.main} className="mx-auto max-w-5xl px-5 py-12 sm:px-8 sm:py-16">
-      <header className="border-b border-line pb-8">
-        <h1 className="text-4xl font-semibold tracking-tight">{siteConfig.name}</h1>
-        <p className="mt-4 max-w-2xl text-base leading-7 text-muted">
-          Generated TypeScript REST clients for Git hosting providers, with exact-version OpenAPI
-          references and browser request exploration.
-        </p>
-        <a
-          href={siteUrls.repository}
-          className="mt-4 inline-block font-mono text-sm text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent"
-        >
-          {siteConfig.packageName} source
-        </a>
+    <main id={siteConfig.anchors.main} className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-20">
+      <header className="grid items-center gap-10 border-b border-line pb-14 lg:grid-cols-[1fr_1.05fr]">
+        <div>
+          <p className="eyebrow">TYPESCRIPT · GIT HOSTING · ONE CONTRACT</p>
+          <h1 className="mt-6 text-5xl leading-[1.08] font-semibold tracking-[-2px] sm:text-6xl">
+            Your Git hosts.<br />
+            <span className="text-accent">One fluent API.</span>
+          </h1>
+          <p className="mt-6 max-w-xl text-lg leading-8 text-muted">
+            Read files, open pull requests, and publish releases across Gitea, Forgejo, and GitLab.
+            A shared contract, with each provider’s native API within reach.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link to={siteUrls.guide("getting-started")} className="button-primary">
+              Make your first request →
+            </Link>
+            <Link to={siteUrls.docs} className="button-secondary">Explore the docs</Link>
+          </div>
+          <p className="mt-5 text-xs leading-6 text-muted">
+            Alpha · available from source · explicit provider versions
+          </p>
+        </div>
+        <div className="min-w-0">
+          <CodeSnippet file="fluent/home.ts" label="A familiar workflow" />
+          <p className="mt-3 text-center font-mono text-[10px] text-muted">
+            GITEA / FORGEJO / GITLAB
+          </p>
+        </div>
       </header>
 
       <div className="grid gap-10 py-9 md:grid-cols-[minmax(0,1fr)_13rem] md:gap-12">
@@ -44,9 +60,16 @@ export default function Home() {
           <dl className="mt-5 space-y-6 text-sm">
             <div>
               <dt>
-                <Link to={siteUrls.docs} className="text-accent hover:underline">Overview</Link>
+                <Link
+                  to={siteUrls.guide("getting-started")}
+                  className="text-accent hover:underline"
+                >
+                  Fluent API guide
+                </Link>
               </dt>
-              <dd className="mt-1.5 leading-6 text-muted">Raw-client setup and providers.</dd>
+              <dd className="mt-1.5 leading-6 text-muted">
+                From first request to complete workflows.
+              </dd>
             </div>
             <div>
               <dt>

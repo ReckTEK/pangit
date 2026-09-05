@@ -1,4 +1,4 @@
-import * as PanGit from "@mannsion/pangit";
+import * as PanGit from "@recktek/pangit";
 import {
   createExampleOAuth as createLowLevelExampleOAuth,
   type ExampleOAuthOptions,

@@ -68,14 +68,14 @@ route types. It expects current normalized specifications and generated clients 
 The private site package exports its internal catalog for site code:
 
 ```ts
-import { documentation, loadDocumentationOperations } from "@mannsion/pangit-site/documentation";
+import { documentation, loadDocumentationOperations } from "@recktek/pangit-site/documentation";
 
 const operations = await loadDocumentationOperations("gitea", "1.27.2");
 console.log(documentation.providers, operations);
 ```
 
 Method indexes load per provider/version. Unknown provider/version pairs return `undefined`.
-`@mannsion/pangit` does not publish the site catalog.
+`@recktek/pangit` does not publish the site catalog.
 
 ## Scalar explorer
 
@@ -109,3 +109,11 @@ deno task build
 Tests compare the documentation catalog against every generated client registry, verify exact
 operation allocation and byte-identical specifications, exercise provider/version routing and Scalar
 adaptation, and reject stale or incomplete generated output.
+
+## Authored fluent guides
+
+The site also owns the fluent API handbook under `packages/pangit-site/app/guides`. These workflow
+pages are authored independently of generated raw references. Their method descriptions are checked
+against the public contracts, and TypeScript examples are part of the site check task. Navigation,
+reading order, and page summaries share one catalog. See
+[site development](../../pangit-site/Development.md#fluent-guides) for the authoring workflow.

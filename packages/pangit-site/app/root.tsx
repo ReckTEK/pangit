@@ -129,7 +129,7 @@ export default function App() {
       <Outlet />
       <footer className="border-t border-line px-6 py-7 text-xs text-muted">
         <div className="mx-auto flex max-w-[1480px] flex-wrap items-center justify-between gap-3">
-          <span>{siteConfig.name} documentation</span>
+          <span>{siteConfig.name} · {siteConfig.organization}</span>
           <span className="font-mono">Deno 2 · TypeScript · OpenAPI</span>
         </div>
       </footer>
@@ -144,10 +144,10 @@ export function ErrorBoundary() {
     <main id={siteConfig.anchors.main} className="mx-auto max-w-3xl px-6 py-32">
       <p className="eyebrow">{missing ? "404 / NOT FOUND" : "SOMETHING WENT WRONG"}</p>
       <h1 className="mt-5 text-4xl font-semibold tracking-tight">
-        {missing ? "That page isn’t in the catalog." : "This page couldn’t load."}
+        {missing ? "That page isn’t here." : "This page couldn’t load."}
       </h1>
       <p className="mt-4 text-muted">
-        Choose a supported provider and version from the documentation.
+        Browse the guides or choose a provider from the documentation overview.
       </p>
       <Link to={siteUrls.docs} className="button-primary mt-8">Open documentation</Link>
     </main>

@@ -1,13 +1,13 @@
 import { readWorkspace, workspace } from "../../workspace-layout.ts";
 import { generateSiteAssets } from "../static-assets.ts";
-import { siteConfig } from "@mannsion/pangit-site/config";
-import { createSiteUrls } from "@mannsion/pangit-site/urls";
+import { siteConfig } from "@recktek/pangit-site/config";
+import { createSiteUrls } from "@recktek/pangit-site/urls";
 import { generateDocumentation } from "./documentation-catalog-generator.ts";
 import {
   documentation,
   type DocumentationOperation,
   loadDocumentationOperations,
-} from "@mannsion/pangit-site/documentation";
+} from "@recktek/pangit-site/documentation";
 import { restClientVersions } from "../../../packages/pangit/src/generated-rest-clients/mod.ts";
 import {
   type GeneratedOpenApiManifest,
@@ -105,8 +105,8 @@ Deno.test("relocated workspace generates documentation and site assets determini
   };
   try {
     await write("deno.json", { workspace: ["./components/sdk", "./web/reference"] });
-    await write("components/sdk/deno.json", { name: "@mannsion/pangit", version: "0.1.0" });
-    await write("web/reference/deno.json", { name: "@mannsion/pangit-site" });
+    await write("components/sdk/deno.json", { name: "@recktek/pangit", version: "0.1.0" });
+    await write("web/reference/deno.json", { name: "@recktek/pangit-site" });
     const paths = await readWorkspace(fixture);
     const site = paths.packages.site;
     const config = {

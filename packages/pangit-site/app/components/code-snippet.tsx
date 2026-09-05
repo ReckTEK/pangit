@@ -1,16 +1,21 @@
 // Vite reads these files as text at build time; snippets are never executed by the site.
-const snippets = import.meta.glob<string>("../snippets/*", {
+import { CodeBlock } from "./code-block.tsx";
+
+const snippets = import.meta.glob<string>("../snippets/**/*", {
   eager: true,
   query: "?raw",
   import: "default",
 });
 
-export function CodeSnippet({ file }: { file: string }) {
+export function CodeSnippet({ file, label }: { file: string; label?: string }) {
   const source = snippets[`../snippets/${file}`];
   if (source === undefined) throw new Error(`Unknown code snippet: ${file}`);
+  // Declarations before this marker give partial examples real, checked types.
+  const displayed = source.split("// @example\n").at(-1)!.trim();
   return (
-    <pre className="mt-4 overflow-x-auto rounded-lg border border-line bg-panel p-4 text-[13px] leading-6">
-      <code>{source.trimEnd()}</code>
-    </pre>
+    <CodeBlock
+      source={displayed}
+      label={label ?? (file.endsWith(".sh") ? "Terminal" : "TypeScript")}
+    />
   );
 }

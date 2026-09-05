@@ -4,7 +4,7 @@ Forgejo `15.0.7` (LTS) and `16.0.3` implement the universal fluent contract thro
 provider. Each version has its own generated REST client, loaded on first use.
 
 ```ts
-import { createClient, createCodebergClient } from "@mannsion/pangit/api";
+import { createClient, createCodebergClient } from "@recktek/pangit/api";
 
 const selfHosted = await createClient("forgejo", "16.0.3", {
   baseUrl: "https://forgejo.example.com/api/v1",
@@ -15,7 +15,7 @@ const repo = await (await git.container("your-username")).repository("your-repos
 console.log(await repo.content.readText("README.md"));
 ```
 
-For a standalone import, `@mannsion/pangit/fluent/forgejo` exports synchronous `createClient` and
+For a standalone import, `@recktek/pangit/fluent/forgejo` exports synchronous `createClient` and
 `createCodebergClient` factories. Their version-specific REST clients remain lazy.
 
 ## Codeberg compatibility
@@ -30,7 +30,7 @@ selecting a contract. Local E2E results prove behavior on the pinned stock Forge
 not claim tests against Codeberg user accounts or access to Codeberg administrator operations.
 Instance settings, token permissions, quotas, and hosted-service policies still apply.
 
-The existing `@mannsion/pangit/providers/codeberg/latest` REST client remains a separately pinned
+The existing `@recktek/pangit/providers/codeberg/latest` REST client remains a separately pinned
 Codeberg schema snapshot. It does not select a different fluent implementation.
 
 ## Supported workflows

@@ -36,8 +36,8 @@ Deno.test("authored documentation links resolve to repository files", async () =
   ];
   for (const file of files) {
     for (const { target } of markdownLinks(await Deno.readTextFile(file))) {
-      const url = target.startsWith("https://github.com/mannsion/pangit/blob/main/")
-        ? new URL(target.slice("https://github.com/mannsion/pangit/blob/main/".length), root)
+      const url = target.startsWith("https://github.com/ReckTEK/pangit/blob/main/")
+        ? new URL(target.slice("https://github.com/ReckTEK/pangit/blob/main/".length), root)
         : new URL(target, file);
       if (url.protocol !== "file:") continue;
       url.hash = "";

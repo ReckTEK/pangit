@@ -1,29 +1,36 @@
 # PanGit
 
-![PanGit — baby Git providers cooking together in a pan — @mannsion/pangit](docs/images/pangit-banner.png)
+![PanGit — baby Git providers cooking together in a pan — @recktek/pangit](docs/images/pangit-banner.png)
 
-PanGit provides generated, typed TypeScript REST clients for Git hosting providers. Each client
-preserves its provider's request fields, response bodies, status codes, operation names, and API
+PanGit by ReckTEK provides one fluent TypeScript API for Git hosting workflows, alongside generated
+REST clients that preserve each provider's request fields, response bodies, status codes, and API
 version.
 
 > [!IMPORTANT]
 > **Status: alpha development.** Fluent and raw REST APIs are live-tested for Gitea, GitLab, and
 > Forgejo. GitLab has
-> [explicit capability gaps and confirmed server defects](https://github.com/mannsion/pangit/blob/main/packages/pangit/docs/GitLab.md#provider-differences).
+> [explicit capability gaps and confirmed server defects](https://github.com/ReckTEK/pangit/blob/main/packages/pangit/docs/GitLab.md#provider-differences).
 > Raw clients are generated for every provider below. The package is not published to JSR yet.
 
 ## Use from source
 
 ```bash
-git clone https://github.com/mannsion/pangit.git
+git clone https://github.com/ReckTEK/pangit.git
 cd pangit
 deno task check
 ```
 
+## Documentation
+
+From the source workspace root, run `deno task generate:pangit-site` and `deno task dev` to open
+[the handbook](http://localhost:5173/docs). The fluent guides cover setup, all repository workflows,
+authentication, pagination, errors, and provider differences. The same site includes searchable
+method indexes and interactive OpenAPI references for every generated REST client.
+
 ## Create a client
 
 ```ts
-import * as PanGit from "@mannsion/pangit";
+import * as PanGit from "@recktek/pangit";
 
 const token = Deno.env.get("GITEA_TOKEN");
 if (!token) throw new Error("Set GITEA_TOKEN.");
@@ -61,7 +68,7 @@ provider implementation. Its generated REST client loads only when an operation 
 provider can also be imported directly:
 
 ```ts
-import { createClient } from "@mannsion/pangit/fluent/gitea";
+import { createClient } from "@recktek/pangit/fluent/gitea";
 
 const connection = createClient("1.27.2", { baseUrl: "https://git.example.com/api/v1" });
 ```
@@ -72,7 +79,7 @@ extension and native types are exported from its own `fluent/<provider>` entry p
 ## Fluent file reads
 
 The provider-neutral fluent API supports Gitea, GitLab, and Forgejo. This example uses Gitea; see
-the [GitLab guide](https://github.com/mannsion/pangit/blob/main/packages/pangit/docs/GitLab.md) for
+the [GitLab guide](https://github.com/ReckTEK/pangit/blob/main/packages/pangit/docs/GitLab.md) for
 its versions, setup and capability differences:
 
 ```ts
@@ -101,7 +108,7 @@ override the type or a `fileName` hint when reading a filename-free Git blob wit
 `repository.blobs.readBlob(sha, options)`.
 
 For Forgejo and Codeberg setup, version differences, and Docker E2E, see the
-[Forgejo guide](https://github.com/mannsion/pangit/blob/main/packages/pangit/docs/Forgejo.md).
+[Forgejo guide](https://github.com/ReckTEK/pangit/blob/main/packages/pangit/docs/Forgejo.md).
 
 ## Provider clients
 
@@ -122,7 +129,7 @@ The package root exports the lazy `createProviderClient` factory. Exact generate
 native types are also available through provider/version entry points:
 
 ```ts
-import { GiteaRestClient, type GiteaUser } from "@mannsion/pangit/providers/gitea/1.27.2";
+import { GiteaRestClient, type GiteaUser } from "@recktek/pangit/providers/gitea/1.27.2";
 ```
 
 ## Response model
