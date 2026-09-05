@@ -8,16 +8,17 @@
 </p>
 
 > [!IMPORTANT]
-> **Status: alpha development.** The fluent API is implemented and live-tested for Gitea only. All
-> eight raw REST clients are generated, exported, and typechecked, but only the two Gitea clients
-> have live-provider E2E coverage. Public APIs may change before a stable release, and the package
-> is not published to JSR yet.
+> **Status: alpha development.** Fluent and raw REST APIs are live-tested for Gitea and GitLab.
+> GitLab has
+> [explicit capability gaps and a confirmed server defect](packages/pangit/docs/GitLab.md#provider-differences).
+> All eight raw clients are generated, exported and typechecked. Public APIs may change before a
+> stable release; the package is not published to JSR yet.
 
 PanGit gives Deno applications two deliberately separate ways to work with Git hosts:
 
 | API                           | Use it for                                                          | Current coverage                          |
 | ----------------------------- | ------------------------------------------------------------------- | ----------------------------------------- |
-| `PanGit.api`                  | Portable, concern-oriented Git workflows through a provider adapter | Gitea `1.26.4` and `1.27.2`               |
+| `PanGit.api`                  | Portable, concern-oriented Git workflows through a provider adapter | Gitea and GitLab (versions below)         |
 | `PanGit.createProviderClient` | Exact generated REST methods, types, payloads, and status codes     | Six providers and eight versioned clients |
 
 The `@mannsion/pangit` library is Deno-native TypeScript built on standard Web APIs and native
@@ -29,16 +30,20 @@ clients are loaded only when selected.
 This matrix tracks what can be used from the current source tree and what has been exercised against
 a real provider. "Not present" means that no live suite exists; it does not mean a suite failed.
 
-| Provider           | API contract      | Fluent API        | Fluent E2E                                                        | Generated REST client       | REST E2E                                                     | Distribution                            |
-| ------------------ | ----------------- | ----------------- | ----------------------------------------------------------------- | --------------------------- | ------------------------------------------------------------ | --------------------------------------- |
-| Gitea              | `1.26.4`          | Available (alpha) | [Pass: 32 contracts](tests/e2e/results/gitea/1.26.4/summary.json) | Available: 471 operations   | [Pass: 471/471](tests/e2e/results/gitea/1.26.4/summary.json) | MIT evidence recorded                   |
-| Gitea              | `1.27.2`          | Available (alpha) | [Pass: 32 contracts](tests/e2e/results/gitea/1.27.2/summary.json) | Available: 482 operations   | [Pass: 482/482](tests/e2e/results/gitea/1.27.2/summary.json) | MIT evidence recorded                   |
-| Codeberg (Forgejo) | `latest` snapshot | Not implemented   | Not present                                                       | Available: 506 operations   | Not present                                                  | MIT evidence recorded                   |
-| GitHub             | `latest` snapshot | Not implemented   | Not present                                                       | Available: 1,222 operations | Not present                                                  | MIT evidence recorded                   |
-| GitLab             | `18.11.11`        | Not implemented   | Not present                                                       | Available: 1,126 operations | Not present                                                  | Included; license evidence not recorded |
-| GitLab             | `19.3.1`          | Not implemented   | Not present                                                       | Available: 1,148 operations | Not present                                                  | Included; license evidence not recorded |
-| Bitbucket Cloud    | `latest` snapshot | Not implemented   | Not present                                                       | Available: 297 operations   | Not present                                                  | Included; license evidence not recorded |
-| Azure DevOps Git   | `latest` snapshot | Not implemented   | Not present                                                       | Available: 112 operations   | Not present                                                  | Included; license evidence not recorded |
+| Provider           | API contract      | Fluent API                                                                 | Fluent E2E                                                           | Generated REST client       | REST E2E                                                            | Distribution                            |
+| ------------------ | ----------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------- | --------------------------- | ------------------------------------------------------------------- | --------------------------------------- |
+| Gitea              | `1.26.4`          | Available (alpha)                                                          | [Pass: 32 contracts](tests/e2e/results/gitea/1.26.4/summary.json)    | Available: 471 operations   | [Pass: 471/471](tests/e2e/results/gitea/1.26.4/summary.json)        | MIT evidence recorded                   |
+| Gitea              | `1.27.2`          | Available (alpha)                                                          | [Pass: 32 contracts](tests/e2e/results/gitea/1.27.2/summary.json)    | Available: 482 operations   | [Pass: 482/482](tests/e2e/results/gitea/1.27.2/summary.json)        | MIT evidence recorded                   |
+| Codeberg (Forgejo) | `latest` snapshot | Not implemented                                                            | Not present                                                          | Available: 506 operations   | Not present                                                         | MIT evidence recorded                   |
+| GitHub             | `latest` snapshot | Not implemented                                                            | Not present                                                          | Available: 1,222 operations | Not present                                                         | MIT evidence recorded                   |
+| GitLab             | `18.11.11`        | [Available with gaps](packages/pangit/docs/GitLab.md#provider-differences) | [Pass: 26 contracts](tests/e2e/results/gitlab/18.11.11/summary.json) | Available: 1,126 operations | [Pass: 1,126/1,126](tests/e2e/results/gitlab/18.11.11/summary.json) | Included; license evidence not recorded |
+| GitLab             | `19.3.1`          | [Available with gaps](packages/pangit/docs/GitLab.md#provider-differences) | [Pass: 26 contracts](tests/e2e/results/gitlab/19.3.1/summary.json)   | Available: 1,148 operations | [Pass: 1,148/1,148](tests/e2e/results/gitlab/19.3.1/summary.json)   | Included; license evidence not recorded |
+| Bitbucket Cloud    | `latest` snapshot | Not implemented                                                            | Not present                                                          | Available: 297 operations   | Not present                                                         | Included; license evidence not recorded |
+| Azure DevOps Git   | `latest` snapshot | Not implemented                                                            | Not present                                                          | Available: 112 operations   | Not present                                                         | Included; license evidence not recorded |
+
+REST E2E totals include positive and negative cases; the linked results distinguish successful
+lifecycle coverage from authentication, resource and validation errors. Passing GitLab contracts
+include explicit rejection of unavailable operations and do not claim full Gitea parity.
 
 In total, the repository contains **6 providers, 8 generated REST clients, and 5,364 generated
 operations**. `latest` identifies the checked-in specification snapshot used for generation; PanGit
@@ -58,6 +63,9 @@ deno task check
 ```
 
 The examples below use the workspace package name and can be run from the repository root.
+
+For GitLab setup, examples, capability differences and standalone tests, see the
+[GitLab adapter guide](packages/pangit/docs/GitLab.md).
 
 ## Fluent API: Gitea
 
@@ -211,7 +219,7 @@ import { GiteaRestClient } from "@mannsion/pangit/providers/gitea/1.27.2";
 | Path                                                                                       | Ownership                                                                              |
 | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------- |
 | [`packages/pangit/src/fluent-api`](packages/pangit/src/fluent-api)                         | Hand-written provider-neutral API and adapter contracts                                |
-| [`packages/pangit/src/git-host-adapters`](packages/pangit/src/git-host-adapters)           | Hand-written provider adapters; currently Gitea only                                   |
+| [`packages/pangit/src/git-host-adapters`](packages/pangit/src/git-host-adapters)           | Hand-written Gitea and GitLab provider adapters                                        |
 | [`packages/pangit/src/generated-rest-clients`](packages/pangit/src/generated-rest-clients) | Generated clients and shared native-Fetch runtime                                      |
 | [`codegen/pangit`](codegen/pangit)                                                         | OpenAPI normalization, client generation, and E2E asset generation                     |
 | [`tests/e2e`](tests/e2e)                                                                   | Generated raw suites, hand-written fluent contracts, Docker environments, and evidence |
@@ -234,9 +242,9 @@ Run repository tasks with Deno 2 from the project root:
 | `deno task lint`              | Lint the workspace                                                                    |
 | `deno fmt --check`            | Check formatting without changing files                                               |
 | `deno task build`             | Build the documentation site                                                          |
-| `deno task e2e`               | Run raw and fluent suites against fresh Dockerized Gitea environments                 |
+| `deno task e2e`               | Run raw and fluent suites against fresh Gitea and GitLab environments                 |
 
-`deno task e2e` currently runs Gitea `1.26.4` and `1.27.2`, writes evidence under
+`deno task e2e` runs Gitea `1.26.4`/`1.27.2` and GitLab `18.11.11`/`19.3.1`, writes evidence under
 [`tests/e2e/results`](tests/e2e/results), and removes the test containers and state after each run.
 See [`codegen/README.md`](codegen/README.md) for generation ownership.
 

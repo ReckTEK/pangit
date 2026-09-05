@@ -87,14 +87,14 @@ export interface BranchRuleCapabilitySupport {
   readonly configuredRules: Readonly<{
     readonly supported: boolean;
     readonly operations: Readonly<
-      Record<BranchRuleOperation, "direct" | "direct-bounded-result">
+      Record<BranchRuleOperation, "direct" | "direct-bounded-result" | "bounded">
     >;
   }>;
   readonly effectiveProtection: Readonly<{
     readonly supported: boolean;
     readonly get: "direct";
   }>;
-  readonly orderedPriority: "gitea-extension";
+  readonly orderedPriority: "gitea-extension" | "unsupported";
 }
 
 /** Optional configured-rule and effective-enforcement adapter contracts. */

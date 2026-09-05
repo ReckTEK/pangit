@@ -131,28 +131,42 @@ export async function writeGeneratedDockerTestEnvironment(input: {
           E2E_AUTH_DIR: environment.runner.credentials,
         },
         tmpfs: environment.service.tmpfs,
+        ...(environment.service.shmSize ? { shm_size: environment.service.shmSize } : {}),
         volumes: [
           `./${environment.service.bootstrapFile}:/sandbox/bootstrap.sh:ro`,
+          ...(environment.service.shutdownFile
+            ? [`./${environment.service.shutdownFile}:/sandbox/shutdown.sh:ro`]
+            : []),
           `./.auth:${environment.runner.credentials}`,
         ],
         post_start: [{
           command: ["/bin/sh", "/sandbox/bootstrap.sh"],
           user: `${environment.service.uid}:${environment.service.gid}`,
         }],
+        ...(environment.service.shutdownFile
+          ? {
+            pre_stop: [{
+              command: ["/bin/sh", "/sandbox/shutdown.sh"],
+              user: `${environment.service.uid}:${environment.service.gid}`,
+            }],
+          }
+          : {}),
         healthcheck: {
           test: ["CMD-SHELL", environment.service.healthcheck],
           interval: "2s",
           timeout: "2s",
-          retries: 90,
+          retries: Math.ceil((environment.service.startupTimeoutSeconds ?? 180) / 2),
           start_period: "5s",
         },
         restart: "no",
-        stop_grace_period: "10s",
+        stop_grace_period: environment.service.stopGracePeriod ?? "10s",
       },
       [environment.runner.name]: {
         image: environment.runner.image,
         init: true,
-        user: `${environment.service.uid}:${environment.service.gid}`,
+        user: `${environment.runner.uid ?? environment.service.uid}:${
+          environment.runner.gid ?? environment.service.gid
+        }`,
         working_dir: environment.runner.workspace,
         entrypoint: ["deno"],
         command: [

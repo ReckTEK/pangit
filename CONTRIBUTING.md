@@ -1,8 +1,8 @@
 # Contributing to PanGit
 
-PanGit is in alpha development. The provider-neutral fluent API currently targets Gitea, while the
-generated REST layer covers the provider versions listed in the [README](README.md#provider-status).
-Keep readiness claims tied to implementation and test evidence.
+PanGit is in alpha development. The provider-neutral fluent API currently targets Gitea and GitLab,
+while the generated REST layer covers the provider versions listed in the
+[README](README.md#provider-status). Keep readiness claims tied to implementation and test evidence.
 
 Small fixes and documentation improvements can go directly to a pull request. For a new provider,
 new fluent capability, public API change, or large refactor, please
@@ -39,7 +39,7 @@ git switch --create your-change upstream/main
 | Change                           | Authoritative location                             | Expectations                                                                                                      |
 | -------------------------------- | -------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
 | Provider-neutral fluent behavior | `packages/pangit/src/fluent-api/`                  | Define portable semantics without provider branches in common operations. Add focused unit and contract coverage. |
-| Gitea fluent implementation      | `packages/pangit/src/git-host-adapters/gitea/`     | Implement the shared contract through the adapter and exercise provider behavior.                                 |
+| Provider fluent implementation   | `packages/pangit/src/git-host-adapters/`           | Implement the shared contract through the adapter and exercise provider behavior.                                 |
 | Generated REST clients           | `codegen/pangit/raw-rest-client-generation/`       | Change source catalogs, normalizers, naming data, or renderers; never patch emitted clients.                      |
 | Live provider coverage           | `tests/e2e/hand-written/`                          | Add hand-written cases, contracts, fixtures, or environment definitions; regenerate emitted suites.               |
 | Examples                         | `packages/pangit-examples/`                        | Demonstrate a real login and repository interaction. Do not commit credentials.                                   |
@@ -96,20 +96,26 @@ These commands do not run Docker or live-provider E2E tests.
 
 ## Live E2E tests
 
-Changes to Gitea transport, generated operations, fluent behavior, or provider fixtures should run
-the smallest relevant live suite and report the exact command in the pull request:
+Changes to provider transport, generated operations, fluent behavior, or provider fixtures should
+run the smallest relevant live suite and report the exact command in the pull request:
 
 ```bash
 deno task e2e --git-host gitea --version 1.27.2 --suite fluent
 deno task e2e --git-host gitea --version 1.27.2 --suite raw
+deno task e2e --git-host gitlab --version 19.3.1 --suite fluent
 deno task e2e --git-host gitea --version 1.27.2 --suite fluent \
   --contract core/repositories
 ```
 
 Filtered runs write ignored evidence under `tests/e2e/.focused-results/`. An unfiltered
-`deno task e2e` runs both supported Gitea versions, refreshes the tracked evidence under
-`tests/e2e/results/`, and removes its disposable Compose environments afterward. Run the complete
-suite before changing a public readiness or E2E claim.
+`deno task e2e` runs both supported Gitea versions and both supported GitLab versions, refreshes the
+tracked evidence under `tests/e2e/results/`, and removes its disposable Compose environments
+afterward. Run the complete suite before changing a public readiness or E2E claim.
+
+Keep provider defect reproductions, candidate patches and upstream follow-up together under
+[`tests/e2e/hand-written/diagnostics`](tests/e2e/hand-written/diagnostics). The GitLab
+protection-cache investigation records its upstream fix checklist there; normal E2E environments
+stay on stock images.
 
 ## Pull requests
 

@@ -1,4 +1,21 @@
 import { assertCleanServiceShutdown } from "./run-all-live-tests.ts";
+import { recordedServerLog } from "./server-log.ts";
+
+Deno.test("Verbose provider logs retain startup and failure diagnostics without flooding tracked evidence", () => {
+  const small = "startup\nready\n";
+  if (recordedServerLog(small) !== small) throw new Error("Short diagnostics changed");
+  if (recordedServerLog("startup \r\nready\t\r\n") !== small) {
+    throw new Error("Container shutdown line endings were not normalized");
+  }
+  const large = "startup\n" + "verbose transport log\n".repeat(100_000) + "final failure\n";
+  const recorded = recordedServerLog(large);
+  if (!recorded.startsWith("startup\n") || !recorded.endsWith("final failure\n")) {
+    throw new Error("Startup or final failure diagnostics were lost");
+  }
+  if (recorded.length > 1_001_000 || !recorded.includes("server.full.log")) {
+    throw new Error("Verbose log must be bounded and point to the full local evidence");
+  }
+});
 
 function assert(value: unknown, message: string): asserts value {
   if (!value) throw new Error(message);

@@ -1,7 +1,6 @@
 import {
   createClient,
   errors,
-  type FluentProvider,
   type ProviderVersion,
 } from "../../../../../../packages/pangit/src/fluent-api/mod.ts";
 import type { FluentApiContractResult, FluentApiRequestEvidence } from "../../contract-result.ts";
@@ -9,7 +8,7 @@ import { FluentApiRequestRecorder, proveRequestSequence } from "../../request-re
 import type { RepositoryWebhookContractFixtures } from "./repository-webhook-contract-fixtures.ts";
 
 export type RepositoryWebhookContractInput<
-  TProvider extends FluentProvider,
+  TProvider extends "gitea",
   TVersion extends ProviderVersion<TProvider>,
 > = {
   readonly provider: TProvider;
@@ -31,7 +30,7 @@ function record(value: unknown): Readonly<Record<string, unknown>> | undefined {
 
 /** Exercise webhook CRUD and prove a real push reaches the isolated journal receiver. */
 export async function runRepositoryWebhookContract<
-  const TProvider extends FluentProvider,
+  const TProvider extends "gitea",
   const TVersion extends ProviderVersion<TProvider>,
 >(
   t: Deno.TestContext,

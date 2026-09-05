@@ -8,12 +8,20 @@ export type DockerTestEnvironmentDefinition = {
     environment: Record<string, string>;
     tmpfs: string[];
     bootstrapFile: string;
+    /** Optional ordered shutdown hook for providers with bundled dependent services. */
+    shutdownFile?: string;
     healthcheck: string;
+    /** Provider boot and shutdown budgets (GitLab configures its bundled services on first boot). */
+    startupTimeoutSeconds?: number;
+    stopGracePeriod?: string;
+    shmSize?: string;
     uid: string;
     gid: string;
   };
   runner: {
     name: string;
+    uid?: string;
+    gid?: string;
     image: string;
     workspace: string;
     results: string;

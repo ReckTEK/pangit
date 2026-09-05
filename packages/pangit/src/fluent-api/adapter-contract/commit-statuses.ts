@@ -71,8 +71,15 @@ export interface GiteaSetCommitStatusExtensionContext {
   readonly portableState: CommitStatusState;
 }
 
+/** Native GitLab states remain visible without inventing a portable equivalent. */
+export interface GitLabSetCommitStatusExtension {
+  readonly state: "running" | "canceled" | "skipped";
+}
+export type GitLabSetCommitStatusExtensionContext = GiteaSetCommitStatusExtensionContext;
+
 export type SetCommitStatusExtension<TProvider extends Provider> = TProvider extends "gitea"
   ? GiteaSetCommitStatusExtension
+  : TProvider extends "gitlab" ? GitLabSetCommitStatusExtension
   : never;
 
 export interface SetCommitStatusOptions<TProvider extends Provider = Provider>

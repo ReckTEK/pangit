@@ -46,6 +46,8 @@ export type {
   FileChange,
   GiteaCommitFileChangesExtension,
   GiteaCommitFileChangesExtensionContext,
+  GitLabCommitFileChangesExtension,
+  GitLabCommitFileChangesExtensionContext,
   ListDirectoryOptions,
   ReadContentBlobOptions,
   ReadContentOptions,
@@ -62,6 +64,8 @@ export type {
   GiteaMergePullRequestExtension,
   GiteaMergePullRequestExtensionContext,
   GiteaPullRequestMergeMethod,
+  GitLabMergePullRequestExtension,
+  GitLabMergePullRequestExtensionContext,
   MergePullRequestInput,
   PullRequestCommentInput,
   PullRequestMergeMethod,
@@ -76,6 +80,8 @@ export type {
   GiteaCommitStatusExtensionState,
   GiteaSetCommitStatusExtension,
   GiteaSetCommitStatusExtensionContext,
+  GitLabSetCommitStatusExtension,
+  GitLabSetCommitStatusExtensionContext,
   SetCommitStatusInput,
 } from "./adapter-contract/commit-statuses.ts";
 export type {

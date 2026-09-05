@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="deno test" tests="544" failures="0" errors="0" time="9.430">
+<testsuites name="deno test" tests="544" failures="0" errors="0" time="9.454">
     <testsuite name="./tests/e2e/generated/raw-rest-client-tests/gitea/1.27.2/generated-raw-rest-client-e2e_test.ts" tests="1" disabled="0" errors="0" failures="0">
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E" classname="./tests/e2e/generated/raw-rest-client-tests/gitea/1.27.2/generated-raw-rest-client-e2e_test.ts" time="9.411" line="5" col="6">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E" classname="./tests/e2e/generated/raw-rest-client-tests/gitea/1.27.2/generated-raw-rest-client-e2e_test.ts" time="9.435" line="5" col="6">
         </testcase>
     </testsuite>
     <testsuite name="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" tests="543" disabled="0" errors="0" failures="0">
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; sandbox identity and fixtures: getVersion" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.011" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; sandbox identity and fixtures: getVersion" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.012" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; sandbox identity and fixtures: userGetCurrent" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; sandbox identity and fixtures: userGetCurrent" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; sandbox identity and fixtures: adminEditUser" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; sandbox identity and fixtures: adminCreateUser" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.016" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; sandbox identity and fixtures: adminCreateUser" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.018" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; sandbox identity and fixtures: userCreateToken" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.014" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; sandbox identity and fixtures: userCreateToken" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.015" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; sandbox identity and fixtures: createCurrentUserRepo" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.121" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; sandbox identity and fixtures: createCurrentUserRepo" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.119" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; sandbox identity and fixtures: repoEdit" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.006" line="261" col="17">
         </testcase>
@@ -23,19 +23,19 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; sandbox identity and fixtures: orgCreate" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.007" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; sandbox identity and fixtures: createOrgRepo" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.117" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; sandbox identity and fixtures: createOrgRepo" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.119" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; instance and current-user read APIs: adminCronList" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; instance and current-user read APIs: adminGetAllEmails" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; instance and current-user read APIs: adminSearchEmails" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; instance and current-user read APIs: adminSearchEmails" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; instance and current-user read APIs: adminGetAllOrgs" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; instance and current-user read APIs: adminSearchUsers" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; instance and current-user read APIs: adminSearchUsers" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; instance and current-user read APIs: adminUnadoptedList" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; instance and current-user read APIs: adminUnadoptedList" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; instance and current-user read APIs: listGitignoresTemplates" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
@@ -75,9 +75,9 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; instance and current-user read APIs: userGetStopWatches" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; instance and current-user read APIs: userCurrentListSubscriptions" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; instance and current-user read APIs: userCurrentListSubscriptions" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; instance and current-user read APIs: userListTeams" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; instance and current-user read APIs: userListTeams" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; instance and current-user read APIs: userCurrentTrackedTimes" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
@@ -89,27 +89,27 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; instance and current-user read APIs: userListBlocks" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; instance and current-user read APIs: adminListHooks" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.002" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; instance and current-user read APIs: adminListHooks" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; instance and current-user read APIs: userListHooks" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; instance and current-user read APIs: userListHooks" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.002" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; instance and current-user read APIs: getGitignoreTemplateInfo" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; instance and current-user read APIs: getLicenseTemplateInfo" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; instance and current-user read APIs: getLabelTemplateInfo" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.002" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; instance and current-user read APIs: getLabelTemplateInfo" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; instance and current-user read APIs: renderMarkdown" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; instance and current-user read APIs: renderMarkdown" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.007" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; instance and current-user read APIs: renderMarkdownRaw" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; instance and current-user read APIs: renderMarkdownRaw" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; instance and current-user read APIs: renderMarkup" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; instance and current-user read APIs: notifyReadList" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; instance and current-user read APIs: updateUserSettings" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; instance and current-user read APIs: updateUserSettings" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoGet" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoGet" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoGetAssignees" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
@@ -121,45 +121,45 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoListCollaborators" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoGetAllCommits" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.008" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoGetAllCommits" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.007" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoGetContentsList" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.007" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: listForks" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: listForks" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoListAllGitRefs" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoListAllGitRefs" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoListHooks" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoListGitHooks" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoListGitHooks" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoGetIssueConfig" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoGetIssueConfig" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoValidateIssueConfig" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoValidateIssueConfig" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoGetIssueTemplates" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoGetIssueTemplates" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: issueListIssues" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: issueListIssues" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: issueGetRepoComments" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoListPinnedIssues" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoListKeys" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoListKeys" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: issueListLabels" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: issueListLabels" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.006" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoGetLanguages" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoGetLanguages" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoGetLicenses" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: issueGetMilestonesList" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: issueGetMilestonesList" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoNewPinAllowed" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoNewPinAllowed" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: notifyGetRepoList" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: notifyGetRepoList" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoListPullRequests" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoListPullRequests" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoListPinnedPullRequests" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
@@ -175,7 +175,7 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoListTagProtection" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoListTags" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoListTags" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoTrackedTimes" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
@@ -183,31 +183,31 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: getArtifacts" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: listWorkflowJobs" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: listWorkflowJobs" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: getRepoRunners" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: getWorkflowRuns" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoListActionsSecrets" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoListActionsSecrets" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.002" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: getRepoVariablesList" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: ActionsListRepositoryWorkflows" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: ActionsListRepositoryWorkflows" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: ListActionTasks" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoGetByID" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoGetByID" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoGetCombinedStatusByRef" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoGetCombinedStatusByRef" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.006" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoListStatusesByRef" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoListStatusesByRef" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoListGitRefs" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoGetContents" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoGetRawFile" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoGetRawFile" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoGetRawFileOrLFS" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
         </testcase>
@@ -217,11 +217,11 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: GetTree" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: GetBlob" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: GetBlob" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoDownloadCommitDiffOrPatch" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoListStatuses" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoListStatuses" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoCreateStatus" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.006" line="261" col="17">
         </testcase>
@@ -231,13 +231,13 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: issueSearchIssues" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: topicSearch" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: topicSearch" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoGetContentsExt" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoGetFileContents" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoGetFileContents" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoGetFileContentsPost" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository read APIs: repoGetFileContentsPost" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; social and permissions: repoAddCollaborator" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
@@ -253,27 +253,27 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; social and permissions: userCheckFollowing" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; social and permissions: userCurrentDeleteFollow" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; social and permissions: userCurrentDeleteFollow" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; social and permissions: userCurrentPutStar" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; social and permissions: userCurrentPutStar" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; social and permissions: userCurrentCheckStarring" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.002" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; social and permissions: userCurrentCheckStarring" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; social and permissions: userCurrentDeleteStar" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; social and permissions: userCurrentDeleteStar" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; social and permissions: userCurrentPutSubscription" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; social and permissions: userCurrentCheckSubscription" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; social and permissions: userCurrentCheckSubscription" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; social and permissions: userCurrentDeleteSubscription" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; social and permissions: userCurrentDeleteSubscription" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; social and permissions: userGet" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; social and permissions: userListActivityFeeds" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; social and permissions: userListFollowers" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; social and permissions: userListFollowers" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; social and permissions: userListFollowing" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; social and permissions: userListFollowing" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; social and permissions: userListGPGKeys" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
@@ -283,11 +283,11 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; social and permissions: orgListUserOrgs" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; social and permissions: userListRepos" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; social and permissions: userListRepos" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; social and permissions: userListStarred" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; social and permissions: userListSubscriptions" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; social and permissions: userListSubscriptions" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; social and permissions: userBlockUser" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
         </testcase>
@@ -295,23 +295,23 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; social and permissions: userUnblockUser" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; social and permissions: repoDeleteCollaborator" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; social and permissions: repoDeleteCollaborator" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; organization APIs: orgGet" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; organization APIs: orgGet" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.006" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; organization APIs: orgListActivityFeeds" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; organization APIs: orgListActivityFeeds" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; organization APIs: orgListHooks" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; organization APIs: orgListLabels" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; organization APIs: orgListMembers" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; organization APIs: orgListMembers" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; organization APIs: orgListPublicMembers" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; organization APIs: orgListRepos" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; organization APIs: orgListRepos" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; organization APIs: orgListTeams" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; organization APIs: orgListTeams" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; organization APIs: teamSearch" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
@@ -319,11 +319,11 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; organization APIs: getOrgWorkflowJobs" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; organization APIs: getOrgRunners" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; organization APIs: getOrgRunners" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; organization APIs: getOrgWorkflowRuns" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; organization APIs: getOrgWorkflowRuns" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; organization APIs: orgListActionsSecrets" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.002" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; organization APIs: orgListActionsSecrets" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; organization APIs: getOrgVariablesList" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
@@ -347,7 +347,7 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; organization APIs: orgCreateTeam" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; organization APIs: orgGetTeam" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; organization APIs: orgGetTeam" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; organization APIs: orgEditTeam" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
@@ -359,9 +359,9 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; organization APIs: orgAddTeamRepository" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; organization APIs: orgListTeamRepos" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; organization APIs: orgListTeamRepos" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; organization APIs: orgListTeamRepo" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; organization APIs: orgListTeamRepo" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; organization APIs: orgListTeamActivityFeeds" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
@@ -387,7 +387,7 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; user Actions configuration: getUserVariable" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; user Actions configuration: updateUserVariable" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; user Actions configuration: updateUserVariable" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.002" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; user Actions configuration: getUserVariable" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
@@ -401,7 +401,7 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; org Actions configuration: getOrgVariablesList" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; org Actions configuration: orgListActionsSecrets" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; org Actions configuration: orgListActionsSecrets" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.002" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; org Actions configuration: createOrgVariable" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
@@ -421,9 +421,9 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repo Actions configuration: getRepoVariablesList" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repo Actions configuration: repoListActionsSecrets" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repo Actions configuration: repoListActionsSecrets" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repo Actions configuration: createRepoVariable" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repo Actions configuration: createRepoVariable" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repo Actions configuration: getRepoVariable" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
@@ -439,9 +439,9 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; Actions instance and user reads: listAdminWorkflowJobs" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; Actions instance and user reads: getAdminRunners" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; Actions instance and user reads: getAdminRunners" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.002" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; Actions instance and user reads: listAdminWorkflowRuns" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; Actions instance and user reads: listAdminWorkflowRuns" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.002" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; Actions instance and user reads: getUserWorkflowJobs" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
@@ -449,7 +449,7 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; Actions instance and user reads: getUserWorkflowRuns" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; Actions instance and user reads: adminCreateRunnerRegistrationToken" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; Actions instance and user reads: adminCreateRunnerRegistrationToken" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.002" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue label CRUD: issueCreateLabel" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
@@ -457,7 +457,7 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue label CRUD: issueGetLabel" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue label CRUD: issueEditLabel" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue label CRUD: issueEditLabel" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; org label CRUD: orgCreateLabel" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
@@ -471,11 +471,11 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; milestone CRUD: issueGetMilestonesList" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; milestone CRUD: issueGetMilestone" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; milestone CRUD: issueGetMilestone" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; milestone CRUD: issueEditMilestone" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueCreateIssue" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.011" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueCreateIssue" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.010" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueCreateIssue" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.006" line="261" col="17">
         </testcase>
@@ -491,27 +491,27 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueListIssueDependencies" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueGetIssueReactions" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueGetIssueReactions" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueSubscriptions" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueTrackedTimes" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueTrackedTimes" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.002" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueListIssueAttachments" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueListIssueAttachments" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueEditIssue" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.007" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueEditIssue" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.006" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueAddAssignees" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.007" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueAddAssignees" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.006" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueCheckAssignee" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueRemoveAssignees" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.007" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueRemoveAssignees" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.006" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueEditIssueDeadline" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueEditIssueDeadline" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueClearLabels" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueClearLabels" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueAddLabel" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueAddLabel" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.006" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueReplaceLabels" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
         </testcase>
@@ -531,13 +531,13 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueStopStopWatch" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueStartStopWatch" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueStartStopWatch" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueDeleteStopWatch" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueDeleteStopWatch" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueAddTime" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueResetTime" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueResetTime" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: pinIssue" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
@@ -553,9 +553,9 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueCheckSubscription" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueDeleteSubscription" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueDeleteSubscription" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueCreateIssueDependencies" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueCreateIssueDependencies" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueRemoveIssueDependencies" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
@@ -563,11 +563,11 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue lifecycle: issueRemoveIssueBlocking" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue comments and attachments: issueCreateComment" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.008" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue comments and attachments: issueCreateComment" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.007" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue comments and attachments: issueGetComment" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue comments and attachments: issueGetComment" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue comments and attachments: issueEditComment" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.008" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue comments and attachments: issueEditComment" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.007" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue comments and attachments: issueEditCommentDeprecated" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.008" line="261" col="17">
         </testcase>
@@ -579,13 +579,13 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue comments and attachments: issueCreateIssueAttachment" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.008" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue comments and attachments: issueGetIssueAttachment" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue comments and attachments: issueGetIssueAttachment" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue comments and attachments: issueEditIssueAttachment" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue comments and attachments: issueDeleteIssueAttachment" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue comments and attachments: issueCreateIssueCommentAttachment" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.009" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue comments and attachments: issueCreateIssueCommentAttachment" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.008" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue comments and attachments: issueListIssueCommentAttachments" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
@@ -595,25 +595,25 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue comments and attachments: issueDeleteIssueCommentAttachment" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue comments and attachments: issueDeleteCommentDeprecated" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.008" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue comments and attachments: issueDeleteCommentDeprecated" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.007" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue comments and attachments: issueCreateComment" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.007" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue comments and attachments: issueCreateComment" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.008" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; issue comments and attachments: issueDeleteComment" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.007" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; admin webhook CRUD: adminCreateHook" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; admin webhook CRUD: adminCreateHook" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; admin webhook CRUD: adminGetHook" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; admin webhook CRUD: adminEditHook" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; admin webhook CRUD: adminDeleteHook" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.002" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; admin webhook CRUD: adminDeleteHook" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; org webhook CRUD: orgCreateHook" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.002" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; org webhook CRUD: orgCreateHook" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; org webhook CRUD: orgGetHook" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; org webhook CRUD: orgEditHook" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; org webhook CRUD: orgEditHook" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; org webhook CRUD: orgDeleteHook" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
@@ -621,47 +621,47 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repo webhook CRUD: repoGetHook" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repo webhook CRUD: repoEditHook" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repo webhook CRUD: repoEditHook" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repo webhook CRUD: repoTestHook" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repo webhook CRUD: repoTestHook" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repo webhook CRUD: repoDeleteHook" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repo webhook CRUD: repoDeleteHook" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.002" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; user webhook CRUD: userCreateHook" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; user webhook CRUD: userCreateHook" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.002" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; user webhook CRUD: userGetHook" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; user webhook CRUD: userGetHook" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; user webhook CRUD: userEditHook" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; user webhook CRUD: userDeleteHook" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; git file and branch lifecycle: repoCreateFile" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.118" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; git file and branch lifecycle: repoCreateFile" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.108" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; git file and branch lifecycle: repoGetEditorConfig" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; git file and branch lifecycle: repoGetEditorConfig" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; git file and branch lifecycle: repoCreateFile" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.114" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; git file and branch lifecycle: repoCreateFile" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.108" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; git file and branch lifecycle: repoUpdateFile" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.117" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; git file and branch lifecycle: repoUpdateFile" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.111" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; git file and branch lifecycle: repoDeleteFile" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.115" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; git file and branch lifecycle: repoDeleteFile" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.106" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; git file and branch lifecycle: repoChangeFiles" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.115" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; git file and branch lifecycle: repoChangeFiles" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.112" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; git file and branch lifecycle: repoApplyDiffPatch" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.109" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; git file and branch lifecycle: repoCreateBranch" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.109" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; git file and branch lifecycle: repoCreateBranch" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.103" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; git file and branch lifecycle: wait for created branch" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; git file and branch lifecycle: repoUpdateBranch" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.107" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; git file and branch lifecycle: repoUpdateBranch" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.100" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; git file and branch lifecycle: repoRenameBranch" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.008" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; git file and branch lifecycle: repoRenameBranch" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.007" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; git file and branch lifecycle: repoCompareDiff" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.017" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; git file and branch lifecycle: repoCompareDiff" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.016" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; git file and branch lifecycle: repoDeleteBranch" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.006" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; git file and branch lifecycle: repoDeleteBranch" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.007" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; git file and branch lifecycle: repoCreateBranchProtection" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; git file and branch lifecycle: repoCreateBranchProtection" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; git file and branch lifecycle: repoGetBranchProtection" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
@@ -673,7 +673,7 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; git file and branch lifecycle: repoCreateTagProtection" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; git file and branch lifecycle: repoGetTagProtection" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; git file and branch lifecycle: repoGetTagProtection" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; git file and branch lifecycle: repoEditTagProtection" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
@@ -693,13 +693,13 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; git file and branch lifecycle: repoDeleteGitHook" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; release and binary attachment lifecycle: repoCreateRelease" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.013" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; release and binary attachment lifecycle: repoCreateRelease" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.011" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; release and binary attachment lifecycle: repoGetLatestRelease" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; release and binary attachment lifecycle: repoGetLatestRelease" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; release and binary attachment lifecycle: repoGetReleaseByTag" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; release and binary attachment lifecycle: repoGetRelease" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; release and binary attachment lifecycle: repoGetRelease" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; release and binary attachment lifecycle: repoEditRelease" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.007" line="261" col="17">
         </testcase>
@@ -707,7 +707,7 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; release and binary attachment lifecycle: repoListReleaseAttachments" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; release and binary attachment lifecycle: repoGetReleaseAttachment" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; release and binary attachment lifecycle: repoGetReleaseAttachment" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; release and binary attachment lifecycle: repoEditReleaseAttachment" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
@@ -717,23 +717,23 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; release and binary attachment lifecycle: repoCreateRelease" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.012" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; release and binary attachment lifecycle: repoDeleteReleaseByTag" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; release and binary attachment lifecycle: repoDeleteReleaseByTag" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; wiki and topics: repoCreateWikiPage" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.120" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; wiki and topics: repoCreateWikiPage" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.108" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; wiki and topics: repoGetWikiPage" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.006" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; wiki and topics: repoGetWikiPages" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; wiki and topics: repoGetWikiPages" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.006" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; wiki and topics: repoGetWikiPageRevisions" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; wiki and topics: repoEditWikiPage" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.114" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; wiki and topics: repoEditWikiPage" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.107" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; wiki and topics: repoDeleteWikiPage" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.110" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; wiki and topics: repoDeleteWikiPage" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.101" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; wiki and topics: repoUpdateTopics" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; wiki and topics: repoUpdateTopics" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; wiki and topics: repoAddTopic" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; wiki and topics: repoAddTopic" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; wiki and topics: repoListTopics" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
@@ -743,15 +743,15 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; SSH key CRUD: userCurrentGetKey" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; SSH key CRUD: userCurrentDeleteKey" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.002" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; SSH key CRUD: userCurrentDeleteKey" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; SSH key CRUD: adminCreatePublicKey" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; SSH key CRUD: adminCreatePublicKey" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; SSH key CRUD: adminDeleteUserPublicKey" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; SSH key CRUD: repoCreateKey" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; SSH key CRUD: repoGetKey" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; SSH key CRUD: repoGetKey" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; SSH key CRUD: repoDeleteKey" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
@@ -765,15 +765,15 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; GPG key lifecycle: userCurrentDeleteGPGKey" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; GPG key lifecycle: repoSigningKey" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.007" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; GPG key lifecycle: repoSigningKey" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.006" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; GPG key lifecycle: getSigningKey" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; OAuth email avatar and API tokens: userCreateOAuth2Application" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.039" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; OAuth email avatar and API tokens: userGetOAuth2Application" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; OAuth email avatar and API tokens: userGetOAuth2Application" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; OAuth email avatar and API tokens: userUpdateOAuth2Application" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.039" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; OAuth email avatar and API tokens: userUpdateOAuth2Application" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.038" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; OAuth email avatar and API tokens: userDeleteOAuth2Application" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
@@ -781,17 +781,17 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; OAuth email avatar and API tokens: userDeleteEmail" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; OAuth email avatar and API tokens: userUpdateAvatar" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; OAuth email avatar and API tokens: userUpdateAvatar" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; OAuth email avatar and API tokens: userDeleteAvatar" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; OAuth email avatar and API tokens: orgUpdateAvatar" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; OAuth email avatar and API tokens: orgDeleteAvatar" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; OAuth email avatar and API tokens: orgDeleteAvatar" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.002" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; OAuth email avatar and API tokens: repoUpdateAvatar" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; OAuth email avatar and API tokens: repoDeleteAvatar" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; OAuth email avatar and API tokens: repoDeleteAvatar" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.002" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; OAuth email avatar and API tokens: userCreateToken" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.014" line="261" col="17">
         </testcase>
@@ -799,33 +799,33 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; OAuth email avatar and API tokens: getCurrentToken" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; OAuth email avatar and API tokens: deleteCurrentToken" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; OAuth email avatar and API tokens: deleteCurrentToken" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.006" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; OAuth email avatar and API tokens: userCreateToken" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.013" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; OAuth email avatar and API tokens: userDeleteAccessToken" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.012" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; OAuth email avatar and API tokens: userDeleteAccessToken" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.011" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoAddCollaborator" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoCreateBranch" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.108" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoCreateBranch" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.104" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: wait for created branch" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoCreateFile" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.115" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoCreateFile" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.110" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoCreatePullRequest" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.120" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoCreatePullRequest" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.115" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoGetPullRequest" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.008" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoGetPullRequestByBaseHead" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.007" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoEditPullRequest" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.016" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoEditPullRequest" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.015" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoGetPullRequestCommits" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.008" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoGetPullRequestFiles" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.009" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoGetPullRequestFiles" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.008" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoDownloadPullDiffOrPatch" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoDownloadPullDiffOrPatch" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoCreatePullReviewRequests" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.013" line="261" col="17">
         </testcase>
@@ -833,55 +833,55 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoListPullReviews" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoCreatePullReview" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.011" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoCreatePullReview" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.009" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoGetPullReview" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoGetPullReview" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.006" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoGetPullReviewComments" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoGetPullReviewComments" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoCreatePullReviewCommentReply" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoResolvePullReviewComment" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoResolvePullReviewComment" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoUnresolvePullReviewComment" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoUnresolvePullReviewComment" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoSubmitPullReview" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.015" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoSubmitPullReview" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.014" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoDismissPullReview" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.008" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoDismissPullReview" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.007" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoUnDismissPullReview" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.006" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoCreateFile" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.115" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoCreateFile" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.109" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoUpdatePullRequest" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.226" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoUpdatePullRequest" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.213" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoGetPullRequest" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="1.130" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoGetPullRequest" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="1.444" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoDeletePullReview" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoDeletePullReview" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoCreateBranchProtection" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoCreateBranchProtection" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: wait for merge readiness" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.635" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: wait for merge readiness" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.634" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoMergePullRequest" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.006" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoMergePullRequest" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.007" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoCancelScheduledAutoMerge" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoCancelScheduledAutoMerge" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoDeleteBranchProtection" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: wait for merge readiness" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.426" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoMergePullRequest" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.140" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoMergePullRequest" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.133" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoPullRequestIsMerged" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoGetPullRequest" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.008" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoGetPullRequest" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.007" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; pull-request lifecycle: repoGetCommitPullRequest" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.007" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; package lifecycle: listPackageVersions" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; package lifecycle: getLatestPackageVersion" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; package lifecycle: getLatestPackageVersion" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; package lifecycle: getPackage" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
@@ -891,17 +891,17 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; package lifecycle: unlinkPackage" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; package lifecycle: deletePackageVersion" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; package lifecycle: deletePackageVersion" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; package lifecycle: deletePackage" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: createFork" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.016" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: createFork" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.015" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: repoGet" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: repoCreateFile" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.117" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: repoCreateFile" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.114" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: repoMergeUpstream" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.110" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: repoMergeUpstream" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.106" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: repoMigrate" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.024" line="261" col="17">
         </testcase>
@@ -913,35 +913,35 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: repoAddPushMirror" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.015" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: repoGetPushMirrorByRemoteName" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: repoGetPushMirrorByRemoteName" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: repoPushMirrorSync" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.226" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: repoPushMirrorSync" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.232" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: repoGet" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.468" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: repoGet" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.316" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: repoDeletePushMirror" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: createCurrentUserRepo" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.116" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: createCurrentUserRepo" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.122" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: generateRepo" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.123" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: generateRepo" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.119" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: repoGet" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: repoDelete" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.006" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: repoDelete" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.007" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: createCurrentUserRepo" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.113" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: createCurrentUserRepo" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.118" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: repoTransfer" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: rejectRepoTransfer" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: repoTransfer" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: repoTransfer" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: acceptRepoTransfer" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: acceptRepoTransfer" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.006" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: repoGet" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: repoDelete" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; repository fork migration mirror template and transfer: repoDelete" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.006" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; runner registration and management: adminCreateRunnerRegistrationToken" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
@@ -949,7 +949,7 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; runner registration and management: getAdminRunner" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; runner registration and management: updateAdminRunner" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; runner registration and management: updateAdminRunner" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; runner registration and management: deleteAdminRunner" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
@@ -959,7 +959,7 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; runner registration and management: getOrgRunner" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; runner registration and management: updateOrgRunner" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; runner registration and management: updateOrgRunner" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; runner registration and management: deleteOrgRunner" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
@@ -971,19 +971,19 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; runner registration and management: updateRepoRunner" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; runner registration and management: deleteRepoRunner" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; runner registration and management: deleteRepoRunner" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; runner registration and management: userCreateRunnerRegistrationToken" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.002" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; runner registration and management: userCreateRunnerRegistrationToken" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; runner registration and management: $fixture/registerUser" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; runner registration and management: getUserRunner" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; runner registration and management: updateUserRunner" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; runner registration and management: updateUserRunner" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; runner registration and management: deleteUserRunner" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; workflow lifecycle: repoCreateFile" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.117" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; workflow lifecycle: repoCreateFile" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.115" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; workflow lifecycle: ActionsGetWorkflow" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
         </testcase>
@@ -997,15 +997,15 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; workflow lifecycle: GetWorkflowRun" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; workflow lifecycle: getWorkflowRunAttempt" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; workflow lifecycle: getWorkflowRunAttempt" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; workflow lifecycle: getArtifactsOfRun" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; workflow lifecycle: getArtifactsOfRun" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; workflow lifecycle: listWorkflowRunJobs" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; workflow lifecycle: listWorkflowRunJobs" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; workflow lifecycle: listWorkflowRunAttemptJobs" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; workflow lifecycle: ActionsListWorkflowRuns" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; workflow lifecycle: ActionsListWorkflowRuns" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; workflow lifecycle: getWorkflowJob" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
@@ -1017,7 +1017,7 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; workflow lifecycle: downloadArtifact" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; workflow lifecycle: deleteArtifact" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; workflow lifecycle: deleteArtifact" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; workflow lifecycle: downloadActionsRunJobLogs" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
@@ -1027,23 +1027,23 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; workflow lifecycle: rerunWorkflowRun" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.014" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; workflow lifecycle: GetWorkflowRun" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.262" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; workflow lifecycle: GetWorkflowRun" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.259" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; workflow lifecycle: rerunFailedWorkflowRun" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.012" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; workflow lifecycle: GetWorkflowRun" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.259" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; workflow lifecycle: deleteActionRun" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; workflow lifecycle: deleteActionRun" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; notification lifecycle: issueCreateComment" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.008" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; notification lifecycle: issueCreateComment" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.009" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; notification lifecycle: notifyGetList" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; notification lifecycle: notifyGetThread" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; notification lifecycle: notifyGetThread" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; notification lifecycle: notifyReadThread" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; secondary resources and administrative cleanup: adminAdoptRepository" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.008" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; secondary resources and administrative cleanup: adminAdoptRepository" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.007" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; secondary resources and administrative cleanup: repoGet" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
@@ -1051,15 +1051,15 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; secondary resources and administrative cleanup: adminCronRun" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; secondary resources and administrative cleanup: adminCreateRepo" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.120" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; secondary resources and administrative cleanup: adminCreateRepo" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.116" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; secondary resources and administrative cleanup: adminCreateOrg" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.006" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; secondary resources and administrative cleanup: createOrgRepoDeprecated" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.117" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; secondary resources and administrative cleanup: createOrgRepoDeprecated" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.112" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; secondary resources and administrative cleanup: adminAddUserBadges" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; secondary resources and administrative cleanup: adminAddUserBadges" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; secondary resources and administrative cleanup: adminListUserBadges" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; secondary resources and administrative cleanup: adminListUserBadges" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; secondary resources and administrative cleanup: adminDeleteUserBadges" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
@@ -1075,7 +1075,7 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; secondary resources and administrative cleanup: orgDelete" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; secondary resources and administrative cleanup: issueDelete" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.006" line="261" col="17">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; secondary resources and administrative cleanup: issueDelete" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="261" col="17">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; secondary resources and administrative cleanup: issueDeleteLabel" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.003" line="261" col="17">
         </testcase>
@@ -1087,7 +1087,7 @@
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; negative: existing commit without a Git note returns not found" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.004" line="268" col="15">
         </testcase>
-        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; negative: repoSigningKeySSH: missing resource contract" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.007" line="268" col="15">
+        <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; negative: repoSigningKeySSH: missing resource contract" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.005" line="268" col="15">
         </testcase>
         <testcase name="gitea 1.27.2 generated raw REST-client E2E &gt; negative: getSigningKeySSH: missing resource contract" classname="./tests/e2e/runner/run-generated-raw-rest-client-test.ts" time="0.006" line="268" col="15">
         </testcase>

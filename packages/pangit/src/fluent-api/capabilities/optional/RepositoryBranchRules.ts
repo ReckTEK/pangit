@@ -32,7 +32,7 @@ export type BranchRuleOrderOperation<
   TVersion extends ProviderVersion<TProvider>,
 > = OperationExtension<
   "branchRules.setOrder",
-  "gitea",
+  TProvider,
   TVersion,
   void
 >;
@@ -134,7 +134,7 @@ export function createRepositoryBranchRules<
     },
     setOrder() {
       const context = { provider, version, operation: "setBranchRuleOrder" } as const;
-      return createOperationExtension<"branchRules.setOrder", "gitea", TVersion, void>({
+      return createOperationExtension<"branchRules.setOrder", TProvider, TVersion, void>({
         operation: "branchRules.setOrder",
         provider,
         version,

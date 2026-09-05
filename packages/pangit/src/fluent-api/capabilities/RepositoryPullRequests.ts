@@ -35,7 +35,7 @@ export type MergePullRequestOperation<
   TVersion extends ProviderVersion<TProvider>,
 > = OperationExtension<
   "pullRequests.merge",
-  "gitea",
+  TProvider,
   TVersion,
   PullRequest<TProvider, TVersion>
 >;
@@ -233,7 +233,7 @@ export function createRepositoryPullRequests<
       }
       return createOperationExtension<
         "pullRequests.merge",
-        "gitea",
+        TProvider,
         TVersion,
         PullRequest<TProvider, TVersion>
       >({

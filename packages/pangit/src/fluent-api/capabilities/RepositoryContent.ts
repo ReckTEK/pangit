@@ -29,7 +29,7 @@ export type CommitFileChangesOperation<
   TVersion extends ProviderVersion<TProvider>,
 > = OperationExtension<
   "content.commitChanges",
-  "gitea",
+  TProvider,
   TVersion,
   Commit<TProvider, TVersion>
 >;
@@ -210,7 +210,7 @@ export function createRepositoryContent<
       );
       return createOperationExtension<
         "content.commitChanges",
-        "gitea",
+        TProvider,
         TVersion,
         Commit<TProvider, TVersion>
       >({

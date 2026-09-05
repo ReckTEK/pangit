@@ -1,0 +1,118 @@
+--- a/app/models/protected_branch.rb
++++ b/app/models/protected_branch.rb
+@@ -71,7 +71,12 @@
+     return false if ref_name.blank?
+ 
+     ProtectedBranches::CacheService.new(project).fetch(ref_name) do # rubocop: disable CodeReuse/ServiceClass
+-      self.matching(ref_name, protected_refs: protected_refs(project)).present?
++      # A request or background job may have loaded its association before a rule
++      # mutation. Never publish that local snapshot into the shared permission cache.
++      uncached do
++        current_project = Project.find(project.id)
++        self.matching(ref_name, protected_refs: protected_refs(current_project)).present?
++      end
+     end
+   end
+ 
+--- a/app/services/protected_branches/cache_service.rb
++++ b/app/services/protected_branches/cache_service.rb
+@@ -8,11 +8,38 @@
+     CACHE_EXPIRE_IN = 1.day
+     CACHE_LIMIT = 1000
+ 
++    # Read a generation and value atomically. The generation survives invalidation
++    # and changes to a fresh token, so an older computation cannot repopulate it.
++    FETCH_VALUE = <<~LUA.freeze
++      local generation = redis.call('HGET', KEYS[1], '__generation__')
++      if not generation then
++        generation = ARGV[2]
++        redis.call('HSET', KEYS[1], '__generation__', generation)
++        redis.call('EXPIRE', KEYS[1], ARGV[3])
++      end
++      return {generation, redis.call('HGET', KEYS[1], ARGV[1])}
++    LUA
++
++    STORE_VALUE = <<~LUA.freeze
++      if redis.call('HGET', KEYS[1], '__generation__') == ARGV[1] then
++        return redis.call('HSET', KEYS[1], ARGV[2], ARGV[3])
++      end
++      return 0
++    LUA
++
++    INVALIDATE = <<~LUA.freeze
++      redis.call('DEL', KEYS[1])
++      redis.call('HSET', KEYS[1], '__generation__', ARGV[1])
++      redis.call('EXPIRE', KEYS[1], ARGV[2])
++      return 1
++    LUA
++
+     def fetch(ref_name, dry_run: false, &block)
+       record = OpenSSL::Digest::SHA256.hexdigest(ref_name)
+ 
+       with_redis do |redis|
+-        cached_result = redis.hget(redis_key, record)
++        generation, cached_result = redis.eval(
++          FETCH_VALUE, keys: [redis_key], argv: [record, SecureRandom.uuid, CACHE_EXPIRE_IN.to_i])
+ 
+         if cached_result.nil?
+           metrics.increment_cache_miss
+@@ -31,17 +58,13 @@
+ 
+         check_and_log_discrepancy(decoded_result, calculated_value, ref_name) if dry_run
+ 
+-        redis.hset(redis_key, record, Gitlab::Redis::Boolean.encode(calculated_value))
+-
+-        # We don't want to extend cache expiration time
+-        if redis.ttl(redis_key) == TTL_UNSET
+-          redis.expire(redis_key, CACHE_EXPIRE_IN)
+-        end
++        redis.eval(STORE_VALUE, keys: [redis_key],
++          argv: [generation, record, Gitlab::Redis::Boolean.encode(calculated_value)])
+ 
+         # If the cache record has too many elements, then something went wrong and
+         # it's better to drop the cache key.
+-        if redis.hlen(redis_key) > CACHE_LIMIT
+-          redis.unlink(redis_key)
++        if redis.hlen(redis_key) > CACHE_LIMIT + 1
++          invalidate(redis, redis_key)
+         end
+ 
+         calculated_value
+@@ -49,7 +72,7 @@
+     end
+ 
+     def refresh
+-      with_redis { |redis| redis.unlink(redis_key) }
++      with_redis { |redis| invalidate(redis, redis_key) }
+ 
+       return unless (group = project_or_group).is_a?(Group)
+ 
+@@ -58,7 +81,7 @@
+         # touch the projects_relation to update the projects' cache key.
+         with_redis do |redis|
+           projects_relation.each do |project|
+-            redis.unlink redis_key(project)
++            invalidate(redis, redis_key(project))
+           end
+         end
+         projects_relation.touch_all
+@@ -66,6 +89,10 @@
+     end
+ 
+     private
++
++    def invalidate(redis, key)
++      redis.eval(INVALIDATE, keys: [key], argv: [SecureRandom.uuid, CACHE_EXPIRE_IN.to_i])
++    end
+ 
+     def with_redis(&block)
+       Gitlab::Redis::Cache.with(&block) # rubocop:disable CodeReuse/ActiveRecord
+@@ -88,7 +115,7 @@
+ 
+     def redis_key(entity = project_or_group)
+       strong_memoize_with(:redis_key, entity) do
+-        ProtectedBranch::CacheKey.new(entity).to_s
++        "#{ProtectedBranch::CacheKey.new(entity)}:v2"
+       end
+     end
+ 

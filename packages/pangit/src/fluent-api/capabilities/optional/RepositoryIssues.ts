@@ -40,7 +40,7 @@ export type IssueUpdateOperation<
   TVersion extends ProviderVersion<TProvider>,
 > = OperationExtension<
   "issues.update",
-  "gitea",
+  TProvider,
   TVersion,
   Issue<TProvider, TVersion>
 >;
@@ -192,7 +192,7 @@ export function createRepositoryIssues<
       if (input.title !== undefined) requireIdentity(input.title, "issue title", context);
       return createOperationExtension<
         "issues.update",
-        "gitea",
+        TProvider,
         TVersion,
         Issue<TProvider, TVersion>
       >({

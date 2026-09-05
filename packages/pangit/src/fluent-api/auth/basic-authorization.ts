@@ -19,7 +19,7 @@ export type BasicClientAuthorizer<
 class BasicAuthorizationImpl<
   TProvider extends FluentProvider,
   TVersion extends ProviderVersion<TProvider>,
-> implements BasicAuthorization<TProvider, TVersion> {
+> {
   #gitea?: GiteaBasicAuthorizationBranch;
   readonly #input: Omit<BasicAuthorizationInput, "oneTimePassword">;
   readonly #authorizeClient: BasicClientAuthorizer<TProvider, TVersion>;
@@ -48,13 +48,20 @@ class BasicAuthorizationImpl<
   }
 }
 
-/** @internal Build a Basic authorization operation for the selected Gitea adapter. */
+/** @internal Build a Basic authorization operation for the selected adapter. */
 export function createBasicAuthorization<
   TProvider extends FluentProvider,
   TVersion extends ProviderVersion<TProvider>,
 >(
+  provider: TProvider,
   input: Omit<BasicAuthorizationInput, "oneTimePassword">,
   authorizeClient: BasicClientAuthorizer<TProvider, TVersion>,
 ): BasicAuthorization<TProvider, TVersion> {
-  return new BasicAuthorizationImpl(input, authorizeClient);
+  const operation = new BasicAuthorizationImpl(input, authorizeClient);
+  return (provider === "gitea"
+    ? operation
+    : Object.freeze({ authorize: operation.authorize.bind(operation) })) as BasicAuthorization<
+      TProvider,
+      TVersion
+    >;
 }

@@ -1,6 +1,5 @@
 import {
   createClient,
-  type FluentProvider,
   type ProviderVersion,
 } from "../../../../../../packages/pangit/src/fluent-api/mod.ts";
 import {
@@ -12,7 +11,7 @@ import { FluentApiRequestRecorder, proveRequestSequence } from "../../request-re
 import type { PullRequestReviewContractFixtures } from "./pull-request-review-contract-fixtures.ts";
 
 export type PullRequestReviewContractInput<
-  TProvider extends FluentProvider,
+  TProvider extends "gitea",
   TVersion extends ProviderVersion<TProvider>,
 > = {
   readonly provider: TProvider;
@@ -27,7 +26,7 @@ function assert(condition: unknown, message: string): asserts condition {
 
 /** Exercise pending and submitted review objects, separate from core approval shortcuts. */
 export async function runPullRequestReviewContract<
-  const TProvider extends FluentProvider,
+  const TProvider extends "gitea",
   const TVersion extends ProviderVersion<TProvider>,
 >(
   t: Deno.TestContext,

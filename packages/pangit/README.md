@@ -5,9 +5,10 @@ preserves its provider's request fields, response bodies, status codes, operatio
 version.
 
 > [!IMPORTANT]
-> **Status: alpha development.** The fluent API is implemented and live-tested for Gitea only. Raw
-> REST clients are generated for every provider listed below, with live E2E coverage for Gitea. The
-> package is not published to JSR yet.
+> **Status: alpha development.** Fluent and raw REST APIs are live-tested for Gitea and GitLab.
+> GitLab has
+> [explicit capability gaps and a confirmed server defect](https://github.com/mannsion/pangit/blob/main/packages/pangit/docs/GitLab.md#provider-differences).
+> Raw clients are generated for every provider below. The package is not published to JSR yet.
 
 ## Use from source
 
@@ -53,7 +54,9 @@ const gitea = await PanGit.createProviderClient(
 
 ## Fluent file reads
 
-The provider-neutral fluent API currently supports Gitea:
+The provider-neutral fluent API supports Gitea and GitLab. This example uses Gitea; see the
+[GitLab guide](https://github.com/mannsion/pangit/blob/main/packages/pangit/docs/GitLab.md) for its
+versions, setup and capability differences:
 
 ```ts
 const connection = PanGit.api.createClient("gitea", "1.27.2", {

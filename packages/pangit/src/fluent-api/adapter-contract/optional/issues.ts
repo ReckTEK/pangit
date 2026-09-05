@@ -97,7 +97,7 @@ export interface IssueCapabilitySupport {
   readonly operations: Readonly<
     Record<IssueCapabilityOperation, "direct" | "one-page" | "one-page-derived">
   >;
-  readonly contentVersionGuard: "gitea-extension";
+  readonly contentVersionGuard: "gitea-extension" | "unsupported";
   readonly timeTracking: "native-only";
   readonly dependencies: "native-only";
   readonly reactions: "native-only";

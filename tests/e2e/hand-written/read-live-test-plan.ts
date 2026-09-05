@@ -60,7 +60,11 @@ function validateLiveTestPlan(value: unknown): asserts value is LiveTestPlan {
         throw new Error(`${gitHost} ${version} must declare a container image`);
       }
       const taggedImage = untypedRelease.containerImage.split("@", 1)[0];
-      if (!taggedImage.endsWith(`:${version}`)) {
+      if (
+        !taggedImage.endsWith(`:${version}`) &&
+        !(gitHost === "gitlab" &&
+          (taggedImage.endsWith(`:${version}-ce.0`) || taggedImage.endsWith(`:${version}-ee.0`)))
+      ) {
         throw new Error(`${gitHost} container image does not match version ${version}`);
       }
     }

@@ -104,8 +104,17 @@ export interface GiteaMergePullRequestExtensionContext {
   readonly sourceSha?: string;
 }
 
+/** GitLab synchronous merge controls, including an explicit optimistic head guard. */
+export interface GitLabMergePullRequestExtension {
+  readonly headCommitId?: string;
+  readonly mergeMessage?: string;
+  readonly squashMessage?: string;
+}
+export type GitLabMergePullRequestExtensionContext = GiteaMergePullRequestExtensionContext;
+
 export type MergePullRequestExtension<TProvider extends Provider> = TProvider extends "gitea"
   ? GiteaMergePullRequestExtension
+  : TProvider extends "gitlab" ? GitLabMergePullRequestExtension
   : never;
 
 export interface MergePullRequestOptions<TProvider extends Provider = Provider>

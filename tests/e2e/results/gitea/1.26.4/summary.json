@@ -30,7 +30,7 @@
     "missing": 0,
     "failedCases": 0,
     "cases": 532,
-    "requests": 551
+    "requests": 554
   },
   "sourceCoverage": {
     "lines": {
@@ -236,7 +236,7 @@
               {
                 "operationId": "orgGet",
                 "method": "GET",
-                "path": "/api/v1/orgs/pge2e-mtkgglvq-52639f67-org"
+                "path": "/api/v1/orgs/pge2e-mtnt0vvo-60277bee-org"
               }
             ]
           },
@@ -249,7 +249,7 @@
               {
                 "operationId": "repoGet",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgglvq-52639f67-user"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0vvo-60277bee-user"
               }
             ]
           },
@@ -262,7 +262,7 @@
               {
                 "operationId": "repoGet",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgglvq-52639f67-user"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0vvo-60277bee-user"
               }
             ]
           },
@@ -275,7 +275,7 @@
               {
                 "operationId": "repoGet",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgglvq-52639f67-user"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0vvo-60277bee-user"
               }
             ]
           },
@@ -288,7 +288,7 @@
               {
                 "operationId": "repoGet",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgglvq-52639f67-user-missing"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0vvo-60277bee-user-missing"
               }
             ]
           },
@@ -301,7 +301,7 @@
               {
                 "operationId": "repoGet",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgglvq-52639f67-user-missing"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0vvo-60277bee-user-missing"
               }
             ]
           },
@@ -327,7 +327,7 @@
               {
                 "operationId": "orgListRepos",
                 "method": "GET",
-                "path": "/api/v1/orgs/pge2e-mtkgglvq-52639f67-org/repos"
+                "path": "/api/v1/orgs/pge2e-mtnt0vvo-60277bee-org/repos"
               }
             ]
           },
@@ -340,7 +340,7 @@
               {
                 "operationId": "repoGet",
                 "method": "GET",
-                "path": "/api/v1/repos/pge2e-mtkgglvq-52639f67-org/pge2e-mtkgglvq-52639f67-repo"
+                "path": "/api/v1/repos/pge2e-mtnt0vvo-60277bee-org/pge2e-mtnt0vvo-60277bee-repo"
               }
             ]
           },
@@ -353,7 +353,7 @@
               {
                 "operationId": "createOrgRepo",
                 "method": "POST",
-                "path": "/api/v1/orgs/pge2e-mtkgglvq-52639f67-org/repos"
+                "path": "/api/v1/orgs/pge2e-mtnt0vvo-60277bee-org/repos"
               }
             ]
           },
@@ -366,7 +366,7 @@
               {
                 "operationId": "repoDelete",
                 "method": "DELETE",
-                "path": "/api/v1/repos/pge2e-mtkgglvq-52639f67-org/pge2e-mtkgglvq-52639f67-org-mutation"
+                "path": "/api/v1/repos/pge2e-mtnt0vvo-60277bee-org/pge2e-mtnt0vvo-60277bee-org-mutation"
               }
             ]
           },
@@ -385,7 +385,7 @@
               {
                 "operationId": "repoChangeFiles",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgglvq-52639f67-initialized/contents"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0vvo-60277bee-initialized/contents"
               }
             ]
           },
@@ -398,7 +398,7 @@
               {
                 "operationId": "repoGetFileContentsPost",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgglvq-52639f67-initialized/file-contents"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0vvo-60277bee-initialized/file-contents"
               }
             ]
           },
@@ -411,7 +411,7 @@
               {
                 "operationId": "repoDelete",
                 "method": "DELETE",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgglvq-52639f67-initialized"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0vvo-60277bee-initialized"
               }
             ]
           },
@@ -437,7 +437,7 @@
               {
                 "operationId": "repoEdit",
                 "method": "PATCH",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgglvq-52639f67-mutation"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0vvo-60277bee-mutation"
               }
             ]
           },
@@ -450,7 +450,7 @@
               {
                 "operationId": "repoGet",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgglvq-52639f67-mutation-renamed"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0vvo-60277bee-mutation-renamed"
               }
             ]
           },
@@ -463,7 +463,7 @@
               {
                 "operationId": "repoDelete",
                 "method": "DELETE",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgglvq-52639f67-mutation-renamed"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0vvo-60277bee-mutation-renamed"
               }
             ]
           },
@@ -476,7 +476,7 @@
               {
                 "operationId": "repoGet",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgglvq-52639f67-mutation-renamed"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0vvo-60277bee-mutation-renamed"
               }
             ]
           },
@@ -511,12 +511,12 @@
               {
                 "operationId": "createFork",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggmfm-e82e25f2-fork-source/forks"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0wey-21e4ace9-fork-source/forks"
               },
               {
                 "operationId": "repoGet",
                 "method": "GET",
-                "path": "/api/v1/repos/pge2e-mtkggmfm-e82e25f2-fork-destination/pge2e-mtkggmfm-e82e25f2-created-fork"
+                "path": "/api/v1/repos/pge2e-mtnt0wey-21e4ace9-fork-destination/pge2e-mtnt0wey-21e4ace9-created-fork"
               }
             ]
           },
@@ -529,7 +529,7 @@
               {
                 "operationId": "listForks",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggmfm-e82e25f2-fork-source/forks"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0wey-21e4ace9-fork-source/forks"
               }
             ]
           },
@@ -561,7 +561,7 @@
               {
                 "operationId": "repoListBranches",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggmkm-7d96a74a-branches/branches"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0wjm-7e8333e9-branches/branches"
               }
             ]
           },
@@ -574,7 +574,7 @@
               {
                 "operationId": "repoListBranches",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggmkm-7d96a74a-branches/branches"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0wjm-7e8333e9-branches/branches"
               }
             ]
           },
@@ -587,7 +587,7 @@
               {
                 "operationId": "repoGetBranch",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggmkm-7d96a74a-branches/branches/feature-diverged"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0wjm-7e8333e9-branches/branches/feature-diverged"
               }
             ]
           },
@@ -600,7 +600,7 @@
               {
                 "operationId": "repoGetBranch",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggmkm-7d96a74a-branches/branches/feature-diverged"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0wjm-7e8333e9-branches/branches/feature-diverged"
               }
             ]
           },
@@ -613,7 +613,7 @@
               {
                 "operationId": "repoGetBranch",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggmkm-7d96a74a-branches/branches/feature-diverged-missing"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0wjm-7e8333e9-branches/branches/feature-diverged-missing"
               }
             ]
           },
@@ -626,7 +626,7 @@
               {
                 "operationId": "repoCreateBranch",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggmkm-7d96a74a-branches/branches"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0wjm-7e8333e9-branches/branches"
               }
             ]
           },
@@ -639,7 +639,7 @@
               {
                 "operationId": "repoRenameBranch",
                 "method": "PATCH",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggmkm-7d96a74a-branches/branches/pge2e-mtkggmkm-7d96a74a-branch-mutation"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0wjm-7e8333e9-branches/branches/pge2e-mtnt0wjm-7e8333e9-branch-mutation"
               }
             ]
           },
@@ -652,7 +652,7 @@
               {
                 "operationId": "repoGetBranch",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggmkm-7d96a74a-branches/branches/pge2e-mtkggmkm-7d96a74a-branch-mutation-renamed"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0wjm-7e8333e9-branches/branches/pge2e-mtnt0wjm-7e8333e9-branch-mutation-renamed"
               }
             ]
           },
@@ -665,7 +665,7 @@
               {
                 "operationId": "repoDeleteBranch",
                 "method": "DELETE",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggmkm-7d96a74a-branches/branches/pge2e-mtkggmkm-7d96a74a-branch-mutation-renamed"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0wjm-7e8333e9-branches/branches/pge2e-mtnt0wjm-7e8333e9-branch-mutation-renamed"
               }
             ]
           },
@@ -689,12 +689,12 @@
               {
                 "operationId": "repoGetAllCommits",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggmkm-7d96a74a-branches/commits"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0wjm-7e8333e9-branches/commits"
               },
               {
                 "operationId": "repoGetAllCommits",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggmkm-7d96a74a-branches/commits"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0wjm-7e8333e9-branches/commits"
               }
             ]
           },
@@ -711,27 +711,27 @@
               {
                 "operationId": "repoListBranches",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggmkm-7d96a74a-branches/branches"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0wjm-7e8333e9-branches/branches"
               },
               {
                 "operationId": "repoGetAllCommits",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggmkm-7d96a74a-branches/commits"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0wjm-7e8333e9-branches/commits"
               },
               {
                 "operationId": "repoGetAllCommits",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggmkm-7d96a74a-branches/commits"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0wjm-7e8333e9-branches/commits"
               },
               {
                 "operationId": "repoGetAllCommits",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggmkm-7d96a74a-branches/commits"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0wjm-7e8333e9-branches/commits"
               },
               {
                 "operationId": "repoGetAllCommits",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggmkm-7d96a74a-branches/commits"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0wjm-7e8333e9-branches/commits"
               }
             ]
           },
@@ -760,7 +760,7 @@
               {
                 "operationId": "repoListTags",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggn2m-00350f66-tags/tags"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0x0z-e9272085-tags/tags"
               }
             ]
           },
@@ -773,7 +773,7 @@
               {
                 "operationId": "repoGetTag",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggn2m-00350f66-tags/tags/fixture-v1"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0x0z-e9272085-tags/tags/fixture-v1"
               }
             ]
           },
@@ -786,7 +786,7 @@
               {
                 "operationId": "repoCreateTag",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggn2m-00350f66-tags/tags"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0x0z-e9272085-tags/tags"
               }
             ]
           },
@@ -799,7 +799,7 @@
               {
                 "operationId": "repoDeleteTag",
                 "method": "DELETE",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggn2m-00350f66-tags/tags/fluent-v2"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0x0z-e9272085-tags/tags/fluent-v2"
               }
             ]
           },
@@ -832,7 +832,7 @@
               {
                 "operationId": "repoGetAllCommits",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggn7l-8f25ddbb-commits/commits"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0x5s-905b9589-commits/commits"
               }
             ]
           },
@@ -845,7 +845,7 @@
               {
                 "operationId": "repoGetSingleCommit",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggn7l-8f25ddbb-commits/git/commits/2e89fae087bf332723d198c58a8a85e94a4cea62"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0x5s-905b9589-commits/git/commits/ea9b47e6fcd43694ed18ae2a5c4624f813b630a6"
               }
             ]
           },
@@ -858,7 +858,7 @@
               {
                 "operationId": "repoGetSingleCommit",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggn7l-8f25ddbb-commits/git/commits/2e89fae087bf332723d198c58a8a85e94a4cea62"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0x5s-905b9589-commits/git/commits/ea9b47e6fcd43694ed18ae2a5c4624f813b630a6"
               }
             ]
           },
@@ -872,12 +872,12 @@
               {
                 "operationId": "repoGetSingleCommit",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggn7l-8f25ddbb-commits/git/commits/2e89fae087bf332723d198c58a8a85e94a4cea62"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0x5s-905b9589-commits/git/commits/ea9b47e6fcd43694ed18ae2a5c4624f813b630a6"
               },
               {
                 "operationId": "repoGetSingleCommit",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggn7l-8f25ddbb-commits/git/commits/5b051c2ad616bf8580196f90b2d8066f50419399"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0x5s-905b9589-commits/git/commits/25353f490dca2c64de7d14918265406a3a68b674"
               }
             ]
           },
@@ -890,7 +890,7 @@
               {
                 "operationId": "repoCompareDiff",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggn7l-8f25ddbb-commits/compare/5b051c2ad616bf8580196f90b2d8066f50419399...2e89fae087bf332723d198c58a8a85e94a4cea62"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0x5s-905b9589-commits/compare/25353f490dca2c64de7d14918265406a3a68b674...ea9b47e6fcd43694ed18ae2a5c4624f813b630a6"
               }
             ]
           },
@@ -903,7 +903,7 @@
               {
                 "operationId": "repoGetSingleCommit",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggn7l-8f25ddbb-commits/git/commits/2e89fae087bf332723d198c58a8a85e94a4cea62"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0x5s-905b9589-commits/git/commits/ea9b47e6fcd43694ed18ae2a5c4624f813b630a6"
               }
             ]
           },
@@ -916,7 +916,7 @@
               {
                 "operationId": "repoGetAllCommits",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggn7l-8f25ddbb-commits/commits"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0x5s-905b9589-commits/commits"
               }
             ]
           },
@@ -938,52 +938,52 @@
               {
                 "operationId": "repoGetAllCommits",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggn7l-8f25ddbb-commits/commits"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0x5s-905b9589-commits/commits"
               },
               {
                 "operationId": "repoGetAllCommits",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggn7l-8f25ddbb-commits/commits"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0x5s-905b9589-commits/commits"
               },
               {
                 "operationId": "repoGetAllCommits",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggn7l-8f25ddbb-commits/commits"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0x5s-905b9589-commits/commits"
               },
               {
                 "operationId": "repoGetAllCommits",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggn7l-8f25ddbb-commits/commits"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0x5s-905b9589-commits/commits"
               },
               {
                 "operationId": "repoGetAllCommits",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggn7l-8f25ddbb-commits/commits"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0x5s-905b9589-commits/commits"
               },
               {
                 "operationId": "repoGetAllCommits",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggn7l-8f25ddbb-commits/commits"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0x5s-905b9589-commits/commits"
               },
               {
                 "operationId": "repoGetAllCommits",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggn7l-8f25ddbb-commits/commits"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0x5s-905b9589-commits/commits"
               },
               {
                 "operationId": "repoGetAllCommits",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggn7l-8f25ddbb-commits/commits"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0x5s-905b9589-commits/commits"
               },
               {
                 "operationId": "repoGetAllCommits",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggn7l-8f25ddbb-commits/commits"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0x5s-905b9589-commits/commits"
               },
               {
                 "operationId": "repoGetSingleCommit",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggn7l-8f25ddbb-commits/git/commits/5b051c2ad616bf8580196f90b2d8066f50419399"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0x5s-905b9589-commits/git/commits/25353f490dca2c64de7d14918265406a3a68b674"
               }
             ]
           },
@@ -996,7 +996,7 @@
               {
                 "operationId": "repoListBranches",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggn7l-8f25ddbb-commits/branches"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0x5s-905b9589-commits/branches"
               }
             ]
           },
@@ -1011,17 +1011,17 @@
               {
                 "operationId": "repoListBranches",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggn7l-8f25ddbb-commits/branches"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0x5s-905b9589-commits/branches"
               },
               {
                 "operationId": "repoGetAllCommits",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggn7l-8f25ddbb-commits/commits"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0x5s-905b9589-commits/commits"
               },
               {
                 "operationId": "repoGetAllCommits",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggn7l-8f25ddbb-commits/commits"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0x5s-905b9589-commits/commits"
               }
             ]
           },
@@ -1034,7 +1034,7 @@
               {
                 "operationId": "repoGetAllCommits",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggn7l-8f25ddbb-commits/commits"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0x5s-905b9589-commits/commits"
               }
             ]
           },
@@ -1055,6 +1055,11 @@
         "passed": true,
         "assertions": [
           "text, binary, empty, Unicode, and nested paths use one direct request each",
+          "byte, UTF-8 text, and JSON conveniences preserve refs with one request each",
+          "Web Blob reads preserve MIME and exact bytes using metadata plus a commit-pinned raw request",
+          "extensionless PNG uses provider MIME; JSON uses path fallback; unknown MIME needs an explicit hint",
+          "entity conversions perform no requests and return defensive byte copies",
+          "metadata-only bodies, invalid UTF-8, and invalid JSON fail explicitly",
           "batch reads deduplicate one provider request and restore caller order",
           "directory and recursive reads visit only the requested bounded subtree",
           "first-parent metadata resolves one commit and only required directory prefixes",
@@ -1070,7 +1075,7 @@
               {
                 "operationId": "repoGetContentsExt",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggnnx-9eabb33b-content/contents-ext/text.txt"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/text.txt"
               }
             ]
           },
@@ -1083,7 +1088,7 @@
               {
                 "operationId": "repoGetContentsExt",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggnnx-9eabb33b-content/contents-ext/binary.bin"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/binary.bin"
               }
             ]
           },
@@ -1096,7 +1101,7 @@
               {
                 "operationId": "repoGetContentsExt",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggnnx-9eabb33b-content/contents-ext/empty.txt"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/empty.txt"
               }
             ]
           },
@@ -1109,9 +1114,343 @@
               {
                 "operationId": "repoGetContentsExt",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggnnx-9eabb33b-content/contents-ext/unicod%C3%A9-%E6%96%87%E4%BB%B6.txt"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/unicod%C3%A9-%E6%96%87%E4%BB%B6.txt"
               }
             ]
+          },
+          {
+            "operation": "readBytes.binary",
+            "expectedOperationIds": [
+              "repoGetContentsExt"
+            ],
+            "requests": [
+              {
+                "operationId": "repoGetContentsExt",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/binary.bin"
+              }
+            ]
+          },
+          {
+            "operation": "readText.text",
+            "expectedOperationIds": [
+              "repoGetContentsExt"
+            ],
+            "requests": [
+              {
+                "operationId": "repoGetContentsExt",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/text.txt"
+              }
+            ]
+          },
+          {
+            "operation": "readText.unicode",
+            "expectedOperationIds": [
+              "repoGetContentsExt"
+            ],
+            "requests": [
+              {
+                "operationId": "repoGetContentsExt",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/unicod%C3%A9-%E6%96%87%E4%BB%B6.txt"
+              }
+            ]
+          },
+          {
+            "operation": "readText.empty",
+            "expectedOperationIds": [
+              "repoGetContentsExt"
+            ],
+            "requests": [
+              {
+                "operationId": "repoGetContentsExt",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/empty.txt"
+              }
+            ]
+          },
+          {
+            "operation": "readJson",
+            "expectedOperationIds": [
+              "repoGetContentsExt"
+            ],
+            "requests": [
+              {
+                "operationId": "repoGetContentsExt",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/config.json"
+              }
+            ]
+          },
+          {
+            "operation": "readText.parentRef",
+            "expectedOperationIds": [
+              "repoGetContentsExt"
+            ],
+            "requests": [
+              {
+                "operationId": "repoGetContentsExt",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/nested%2Fa.txt"
+              }
+            ]
+          },
+          {
+            "operation": "readText.currentRef",
+            "expectedOperationIds": [
+              "repoGetContentsExt"
+            ],
+            "requests": [
+              {
+                "operationId": "repoGetContentsExt",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/nested%2Fa.txt"
+              }
+            ]
+          },
+          {
+            "operation": "readText.invalidUtf8",
+            "expectedOperationIds": [
+              "repoGetContentsExt"
+            ],
+            "requests": [
+              {
+                "operationId": "repoGetContentsExt",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/binary.bin"
+              }
+            ]
+          },
+          {
+            "operation": "readJson.invalid:invalid.json",
+            "expectedOperationIds": [
+              "repoGetContentsExt"
+            ],
+            "requests": [
+              {
+                "operationId": "repoGetContentsExt",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/invalid.json"
+              }
+            ]
+          },
+          {
+            "operation": "readJson.invalid:empty.txt",
+            "expectedOperationIds": [
+              "repoGetContentsExt"
+            ],
+            "requests": [
+              {
+                "operationId": "repoGetContentsExt",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/empty.txt"
+              }
+            ]
+          },
+          {
+            "operation": "readBlob.image:image.png",
+            "expectedOperationIds": [
+              "repoGetContentsExt",
+              "repoGetRawFile"
+            ],
+            "requests": [
+              {
+                "operationId": "repoGetContentsExt",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/image.png"
+              },
+              {
+                "operationId": "repoGetRawFile",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/raw/image.png"
+              }
+            ]
+          },
+          {
+            "operation": "readBlob.image:image",
+            "expectedOperationIds": [
+              "repoGetContentsExt",
+              "repoGetRawFile"
+            ],
+            "requests": [
+              {
+                "operationId": "repoGetContentsExt",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/image"
+              },
+              {
+                "operationId": "repoGetRawFile",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/raw/image"
+              }
+            ]
+          },
+          {
+            "operation": "readBlob.jsonPathFallback",
+            "expectedOperationIds": [
+              "repoGetContentsExt",
+              "repoGetRawFile"
+            ],
+            "requests": [
+              {
+                "operationId": "repoGetContentsExt",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/config.json"
+              },
+              {
+                "operationId": "repoGetRawFile",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/raw/config.json"
+              }
+            ]
+          },
+          {
+            "operation": "readBlob.empty",
+            "expectedOperationIds": [
+              "repoGetContentsExt",
+              "repoGetRawFile"
+            ],
+            "requests": [
+              {
+                "operationId": "repoGetContentsExt",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/empty.txt"
+              },
+              {
+                "operationId": "repoGetRawFile",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/raw/empty.txt"
+              }
+            ]
+          },
+          {
+            "operation": "readBlob.branchRef",
+            "expectedOperationIds": [
+              "repoGetContentsExt",
+              "repoGetRawFile"
+            ],
+            "requests": [
+              {
+                "operationId": "repoGetContentsExt",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/nested%2Fa.txt"
+              },
+              {
+                "operationId": "repoGetRawFile",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/raw/nested%2Fa.txt"
+              }
+            ]
+          },
+          {
+            "operation": "readBlob.parentRef",
+            "expectedOperationIds": [
+              "repoGetContentsExt",
+              "repoGetRawFile"
+            ],
+            "requests": [
+              {
+                "operationId": "repoGetContentsExt",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/nested%2Fa.txt"
+              },
+              {
+                "operationId": "repoGetRawFile",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/raw/nested%2Fa.txt"
+              }
+            ]
+          },
+          {
+            "operation": "readBlob.unknownMediaType",
+            "expectedOperationIds": [
+              "repoGetContentsExt",
+              "repoGetRawFile"
+            ],
+            "requests": [
+              {
+                "operationId": "repoGetContentsExt",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/unknown-content"
+              },
+              {
+                "operationId": "repoGetRawFile",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/raw/unknown-content"
+              }
+            ]
+          },
+          {
+            "operation": "readBlob.explicitOctetStream",
+            "expectedOperationIds": [
+              "repoGetContentsExt",
+              "repoGetRawFile"
+            ],
+            "requests": [
+              {
+                "operationId": "repoGetContentsExt",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/unknown-content"
+              },
+              {
+                "operationId": "repoGetRawFile",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/raw/unknown-content"
+              }
+            ]
+          },
+          {
+            "operation": "readBlob.fileNameHint",
+            "expectedOperationIds": [
+              "repoGetContentsExt",
+              "repoGetRawFile"
+            ],
+            "requests": [
+              {
+                "operationId": "repoGetContentsExt",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/unknown-content"
+              },
+              {
+                "operationId": "repoGetRawFile",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/raw/unknown-content"
+              }
+            ]
+          },
+          {
+            "operation": "readBlob.invalidMediaType",
+            "expectedOperationIds": [],
+            "requests": []
+          },
+          {
+            "operation": "readBlob.invalidFileName",
+            "expectedOperationIds": [],
+            "requests": []
+          },
+          {
+            "operation": "content.bodyConversions",
+            "expectedOperationIds": [],
+            "requests": []
+          },
+          {
+            "operation": "readContent.metadataOnly",
+            "expectedOperationIds": [
+              "repoGetContentsExt"
+            ],
+            "requests": [
+              {
+                "operationId": "repoGetContentsExt",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/text.txt"
+              }
+            ]
+          },
+          {
+            "operation": "content.metadataOnly.bodyErrors",
+            "expectedOperationIds": [],
+            "requests": []
           },
           {
             "operation": "readFiles",
@@ -1122,9 +1461,14 @@
               {
                 "operationId": "repoGetFileContentsPost",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggnnx-9eabb33b-content/file-contents"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/file-contents"
               }
             ]
+          },
+          {
+            "operation": "readFiles.bodyConversions",
+            "expectedOperationIds": [],
+            "requests": []
           },
           {
             "operation": "getDirectory",
@@ -1135,7 +1479,38 @@
               {
                 "operationId": "repoGetContentsExt",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggnnx-9eabb33b-content/contents-ext/nested"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/nested"
+              }
+            ]
+          },
+          {
+            "operation": "content.directory.bodyErrors",
+            "expectedOperationIds": [],
+            "requests": []
+          },
+          {
+            "operation": "readBlob.directory",
+            "expectedOperationIds": [
+              "repoGetContentsExt"
+            ],
+            "requests": [
+              {
+                "operationId": "repoGetContentsExt",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/nested"
+              }
+            ]
+          },
+          {
+            "operation": "readText.directory",
+            "expectedOperationIds": [
+              "repoGetContentsExt"
+            ],
+            "requests": [
+              {
+                "operationId": "repoGetContentsExt",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/nested"
               }
             ]
           },
@@ -1148,7 +1523,7 @@
               {
                 "operationId": "repoGetContentsExt",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggnnx-9eabb33b-content/contents-ext/nested"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/nested"
               }
             ]
           },
@@ -1162,12 +1537,12 @@
               {
                 "operationId": "repoGetContentsExt",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggnnx-9eabb33b-content/contents-ext/nested"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/nested"
               },
               {
                 "operationId": "repoGetContentsExt",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggnnx-9eabb33b-content/contents-ext/nested%2Fdeeper"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/nested%2Fdeeper"
               }
             ]
           },
@@ -1182,17 +1557,17 @@
               {
                 "operationId": "repoGetContentsExt",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggnnx-9eabb33b-content/contents-ext/chain"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/chain"
               },
               {
                 "operationId": "repoGetContentsExt",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggnnx-9eabb33b-content/contents-ext/chain%2Fone"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/chain%2Fone"
               },
               {
                 "operationId": "repoGetContentsExt",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggnnx-9eabb33b-content/contents-ext/chain%2Fone%2Ftwo"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/chain%2Fone%2Ftwo"
               }
             ]
           },
@@ -1207,17 +1582,17 @@
               {
                 "operationId": "repoGetSingleCommit",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggnnx-9eabb33b-content/git/commits/fd6cfb395564851f45161a383e8d6ea4eb56bd13"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/git/commits/401863ef6df20d0e34835a59645cf552af12c27f"
               },
               {
                 "operationId": "repoGetContentsExt",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggnnx-9eabb33b-content/contents-ext/nested"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/nested"
               },
               {
                 "operationId": "repoGetContentsExt",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggnnx-9eabb33b-content/contents-ext/nested"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0xlk-7bdaa85a-content/contents-ext/nested"
               }
             ]
           },
@@ -1302,6 +1677,26 @@
             "operation": "readContent.preflightAbort",
             "expectedOperationIds": [],
             "requests": []
+          },
+          {
+            "operation": "readBytes.preflightAbort",
+            "expectedOperationIds": [],
+            "requests": []
+          },
+          {
+            "operation": "readText.preflightAbort",
+            "expectedOperationIds": [],
+            "requests": []
+          },
+          {
+            "operation": "readJson.preflightAbort",
+            "expectedOperationIds": [],
+            "requests": []
+          },
+          {
+            "operation": "readBlob.preflightAbort",
+            "expectedOperationIds": [],
+            "requests": []
           }
         ]
       },
@@ -1325,12 +1720,12 @@
               {
                 "operationId": "repoGetFileContentsPost",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggo1o-30b33b3d-file-changes/file-contents"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0y3d-ce3f7733-file-changes/file-contents"
               },
               {
                 "operationId": "repoChangeFiles",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggo1o-30b33b3d-file-changes/contents"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0y3d-ce3f7733-file-changes/contents"
               }
             ]
           },
@@ -1343,7 +1738,7 @@
               {
                 "operationId": "repoGetFileContentsPost",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggo1o-30b33b3d-file-changes/file-contents"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0y3d-ce3f7733-file-changes/file-contents"
               }
             ]
           },
@@ -1356,7 +1751,7 @@
               {
                 "operationId": "repoChangeFiles",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggo1o-30b33b3d-file-changes/contents"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0y3d-ce3f7733-file-changes/contents"
               }
             ]
           },
@@ -1369,7 +1764,7 @@
               {
                 "operationId": "repoGetBranch",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggo1o-30b33b3d-file-changes/branches/batch-created-branch"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0y3d-ce3f7733-file-changes/branches/batch-created-branch"
               }
             ]
           },
@@ -1409,7 +1804,7 @@
               {
                 "operationId": "repoListPullRequests",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggofu-0f5c23c4-pr-discovery/pulls"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0ygw-a406a02b-pr-discovery/pulls"
               }
             ]
           },
@@ -1428,7 +1823,7 @@
               {
                 "operationId": "repoGetPullRequest",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggofu-0f5c23c4-pr-discovery/pulls/1"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0ygw-a406a02b-pr-discovery/pulls/1"
               }
             ]
           },
@@ -1441,7 +1836,7 @@
               {
                 "operationId": "repoGetPullRequest",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggofu-0f5c23c4-pr-discovery/pulls/1"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0ygw-a406a02b-pr-discovery/pulls/1"
               }
             ]
           },
@@ -1454,7 +1849,7 @@
               {
                 "operationId": "repoGetPullRequestByBaseHead",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggofu-0f5c23c4-pr-discovery/pulls/main/discovery-same"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0ygw-a406a02b-pr-discovery/pulls/main/discovery-same"
               }
             ]
           },
@@ -1467,7 +1862,7 @@
               {
                 "operationId": "repoGetPullRequest",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggofu-0f5c23c4-pr-discovery/pulls/2"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0ygw-a406a02b-pr-discovery/pulls/2"
               }
             ]
           },
@@ -1480,7 +1875,7 @@
               {
                 "operationId": "repoGetPullRequestByBaseHead",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggofu-0f5c23c4-pr-discovery/pulls/main/discovery-same-missing"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0ygw-a406a02b-pr-discovery/pulls/main/discovery-same-missing"
               }
             ]
           },
@@ -1498,7 +1893,7 @@
               {
                 "operationId": "repoGetPullRequest",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggofu-0f5c23c4-pr-discovery/pulls/1"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0ygw-a406a02b-pr-discovery/pulls/1"
               }
             ]
           },
@@ -1511,7 +1906,7 @@
               {
                 "operationId": "repoGetPullRequestCommits",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggofu-0f5c23c4-pr-discovery/pulls/1/commits"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0ygw-a406a02b-pr-discovery/pulls/1/commits"
               }
             ]
           },
@@ -1524,7 +1919,7 @@
               {
                 "operationId": "repoGetPullRequestFiles",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggofu-0f5c23c4-pr-discovery/pulls/1/files"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt0ygw-a406a02b-pr-discovery/pulls/1/files"
               }
             ]
           },
@@ -1553,7 +1948,7 @@
               {
                 "operationId": "repoCreatePullRequest",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggpt4-c59f99da-pr-mutation/pulls"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt10py-29a57a62-pr-mutation/pulls"
               }
             ]
           },
@@ -1566,7 +1961,7 @@
               {
                 "operationId": "repoEditPullRequest",
                 "method": "PATCH",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggpt4-c59f99da-pr-mutation/pulls/1"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt10py-29a57a62-pr-mutation/pulls/1"
               }
             ]
           },
@@ -1579,7 +1974,7 @@
               {
                 "operationId": "repoEditPullRequest",
                 "method": "PATCH",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggpt4-c59f99da-pr-mutation/pulls/1"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt10py-29a57a62-pr-mutation/pulls/1"
               }
             ]
           },
@@ -1592,7 +1987,7 @@
               {
                 "operationId": "repoCreatePullRequest",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggpt4-c59f99da-pr-mutation/pulls"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt10py-29a57a62-pr-mutation/pulls"
               }
             ]
           },
@@ -1605,7 +2000,7 @@
               {
                 "operationId": "repoCreatePullRequest",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggpt4-c59f99da-pr-mutation/pulls"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt10py-29a57a62-pr-mutation/pulls"
               }
             ]
           },
@@ -1639,12 +2034,12 @@
               {
                 "operationId": "repoMergePullRequest",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggqro-d0eef425-pr-merge-default/pulls/1/merge"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt11n7-f415755d-pr-merge-default/pulls/1/merge"
               },
               {
                 "operationId": "repoGetPullRequest",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggqro-d0eef425-pr-merge-default/pulls/1"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt11n7-f415755d-pr-merge-default/pulls/1"
               }
             ]
           },
@@ -1657,7 +2052,7 @@
               {
                 "operationId": "repoGetBranch",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggqro-d0eef425-pr-merge-default/branches/merge-default"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt11n7-f415755d-pr-merge-default/branches/merge-default"
               }
             ]
           },
@@ -1671,12 +2066,12 @@
               {
                 "operationId": "repoMergePullRequest",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggqro-d0eef425-pr-merge-squash/pulls/1/merge"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt11n7-f415755d-pr-merge-squash/pulls/1/merge"
               },
               {
                 "operationId": "repoGetPullRequest",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggqro-d0eef425-pr-merge-squash/pulls/1"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt11n7-f415755d-pr-merge-squash/pulls/1"
               }
             ]
           },
@@ -1689,7 +2084,7 @@
               {
                 "operationId": "repoGetBranch",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggqro-d0eef425-pr-merge-squash/branches/merge-squash"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt11n7-f415755d-pr-merge-squash/branches/merge-squash"
               }
             ]
           }
@@ -1714,7 +2109,7 @@
               {
                 "operationId": "repoCreatePullReviewRequests",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggxpl-09372368-pr-reviews/pulls/1/requested_reviewers"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt16me-3554e30e-pr-reviews/pulls/1/requested_reviewers"
               }
             ]
           },
@@ -1727,7 +2122,7 @@
               {
                 "operationId": "repoCreatePullReview",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggxpl-09372368-pr-reviews/pulls/1/reviews"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt16me-3554e30e-pr-reviews/pulls/1/reviews"
               }
             ]
           },
@@ -1740,7 +2135,7 @@
               {
                 "operationId": "issueCreateComment",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggxpl-09372368-pr-reviews/issues/1/comments"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt16me-3554e30e-pr-reviews/issues/1/comments"
               }
             ]
           },
@@ -1753,7 +2148,7 @@
               {
                 "operationId": "repoCreatePullReview",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggxpl-09372368-pr-reviews/pulls/1/reviews"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt16me-3554e30e-pr-reviews/pulls/1/reviews"
               }
             ]
           },
@@ -1766,7 +2161,7 @@
               {
                 "operationId": "repoCreatePullReview",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggxpl-09372368-pr-reviews/pulls/1/reviews"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt16me-3554e30e-pr-reviews/pulls/1/reviews"
               }
             ]
           },
@@ -1806,7 +2201,7 @@
               {
                 "operationId": "repoCreateStatus",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggybe-136aa0e9-statuses/statuses/bd61cfb1792a442aa99b9b42c29d8a5d5d844ee1"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt177m-55db4ea3-statuses/statuses/ea3181ce4f581355c62623fd13cf652dcab4e97d"
               }
             ]
           },
@@ -1819,7 +2214,7 @@
               {
                 "operationId": "repoCreateStatus",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggybe-136aa0e9-statuses/statuses/status-branch"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt177m-55db4ea3-statuses/statuses/status-branch"
               }
             ]
           },
@@ -1832,7 +2227,7 @@
               {
                 "operationId": "repoCreateStatus",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggybe-136aa0e9-statuses/statuses/status-tag"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt177m-55db4ea3-statuses/statuses/status-tag"
               }
             ]
           },
@@ -1846,12 +2241,12 @@
               {
                 "operationId": "repoGetPullRequest",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggybe-136aa0e9-statuses/pulls/1"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt177m-55db4ea3-statuses/pulls/1"
               },
               {
                 "operationId": "repoCreateStatus",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggybe-136aa0e9-statuses/statuses/bd61cfb1792a442aa99b9b42c29d8a5d5d844ee1"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt177m-55db4ea3-statuses/statuses/ea3181ce4f581355c62623fd13cf652dcab4e97d"
               }
             ]
           },
@@ -1864,7 +2259,7 @@
               {
                 "operationId": "repoListStatusesByRef",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggybe-136aa0e9-statuses/commits/status-branch/statuses"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt177m-55db4ea3-statuses/commits/status-branch/statuses"
               }
             ]
           },
@@ -1877,7 +2272,7 @@
               {
                 "operationId": "repoGetCombinedStatusByRef",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggybe-136aa0e9-statuses/commits/status-tag/status"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt177m-55db4ea3-statuses/commits/status-tag/status"
               }
             ]
           },
@@ -1891,12 +2286,12 @@
               {
                 "operationId": "repoGetPullRequest",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggybe-136aa0e9-statuses/pulls/1"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt177m-55db4ea3-statuses/pulls/1"
               },
               {
                 "operationId": "repoListStatusesByRef",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggybe-136aa0e9-statuses/commits/bd61cfb1792a442aa99b9b42c29d8a5d5d844ee1/statuses"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt177m-55db4ea3-statuses/commits/ea3181ce4f581355c62623fd13cf652dcab4e97d/statuses"
               }
             ]
           },
@@ -1909,7 +2304,7 @@
               {
                 "operationId": "repoListStatusesByRef",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggybe-136aa0e9-statuses/commits/bd61cfb1792a442aa99b9b42c29d8a5d5d844ee1/statuses"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt177m-55db4ea3-statuses/commits/ea3181ce4f581355c62623fd13cf652dcab4e97d/statuses"
               }
             ]
           },
@@ -1922,7 +2317,7 @@
               {
                 "operationId": "repoListStatusesByRef",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggybe-136aa0e9-statuses/commits/bd61cfb1792a442aa99b9b42c29d8a5d5d844ee1/statuses"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt177m-55db4ea3-statuses/commits/ea3181ce4f581355c62623fd13cf652dcab4e97d/statuses"
               }
             ]
           },
@@ -1935,7 +2330,7 @@
               {
                 "operationId": "repoListStatusesByRef",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggybe-136aa0e9-statuses/commits/bd61cfb1792a442aa99b9b42c29d8a5d5d844ee1/statuses"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt177m-55db4ea3-statuses/commits/ea3181ce4f581355c62623fd13cf652dcab4e97d/statuses"
               }
             ]
           },
@@ -1948,7 +2343,7 @@
               {
                 "operationId": "repoGetCombinedStatusByRef",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggybe-136aa0e9-statuses/commits/bd61cfb1792a442aa99b9b42c29d8a5d5d844ee1/status"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt177m-55db4ea3-statuses/commits/ea3181ce4f581355c62623fd13cf652dcab4e97d/status"
               }
             ]
           },
@@ -1980,7 +2375,7 @@
               {
                 "operationId": "repoChangeFiles",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggyr3-d29997da-extension-files/contents"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt17ms-e628ab29-extension-files/contents"
               }
             ]
           }
@@ -2013,12 +2408,12 @@
               {
                 "operationId": "repoMergePullRequest",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggz7s-87305219-extension-merge-success/pulls/1/merge"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt182r-d3f33620-extension-merge-success/pulls/1/merge"
               },
               {
                 "operationId": "repoGetPullRequest",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggz7s-87305219-extension-merge-success/pulls/1"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt182r-d3f33620-extension-merge-success/pulls/1"
               }
             ]
           },
@@ -2031,7 +2426,7 @@
               {
                 "operationId": "repoGetSingleCommit",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggz7s-87305219-extension-merge-success/git/commits/00dfb2147323b9e2d31c1dcd6ed2c18e641e9c5a"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt182r-d3f33620-extension-merge-success/git/commits/46cfe245196ca5d6c113a986684efce48681aa77"
               }
             ]
           },
@@ -2044,7 +2439,7 @@
               {
                 "operationId": "repoMergePullRequest",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggz7s-87305219-extension-merge-stale/pulls/1/merge"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt182r-d3f33620-extension-merge-stale/pulls/1/merge"
               }
             ]
           },
@@ -2059,17 +2454,17 @@
               {
                 "operationId": "repoMergePullRequest",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggz7s-87305219-extension-merge-scheduled/pulls/1/merge"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt182r-d3f33620-extension-merge-scheduled/pulls/1/merge"
               },
               {
                 "operationId": "repoGetPullRequest",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggz7s-87305219-extension-merge-scheduled/pulls/1"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt182r-d3f33620-extension-merge-scheduled/pulls/1"
               },
               {
                 "operationId": "repoGetPullRequest",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkggz7s-87305219-extension-merge-scheduled/pulls/1"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt182r-d3f33620-extension-merge-scheduled/pulls/1"
               }
             ]
           }
@@ -2091,7 +2486,7 @@
               {
                 "operationId": "repoCreatePullReview",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh91j-bb616e15-extension-review/pulls/1/reviews"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1m58-a2fbe635-extension-review/pulls/1/reviews"
               }
             ]
           }
@@ -2114,7 +2509,7 @@
               {
                 "operationId": "repoCreateStatus",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9km-23873b42-extension-status/statuses/848071945184c5c44c0170ae3658dcd413815b85"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1mnl-a3513142-extension-status/statuses/8ebb852e3371e101539b669bd9cfac2aaf420820"
               }
             ]
           },
@@ -2127,7 +2522,7 @@
               {
                 "operationId": "repoCreateStatus",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9km-23873b42-extension-status/statuses/848071945184c5c44c0170ae3658dcd413815b85"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1mnl-a3513142-extension-status/statuses/8ebb852e3371e101539b669bd9cfac2aaf420820"
               }
             ]
           },
@@ -2140,7 +2535,7 @@
               {
                 "operationId": "repoCreateStatus",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9km-23873b42-extension-status/statuses/848071945184c5c44c0170ae3658dcd413815b85"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1mnl-a3513142-extension-status/statuses/8ebb852e3371e101539b669bd9cfac2aaf420820"
               }
             ]
           }
@@ -2224,7 +2619,7 @@
               {
                 "operationId": "issueCreateIssue",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9p5-96027780-issues/issues"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1mry-dcb27143-issues/issues"
               }
             ]
           },
@@ -2237,7 +2632,7 @@
               {
                 "operationId": "issueGetIssue",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9p5-96027780-issues/issues/1"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1mry-dcb27143-issues/issues/1"
               }
             ]
           },
@@ -2250,7 +2645,7 @@
               {
                 "operationId": "issueListIssues",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9p5-96027780-issues/issues"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1mry-dcb27143-issues/issues"
               }
             ]
           },
@@ -2263,7 +2658,7 @@
               {
                 "operationId": "issueEditIssue",
                 "method": "PATCH",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9p5-96027780-issues/issues/1"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1mry-dcb27143-issues/issues/1"
               }
             ]
           },
@@ -2276,7 +2671,7 @@
               {
                 "operationId": "issueEditIssue",
                 "method": "PATCH",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9p5-96027780-issues/issues/1"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1mry-dcb27143-issues/issues/1"
               }
             ]
           },
@@ -2289,7 +2684,7 @@
               {
                 "operationId": "issueEditIssue",
                 "method": "PATCH",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9p5-96027780-issues/issues/1"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1mry-dcb27143-issues/issues/1"
               }
             ]
           },
@@ -2302,7 +2697,7 @@
               {
                 "operationId": "issueCreateComment",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9p5-96027780-issues/issues/1/comments"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1mry-dcb27143-issues/issues/1/comments"
               }
             ]
           },
@@ -2315,7 +2710,7 @@
               {
                 "operationId": "issueGetComment",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9p5-96027780-issues/issues/comments/85"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1mry-dcb27143-issues/issues/comments/87"
               }
             ]
           },
@@ -2328,7 +2723,7 @@
               {
                 "operationId": "issueGetRepoComments",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9p5-96027780-issues/issues/comments"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1mry-dcb27143-issues/issues/comments"
               }
             ]
           },
@@ -2341,7 +2736,7 @@
               {
                 "operationId": "issueEditComment",
                 "method": "PATCH",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9p5-96027780-issues/issues/comments/85"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1mry-dcb27143-issues/issues/comments/87"
               }
             ]
           },
@@ -2364,7 +2759,7 @@
               {
                 "operationId": "issueDeleteComment",
                 "method": "DELETE",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9p5-96027780-issues/issues/comments/85"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1mry-dcb27143-issues/issues/comments/87"
               }
             ]
           },
@@ -2377,7 +2772,7 @@
               {
                 "operationId": "issueGetComment",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9p5-96027780-issues/issues/comments/85"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1mry-dcb27143-issues/issues/comments/87"
               }
             ]
           },
@@ -2390,7 +2785,7 @@
               {
                 "operationId": "issueGetIssue",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9p5-96027780-issues/issues/100001"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1mry-dcb27143-issues/issues/100001"
               }
             ]
           },
@@ -2413,7 +2808,7 @@
               {
                 "operationId": "issueEditIssue",
                 "method": "PATCH",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9p5-96027780-issues/issues/1"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1mry-dcb27143-issues/issues/1"
               }
             ]
           }
@@ -2442,7 +2837,7 @@
               {
                 "operationId": "issueCreateIssue",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9uw-859c0970-issue-content-version/issues"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1mxk-7be7e2a5-issue-content-version/issues"
               }
             ]
           },
@@ -2460,7 +2855,7 @@
               {
                 "operationId": "issueEditIssue",
                 "method": "PATCH",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9uw-859c0970-issue-content-version/issues/1"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1mxk-7be7e2a5-issue-content-version/issues/1"
               }
             ]
           },
@@ -2473,7 +2868,7 @@
               {
                 "operationId": "issueEditIssue",
                 "method": "PATCH",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9uw-859c0970-issue-content-version/issues/1"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1mxk-7be7e2a5-issue-content-version/issues/1"
               }
             ]
           },
@@ -2486,7 +2881,7 @@
               {
                 "operationId": "issueGetIssue",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9uw-859c0970-issue-content-version/issues/1"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1mxk-7be7e2a5-issue-content-version/issues/1"
               }
             ]
           },
@@ -2499,7 +2894,7 @@
               {
                 "operationId": "issueEditIssue",
                 "method": "PATCH",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9uw-859c0970-issue-content-version/issues/1"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1mxk-7be7e2a5-issue-content-version/issues/1"
               }
             ]
           }
@@ -2530,7 +2925,7 @@
               {
                 "operationId": "repoCreateRelease",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9ze-fc98255d-releases/releases"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1n1t-b6899f07-releases/releases"
               }
             ]
           },
@@ -2543,7 +2938,7 @@
               {
                 "operationId": "repoGetRelease",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9ze-fc98255d-releases/releases/14"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1n1t-b6899f07-releases/releases/14"
               }
             ]
           },
@@ -2556,7 +2951,7 @@
               {
                 "operationId": "repoGetReleaseByTag",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9ze-fc98255d-releases/releases/tags/optional-release-v1"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1n1t-b6899f07-releases/releases/tags/optional-release-v1"
               }
             ]
           },
@@ -2569,7 +2964,7 @@
               {
                 "operationId": "repoListReleases",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9ze-fc98255d-releases/releases"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1n1t-b6899f07-releases/releases"
               }
             ]
           },
@@ -2582,7 +2977,7 @@
               {
                 "operationId": "repoEditRelease",
                 "method": "PATCH",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9ze-fc98255d-releases/releases/14"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1n1t-b6899f07-releases/releases/14"
               }
             ]
           },
@@ -2595,7 +2990,7 @@
               {
                 "operationId": "repoCreateReleaseAttachment",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9ze-fc98255d-releases/releases/14/assets"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1n1t-b6899f07-releases/releases/14/assets"
               }
             ]
           },
@@ -2608,7 +3003,7 @@
               {
                 "operationId": "repoGetReleaseAttachment",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9ze-fc98255d-releases/releases/14/assets/4"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1n1t-b6899f07-releases/releases/14/assets/4"
               }
             ]
           },
@@ -2621,7 +3016,7 @@
               {
                 "operationId": "repoListReleaseAttachments",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9ze-fc98255d-releases/releases/14/assets"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1n1t-b6899f07-releases/releases/14/assets"
               }
             ]
           },
@@ -2634,7 +3029,7 @@
               {
                 "operationId": "repoEditReleaseAttachment",
                 "method": "PATCH",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9ze-fc98255d-releases/releases/14/assets/4"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1n1t-b6899f07-releases/releases/14/assets/4"
               }
             ]
           },
@@ -2657,7 +3052,7 @@
               {
                 "operationId": "repoDeleteReleaseAttachment",
                 "method": "DELETE",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9ze-fc98255d-releases/releases/14/assets/4"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1n1t-b6899f07-releases/releases/14/assets/4"
               }
             ]
           },
@@ -2670,7 +3065,7 @@
               {
                 "operationId": "repoGetReleaseAttachment",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9ze-fc98255d-releases/releases/14/assets/4"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1n1t-b6899f07-releases/releases/14/assets/4"
               }
             ]
           },
@@ -2693,7 +3088,7 @@
               {
                 "operationId": "repoDeleteRelease",
                 "method": "DELETE",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9ze-fc98255d-releases/releases/14"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1n1t-b6899f07-releases/releases/14"
               }
             ]
           },
@@ -2706,7 +3101,7 @@
               {
                 "operationId": "repoGetRelease",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgh9ze-fc98255d-releases/releases/14"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1n1t-b6899f07-releases/releases/14"
               }
             ]
           }
@@ -2736,7 +3131,7 @@
               {
                 "operationId": "repoCreateHook",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgha4w-50981cfb-webhooks/hooks"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1n75-f503b5a2-webhooks/hooks"
               }
             ]
           },
@@ -2749,7 +3144,7 @@
               {
                 "operationId": "repoGetHook",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgha4w-50981cfb-webhooks/hooks/5"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1n75-f503b5a2-webhooks/hooks/5"
               }
             ]
           },
@@ -2762,7 +3157,7 @@
               {
                 "operationId": "repoListHooks",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgha4w-50981cfb-webhooks/hooks"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1n75-f503b5a2-webhooks/hooks"
               }
             ]
           },
@@ -2775,7 +3170,7 @@
               {
                 "operationId": "repoEditHook",
                 "method": "PATCH",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgha4w-50981cfb-webhooks/hooks/5"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1n75-f503b5a2-webhooks/hooks/5"
               }
             ]
           },
@@ -2793,7 +3188,7 @@
               {
                 "operationId": "repoChangeFiles",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgha4w-50981cfb-webhooks/contents"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1n75-f503b5a2-webhooks/contents"
               }
             ]
           },
@@ -2816,7 +3211,7 @@
               {
                 "operationId": "repoDeleteHook",
                 "method": "DELETE",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgha4w-50981cfb-webhooks/hooks/5"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1n75-f503b5a2-webhooks/hooks/5"
               }
             ]
           },
@@ -2829,7 +3224,7 @@
               {
                 "operationId": "repoGetHook",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkgha4w-50981cfb-webhooks/hooks/5"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1n75-f503b5a2-webhooks/hooks/5"
               }
             ]
           }
@@ -2860,7 +3255,7 @@
               {
                 "operationId": "ActionsGetWorkflow",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkghb6d-066dbdc2-ci-run-discovery/actions/workflows/optional-ci.yaml"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1ntz-0a886fa1-ci-run-discovery/actions/workflows/optional-ci.yaml"
               }
             ]
           },
@@ -2873,7 +3268,7 @@
               {
                 "operationId": "getWorkflowRuns",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkghb6d-066dbdc2-ci-run-discovery/actions/runs"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1ntz-0a886fa1-ci-run-discovery/actions/runs"
               }
             ]
           },
@@ -2886,7 +3281,7 @@
               {
                 "operationId": "GetWorkflowRun",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkghb6d-066dbdc2-ci-run-discovery/actions/runs/2"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1ntz-0a886fa1-ci-run-discovery/actions/runs/2"
               }
             ]
           },
@@ -2899,7 +3294,7 @@
               {
                 "operationId": "listWorkflowRunJobs",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkghb6d-066dbdc2-ci-run-discovery/actions/runs/2/jobs"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1ntz-0a886fa1-ci-run-discovery/actions/runs/2/jobs"
               }
             ]
           },
@@ -2912,7 +3307,7 @@
               {
                 "operationId": "getWorkflowJob",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkghb6d-066dbdc2-ci-run-discovery/actions/jobs/2"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1ntz-0a886fa1-ci-run-discovery/actions/jobs/2"
               }
             ]
           },
@@ -2925,7 +3320,7 @@
               {
                 "operationId": "getArtifactsOfRun",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkghb6d-066dbdc2-ci-run-discovery/actions/runs/2/artifacts"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1ntz-0a886fa1-ci-run-discovery/actions/runs/2/artifacts"
               }
             ]
           },
@@ -2938,7 +3333,7 @@
               {
                 "operationId": "getArtifact",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkghb6d-066dbdc2-ci-run-discovery/actions/artifacts/2"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1ntz-0a886fa1-ci-run-discovery/actions/artifacts/2"
               }
             ]
           },
@@ -2951,7 +3346,7 @@
               {
                 "operationId": "getArtifactsOfRun",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkghb6d-066dbdc2-ci-run-discovery/actions/runs/2/artifacts"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1ntz-0a886fa1-ci-run-discovery/actions/runs/2/artifacts"
               }
             ]
           },
@@ -3015,7 +3410,7 @@
               {
                 "operationId": "listPackageVersions",
                 "method": "GET",
-                "path": "/api/v1/packages/sandbox/generic/pge2e-mtkghbyx-87721205-package"
+                "path": "/api/v1/packages/sandbox/generic/pge2e-mtnt1ouq-4bbeaf2d-package"
               }
             ]
           },
@@ -3028,7 +3423,7 @@
               {
                 "operationId": "getPackage",
                 "method": "GET",
-                "path": "/api/v1/packages/sandbox/generic/pge2e-mtkghbyx-87721205-package/1.0.0"
+                "path": "/api/v1/packages/sandbox/generic/pge2e-mtnt1ouq-4bbeaf2d-package/1.0.0"
               }
             ]
           },
@@ -3041,7 +3436,7 @@
               {
                 "operationId": "getPackage",
                 "method": "GET",
-                "path": "/api/v1/packages/sandbox/generic/pge2e-mtkghbyx-87721205-package/1.0.0"
+                "path": "/api/v1/packages/sandbox/generic/pge2e-mtnt1ouq-4bbeaf2d-package/1.0.0"
               }
             ]
           },
@@ -3054,7 +3449,7 @@
               {
                 "operationId": "listPackageFiles",
                 "method": "GET",
-                "path": "/api/v1/packages/sandbox/generic/pge2e-mtkghbyx-87721205-package/1.0.0/files"
+                "path": "/api/v1/packages/sandbox/generic/pge2e-mtnt1ouq-4bbeaf2d-package/1.0.0/files"
               }
             ]
           },
@@ -3077,7 +3472,7 @@
               {
                 "operationId": "getPackage",
                 "method": "GET",
-                "path": "/api/v1/packages/sandbox/generic/pge2e-mtkghbyx-87721205-package/999.0.0-missing"
+                "path": "/api/v1/packages/sandbox/generic/pge2e-mtnt1ouq-4bbeaf2d-package/999.0.0-missing"
               }
             ]
           },
@@ -3100,7 +3495,7 @@
               {
                 "operationId": "deletePackageVersion",
                 "method": "DELETE",
-                "path": "/api/v1/packages/sandbox/generic/pge2e-mtkghbyx-87721205-package/2.0.0"
+                "path": "/api/v1/packages/sandbox/generic/pge2e-mtnt1ouq-4bbeaf2d-package/2.0.0"
               }
             ]
           },
@@ -3113,7 +3508,7 @@
               {
                 "operationId": "getPackage",
                 "method": "GET",
-                "path": "/api/v1/packages/sandbox/generic/pge2e-mtkghbyx-87721205-package/2.0.0"
+                "path": "/api/v1/packages/sandbox/generic/pge2e-mtnt1ouq-4bbeaf2d-package/2.0.0"
               }
             ]
           },
@@ -3126,7 +3521,7 @@
               {
                 "operationId": "deletePackage",
                 "method": "DELETE",
-                "path": "/api/v1/packages/sandbox/generic/pge2e-mtkghbyx-87721205-package"
+                "path": "/api/v1/packages/sandbox/generic/pge2e-mtnt1ouq-4bbeaf2d-package"
               }
             ]
           },
@@ -3139,7 +3534,7 @@
               {
                 "operationId": "getPackage",
                 "method": "GET",
-                "path": "/api/v1/packages/sandbox/generic/pge2e-mtkghbyx-87721205-package/1.0.0"
+                "path": "/api/v1/packages/sandbox/generic/pge2e-mtnt1ouq-4bbeaf2d-package/1.0.0"
               }
             ]
           }
@@ -3151,6 +3546,9 @@
         "assertions": [
           "capability support is static and performs zero provider requests",
           "known immutable binary bytes are returned by one direct SHA request",
+          "byte, UTF-8 text, and JSON conveniences use one direct SHA request each",
+          "SHA-addressed Web Blobs preserve bytes and require filename or explicit MIME evidence",
+          "entity text, JSON, and buffer conversions are zero-request and defensive",
           "exact native payload access performs zero additional provider requests",
           "absence costs one direct request; invalid and cancelled reads cost zero"
         ],
@@ -3169,9 +3567,219 @@
               {
                 "operationId": "GetBlob",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkghc08-de4a6b27-blob-reads/git/blobs/ac0deae0c6de979e3136dcc6bdb1d07c58d37107"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1ovz-e32c8cb0-blob-reads/git/blobs/ac0deae0c6de979e3136dcc6bdb1d07c58d37107"
               }
             ]
+          },
+          {
+            "operation": "repository.blobs.readBytes",
+            "expectedOperationIds": [
+              "GetBlob"
+            ],
+            "requests": [
+              {
+                "operationId": "GetBlob",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1ovz-e32c8cb0-blob-reads/git/blobs/ac0deae0c6de979e3136dcc6bdb1d07c58d37107"
+              }
+            ]
+          },
+          {
+            "operation": "repository.blobs.readText.unicode",
+            "expectedOperationIds": [
+              "GetBlob"
+            ],
+            "requests": [
+              {
+                "operationId": "GetBlob",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1ovz-e32c8cb0-blob-reads/git/blobs/cee29c28ad51273fbec73c6a076d6443edf5485b"
+              }
+            ]
+          },
+          {
+            "operation": "repository.blobs.readText.empty",
+            "expectedOperationIds": [
+              "GetBlob"
+            ],
+            "requests": [
+              {
+                "operationId": "GetBlob",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1ovz-e32c8cb0-blob-reads/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+              }
+            ]
+          },
+          {
+            "operation": "repository.blobs.readJson",
+            "expectedOperationIds": [
+              "GetBlob"
+            ],
+            "requests": [
+              {
+                "operationId": "GetBlob",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1ovz-e32c8cb0-blob-reads/git/blobs/bc03d3bdc3e094ba5c8d74e2f8d11265fec975cd"
+              }
+            ]
+          },
+          {
+            "operation": "repository.blobs.readText.invalidUtf8",
+            "expectedOperationIds": [
+              "GetBlob"
+            ],
+            "requests": [
+              {
+                "operationId": "GetBlob",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1ovz-e32c8cb0-blob-reads/git/blobs/ac0deae0c6de979e3136dcc6bdb1d07c58d37107"
+              }
+            ]
+          },
+          {
+            "operation": "repository.blobs.readJson.invalid",
+            "expectedOperationIds": [
+              "GetBlob"
+            ],
+            "requests": [
+              {
+                "operationId": "GetBlob",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1ovz-e32c8cb0-blob-reads/git/blobs/f3589c2f3c1d2e8e4e346409e0a30fc98dfe7cda"
+              }
+            ]
+          },
+          {
+            "operation": "repository.blobs.readJson.empty",
+            "expectedOperationIds": [
+              "GetBlob"
+            ],
+            "requests": [
+              {
+                "operationId": "GetBlob",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1ovz-e32c8cb0-blob-reads/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+              }
+            ]
+          },
+          {
+            "operation": "repository.blobs.readBlob.imageHint",
+            "expectedOperationIds": [
+              "GetBlob"
+            ],
+            "requests": [
+              {
+                "operationId": "GetBlob",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1ovz-e32c8cb0-blob-reads/git/blobs/26a8c68efad2a094e8fe6d850426b651d353c568"
+              }
+            ]
+          },
+          {
+            "operation": "repository.blobs.readBlob.jsonHint",
+            "expectedOperationIds": [
+              "GetBlob"
+            ],
+            "requests": [
+              {
+                "operationId": "GetBlob",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1ovz-e32c8cb0-blob-reads/git/blobs/bc03d3bdc3e094ba5c8d74e2f8d11265fec975cd"
+              }
+            ]
+          },
+          {
+            "operation": "repository.blobs.readBlob.emptyHint",
+            "expectedOperationIds": [
+              "GetBlob"
+            ],
+            "requests": [
+              {
+                "operationId": "GetBlob",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1ovz-e32c8cb0-blob-reads/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+              }
+            ]
+          },
+          {
+            "operation": "repository.blobs.readBlob.explicitOctetStream",
+            "expectedOperationIds": [
+              "GetBlob"
+            ],
+            "requests": [
+              {
+                "operationId": "GetBlob",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1ovz-e32c8cb0-blob-reads/git/blobs/ac0deae0c6de979e3136dcc6bdb1d07c58d37107"
+              }
+            ]
+          },
+          {
+            "operation": "repository.blobs.readBlob.unknownMediaType",
+            "expectedOperationIds": [
+              "GetBlob"
+            ],
+            "requests": [
+              {
+                "operationId": "GetBlob",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1ovz-e32c8cb0-blob-reads/git/blobs/bc03d3bdc3e094ba5c8d74e2f8d11265fec975cd"
+              }
+            ]
+          },
+          {
+            "operation": "repository.blobs.readBlob.invalidMediaType",
+            "expectedOperationIds": [],
+            "requests": []
+          },
+          {
+            "operation": "repository.blobs.readBlob.invalidFileName",
+            "expectedOperationIds": [],
+            "requests": []
+          },
+          {
+            "operation": "repository.blobs.get.text",
+            "expectedOperationIds": [
+              "GetBlob"
+            ],
+            "requests": [
+              {
+                "operationId": "GetBlob",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1ovz-e32c8cb0-blob-reads/git/blobs/cee29c28ad51273fbec73c6a076d6443edf5485b"
+              }
+            ]
+          },
+          {
+            "operation": "repository.blobs.get.json",
+            "expectedOperationIds": [
+              "GetBlob"
+            ],
+            "requests": [
+              {
+                "operationId": "GetBlob",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1ovz-e32c8cb0-blob-reads/git/blobs/bc03d3bdc3e094ba5c8d74e2f8d11265fec975cd"
+              }
+            ]
+          },
+          {
+            "operation": "repository.blobs.get.empty",
+            "expectedOperationIds": [
+              "GetBlob"
+            ],
+            "requests": [
+              {
+                "operationId": "GetBlob",
+                "method": "GET",
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1ovz-e32c8cb0-blob-reads/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+              }
+            ]
+          },
+          {
+            "operation": "blob.bodyConversions",
+            "expectedOperationIds": [],
+            "requests": []
           },
           {
             "operation": "blob.native.gitea",
@@ -3187,7 +3795,7 @@
               {
                 "operationId": "GetBlob",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkghc08-de4a6b27-blob-reads/git/blobs/ffffffffffffffffffffffffffffffffffffffff"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1ovz-e32c8cb0-blob-reads/git/blobs/ffffffffffffffffffffffffffffffffffffffff"
               }
             ]
           },
@@ -3198,6 +3806,26 @@
           },
           {
             "operation": "repository.blobs.get.preflightAbort",
+            "expectedOperationIds": [],
+            "requests": []
+          },
+          {
+            "operation": "repository.blobs.readBytes.preflightAbort",
+            "expectedOperationIds": [],
+            "requests": []
+          },
+          {
+            "operation": "repository.blobs.readText.preflightAbort",
+            "expectedOperationIds": [],
+            "requests": []
+          },
+          {
+            "operation": "repository.blobs.readJson.preflightAbort",
+            "expectedOperationIds": [],
+            "requests": []
+          },
+          {
+            "operation": "repository.blobs.readBlob.preflightAbort",
             "expectedOperationIds": [],
             "requests": []
           }
@@ -3227,7 +3855,7 @@
               {
                 "operationId": "repoCreatePullReview",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkghc7i-91157b34-review-objects/pulls/1/reviews"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1p5h-6e8df5aa-review-objects/pulls/1/reviews"
               }
             ]
           },
@@ -3240,7 +3868,7 @@
               {
                 "operationId": "repoGetPullReview",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkghc7i-91157b34-review-objects/pulls/1/reviews/8"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1p5h-6e8df5aa-review-objects/pulls/1/reviews/8"
               }
             ]
           },
@@ -3253,7 +3881,7 @@
               {
                 "operationId": "repoListPullReviews",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkghc7i-91157b34-review-objects/pulls/1/reviews"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1p5h-6e8df5aa-review-objects/pulls/1/reviews"
               }
             ]
           },
@@ -3271,7 +3899,7 @@
               {
                 "operationId": "repoSubmitPullReview",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkghc7i-91157b34-review-objects/pulls/1/reviews/8"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1p5h-6e8df5aa-review-objects/pulls/1/reviews/8"
               }
             ]
           },
@@ -3312,7 +3940,7 @@
               {
                 "operationId": "repoCreateBranchProtection",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkghcol-719ad871-branch-rules/branch_protections"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1plt-a80febd0-branch-rules/branch_protections"
               }
             ]
           },
@@ -3325,7 +3953,7 @@
               {
                 "operationId": "repoGetBranchProtection",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkghcol-719ad871-branch-rules/branch_protections/main"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1plt-a80febd0-branch-rules/branch_protections/main"
               }
             ]
           },
@@ -3338,7 +3966,7 @@
               {
                 "operationId": "repoListBranchProtection",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkghcol-719ad871-branch-rules/branch_protections"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1plt-a80febd0-branch-rules/branch_protections"
               }
             ]
           },
@@ -3351,7 +3979,7 @@
               {
                 "operationId": "repoEditBranchProtection",
                 "method": "PATCH",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkghcol-719ad871-branch-rules/branch_protections/main"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1plt-a80febd0-branch-rules/branch_protections/main"
               }
             ]
           },
@@ -3364,7 +3992,7 @@
               {
                 "operationId": "repoGetBranch",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkghcol-719ad871-branch-rules/branches/main"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1plt-a80febd0-branch-rules/branches/main"
               }
             ]
           },
@@ -3382,7 +4010,7 @@
               {
                 "operationId": "repoDeleteBranchProtection",
                 "method": "DELETE",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkghcol-719ad871-branch-rules/branch_protections/main"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1plt-a80febd0-branch-rules/branch_protections/main"
               }
             ]
           },
@@ -3395,7 +4023,7 @@
               {
                 "operationId": "repoGetBranchProtection",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkghcol-719ad871-branch-rules/branch_protections/main"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1plt-a80febd0-branch-rules/branch_protections/main"
               }
             ]
           },
@@ -3428,7 +4056,7 @@
               {
                 "operationId": "repoCreateBranchProtection",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkghcsy-df0d3336-branch-rule-priority/branch_protections"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1pqd-9dd55faa-branch-rule-priority/branch_protections"
               }
             ]
           },
@@ -3441,7 +4069,7 @@
               {
                 "operationId": "repoCreateBranchProtection",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkghcsy-df0d3336-branch-rule-priority/branch_protections"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1pqd-9dd55faa-branch-rule-priority/branch_protections"
               }
             ]
           },
@@ -3454,7 +4082,7 @@
               {
                 "operationId": "repoUpdateBranchProtectionPriories",
                 "method": "POST",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkghcsy-df0d3336-branch-rule-priority/branch_protections/priority"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1pqd-9dd55faa-branch-rule-priority/branch_protections/priority"
               }
             ]
           },
@@ -3467,7 +4095,7 @@
               {
                 "operationId": "repoListBranchProtection",
                 "method": "GET",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkghcsy-df0d3336-branch-rule-priority/branch_protections"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1pqd-9dd55faa-branch-rule-priority/branch_protections"
               }
             ]
           },
@@ -3490,7 +4118,7 @@
               {
                 "operationId": "repoDeleteBranchProtection",
                 "method": "DELETE",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkghcsy-df0d3336-branch-rule-priority/branch_protections/priority-first"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1pqd-9dd55faa-branch-rule-priority/branch_protections/priority-first"
               }
             ]
           },
@@ -3503,7 +4131,7 @@
               {
                 "operationId": "repoDeleteBranchProtection",
                 "method": "DELETE",
-                "path": "/api/v1/repos/sandbox/pge2e-mtkghcsy-df0d3336-branch-rule-priority/branch_protections/priority-second"
+                "path": "/api/v1/repos/sandbox/pge2e-mtnt1pqd-9dd55faa-branch-rule-priority/branch_protections/priority-second"
               }
             ]
           }

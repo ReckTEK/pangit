@@ -1,6 +1,5 @@
 import {
   createClient,
-  type FluentProvider,
   type ProviderVersion,
 } from "../../../../../../packages/pangit/src/fluent-api/mod.ts";
 import {
@@ -14,7 +13,7 @@ import { FluentApiRequestRecorder, proveRequestSequence } from "../../request-re
 import type { BlobReadContractFixtures } from "./blob-read-contract-fixtures.ts";
 
 export type BlobReadContractInput<
-  TProvider extends FluentProvider,
+  TProvider extends "gitea",
   TVersion extends ProviderVersion<TProvider>,
 > = {
   readonly provider: TProvider;
@@ -48,7 +47,7 @@ async function expectReadError(action: () => unknown, reason: string): Promise<v
 
 /** Exercise the optional direct SHA-addressed blob capability without content-path discovery. */
 export async function runBlobReadContract<
-  const TProvider extends FluentProvider,
+  const TProvider extends "gitea",
   const TVersion extends ProviderVersion<TProvider>,
 >(
   t: Deno.TestContext,

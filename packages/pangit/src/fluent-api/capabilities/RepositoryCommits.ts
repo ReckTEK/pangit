@@ -58,7 +58,7 @@ export type CompareCommitsOperation<
   TVersion extends ProviderVersion<TProvider>,
 > = OperationExtension<
   "commits.compare",
-  "gitea",
+  TProvider,
   TVersion,
   CommitComparisonResult<TProvider, TVersion>
 >;
@@ -138,7 +138,7 @@ export function createRepositoryCommits<
       const headRef = requireIdentity(head, "head ref", context);
       return createOperationExtension<
         "commits.compare",
-        "gitea",
+        TProvider,
         TVersion,
         CommitComparisonResult<TProvider, TVersion>
       >({

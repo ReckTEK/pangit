@@ -16,16 +16,18 @@ export interface ExecutableOperation<TResult> {
 
 type ProviderExtensionMethod<
   TOperation extends RegisteredOperation,
-  TProvider extends RegisteredProvider<TOperation>,
+  TProvider extends string,
   TVersion extends string,
   TDefaultResult,
-> = ProviderExtensionSupportsVersion<TOperation, TProvider, TVersion> extends true ? {
-    readonly [TKey in TProvider]: (
-      configure: (
-        context: Readonly<ProviderExtensionContext<TOperation, TProvider>>,
-      ) => ProviderExtensionOptions<TOperation, TProvider>,
-    ) => ExecutableOperation<ProviderExtensionResult<TOperation, TProvider, TDefaultResult>>;
-  }
+> = TProvider extends RegisteredProvider<TOperation>
+  ? ProviderExtensionSupportsVersion<TOperation, TProvider, TVersion> extends true ? {
+      readonly [TKey in TProvider]: (
+        configure: (
+          context: Readonly<ProviderExtensionContext<TOperation, TProvider>>,
+        ) => ProviderExtensionOptions<TOperation, TProvider>,
+      ) => ExecutableOperation<ProviderExtensionResult<TOperation, TProvider, TDefaultResult>>;
+    }
+  : Record<never, never>
   : Record<never, never>;
 
 /**
@@ -34,7 +36,7 @@ type ProviderExtensionMethod<
  */
 export type OperationExtension<
   TOperation extends RegisteredOperation,
-  TProvider extends RegisteredProvider<TOperation>,
+  TProvider extends string,
   TVersion extends string,
   TDefaultResult,
 > =
@@ -44,7 +46,7 @@ export type OperationExtension<
 /** Build one immutable, single-configuration provider extension operation. */
 export function createOperationExtension<
   TOperation extends RegisteredOperation,
-  TProvider extends RegisteredProvider<TOperation>,
+  TProvider extends string,
   TVersion extends string,
   TDefaultResult,
 >(input: {
@@ -52,16 +54,21 @@ export function createOperationExtension<
   readonly provider: TProvider;
   /** Carries the exact selected version into the returned compile-time extension surface. */
   readonly version: TVersion;
-  readonly context: Readonly<ProviderExtensionContext<TOperation, TProvider>>;
+  readonly context: Readonly<object>;
   readonly execute: (
-    extension: Readonly<ProviderExtensionOptions<TOperation, TProvider>> | undefined,
+    extension:
+      | Readonly<ProviderExtensionOptions<TOperation, RegisteredProvider<TOperation>>>
+      | undefined,
     options: OperationOptions,
   ) => Promise<
-    TDefaultResult | ProviderExtensionResult<TOperation, TProvider, TDefaultResult>
+    | TDefaultResult
+    | ProviderExtensionResult<TOperation, RegisteredProvider<TOperation>, TDefaultResult>
   >;
 }): OperationExtension<TOperation, TProvider, TVersion, TDefaultResult> {
   let configured = false;
-  let extension: Readonly<ProviderExtensionOptions<TOperation, TProvider>> | undefined;
+  let extension:
+    | Readonly<ProviderExtensionOptions<TOperation, RegisteredProvider<TOperation>>>
+    | undefined;
   const execute = (options: OperationOptions = {}) => input.execute(extension, options);
   const executable = Object.freeze({ execute });
   const builder = isProviderExtensionVersionSupported(
@@ -74,7 +81,7 @@ export function createOperationExtension<
       [input.provider](
         configure: (
           context: Readonly<ProviderExtensionContext<TOperation, TProvider>>,
-        ) => ProviderExtensionOptions<TOperation, TProvider>,
+        ) => ProviderExtensionOptions<TOperation, RegisteredProvider<TOperation>>,
       ) {
         if (configured) {
           throw new TypeError(
@@ -82,7 +89,13 @@ export function createOperationExtension<
           );
         }
         configured = true;
-        extension = Object.freeze({ ...configure(Object.freeze({ ...input.context })) });
+        extension = Object.freeze({
+          ...configure(
+            Object.freeze({ ...input.context }) as Readonly<
+              ProviderExtensionContext<TOperation, TProvider>
+            >,
+          ),
+        });
         return executable;
       },
     }

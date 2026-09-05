@@ -1,7 +1,6 @@
 import {
   createClient,
   errors,
-  type FluentProvider,
   type ProviderVersion,
 } from "../../../../../../packages/pangit/src/fluent-api/mod.ts";
 import type { FluentApiContractResult, FluentApiRequestEvidence } from "../../contract-result.ts";
@@ -9,7 +8,7 @@ import { FluentApiRequestRecorder, proveRequestSequence } from "../../request-re
 import type { PackageContractFixtures } from "./package-contract-fixtures.ts";
 
 export type PackageContractInput<
-  TProvider extends FluentProvider,
+  TProvider extends "gitea",
   TVersion extends ProviderVersion<TProvider>,
 > = {
   readonly provider: TProvider;
@@ -25,7 +24,7 @@ function assert(condition: unknown, message: string): asserts condition {
 
 /** Exercise bounded package metadata reads and direct version/package cleanup. */
 export async function runPackageContract<
-  const TProvider extends FluentProvider,
+  const TProvider extends "gitea",
   const TVersion extends ProviderVersion<TProvider>,
 >(
   t: Deno.TestContext,

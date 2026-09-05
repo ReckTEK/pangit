@@ -9,12 +9,18 @@ export function createClientNativeAccess<
   TVersion extends ProviderVersion<TProvider>,
 >(
   selectedAdapter: SelectedGitHostAdapter<TProvider, TVersion>,
+  provider: TProvider,
 ): ProviderClientNative<TProvider, TVersion> {
   const native = Object.freeze({
-    async gitea<TResult>(use: (context: never) => TResult | Promise<TResult>): Promise<TResult> {
+    async [provider]<TResult>(
+      use: (context: never) => TResult | Promise<TResult>,
+    ): Promise<TResult> {
       const adapter = await selectedAdapter();
-      const door = adapter.native as { gitea(callback: typeof use): Promise<TResult> };
-      return await door.gitea(use);
+      const doors = adapter.native as unknown as Record<
+        string,
+        (callback: typeof use) => Promise<TResult>
+      >;
+      return await doors[provider](use);
     },
   });
   return native as ProviderClientNative<TProvider, TVersion>;

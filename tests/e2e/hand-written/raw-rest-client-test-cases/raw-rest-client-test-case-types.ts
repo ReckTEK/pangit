@@ -2,6 +2,8 @@ export type JsonRecord = Record<string, unknown>;
 
 export type RawRestClientTestStep = {
   operationId: string;
+  /** Restrict a provider-specific expectation to these exact contract versions. */
+  versions?: string[];
   fixture?: { method: string; url: string; json?: unknown };
   name?: string;
   input?: JsonRecord;

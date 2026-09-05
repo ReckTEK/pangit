@@ -84,7 +84,7 @@ class FluentClientImpl<
   ) {
     this.#selectedAdapter = selectedAdapter;
     this.authorization = authorization;
-    this.native = createClientNativeAccess(selectedAdapter);
+    this.native = createClientNativeAccess(selectedAdapter, provider);
     const capabilitySupport = getFluentClientCapabilitySupport(provider, version);
     this.currentUserProfile = createLazyCurrentUserProfileCapability(
       selectedAdapter,
@@ -195,7 +195,7 @@ export function createClient(
   provider: string,
   version: string,
   baseUrlOrOptions: string | URL | FluentClientOptions,
-): FluentClient<"gitea", ProviderVersion<"gitea">> {
+): unknown {
   if (!isFluentProvider(provider)) throw new ProviderAdapterUnavailableError(provider, version);
   const versions: readonly string[] = fluentProviderVersions[provider];
   if (!versions.includes(version)) {

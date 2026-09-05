@@ -1,6 +1,5 @@
 import {
   createClient,
-  type FluentProvider,
   type ProviderVersion,
 } from "../../../../../../packages/pangit/src/fluent-api/mod.ts";
 import {
@@ -13,7 +12,7 @@ import { FluentApiRequestRecorder, proveRequestSequence } from "../../request-re
 import type { BranchRuleContractFixtures } from "./branch-rule-contract-fixtures.ts";
 
 export type BranchRuleContractInput<
-  TProvider extends FluentProvider,
+  TProvider extends "gitea",
   TVersion extends ProviderVersion<TProvider>,
 > = {
   readonly provider: TProvider;
@@ -29,7 +28,7 @@ function assert(condition: unknown, message: string): asserts condition {
 
 /** Exercise configured-rule lifecycle and separately resolved effective branch enforcement. */
 export async function runBranchRuleContract<
-  const TProvider extends FluentProvider,
+  const TProvider extends "gitea",
   const TVersion extends ProviderVersion<TProvider>,
 >(
   t: Deno.TestContext,

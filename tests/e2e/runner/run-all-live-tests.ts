@@ -7,6 +7,7 @@ import {
   resolveE2EResultDirectory,
 } from "./e2e-run-selection.ts";
 import { liveE2ERunCatalog } from "./live-e2e-run-catalog.ts";
+import { recordedServerLog } from "./server-log.ts";
 
 /** Treat fixture crashes and forced kills as failures, even when Compose cleanup succeeds. */
 export function assertCleanServiceShutdown(
@@ -77,7 +78,9 @@ export async function runAllLiveTests(
     if (!child) return;
     const signal = (value: Deno.Signal) => {
       try {
-        Deno.kill(-child.pid, value);
+        // Docker forwards signals to its Compose plugin. Signal the owned child:
+        // Deno.kill requires unrestricted process permissions even for our process group.
+        child.kill(value);
       } catch (error) {
         if (!(error instanceof Deno.errors.NotFound)) console.error(error);
       }
@@ -148,6 +151,28 @@ export async function runAllLiveTests(
           `${gitHost} ${version}: ${error instanceof Error ? error.message : error}`,
         );
       };
+      const captureServerLogs = async () => {
+        const logs = await runDocker(
+          [...composeArgs, "logs", "--no-color", run.service.name],
+          true,
+        ) as Deno.CommandOutput;
+        const serverLog = decoder.decode(
+          new Uint8Array([...logs.stdout, ...logs.stderr]),
+        ).replace(/[ \t]+$/gm, "");
+        const environmentResults = new URL(
+          "live-test-environment/",
+          results,
+        );
+        await Deno.mkdir(environmentResults, { recursive: true });
+        const recorded = recordedServerLog(serverLog);
+        if (recorded !== serverLog) {
+          await Deno.writeTextFile(new URL("server.full.log", environmentResults), serverLog);
+        }
+        await Deno.writeTextFile(
+          new URL("server.log", environmentResults),
+          recorded,
+        );
+      };
       const teardown = async (verifyShutdown = false) => {
         if (!project) return;
         const errors: string[] = [];
@@ -173,6 +198,13 @@ export async function runAllLiveTests(
             }
           } catch (error) {
             errors.push(String(error));
+          }
+        }
+        if (verifyShutdown) {
+          try {
+            await captureServerLogs();
+          } catch (error) {
+            errors.push(`Could not capture shutdown diagnostics: ${error}`);
           }
         }
         try {
@@ -262,7 +294,7 @@ export async function runAllLiveTests(
             "--build",
             "--wait",
             "--wait-timeout",
-            "180",
+            String(run.service.startupTimeoutSeconds ?? 180),
             run.service.name,
             ...Object.keys(run.services ?? {}),
           ],
@@ -290,28 +322,6 @@ export async function runAllLiveTests(
       } catch (error) {
         reportError(error);
       } finally {
-        try {
-          if (started) {
-            const logs = await runDocker(
-              [...composeArgs, "logs", "--no-color", run.service.name],
-              true,
-            ) as Deno.CommandOutput;
-            const serverLog = decoder.decode(
-              new Uint8Array([...logs.stdout, ...logs.stderr]),
-            ).replace(/[ \t]+$/gm, "");
-            const environmentResults = new URL(
-              "live-test-environment/",
-              results,
-            );
-            await Deno.mkdir(environmentResults, { recursive: true });
-            await Deno.writeTextFile(
-              new URL("server.log", environmentResults),
-              serverLog,
-            );
-          }
-        } catch (error) {
-          reportError(error);
-        }
         try {
           await teardown(started);
         } catch (error) {

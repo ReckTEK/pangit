@@ -1,0 +1,353 @@
+{
+  "scope": "Isolated GitLab server defect and candidate fix; not full PanGit parity approval",
+  "candidatePatchSha256": "6060c2de81e9896a123019fcd9662ac507435bf191881f331d07120677176c02",
+  "versions": {
+    "18.11.11": {
+      "image": "gitlab/gitlab-ee:18.11.11-ee.0",
+      "gitlabCommit": "16bd35699eb29fa0c5595aa8ae57534f39b95145",
+      "stockDeterministicCases": [
+        {
+          "scenario": "earlier_loaded_association",
+          "project_id": 3,
+          "branch": "rule-target",
+          "database_protected": false,
+          "cache_after_deletion": null,
+          "earlier_reader_result": true,
+          "fresh_reader_result": true,
+          "earlier_reader_rules": [
+            "main",
+            "rule-target"
+          ],
+          "current_rules": [
+            "main"
+          ]
+        },
+        {
+          "scenario": "delete_during_cache_calculation",
+          "database_protected": false,
+          "earlier_reader_result": true,
+          "fresh_reader_result": true
+        },
+        {
+          "scenario": "create_during_cache_calculation",
+          "database_protected": true,
+          "earlier_reader_result": false,
+          "fresh_reader_result": false
+        }
+      ],
+      "candidateDeterministicCases": [
+        {
+          "scenario": "earlier_loaded_association",
+          "project_id": 3,
+          "branch": "rule-target",
+          "database_protected": false,
+          "cache_after_deletion": null,
+          "earlier_reader_result": false,
+          "fresh_reader_result": false,
+          "earlier_reader_rules": [
+            "main",
+            "rule-target"
+          ],
+          "current_rules": [
+            "main"
+          ]
+        },
+        {
+          "scenario": "delete_during_cache_calculation",
+          "database_protected": false,
+          "earlier_reader_result": true,
+          "fresh_reader_result": false
+        },
+        {
+          "scenario": "create_during_cache_calculation",
+          "database_protected": true,
+          "earlier_reader_result": false,
+          "fresh_reader_result": true
+        }
+      ],
+      "candidateSequentialHttp": {
+        "cycles": 25,
+        "completed": true,
+        "pushes": [
+          {
+            "event": "push",
+            "at": "2026-09-05T00:10:52.365759Z",
+            "branch": "probe-0",
+            "phase": "protected",
+            "accepted": false,
+            "output": "remote: GitLab: You are not allowed to push code to protected branches on this project.\nerror: failed to push some refs to 'http://127.0.0.1/root/protection-probe-1788567048-36d431.git'\nTo http://127.0.0.1/root/protection-probe-1788567048-36d431.git\n!\tHEAD:refs/heads/probe-0\t[remote rejected] (pre-receive hook declined)\nDone\n"
+          },
+          {
+            "event": "push",
+            "at": "2026-09-05T00:10:52.724717Z",
+            "branch": "probe-0",
+            "phase": "deleted",
+            "accepted": true,
+            "output": "remote: \nremote: To create a merge request for probe-0, visit:        \nremote:   http://gitlab/root/protection-probe-1788567048-36d431/-/merge_requests/new?merge_request%5Bsource_branch%5D=probe-0        \nremote: \nTo http://127.0.0.1/root/protection-probe-1788567048-36d431.git\n \tHEAD:refs/heads/probe-0\t57a9b1a..976c302\nDone\n"
+          }
+        ]
+      },
+      "candidateStrictFluent": {
+        "cycles": 20,
+        "assertions": 300,
+        "requestProofs": 80,
+        "passed": true
+      },
+      "stockFreshHttp": {
+        "cycles": 100,
+        "completed": true,
+        "pushes": [],
+        "interpretation": "100 timing-dependent HTTP cycles passed, but all three deterministic defect reproductions failed."
+      }
+    },
+    "19.3.1": {
+      "image": "gitlab/gitlab-ee:19.3.1-ee.0",
+      "gitlabCommit": "9d55961fa804344fb1a988c503bd36f31f0f6f0f",
+      "stockDeterministicCases": [
+        {
+          "scenario": "earlier_loaded_association",
+          "project_id": 5,
+          "branch": "rule-target",
+          "database_protected": false,
+          "cache_after_deletion": null,
+          "earlier_reader_result": true,
+          "fresh_reader_result": true,
+          "earlier_reader_rules": [
+            "rule-target",
+            "main"
+          ],
+          "current_rules": [
+            "main"
+          ]
+        },
+        {
+          "scenario": "delete_during_cache_calculation",
+          "database_protected": false,
+          "earlier_reader_result": true,
+          "fresh_reader_result": true
+        },
+        {
+          "scenario": "create_during_cache_calculation",
+          "database_protected": true,
+          "earlier_reader_result": false,
+          "fresh_reader_result": false
+        }
+      ],
+      "candidateDeterministicCases": [
+        {
+          "scenario": "earlier_loaded_association",
+          "project_id": 5,
+          "branch": "rule-target",
+          "database_protected": false,
+          "cache_after_deletion": null,
+          "earlier_reader_result": false,
+          "fresh_reader_result": false,
+          "earlier_reader_rules": [
+            "rule-target",
+            "main"
+          ],
+          "current_rules": [
+            "main"
+          ]
+        },
+        {
+          "scenario": "delete_during_cache_calculation",
+          "database_protected": false,
+          "earlier_reader_result": true,
+          "fresh_reader_result": false
+        },
+        {
+          "scenario": "create_during_cache_calculation",
+          "database_protected": true,
+          "earlier_reader_result": false,
+          "fresh_reader_result": true
+        }
+      ],
+      "candidateSequentialHttp": {
+        "cycles": 25,
+        "completed": true,
+        "pushes": [
+          {
+            "event": "push",
+            "at": "2026-09-05T00:07:37.021953Z",
+            "branch": "probe-0",
+            "phase": "protected",
+            "accepted": false,
+            "output": "remote: GitLab: You are not allowed to push code to protected branches on this project.\nerror: failed to push some refs to 'http://127.0.0.1/root/protection-probe-1788566849-42d176.git'\nTo http://127.0.0.1/root/protection-probe-1788566849-42d176.git\n!\tHEAD:refs/heads/probe-0\t[remote rejected] (pre-receive hook declined)\nDone\n"
+          },
+          {
+            "event": "push",
+            "at": "2026-09-05T00:07:37.368073Z",
+            "branch": "probe-0",
+            "phase": "deleted",
+            "accepted": true,
+            "output": "remote: \nremote: To create a merge request for probe-0, visit:        \nremote:   http://gitlab/root/protection-probe-1788566849-42d176/-/merge_requests/new?merge_request%5Bsource_branch%5D=probe-0        \nremote: \nTo http://127.0.0.1/root/protection-probe-1788566849-42d176.git\n \tHEAD:refs/heads/probe-0\td0f3673..6ae306a\nDone\n"
+          }
+        ]
+      },
+      "candidateStrictFluent": {
+        "cycles": 20,
+        "assertions": 300,
+        "requestProofs": 80,
+        "passed": true
+      },
+      "stockFreshHttpFailure": [
+        {
+          "event": "fixture",
+          "at": "2026-09-05T00:01:23.119852Z",
+          "project_id": 5,
+          "cycle": 0,
+          "path": "root/fresh-protection-23d21fdf0744"
+        },
+        {
+          "event": "snapshot",
+          "at": "2026-09-05T00:01:23.345547Z",
+          "project_id": 5,
+          "branch": "rule-target",
+          "phase": "protected",
+          "configured": [
+            "main",
+            "rule-target"
+          ],
+          "protected": true,
+          "root_can_push": false,
+          "developer_can_push": false,
+          "request_id": "01M1QDXCAJKFK3H9K3BX79KRP6"
+        },
+        {
+          "event": "snapshot",
+          "at": "2026-09-05T00:01:23.497921Z",
+          "project_id": 5,
+          "branch": "rule-target",
+          "phase": "deleted",
+          "configured": [
+            "main"
+          ],
+          "protected": false,
+          "root_can_push": true,
+          "developer_can_push": true,
+          "request_id": "01M1QDXCF3WF1644YECXZHGDS1"
+        },
+        {
+          "event": "fixture",
+          "at": "2026-09-05T00:01:23.748738Z",
+          "project_id": 6,
+          "cycle": 1,
+          "path": "root/fresh-protection-5cb34d8c5afc"
+        },
+        {
+          "event": "snapshot",
+          "at": "2026-09-05T00:01:24.006122Z",
+          "project_id": 6,
+          "branch": "rule-target",
+          "phase": "protected",
+          "configured": [
+            "rule-target"
+          ],
+          "protected": true,
+          "root_can_push": false,
+          "developer_can_push": false,
+          "request_id": "01M1QDXCZ3JD0MJWHXSPSYCMRN"
+        },
+        {
+          "event": "snapshot",
+          "at": "2026-09-05T00:01:24.147065Z",
+          "project_id": 6,
+          "branch": "rule-target",
+          "phase": "deleted",
+          "configured": [
+            "main"
+          ],
+          "protected": true,
+          "root_can_push": false,
+          "developer_can_push": false,
+          "request_id": "01M1QDXD3TPY2G1FN64PKY1ADW"
+        },
+        {
+          "event": "mismatch",
+          "at": "2026-09-05T00:01:24.147098Z",
+          "project_id": 6,
+          "branch": "rule-target"
+        }
+      ],
+      "stockActualPushFailure": [
+        {
+          "event": "fixture",
+          "at": "2026-09-05T00:01:45.718130Z",
+          "project_id": 6,
+          "user_id": 4,
+          "path": "root/fresh-protection-5cb34d8c5afc"
+        },
+        {
+          "event": "developer_access_ready",
+          "at": "2026-09-05T00:01:45.773598Z",
+          "attempts": 1
+        },
+        {
+          "event": "snapshot",
+          "at": "2026-09-05T00:01:46.043381Z",
+          "project_id": 6,
+          "branch": "rule-target",
+          "phase": "existing",
+          "configured": [
+            "main"
+          ],
+          "protected": true,
+          "root_can_push": false,
+          "developer_can_push": false,
+          "request_id": "01M1QDY2FRXWSEJ9RB929C0FFM"
+        },
+        {
+          "event": "push",
+          "at": "2026-09-05T00:01:46.189270Z",
+          "branch": "rule-target",
+          "phase": "existing",
+          "accepted": false,
+          "output": "remote: GitLab: You are not allowed to push code to protected branches on this project.\nerror: failed to push some refs to 'http://127.0.0.1/root/fresh-protection-5cb34d8c5afc.git'\nTo http://127.0.0.1/root/fresh-protection-5cb34d8c5afc.git\n!\tHEAD:refs/heads/rule-target\t[remote rejected] (pre-receive hook declined)\nDone\n"
+        }
+      ],
+      "candidateOriginalFailingBranch": [
+        {
+          "event": "fixture",
+          "at": "2026-09-05T00:06:19.685034Z",
+          "project_id": 6,
+          "user_id": 5,
+          "path": "root/fresh-protection-5cb34d8c5afc"
+        },
+        {
+          "event": "developer_access_ready",
+          "at": "2026-09-05T00:06:19.763955Z",
+          "attempts": 1
+        },
+        {
+          "event": "snapshot",
+          "at": "2026-09-05T00:06:20.101378Z",
+          "project_id": 6,
+          "branch": "rule-target",
+          "phase": "existing",
+          "configured": [
+            "main"
+          ],
+          "protected": false,
+          "root_can_push": true,
+          "second_reader_can_push": true,
+          "second_reader": "developer",
+          "request_id": "01M1QE6E3EQ5TEYP7YDY2PBGR1"
+        },
+        {
+          "event": "push",
+          "at": "2026-09-05T00:06:20.397032Z",
+          "branch": "rule-target",
+          "phase": "existing",
+          "accepted": true,
+          "output": "remote: \nremote: To create a merge request for rule-target, visit:        \nremote:   http://gitlab/root/fresh-protection-5cb34d8c5afc/-/merge_requests/new?merge_request%5Bsource_branch%5D=rule-target        \nremote: \nTo http://127.0.0.1/root/fresh-protection-5cb34d8c5afc.git\n \tHEAD:refs/heads/rule-target\teed2bfc..02729f5\nDone\n"
+        }
+      ],
+      "candidateFreshHttp": {
+        "cycles": 100,
+        "completed": true,
+        "pushes": []
+      }
+    }
+  }
+}

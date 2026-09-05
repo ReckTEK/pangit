@@ -1,6 +1,5 @@
 import {
   createClient,
-  type FluentProvider,
   type ProviderVersion,
 } from "../../../../../packages/pangit/src/fluent-api/mod.ts";
 import {
@@ -13,7 +12,7 @@ import { FluentApiRequestRecorder, proveRequestSequence } from "../request-recor
 import type { AuthenticationContractFixtures } from "./authentication-contract-fixtures.ts";
 
 type AuthenticationContractInput<
-  TProvider extends FluentProvider,
+  TProvider extends "gitea",
   TVersion extends ProviderVersion<TProvider>,
 > = {
   readonly provider: TProvider;
@@ -30,7 +29,7 @@ function assert(condition: unknown, message: string): asserts condition {
 
 /** Exercise PAT, Basic/TOTP, and a complete browser authorization-code OAuth flow. */
 export async function runAuthenticationContract<
-  const TProvider extends FluentProvider,
+  const TProvider extends "gitea",
   const TVersion extends ProviderVersion<TProvider>,
 >(
   t: Deno.TestContext,

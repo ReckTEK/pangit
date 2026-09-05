@@ -70,7 +70,7 @@ export type PackageCapabilityOperation =
 export interface PackageCapabilitySupport {
   readonly supported: boolean;
   readonly operations: Readonly<
-    Record<PackageCapabilityOperation, "direct" | "one-page" | "direct-bounded-result">
+    Record<PackageCapabilityOperation, "direct" | "one-page" | "direct-bounded-result" | "bounded">
   >;
   readonly upload: "native-only";
   readonly download: "native-only";

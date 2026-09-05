@@ -34,7 +34,7 @@ export type CreatePullRequestReviewOperation<
   TVersion extends ProviderVersion<TProvider>,
 > = OperationExtension<
   "pullRequestReviews.create",
-  "gitea",
+  TProvider,
   TVersion,
   PullRequestReview<TProvider, TVersion>
 >;
@@ -108,7 +108,7 @@ export function createPullRequestReviews<
       }
       return createOperationExtension<
         "pullRequestReviews.create",
-        "gitea",
+        TProvider,
         TVersion,
         PullRequestReview<TProvider, TVersion>
       >({

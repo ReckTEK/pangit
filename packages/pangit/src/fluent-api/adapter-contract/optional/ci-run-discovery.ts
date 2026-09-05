@@ -124,7 +124,7 @@ export type CiRunDiscoveryOperation =
 export interface CiRunDiscoveryCapabilitySupport {
   readonly supported: boolean;
   readonly operations: Readonly<
-    Record<CiRunDiscoveryOperation, "direct" | "one-page">
+    Record<CiRunDiscoveryOperation, "direct" | "one-page" | "bounded">
   >;
   readonly workflowListing: "native-only-unbounded";
   readonly artifactListing: "native-only-unbounded";

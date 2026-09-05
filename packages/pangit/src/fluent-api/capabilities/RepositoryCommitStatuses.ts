@@ -1,3 +1,4 @@
+import { validateStatusExtension } from "../provider-extensions/ProviderExtensionRegistry.ts";
 import type { ProviderVersion } from "../../generated-rest-clients/git-host.ts";
 import type {
   CombinedCommitStatus,
@@ -24,7 +25,7 @@ export type SetCommitStatusOperation<
   TVersion extends ProviderVersion<TProvider>,
 > = OperationExtension<
   "statuses.set",
-  "gitea",
+  TProvider,
   TVersion,
   CommitStatus<TProvider, TVersion>
 >;
@@ -67,16 +68,31 @@ export function createRepositoryCommitStatuses<
       const resolvedRequest = resolvePageRequest(request, 50, context);
       const page = await adapter.listCommitStatuses(
         repository,
-        await resolveStatusReference(adapter, repository, reference, resolvedRequest, context),
+        await resolveStatusReference(
+          adapter,
+          repository,
+          reference,
+          resolvedRequest,
+          context,
+        ),
         resolvedRequest,
       );
       return createPage(page.items.map(createCommitStatus), page);
     },
-    async get(reference: CommitStatusReference, options: OperationOptions = {}) {
+    async get(
+      reference: CommitStatusReference,
+      options: OperationOptions = {},
+    ) {
       const context = validationContext(adapter, "getCommitStatus");
       const combined = await adapter.getCommitStatus(
         repository,
-        await resolveStatusReference(adapter, repository, reference, options, context),
+        await resolveStatusReference(
+          adapter,
+          repository,
+          reference,
+          options,
+          context,
+        ),
         options,
       );
       return Object.freeze({
@@ -90,13 +106,24 @@ export function createRepositoryCommitStatuses<
     set(reference: CommitStatusReference, input: SetCommitStatusInput) {
       const context = validationContext(adapter, "setCommitStatus");
       const target = validateStatusReference(reference, context);
-      const statusContext = requireIdentity(input.context, "status context", context);
-      if (input.state !== "pending" && input.state !== "success" && input.state !== "failure") {
-        throw new ValidationError("invalid portable commit-status state", context);
+      const statusContext = requireIdentity(
+        input.context,
+        "status context",
+        context,
+      );
+      if (
+        input.state !== "pending" &&
+        input.state !== "success" &&
+        input.state !== "failure"
+      ) {
+        throw new ValidationError(
+          "invalid portable commit-status state",
+          context,
+        );
       }
       return createOperationExtension<
         "statuses.set",
-        "gitea",
+        TProvider,
         TVersion,
         CommitStatus<TProvider, TVersion>
       >({
@@ -110,11 +137,12 @@ export function createRepositoryCommitStatuses<
           portableState: input.state,
         }),
         execute: async (extension, options) => {
-          if (
-            extension !== undefined && extension.state !== "error" &&
-            extension.state !== "warning" && extension.state !== "skipped"
-          ) {
-            throw new ValidationError("invalid Gitea commit-status state", context);
+          if (extension !== undefined) {
+            validateStatusExtension(
+              adapter.provider,
+              adapter.version,
+              extension,
+            );
           }
           const resolvedReference = await resolveStatusReference(
             adapter,
@@ -124,10 +152,15 @@ export function createRepositoryCommitStatuses<
             context,
           );
           return createCommitStatus(
-            await adapter.setCommitStatus(repository, resolvedReference, input, {
-              ...options,
-              ...(extension === undefined ? {} : { extension }),
-            } as SetCommitStatusOptions<TProvider>),
+            await adapter.setCommitStatus(
+              repository,
+              resolvedReference,
+              input,
+              {
+                ...options,
+                ...(extension === undefined ? {} : { extension }),
+              } as SetCommitStatusOptions<TProvider>,
+            ),
           );
         },
       });
@@ -149,7 +182,11 @@ function validateStatusReference(
     case "tag":
       return Object.freeze({
         kind: reference.kind,
-        name: requireIdentity(reference.name, `${reference.kind} name`, context),
+        name: requireIdentity(
+          reference.name,
+          `${reference.kind} name`,
+          context,
+        ),
       });
     case "pullRequestHead":
       if (!Number.isSafeInteger(reference.number) || reference.number <= 0) {
@@ -160,7 +197,10 @@ function validateStatusReference(
       }
       return Object.freeze({ kind: reference.kind, number: reference.number });
     default:
-      throw new ValidationError("invalid commit-status reference kind", context);
+      throw new ValidationError(
+        "invalid commit-status reference kind",
+        context,
+      );
   }
 }
 
@@ -182,8 +222,16 @@ async function resolveStatusReference<
     case "tag":
       return target.name;
     case "pullRequestHead": {
-      const pullRequest = await adapter.getPullRequest(repository, target.number, options);
-      return requireIdentity(pullRequest.source.sha ?? "", "pull-request head SHA", context);
+      const pullRequest = await adapter.getPullRequest(
+        repository,
+        target.number,
+        options,
+      );
+      return requireIdentity(
+        pullRequest.source.sha ?? "",
+        "pull-request head SHA",
+        context,
+      );
     }
   }
 }

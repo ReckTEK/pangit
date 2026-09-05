@@ -84,7 +84,7 @@ export type ReleaseCapabilityOperation =
 export interface ReleaseCapabilitySupport {
   readonly supported: boolean;
   readonly operations: Readonly<
-    Record<ReleaseCapabilityOperation, "direct" | "one-page" | "direct-bounded-result">
+    Record<ReleaseCapabilityOperation, "direct" | "one-page" | "direct-bounded-result" | "bounded">
   >;
   readonly signing: "native-only";
 }

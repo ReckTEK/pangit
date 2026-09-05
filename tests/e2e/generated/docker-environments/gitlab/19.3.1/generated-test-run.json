@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "gitHost": "gitlab",
+  "version": "19.3.1",
+  "containerImage": "gitlab/gitlab-ee:19.3.1-ee.0",
+  "service": {
+    "name": "gitlab",
+    "apiUrl": "http://gitlab",
+    "localApiUrl": "http://127.0.0.1/api/v4",
+    "environment": {
+      "GITLAB_OMNIBUS_CONFIG": "external_url 'http://gitlab'; letsencrypt['enable'] = false; prometheus_monitoring['enable'] = false; gitlab_rails['initial_root_password'] = 'Pangit_7qJ3!vR9#eK2'; gitlab_rails['gitlab_signup_enabled'] = false; gitlab_rails['gitlab_default_projects_features_builds'] = true; gitlab_rails['usage_ping_enabled'] = false; gitlab_rails['env'] = { 'GITLAB_ALLOW_SEPARATE_CI_DATABASE' => 'false' }; puma['worker_processes'] = 2; sidekiq['concurrency'] = 5; nginx['listen_port'] = 80;",
+      "SVWAIT": "120"
+    },
+    "tmpfs": [
+      "/etc/gitlab:mode=0755",
+      "/var/opt/gitlab:exec,mode=0755",
+      "/var/log/gitlab:mode=0755"
+    ],
+    "uid": "0",
+    "gid": "0",
+    "shmSize": "256m",
+    "startupTimeoutSeconds": 900,
+    "stopGracePeriod": "300s",
+    "healthcheck": "test -f /sandbox-auth/ready && curl --fail --silent --header \"PRIVATE-TOKEN: $$(cat /sandbox-auth/api-token)\" http://127.0.0.1/api/v4/user >/dev/null",
+    "bootstrapFile": "bootstrap.sh",
+    "shutdownFile": "shutdown.sh"
+  },
+  "runner": {
+    "name": "e2e",
+    "image": "denoland/deno:2.9.5",
+    "workspace": "/workspace",
+    "results": "/results",
+    "credentials": "/sandbox-auth",
+    "timeoutMs": 30000,
+    "networkHosts": [
+      "webhook-journal:8080"
+    ],
+    "uid": "1000",
+    "gid": "1000"
+  },
+  "credentials": {
+    "username": "root",
+    "password": "Pangit_7qJ3!vR9#eK2",
+    "email": "root@example.invalid",
+    "tokenFile": "api-token",
+    "authorizationHeader": "PRIVATE-TOKEN",
+    "tokenPrefix": ""
+  },
+  "services": {
+    "webhook-journal": {
+      "image": "denoland/deno:2.9.5",
+      "init": true,
+      "stop_grace_period": "10s",
+      "user": "1000:1000",
+      "working_dir": "/fixture",
+      "entrypoint": [
+        "deno"
+      ],
+      "command": [
+        "run",
+        "--no-config",
+        "--allow-net=0.0.0.0:8080",
+        "/fixture/webhook-journal.ts"
+      ],
+      "volumes": [
+        "./webhook-journal.ts:/fixture/webhook-journal.ts:ro"
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "deno eval 'const r=await fetch(\"http://127.0.0.1:8080/health\");if(!r.ok)Deno.exit(1)'"
+        ],
+        "interval": "1s",
+        "timeout": "2s",
+        "retries": 30
+      },
+      "restart": "no"
+    },
+    "runner": {
+      "image": "gitlab/gitlab-runner:alpine-v19.3.1",
+      "init": true,
+      "entrypoint": [
+        "/bin/sh",
+        "-ec"
+      ],
+      "command": [
+        "gitlab-runner register --non-interactive --config /runner/config.toml --url http://gitlab --token \"$$(cat /sandbox-runner-auth/token)\" --executor shell --builds-dir /runner/builds --cache-dir /runner/cache && exec gitlab-runner run --config /runner/config.toml --working-directory /runner --user root"
+      ],
+      "tmpfs": [
+        "/runner:exec,mode=0755"
+      ],
+      "volumes": [
+        "./.auth/runner:/sandbox-runner-auth:ro"
+      ],
+      "depends_on": {
+        "gitlab": {
+          "condition": "service_healthy"
+        }
+      },
+      "stop_signal": "SIGQUIT",
+      "stop_grace_period": "30s",
+      "restart": "no"
+    }
+  },
+  "suites": {
+    "generatedRawRestClientTest": {
+      "testFile": "tests/e2e/generated/raw-rest-client-tests/gitlab/19.3.1/generated-raw-rest-client-e2e_test.ts",
+      "manifestFile": "tests/e2e/generated/raw-rest-client-tests/gitlab/19.3.1/generated-test-manifest.json",
+      "clientImplementation": "packages/pangit/src/generated-rest-clients/gitlab/19.3.1/GitLabRestClient.ts"
+    },
+    "handWrittenFluentApiTest": {
+      "testFile": "tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts"
+    }
+  }
+}

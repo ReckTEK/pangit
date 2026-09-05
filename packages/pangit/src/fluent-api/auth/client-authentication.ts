@@ -94,7 +94,7 @@ class AuthImpl<
   basic(
     input: Omit<BasicAuthorizationInput, "oneTimePassword">,
   ): BasicAuthorization<TProvider, TVersion> {
-    return createBasicAuthorization(input, this.#authorizers.basic);
+    return createBasicAuthorization(this.#provider, input, this.#authorizers.basic);
   }
 }
 

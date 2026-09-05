@@ -123,8 +123,16 @@ export interface GiteaCommitFileChangesExtensionContext {
   readonly changeCount: number;
 }
 
+/** GitLab atomic commit controls. startSha replaces the source branch for a new branch. */
+export interface GitLabCommitFileChangesExtension {
+  readonly force?: boolean;
+  readonly startSha?: string;
+}
+export type GitLabCommitFileChangesExtensionContext = GiteaCommitFileChangesExtensionContext;
+
 export type CommitFileChangesExtension<TProvider extends Provider> = TProvider extends "gitea"
   ? GiteaCommitFileChangesExtension
+  : TProvider extends "gitlab" ? GitLabCommitFileChangesExtension
   : never;
 
 export interface CommitFileChangesOptions<TProvider extends Provider = Provider>

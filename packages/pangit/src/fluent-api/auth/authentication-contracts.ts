@@ -16,13 +16,17 @@ export interface GiteaBasicAuthorizationExtension {
 export type GiteaBasicAuthorizationBranch = () => MaybePromise<GiteaBasicAuthorizationExtension>;
 
 /** Fluent provider-specific Basic authentication selection. */
-export interface BasicAuthorization<
+export type BasicAuthorization<
   TProvider extends FluentProvider,
   TVersion extends ProviderVersion<TProvider>,
-> {
-  gitea(branch: GiteaBasicAuthorizationBranch): this;
-  authorize(options?: OperationOptions): Promise<FluentClient<TProvider, TVersion>>;
-}
+> =
+  & {
+    authorize(options?: OperationOptions): Promise<FluentClient<TProvider, TVersion>>;
+  }
+  & (TProvider extends "gitea" ? {
+      gitea(branch: GiteaBasicAuthorizationBranch): BasicAuthorization<TProvider, TVersion>;
+    }
+    : Record<never, never>);
 
 /** Authentication capability for one selected provider client. */
 export interface Auth<

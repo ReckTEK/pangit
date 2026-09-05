@@ -12,7 +12,7 @@
     "missing": 0,
     "failedCases": 0,
     "cases": 532,
-    "requests": 551
+    "requests": 554
   },
   "endpoints": [
     {
@@ -4842,7 +4842,7 @@
             200
           ],
           "status": 200,
-          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/git/tags/7ea87b0de0667105336c85aacf2a3c3aab752813",
+          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/git/tags/0733e8400fc690abfe367e454e3897ec4aa94c92",
           "method": "GET"
         }
       ]
@@ -6941,7 +6941,7 @@
             200
           ],
           "status": 200,
-          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/git/trees/ebdbb81eeac5ffceeacaf25d5e40d0a19c551390",
+          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/git/trees/01bb5e4e96794b43bde784e8ca7b065c6d9da911",
           "method": "GET"
         }
       ]
@@ -21784,7 +21784,7 @@
             201
           ],
           "status": 201,
-          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/statuses/ebdbb81eeac5ffceeacaf25d5e40d0a19c551390",
+          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/statuses/01bb5e4e96794b43bde784e8ca7b065c6d9da911",
           "method": "POST"
         }
       ]
@@ -23062,7 +23062,7 @@
             204
           ],
           "status": 204,
-          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/push_mirrors/remote_mirror_pGj0566hh3",
+          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/push_mirrors/remote_mirror_uHoZ6xcp7c",
           "method": "DELETE"
         }
       ]
@@ -23870,7 +23870,7 @@
             200
           ],
           "status": 200,
-          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/git/commits/ebdbb81eeac5ffceeacaf25d5e40d0a19c551390.diff",
+          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/git/commits/01bb5e4e96794b43bde784e8ca7b065c6d9da911.diff",
           "method": "GET"
         }
       ]
@@ -25622,7 +25622,7 @@
             200
           ],
           "status": 200,
-          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/commits/9c5331dbef80b16dd6bc07876a82d408101f2724/pull",
+          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/commits/22a98f4a633b73bf4518fd1f54d4f6bf78bfd0a6/pull",
           "method": "GET"
         }
       ]
@@ -26778,7 +26778,7 @@
             404
           ],
           "status": 404,
-          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/git/notes/ebdbb81eeac5ffceeacaf25d5e40d0a19c551390",
+          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/git/notes/01bb5e4e96794b43bde784e8ca7b065c6d9da911",
           "method": "GET"
         }
       ]
@@ -26849,13 +26849,6 @@
           ],
           "passed": true,
           "attempts": [
-            200,
-            200,
-            200,
-            200,
-            200,
-            200,
-            200,
             200
           ],
           "status": 200,
@@ -26872,6 +26865,15 @@
           "passed": true,
           "attempts": [
             200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
             200
           ],
           "status": 200,
@@ -26887,6 +26889,7 @@
           ],
           "passed": true,
           "attempts": [
+            200,
             200,
             200,
             200,
@@ -27452,7 +27455,7 @@
             200
           ],
           "status": 200,
-          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/push_mirrors/remote_mirror_pGj0566hh3",
+          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/push_mirrors/remote_mirror_uHoZ6xcp7c",
           "method": "GET"
         }
       ]
@@ -28091,7 +28094,7 @@
             200
           ],
           "status": 200,
-          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/git/commits/ebdbb81eeac5ffceeacaf25d5e40d0a19c551390",
+          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/git/commits/01bb5e4e96794b43bde784e8ca7b065c6d9da911",
           "method": "GET"
         }
       ]
@@ -30094,7 +30097,7 @@
             200
           ],
           "status": 200,
-          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/statuses/ebdbb81eeac5ffceeacaf25d5e40d0a19c551390",
+          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/statuses/01bb5e4e96794b43bde784e8ca7b065c6d9da911",
           "method": "GET"
         }
       ]

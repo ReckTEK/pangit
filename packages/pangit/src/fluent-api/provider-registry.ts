@@ -1,3 +1,4 @@
+import { gitlabClientCapabilitySupport } from "../git-host-adapters/gitlab/support.ts";
 import type { ProviderVersion } from "../generated-rest-clients/git-host.ts";
 import { ProviderAdapterUnavailableError } from "./adapter-contract/errors.ts";
 import type { CurrentUserProfileCapabilitySupport } from "./adapter-contract/optional/current-user-profile.ts";
@@ -10,8 +11,10 @@ import type {
 /** Providers whose complete high-level adapter is registered. Raw clients have a wider registry. */
 export const fluentProviderVersions: Readonly<{
   readonly gitea: readonly ["1.26.4", "1.27.2"];
+  readonly gitlab: readonly ["18.11.11", "19.3.1"];
 }> = Object.freeze({
   gitea: Object.freeze(["1.26.4", "1.27.2"] as const),
+  gitlab: Object.freeze(["18.11.11", "19.3.1"] as const),
 });
 
 export type FluentProvider = keyof typeof fluentProviderVersions;
@@ -66,10 +69,15 @@ const giteaClientCapabilitySupport = Object.freeze({
 
 /** Static exact-version client capability registry; reading it never probes a provider. */
 export const fluentClientCapabilitySupport: Readonly<{
+  readonly gitlab: Readonly<Record<"18.11.11" | "19.3.1", FluentClientCapabilitySupport>>;
   readonly gitea: Readonly<
     Record<"1.26.4" | "1.27.2", FluentClientCapabilitySupport>
   >;
 }> = Object.freeze({
+  gitlab: Object.freeze({
+    "18.11.11": gitlabClientCapabilitySupport,
+    "19.3.1": gitlabClientCapabilitySupport,
+  }),
   gitea: Object.freeze({
     "1.26.4": giteaClientCapabilitySupport,
     "1.27.2": giteaClientCapabilitySupport,

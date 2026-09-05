@@ -16,6 +16,7 @@ export function validateHandWrittenTestCases(
   const byId = new Map(operations.map((operation) => [operation.id, operation]));
   const covered = new Set<string>();
   const prepare = (step: RawRestClientTestStep): RawRestClientTestStep[] => {
+    if (step.versions && !step.versions.includes(version)) return [];
     if (step.fixture) {
       if (!step.operationId.startsWith("$fixture/") || byId.has(step.operationId)) {
         throw new Error("Fixture requests must be explicitly separate from spec operations");
@@ -28,7 +29,14 @@ export function validateHandWrittenTestCases(
     }
     const input = structuredClone(step.input ?? {});
     const path = { ...(input.path as JsonRecord ?? {}) };
-    for (const parameter of openAPIOperations.get(step.operationId)!.parameters) {
+    const parameters = [
+      ...openAPIOperations.get(step.operationId)!.parameters,
+      ...(byId.get(step.operationId)!.pathParameters ?? []).map((p) => ({
+        in: "path",
+        name: p.name,
+      })),
+    ];
+    for (const parameter of parameters) {
       if (parameter.in !== "path") continue;
       const name = parameter.name as string;
       if (!(name in path)) {

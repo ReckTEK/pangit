@@ -1,47 +1,47 @@
 [0m[38;5;245mrunning 1 test from ./tests/e2e/generated/raw-rest-client-tests/gitea/1.26.4/generated-raw-rest-client-e2e_test.ts[0m
 gitea 1.26.4 generated raw REST-client E2E ...
-  sandbox identity and fixtures: getVersion ... [0m[32mok[0m [0m[38;5;245m(11ms)[0m
-  sandbox identity and fixtures: userGetCurrent ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  sandbox identity and fixtures: getVersion ... [0m[32mok[0m [0m[38;5;245m(13ms)[0m
+  sandbox identity and fixtures: userGetCurrent ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   sandbox identity and fixtures: adminEditUser ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   sandbox identity and fixtures: adminCreateUser ... [0m[32mok[0m [0m[38;5;245m(17ms)[0m
-  sandbox identity and fixtures: userCreateToken ... [0m[32mok[0m [0m[38;5;245m(13ms)[0m
-  sandbox identity and fixtures: createCurrentUserRepo ... [0m[32mok[0m [0m[38;5;245m(121ms)[0m
+  sandbox identity and fixtures: userCreateToken ... [0m[32mok[0m [0m[38;5;245m(15ms)[0m
+  sandbox identity and fixtures: createCurrentUserRepo ... [0m[32mok[0m [0m[38;5;245m(118ms)[0m
   sandbox identity and fixtures: repoEdit ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
   sandbox identity and fixtures: repoGetBranch ... [0m[32mok[0m [0m[38;5;245m(8ms)[0m
   sandbox identity and fixtures: orgCreate ... [0m[32mok[0m [0m[38;5;245m(7ms)[0m
-  sandbox identity and fixtures: createOrgRepo ... [0m[32mok[0m [0m[38;5;245m(120ms)[0m
+  sandbox identity and fixtures: createOrgRepo ... [0m[32mok[0m [0m[38;5;245m(114ms)[0m
   instance and current-user read APIs: adminCronList ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   instance and current-user read APIs: adminGetAllEmails ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  instance and current-user read APIs: adminSearchEmails ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  instance and current-user read APIs: adminSearchEmails ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   instance and current-user read APIs: adminGetAllOrgs ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   instance and current-user read APIs: adminSearchUsers ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  instance and current-user read APIs: adminUnadoptedList ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  instance and current-user read APIs: listGitignoresTemplates ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  instance and current-user read APIs: adminUnadoptedList ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  instance and current-user read APIs: listGitignoresTemplates ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
   instance and current-user read APIs: listLabelTemplates ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   instance and current-user read APIs: listLicenseTemplates ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   instance and current-user read APIs: getGeneralAPISettings ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   instance and current-user read APIs: getGeneralAttachmentSettings ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  instance and current-user read APIs: getGeneralRepositorySettings ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  instance and current-user read APIs: getGeneralRepositorySettings ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
   instance and current-user read APIs: getGeneralUISettings ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
-  instance and current-user read APIs: orgGetAll ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
-  instance and current-user read APIs: notifyGetList ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
-  instance and current-user read APIs: notifyNewAvailable ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
+  instance and current-user read APIs: orgGetAll ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  instance and current-user read APIs: notifyGetList ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  instance and current-user read APIs: notifyNewAvailable ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   instance and current-user read APIs: userCurrentListFollowers ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   instance and current-user read APIs: userCurrentListFollowing ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   instance and current-user read APIs: userCurrentListGPGKeys ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   instance and current-user read APIs: userCurrentListKeys ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  instance and current-user read APIs: userListEmails ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  instance and current-user read APIs: userListEmails ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
   instance and current-user read APIs: orgListCurrentUserOrgs ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   instance and current-user read APIs: userCurrentListRepos ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  instance and current-user read APIs: userCurrentListStarred ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
+  instance and current-user read APIs: userCurrentListStarred ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   instance and current-user read APIs: userGetStopWatches ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   instance and current-user read APIs: userCurrentListSubscriptions ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   instance and current-user read APIs: userListTeams ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   instance and current-user read APIs: userCurrentTrackedTimes ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   instance and current-user read APIs: userSearch ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   instance and current-user read APIs: getUserSettings ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  instance and current-user read APIs: userGetOauth2Application ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
-  instance and current-user read APIs: userListBlocks ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  instance and current-user read APIs: userGetOauth2Application ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  instance and current-user read APIs: userListBlocks ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
   instance and current-user read APIs: adminListHooks ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   instance and current-user read APIs: userListHooks ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   instance and current-user read APIs: getGitignoreTemplateInfo ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
@@ -50,19 +50,19 @@ gitea 1.26.4 generated raw REST-client E2E ...
   instance and current-user read APIs: renderMarkdown ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
   instance and current-user read APIs: renderMarkdownRaw ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   instance and current-user read APIs: renderMarkup ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  instance and current-user read APIs: notifyReadList ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  instance and current-user read APIs: notifyReadList ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
   instance and current-user read APIs: updateUserSettings ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repository read APIs: repoGet ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  repository read APIs: repoGetAssignees ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  repository read APIs: repoGetAssignees ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
   repository read APIs: repoListActivityFeeds ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   repository read APIs: repoListBranchProtection ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repository read APIs: repoListBranches ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
   repository read APIs: repoListCollaborators ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repository read APIs: repoGetAllCommits ... [0m[32mok[0m [0m[38;5;245m(7ms)[0m
-  repository read APIs: repoGetContentsList ... [0m[32mok[0m [0m[38;5;245m(7ms)[0m
-  repository read APIs: listForks ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  repository read APIs: repoListAllGitRefs ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  repository read APIs: repoListHooks ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  repository read APIs: repoGetContentsList ... [0m[32mok[0m [0m[38;5;245m(8ms)[0m
+  repository read APIs: listForks ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  repository read APIs: repoListAllGitRefs ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  repository read APIs: repoListHooks ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   repository read APIs: repoListGitHooks ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repository read APIs: repoGetIssueConfig ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   repository read APIs: repoValidateIssueConfig ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
@@ -73,65 +73,65 @@ gitea 1.26.4 generated raw REST-client E2E ...
   repository read APIs: repoListKeys ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repository read APIs: issueListLabels ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repository read APIs: repoGetLanguages ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  repository read APIs: repoGetLicenses ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  repository read APIs: repoGetLicenses ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repository read APIs: issueGetMilestonesList ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repository read APIs: repoNewPinAllowed ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  repository read APIs: notifyGetRepoList ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  repository read APIs: notifyGetRepoList ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repository read APIs: repoListPullRequests ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repository read APIs: repoListPinnedPullRequests ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repository read APIs: repoListPushMirrors ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repository read APIs: repoListReleases ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repository read APIs: repoGetReviewers ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repository read APIs: repoListStargazers ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  repository read APIs: repoListSubscribers ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  repository read APIs: repoListSubscribers ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repository read APIs: repoListTagProtection ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repository read APIs: repoListTags ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repository read APIs: repoTrackedTimes ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  repository read APIs: repoListTopics ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  repository read APIs: repoListTopics ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repository read APIs: getArtifacts ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repository read APIs: listWorkflowJobs ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repository read APIs: getRepoRunners ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repository read APIs: getWorkflowRuns ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  repository read APIs: repoListActionsSecrets ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  repository read APIs: repoListActionsSecrets ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repository read APIs: getRepoVariablesList ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repository read APIs: ActionsListRepositoryWorkflows ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   repository read APIs: ListActionTasks ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   repository read APIs: repoGetByID ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  repository read APIs: repoGetCombinedStatusByRef ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
+  repository read APIs: repoGetCombinedStatusByRef ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   repository read APIs: repoListStatusesByRef ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   repository read APIs: repoListGitRefs ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   repository read APIs: repoGetContents ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
-  repository read APIs: repoGetRawFile ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
-  repository read APIs: repoGetRawFileOrLFS ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
+  repository read APIs: repoGetRawFile ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  repository read APIs: repoGetRawFileOrLFS ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   repository read APIs: repoGetArchive ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
   repository read APIs: repoGetSingleCommit ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
   repository read APIs: GetTree ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   repository read APIs: GetBlob ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  repository read APIs: repoDownloadCommitDiffOrPatch ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
-  repository read APIs: repoListStatuses ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  repository read APIs: repoDownloadCommitDiffOrPatch ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  repository read APIs: repoListStatuses ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   repository read APIs: repoCreateStatus ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
-  repository read APIs: notifyReadRepoList ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  repository read APIs: notifyReadRepoList ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repository read APIs: repoSearch ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repository read APIs: issueSearchIssues ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repository read APIs: topicSearch ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repository read APIs: repoGetContentsExt ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   repository read APIs: repoGetFileContents ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
-  repository read APIs: repoGetFileContentsPost ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
-  social and permissions: repoAddCollaborator ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  repository read APIs: repoGetFileContentsPost ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
+  social and permissions: repoAddCollaborator ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   social and permissions: repoCheckCollaborator ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  social and permissions: repoGetRepoPermissions ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  social and permissions: repoGetRepoPermissions ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   social and permissions: userCurrentPutFollow ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  social and permissions: userCurrentCheckFollowing ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  social and permissions: userCheckFollowing ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  social and permissions: userCurrentCheckFollowing ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
+  social and permissions: userCheckFollowing ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
   social and permissions: userCurrentDeleteFollow ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   social and permissions: userCurrentPutStar ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   social and permissions: userCurrentCheckStarring ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  social and permissions: userCurrentDeleteStar ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  social and permissions: userCurrentDeleteStar ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
   social and permissions: userCurrentPutSubscription ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   social and permissions: userCurrentCheckSubscription ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   social and permissions: userCurrentDeleteSubscription ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   social and permissions: userGet ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  social and permissions: userListActivityFeeds ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  social and permissions: userListActivityFeeds ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   social and permissions: userListFollowers ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   social and permissions: userListFollowing ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   social and permissions: userListGPGKeys ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
@@ -141,24 +141,24 @@ gitea 1.26.4 generated raw REST-client E2E ...
   social and permissions: userListRepos ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   social and permissions: userListStarred ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   social and permissions: userListSubscriptions ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  social and permissions: userBlockUser ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
+  social and permissions: userBlockUser ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   social and permissions: userCheckUserBlock ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   social and permissions: userUnblockUser ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   social and permissions: repoDeleteCollaborator ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   organization APIs: orgGet ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  organization APIs: orgListActivityFeeds ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  organization APIs: orgListHooks ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  organization APIs: orgListLabels ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
+  organization APIs: orgListActivityFeeds ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  organization APIs: orgListHooks ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
+  organization APIs: orgListLabels ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   organization APIs: orgListMembers ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   organization APIs: orgListPublicMembers ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  organization APIs: orgListRepos ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  organization APIs: orgListRepos ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   organization APIs: orgListTeams ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   organization APIs: teamSearch ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  organization APIs: organizationListBlocks ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  organization APIs: getOrgWorkflowJobs ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  organization APIs: organizationListBlocks ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
+  organization APIs: getOrgWorkflowJobs ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   organization APIs: getOrgRunners ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  organization APIs: getOrgWorkflowRuns ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
-  organization APIs: orgListActionsSecrets ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
+  organization APIs: getOrgWorkflowRuns ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  organization APIs: orgListActionsSecrets ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   organization APIs: getOrgVariablesList ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   organization APIs: orgEdit ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   organization APIs: orgIsMember ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
@@ -166,57 +166,57 @@ gitea 1.26.4 generated raw REST-client E2E ...
   organization APIs: orgIsPublicMember ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   organization APIs: orgConcealMember ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   organization APIs: orgGetUserPermissions ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  organization APIs: organizationBlockUser ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  organization APIs: organizationBlockUser ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   organization APIs: organizationCheckUserBlock ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   organization APIs: organizationUnblockUser ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   organization APIs: orgCreateTeam ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   organization APIs: orgGetTeam ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   organization APIs: orgEditTeam ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  organization APIs: orgAddTeamMember ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  organization APIs: orgAddTeamMember ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   organization APIs: orgListTeamMembers ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   organization APIs: orgListTeamMember ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   organization APIs: orgAddTeamRepository ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  organization APIs: orgListTeamRepos ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  organization APIs: orgListTeamRepos ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   organization APIs: orgListTeamRepo ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  organization APIs: orgListTeamActivityFeeds ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  organization APIs: orgListTeamActivityFeeds ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   organization APIs: repoListTeams ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   organization APIs: repoCheckTeam ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  organization APIs: repoDeleteTeam ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
+  organization APIs: repoDeleteTeam ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   organization APIs: repoAddTeam ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   organization APIs: orgRemoveTeamRepository ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  organization APIs: orgRemoveTeamMember ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  organization APIs: orgRemoveTeamMember ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   organization APIs: orgDeleteTeam ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   user Actions configuration: userCreateRunnerRegistrationToken ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   user Actions configuration: getUserVariablesList ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   user Actions configuration: createUserVariable ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   user Actions configuration: getUserVariable ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  user Actions configuration: updateUserVariable ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  user Actions configuration: getUserVariable ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  user Actions configuration: updateUserVariable ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
+  user Actions configuration: getUserVariable ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
   user Actions configuration: deleteUserVariable ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   user Actions configuration: updateUserSecret ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  user Actions configuration: deleteUserSecret ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  org Actions configuration: orgCreateRunnerRegistrationToken ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  user Actions configuration: deleteUserSecret ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
+  org Actions configuration: orgCreateRunnerRegistrationToken ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   org Actions configuration: getOrgVariablesList ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   org Actions configuration: orgListActionsSecrets ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   org Actions configuration: createOrgVariable ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   org Actions configuration: getOrgVariable ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   org Actions configuration: updateOrgVariable ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  org Actions configuration: getOrgVariable ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  org Actions configuration: getOrgVariable ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
   org Actions configuration: deleteOrgVariable ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   org Actions configuration: updateOrgSecret ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   org Actions configuration: deleteOrgSecret ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repo Actions configuration: repoCreateRunnerRegistrationToken ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repo Actions configuration: getRepoVariablesList ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repo Actions configuration: repoListActionsSecrets ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  repo Actions configuration: createRepoVariable ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  repo Actions configuration: createRepoVariable ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repo Actions configuration: getRepoVariable ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repo Actions configuration: updateRepoVariable ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repo Actions configuration: getRepoVariable ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repo Actions configuration: deleteRepoVariable ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repo Actions configuration: updateRepoSecret ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repo Actions configuration: deleteRepoSecret ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  Actions instance and user reads: listAdminWorkflowJobs ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  Actions instance and user reads: getAdminRunners ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  Actions instance and user reads: listAdminWorkflowJobs ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
+  Actions instance and user reads: getAdminRunners ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   Actions instance and user reads: listAdminWorkflowRuns ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   Actions instance and user reads: getUserWorkflowJobs ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   Actions instance and user reads: getUserRunners ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
@@ -228,64 +228,64 @@ gitea 1.26.4 generated raw REST-client E2E ...
   issue label CRUD: issueEditLabel ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   org label CRUD: orgCreateLabel ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   org label CRUD: orgListLabels ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  org label CRUD: orgGetLabel ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  org label CRUD: orgEditLabel ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  org label CRUD: orgGetLabel ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
+  org label CRUD: orgEditLabel ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
   milestone CRUD: issueCreateMilestone ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   milestone CRUD: issueGetMilestonesList ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   milestone CRUD: issueGetMilestone ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   milestone CRUD: issueEditMilestone ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  issue lifecycle: issueCreateIssue ... [0m[32mok[0m [0m[38;5;245m(10ms)[0m
+  issue lifecycle: issueCreateIssue ... [0m[32mok[0m [0m[38;5;245m(9ms)[0m
   issue lifecycle: issueCreateIssue ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
-  issue lifecycle: issueGetIssue ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
+  issue lifecycle: issueGetIssue ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   issue lifecycle: issueGetComments ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   issue lifecycle: issueGetCommentsAndTimeline ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  issue lifecycle: issueGetLabels ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  issue lifecycle: issueListBlocks ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  issue lifecycle: issueGetLabels ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  issue lifecycle: issueListBlocks ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   issue lifecycle: issueListIssueDependencies ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   issue lifecycle: issueGetIssueReactions ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   issue lifecycle: issueSubscriptions ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   issue lifecycle: issueTrackedTimes ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   issue lifecycle: issueListIssueAttachments ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  issue lifecycle: issueEditIssue ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
+  issue lifecycle: issueEditIssue ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
   issue lifecycle: issueEditIssueDeadline ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  issue lifecycle: issueClearLabels ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  issue lifecycle: issueClearLabels ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   issue lifecycle: issueAddLabel ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
-  issue lifecycle: issueReplaceLabels ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
+  issue lifecycle: issueReplaceLabels ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   issue lifecycle: issueRemoveLabel ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
-  issue lifecycle: issuePostIssueReaction ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
-  issue lifecycle: issueDeleteIssueReaction ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  issue lifecycle: issuePostIssueReaction ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  issue lifecycle: issueDeleteIssueReaction ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   issue lifecycle: issueAddTime ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   issue lifecycle: userTrackedTimes ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   issue lifecycle: issueDeleteTime ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   issue lifecycle: issueStartStopWatch ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   issue lifecycle: issueStopStopWatch ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  issue lifecycle: issueStartStopWatch ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  issue lifecycle: issueDeleteStopWatch ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  issue lifecycle: issueStartStopWatch ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  issue lifecycle: issueDeleteStopWatch ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   issue lifecycle: issueAddTime ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   issue lifecycle: issueResetTime ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  issue lifecycle: pinIssue ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  issue lifecycle: pinIssue ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   issue lifecycle: moveIssuePin ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   issue lifecycle: unpinIssue ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   issue lifecycle: issueLockIssue ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   issue lifecycle: issueUnlockIssue ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  issue lifecycle: issueAddSubscription ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  issue lifecycle: issueAddSubscription ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   issue lifecycle: issueCheckSubscription ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   issue lifecycle: issueDeleteSubscription ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  issue lifecycle: issueCreateIssueDependencies ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  issue lifecycle: issueCreateIssueDependencies ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   issue lifecycle: issueRemoveIssueDependencies ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   issue lifecycle: issueCreateIssueBlocking ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  issue lifecycle: issueRemoveIssueBlocking ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  issue comments and attachments: issueCreateComment ... [0m[32mok[0m [0m[38;5;245m(11ms)[0m
+  issue lifecycle: issueRemoveIssueBlocking ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  issue comments and attachments: issueCreateComment ... [0m[32mok[0m [0m[38;5;245m(7ms)[0m
   issue comments and attachments: issueGetComment ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  issue comments and attachments: issueEditComment ... [0m[32mok[0m [0m[38;5;245m(8ms)[0m
-  issue comments and attachments: issueEditCommentDeprecated ... [0m[32mok[0m [0m[38;5;245m(8ms)[0m
-  issue comments and attachments: issuePostCommentReaction ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  issue comments and attachments: issueGetCommentReactions ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  issue comments and attachments: issueDeleteCommentReaction ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  issue comments and attachments: issueCreateIssueAttachment ... [0m[32mok[0m [0m[38;5;245m(10ms)[0m
+  issue comments and attachments: issueEditComment ... [0m[32mok[0m [0m[38;5;245m(7ms)[0m
+  issue comments and attachments: issueEditCommentDeprecated ... [0m[32mok[0m [0m[38;5;245m(7ms)[0m
+  issue comments and attachments: issuePostCommentReaction ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  issue comments and attachments: issueGetCommentReactions ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  issue comments and attachments: issueDeleteCommentReaction ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  issue comments and attachments: issueCreateIssueAttachment ... [0m[32mok[0m [0m[38;5;245m(8ms)[0m
   issue comments and attachments: issueGetIssueAttachment ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  issue comments and attachments: issueEditIssueAttachment ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  issue comments and attachments: issueDeleteIssueAttachment ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  issue comments and attachments: issueEditIssueAttachment ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
+  issue comments and attachments: issueDeleteIssueAttachment ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   issue comments and attachments: issueCreateIssueCommentAttachment ... [0m[32mok[0m [0m[38;5;245m(8ms)[0m
   issue comments and attachments: issueListIssueCommentAttachments ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   issue comments and attachments: issueGetIssueCommentAttachment ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
@@ -296,72 +296,72 @@ gitea 1.26.4 generated raw REST-client E2E ...
   issue comments and attachments: issueDeleteComment ... [0m[32mok[0m [0m[38;5;245m(7ms)[0m
   admin webhook CRUD: adminCreateHook ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   admin webhook CRUD: adminGetHook ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  admin webhook CRUD: adminEditHook ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  admin webhook CRUD: adminDeleteHook ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  admin webhook CRUD: adminEditHook ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  admin webhook CRUD: adminDeleteHook ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
   org webhook CRUD: orgCreateHook ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  org webhook CRUD: orgGetHook ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  org webhook CRUD: orgGetHook ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
   org webhook CRUD: orgEditHook ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  org webhook CRUD: orgDeleteHook ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  org webhook CRUD: orgDeleteHook ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   repo webhook CRUD: repoCreateHook ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repo webhook CRUD: repoGetHook ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repo webhook CRUD: repoEditHook ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   repo webhook CRUD: repoTestHook ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
   repo webhook CRUD: repoDeleteHook ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  user webhook CRUD: userCreateHook ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  user webhook CRUD: userCreateHook ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
   user webhook CRUD: userGetHook ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   user webhook CRUD: userEditHook ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   user webhook CRUD: userDeleteHook ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  git file and branch lifecycle: repoCreateFile ... [0m[32mok[0m [0m[38;5;245m(119ms)[0m
+  git file and branch lifecycle: repoCreateFile ... [0m[32mok[0m [0m[38;5;245m(113ms)[0m
   git file and branch lifecycle: repoGetEditorConfig ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
-  git file and branch lifecycle: repoCreateFile ... [0m[32mok[0m [0m[38;5;245m(118ms)[0m
-  git file and branch lifecycle: repoUpdateFile ... [0m[32mok[0m [0m[38;5;245m(121ms)[0m
-  git file and branch lifecycle: repoDeleteFile ... [0m[32mok[0m [0m[38;5;245m(121ms)[0m
-  git file and branch lifecycle: repoChangeFiles ... [0m[32mok[0m [0m[38;5;245m(124ms)[0m
-  git file and branch lifecycle: repoApplyDiffPatch ... [0m[32mok[0m [0m[38;5;245m(117ms)[0m
-  git file and branch lifecycle: repoCreateBranch ... [0m[32mok[0m [0m[38;5;245m(104ms)[0m
+  git file and branch lifecycle: repoCreateFile ... [0m[32mok[0m [0m[38;5;245m(111ms)[0m
+  git file and branch lifecycle: repoUpdateFile ... [0m[32mok[0m [0m[38;5;245m(112ms)[0m
+  git file and branch lifecycle: repoDeleteFile ... [0m[32mok[0m [0m[38;5;245m(110ms)[0m
+  git file and branch lifecycle: repoChangeFiles ... [0m[32mok[0m [0m[38;5;245m(110ms)[0m
+  git file and branch lifecycle: repoApplyDiffPatch ... [0m[32mok[0m [0m[38;5;245m(110ms)[0m
+  git file and branch lifecycle: repoCreateBranch ... [0m[32mok[0m [0m[38;5;245m(103ms)[0m
   git file and branch lifecycle: wait for created branch ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
-  git file and branch lifecycle: repoUpdateBranch ... [0m[32mok[0m [0m[38;5;245m(106ms)[0m
-  git file and branch lifecycle: repoRenameBranch ... [0m[32mok[0m [0m[38;5;245m(8ms)[0m
-  git file and branch lifecycle: repoCompareDiff ... [0m[32mok[0m [0m[38;5;245m(16ms)[0m
+  git file and branch lifecycle: repoUpdateBranch ... [0m[32mok[0m [0m[38;5;245m(102ms)[0m
+  git file and branch lifecycle: repoRenameBranch ... [0m[32mok[0m [0m[38;5;245m(7ms)[0m
+  git file and branch lifecycle: repoCompareDiff ... [0m[32mok[0m [0m[38;5;245m(17ms)[0m
   git file and branch lifecycle: repoDeleteBranch ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
-  git file and branch lifecycle: repoCreateBranchProtection ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  git file and branch lifecycle: repoCreateBranchProtection ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   git file and branch lifecycle: repoGetBranchProtection ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  git file and branch lifecycle: repoEditBranchProtection ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  git file and branch lifecycle: repoEditBranchProtection ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   git file and branch lifecycle: repoUpdateBranchProtectionPriories ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   git file and branch lifecycle: repoDeleteBranchProtection ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  git file and branch lifecycle: repoCreateTagProtection ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  git file and branch lifecycle: repoCreateTagProtection ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   git file and branch lifecycle: repoGetTagProtection ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   git file and branch lifecycle: repoEditTagProtection ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   git file and branch lifecycle: repoDeleteTagProtection ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   git file and branch lifecycle: repoCreateTag ... [0m[32mok[0m [0m[38;5;245m(11ms)[0m
   git file and branch lifecycle: repoGetTag ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   git file and branch lifecycle: GetAnnotatedTag ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
-  git file and branch lifecycle: repoDeleteTag ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
+  git file and branch lifecycle: repoDeleteTag ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
   git file and branch lifecycle: repoGetGitHook ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  git file and branch lifecycle: repoEditGitHook ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  git file and branch lifecycle: repoEditGitHook ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   git file and branch lifecycle: repoDeleteGitHook ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  release and binary attachment lifecycle: repoCreateRelease ... [0m[32mok[0m [0m[38;5;245m(12ms)[0m
-  release and binary attachment lifecycle: repoGetLatestRelease ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  release and binary attachment lifecycle: repoCreateRelease ... [0m[32mok[0m [0m[38;5;245m(11ms)[0m
+  release and binary attachment lifecycle: repoGetLatestRelease ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   release and binary attachment lifecycle: repoGetReleaseByTag ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  release and binary attachment lifecycle: repoGetRelease ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  release and binary attachment lifecycle: repoGetRelease ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   release and binary attachment lifecycle: repoEditRelease ... [0m[32mok[0m [0m[38;5;245m(7ms)[0m
   release and binary attachment lifecycle: repoCreateReleaseAttachment ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  release and binary attachment lifecycle: repoListReleaseAttachments ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  release and binary attachment lifecycle: repoListReleaseAttachments ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   release and binary attachment lifecycle: repoGetReleaseAttachment ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  release and binary attachment lifecycle: repoEditReleaseAttachment ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  release and binary attachment lifecycle: repoEditReleaseAttachment ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   release and binary attachment lifecycle: repoDeleteReleaseAttachment ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   release and binary attachment lifecycle: repoDeleteRelease ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  release and binary attachment lifecycle: repoCreateRelease ... [0m[32mok[0m [0m[38;5;245m(13ms)[0m
+  release and binary attachment lifecycle: repoCreateRelease ... [0m[32mok[0m [0m[38;5;245m(11ms)[0m
   release and binary attachment lifecycle: repoDeleteReleaseByTag ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  wiki and topics: repoCreateWikiPage ... [0m[32mok[0m [0m[38;5;245m(111ms)[0m
-  wiki and topics: repoGetWikiPage ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
+  wiki and topics: repoCreateWikiPage ... [0m[32mok[0m [0m[38;5;245m(108ms)[0m
+  wiki and topics: repoGetWikiPage ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
   wiki and topics: repoGetWikiPages ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
   wiki and topics: repoGetWikiPageRevisions ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
-  wiki and topics: repoEditWikiPage ... [0m[32mok[0m [0m[38;5;245m(112ms)[0m
-  wiki and topics: repoDeleteWikiPage ... [0m[32mok[0m [0m[38;5;245m(111ms)[0m
-  wiki and topics: repoUpdateTopics ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  wiki and topics: repoEditWikiPage ... [0m[32mok[0m [0m[38;5;245m(107ms)[0m
+  wiki and topics: repoDeleteWikiPage ... [0m[32mok[0m [0m[38;5;245m(107ms)[0m
+  wiki and topics: repoUpdateTopics ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   wiki and topics: repoAddTopic ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  wiki and topics: repoListTopics ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  wiki and topics: repoListTopics ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   wiki and topics: repoDeleteTopic ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   SSH key CRUD: userCurrentPostKey ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   SSH key CRUD: userCurrentGetKey ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
@@ -369,7 +369,7 @@ gitea 1.26.4 generated raw REST-client E2E ...
   SSH key CRUD: adminCreatePublicKey ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   SSH key CRUD: adminDeleteUserPublicKey ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   SSH key CRUD: repoCreateKey ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  SSH key CRUD: repoGetKey ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  SSH key CRUD: repoGetKey ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   SSH key CRUD: repoDeleteKey ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   GPG key lifecycle: getVerificationToken ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   GPG key lifecycle: userCurrentPostGPGKey ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
@@ -377,101 +377,101 @@ gitea 1.26.4 generated raw REST-client E2E ...
   GPG key lifecycle: userVerifyGPGKey ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   GPG key lifecycle: userCurrentDeleteGPGKey ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   GPG key lifecycle: repoSigningKey ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
-  GPG key lifecycle: getSigningKey ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
+  GPG key lifecycle: getSigningKey ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
   OAuth email avatar and API tokens: userCreateOAuth2Application ... [0m[32mok[0m [0m[38;5;245m(39ms)[0m
   OAuth email avatar and API tokens: userGetOAuth2Application ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  OAuth email avatar and API tokens: userUpdateOAuth2Application ... [0m[32mok[0m [0m[38;5;245m(38ms)[0m
+  OAuth email avatar and API tokens: userUpdateOAuth2Application ... [0m[32mok[0m [0m[38;5;245m(39ms)[0m
   OAuth email avatar and API tokens: userDeleteOAuth2Application ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   OAuth email avatar and API tokens: userAddEmail ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   OAuth email avatar and API tokens: userDeleteEmail ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  OAuth email avatar and API tokens: userUpdateAvatar ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  OAuth email avatar and API tokens: userUpdateAvatar ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
   OAuth email avatar and API tokens: userDeleteAvatar ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  OAuth email avatar and API tokens: orgUpdateAvatar ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
-  OAuth email avatar and API tokens: orgDeleteAvatar ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
+  OAuth email avatar and API tokens: orgUpdateAvatar ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  OAuth email avatar and API tokens: orgDeleteAvatar ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   OAuth email avatar and API tokens: repoUpdateAvatar ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  OAuth email avatar and API tokens: repoDeleteAvatar ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  OAuth email avatar and API tokens: userCreateToken ... [0m[32mok[0m [0m[38;5;245m(14ms)[0m
+  OAuth email avatar and API tokens: repoDeleteAvatar ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
+  OAuth email avatar and API tokens: userCreateToken ... [0m[32mok[0m [0m[38;5;245m(13ms)[0m
   OAuth email avatar and API tokens: userGetTokens ... [0m[32mok[0m [0m[38;5;245m(11ms)[0m
   OAuth email avatar and API tokens: userCreateToken ... [0m[32mok[0m [0m[38;5;245m(14ms)[0m
   OAuth email avatar and API tokens: userDeleteAccessToken ... [0m[32mok[0m [0m[38;5;245m(11ms)[0m
   pull-request lifecycle: repoAddCollaborator ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  pull-request lifecycle: repoCreateBranch ... [0m[32mok[0m [0m[38;5;245m(108ms)[0m
+  pull-request lifecycle: repoCreateBranch ... [0m[32mok[0m [0m[38;5;245m(105ms)[0m
   pull-request lifecycle: wait for created branch ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
-  pull-request lifecycle: repoCreateFile ... [0m[32mok[0m [0m[38;5;245m(114ms)[0m
-  pull-request lifecycle: repoCreatePullRequest ... [0m[32mok[0m [0m[38;5;245m(124ms)[0m
-  pull-request lifecycle: repoGetPullRequest ... [0m[32mok[0m [0m[38;5;245m(1s)[0m
+  pull-request lifecycle: repoCreateFile ... [0m[32mok[0m [0m[38;5;245m(111ms)[0m
+  pull-request lifecycle: repoCreatePullRequest ... [0m[32mok[0m [0m[38;5;245m(122ms)[0m
+  pull-request lifecycle: repoGetPullRequest ... [0m[32mok[0m [0m[38;5;245m(7ms)[0m
   pull-request lifecycle: repoGetPullRequestByBaseHead ... [0m[32mok[0m [0m[38;5;245m(7ms)[0m
-  pull-request lifecycle: repoEditPullRequest ... [0m[32mok[0m [0m[38;5;245m(15ms)[0m
+  pull-request lifecycle: repoEditPullRequest ... [0m[32mok[0m [0m[38;5;245m(18ms)[0m
   pull-request lifecycle: repoGetPullRequestCommits ... [0m[32mok[0m [0m[38;5;245m(9ms)[0m
   pull-request lifecycle: repoGetPullRequestFiles ... [0m[32mok[0m [0m[38;5;245m(8ms)[0m
   pull-request lifecycle: repoDownloadPullDiffOrPatch ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  pull-request lifecycle: repoCreatePullReviewRequests ... [0m[32mok[0m [0m[38;5;245m(12ms)[0m
-  pull-request lifecycle: repoDeletePullReviewRequests ... [0m[32mok[0m [0m[38;5;245m(12ms)[0m
+  pull-request lifecycle: repoCreatePullReviewRequests ... [0m[32mok[0m [0m[38;5;245m(11ms)[0m
+  pull-request lifecycle: repoDeletePullReviewRequests ... [0m[32mok[0m [0m[38;5;245m(11ms)[0m
   pull-request lifecycle: repoListPullReviews ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   pull-request lifecycle: repoCreatePullReview ... [0m[32mok[0m [0m[38;5;245m(9ms)[0m
-  pull-request lifecycle: repoGetPullReview ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  pull-request lifecycle: repoGetPullReview ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
   pull-request lifecycle: repoGetPullReviewComments ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   pull-request lifecycle: repoResolvePullReviewComment ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   pull-request lifecycle: repoUnresolvePullReviewComment ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  pull-request lifecycle: repoSubmitPullReview ... [0m[32mok[0m [0m[38;5;245m(15ms)[0m
-  pull-request lifecycle: repoDismissPullReview ... [0m[32mok[0m [0m[38;5;245m(8ms)[0m
+  pull-request lifecycle: repoSubmitPullReview ... [0m[32mok[0m [0m[38;5;245m(14ms)[0m
+  pull-request lifecycle: repoDismissPullReview ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
   pull-request lifecycle: repoUnDismissPullReview ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
-  pull-request lifecycle: repoCreateFile ... [0m[32mok[0m [0m[38;5;245m(118ms)[0m
-  pull-request lifecycle: repoUpdatePullRequest ... [0m[32mok[0m [0m[38;5;245m(226ms)[0m
-  pull-request lifecycle: repoGetPullRequest ... [0m[32mok[0m [0m[38;5;245m(167ms)[0m
-  pull-request lifecycle: repoDeletePullReview ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
-  pull-request lifecycle: repoCreateBranchProtection ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
-  pull-request lifecycle: wait for merge readiness ... [0m[32mok[0m [0m[38;5;245m(632ms)[0m
-  pull-request lifecycle: repoMergePullRequest ... [0m[32mok[0m [0m[38;5;245m(7ms)[0m
+  pull-request lifecycle: repoCreateFile ... [0m[32mok[0m [0m[38;5;245m(111ms)[0m
+  pull-request lifecycle: repoUpdatePullRequest ... [0m[32mok[0m [0m[38;5;245m(222ms)[0m
+  pull-request lifecycle: repoGetPullRequest ... [0m[32mok[0m [0m[38;5;245m(1s)[0m
+  pull-request lifecycle: repoDeletePullReview ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  pull-request lifecycle: repoCreateBranchProtection ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  pull-request lifecycle: wait for merge readiness ... [0m[32mok[0m [0m[38;5;245m(844ms)[0m
+  pull-request lifecycle: repoMergePullRequest ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
   pull-request lifecycle: repoCancelScheduledAutoMerge ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   pull-request lifecycle: repoDeleteBranchProtection ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   pull-request lifecycle: wait for merge readiness ... [0m[32mok[0m [0m[38;5;245m(427ms)[0m
-  pull-request lifecycle: repoMergePullRequest ... [0m[32mok[0m [0m[38;5;245m(136ms)[0m
+  pull-request lifecycle: repoMergePullRequest ... [0m[32mok[0m [0m[38;5;245m(134ms)[0m
   pull-request lifecycle: repoPullRequestIsMerged ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   pull-request lifecycle: repoGetPullRequest ... [0m[32mok[0m [0m[38;5;245m(7ms)[0m
-  pull-request lifecycle: repoGetCommitPullRequest ... [0m[32mok[0m [0m[38;5;245m(7ms)[0m
+  pull-request lifecycle: repoGetCommitPullRequest ... [0m[32mok[0m [0m[38;5;245m(8ms)[0m
   package lifecycle: listPackageVersions ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  package lifecycle: getLatestPackageVersion ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  package lifecycle: getLatestPackageVersion ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   package lifecycle: getPackage ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  package lifecycle: listPackageFiles ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  package lifecycle: linkPackage ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  package lifecycle: unlinkPackage ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  package lifecycle: deletePackageVersion ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  package lifecycle: deletePackage ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  repository fork migration mirror template and transfer: createFork ... [0m[32mok[0m [0m[38;5;245m(15ms)[0m
+  package lifecycle: listPackageFiles ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  package lifecycle: linkPackage ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  package lifecycle: unlinkPackage ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  package lifecycle: deletePackageVersion ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  package lifecycle: deletePackage ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  repository fork migration mirror template and transfer: createFork ... [0m[32mok[0m [0m[38;5;245m(19ms)[0m
   repository fork migration mirror template and transfer: repoGet ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  repository fork migration mirror template and transfer: repoCreateFile ... [0m[32mok[0m [0m[38;5;245m(119ms)[0m
-  repository fork migration mirror template and transfer: repoMergeUpstream ... [0m[32mok[0m [0m[38;5;245m(101ms)[0m
-  repository fork migration mirror template and transfer: repoMigrate ... [0m[32mok[0m [0m[38;5;245m(23ms)[0m
+  repository fork migration mirror template and transfer: repoCreateFile ... [0m[32mok[0m [0m[38;5;245m(114ms)[0m
+  repository fork migration mirror template and transfer: repoMergeUpstream ... [0m[32mok[0m [0m[38;5;245m(106ms)[0m
+  repository fork migration mirror template and transfer: repoMigrate ... [0m[32mok[0m [0m[38;5;245m(24ms)[0m
   repository fork migration mirror template and transfer: repoGet ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  repository fork migration mirror template and transfer: repoMirrorSync ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  repository fork migration mirror template and transfer: createCurrentUserRepo ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
-  repository fork migration mirror template and transfer: repoAddPushMirror ... [0m[32mok[0m [0m[38;5;245m(15ms)[0m
+  repository fork migration mirror template and transfer: repoMirrorSync ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  repository fork migration mirror template and transfer: createCurrentUserRepo ... [0m[32mok[0m [0m[38;5;245m(7ms)[0m
+  repository fork migration mirror template and transfer: repoAddPushMirror ... [0m[32mok[0m [0m[38;5;245m(14ms)[0m
   repository fork migration mirror template and transfer: repoGetPushMirrorByRemoteName ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  repository fork migration mirror template and transfer: repoPushMirrorSync ... [0m[32mok[0m [0m[38;5;245m(233ms)[0m
+  repository fork migration mirror template and transfer: repoPushMirrorSync ... [0m[32mok[0m [0m[38;5;245m(231ms)[0m
   repository fork migration mirror template and transfer: repoGet ... [0m[32mok[0m [0m[38;5;245m(313ms)[0m
-  repository fork migration mirror template and transfer: repoDeletePushMirror ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  repository fork migration mirror template and transfer: createCurrentUserRepo ... [0m[32mok[0m [0m[38;5;245m(112ms)[0m
+  repository fork migration mirror template and transfer: repoDeletePushMirror ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  repository fork migration mirror template and transfer: createCurrentUserRepo ... [0m[32mok[0m [0m[38;5;245m(113ms)[0m
   repository fork migration mirror template and transfer: generateRepo ... [0m[32mok[0m [0m[38;5;245m(114ms)[0m
   repository fork migration mirror template and transfer: repoGet ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   repository fork migration mirror template and transfer: repoDelete ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
-  repository fork migration mirror template and transfer: createCurrentUserRepo ... [0m[32mok[0m [0m[38;5;245m(114ms)[0m
+  repository fork migration mirror template and transfer: createCurrentUserRepo ... [0m[32mok[0m [0m[38;5;245m(117ms)[0m
   repository fork migration mirror template and transfer: repoTransfer ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   repository fork migration mirror template and transfer: rejectRepoTransfer ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   repository fork migration mirror template and transfer: repoTransfer ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   repository fork migration mirror template and transfer: acceptRepoTransfer ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   repository fork migration mirror template and transfer: repoGet ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  repository fork migration mirror template and transfer: repoDelete ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
+  repository fork migration mirror template and transfer: repoDelete ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
   runner registration and management: adminCreateRunnerRegistrationToken ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   runner registration and management: $fixture/registerAdmin ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   runner registration and management: getAdminRunner ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   runner registration and management: updateAdminRunner ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   runner registration and management: deleteAdminRunner ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  runner registration and management: orgCreateRunnerRegistrationToken ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  runner registration and management: $fixture/registerOrg ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
+  runner registration and management: orgCreateRunnerRegistrationToken ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
+  runner registration and management: $fixture/registerOrg ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   runner registration and management: getOrgRunner ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  runner registration and management: updateOrgRunner ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  runner registration and management: deleteOrgRunner ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
+  runner registration and management: updateOrgRunner ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  runner registration and management: deleteOrgRunner ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   runner registration and management: repoCreateRunnerRegistrationToken ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   runner registration and management: $fixture/registerRepo ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
   runner registration and management: getRepoRunner ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
@@ -482,56 +482,56 @@ gitea 1.26.4 generated raw REST-client E2E ...
   runner registration and management: getUserRunner ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   runner registration and management: updateUserRunner ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   runner registration and management: deleteUserRunner ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  workflow lifecycle: repoCreateFile ... [0m[32mok[0m [0m[38;5;245m(118ms)[0m
+  workflow lifecycle: repoCreateFile ... [0m[32mok[0m [0m[38;5;245m(114ms)[0m
   workflow lifecycle: ActionsGetWorkflow ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
   workflow lifecycle: ActionsDisableWorkflow ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
-  workflow lifecycle: ActionsEnableWorkflow ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
-  workflow lifecycle: ActionsDispatchWorkflow ... [0m[32mok[0m [0m[38;5;245m(11ms)[0m
-  workflow lifecycle: getWorkflowRuns ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  workflow lifecycle: GetWorkflowRun ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  workflow lifecycle: getArtifactsOfRun ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  workflow lifecycle: ActionsEnableWorkflow ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  workflow lifecycle: ActionsDispatchWorkflow ... [0m[32mok[0m [0m[38;5;245m(12ms)[0m
+  workflow lifecycle: getWorkflowRuns ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  workflow lifecycle: GetWorkflowRun ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  workflow lifecycle: getArtifactsOfRun ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   workflow lifecycle: listWorkflowRunJobs ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   workflow lifecycle: getWorkflowJob ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  workflow lifecycle: GetWorkflowRun ... [0m[32mok[0m [0m[38;5;245m(259ms)[0m
-  workflow lifecycle: getArtifacts ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  workflow lifecycle: GetWorkflowRun ... [0m[32mok[0m [0m[38;5;245m(261ms)[0m
+  workflow lifecycle: getArtifacts ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
   workflow lifecycle: getArtifact ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  workflow lifecycle: downloadArtifact ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  workflow lifecycle: downloadArtifact ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   workflow lifecycle: deleteArtifact ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  workflow lifecycle: downloadActionsRunJobLogs ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  workflow lifecycle: rerunWorkflowJob ... [0m[32mok[0m [0m[38;5;245m(10ms)[0m
+  workflow lifecycle: downloadActionsRunJobLogs ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
+  workflow lifecycle: rerunWorkflowJob ... [0m[32mok[0m [0m[38;5;245m(13ms)[0m
   workflow lifecycle: GetWorkflowRun ... [0m[32mok[0m [0m[38;5;245m(259ms)[0m
   workflow lifecycle: rerunWorkflowRun ... [0m[32mok[0m [0m[38;5;245m(11ms)[0m
+  workflow lifecycle: GetWorkflowRun ... [0m[32mok[0m [0m[38;5;245m(257ms)[0m
+  workflow lifecycle: rerunFailedWorkflowRun ... [0m[32mok[0m [0m[38;5;245m(10ms)[0m
   workflow lifecycle: GetWorkflowRun ... [0m[32mok[0m [0m[38;5;245m(259ms)[0m
-  workflow lifecycle: rerunFailedWorkflowRun ... [0m[32mok[0m [0m[38;5;245m(11ms)[0m
-  workflow lifecycle: GetWorkflowRun ... [0m[32mok[0m [0m[38;5;245m(259ms)[0m
-  workflow lifecycle: deleteActionRun ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  workflow lifecycle: deleteActionRun ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   notification lifecycle: issueCreateComment ... [0m[32mok[0m [0m[38;5;245m(9ms)[0m
   notification lifecycle: notifyGetList ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  notification lifecycle: notifyGetThread ... [0m[32mok[0m [0m[38;5;245m(7ms)[0m
+  notification lifecycle: notifyGetThread ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   notification lifecycle: notifyReadThread ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  secondary resources and administrative cleanup: adminAdoptRepository ... [0m[32mok[0m [0m[38;5;245m(8ms)[0m
-  secondary resources and administrative cleanup: repoGet ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  secondary resources and administrative cleanup: adminDeleteUnadoptedRepository ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
-  secondary resources and administrative cleanup: adminCronRun ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  secondary resources and administrative cleanup: adminCreateRepo ... [0m[32mok[0m [0m[38;5;245m(118ms)[0m
-  secondary resources and administrative cleanup: adminCreateOrg ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
-  secondary resources and administrative cleanup: createOrgRepoDeprecated ... [0m[32mok[0m [0m[38;5;245m(119ms)[0m
+  secondary resources and administrative cleanup: adminAdoptRepository ... [0m[32mok[0m [0m[38;5;245m(7ms)[0m
+  secondary resources and administrative cleanup: repoGet ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  secondary resources and administrative cleanup: adminDeleteUnadoptedRepository ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  secondary resources and administrative cleanup: adminCronRun ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  secondary resources and administrative cleanup: adminCreateRepo ... [0m[32mok[0m [0m[38;5;245m(109ms)[0m
+  secondary resources and administrative cleanup: adminCreateOrg ... [0m[32mok[0m [0m[38;5;245m(8ms)[0m
+  secondary resources and administrative cleanup: createOrgRepoDeprecated ... [0m[32mok[0m [0m[38;5;245m(116ms)[0m
   secondary resources and administrative cleanup: adminAddUserBadges ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  secondary resources and administrative cleanup: adminListUserBadges ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  secondary resources and administrative cleanup: adminListUserBadges ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   secondary resources and administrative cleanup: adminDeleteUserBadges ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   secondary resources and administrative cleanup: orgDeleteMember ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   secondary resources and administrative cleanup: listPackages ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   secondary resources and administrative cleanup: adminRenameUser ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  secondary resources and administrative cleanup: renameOrg ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  secondary resources and administrative cleanup: orgDelete ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  secondary resources and administrative cleanup: issueDelete ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
+  secondary resources and administrative cleanup: renameOrg ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
+  secondary resources and administrative cleanup: orgDelete ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
+  secondary resources and administrative cleanup: issueDelete ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   secondary resources and administrative cleanup: issueDeleteLabel ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   secondary resources and administrative cleanup: orgDeleteLabel ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   secondary resources and administrative cleanup: issueDeleteMilestone ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  secondary resources and administrative cleanup: adminDeleteUser ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
-  negative: existing commit without a Git note returns not found ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  secondary resources and administrative cleanup: adminDeleteUser ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
+  negative: existing commit without a Git note returns not found ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
   negative: repoSigningKeySSH: missing resource contract ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
-  negative: getSigningKeySSH: missing resource contract ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
+  negative: getSigningKeySSH: missing resource contract ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
 gitea 1.26.4 generated raw REST-client E2E ... [0m[32mok[0m [0m[38;5;245m(9s)[0m
 
 [0m[32mok[0m | 1 passed (532 steps) | 0 failed [0m[38;5;245m(9s)[0m

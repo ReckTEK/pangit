@@ -5,6 +5,7 @@ export type RestClientOperation = {
   method: string;
   path: string;
   methodName: string;
+  pathParameters?: readonly { name: string; multiSegment?: boolean }[];
 };
 
 export type OpenAPIOperation = {

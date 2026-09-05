@@ -1,3 +1,7 @@
+import type {
+  GitLabProviderNativeRegistry,
+  GitLabVersion,
+} from "../../git-host-adapters/gitlab/native/GitLabNative.ts";
 import type { Provider, ProviderVersion } from "../../generated-rest-clients/git-host.ts";
 import type { GiteaBlobNative } from "../../git-host-adapters/gitea/native/GiteaBlobNative.ts";
 import type { GiteaBranchRuleEntityNative } from "../../git-host-adapters/gitea/native/GiteaBranchRuleNative.ts";
@@ -73,6 +77,7 @@ export type GiteaProviderNativeRegistry<TVersion extends GiteaVersion> = Readonl
 
 /** Single source of truth for every implemented provider/version native door. */
 export type ProviderNativeRegistry = Readonly<{
+  gitlab: Readonly<{ [V in GitLabVersion]: GitLabProviderNativeRegistry<V> }>;
   gitea: Readonly<
     {
       [TVersion in GiteaVersion]: GiteaProviderNativeRegistry<TVersion>;
@@ -87,6 +92,7 @@ type RegisteredProviderNative<
   TVersion extends ProviderVersion<TProvider>,
   TKind extends keyof GiteaProviderNativeRegistry<GiteaVersion>,
 > = TProvider extends "gitea" ? GiteaProviderNativeRegistry<TVersion & GiteaVersion>[TKind]
+  : TProvider extends "gitlab" ? GitLabProviderNativeRegistry<TVersion & GitLabVersion>[TKind]
   : EmptyProviderNative;
 
 /** Fluent-client native door narrowed to the selected implemented provider. */
