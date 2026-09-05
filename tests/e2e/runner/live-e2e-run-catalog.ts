@@ -1,9 +1,11 @@
+import { forgejoFluentContractIds } from "../hand-written/git-host-adapter-tests/forgejo/forgejo-contract-ids.ts";
 import { gitlabFluentContractIds } from "../hand-written/git-host-adapter-tests/gitlab/gitlab-contract-ids.ts";
 import { giteaFluentContractIds } from "../hand-written/git-host-adapter-tests/gitea/gitea-contract-ids.ts";
 import { liveTestPlan } from "../hand-written/read-live-test-plan.ts";
 import type { E2ERunCatalog } from "./e2e-run-selection.ts";
 
 const fluentContractIds = {
+  forgejo: forgejoFluentContractIds,
   gitea: giteaFluentContractIds,
   gitlab: gitlabFluentContractIds,
 } as const satisfies Partial<Record<keyof typeof liveTestPlan.gitHosts, readonly string[]>>;

@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="deno test" tests="33" failures="0" errors="0" time="48.143">
+<testsuites name="deno test" tests="33" failures="0" errors="0" time="55.924">
     <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/gitea/gitea-fluent-api-e2e_test.ts" tests="1" disabled="0" errors="0" failures="0">
-        <testcase name="gitea 1.27.2 hand-written fluent API E2E" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitea/gitea-fluent-api-e2e_test.ts" time="48.141" line="17" col="6">
+        <testcase name="gitea 1.27.2 hand-written fluent API E2E" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitea/gitea-fluent-api-e2e_test.ts" time="55.922" line="17" col="6">
         </testcase>
     </testsuite>
     <testsuite name="./tests/e2e/hand-written/fluent-api-contracts/authentication/authentication-contract.ts" tests="1" disabled="0" errors="0" failures="0">
-        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; core/authentication" classname="./tests/e2e/hand-written/fluent-api-contracts/authentication/authentication-contract.ts" time="12.101" line="54" col="26">
+        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; core/authentication" classname="./tests/e2e/hand-written/fluent-api-contracts/authentication/authentication-contract.ts" time="15.871" line="54" col="26">
         </testcase>
     </testsuite>
     <testsuite name="./tests/e2e/hand-written/fluent-api-contracts/repositories/repository-contract.ts" tests="1" disabled="0" errors="0" failures="0">
-        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; core/repositories" classname="./tests/e2e/hand-written/fluent-api-contracts/repositories/repository-contract.ts" time="0.456" line="60" col="26">
+        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; core/repositories" classname="./tests/e2e/hand-written/fluent-api-contracts/repositories/repository-contract.ts" time="0.412" line="60" col="26">
         </testcase>
     </testsuite>
     <testsuite name="./tests/e2e/hand-written/fluent-api-contracts/forks/fork-contract.ts" tests="1" disabled="0" errors="0" failures="0">
-        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; core/forks" classname="./tests/e2e/hand-written/fluent-api-contracts/forks/fork-contract.ts" time="0.031" line="47" col="26">
+        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; core/forks" classname="./tests/e2e/hand-written/fluent-api-contracts/forks/fork-contract.ts" time="0.029" line="47" col="26">
         </testcase>
     </testsuite>
     <testsuite name="./tests/e2e/hand-written/fluent-api-contracts/branches/branch-contract.ts" tests="1" disabled="0" errors="0" failures="0">
-        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; core/branches" classname="./tests/e2e/hand-written/fluent-api-contracts/branches/branch-contract.ts" time="0.194" line="52" col="26">
+        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; core/branches" classname="./tests/e2e/hand-written/fluent-api-contracts/branches/branch-contract.ts" time="0.183" line="52" col="26">
         </testcase>
     </testsuite>
     <testsuite name="./tests/e2e/hand-written/fluent-api-contracts/tags/tag-contract.ts" tests="1" disabled="0" errors="0" failures="0">
-        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; core/tags" classname="./tests/e2e/hand-written/fluent-api-contracts/tags/tag-contract.ts" time="0.038" line="50" col="26">
+        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; core/tags" classname="./tests/e2e/hand-written/fluent-api-contracts/tags/tag-contract.ts" time="0.041" line="50" col="26">
         </testcase>
     </testsuite>
     <testsuite name="./tests/e2e/hand-written/fluent-api-contracts/commits/commit-contract.ts" tests="1" disabled="0" errors="0" failures="0">
-        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; core/commits" classname="./tests/e2e/hand-written/fluent-api-contracts/commits/commit-contract.ts" time="0.120" line="59" col="26">
+        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; core/commits" classname="./tests/e2e/hand-written/fluent-api-contracts/commits/commit-contract.ts" time="0.118" line="59" col="26">
         </testcase>
     </testsuite>
     <testsuite name="./tests/e2e/hand-written/fluent-api-contracts/content/content-read-contract.ts" tests="1" disabled="0" errors="0" failures="0">
-        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; core/content-reads" classname="./tests/e2e/hand-written/fluent-api-contracts/content/content-read-contract.ts" time="0.266" line="70" col="26">
+        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; core/content-reads" classname="./tests/e2e/hand-written/fluent-api-contracts/content/content-read-contract.ts" time="0.262" line="70" col="26">
         </testcase>
     </testsuite>
     <testsuite name="./tests/e2e/hand-written/fluent-api-contracts/content/file-change-contract.ts" tests="1" disabled="0" errors="0" failures="0">
-        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; core/file-change-commits" classname="./tests/e2e/hand-written/fluent-api-contracts/content/file-change-contract.ts" time="0.263" line="51" col="26">
+        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; core/file-change-commits" classname="./tests/e2e/hand-written/fluent-api-contracts/content/file-change-contract.ts" time="0.250" line="51" col="26">
         </testcase>
     </testsuite>
     <testsuite name="./tests/e2e/hand-written/fluent-api-contracts/pull-requests/pull-request-discovery-contract.ts" tests="1" disabled="0" errors="0" failures="0">
@@ -41,19 +41,19 @@
         </testcase>
     </testsuite>
     <testsuite name="./tests/e2e/hand-written/fluent-api-contracts/pull-requests/pull-request-mutation-contract.ts" tests="1" disabled="0" errors="0" failures="0">
-        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; core/pull-request-mutation" classname="./tests/e2e/hand-written/fluent-api-contracts/pull-requests/pull-request-mutation-contract.ts" time="0.416" line="59" col="26">
+        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; core/pull-request-mutation" classname="./tests/e2e/hand-written/fluent-api-contracts/pull-requests/pull-request-mutation-contract.ts" time="0.396" line="59" col="26">
         </testcase>
     </testsuite>
     <testsuite name="./tests/e2e/hand-written/fluent-api-contracts/pull-requests/pull-request-merge-contract.ts" tests="1" disabled="0" errors="0" failures="0">
-        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; core/pull-request-merge" classname="./tests/e2e/hand-written/fluent-api-contracts/pull-requests/pull-request-merge-contract.ts" time="0.320" line="46" col="26">
+        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; core/pull-request-merge" classname="./tests/e2e/hand-written/fluent-api-contracts/pull-requests/pull-request-merge-contract.ts" time="0.301" line="46" col="26">
         </testcase>
     </testsuite>
     <testsuite name="./tests/e2e/hand-written/fluent-api-contracts/pull-requests/pull-request-reviews-comments-contract.ts" tests="1" disabled="0" errors="0" failures="0">
-        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; core/pull-request-reviews-comments" classname="./tests/e2e/hand-written/fluent-api-contracts/pull-requests/pull-request-reviews-comments-contract.ts" time="0.182" line="50" col="26">
+        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; core/pull-request-reviews-comments" classname="./tests/e2e/hand-written/fluent-api-contracts/pull-requests/pull-request-reviews-comments-contract.ts" time="0.171" line="50" col="26">
         </testcase>
     </testsuite>
     <testsuite name="./tests/e2e/hand-written/fluent-api-contracts/commit-statuses/commit-status-contract.ts" tests="1" disabled="0" errors="0" failures="0">
-        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; core/commit-statuses" classname="./tests/e2e/hand-written/fluent-api-contracts/commit-statuses/commit-status-contract.ts" time="0.087" line="50" col="26">
+        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; core/commit-statuses" classname="./tests/e2e/hand-written/fluent-api-contracts/commit-statuses/commit-status-contract.ts" time="0.084" line="50" col="26">
         </testcase>
     </testsuite>
     <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/gitea/extensions/file-change-commit/gitea-file-change-commit-contract.ts" tests="1" disabled="0" errors="0" failures="0">
@@ -61,15 +61,15 @@
         </testcase>
     </testsuite>
     <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/gitea/extensions/compare-diff-patch/gitea-compare-diff-patch-contract.ts" tests="1" disabled="0" errors="0" failures="0">
-        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; gitea-extension/compare-diff-patch" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitea/extensions/compare-diff-patch/gitea-compare-diff-patch-contract.ts" time="0.021" line="34" col="26">
+        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; gitea-extension/compare-diff-patch" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitea/extensions/compare-diff-patch/gitea-compare-diff-patch-contract.ts" time="0.020" line="34" col="26">
         </testcase>
     </testsuite>
     <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/gitea/extensions/pull-request-merge/gitea-pull-request-merge-contract.ts" tests="1" disabled="0" errors="0" failures="0">
-        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; gitea-extension/pull-request-merge" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitea/extensions/pull-request-merge/gitea-pull-request-merge-contract.ts" time="0.208" line="43" col="26">
+        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; gitea-extension/pull-request-merge" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitea/extensions/pull-request-merge/gitea-pull-request-merge-contract.ts" time="0.203" line="43" col="26">
         </testcase>
     </testsuite>
     <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/gitea/extensions/pull-request-review/gitea-pull-request-review-contract.ts" tests="1" disabled="0" errors="0" failures="0">
-        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; gitea-extension/pull-request-review" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitea/extensions/pull-request-review/gitea-pull-request-review-contract.ts" time="0.082" line="48" col="26">
+        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; gitea-extension/pull-request-review" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitea/extensions/pull-request-review/gitea-pull-request-review-contract.ts" time="0.079" line="48" col="26">
         </testcase>
     </testsuite>
     <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/gitea/extensions/commit-status/gitea-commit-status-contract.ts" tests="1" disabled="0" errors="0" failures="0">
@@ -81,19 +81,19 @@
         </testcase>
     </testsuite>
     <testsuite name="./tests/e2e/hand-written/fluent-api-contracts/optional/issues/issue-contract.ts" tests="1" disabled="0" errors="0" failures="0">
-        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; shared-capability/issues" classname="./tests/e2e/hand-written/fluent-api-contracts/optional/issues/issue-contract.ts" time="0.080" line="46" col="26">
+        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; shared-capability/issues" classname="./tests/e2e/hand-written/fluent-api-contracts/optional/issues/issue-contract.ts" time="0.077" line="46" col="26">
         </testcase>
     </testsuite>
     <testsuite name="./tests/e2e/hand-written/fluent-api-contracts/optional/issues/issue-content-version-contract.ts" tests="1" disabled="0" errors="0" failures="0">
-        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; gitea-extension/issue-content-version" classname="./tests/e2e/hand-written/fluent-api-contracts/optional/issues/issue-content-version-contract.ts" time="0.033" line="49" col="26">
+        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; gitea-extension/issue-content-version" classname="./tests/e2e/hand-written/fluent-api-contracts/optional/issues/issue-content-version-contract.ts" time="0.037" line="49" col="26">
         </testcase>
     </testsuite>
     <testsuite name="./tests/e2e/hand-written/fluent-api-contracts/optional/releases/release-contract.ts" tests="1" disabled="0" errors="0" failures="0">
-        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; shared-capability/releases" classname="./tests/e2e/hand-written/fluent-api-contracts/optional/releases/release-contract.ts" time="0.060" line="46" col="26">
+        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; shared-capability/releases" classname="./tests/e2e/hand-written/fluent-api-contracts/optional/releases/release-contract.ts" time="0.058" line="46" col="26">
         </testcase>
     </testsuite>
     <testsuite name="./tests/e2e/hand-written/fluent-api-contracts/optional/repository-webhooks/repository-webhook-contract.ts" tests="1" disabled="0" errors="0" failures="0">
-        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; shared-capability/repository-webhooks" classname="./tests/e2e/hand-written/fluent-api-contracts/optional/repository-webhooks/repository-webhook-contract.ts" time="1.791" line="52" col="26">
+        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; shared-capability/repository-webhooks" classname="./tests/e2e/hand-written/fluent-api-contracts/optional/repository-webhooks/repository-webhook-contract.ts" time="2.487" line="52" col="26">
         </testcase>
     </testsuite>
     <testsuite name="./tests/e2e/hand-written/fluent-api-contracts/optional/ci-run-discovery/ci-run-discovery-contract.ts" tests="1" disabled="0" errors="0" failures="0">
@@ -101,15 +101,15 @@
         </testcase>
     </testsuite>
     <testsuite name="./tests/e2e/hand-written/fluent-api-contracts/optional/packages/package-contract.ts" tests="1" disabled="0" errors="0" failures="0">
-        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; shared-capability/packages" classname="./tests/e2e/hand-written/fluent-api-contracts/optional/packages/package-contract.ts" time="0.035" line="46" col="26">
+        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; shared-capability/packages" classname="./tests/e2e/hand-written/fluent-api-contracts/optional/packages/package-contract.ts" time="0.034" line="46" col="26">
         </testcase>
     </testsuite>
     <testsuite name="./tests/e2e/hand-written/fluent-api-contracts/optional/blob-reads/blob-read-contract.ts" tests="1" disabled="0" errors="0" failures="0">
-        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; shared-capability/blob-reads" classname="./tests/e2e/hand-written/fluent-api-contracts/optional/blob-reads/blob-read-contract.ts" time="0.068" line="69" col="26">
+        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; shared-capability/blob-reads" classname="./tests/e2e/hand-written/fluent-api-contracts/optional/blob-reads/blob-read-contract.ts" time="0.070" line="69" col="26">
         </testcase>
     </testsuite>
     <testsuite name="./tests/e2e/hand-written/fluent-api-contracts/optional/pull-request-reviews/pull-request-review-contract.ts" tests="1" disabled="0" errors="0" failures="0">
-        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; shared-capability/pull-request-reviews" classname="./tests/e2e/hand-written/fluent-api-contracts/optional/pull-request-reviews/pull-request-review-contract.ts" time="0.127" line="48" col="26">
+        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; shared-capability/pull-request-reviews" classname="./tests/e2e/hand-written/fluent-api-contracts/optional/pull-request-reviews/pull-request-review-contract.ts" time="0.124" line="48" col="26">
         </testcase>
     </testsuite>
     <testsuite name="./tests/e2e/hand-written/fluent-api-contracts/optional/branch-rules/branch-rule-contract.ts" tests="1" disabled="0" errors="0" failures="0">
@@ -117,7 +117,7 @@
         </testcase>
     </testsuite>
     <testsuite name="./tests/e2e/hand-written/fluent-api-contracts/optional/branch-rules/branch-rule-priority-contract.ts" tests="1" disabled="0" errors="0" failures="0">
-        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; gitea-extension/branch-rule-priority" classname="./tests/e2e/hand-written/fluent-api-contracts/optional/branch-rules/branch-rule-priority-contract.ts" time="0.027" line="42" col="26">
+        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; gitea-extension/branch-rule-priority" classname="./tests/e2e/hand-written/fluent-api-contracts/optional/branch-rules/branch-rule-priority-contract.ts" time="0.025" line="42" col="26">
         </testcase>
     </testsuite>
     <testsuite name="./tests/e2e/hand-written/fluent-api-contracts/optional/unsupported-gitea-modules/unsupported-gitea-modules-contract.ts" tests="1" disabled="0" errors="0" failures="0">
@@ -129,7 +129,7 @@
         </testcase>
     </testsuite>
     <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/gitea/native-access/entities/gitea-native-entity-access-contract.ts" tests="1" disabled="0" errors="0" failures="0">
-        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; native-access/gitea/entities" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitea/native-access/entities/gitea-native-entity-access-contract.ts" time="0.113" line="42" col="26">
+        <testcase name="gitea 1.27.2 hand-written fluent API E2E &gt; native-access/gitea/entities" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitea/native-access/entities/gitea-native-entity-access-contract.ts" time="0.109" line="42" col="26">
         </testcase>
     </testsuite>
 </testsuites>

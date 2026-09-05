@@ -1,3 +1,4 @@
+import type {} from "../fluent-providers/forgejo/registration.ts";
 import type {} from "../fluent-providers/gitea/registration.ts";
 import type {} from "../fluent-providers/gitlab/registration.ts";
 import type { ProviderVersion } from "../fluent-api/adapter-contract/provider.ts";
@@ -6,6 +7,8 @@ import type { FluentClient } from "../fluent-api/client/FluentClient.ts";
 import { ProviderAdapterUnavailableError } from "../fluent-api/adapter-contract/errors.ts";
 
 const providers = {
+  forgejo: (): Promise<typeof import("../fluent-providers/forgejo/mod.ts")> =>
+    import("../fluent-providers/forgejo/mod.ts"),
   gitea: (): Promise<typeof import("../fluent-providers/gitea/mod.ts")> =>
     import("../fluent-providers/gitea/mod.ts"),
   gitlab: (): Promise<typeof import("../fluent-providers/gitlab/mod.ts")> =>

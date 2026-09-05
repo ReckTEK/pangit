@@ -6,7 +6,7 @@
   "selection": {
     "suite": "all"
   },
-  "passed": true,
+  "passed": false,
   "suites": {
     "generatedRawRestClientTest": {
       "kind": "generated-raw-rest-client-test",
@@ -16,7 +16,7 @@
     },
     "handWrittenFluentApiTest": {
       "kind": "hand-written-fluent-api-test",
-      "passed": true,
+      "passed": false,
       "junit": "hand-written-fluent-api-test/junit.xml",
       "log": "hand-written-fluent-api-test/test.log",
       "evidence": "hand-written-fluent-api-test/fluent-api-contracts.json"
@@ -82,7 +82,7 @@
       "shared-capability/blob-reads",
       "shared-capability/unsupported-modules"
     ],
-    "passed": true,
+    "passed": false,
     "knownProviderDefects": [
       {
         "id": "GL-001",
@@ -157,9 +157,9 @@
         "id": "gitlab-extension/operations",
         "passed": true,
         "assertions": [
-          "Extension callback context: expected \"root/pangit-7fabd211-d48-repo\", received \"root/pangit-7fabd211-d48-repo\"",
+          "Extension callback context: expected \"root/pangit-9820f8a1-23d-repo\", received \"root/pangit-9820f8a1-23d-repo\"",
           "Extension callback evaluated once: expected 1, received 1",
-          "Native start SHA honored: expected [\"6e6f0864c558ace706dc2e54e7f2d881aa78c7c2\"], received [\"6e6f0864c558ace706dc2e54e7f2d881aa78c7c2\"]",
+          "Native start SHA honored: expected [\"1c4de9f8ebaadb6e06f68d5b13ba4cc8f7c6513f\"], received [\"1c4de9f8ebaadb6e06f68d5b13ba4cc8f7c6513f\"]",
           "Native GitLab status preserved: expected \"running\", received \"running\"",
           "Native running is not invented as portable pending: expected undefined, received undefined",
           "Native merge controls complete merge"
@@ -201,8 +201,8 @@
         "passed": true,
         "assertions": [
           "Nested namespace retains full path",
-          "Fork parent identity retained: expected \"root/pangit-fc91317b-2d0-repo\", received \"root/pangit-fc91317b-2d0-repo\"",
-          "Fork is usable when create resolves: expected \"b785ea609e228a3c5a99a12e288907269461d6ec\", received \"b785ea609e228a3c5a99a12e288907269461d6ec\"",
+          "Fork parent identity retained: expected \"root/pangit-822ee881-86e-repo\", received \"root/pangit-822ee881-86e-repo\"",
+          "Fork is usable when create resolves: expected \"f025e72aef6c49745bfba3eade50cbef5547b4a7\", received \"f025e72aef6c49745bfba3eade50cbef5547b4a7\"",
           "Fork listing contains created fork"
         ],
         "requestEvidence": []
@@ -211,7 +211,7 @@
         "id": "core/branches",
         "passed": true,
         "assertions": [
-          "Branch created at exact commit: expected \"93cf2f65eabc3708d73a2cd58eb21fba39b42297\", received \"93cf2f65eabc3708d73a2cd58eb21fba39b42297\"",
+          "Branch created at exact commit: expected \"0ed37934259bd8b95095f908d2e557aa9385dc16\", received \"0ed37934259bd8b95095f908d2e557aa9385dc16\"",
           "Divergence compares both directions: expected [1,1], received [1,1]",
           "Rejects with CapabilityUnavailableError: expected \"CapabilityUnavailableError\", received \"CapabilityUnavailableError\"",
           "Unsupported rename preserves original branch",
@@ -243,7 +243,7 @@
         "id": "core/tags",
         "passed": true,
         "assertions": [
-          "Annotated tag points to commit: expected \"3e91aafeda44e9e4408696a67826d696bf8e71a3\", received \"3e91aafeda44e9e4408696a67826d696bf8e71a3\"",
+          "Annotated tag points to commit: expected \"e6938e5f6b950bd0fd34b052dcce3c2cfcd758ca\", received \"e6938e5f6b950bd0fd34b052dcce3c2cfcd758ca\"",
           "Encoded tag lookup: expected \"v1/encoded\", received \"v1/encoded\"",
           "Tags one-page listing: expected 1, received 1",
           "Rejects with NotFoundError: expected \"NotFoundError\", received \"NotFoundError\""
@@ -268,19 +268,19 @@
         "id": "core/commits",
         "passed": true,
         "assertions": [
-          "Commit parent graph retained: expected [\"220c7dcac4c4f34489ee6526fe6c4661981a2f0c\"], received [\"220c7dcac4c4f34489ee6526fe6c4661981a2f0c\"]",
+          "Commit parent graph retained: expected [\"463a574ada6cb4cf5189776962c9aba857ffbf7d\"], received [\"463a574ada6cb4cf5189776962c9aba857ffbf7d\"]",
           "Optional diff facet: expected \"history.txt\", received \"history.txt\"",
           "Optional statistics facet: expected 1, received 1",
           "Unsigned commit verification: expected false, received false",
-          "Batch preserves input order and duplicates: expected [\"4e46af5f08de2b7e416287762e5c6274285358b7\",\"220c7dcac4c4f34489ee6526fe6c4661981a2f0c\",\"4e46af5f08de2b7e416287762e5c6274285358b7\"], received [\"4e46af5f08de2b7e416287762e5c6274285358b7\",\"220c7dcac4c4f34489ee6526fe6c4661981a2f0c\",\"4e46af5f08de2b7e416287762e5c6274285358b7\"]",
-          "Compare yields exact range: expected [\"4e46af5f08de2b7e416287762e5c6274285358b7\"], received [\"4e46af5f08de2b7e416287762e5c6274285358b7\"]",
+          "Batch preserves input order and duplicates: expected [\"411fa2e50d9ed5be26179306fa9280e077569d1a\",\"463a574ada6cb4cf5189776962c9aba857ffbf7d\",\"411fa2e50d9ed5be26179306fa9280e077569d1a\"], received [\"411fa2e50d9ed5be26179306fa9280e077569d1a\",\"463a574ada6cb4cf5189776962c9aba857ffbf7d\",\"411fa2e50d9ed5be26179306fa9280e077569d1a\"]",
+          "Compare yields exact range: expected [\"411fa2e50d9ed5be26179306fa9280e077569d1a\"], received [\"411fa2e50d9ed5be26179306fa9280e077569d1a\"]",
           "Reachable difference: expected 1, received 1",
           "Full reachable count: expected 2, received 2",
-          "Merge bases complete: expected [\"220c7dcac4c4f34489ee6526fe6c4661981a2f0c\"], received [\"220c7dcac4c4f34489ee6526fe6c4661981a2f0c\"]",
+          "Merge bases complete: expected [\"463a574ada6cb4cf5189776962c9aba857ffbf7d\"], received [\"463a574ada6cb4cf5189776962c9aba857ffbf7d\"]",
           "Head refs resolve exact SHA",
           "Bounded contributor slice reports completeness",
           "Commit page retains continuation",
-          "Commit continuation: expected \"220c7dcac4c4f34489ee6526fe6c4661981a2f0c\", received \"220c7dcac4c4f34489ee6526fe6c4661981a2f0c\""
+          "Commit continuation: expected \"463a574ada6cb4cf5189776962c9aba857ffbf7d\", received \"463a574ada6cb4cf5189776962c9aba857ffbf7d\""
         ],
         "requestEvidence": [
           {
@@ -292,7 +292,7 @@
               {
                 "operationId": "getApiV4ProjectsIdRepositoryCommitsSha",
                 "method": "GET",
-                "path": "/api/v4/projects/10/repository/commits/4e46af5f08de2b7e416287762e5c6274285358b7"
+                "path": "/api/v4/projects/10/repository/commits/411fa2e50d9ed5be26179306fa9280e077569d1a"
               }
             ]
           },
@@ -306,12 +306,12 @@
               {
                 "operationId": "getApiV4ProjectsIdRepositoryCommitsSha",
                 "method": "GET",
-                "path": "/api/v4/projects/10/repository/commits/4e46af5f08de2b7e416287762e5c6274285358b7"
+                "path": "/api/v4/projects/10/repository/commits/411fa2e50d9ed5be26179306fa9280e077569d1a"
               },
               {
                 "operationId": "getApiV4ProjectsIdRepositoryCommitsSha",
                 "method": "GET",
-                "path": "/api/v4/projects/10/repository/commits/220c7dcac4c4f34489ee6526fe6c4661981a2f0c"
+                "path": "/api/v4/projects/10/repository/commits/463a574ada6cb4cf5189776962c9aba857ffbf7d"
               }
             ]
           }
@@ -334,12 +334,12 @@
               {
                 "operationId": "getApiV4ProjectsIdRepositoryCommitsShaDiff",
                 "method": "GET",
-                "path": "/api/v4/projects/11/repository/commits/4dc0eb7fb39a2a9b82124ab5466ad2a690a45e22/diff"
+                "path": "/api/v4/projects/11/repository/commits/119cb675e97847c70b394a316b4f23bca6093690/diff"
               },
               {
                 "operationId": "getApiV4ProjectsIdRepositoryCommitsShaDiff",
                 "method": "GET",
-                "path": "/api/v4/projects/11/repository/commits/4dc0eb7fb39a2a9b82124ab5466ad2a690a45e22/diff"
+                "path": "/api/v4/projects/11/repository/commits/119cb675e97847c70b394a316b4f23bca6093690/diff"
               }
             ]
           }
@@ -413,11 +413,8 @@
       },
       {
         "id": "core/pull-request-comments",
-        "passed": true,
-        "assertions": [
-          "General, inline, and renamed-file comments persisted",
-          "Reviewer assignment persisted"
-        ],
+        "passed": false,
+        "assertions": [],
         "requestEvidence": []
       },
       {
@@ -515,7 +512,7 @@
               {
                 "operationId": "getApiV4ProjectsIdPackages",
                 "method": "GET",
-                "path": "/api/v4/projects/root%2Fpangit-3cb073d4-1c4-repo/packages"
+                "path": "/api/v4/projects/root%2Fpangit-00e1615e-37a-repo/packages"
               }
             ]
           }
@@ -595,12 +592,12 @@
         "passed": true,
         "assertions": [
           "Real runner executes pipeline successfully: expected \"success\", received \"success\"",
-          "Pipeline head SHA: expected \"4690597a562978a35f3f06a6831481b91131f604\", received \"4690597a562978a35f3f06a6831481b91131f604\"",
+          "Pipeline head SHA: expected \"55a0188bf9fd6d52fdb5dd6b89a6b67d98a15fa5\", received \"55a0188bf9fd6d52fdb5dd6b89a6b67d98a15fa5\"",
           "CI configuration workflow: expected \".gitlab-ci.yml\", received \".gitlab-ci.yml\"",
           "CI job conclusion: expected \"success\", received \"success\"",
           "Direct job lookup: expected \"fixture\", received \"fixture\"",
           "Actual job artifact discovered",
-          "Stable job archive identity: expected \"job:4\", received \"job:4\"",
+          "Stable job archive identity: expected \"job:5\", received \"job:5\"",
           "Pipeline filtered discovery"
         ],
         "requestEvidence": [
@@ -613,7 +610,7 @@
               {
                 "operationId": "getApiV4ProjectsIdJobsJobId",
                 "method": "GET",
-                "path": "/api/v4/projects/25/jobs/4"
+                "path": "/api/v4/projects/25/jobs/5"
               }
             ]
           }

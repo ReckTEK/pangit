@@ -66,7 +66,7 @@ Deno.test("package root exposes only the fluent API and provider-client factory"
   assertEquals(Object.keys(PanGit), ["api", "createProviderClient"], "Unexpected root export");
   assertEquals(
     Object.keys(PanGit.api),
-    ["auth", "createClient", "errors"],
+    ["auth", "createClient", "createCodebergClient", "errors"],
     "Unexpected API export",
   );
   assertEquals(
@@ -90,6 +90,8 @@ Deno.test("package subpaths expose only the API and individual provider clients"
     "./providers/azure-devops/latest",
     "./providers/bitbucket/latest",
     "./providers/codeberg/latest",
+    "./providers/forgejo/15.0.7",
+    "./providers/forgejo/16.0.3",
     "./providers/gitea/1.26.4",
     "./providers/gitea/1.27.2",
     "./providers/github/latest",
@@ -97,6 +99,7 @@ Deno.test("package subpaths expose only the API and individual provider clients"
     "./providers/gitlab/19.3.1",
     "./fluent/gitea",
     "./fluent/gitlab",
+    "./fluent/forgejo",
   ];
   assertEquals(Object.keys(configuration.exports), expected, "Unexpected package export path");
   for (const [specifier, target] of Object.entries(configuration.exports)) {

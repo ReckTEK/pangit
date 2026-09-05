@@ -33,7 +33,15 @@ Deno.test("package ships PanGit MIT license and complete generated schema notice
     await Deno.readTextFile(manifestFile),
   ) as GeneratedOpenApiManifest;
   const providers = Object.keys(manifest.gitHosts).sort();
-  const expectedProviders = ["azure-devops", "bitbucket", "codeberg", "gitea", "github", "gitlab"];
+  const expectedProviders = [
+    "azure-devops",
+    "bitbucket",
+    "codeberg",
+    "forgejo",
+    "gitea",
+    "github",
+    "gitlab",
+  ];
   if (JSON.stringify(providers) !== JSON.stringify(expectedProviders)) {
     throw new Error(`Package contains unexpected providers: ${providers.join(", ")}`);
   }

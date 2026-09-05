@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "gitHost": "forgejo",
+  "version": "16.0.3",
+  "containerImage": "codeberg.org/forgejo/forgejo:16.0.3",
+  "service": {
+    "name": "forgejo",
+    "apiUrl": "http://forgejo:3000/api/v1",
+    "localApiUrl": "http://127.0.0.1:3000/api/v1",
+    "environment": {
+      "FORGEJO__actions__ENABLED": "true",
+      "FORGEJO__database__DB_TYPE": "sqlite3",
+      "FORGEJO__database__PATH": "/data/gitea/forgejo.db",
+      "FORGEJO__mailer__ENABLED": "false",
+      "FORGEJO__security__INSTALL_LOCK": "true",
+      "FORGEJO__server__DOMAIN": "forgejo",
+      "FORGEJO__server__ROOT_URL": "http://forgejo:3000/",
+      "FORGEJO__server__SSH_DOMAIN": "forgejo",
+      "FORGEJO__server__SSH_PORT": "22",
+      "FORGEJO__service__DISABLE_REGISTRATION": "true",
+      "FORGEJO__security__DISABLE_GIT_HOOKS": "false",
+      "FORGEJO__repository__ENABLE_PUSH_CREATE_USER": "true",
+      "FORGEJO__repository__DEFAULT_BRANCH": "main",
+      "FORGEJO__migrations__ALLOW_LOCALNETWORKS": "true",
+      "FORGEJO__webhook__ALLOWED_HOST_LIST": "private",
+      "USER_UID": "1000",
+      "USER_GID": "1000",
+      "FORGEJO__git__HOME_PATH": "/data/git",
+      "FORGEJO__quota__ENABLED": "true",
+      "FORGEJO__quota.default__TOTAL": "-1"
+    },
+    "tmpfs": [
+      "/data:exec,mode=0750,uid=1000,gid=1000"
+    ],
+    "uid": "1000",
+    "gid": "1000",
+    "healthcheck": "test -f /sandbox-auth/ready && wget -qO- --header=\"Authorization: token $$(cat /sandbox-auth/api-token)\" http://127.0.0.1:3000/api/v1/user >/dev/null",
+    "bootstrapFile": "bootstrap.sh"
+  },
+  "runner": {
+    "name": "e2e",
+    "image": "denoland/deno:2.9.5",
+    "workspace": "/workspace",
+    "results": "/results",
+    "credentials": "/sandbox-auth",
+    "timeoutMs": 20000,
+    "networkHosts": [
+      "webhook-journal:8080"
+    ]
+  },
+  "credentials": {
+    "username": "sandbox",
+    "password": "forgejo-sandbox-password",
+    "email": "sandbox@example.invalid",
+    "tokenFile": "api-token",
+    "authorizationHeader": "authorization",
+    "tokenPrefix": "token "
+  },
+  "services": {
+    "webhook-journal": {
+      "image": "denoland/deno:2.9.5",
+      "init": true,
+      "stop_grace_period": "10s",
+      "user": "1000:1000",
+      "working_dir": "/fixture",
+      "entrypoint": [
+        "deno"
+      ],
+      "command": [
+        "run",
+        "--no-config",
+        "--allow-net=0.0.0.0:8080",
+        "/fixture/webhook-journal.ts"
+      ],
+      "volumes": [
+        "./webhook-journal.ts:/fixture/webhook-journal.ts:ro"
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "deno eval 'const r=await fetch(\"http://127.0.0.1:8080/health\");if(!r.ok)Deno.exit(1)'"
+        ],
+        "interval": "1s",
+        "timeout": "2s",
+        "retries": 30
+      },
+      "restart": "no"
+    },
+    "actions": {
+      "user": "1000:1000",
+      "working_dir": "/data",
+      "tmpfs": [
+        "/data:exec,mode=0750,uid=1000,gid=1000"
+      ],
+      "entrypoint": [
+        "/bin/sh",
+        "-ec"
+      ],
+      "command": [
+        "forgejo-runner register --no-interactive --config /config.yaml --instance http://forgejo:3000 --token \"$$(cat /sandbox-auth/runner-token)\" --name e2e-executor --labels sandbox:host && exec forgejo-runner daemon --config /config.yaml"
+      ],
+      "volumes": [
+        "./.auth:/sandbox-auth:ro",
+        "./actions-config.yaml:/config.yaml:ro",
+        "./upload-artifact.sh:/fixtures/upload-artifact.sh:ro"
+      ],
+      "depends_on": {
+        "forgejo": {
+          "condition": "service_healthy"
+        }
+      },
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "test -s /data/.runner && kill -0 1"
+        ],
+        "interval": "1s",
+        "timeout": "2s",
+        "retries": 60
+      },
+      "restart": "no",
+      "stop_grace_period": "10s",
+      "build": {
+        "context": ".",
+        "dockerfile": "actions.Dockerfile"
+      }
+    }
+  },
+  "suites": {
+    "generatedRawRestClientTest": {
+      "testFile": "tests/e2e/generated/raw-rest-client-tests/forgejo/16.0.3/generated-raw-rest-client-e2e_test.ts",
+      "manifestFile": "tests/e2e/generated/raw-rest-client-tests/forgejo/16.0.3/generated-test-manifest.json",
+      "clientImplementation": "packages/pangit/src/generated-rest-clients/forgejo/16.0.3/ForgejoRestClient.ts"
+    },
+    "handWrittenFluentApiTest": {
+      "testFile": "tests/e2e/hand-written/git-host-adapter-tests/forgejo/forgejo-fluent-api-e2e_test.ts"
+    }
+  }
+}

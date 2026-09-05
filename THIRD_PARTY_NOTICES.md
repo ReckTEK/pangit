@@ -100,6 +100,152 @@ index cee797761f..7f9f90a665 100644
      "version": "{{AppVer | JSEscape}}"
 ```
 
+## Forgejo 15.0.7
+
+Copyright (c) Forgejo contributors
+
+- OpenAPI source:
+  https://codeberg.org/forgejo/forgejo/raw/tag/v15.0.7/templates/swagger/v1_json.tmpl
+- OpenAPI SHA-256: `sha256:e5a8b5adc4498281d0b369063432d58edb162c263088657b0d07df03c8d75975`
+- License: `MIT`
+- Embedded schema declaration: This file is distributed under the MIT license for the purpose of
+  interoperability
+- Declared terms: http://opensource.org/licenses/MIT
+- License source: https://spdx.org/licenses/MIT.txt
+- Downloaded license SHA-256:
+  `sha256:c3b1b78bc8bd3ea13aa4bc9778442d16560270afa235006d816e5e88cef24db4`
+- License text completion: Generic source fields completed with the attribution above.
+- Distributed license SHA-256:
+  `sha256:c20c38e33cc6c92ccfab8a6a9196042831a9ff36852ce6a76a7d441fe3b5fdb6`
+- Modification notice: PanGit downloaded and normalized the schema, then generated TypeScript types,
+  operation metadata, REST-client methods, tests, and reference documentation.
+
+### License text
+
+```text
+MIT License
+
+Copyright (c) Forgejo contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+```
+
+### Upstream notice 1
+
+- Source: https://codeberg.org/forgejo/forgejo/commit/5e923cfbddb59eb7afaed1bc3b5724c1b2bc0844.patch
+- SHA-256: `sha256:633609919b93847156e4830222877cbc7e361f8fdd3c7dff132bfe64228c595c`
+
+```text
+From 5e923cfbddb59eb7afaed1bc3b5724c1b2bc0844 Mon Sep 17 00:00:00 2001
+From: Earl Warren <contact@earl-warren.org>
+Date: Fri, 23 Aug 2024 17:40:33 +0200
+Subject: [PATCH] chore(license): clarify the API swagger file is and stays MIT
+
+It is not an original work and enforcing copyright on that file would
+probably be difficult. To clarify that the intent of the Forgejo
+authors is that it is used for interoperability with no restriction,
+explicitly release it under MIT and display the intent in the swagger
+web page.
+
+There is a contradiction in claiming it is under MIT while claiming
+copyright is unlikely to be enforceable, but it efficiently conveys
+the intention.
+---
+ templates/swagger/v1_json.tmpl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/templates/swagger/v1_json.tmpl b/templates/swagger/v1_json.tmpl
+index cee797761f..7f9f90a665 100644
+--- a/templates/swagger/v1_json.tmpl
++++ b/templates/swagger/v1_json.tmpl
+@@ -16,7 +16,7 @@
+     "description": "This documentation describes the Forgejo API.",
+     "title": "Forgejo API",
+     "license": {
+-      "name": "MIT",
++      "name": "This file is distributed under the MIT license for the purpose of interoperability",
+       "url": "http://opensource.org/licenses/MIT"
+     },
+     "version": "{{AppVer | JSEscape}}"
+```
+
+## Forgejo 16.0.3
+
+Copyright (c) Forgejo contributors
+
+- OpenAPI source:
+  https://codeberg.org/forgejo/forgejo/raw/tag/v16.0.3/templates/swagger/v1_json.tmpl
+- OpenAPI SHA-256: `sha256:e37f187d0c054c6330cfaa256d5b34daa32b8b5bfbb4247b741eba096194262f`
+- License: `MIT`
+- Embedded schema declaration: This file is distributed under the MIT license for the purpose of
+  interoperability
+- Declared terms: http://opensource.org/licenses/MIT
+- License source: https://spdx.org/licenses/MIT.txt
+- Downloaded license SHA-256:
+  `sha256:c3b1b78bc8bd3ea13aa4bc9778442d16560270afa235006d816e5e88cef24db4`
+- License text completion: Generic source fields completed with the attribution above.
+- Distributed license SHA-256:
+  `sha256:c20c38e33cc6c92ccfab8a6a9196042831a9ff36852ce6a76a7d441fe3b5fdb6`
+- Modification notice: PanGit downloaded and normalized the schema, then generated TypeScript types,
+  operation metadata, REST-client methods, tests, and reference documentation.
+
+### License text
+
+```text
+MIT License
+
+Copyright (c) Forgejo contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+```
+
+### Upstream notice 1
+
+- Source: https://codeberg.org/forgejo/forgejo/commit/5e923cfbddb59eb7afaed1bc3b5724c1b2bc0844.patch
+- SHA-256: `sha256:633609919b93847156e4830222877cbc7e361f8fdd3c7dff132bfe64228c595c`
+
+```text
+From 5e923cfbddb59eb7afaed1bc3b5724c1b2bc0844 Mon Sep 17 00:00:00 2001
+From: Earl Warren <contact@earl-warren.org>
+Date: Fri, 23 Aug 2024 17:40:33 +0200
+Subject: [PATCH] chore(license): clarify the API swagger file is and stays MIT
+
+It is not an original work and enforcing copyright on that file would
+probably be difficult. To clarify that the intent of the Forgejo
+authors is that it is used for interoperability with no restriction,
+explicitly release it under MIT and display the intent in the swagger
+web page.
+
+There is a contradiction in claiming it is under MIT while claiming
+copyright is unlikely to be enforceable, but it efficiently conveys
+the intention.
+---
+ templates/swagger/v1_json.tmpl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/templates/swagger/v1_json.tmpl b/templates/swagger/v1_json.tmpl
+index cee797761f..7f9f90a665 100644
+--- a/templates/swagger/v1_json.tmpl
++++ b/templates/swagger/v1_json.tmpl
+@@ -16,7 +16,7 @@
+     "description": "This documentation describes the Forgejo API.",
+     "title": "Forgejo API",
+     "license": {
+-      "name": "MIT",
++      "name": "This file is distributed under the MIT license for the purpose of interoperability",
+       "url": "http://opensource.org/licenses/MIT"
+     },
+     "version": "{{AppVer | JSEscape}}"
+```
+
 ## Gitea 1.26.4
 
 Copyright (c) 2016 The Gitea Authors; Copyright (c) 2015 The Gogs Authors

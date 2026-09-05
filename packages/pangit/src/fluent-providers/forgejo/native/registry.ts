@@ -1,0 +1,43 @@
+import type { ForgejoBlobNative } from "./ForgejoBlobNative.ts";
+import type { ForgejoBranchRuleEntityNative } from "./ForgejoBranchRuleNative.ts";
+import type { ForgejoCiEntityNative } from "./ForgejoCiRunDiscoveryNative.ts";
+import type { ForgejoClientNative } from "./ForgejoClientNative.ts";
+import type { ForgejoCurrentUserProfileNative } from "./ForgejoCurrentUserProfileNative.ts";
+import type { ForgejoEntityNative, ForgejoVersion } from "./ForgejoEntityNative.ts";
+import type { ForgejoIssueEntityNative } from "./ForgejoIssueNative.ts";
+import type { ForgejoPackageEntityNative } from "./ForgejoPackageNative.ts";
+import type { ForgejoPullRequestReviewNative } from "./ForgejoPullRequestReviewNative.ts";
+import type { ForgejoReleaseEntityNative } from "./ForgejoReleaseNative.ts";
+import type { ForgejoRepositoryContainerNative } from "./ForgejoRepositoryContainerNative.ts";
+import type { ForgejoRepositoryNative } from "./ForgejoRepositoryNative.ts";
+import type { ForgejoRepositoryWebhookNative } from "./ForgejoRepositoryWebhookNative.ts";
+
+/** Every native door implemented by the Forgejo fluent adapter for one exact version. */
+export type ForgejoProviderNativeRegistry<TVersion extends ForgejoVersion> = Readonly<{
+  client: ForgejoClientNative<TVersion>;
+  repositoryContainer: ForgejoRepositoryContainerNative<TVersion>;
+  repository: ForgejoRepositoryNative<TVersion>;
+  branch: ForgejoEntityNative<TVersion, "branch">;
+  tag: ForgejoEntityNative<TVersion, "tag">;
+  commit: ForgejoEntityNative<TVersion, "commit">;
+  content: ForgejoEntityNative<TVersion, "content">;
+  pullRequest: ForgejoEntityNative<TVersion, "pullRequest">;
+  review: ForgejoEntityNative<TVersion, "review">;
+  commitStatus: ForgejoEntityNative<TVersion, "commitStatus">;
+  blob: ForgejoBlobNative<TVersion>;
+  configuredRule: ForgejoBranchRuleEntityNative<TVersion, "configuredRule">;
+  effectiveProtection: ForgejoBranchRuleEntityNative<TVersion, "effectiveProtection">;
+  currentUserProfile: ForgejoCurrentUserProfileNative<TVersion>;
+  issue: ForgejoIssueEntityNative<TVersion, "issue">;
+  issueComment: ForgejoIssueEntityNative<TVersion, "issueComment">;
+  package: ForgejoPackageEntityNative<TVersion, "package">;
+  packageFile: ForgejoPackageEntityNative<TVersion, "packageFile">;
+  pullRequestReview: ForgejoPullRequestReviewNative<TVersion>;
+  release: ForgejoReleaseEntityNative<TVersion, "release">;
+  releaseAsset: ForgejoReleaseEntityNative<TVersion, "releaseAsset">;
+  repositoryWebhook: ForgejoRepositoryWebhookNative<TVersion>;
+  workflow: ForgejoCiEntityNative<TVersion, "workflow">;
+  run: ForgejoCiEntityNative<TVersion, "run">;
+  job: ForgejoCiEntityNative<TVersion, "job">;
+  artifact: ForgejoCiEntityNative<TVersion, "artifact">;
+}>;

@@ -89,10 +89,10 @@ export function applyOpenApiTransform(
   source: OpenApiVersionSource,
   version: string,
 ): string {
-  if (source.transform !== "gitea-template") return body;
-  const transformed = body
-    .replaceAll("{{.SwaggerAppVer}}", version)
-    .replaceAll("{{.SwaggerAppSubUrl}}", "");
+  if (source.transform === undefined) return body;
+  const transformed = source.transform === "forgejo-template"
+    ? body.replaceAll("{{AppVer | JSEscape}}", version).replaceAll("{{AppSubUrl | JSEscape}}", "")
+    : body.replaceAll("{{.SwaggerAppVer}}", version).replaceAll("{{.SwaggerAppSubUrl}}", "");
   if (/{{[^}]+}}/.test(transformed)) {
     throw new Error(`OpenAPI specification ${version} contains unresolved template expressions`);
   }

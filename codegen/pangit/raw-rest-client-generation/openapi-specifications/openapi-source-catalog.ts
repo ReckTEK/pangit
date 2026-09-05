@@ -2,7 +2,7 @@ import configuredGitHosts from "./git-hosts.json" with { type: "json" };
 
 export type OpenApiFormat = "json" | "yaml";
 export type OpenApiSourceKind = "release" | "live";
-export type OpenApiTransform = "gitea-template";
+export type OpenApiTransform = "gitea-template" | "forgejo-template";
 
 export type OpenApiNoticeSource = {
   url: string;
@@ -206,7 +206,9 @@ function validateGitHostMap(
         }
         if (
           isRecord(versionSource.license) &&
-          !(versionSource.license.url as string).includes(`/${versionSource.ref}/`)
+          !(versionSource.license.url as string).includes(`/${versionSource.ref}/`) &&
+          !(versionSource.license.url === "https://spdx.org/licenses/MIT.txt" &&
+            isRecord(versionSource.license.declaration))
         ) {
           throw new Error(
             `${gitHost} release license URL is not pinned to ${versionSource.ref}`,
@@ -216,7 +218,10 @@ function validateGitHostMap(
         throw new Error(`${gitHost} live source must not declare a ref`);
       }
 
-      if (versionSource.transform !== undefined && versionSource.transform !== "gitea-template") {
+      if (
+        versionSource.transform !== undefined && versionSource.transform !== "gitea-template" &&
+        versionSource.transform !== "forgejo-template"
+      ) {
         throw new Error(`${gitHost} version ${version} has unsupported transform`);
       }
     }

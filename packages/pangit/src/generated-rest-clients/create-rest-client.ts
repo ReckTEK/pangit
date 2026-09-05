@@ -23,6 +23,12 @@ const restClientLoaders = {
     "latest": async (options) =>
       new (await import("./codeberg/latest/mod.ts")).CodebergRestClient(options),
   },
+  "forgejo": {
+    "15.0.7": async (options) =>
+      new (await import("./forgejo/15.0.7/mod.ts")).ForgejoRestClient(options),
+    "16.0.3": async (options) =>
+      new (await import("./forgejo/16.0.3/mod.ts")).ForgejoRestClient(options),
+  },
   "gitea": {
     "1.26.4": async (options) =>
       new (await import("./gitea/1.26.4/mod.ts")).GiteaRestClient(options),

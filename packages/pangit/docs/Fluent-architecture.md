@@ -43,9 +43,10 @@ version-specific REST transport remains lazy.
 ## Provider extensions
 
 Portable operations retain portable inputs. Extra options live behind the selected provider's
-explicit operation callback, such as `operation.gitea(...)` or `operation.gitlab(...)`. Raw access
-uses `client.native.gitlab(({ client }) => ...)`; entity native callbacks also expose the original
-response payload. Both preserve the exact selected version's generated types.
+explicit operation callback, such as `operation.gitea(...)`, `operation.gitlab(...)`, or
+`operation.forgejo(...)`. Raw access uses `client.native.gitlab(({ client }) => ...)`; entity native
+callbacks also expose the original response payload. Both preserve the exact selected version's
+generated types.
 
 Provider-specific types are exported from `@mannsion/pangit/fluent/<provider>`. They are not
 exported from the universal API. Provider-owned `registration.ts` files augment the abstract type
@@ -64,3 +65,6 @@ The universal contract needs no concrete provider names or switches. Architectur
 cross-provider dependencies, provider leakage into the core, static runtime import cycles, and
 oversized implementation modules. Fresh-process coverage tests verify actual module evaluation
 before selection, after selection, and after native access.
+
+Hosted deployments use provider-local configuration. For example, `createCodebergClient(version)`
+selects Forgejo with Codeberg URLs; it does not introduce a second fluent implementation.

@@ -8,18 +8,18 @@
 </p>
 
 > [!IMPORTANT]
-> **Status: alpha development.** Fluent and raw REST APIs are live-tested for Gitea and GitLab.
-> GitLab has
-> [explicit capability gaps and a confirmed server defect](packages/pangit/docs/GitLab.md#provider-differences).
-> All eight raw clients are generated, exported and typechecked. Public APIs may change before a
+> **Status: alpha development.** Fluent and raw REST APIs are live-tested for Gitea, GitLab, and
+> Forgejo. GitLab has
+> [explicit capability gaps and confirmed server defects](packages/pangit/docs/GitLab.md#provider-differences).
+> All ten raw clients are generated, exported and typechecked. Public APIs may change before a
 > stable release; the package is not published to JSR yet.
 
 PanGit gives Deno applications two deliberately separate ways to work with Git hosts:
 
-| API                           | Use it for                                                          | Current coverage                          |
-| ----------------------------- | ------------------------------------------------------------------- | ----------------------------------------- |
-| `PanGit.api`                  | Portable, concern-oriented Git workflows through a provider adapter | Gitea and GitLab (versions below)         |
-| `PanGit.createProviderClient` | Exact generated REST methods, types, payloads, and status codes     | Six providers and eight versioned clients |
+| API                           | Use it for                                                          | Current coverage                            |
+| ----------------------------- | ------------------------------------------------------------------- | ------------------------------------------- |
+| `PanGit.api`                  | Portable, concern-oriented Git workflows through a provider adapter | Gitea, GitLab, and Forgejo (versions below) |
+| `PanGit.createProviderClient` | Exact generated REST methods, types, payloads, and status codes     | Seven providers and ten versioned clients   |
 
 The `@mannsion/pangit` library is Deno-native TypeScript built on standard Web APIs and native
 `fetch`. It has no Node runtime or third-party runtime dependency. Provider implementations and raw
@@ -29,23 +29,28 @@ clients are loaded only when selected.
 
 This matrix tracks what can be used from the current source tree and what has been exercised against
 a real provider. "Not present" means that no live suite exists; it does not mean a suite failed.
+GitLab 19.3.1 failed one fixture setup after accepting a new branch; see the
+[branch-cache investigation](tests/e2e/hand-written/diagnostics/gitlab/branch-names-cache/README.md).
 
-| Provider           | API contract      | Fluent API                                                                 | Fluent E2E                                                           | Generated REST client       | REST E2E                                                            | Distribution                            |
-| ------------------ | ----------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------- | --------------------------- | ------------------------------------------------------------------- | --------------------------------------- |
-| Gitea              | `1.26.4`          | Available (alpha)                                                          | [Pass: 32 contracts](tests/e2e/results/gitea/1.26.4/summary.json)    | Available: 471 operations   | [Pass: 471/471](tests/e2e/results/gitea/1.26.4/summary.json)        | MIT evidence recorded                   |
-| Gitea              | `1.27.2`          | Available (alpha)                                                          | [Pass: 32 contracts](tests/e2e/results/gitea/1.27.2/summary.json)    | Available: 482 operations   | [Pass: 482/482](tests/e2e/results/gitea/1.27.2/summary.json)        | MIT evidence recorded                   |
-| Codeberg (Forgejo) | `latest` snapshot | Not implemented                                                            | Not present                                                          | Available: 506 operations   | Not present                                                         | MIT evidence recorded                   |
-| GitHub             | `latest` snapshot | Not implemented                                                            | Not present                                                          | Available: 1,222 operations | Not present                                                         | MIT evidence recorded                   |
-| GitLab             | `18.11.11`        | [Available with gaps](packages/pangit/docs/GitLab.md#provider-differences) | [Pass: 26 contracts](tests/e2e/results/gitlab/18.11.11/summary.json) | Available: 1,126 operations | [Pass: 1,126/1,126](tests/e2e/results/gitlab/18.11.11/summary.json) | Included; license evidence not recorded |
-| GitLab             | `19.3.1`          | [Available with gaps](packages/pangit/docs/GitLab.md#provider-differences) | [Pass: 26 contracts](tests/e2e/results/gitlab/19.3.1/summary.json)   | Available: 1,148 operations | [Pass: 1,148/1,148](tests/e2e/results/gitlab/19.3.1/summary.json)   | Included; license evidence not recorded |
-| Bitbucket Cloud    | `latest` snapshot | Not implemented                                                            | Not present                                                          | Available: 297 operations   | Not present                                                         | Included; license evidence not recorded |
-| Azure DevOps Git   | `latest` snapshot | Not implemented                                                            | Not present                                                          | Available: 112 operations   | Not present                                                         | Included; license evidence not recorded |
+| Provider           | API contract          | Fluent API                                                                                | Fluent E2E                                                              | Generated REST client       | REST E2E                                                            | Distribution                            |
+| ------------------ | --------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- | --------------------------- | ------------------------------------------------------------------- | --------------------------------------- |
+| Gitea              | `1.26.4`              | Available (alpha)                                                                         | [Pass: 32 contracts](tests/e2e/results/gitea/1.26.4/summary.json)       | Available: 471 operations   | [Pass: 471/471](tests/e2e/results/gitea/1.26.4/summary.json)        | MIT evidence recorded                   |
+| Gitea              | `1.27.2`              | Available (alpha)                                                                         | [Pass: 32 contracts](tests/e2e/results/gitea/1.27.2/summary.json)       | Available: 482 operations   | [Pass: 482/482](tests/e2e/results/gitea/1.27.2/summary.json)        | MIT evidence recorded                   |
+| Forgejo            | `15.0.7`              | [Available with version differences](packages/pangit/docs/Forgejo.md#supported-workflows) | [Pass: 29 contracts](tests/e2e/results/forgejo/15.0.7/summary.json)     | Available: 491 operations   | [Pass: 491/491](tests/e2e/results/forgejo/15.0.7/summary.json)      | MIT evidence recorded                   |
+| Forgejo            | `16.0.3`              | [Available with version differences](packages/pangit/docs/Forgejo.md#supported-workflows) | [Pass: 29 contracts](tests/e2e/results/forgejo/16.0.3/summary.json)     | Available: 506 operations   | [Pass: 506/506](tests/e2e/results/forgejo/16.0.3/summary.json)      | MIT evidence recorded                   |
+| Codeberg (Forgejo) | `latest` raw snapshot | [Hosted Forgejo configuration](packages/pangit/docs/Forgejo.md#codeberg-compatibility)    | Tested on local Forgejo                                                 | Available: 506 operations   | Not present                                                         | MIT evidence recorded                   |
+| GitHub             | `latest` snapshot     | Not implemented                                                                           | Not present                                                             | Available: 1,222 operations | Not present                                                         | MIT evidence recorded                   |
+| GitLab             | `18.11.11`            | [Available with gaps](packages/pangit/docs/GitLab.md#provider-differences)                | [Pass: 26 contracts](tests/e2e/results/gitlab/18.11.11/summary.json)    | Available: 1,126 operations | [Pass: 1,126/1,126](tests/e2e/results/gitlab/18.11.11/summary.json) | Included; license evidence not recorded |
+| GitLab             | `19.3.1`              | [Available with gaps](packages/pangit/docs/GitLab.md#provider-differences)                | [Failed: 25/26 contracts](tests/e2e/results/gitlab/19.3.1/summary.json) | Available: 1,148 operations | [1,148/1,148 passed](tests/e2e/results/gitlab/19.3.1/summary.json)  | Included; license evidence not recorded |
+| Bitbucket Cloud    | `latest` snapshot     | Not implemented                                                                           | Not present                                                             | Available: 297 operations   | Not present                                                         | Included; license evidence not recorded |
+| Azure DevOps Git   | `latest` snapshot     | Not implemented                                                                           | Not present                                                             | Available: 112 operations   | Not present                                                         | Included; license evidence not recorded |
 
 REST E2E totals include positive and negative cases; the linked results distinguish successful
 lifecycle coverage from authentication, resource and validation errors. Passing GitLab contracts
-include explicit rejection of unavailable operations and do not claim full Gitea parity.
+include explicit rejection of unavailable operations and do not claim full Gitea parity. Forgejo
+contracts similarly distinguish version-specific CI support and provider API differences.
 
-In total, the repository contains **6 providers, 8 generated REST clients, and 5,364 generated
+In total, the repository contains **7 providers, 10 generated REST clients, and 6,361 generated
 operations**. `latest` identifies the checked-in specification snapshot used for generation; PanGit
 does not download or negotiate a newer contract at runtime. Every schema is hash-pinned. Available
 license evidence is downloaded, verified, and shipped in generated notices; missing evidence is
@@ -223,7 +228,7 @@ import { GiteaRestClient } from "@mannsion/pangit/providers/gitea/1.27.2";
 | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------- |
 | [`packages/pangit/src/fluent-api`](packages/pangit/src/fluent-api)                         | Hand-written provider-neutral API and adapter contracts                                |
 | [`packages/pangit/src/fluent-client`](packages/pangit/src/fluent-client)                   | Async provider selection and public fluent entry point                                 |
-| [`packages/pangit/src/fluent-providers`](packages/pangit/src/fluent-providers)             | Hand-written Gitea and GitLab provider adapters                                        |
+| [`packages/pangit/src/fluent-providers`](packages/pangit/src/fluent-providers)             | Hand-written Gitea, GitLab, and Forgejo provider adapters                              |
 | [`packages/pangit/src/generated-rest-clients`](packages/pangit/src/generated-rest-clients) | Generated clients and shared native-Fetch runtime                                      |
 | [`codegen/pangit`](codegen/pangit)                                                         | OpenAPI normalization, client generation, and E2E asset generation                     |
 | [`tests/e2e`](tests/e2e)                                                                   | Generated raw suites, hand-written fluent contracts, Docker environments, and evidence |
@@ -246,11 +251,12 @@ Run repository tasks with Deno 2 from the project root:
 | `deno task lint`              | Lint the workspace                                                                    |
 | `deno fmt --check`            | Check formatting without changing files                                               |
 | `deno task build`             | Build the documentation site                                                          |
-| `deno task e2e`               | Run raw and fluent suites against fresh Gitea and GitLab environments                 |
+| `deno task e2e`               | Run raw and fluent suites against fresh Gitea, GitLab, and Forgejo environments       |
 
-`deno task e2e` runs Gitea `1.26.4`/`1.27.2` and GitLab `18.11.11`/`19.3.1`, writes evidence under
-[`tests/e2e/results`](tests/e2e/results), and removes the test containers and state after each run.
-See [`codegen/README.md`](codegen/README.md) for generation ownership.
+`deno task e2e` runs Gitea `1.26.4`/`1.27.2`, GitLab `18.11.11`/`19.3.1`, and Forgejo
+`15.0.7`/`16.0.3`, writes evidence under [`tests/e2e/results`](tests/e2e/results), and removes the
+test containers and state after each run. See [`codegen/README.md`](codegen/README.md) for
+generation ownership.
 
 ## Local documentation site
 

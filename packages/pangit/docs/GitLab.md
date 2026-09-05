@@ -61,6 +61,11 @@ atomic writes use GitLab commit actions and `last_commit_id` for checked paths. 
 completion is polled with cancellation and a timeout. Approvals require an edition exposing the
 approvals API; the E2E environment uses the free tier of the EE image without a paid license.
 
+GitLab 19.3.1 also rejected a commit immediately after successfully creating its branch in the
+recorded E2E run. PanGit preserves that server error; it does not retry the mutation. The focused
+[branch-cache investigation](../../../tests/e2e/hand-written/diagnostics/gitlab/branch-names-cache/README.md)
+records the failure and upstream follow-up.
+
 ## Extensions and native access
 
 Operation extensions use `.gitlab(callback).execute()`: file commits accept `force` and `startSha`

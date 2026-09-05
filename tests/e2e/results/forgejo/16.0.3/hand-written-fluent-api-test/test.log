@@ -1,0 +1,36 @@
+[0m[38;5;245mrunning 1 test from ./tests/e2e/hand-written/git-host-adapter-tests/forgejo/forgejo-fluent-api-e2e_test.ts[0m
+forgejo 16.0.3 hand-written fluent API E2E ...
+  core/authentication ... [0m[32mok[0m [0m[38;5;245m(16s)[0m
+  core/repositories ... [0m[32mok[0m [0m[38;5;245m(480ms)[0m
+  core/forks ... [0m[32mok[0m [0m[38;5;245m(28ms)[0m
+  core/branches ... [0m[32mok[0m [0m[38;5;245m(215ms)[0m
+  core/tags ... [0m[32mok[0m [0m[38;5;245m(44ms)[0m
+  core/commits ... [0m[32mok[0m [0m[38;5;245m(132ms)[0m
+  core/content-reads ... [0m[32mok[0m [0m[38;5;245m(451ms)[0m
+  core/file-change-commits ... [0m[32mok[0m [0m[38;5;245m(306ms)[0m
+  core/pull-request-discovery ... [0m[32mok[0m [0m[38;5;245m(82ms)[0m
+  core/pull-request-mutation ... [0m[32mok[0m [0m[38;5;245m(197ms)[0m
+  core/pull-request-merge ... [0m[32mok[0m [0m[38;5;245m(344ms)[0m
+  core/pull-request-reviews-comments ... [0m[32mok[0m [0m[38;5;245m(704ms)[0m
+  core/commit-statuses ... [0m[32mok[0m [0m[38;5;245m(106ms)[0m
+  forgejo-extension/file-change-commit ... [0m[32mok[0m [0m[38;5;245m(133ms)[0m
+  forgejo-extension/pull-request-merge ... [0m[32mok[0m [0m[38;5;245m(236ms)[0m
+  forgejo-extension/pull-request-review ... [0m[32mok[0m [0m[38;5;245m(416ms)[0m
+  forgejo-extension/commit-status ... [0m[32mok[0m [0m[38;5;245m(23ms)[0m
+  shared-capability/current-user-profile ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
+  shared-capability/issues ... [0m[32mok[0m [0m[38;5;245m(77ms)[0m
+  shared-capability/releases ... [0m[32mok[0m [0m[38;5;245m(59ms)[0m
+  shared-capability/repository-webhooks ... [0m[32mok[0m [0m[38;5;245m(1s)[0m
+  shared-capability/ci-run-discovery ... [0m[32mok[0m [0m[38;5;245m(36ms)[0m
+  shared-capability/packages ... [0m[32mok[0m [0m[38;5;245m(34ms)[0m
+  shared-capability/blob-reads ... [0m[32mok[0m [0m[38;5;245m(84ms)[0m
+  shared-capability/pull-request-reviews ... [0m[32mok[0m [0m[38;5;245m(629ms)[0m
+  shared-capability/branch-rules ... [0m[32mok[0m [0m[38;5;245m(31ms)[0m
+  shared-capability/unsupported-forgejo-modules ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
+  native-access/forgejo/client ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
+  native-access/forgejo/entities ... [0m[32mok[0m [0m[38;5;245m(454ms)[0m
+forgejo 16.0.3 hand-written fluent API E2E ... [0m[32mok[0m [0m[38;5;245m(50s)[0m
+
+[0m[32mok[0m | 1 passed (29 steps) | 0 failed [0m[38;5;245m(50s)[0m
+
+[0m[32mCheck[0m tests/e2e/hand-written/git-host-adapter-tests/forgejo/forgejo-fluent-api-e2e_test.ts

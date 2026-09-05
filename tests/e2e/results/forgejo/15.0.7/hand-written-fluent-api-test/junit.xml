@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="deno test" tests="30" failures="0" errors="0" time="65.250">
+    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/forgejo-fluent-api-e2e_test.ts" tests="1" disabled="0" errors="0" failures="0">
+        <testcase name="forgejo 15.0.7 hand-written fluent API E2E" classname="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/forgejo-fluent-api-e2e_test.ts" time="65.248" line="17" col="6">
+        </testcase>
+    </testsuite>
+    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/authentication/authentication-contract.ts" tests="1" disabled="0" errors="0" failures="0">
+        <testcase name="forgejo 15.0.7 hand-written fluent API E2E &gt; core/authentication" classname="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/authentication/authentication-contract.ts" time="30.080" line="60" col="26">
+        </testcase>
+    </testsuite>
+    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/repositories/repository-contract.ts" tests="1" disabled="0" errors="0" failures="0">
+        <testcase name="forgejo 15.0.7 hand-written fluent API E2E &gt; core/repositories" classname="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/repositories/repository-contract.ts" time="0.480" line="66" col="26">
+        </testcase>
+    </testsuite>
+    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/forks/fork-contract.ts" tests="1" disabled="0" errors="0" failures="0">
+        <testcase name="forgejo 15.0.7 hand-written fluent API E2E &gt; core/forks" classname="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/forks/fork-contract.ts" time="0.032" line="53" col="26">
+        </testcase>
+    </testsuite>
+    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/branches/branch-contract.ts" tests="1" disabled="0" errors="0" failures="0">
+        <testcase name="forgejo 15.0.7 hand-written fluent API E2E &gt; core/branches" classname="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/branches/branch-contract.ts" time="0.215" line="58" col="26">
+        </testcase>
+    </testsuite>
+    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/tags/tag-contract.ts" tests="1" disabled="0" errors="0" failures="0">
+        <testcase name="forgejo 15.0.7 hand-written fluent API E2E &gt; core/tags" classname="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/tags/tag-contract.ts" time="0.048" line="56" col="26">
+        </testcase>
+    </testsuite>
+    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/commits/commit-contract.ts" tests="1" disabled="0" errors="0" failures="0">
+        <testcase name="forgejo 15.0.7 hand-written fluent API E2E &gt; core/commits" classname="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/commits/commit-contract.ts" time="0.127" line="62" col="26">
+        </testcase>
+    </testsuite>
+    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/content/content-read-contract.ts" tests="1" disabled="0" errors="0" failures="0">
+        <testcase name="forgejo 15.0.7 hand-written fluent API E2E &gt; core/content-reads" classname="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/content/content-read-contract.ts" time="0.436" line="76" col="26">
+        </testcase>
+    </testsuite>
+    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/content/file-change-contract.ts" tests="1" disabled="0" errors="0" failures="0">
+        <testcase name="forgejo 15.0.7 hand-written fluent API E2E &gt; core/file-change-commits" classname="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/content/file-change-contract.ts" time="0.308" line="57" col="26">
+        </testcase>
+    </testsuite>
+    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/pull-requests/pull-request-discovery-contract.ts" tests="1" disabled="0" errors="0" failures="0">
+        <testcase name="forgejo 15.0.7 hand-written fluent API E2E &gt; core/pull-request-discovery" classname="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/pull-requests/pull-request-discovery-contract.ts" time="0.090" line="56" col="26">
+        </testcase>
+    </testsuite>
+    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/pull-requests/pull-request-mutation-contract.ts" tests="1" disabled="0" errors="0" failures="0">
+        <testcase name="forgejo 15.0.7 hand-written fluent API E2E &gt; core/pull-request-mutation" classname="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/pull-requests/pull-request-mutation-contract.ts" time="0.210" line="65" col="26">
+        </testcase>
+    </testsuite>
+    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/pull-requests/pull-request-merge-contract.ts" tests="1" disabled="0" errors="0" failures="0">
+        <testcase name="forgejo 15.0.7 hand-written fluent API E2E &gt; core/pull-request-merge" classname="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/pull-requests/pull-request-merge-contract.ts" time="0.341" line="52" col="26">
+        </testcase>
+    </testsuite>
+    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/pull-requests/pull-request-reviews-comments-contract.ts" tests="1" disabled="0" errors="0" failures="0">
+        <testcase name="forgejo 15.0.7 hand-written fluent API E2E &gt; core/pull-request-reviews-comments" classname="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/pull-requests/pull-request-reviews-comments-contract.ts" time="0.703" line="56" col="26">
+        </testcase>
+    </testsuite>
+    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/commit-statuses/commit-status-contract.ts" tests="1" disabled="0" errors="0" failures="0">
+        <testcase name="forgejo 15.0.7 hand-written fluent API E2E &gt; core/commit-statuses" classname="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/commit-statuses/commit-status-contract.ts" time="0.108" line="56" col="26">
+        </testcase>
+    </testsuite>
+    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/extensions/file-change-commit/forgejo-file-change-commit-contract.ts" tests="1" disabled="0" errors="0" failures="0">
+        <testcase name="forgejo 15.0.7 hand-written fluent API E2E &gt; forgejo-extension/file-change-commit" classname="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/extensions/file-change-commit/forgejo-file-change-commit-contract.ts" time="0.130" line="35" col="26">
+        </testcase>
+    </testsuite>
+    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/extensions/pull-request-merge/forgejo-pull-request-merge-contract.ts" tests="1" disabled="0" errors="0" failures="0">
+        <testcase name="forgejo 15.0.7 hand-written fluent API E2E &gt; forgejo-extension/pull-request-merge" classname="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/extensions/pull-request-merge/forgejo-pull-request-merge-contract.ts" time="0.235" line="43" col="26">
+        </testcase>
+    </testsuite>
+    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/extensions/pull-request-review/forgejo-pull-request-review-contract.ts" tests="1" disabled="0" errors="0" failures="0">
+        <testcase name="forgejo 15.0.7 hand-written fluent API E2E &gt; forgejo-extension/pull-request-review" classname="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/extensions/pull-request-review/forgejo-pull-request-review-contract.ts" time="0.420" line="48" col="26">
+        </testcase>
+    </testsuite>
+    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/extensions/commit-status/forgejo-commit-status-contract.ts" tests="1" disabled="0" errors="0" failures="0">
+        <testcase name="forgejo 15.0.7 hand-written fluent API E2E &gt; forgejo-extension/commit-status" classname="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/extensions/commit-status/forgejo-commit-status-contract.ts" time="0.023" line="37" col="26">
+        </testcase>
+    </testsuite>
+    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/optional/current-user-profile/current-user-profile-contract.ts" tests="1" disabled="0" errors="0" failures="0">
+        <testcase name="forgejo 15.0.7 hand-written fluent API E2E &gt; shared-capability/current-user-profile" classname="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/optional/current-user-profile/current-user-profile-contract.ts" time="0.006" line="52" col="26">
+        </testcase>
+    </testsuite>
+    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/optional/issues/issue-contract.ts" tests="1" disabled="0" errors="0" failures="0">
+        <testcase name="forgejo 15.0.7 hand-written fluent API E2E &gt; shared-capability/issues" classname="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/optional/issues/issue-contract.ts" time="0.083" line="52" col="26">
+        </testcase>
+    </testsuite>
+    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/optional/releases/release-contract.ts" tests="1" disabled="0" errors="0" failures="0">
+        <testcase name="forgejo 15.0.7 hand-written fluent API E2E &gt; shared-capability/releases" classname="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/optional/releases/release-contract.ts" time="0.062" line="52" col="26">
+        </testcase>
+    </testsuite>
+    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/optional/repository-webhooks/repository-webhook-contract.ts" tests="1" disabled="0" errors="0" failures="0">
+        <testcase name="forgejo 15.0.7 hand-written fluent API E2E &gt; shared-capability/repository-webhooks" classname="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/optional/repository-webhooks/repository-webhook-contract.ts" time="2.553" line="58" col="26">
+        </testcase>
+    </testsuite>
+    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/optional/ci-run-discovery/ci-run-discovery-contract.ts" tests="1" disabled="0" errors="0" failures="0">
+        <testcase name="forgejo 15.0.7 hand-written fluent API E2E &gt; shared-capability/ci-run-discovery" classname="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/optional/ci-run-discovery/ci-run-discovery-contract.ts" time="0.022" line="52" col="26">
+        </testcase>
+    </testsuite>
+    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/optional/packages/package-contract.ts" tests="1" disabled="0" errors="0" failures="0">
+        <testcase name="forgejo 15.0.7 hand-written fluent API E2E &gt; shared-capability/packages" classname="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/optional/packages/package-contract.ts" time="0.036" line="52" col="26">
+        </testcase>
+    </testsuite>
+    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/optional/blob-reads/blob-read-contract.ts" tests="1" disabled="0" errors="0" failures="0">
+        <testcase name="forgejo 15.0.7 hand-written fluent API E2E &gt; shared-capability/blob-reads" classname="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/optional/blob-reads/blob-read-contract.ts" time="0.084" line="75" col="26">
+        </testcase>
+    </testsuite>
+    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/optional/pull-request-reviews/pull-request-review-contract.ts" tests="1" disabled="0" errors="0" failures="0">
+        <testcase name="forgejo 15.0.7 hand-written fluent API E2E &gt; shared-capability/pull-request-reviews" classname="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/optional/pull-request-reviews/pull-request-review-contract.ts" time="0.629" line="54" col="26">
+        </testcase>
+    </testsuite>
+    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/optional/branch-rules/branch-rule-contract.ts" tests="1" disabled="0" errors="0" failures="0">
+        <testcase name="forgejo 15.0.7 hand-written fluent API E2E &gt; shared-capability/branch-rules" classname="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/optional/branch-rules/branch-rule-contract.ts" time="0.031" line="57" col="26">
+        </testcase>
+    </testsuite>
+    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/optional/unsupported-forgejo-modules/unsupported-forgejo-modules-contract.ts" tests="1" disabled="0" errors="0" failures="0">
+        <testcase name="forgejo 15.0.7 hand-written fluent API E2E &gt; shared-capability/unsupported-forgejo-modules" classname="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/contracts/optional/unsupported-forgejo-modules/unsupported-forgejo-modules-contract.ts" time="0.000" line="49" col="26">
+        </testcase>
+    </testsuite>
+    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/native-access/client/forgejo-native-client-access-contract.ts" tests="1" disabled="0" errors="0" failures="0">
+        <testcase name="forgejo 15.0.7 hand-written fluent API E2E &gt; native-access/forgejo/client" classname="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/native-access/client/forgejo-native-client-access-contract.ts" time="0.001" line="25" col="26">
+        </testcase>
+    </testsuite>
+    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/native-access/entities/forgejo-native-entity-access-contract.ts" tests="1" disabled="0" errors="0" failures="0">
+        <testcase name="forgejo 15.0.7 hand-written fluent API E2E &gt; native-access/forgejo/entities" classname="./tests/e2e/hand-written/git-host-adapter-tests/forgejo/native-access/entities/forgejo-native-entity-access-contract.ts" time="0.460" line="42" col="26">
+        </testcase>
+    </testsuite>
+</testsuites>

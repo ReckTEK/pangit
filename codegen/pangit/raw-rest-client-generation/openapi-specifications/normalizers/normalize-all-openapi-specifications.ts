@@ -2,6 +2,7 @@ import { getGitHostApiVersions, getGitHosts, type GitHost } from "../openapi-sou
 import { normalizeAzureDevOps } from "./azure-devops.ts";
 import { normalizeBitbucket } from "./bitbucket.ts";
 import { normalizeCodeberg } from "./codeberg.ts";
+import { normalizeForgejo } from "./forgejo.ts";
 import { normalizeGitea } from "./gitea.ts";
 import { normalizeGitHub } from "./github.ts";
 import { normalizeGitLab } from "./gitlab.ts";
@@ -11,6 +12,7 @@ type GitHostNormalizer = (version: string) => Promise<void>;
 
 export const gitHostNormalizers = {
   gitea: normalizeGitea,
+  forgejo: normalizeForgejo,
   github: normalizeGitHub,
   codeberg: normalizeCodeberg,
   gitlab: normalizeGitLab,

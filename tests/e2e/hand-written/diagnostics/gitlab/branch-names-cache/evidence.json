@@ -1,0 +1,48 @@
+{
+  "scope": "Confirmed stock GitLab branch-name cache race; original full-run failure retained. No fix applied.",
+  "image": "gitlab/gitlab-ee:19.3.1-ee.0",
+  "probeSha256": "fea855475a19e6e8d130d10e8bb136673290d1a3d40a7bfd8e3bf9de454d0f4e",
+  "stockDeterministicCase": {
+    "gitlab_version": "19.3.1-ee",
+    "gitlab_revision": "9d55961fa80",
+    "project_id": 4,
+    "branch": "feature",
+    "branch_creation_status": 201,
+    "ref_existence_check_gitaly": false,
+    "raw_branch_exists": true,
+    "cached_branch_exists": false,
+    "commit_status": "error",
+    "commit_message": "You can only create or edit files when you are on a branch"
+  },
+  "fullRunFailure": {
+    "contract": "core/pull-request-comments",
+    "phase": "fixture setup",
+    "projectId": 16,
+    "requests": [
+      {
+        "time": "2026-09-05T05:12:23.322Z",
+        "method": "POST",
+        "path": "/api/v4/projects/16/repository/commits",
+        "branch": "main",
+        "status": 201
+      },
+      {
+        "time": "2026-09-05T05:12:23.441Z",
+        "method": "POST",
+        "path": "/api/v4/projects/16/repository/branches",
+        "branch": "feature",
+        "status": 201
+      },
+      {
+        "time": "2026-09-05T05:12:23.488Z",
+        "method": "POST",
+        "path": "/api/v4/projects/16/repository/commits",
+        "branch": "feature",
+        "status": 400
+      }
+    ],
+    "error": "You can only create or edit files when you are on a branch",
+    "originalReaderIdentified": false
+  },
+  "upstreamFixSubmitted": false
+}

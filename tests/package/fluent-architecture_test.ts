@@ -181,6 +181,7 @@ Deno.test("importing the public catalog evaluates no provider implementation", a
 for (
   const [provider, versions] of Object.entries({
     gitea: ["1.26.4", "1.27.2"],
+    forgejo: ["15.0.7", "16.0.3"],
     gitlab: ["18.11.11", "19.3.1"],
   })
 ) {

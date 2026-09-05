@@ -421,6 +421,147 @@
       ]
     },
     {
+      "id": "forgejo",
+      "name": "Forgejo",
+      "kind": "release",
+      "upstream": "https://codeberg.org/forgejo/forgejo",
+      "selected": "16.0.3",
+      "client": {
+        "className": "ForgejoRestClient",
+        "displayName": "Forgejo",
+        "namespaceName": "ForgejoApi",
+        "variablePrefix": "forgejo"
+      },
+      "versions": [
+        {
+          "version": "15.0.7",
+          "route": "/docs/raw/forgejo/15.0.7",
+          "specUrl": "/openapi/forgejo/15.0.7.json",
+          "source": "https://codeberg.org/forgejo/forgejo/raw/tag/v15.0.7/templates/swagger/v1_json.tmpl",
+          "sourceSha256": "sha256:e5a8b5adc4498281d0b369063432d58edb162c263088657b0d07df03c8d75975",
+          "sha256": "sha256:8e2baadcf5449c67cab63911113a903954d848fc0710fa5ba887b17f805cd6e9",
+          "openapi": "3.0.3",
+          "operationCount": 491,
+          "schemaCount": 244,
+          "tags": [
+            {
+              "name": "activitypub",
+              "count": 11
+            },
+            {
+              "name": "admin",
+              "count": 48
+            },
+            {
+              "name": "issue",
+              "count": 67
+            },
+            {
+              "name": "miscellaneous",
+              "count": 13
+            },
+            {
+              "name": "notification",
+              "count": 7
+            },
+            {
+              "name": "organization",
+              "count": 69
+            },
+            {
+              "name": "package",
+              "count": 6
+            },
+            {
+              "name": "repository",
+              "count": 188
+            },
+            {
+              "name": "settings",
+              "count": 4
+            },
+            {
+              "name": "user",
+              "count": 79
+            }
+          ],
+          "servers": [
+            {
+              "url": "/api/v1"
+            }
+          ],
+          "variants": [],
+          "artifacts": {
+            "openapi": "app/documentation/generated/forgejo/15.0.7/openapi.json",
+            "operations": "app/documentation/generated/forgejo/15.0.7/operations.json"
+          }
+        },
+        {
+          "version": "16.0.3",
+          "route": "/docs/raw/forgejo/16.0.3",
+          "specUrl": "/openapi/forgejo/16.0.3.json",
+          "source": "https://codeberg.org/forgejo/forgejo/raw/tag/v16.0.3/templates/swagger/v1_json.tmpl",
+          "sourceSha256": "sha256:e37f187d0c054c6330cfaa256d5b34daa32b8b5bfbb4247b741eba096194262f",
+          "sha256": "sha256:39f6f52ffa6f11c417f586fec946d0d308c15a2f37c42d611ce190d09d02efc1",
+          "openapi": "3.0.3",
+          "operationCount": 506,
+          "schemaCount": 246,
+          "tags": [
+            {
+              "name": "activitypub",
+              "count": 11
+            },
+            {
+              "name": "admin",
+              "count": 51
+            },
+            {
+              "name": "issue",
+              "count": 67
+            },
+            {
+              "name": "miscellaneous",
+              "count": 14
+            },
+            {
+              "name": "notification",
+              "count": 7
+            },
+            {
+              "name": "organization",
+              "count": 69
+            },
+            {
+              "name": "package",
+              "count": 6
+            },
+            {
+              "name": "repository",
+              "count": 198
+            },
+            {
+              "name": "settings",
+              "count": 4
+            },
+            {
+              "name": "user",
+              "count": 80
+            }
+          ],
+          "servers": [
+            {
+              "url": "/api/v1"
+            }
+          ],
+          "variants": [],
+          "artifacts": {
+            "openapi": "app/documentation/generated/forgejo/16.0.3/openapi.json",
+            "operations": "app/documentation/generated/forgejo/16.0.3/operations.json"
+          }
+        }
+      ]
+    },
+    {
       "id": "gitea",
       "name": "Gitea",
       "kind": "release",

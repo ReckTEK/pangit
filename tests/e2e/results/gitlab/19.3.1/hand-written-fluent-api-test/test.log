@@ -1,33 +1,61 @@
 [0m[38;5;245mrunning 1 test from ./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts[0m
 gitlab 19.3.1 hand-written fluent API E2E ...
-  core/authentication ... [0m[32mok[0m [0m[38;5;245m(114ms)[0m
+  core/authentication ... [0m[32mok[0m [0m[38;5;245m(104ms)[0m
   core/oauth ... [0m[32mok[0m [0m[38;5;245m(1s)[0m
-  gitlab-extension/operations ... [0m[32mok[0m [0m[38;5;245m(2s)[0m
-  core/repositories ... [0m[32mok[0m [0m[38;5;245m(917ms)[0m
+  gitlab-extension/operations ... [0m[32mok[0m [0m[38;5;245m(1s)[0m
+  core/repositories ... [0m[32mok[0m [0m[38;5;245m(844ms)[0m
   core/forks ... [0m[32mok[0m [0m[38;5;245m(1s)[0m
   core/branches ... [0m[32mok[0m [0m[38;5;245m(1s)[0m
-  core/tags ... [0m[32mok[0m [0m[38;5;245m(820ms)[0m
+  core/tags ... [0m[32mok[0m [0m[38;5;245m(704ms)[0m
   core/commits ... [0m[32mok[0m [0m[38;5;245m(1s)[0m
-  core/commit-files-pagination ... [0m[32mok[0m [0m[38;5;245m(824ms)[0m
+  core/commit-files-pagination ... [0m[32mok[0m [0m[38;5;245m(706ms)[0m
   core/content-reads ... [0m[32mok[0m [0m[38;5;245m(1s)[0m
   core/file-changes ... [0m[32mok[0m [0m[38;5;245m(1s)[0m
-  core/links ... [0m[32mok[0m [0m[38;5;245m(769ms)[0m
-  core/pull-requests ... [0m[32mok[0m [0m[38;5;245m(2s)[0m
-  core/pull-request-merge ... [0m[32mok[0m [0m[38;5;245m(1s)[0m
-  core/pull-request-comments ... [0m[32mok[0m [0m[38;5;245m(3s)[0m
+  core/links ... [0m[32mok[0m [0m[38;5;245m(639ms)[0m
+  core/pull-requests ... [0m[32mok[0m [0m[38;5;245m(1s)[0m
+  core/pull-request-merge ... [0m[32mok[0m [0m[38;5;245m(2s)[0m
+  core/pull-request-comments ... [0m[31mFAILED[0m [0m[38;5;245m(668ms)[0m
   core/pull-request-approval ... [0m[32mok[0m [0m[38;5;245m(2s)[0m
-  core/commit-statuses ... [0m[32mok[0m [0m[38;5;245m(790ms)[0m
+  core/commit-statuses ... [0m[32mok[0m [0m[38;5;245m(718ms)[0m
   shared-capability/issues ... [0m[32mok[0m [0m[38;5;245m(1s)[0m
   shared-capability/releases ... [0m[32mok[0m [0m[38;5;245m(1s)[0m
-  shared-capability/packages ... [0m[32mok[0m [0m[38;5;245m(833ms)[0m
-  shared-capability/branch-rules ... [0m[32mok[0m [0m[38;5;245m(781ms)[0m
-  shared-capability/branch-protection-enforcement ... [0m[32mok[0m [0m[38;5;245m(434ms)[0m
+  shared-capability/packages ... [0m[32mok[0m [0m[38;5;245m(688ms)[0m
+  shared-capability/branch-rules ... [0m[32mok[0m [0m[38;5;245m(746ms)[0m
+  shared-capability/branch-protection-enforcement ... [0m[32mok[0m [0m[38;5;245m(380ms)[0m
   shared-capability/webhooks ... [0m[32mok[0m [0m[38;5;245m(1s)[0m
-  shared-capability/ci-run-discovery ... [0m[32mok[0m [0m[38;5;245m(4s)[0m
-  shared-capability/blob-reads ... [0m[32mok[0m [0m[38;5;245m(694ms)[0m
-  shared-capability/unsupported-modules ... [0m[32mok[0m [0m[38;5;245m(455ms)[0m
-gitlab 19.3.1 hand-written fluent API E2E ... [0m[32mok[0m [0m[38;5;245m(37s)[0m
+  shared-capability/ci-run-discovery ... [0m[32mok[0m [0m[38;5;245m(5s)[0m
+  shared-capability/blob-reads ... [0m[32mok[0m [0m[38;5;245m(622ms)[0m
+  shared-capability/unsupported-modules ... [0m[32mok[0m [0m[38;5;245m(400ms)[0m
+gitlab 19.3.1 hand-written fluent API E2E ... [0m[31mFAILED[0m [0m[38;5;245m(32s)[0m
 
-[0m[32mok[0m | 1 passed (26 steps) | 0 failed [0m[38;5;245m(37s)[0m
+[0m[1m[37m[41m ERRORS [0m
+
+gitlab 19.3.1 hand-written fluent API E2E ... core/pull-request-comments [0m[38;5;245m=> ./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts:23:28[0m
+[0m[1m[31merror[0m: Error: Fixture POST /projects/16/repository/commits: 400: {"message":"You can only create or edit files when you are on a branch"}
+      throw new Error(`Fixture ${method} ${path}: ${response.status}: ${text.slice(0, 1000)}`);
+[0m[31m            ^[0m
+    at [0m[1m[3mGitLabE2EFixtureDriver.raw[0m ([0m[2m[38;5;245mfile:///workspace/[0m[0m[36mtests/e2e/hand-written/git-host-adapter-tests/gitlab/GitLabE2EFixtureDriver.ts[0m:[0m[33m68[0m:[0m[33m13[0m)
+    at async [0m[1m[3mGitLabE2EFixtureDriver.commit[0m ([0m[2m[38;5;245mfile:///workspace/[0m[0m[36mtests/e2e/hand-written/git-host-adapter-tests/gitlab/GitLabE2EFixtureDriver.ts[0m:[0m[33m93[0m:[0m[33m8[0m)
+    at async [0m[1m[3mObject.core/pull-request-comments [as run][0m ([0m[2m[38;5;245mfile:///workspace/[0m[0m[36mtests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-contract-catalog.ts[0m:[0m[33m501[0m:[0m[33m5[0m)
+    at async [0m[2m[38;5;245mfile:///workspace/[0m[0m[36mtests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts[0m:[0m[33m25[0m:[0m[33m9[0m
+    [0m[2m[38;5;245mat [0m[0m[2m[38;5;245masync [0m[0m[2m[38;5;245minnerWrapped[0m[0m[2m[38;5;245m ([0m[0m[2m[38;5;245mext:cli/40_test.js[0m[0m[2m[38;5;245m:[0m[0m[2m[38;5;245m300[0m[0m[2m[38;5;245m:[0m[0m[2m[38;5;245m5[0m[0m[2m[38;5;245m)[0m
+    [0m[2m[38;5;245mat [0m[0m[2m[38;5;245masync [0m[0m[2m[38;5;245mexitSanitizer[0m[0m[2m[38;5;245m ([0m[0m[2m[38;5;245mext:cli/40_test.js[0m[0m[2m[38;5;245m:[0m[0m[2m[38;5;245m201[0m[0m[2m[38;5;245m:[0m[0m[2m[38;5;245m27[0m[0m[2m[38;5;245m)[0m
+    [0m[2m[38;5;245mat [0m[0m[2m[38;5;245masync [0m[0m[2m[38;5;245mObject.outerWrapped [as fn][0m[0m[2m[38;5;245m ([0m[0m[2m[38;5;245mext:cli/40_test.js[0m[0m[2m[38;5;245m:[0m[0m[2m[38;5;245m239[0m[0m[2m[38;5;245m:[0m[0m[2m[38;5;245m22[0m[0m[2m[38;5;245m)[0m
+    [0m[2m[38;5;245mat [0m[0m[2m[38;5;245masync [0m[0m[2m[38;5;245mTestContext.step[0m[0m[2m[38;5;245m ([0m[0m[2m[38;5;245mext:cli/40_test.js[0m[0m[2m[38;5;245m:[0m[0m[2m[38;5;245m855[0m[0m[2m[38;5;245m:[0m[0m[2m[38;5;245m22[0m[0m[2m[38;5;245m)[0m
+    at async [0m[2m[38;5;245mfile:///workspace/[0m[0m[36mtests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts[0m:[0m[33m23[0m:[0m[33m20[0m
+
+gitlab 19.3.1 hand-written fluent API E2E [0m[38;5;245m=> ./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts:12:6[0m
+[0m[1m[31merror[0m: Error: One or more GitLab fluent contracts failed
+  if (!passed) throw new Error("One or more GitLab fluent contracts failed");
+[0m[31m                     ^[0m
+    at [0m[2m[38;5;245mfile:///workspace/[0m[0m[36mtests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts[0m:[0m[33m55[0m:[0m[33m22[0m
+
+[0m[1m[37m[41m FAILURES [0m
+
+gitlab 19.3.1 hand-written fluent API E2E ... core/pull-request-comments [0m[38;5;245m=> ./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts:23:28[0m
+gitlab 19.3.1 hand-written fluent API E2E [0m[38;5;245m=> ./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts:12:6[0m
+
+[0m[31mFAILED[0m | 0 passed (25 steps) | 1 failed (1 step) [0m[38;5;245m(32s)[0m
 
 [0m[32mCheck[0m tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts
+[0m[1m[31merror[0m: Test failed

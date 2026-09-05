@@ -796,7 +796,7 @@ FNDA:1,repoEditRelease
 FNDA:1,repoEditReleaseAttachment
 FNDA:1,repoEditTagProtection
 FNDA:1,repoEditWikiPage
-FNDA:13,repoGet
+FNDA:17,repoGet
 FNDA:1,repoGetAllCommits
 FNDA:1,repoGetArchive
 FNDA:1,repoGetAssignees
@@ -820,7 +820,7 @@ FNDA:1,repoGetLanguages
 FNDA:1,repoGetLatestRelease
 FNDA:1,repoGetLicenses
 FNDA:1,repoGetNote
-FNDA:15,repoGetPullRequest
+FNDA:23,repoGetPullRequest
 FNDA:1,repoGetPullRequestByBaseHead
 FNDA:1,repoGetPullRequestCommits
 FNDA:1,repoGetPullRequestFiles
@@ -14475,8 +14475,8 @@ DA:34777,1
 DA:34778,1
 DA:34779,1
 DA:34780,1
-DA:34781,13
-DA:34782,13
+DA:34781,17
+DA:34782,17
 DA:34790,1
 DA:34791,1
 DA:34792,1
@@ -14673,11 +14673,11 @@ DA:35171,1
 DA:35172,1
 DA:35173,1
 DA:35174,1
-DA:35175,15
-DA:35176,15
-DA:35177,15
-DA:35178,15
-DA:35180,15
+DA:35175,23
+DA:35176,23
+DA:35177,23
+DA:35178,23
+DA:35180,23
 DA:35188,1
 DA:35189,1
 DA:35190,1

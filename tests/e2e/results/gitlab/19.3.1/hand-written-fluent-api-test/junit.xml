@@ -1,59 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="deno test" tests="27" failures="0" errors="0" time="37.772">
-    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" tests="27" disabled="0" errors="0" failures="0">
-        <testcase name="gitlab 19.3.1 hand-written fluent API E2E" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="37.770" line="12" col="6">
+<testsuites name="deno test" tests="27" failures="2" errors="0" time="32.321">
+    <testsuite name="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" tests="27" disabled="0" errors="0" failures="2">
+        <testcase name="gitlab 19.3.1 hand-written fluent API E2E" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="32.320" line="12" col="6">
+            <failure message="Uncaught Error: One or more GitLab fluent contracts failed">Error: One or more GitLab fluent contracts failed
+  if (!passed) throw new Error(&quot;One or more GitLab fluent contracts failed&quot;);
+                     ^
+    at file:///workspace/tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts:55:22</failure>
         </testcase>
-        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; core/authentication" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="0.114" line="23" col="28">
+        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; core/authentication" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="0.104" line="23" col="28">
         </testcase>
-        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; core/oauth" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="1.408" line="23" col="28">
+        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; core/oauth" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="1.431" line="23" col="28">
         </testcase>
-        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; gitlab-extension/operations" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="2.728" line="23" col="28">
+        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; gitlab-extension/operations" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="1.900" line="23" col="28">
         </testcase>
-        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; core/repositories" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="0.917" line="23" col="28">
+        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; core/repositories" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="0.844" line="23" col="28">
         </testcase>
-        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; core/forks" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="1.943" line="23" col="28">
+        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; core/forks" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="1.792" line="23" col="28">
         </testcase>
-        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; core/branches" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="1.209" line="23" col="28">
+        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; core/branches" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="1.116" line="23" col="28">
         </testcase>
-        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; core/tags" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="0.820" line="23" col="28">
+        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; core/tags" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="0.704" line="23" col="28">
         </testcase>
-        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; core/commits" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="1.197" line="23" col="28">
+        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; core/commits" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="1.031" line="23" col="28">
         </testcase>
-        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; core/commit-files-pagination" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="0.824" line="23" col="28">
+        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; core/commit-files-pagination" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="0.706" line="23" col="28">
         </testcase>
-        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; core/content-reads" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="1.607" line="23" col="28">
+        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; core/content-reads" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="1.362" line="23" col="28">
         </testcase>
-        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; core/file-changes" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="1.454" line="23" col="28">
+        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; core/file-changes" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="1.269" line="23" col="28">
         </testcase>
-        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; core/links" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="0.769" line="23" col="28">
+        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; core/links" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="0.639" line="23" col="28">
         </testcase>
-        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; core/pull-requests" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="2.282" line="23" col="28">
+        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; core/pull-requests" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="1.029" line="23" col="28">
         </testcase>
-        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; core/pull-request-merge" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="1.945" line="23" col="28">
+        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; core/pull-request-merge" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="2.129" line="23" col="28">
         </testcase>
-        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; core/pull-request-comments" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="3.052" line="23" col="28">
+        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; core/pull-request-comments" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="0.668" line="23" col="28">
+            <failure message="Uncaught Error: Fixture POST /projects/16/repository/commits: 400: {&quot;message&quot;:&quot;You can only create or edit files when you are on a branch&quot;}">Error: Fixture POST /projects/16/repository/commits: 400: {&quot;message&quot;:&quot;You can only create or edit files when you are on a branch&quot;}
+      throw new Error(`Fixture ${method} ${path}: ${response.status}: ${text.slice(0, 1000)}`);
+            ^
+    at GitLabE2EFixtureDriver.raw (file:///workspace/tests/e2e/hand-written/git-host-adapter-tests/gitlab/GitLabE2EFixtureDriver.ts:68:13)
+    at async GitLabE2EFixtureDriver.commit (file:///workspace/tests/e2e/hand-written/git-host-adapter-tests/gitlab/GitLabE2EFixtureDriver.ts:93:8)
+    at async Object.core/pull-request-comments [as run] (file:///workspace/tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-contract-catalog.ts:501:5)
+    at async file:///workspace/tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts:25:9
+    at async innerWrapped (ext:cli/40_test.js:300:5)
+    at async exitSanitizer (ext:cli/40_test.js:201:27)
+    at async Object.outerWrapped [as fn] (ext:cli/40_test.js:239:22)
+    at async TestContext.step (ext:cli/40_test.js:855:22)
+    at async file:///workspace/tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts:23:20</failure>
         </testcase>
-        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; core/pull-request-approval" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="2.648" line="23" col="28">
+        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; core/pull-request-approval" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="2.538" line="23" col="28">
         </testcase>
-        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; core/commit-statuses" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="0.790" line="23" col="28">
+        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; core/commit-statuses" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="0.718" line="23" col="28">
         </testcase>
-        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; shared-capability/issues" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="1.156" line="23" col="28">
+        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; shared-capability/issues" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="1.075" line="23" col="28">
         </testcase>
-        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; shared-capability/releases" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="1.829" line="23" col="28">
+        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; shared-capability/releases" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="1.722" line="23" col="28">
         </testcase>
-        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; shared-capability/packages" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="0.833" line="23" col="28">
+        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; shared-capability/packages" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="0.688" line="23" col="28">
         </testcase>
-        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; shared-capability/branch-rules" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="0.781" line="23" col="28">
+        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; shared-capability/branch-rules" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="0.746" line="23" col="28">
         </testcase>
-        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; shared-capability/branch-protection-enforcement" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="0.434" line="23" col="28">
+        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; shared-capability/branch-protection-enforcement" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="0.380" line="23" col="28">
         </testcase>
-        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; shared-capability/webhooks" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="1.661" line="23" col="28">
+        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; shared-capability/webhooks" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="1.615" line="23" col="28">
         </testcase>
-        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; shared-capability/ci-run-discovery" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="4.218" line="23" col="28">
+        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; shared-capability/ci-run-discovery" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="5.087" line="23" col="28">
         </testcase>
-        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; shared-capability/blob-reads" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="0.694" line="23" col="28">
+        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; shared-capability/blob-reads" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="0.622" line="23" col="28">
         </testcase>
-        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; shared-capability/unsupported-modules" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="0.455" line="23" col="28">
+        <testcase name="gitlab 19.3.1 hand-written fluent API E2E &gt; shared-capability/unsupported-modules" classname="./tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts" time="0.400" line="23" col="28">
         </testcase>
     </testsuite>
 </testsuites>

@@ -9,6 +9,10 @@ export type RestClientTypeMap = {
   "codeberg": {
     "latest": import("./codeberg/latest/mod.ts").CodebergRestClient;
   };
+  "forgejo": {
+    "15.0.7": import("./forgejo/15.0.7/mod.ts").ForgejoRestClient;
+    "16.0.3": import("./forgejo/16.0.3/mod.ts").ForgejoRestClient;
+  };
   "gitea": {
     "1.26.4": import("./gitea/1.26.4/mod.ts").GiteaRestClient;
     "1.27.2": import("./gitea/1.27.2/mod.ts").GiteaRestClient;

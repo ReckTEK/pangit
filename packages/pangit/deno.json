@@ -8,13 +8,16 @@
     "./providers/azure-devops/latest": "./src/generated-rest-clients/azure-devops/latest/mod.ts",
     "./providers/bitbucket/latest": "./src/generated-rest-clients/bitbucket/latest/mod.ts",
     "./providers/codeberg/latest": "./src/generated-rest-clients/codeberg/latest/mod.ts",
+    "./providers/forgejo/15.0.7": "./src/generated-rest-clients/forgejo/15.0.7/mod.ts",
+    "./providers/forgejo/16.0.3": "./src/generated-rest-clients/forgejo/16.0.3/mod.ts",
     "./providers/gitea/1.26.4": "./src/generated-rest-clients/gitea/1.26.4/mod.ts",
     "./providers/gitea/1.27.2": "./src/generated-rest-clients/gitea/1.27.2/mod.ts",
     "./providers/github/latest": "./src/generated-rest-clients/github/latest/mod.ts",
     "./providers/gitlab/18.11.11": "./src/generated-rest-clients/gitlab/18.11.11/mod.ts",
     "./providers/gitlab/19.3.1": "./src/generated-rest-clients/gitlab/19.3.1/mod.ts",
     "./fluent/gitea": "./src/fluent-providers/gitea/mod.ts",
-    "./fluent/gitlab": "./src/fluent-providers/gitlab/mod.ts"
+    "./fluent/gitlab": "./src/fluent-providers/gitlab/mod.ts",
+    "./fluent/forgejo": "./src/fluent-providers/forgejo/mod.ts"
   },
   "publish": {
     "include": [

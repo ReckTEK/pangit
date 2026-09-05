@@ -7,9 +7,9 @@ preserves its provider's request fields, response bodies, status codes, operatio
 version.
 
 > [!IMPORTANT]
-> **Status: alpha development.** Fluent and raw REST APIs are live-tested for Gitea and GitLab.
-> GitLab has
-> [explicit capability gaps and a confirmed server defect](https://github.com/mannsion/pangit/blob/main/packages/pangit/docs/GitLab.md#provider-differences).
+> **Status: alpha development.** Fluent and raw REST APIs are live-tested for Gitea, GitLab, and
+> Forgejo. GitLab has
+> [explicit capability gaps and confirmed server defects](https://github.com/mannsion/pangit/blob/main/packages/pangit/docs/GitLab.md#provider-differences).
 > Raw clients are generated for every provider below. The package is not published to JSR yet.
 
 ## Use from source
@@ -71,9 +71,9 @@ extension and native types are exported from its own `fluent/<provider>` entry p
 
 ## Fluent file reads
 
-The provider-neutral fluent API supports Gitea and GitLab. This example uses Gitea; see the
-[GitLab guide](https://github.com/mannsion/pangit/blob/main/packages/pangit/docs/GitLab.md) for its
-versions, setup and capability differences:
+The provider-neutral fluent API supports Gitea, GitLab, and Forgejo. This example uses Gitea; see
+the [GitLab guide](https://github.com/mannsion/pangit/blob/main/packages/pangit/docs/GitLab.md) for
+its versions, setup and capability differences:
 
 ```ts
 const connection = await PanGit.api.createClient("gitea", "1.27.2", {
@@ -100,11 +100,15 @@ unresolved types throw `PanGit.api.errors.ContentReadError`. Supply `{ type: "im
 override the type or a `fileName` hint when reading a filename-free Git blob with
 `repository.blobs.readBlob(sha, options)`.
 
+For Forgejo and Codeberg setup, version differences, and Docker E2E, see the
+[Forgejo guide](https://github.com/mannsion/pangit/blob/main/packages/pangit/docs/Forgejo.md).
+
 ## Provider clients
 
 | Provider           | Key            | API versions         |
 | ------------------ | -------------- | -------------------- |
 | Gitea              | `gitea`        | `1.26.4`, `1.27.2`   |
+| Forgejo            | `forgejo`      | `15.0.7`, `16.0.3`   |
 | GitLab             | `gitlab`       | `18.11.11`, `19.3.1` |
 | GitHub             | `github`       | `latest`             |
 | Codeberg (Forgejo) | `codeberg`     | `latest`             |

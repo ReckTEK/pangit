@@ -1,39 +1,39 @@
 [0m[38;5;245mrunning 1 test from ./tests/e2e/hand-written/git-host-adapter-tests/gitea/gitea-fluent-api-e2e_test.ts[0m
 gitea 1.27.2 hand-written fluent API E2E ...
-  core/authentication ... [0m[32mok[0m [0m[38;5;245m(12s)[0m
-  core/repositories ... [0m[32mok[0m [0m[38;5;245m(456ms)[0m
-  core/forks ... [0m[32mok[0m [0m[38;5;245m(31ms)[0m
-  core/branches ... [0m[32mok[0m [0m[38;5;245m(194ms)[0m
-  core/tags ... [0m[32mok[0m [0m[38;5;245m(38ms)[0m
-  core/commits ... [0m[32mok[0m [0m[38;5;245m(120ms)[0m
-  core/content-reads ... [0m[32mok[0m [0m[38;5;245m(266ms)[0m
-  core/file-change-commits ... [0m[32mok[0m [0m[38;5;245m(263ms)[0m
+  core/authentication ... [0m[32mok[0m [0m[38;5;245m(15s)[0m
+  core/repositories ... [0m[32mok[0m [0m[38;5;245m(412ms)[0m
+  core/forks ... [0m[32mok[0m [0m[38;5;245m(29ms)[0m
+  core/branches ... [0m[32mok[0m [0m[38;5;245m(183ms)[0m
+  core/tags ... [0m[32mok[0m [0m[38;5;245m(41ms)[0m
+  core/commits ... [0m[32mok[0m [0m[38;5;245m(118ms)[0m
+  core/content-reads ... [0m[32mok[0m [0m[38;5;245m(262ms)[0m
+  core/file-change-commits ... [0m[32mok[0m [0m[38;5;245m(250ms)[0m
   core/pull-request-discovery ... [0m[32mok[0m [0m[38;5;245m(78ms)[0m
-  core/pull-request-mutation ... [0m[32mok[0m [0m[38;5;245m(416ms)[0m
-  core/pull-request-merge ... [0m[32mok[0m [0m[38;5;245m(320ms)[0m
-  core/pull-request-reviews-comments ... [0m[32mok[0m [0m[38;5;245m(182ms)[0m
-  core/commit-statuses ... [0m[32mok[0m [0m[38;5;245m(87ms)[0m
+  core/pull-request-mutation ... [0m[32mok[0m [0m[38;5;245m(396ms)[0m
+  core/pull-request-merge ... [0m[32mok[0m [0m[38;5;245m(301ms)[0m
+  core/pull-request-reviews-comments ... [0m[32mok[0m [0m[38;5;245m(171ms)[0m
+  core/commit-statuses ... [0m[32mok[0m [0m[38;5;245m(84ms)[0m
   gitea-extension/file-change-commit ... [0m[32mok[0m [0m[38;5;245m(116ms)[0m
-  gitea-extension/compare-diff-patch ... [0m[32mok[0m [0m[38;5;245m(21ms)[0m
-  gitea-extension/pull-request-merge ... [0m[32mok[0m [0m[38;5;245m(208ms)[0m
-  gitea-extension/pull-request-review ... [0m[32mok[0m [0m[38;5;245m(82ms)[0m
+  gitea-extension/compare-diff-patch ... [0m[32mok[0m [0m[38;5;245m(20ms)[0m
+  gitea-extension/pull-request-merge ... [0m[32mok[0m [0m[38;5;245m(203ms)[0m
+  gitea-extension/pull-request-review ... [0m[32mok[0m [0m[38;5;245m(79ms)[0m
   gitea-extension/commit-status ... [0m[32mok[0m [0m[38;5;245m(24ms)[0m
   shared-capability/current-user-profile ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
-  shared-capability/issues ... [0m[32mok[0m [0m[38;5;245m(80ms)[0m
-  gitea-extension/issue-content-version ... [0m[32mok[0m [0m[38;5;245m(33ms)[0m
-  shared-capability/releases ... [0m[32mok[0m [0m[38;5;245m(60ms)[0m
-  shared-capability/repository-webhooks ... [0m[32mok[0m [0m[38;5;245m(1s)[0m
+  shared-capability/issues ... [0m[32mok[0m [0m[38;5;245m(77ms)[0m
+  gitea-extension/issue-content-version ... [0m[32mok[0m [0m[38;5;245m(37ms)[0m
+  shared-capability/releases ... [0m[32mok[0m [0m[38;5;245m(58ms)[0m
+  shared-capability/repository-webhooks ... [0m[32mok[0m [0m[38;5;245m(2s)[0m
   shared-capability/ci-run-discovery ... [0m[32mok[0m [0m[38;5;245m(35ms)[0m
-  shared-capability/packages ... [0m[32mok[0m [0m[38;5;245m(35ms)[0m
-  shared-capability/blob-reads ... [0m[32mok[0m [0m[38;5;245m(68ms)[0m
-  shared-capability/pull-request-reviews ... [0m[32mok[0m [0m[38;5;245m(127ms)[0m
+  shared-capability/packages ... [0m[32mok[0m [0m[38;5;245m(34ms)[0m
+  shared-capability/blob-reads ... [0m[32mok[0m [0m[38;5;245m(70ms)[0m
+  shared-capability/pull-request-reviews ... [0m[32mok[0m [0m[38;5;245m(124ms)[0m
   shared-capability/branch-rules ... [0m[32mok[0m [0m[38;5;245m(32ms)[0m
-  gitea-extension/branch-rule-priority ... [0m[32mok[0m [0m[38;5;245m(27ms)[0m
+  gitea-extension/branch-rule-priority ... [0m[32mok[0m [0m[38;5;245m(25ms)[0m
   shared-capability/unsupported-gitea-modules ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
   native-access/gitea/client ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
-  native-access/gitea/entities ... [0m[32mok[0m [0m[38;5;245m(113ms)[0m
-gitea 1.27.2 hand-written fluent API E2E ... [0m[32mok[0m [0m[38;5;245m(48s)[0m
+  native-access/gitea/entities ... [0m[32mok[0m [0m[38;5;245m(109ms)[0m
+gitea 1.27.2 hand-written fluent API E2E ... [0m[32mok[0m [0m[38;5;245m(55s)[0m
 
-[0m[32mok[0m | 1 passed (32 steps) | 0 failed [0m[38;5;245m(48s)[0m
+[0m[32mok[0m | 1 passed (32 steps) | 0 failed [0m[38;5;245m(55s)[0m
 
 [0m[32mCheck[0m tests/e2e/hand-written/git-host-adapter-tests/gitea/gitea-fluent-api-e2e_test.ts

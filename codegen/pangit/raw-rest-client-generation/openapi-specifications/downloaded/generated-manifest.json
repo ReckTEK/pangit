@@ -118,6 +118,98 @@
         }
       }
     },
+    "forgejo": {
+      "name": "Forgejo",
+      "kind": "release",
+      "upstream": "https://codeberg.org/forgejo/forgejo",
+      "selected": "16.0.3",
+      "client": {
+        "className": "ForgejoRestClient",
+        "displayName": "Forgejo",
+        "namespaceName": "ForgejoApi",
+        "variablePrefix": "forgejo"
+      },
+      "versions": {
+        "15.0.7": {
+          "ref": "v15.0.7",
+          "source": "https://codeberg.org/forgejo/forgejo/raw/tag/v15.0.7/templates/swagger/v1_json.tmpl",
+          "format": "json",
+          "destination": "codegen/pangit/raw-rest-client-generation/openapi-specifications/downloaded/forgejo/15.0.7.json",
+          "bytes": 828823,
+          "sha256": "sha256:e5a8b5adc4498281d0b369063432d58edb162c263088657b0d07df03c8d75975",
+          "license": {
+            "spdx": "MIT",
+            "attribution": "Copyright (c) Forgejo contributors",
+            "declaration": {
+              "name": "This file is distributed under the MIT license for the purpose of interoperability",
+              "url": "http://opensource.org/licenses/MIT"
+            },
+            "text": {
+              "source": "https://spdx.org/licenses/MIT.txt",
+              "destination": "codegen/pangit/raw-rest-client-generation/openapi-specifications/downloaded/licenses/forgejo/15.0.7/LICENSE.txt",
+              "bytes": 1077,
+              "sha256": "sha256:c3b1b78bc8bd3ea13aa4bc9778442d16560270afa235006d816e5e88cef24db4"
+            },
+            "notices": [
+              {
+                "source": "https://codeberg.org/forgejo/forgejo/commit/5e923cfbddb59eb7afaed1bc3b5724c1b2bc0844.patch",
+                "destination": "codegen/pangit/raw-rest-client-generation/openapi-specifications/downloaded/licenses/forgejo/15.0.7/NOTICE-01.txt",
+                "bytes": 1303,
+                "sha256": "sha256:633609919b93847156e4830222877cbc7e361f8fdd3c7dff132bfe64228c595c"
+              }
+            ]
+          },
+          "artifacts": {
+            "normalized": "codegen/pangit/raw-rest-client-generation/openapi-specifications/normalized/forgejo/15.0.7.json",
+            "client": "src/generated-rest-clients/forgejo/15.0.7/mod.ts",
+            "documentation": {
+              "openapi": "app/documentation/generated/forgejo/15.0.7/openapi.json",
+              "operations": "app/documentation/generated/forgejo/15.0.7/operations.json",
+              "route": "/docs/raw/forgejo/15.0.7"
+            }
+          }
+        },
+        "16.0.3": {
+          "ref": "v16.0.3",
+          "source": "https://codeberg.org/forgejo/forgejo/raw/tag/v16.0.3/templates/swagger/v1_json.tmpl",
+          "format": "json",
+          "destination": "codegen/pangit/raw-rest-client-generation/openapi-specifications/downloaded/forgejo/16.0.3.json",
+          "bytes": 853926,
+          "sha256": "sha256:e37f187d0c054c6330cfaa256d5b34daa32b8b5bfbb4247b741eba096194262f",
+          "license": {
+            "spdx": "MIT",
+            "attribution": "Copyright (c) Forgejo contributors",
+            "declaration": {
+              "name": "This file is distributed under the MIT license for the purpose of interoperability",
+              "url": "http://opensource.org/licenses/MIT"
+            },
+            "text": {
+              "source": "https://spdx.org/licenses/MIT.txt",
+              "destination": "codegen/pangit/raw-rest-client-generation/openapi-specifications/downloaded/licenses/forgejo/16.0.3/LICENSE.txt",
+              "bytes": 1077,
+              "sha256": "sha256:c3b1b78bc8bd3ea13aa4bc9778442d16560270afa235006d816e5e88cef24db4"
+            },
+            "notices": [
+              {
+                "source": "https://codeberg.org/forgejo/forgejo/commit/5e923cfbddb59eb7afaed1bc3b5724c1b2bc0844.patch",
+                "destination": "codegen/pangit/raw-rest-client-generation/openapi-specifications/downloaded/licenses/forgejo/16.0.3/NOTICE-01.txt",
+                "bytes": 1303,
+                "sha256": "sha256:633609919b93847156e4830222877cbc7e361f8fdd3c7dff132bfe64228c595c"
+              }
+            ]
+          },
+          "artifacts": {
+            "normalized": "codegen/pangit/raw-rest-client-generation/openapi-specifications/normalized/forgejo/16.0.3.json",
+            "client": "src/generated-rest-clients/forgejo/16.0.3/mod.ts",
+            "documentation": {
+              "openapi": "app/documentation/generated/forgejo/16.0.3/openapi.json",
+              "operations": "app/documentation/generated/forgejo/16.0.3/operations.json",
+              "route": "/docs/raw/forgejo/16.0.3"
+            }
+          }
+        }
+      }
+    },
     "gitea": {
       "name": "Gitea",
       "kind": "release",

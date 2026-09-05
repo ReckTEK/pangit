@@ -16,7 +16,7 @@
     "build": "deno task --recursive --filter @mannsion/pangit-site build",
     "start": "deno task --recursive --filter @mannsion/pangit-site start",
     "check": "deno check codegen tests/package tests/e2e && deno task --recursive --filter @mannsion/* check",
-    "test": "deno test --allow-env=NODE_DISABLE_COLORS --allow-read --allow-write --allow-run=deno codegen tests/package tests/e2e/result-management/prepare-result-directories_test.ts tests/e2e/runner/e2e-run-selection_test.ts tests/e2e/runner/run-all-live-tests_test.ts tests/e2e/hand-written/fluent-api-contracts/request-recorder_test.ts tests/e2e/hand-written/git-host-adapter-tests/gitea/gitea-contract-catalog_test.ts tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-contract-catalog_test.ts tests/e2e/hand-written/docker-environment-definitions/gitea/webhook-journal_test.ts && deno task --recursive --filter @mannsion/* test",
+    "test": "deno test --allow-env=NODE_DISABLE_COLORS --allow-read --allow-write --allow-run=deno codegen tests/package tests/e2e/result-management/prepare-result-directories_test.ts tests/e2e/runner/e2e-run-selection_test.ts tests/e2e/runner/run-all-live-tests_test.ts tests/e2e/hand-written/fluent-api-contracts/request-recorder_test.ts tests/e2e/hand-written/git-host-adapter-tests/gitea/gitea-contract-catalog_test.ts tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-contract-catalog_test.ts tests/e2e/hand-written/git-host-adapter-tests/forgejo/forgejo-contract-catalog_test.ts tests/e2e/hand-written/docker-environment-definitions/gitea/webhook-journal_test.ts && deno task --recursive --filter @mannsion/* test",
     "lint": "deno lint codegen tests/package tests/e2e && deno task --recursive --filter @mannsion/* lint",
     "fmt": "deno fmt"
   },

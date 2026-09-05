@@ -3,6 +3,7 @@ export const restClientVersions = {
   "azure-devops": ["latest"],
   "bitbucket": ["latest"],
   "codeberg": ["latest"],
+  "forgejo": ["15.0.7", "16.0.3"],
   "gitea": ["1.26.4", "1.27.2"],
   "github": ["latest"],
   "gitlab": ["18.11.11", "19.3.1"],

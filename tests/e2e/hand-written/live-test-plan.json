@@ -28,6 +28,20 @@
         }
       },
       "handWrittenFluentApiTest": "tests/e2e/hand-written/git-host-adapter-tests/gitlab/gitlab-fluent-api-e2e_test.ts"
+    },
+    "forgejo": {
+      "displayName": "Forgejo",
+      "rawRestClientTestCases": "tests/e2e/hand-written/raw-rest-client-test-cases/forgejo.json",
+      "handWrittenFluentApiTest": "tests/e2e/hand-written/git-host-adapter-tests/forgejo/forgejo-fluent-api-e2e_test.ts",
+      "dockerEnvironmentDefinition": "tests/e2e/hand-written/docker-environment-definitions/forgejo/environment.json",
+      "versions": {
+        "15.0.7": {
+          "containerImage": "codeberg.org/forgejo/forgejo:15.0.7"
+        },
+        "16.0.3": {
+          "containerImage": "codeberg.org/forgejo/forgejo:16.0.3"
+        }
+      }
     }
   }
 }

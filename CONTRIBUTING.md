@@ -1,7 +1,7 @@
 # Contributing to PanGit
 
-PanGit is in alpha development. The provider-neutral fluent API currently targets Gitea and GitLab,
-while the generated REST layer covers the provider versions listed in the
+PanGit is in alpha development. The provider-neutral fluent API currently targets Gitea, GitLab, and
+Forgejo, while the generated REST layer covers the provider versions listed in the
 [README](README.md#provider-status). Keep readiness claims tied to implementation and test evidence.
 
 Small fixes and documentation improvements can go directly to a pull request. For a new provider,
@@ -109,14 +109,15 @@ run the smallest relevant live suite and report the exact command in the pull re
 deno task e2e --git-host gitea --version 1.27.2 --suite fluent
 deno task e2e --git-host gitea --version 1.27.2 --suite raw
 deno task e2e --git-host gitlab --version 19.3.1 --suite fluent
+deno task e2e --git-host forgejo --version 16.0.3 --suite fluent
 deno task e2e --git-host gitea --version 1.27.2 --suite fluent \
   --contract core/repositories
 ```
 
 Filtered runs write ignored evidence under `tests/e2e/.focused-results/`. An unfiltered
-`deno task e2e` runs both supported Gitea versions and both supported GitLab versions, refreshes the
-tracked evidence under `tests/e2e/results/`, and removes its disposable Compose environments
-afterward. Run the complete suite before changing a public readiness or E2E claim.
+`deno task e2e` runs both supported versions of Gitea, GitLab, and Forgejo, refreshes the tracked
+evidence under `tests/e2e/results/`, and removes its disposable Compose environments afterward. Run
+the complete suite before changing a public readiness or E2E claim.
 
 Keep provider defect reproductions, candidate patches and upstream follow-up together under
 [`tests/e2e/hand-written/diagnostics`](tests/e2e/hand-written/diagnostics). The GitLab

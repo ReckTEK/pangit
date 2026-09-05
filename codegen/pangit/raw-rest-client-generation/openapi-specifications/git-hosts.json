@@ -160,5 +160,64 @@
         "expectedSha256": "sha256:7e7b5bd1af4b486a1af498c78150ca1083b7c6d621671bde26967406e3d75d6d"
       }
     }
+  },
+  "forgejo": {
+    "client": {
+      "className": "ForgejoRestClient",
+      "displayName": "Forgejo",
+      "namespaceName": "ForgejoApi",
+      "variablePrefix": "forgejo"
+    },
+    "name": "Forgejo",
+    "kind": "release",
+    "format": "json",
+    "selected": "16.0.3",
+    "upstream": "https://codeberg.org/forgejo/forgejo",
+    "versions": {
+      "15.0.7": {
+        "ref": "v15.0.7",
+        "url": "https://codeberg.org/forgejo/forgejo/raw/tag/v15.0.7/templates/swagger/v1_json.tmpl",
+        "expectedSha256": "sha256:e5a8b5adc4498281d0b369063432d58edb162c263088657b0d07df03c8d75975",
+        "transform": "forgejo-template",
+        "license": {
+          "spdx": "MIT",
+          "url": "https://spdx.org/licenses/MIT.txt",
+          "expectedSha256": "sha256:c3b1b78bc8bd3ea13aa4bc9778442d16560270afa235006d816e5e88cef24db4",
+          "attribution": "Copyright (c) Forgejo contributors",
+          "declaration": {
+            "name": "This file is distributed under the MIT license for the purpose of interoperability",
+            "url": "http://opensource.org/licenses/MIT"
+          },
+          "notices": [
+            {
+              "url": "https://codeberg.org/forgejo/forgejo/commit/5e923cfbddb59eb7afaed1bc3b5724c1b2bc0844.patch",
+              "expectedSha256": "sha256:633609919b93847156e4830222877cbc7e361f8fdd3c7dff132bfe64228c595c"
+            }
+          ]
+        }
+      },
+      "16.0.3": {
+        "ref": "v16.0.3",
+        "url": "https://codeberg.org/forgejo/forgejo/raw/tag/v16.0.3/templates/swagger/v1_json.tmpl",
+        "expectedSha256": "sha256:e37f187d0c054c6330cfaa256d5b34daa32b8b5bfbb4247b741eba096194262f",
+        "transform": "forgejo-template",
+        "license": {
+          "spdx": "MIT",
+          "url": "https://spdx.org/licenses/MIT.txt",
+          "expectedSha256": "sha256:c3b1b78bc8bd3ea13aa4bc9778442d16560270afa235006d816e5e88cef24db4",
+          "attribution": "Copyright (c) Forgejo contributors",
+          "declaration": {
+            "name": "This file is distributed under the MIT license for the purpose of interoperability",
+            "url": "http://opensource.org/licenses/MIT"
+          },
+          "notices": [
+            {
+              "url": "https://codeberg.org/forgejo/forgejo/commit/5e923cfbddb59eb7afaed1bc3b5724c1b2bc0844.patch",
+              "expectedSha256": "sha256:633609919b93847156e4830222877cbc7e361f8fdd3c7dff132bfe64228c595c"
+            }
+          ]
+        }
+      }
+    }
   }
 }

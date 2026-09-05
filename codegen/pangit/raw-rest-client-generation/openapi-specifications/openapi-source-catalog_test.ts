@@ -16,7 +16,15 @@ Deno.test("every active API specification source has a normalizer", () => {
 });
 
 Deno.test("every supported source is active and content-pinned", () => {
-  const expected = ["azure-devops", "bitbucket", "codeberg", "gitea", "github", "gitlab"];
+  const expected = [
+    "azure-devops",
+    "bitbucket",
+    "codeberg",
+    "forgejo",
+    "gitea",
+    "github",
+    "gitlab",
+  ];
   const actual = getGitHosts();
   if (JSON.stringify(actual) !== JSON.stringify(expected)) {
     throw new Error(`Expected ${JSON.stringify(expected)}, received ${JSON.stringify(actual)}`);
@@ -106,7 +114,11 @@ Deno.test("release sources use stable versions and immutable release refs", () =
       if (release.ref === undefined || !release.url.includes(`/${release.ref}/`)) {
         throw new Error(`${gitHost} ${version} is not pinned to its release ref`);
       }
-      if (release.license !== undefined && !release.license.url.includes(`/${release.ref}/`)) {
+      if (
+        release.license !== undefined && !release.license.url.includes(`/${release.ref}/`) &&
+        !(release.license.url === "https://spdx.org/licenses/MIT.txt" &&
+          release.license.declaration)
+      ) {
         throw new Error(`${gitHost} ${version} license is not pinned to its release ref`);
       }
     }
