@@ -105,14 +105,15 @@ These commands do not run Docker or live-provider E2E tests.
 The JSR package is configured in `packages/pangit/deno.json`; a separate `jsr.json` is unnecessary.
 Only `@recktek/pangit` is published. The site and example workspaces have `"publish": false`.
 
-One-time registry setup: create `pangit` in the `recktek` scope at [JSR](https://jsr.io/new), then
-link `ReckTEK/pangit` in the package settings. The GitHub user pushing the release tag must be a
-member of that JSR scope. The workflow uses GitHub OIDC with provenance; no publish token is needed.
+The [JSR package](https://jsr.io/@recktek/pangit) is linked to `ReckTEK/pangit`. The GitHub user
+pushing the release tag must be a member of the `recktek` JSR scope. The workflow uses GitHub OIDC
+with provenance; no publish token is needed.
 
 For each release:
 
 1. Set a new version such as `0.1.0-alpha.2` in `packages/pangit/deno.json` and update the root
-   `deno.json` import for `@recktek/pangit` to that exact version.
+   `deno.json` import for `@recktek/pangit` to that exact version. Update the install commands in
+   both READMEs and `packages/pangit-site/app/snippets/install.sh` to match.
 2. Run the non-live checks above, including regeneration. Commit the version change and generated
    package metadata to `main`, then push it.
 3. Tag that commit with `v` followed by the exact package version, for example

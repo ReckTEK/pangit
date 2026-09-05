@@ -28,7 +28,7 @@ export const siteConfig = {
     logo: "pangit-logo.png",
   },
   anchors: { main: "main", reference: "rest-api-reference" },
-  snippets: { source: "source.sh" },
+  snippets: { install: "install.sh" },
   theme: { cookie: "pangit-theme", maxAge: 31_536_000 },
 };
 

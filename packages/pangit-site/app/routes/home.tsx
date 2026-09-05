@@ -35,7 +35,7 @@ export default function Home() {
             <Link to={siteUrls.docs} className="button-secondary">Explore the docs</Link>
           </div>
           <p className="mt-5 text-xs leading-6 text-muted">
-            Alpha · available from source · explicit provider versions
+            Alpha · available on JSR · explicit provider versions
           </p>
         </div>
         <div className="min-w-0">
@@ -47,12 +47,12 @@ export default function Home() {
       </header>
 
       <div className="grid gap-10 py-9 md:grid-cols-[minmax(0,1fr)_13rem] md:gap-12">
-        <section aria-labelledby="source-heading" className="min-w-0">
-          <h2 id="source-heading" className="text-xl font-semibold">Use the alpha from source</h2>
+        <section aria-labelledby="install-heading" className="min-w-0">
+          <h2 id="install-heading" className="text-xl font-semibold">Install the alpha</h2>
           <p className="mt-3 text-sm text-muted">
-            The package is not published yet. Clone the repository and use its Deno workspace:
+            Add PanGit to your Deno project. Select the alpha version explicitly:
           </p>
-          <CodeSnippet file={siteConfig.snippets.source} />
+          <CodeSnippet file={siteConfig.snippets.install} />
         </section>
 
         <aside aria-labelledby="documentation-heading">
