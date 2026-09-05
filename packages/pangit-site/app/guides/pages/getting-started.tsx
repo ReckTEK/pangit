@@ -26,6 +26,14 @@ export default function Guide() {
               </Note>
               <CodeSnippet file="install.sh" />
               <p>
+                <a href="https://docs.deno.com/runtime/packages/supply_chain/#minimum-dependency-age">
+                  Deno 2.9+ waits 24 hours
+                </a>{" "}
+                before installing new releases by default. To install a trusted release sooner, add
+                {" "}
+                <code>--minimum-dependency-age=0</code> to that <code>deno add</code> command.
+              </p>
+              <p>
                 Create <code>quickstart.ts</code> alongside your{" "}
                 <code>deno.json</code>. Imports from <code>@recktek/pangit/api</code>{" "}
                 resolve to the installed package.

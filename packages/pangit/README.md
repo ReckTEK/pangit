@@ -22,6 +22,10 @@ Use Deno 2 and select the alpha version explicitly; stable version ranges do not
 prereleases. The command registers `@recktek/pangit` for the imports below. See
 [available versions](https://jsr.io/@recktek/pangit/versions) on JSR.
 
+[Deno 2.9+ waits 24 hours](https://docs.deno.com/runtime/packages/supply_chain/#minimum-dependency-age)
+before installing new releases by default. To install a trusted release sooner, add
+`--minimum-dependency-age=0` to that `deno add` command.
+
 ## Documentation
 
 From the source workspace root, run `deno task generate:pangit-site` and `deno task dev` to open

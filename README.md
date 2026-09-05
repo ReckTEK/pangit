@@ -76,6 +76,10 @@ deno add jsr:@recktek/pangit@0.1.0-alpha.2
 Select the alpha version explicitly; stable version ranges do not include prereleases. The examples
 below use the `@recktek/pangit` import registered by this command.
 
+[Deno 2.9+ waits 24 hours](https://docs.deno.com/runtime/packages/supply_chain/#minimum-dependency-age)
+before installing new releases by default. To install a trusted release sooner, add
+`--minimum-dependency-age=0` to that `deno add` command.
+
 To work on PanGit itself, clone the repository and use its workspace package:
 
 ```bash
