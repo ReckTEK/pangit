@@ -100,6 +100,36 @@ deno task build
 
 These commands do not run Docker or live-provider E2E tests.
 
+## Publish an alpha
+
+The JSR package is configured in `packages/pangit/deno.json`; a separate `jsr.json` is unnecessary.
+Only `@recktek/pangit` is published. The site and example workspaces have `"publish": false`.
+
+One-time registry setup: create `pangit` in the `recktek` scope at [JSR](https://jsr.io/new), then
+link `ReckTEK/pangit` in the package settings. The GitHub user pushing the release tag must be a
+member of that JSR scope. The workflow uses GitHub OIDC with provenance; no publish token is needed.
+
+For each release:
+
+1. Set a new version such as `0.1.0-alpha.2` in `packages/pangit/deno.json` and update the root
+   `deno.json` import for `@recktek/pangit` to that exact version.
+2. Run the non-live checks above, including regeneration. Commit the version change and generated
+   package metadata to `main`, then push it.
+3. Tag that commit with `v` followed by the exact package version, for example
+   `git tag v0.1.0-alpha.2`, then `git push origin v0.1.0-alpha.2`.
+4. Check the
+   [Publish to JSR workflow](https://github.com/ReckTEK/pangit/actions/workflows/publish.yml) and
+   confirm the version appears on [JSR](https://jsr.io/@recktek/pangit/versions).
+
+The workflow verifies that the tag matches an alpha version on `main`, runs the non-live checks,
+then publishes only the library from a fresh checkout. Ordinary commits do not publish a version.
+Failed runs can be rerun from GitHub Actions; a published version cannot be overwritten.
+
+[JSR prereleases](https://jsr.io/docs/packages#pre-release-versions) use SemVer suffixes such as
+`-alpha.1`. They are excluded from stable version resolution and must be selected explicitly:
+`deno add jsr:@recktek/pangit@0.1.0-alpha.1`. Public APIs may change between alpha releases. The
+workflow deliberately rejects stable versions; change that policy when preparing a stable release.
+
 ## Live E2E tests
 
 Changes to provider transport, generated operations, fluent behavior, or provider fixtures should

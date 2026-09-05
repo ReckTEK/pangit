@@ -1,0 +1,76 @@
+name: Publish to JSR
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: jsr-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    name: Verify alpha release
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: denoland/setup-deno@22d081ff2d3a40755e97629de92e3bcbfa7cf2ed # v2.0.5
+        with:
+          deno-version: v2.9.5
+          cache: true
+      - name: Validate package and release tag
+        run: |
+          git merge-base --is-ancestor HEAD origin/main
+          deno eval '
+            const pkg = JSON.parse(await Deno.readTextFile("packages/pangit/deno.json"));
+            const root = JSON.parse(await Deno.readTextFile("deno.json"));
+            if (pkg.name !== "@recktek/pangit") throw new Error("Unexpected package name");
+            if (!/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)-alpha\.(0|[1-9]\d*)$/.test(pkg.version)) {
+              throw new Error("Only numbered alpha versions may be published");
+            }
+            if (Deno.env.get("GITHUB_REF_NAME") !== `v${pkg.version}`) {
+              throw new Error("Release tag must exactly match the package version");
+            }
+            if (root.imports[pkg.name] !== `jsr:${pkg.name}@${pkg.version}`) {
+              throw new Error("Workspace import must match the package version");
+            }
+          '
+      - run: deno install --frozen
+      - run: deno task generate --cached
+      - name: Check generated output is committed
+        run: git diff --exit-code
+      - run: deno fmt --check
+      - run: deno task check
+      - run: deno task test
+      - run: deno task lint
+      - run: deno task build
+      - name: Validate JSR package
+        working-directory: packages/pangit
+        run: deno publish --dry-run
+
+  publish:
+    name: Publish alpha
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          persist-credentials: false
+      - uses: denoland/setup-deno@22d081ff2d3a40755e97629de92e3bcbfa7cf2ed # v2.0.5
+        with:
+          deno-version: v2.9.5
+      - name: Publish @recktek/pangit with provenance
+        working-directory: packages/pangit
+        run: deno publish

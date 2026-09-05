@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "package": {
     "name": "@recktek/pangit",
-    "version": "0.1.0"
+    "version": "0.1.0-alpha.1"
   },
   "providers": [
     {
