@@ -109,11 +109,16 @@ The [JSR package](https://jsr.io/@recktek/pangit) is linked to `ReckTEK/pangit`.
 pushing the release tag must be a member of the `recktek` JSR scope. The workflow uses GitHub OIDC
 with provenance; no publish token is needed.
 
+Publication is currently blocked: JSR rejects the module augmentation used by provider
+`registration.ts` files. Replace that registration mechanism while preserving provider isolation
+before publishing. The local `deno publish --dry-run` does not catch this server-side restriction.
+
 For each release:
 
 1. Set a new version such as `0.1.0-alpha.2` in `packages/pangit/deno.json` and update the root
-   `deno.json` import for `@recktek/pangit` to that exact version. Update the install commands in
-   both READMEs and `packages/pangit-site/app/snippets/install.sh` to match.
+   `deno.json` import for `@recktek/pangit` to that exact version. When the first version is ready
+   to publish, update both READMEs and the site's getting-started instructions to use that JSR
+   version.
 2. Run the non-live checks above, including regeneration. Commit the version change and generated
    package metadata to `main`, then push it.
 3. Tag that commit with `v` followed by the exact package version, for example

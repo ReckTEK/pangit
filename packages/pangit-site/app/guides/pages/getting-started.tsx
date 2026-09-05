@@ -10,7 +10,7 @@ export default function Guide() {
       sections={[
         {
           id: "setup",
-          title: "1. Install PanGit",
+          title: "1. Open the workspace",
           content: (
             <>
               <p>
@@ -18,17 +18,16 @@ export default function Guide() {
                 provider and version, authenticate, then work with repositories, files, and pull
                 requests through one contract.
               </p>
-              <Note title="Alpha · select an explicit version">
+              <Note title="Alpha · use from source">
                 <p>
-                  Public APIs may change between alpha releases. You need Deno 2 and an existing Git
-                  host. Run this command in your own project:
+                  The package is not published yet. These examples use the local Deno workspace. You
+                  need Deno 2, Git, and an existing Git host.
                 </p>
               </Note>
-              <CodeSnippet file="install.sh" />
+              <CodeSnippet file="source.sh" />
               <p>
-                Create <code>quickstart.ts</code> alongside your{" "}
-                <code>deno.json</code>. Imports from <code>@recktek/pangit/api</code>{" "}
-                resolve to the installed package.
+                Create <code>quickstart.ts</code> in the cloned repository root. Imports from{" "}
+                <code>@recktek/pangit/api</code> resolve to the workspace package.
               </p>
             </>
           ),
