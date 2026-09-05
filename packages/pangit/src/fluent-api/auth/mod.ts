@@ -1,12 +1,7 @@
 /** Fluent API authentication contracts and helpers. @module */
 
-export type {
-  Auth,
-  BasicAuthorization,
-  GiteaBasicAuthorizationBranch,
-  GiteaBasicAuthorizationExtension,
-  MaybePromise,
-} from "./authentication-contracts.ts";
+export type { Auth, BasicAuthorization, MaybePromise } from "./authentication-contracts.ts";
+
 export type {
   OAuthCookieCompletion,
   OAuthCookieFlow,
@@ -32,6 +27,6 @@ export type {
   OAuthTransactionCookieErrorCode,
   OAuthTransactionCookieOptions,
   OAuthTransactionCookieSecret,
-} from "./oauth-transaction-cookie.ts";
-export { createOAuthTransactionCookie } from "./oauth-transaction-cookie.ts";
+} from "./oauth-transaction-cookie/mod.ts";
+export { createOAuthTransactionCookie } from "./oauth-transaction-cookie/mod.ts";
 export { OAuthCallbackError } from "./OAuthCallbackError.ts";

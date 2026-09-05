@@ -1,4 +1,4 @@
-import type { ProviderVersion } from "../../../generated-rest-clients/git-host.ts";
+import type { FluentProvider, ProviderVersion } from "../../adapter-contract/provider.ts";
 import type {
   CiArtifactData,
   CiExecutionConclusion,
@@ -9,7 +9,6 @@ import type {
   CiWorkflowState,
   ProviderCiEntityNative,
 } from "../../adapter-contract/optional/ci-run-discovery.ts";
-import type { FluentProvider } from "../../provider-registry.ts";
 
 export interface CiWorkflow<
   TProvider extends FluentProvider,

@@ -2,7 +2,7 @@ import {
   createClient,
   errors,
   type ProviderVersion,
-} from "../../../../../../packages/pangit/src/fluent-api/mod.ts";
+} from "../../../../../../packages/pangit/src/fluent-client/mod.ts";
 import type { FluentApiContractResult, FluentApiRequestEvidence } from "../../contract-result.ts";
 import { FluentApiRequestRecorder, proveRequestSequence } from "../../request-recorder.ts";
 import type { RepositoryWebhookContractFixtures } from "./repository-webhook-contract-fixtures.ts";
@@ -50,10 +50,10 @@ export async function runRepositoryWebhookContract<
   };
 
   const passed = await t.step("shared-capability/repository-webhooks", async () => {
-    const git = await createClient(input.provider, input.version, {
+    const git = await (await createClient(input.provider, input.version, {
       baseUrl: input.apiUrl,
       beforeRequest: recorder.beforeRequest,
-    }).auth.token(input.token);
+    })).auth.token(input.token);
     const repository = await (await git.container(input.fixtures.repository.owner)).repository(
       input.fixtures.repository.name,
     );

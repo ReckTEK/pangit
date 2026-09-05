@@ -1,4 +1,4 @@
-import type { ProviderVersion } from "../../../../../packages/pangit/src/fluent-api/mod.ts";
+import type { ProviderVersion } from "../../../../../packages/pangit/src/fluent-client/mod.ts";
 import type { GeneratedLiveTestRun } from "../../../runner/generated-live-test-run.ts";
 import { GiteaE2EFixtureDriver } from "./GiteaE2EFixtureDriver.ts";
 import { selectGiteaContracts } from "./gitea-contract-catalog.ts";

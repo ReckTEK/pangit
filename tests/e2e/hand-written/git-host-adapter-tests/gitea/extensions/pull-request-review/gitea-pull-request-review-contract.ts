@@ -1,7 +1,7 @@
 import {
   createClient,
   type ProviderVersion,
-} from "../../../../../../../packages/pangit/src/fluent-api/mod.ts";
+} from "../../../../../../../packages/pangit/src/fluent-client/mod.ts";
 import type {
   RestRequestContext,
   RestRequestOperation,
@@ -46,10 +46,10 @@ export async function runGiteaPullRequestReviewContract(
   };
 
   const passed = await t.step("gitea-extension/pull-request-review", async () => {
-    const git = await createClient("gitea", input.version, {
+    const git = await (await createClient("gitea", input.version, {
       baseUrl: input.apiUrl,
       beforeRequest,
-    }).auth.basic({
+    })).auth.basic({
       username: input.fixtures.reviewer.username,
       password: input.fixtures.reviewer.password,
     }).authorize();

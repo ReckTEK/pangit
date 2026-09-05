@@ -1,13 +1,19 @@
-import type { ProviderVersion } from "../../../generated-rest-clients/git-host.ts";
-import type { SelectedGitHostAdapter } from "../../adapter-contract/GitHostAdapter.ts";
+import type { FluentProvider, ProviderVersion } from "../../adapter-contract/provider.ts";
+
 import type { ValidationErrorContext } from "../../adapter-contract/errors.ts";
-import type { OperationOptions } from "../../adapter-contract/operation-options.ts";
 import {
+  type OperationOptions,
   requireIdentity,
   requirePositiveInteger,
 } from "../../adapter-contract/operation-options.ts";
-import type { Page, PageRequest } from "../../adapter-contract/pagination.ts";
-import { createPage, resolvePageRequest } from "../../adapter-contract/pagination.ts";
+
+import {
+  createPage,
+  type Page,
+  type PageRequest,
+  resolvePageRequest,
+} from "../../adapter-contract/pagination.ts";
+
 import type {
   ListPackageFilesOptions,
   PackageAdapter,
@@ -21,7 +27,6 @@ import {
   type PackageFile,
   type PackageVersion,
 } from "../../entities/optional/Package.ts";
-import type { FluentProvider } from "../../provider-registry.ts";
 
 export interface ListPackagesOptions extends PageRequest {
   readonly query?: string;
@@ -61,34 +66,9 @@ export function createPackages<
   TProvider extends FluentProvider,
   TVersion extends ProviderVersion<TProvider>,
 >(adapter: PackageAdapter<TProvider, TVersion>): Packages<TProvider, TVersion> {
-  return createPackagesFromSelection(
-    () => Promise.resolve(adapter),
-    adapter.packageSupport,
-  );
-}
-
-/** Build the client-scoped package handle without loading the selected provider adapter. */
-export function createLazyPackages<
-  TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
->(
-  selectedAdapter: SelectedGitHostAdapter<TProvider, TVersion>,
-  support: PackageCapabilitySupport,
-): Packages<TProvider, TVersion> {
-  return createPackagesFromSelection(selectedAdapter, support);
-}
-
-function createPackagesFromSelection<
-  TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
->(
-  selectedAdapter: () => Promise<PackageAdapter<TProvider, TVersion>>,
-  support: PackageCapabilitySupport,
-): Packages<TProvider, TVersion> {
   return Object.freeze({
-    support,
+    support: adapter.packageSupport,
     async list(owner: string, options: ListPackagesOptions = {}) {
-      const adapter = await selectedAdapter();
       const context = adapterValidationContext(adapter, "listPackages");
       validatePageLimit(options, context);
       const page = await adapter.listPackages(requireIdentity(owner, "package owner", context), {
@@ -103,7 +83,6 @@ function createPackagesFromSelection<
       return createPage(page.items.map(createPackageVersion), page);
     },
     async versions(coordinates: PackageCoordinates, request: PageRequest = {}) {
-      const adapter = await selectedAdapter();
       const context = adapterValidationContext(adapter, "listPackageVersions");
       validatePageLimit(request, context);
       const page = await adapter.listPackageVersions(
@@ -113,32 +92,27 @@ function createPackagesFromSelection<
       return createPage(page.items.map(createPackageVersion), page);
     },
     async get(identity: PackageVersionIdentity, options: OperationOptions = {}) {
-      const adapter = await selectedAdapter();
       const context = adapterValidationContext(adapter, "getPackageVersion");
       return createPackageVersion(
         await adapter.getPackageVersion(validateIdentity(identity, context), options),
       );
     },
     async find(identity: PackageVersionIdentity, options: OperationOptions = {}) {
-      const adapter = await selectedAdapter();
       const context = adapterValidationContext(adapter, "findPackageVersion");
       const found = await adapter.findPackageVersion(validateIdentity(identity, context), options);
       return found === undefined ? undefined : createPackageVersion(found);
     },
     async files(identity: PackageVersionIdentity, options: ListPackageFilesOptions) {
-      const adapter = await selectedAdapter();
       const context = adapterValidationContext(adapter, "listPackageFiles");
       requirePositiveInteger(options.maxFiles, "maximum package files", context);
       const files = await adapter.listPackageFiles(validateIdentity(identity, context), options);
       return Object.freeze(files.map(createPackageFile));
     },
-    async deleteVersion(identity: PackageVersionIdentity, options: OperationOptions = {}) {
-      const adapter = await selectedAdapter();
+    deleteVersion(identity: PackageVersionIdentity, options: OperationOptions = {}) {
       const context = adapterValidationContext(adapter, "deletePackageVersion");
       return adapter.deletePackageVersion(validateIdentity(identity, context), options);
     },
-    async delete(coordinates: PackageCoordinates, options: OperationOptions = {}) {
-      const adapter = await selectedAdapter();
+    delete(coordinates: PackageCoordinates, options: OperationOptions = {}) {
       const context = adapterValidationContext(adapter, "deletePackage");
       return adapter.deletePackage(validateCoordinates(coordinates, context), options);
     },

@@ -1,15 +1,23 @@
-import type { ProviderVersion } from "../../generated-rest-clients/git-host.ts";
+import type { FluentProvider, ProviderVersion } from "../adapter-contract/provider.ts";
 import type { CommitFileData } from "../adapter-contract/commits.ts";
 import { ValidationError, type ValidationErrorContext } from "../adapter-contract/errors.ts";
 import type { GitHostAdapter } from "../adapter-contract/GitHostAdapter.ts";
-import type { OperationOptions } from "../adapter-contract/operation-options.ts";
-import { requireIdentity, requirePositiveInteger } from "../adapter-contract/operation-options.ts";
-import type { Page, PageRequest } from "../adapter-contract/pagination.ts";
-import { createPage, resolvePageRequest } from "../adapter-contract/pagination.ts";
+import {
+  type OperationOptions,
+  requireIdentity,
+  requirePositiveInteger,
+} from "../adapter-contract/operation-options.ts";
+
+import {
+  createPage,
+  type Page,
+  type PageRequest,
+  resolvePageRequest,
+} from "../adapter-contract/pagination.ts";
+
 import type {
   CreatePullRequestInput,
   FindPullRequestInput,
-  GiteaMergePullRequestExtension,
   ListPullRequestsRequest,
   MergePullRequestInput,
   MergePullRequestOptions,
@@ -24,7 +32,7 @@ import {
   createPullRequestReviews,
   type PullRequestReviews,
 } from "./optional/PullRequestReviews.ts";
-import type { FluentProvider } from "../provider-registry.ts";
+
 import {
   createOperationExtension,
   type OperationExtension,
@@ -238,6 +246,8 @@ export function createRepositoryPullRequests<
         PullRequest<TProvider, TVersion>
       >({
         operation: "pullRequests.merge",
+        support: adapter.extensions["pullRequests.merge"],
+        validationContext: context,
         provider: adapter.provider,
         version: adapter.version,
         context: Object.freeze({
@@ -246,7 +256,6 @@ export function createRepositoryPullRequests<
           ...(pullRequest.source.sha === undefined ? {} : { sourceSha: pullRequest.source.sha }),
         }),
         execute: async (extension, options) => {
-          if (extension !== undefined) validateMergeExtension(extension, context);
           return createPullRequest(
             await adapter.mergePullRequest(repository, data(pullRequest), {
               ...input,
@@ -317,57 +326,4 @@ function validationContext<
   operation: string,
 ): ValidationErrorContext<TProvider, TVersion> {
   return { provider: adapter.provider, version: adapter.version, operation };
-}
-
-function validateMergeExtension(
-  extension: Readonly<GiteaMergePullRequestExtension>,
-  context: ValidationErrorContext,
-): void {
-  const supportedMethods = new Set([
-    "fast-forward-only",
-    "manually-merged",
-    "merge",
-    "rebase",
-    "rebase-merge",
-    "squash",
-  ]);
-  if (extension.method !== undefined && !supportedMethods.has(extension.method)) {
-    throw new ValidationError("invalid Gitea pull-request merge method", context);
-  }
-  if (extension.headCommitId !== undefined) {
-    requireIdentity(extension.headCommitId, "pull request merge head commit ID", context);
-  }
-  if (extension.mergeCommitId !== undefined) {
-    requireIdentity(extension.mergeCommitId, "pull request merge commit ID", context);
-  }
-  if (
-    extension.mergeWhenChecksSucceed === true && extension.scheduledCompletion === undefined
-  ) {
-    throw new ValidationError(
-      "scheduled Gitea merge requires an explicit completion polling bound",
-      context,
-    );
-  }
-  if (
-    extension.scheduledCompletion !== undefined && extension.mergeWhenChecksSucceed !== true
-  ) {
-    throw new ValidationError(
-      "scheduled completion polling requires mergeWhenChecksSucceed",
-      context,
-    );
-  }
-  if (extension.scheduledCompletion !== undefined) {
-    requirePositiveInteger(
-      extension.scheduledCompletion.attempts,
-      "scheduled merge poll attempts",
-      context,
-    );
-    const intervalMs = extension.scheduledCompletion.intervalMs;
-    if (intervalMs !== undefined && (!Number.isSafeInteger(intervalMs) || intervalMs < 0)) {
-      throw new ValidationError(
-        "scheduled merge poll interval must be a non-negative safe integer",
-        context,
-      );
-    }
-  }
 }

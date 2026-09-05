@@ -1,8 +1,8 @@
-import type { ProviderVersion } from "../../../../../packages/pangit/src/fluent-api/mod.ts";
+import type { ProviderVersion } from "../../../../../packages/pangit/src/fluent-client/mod.ts";
 import type { GeneratedLiveTestRun } from "../../../runner/generated-live-test-run.ts";
 import { GitLabE2EFixtureDriver } from "./GitLabE2EFixtureDriver.ts";
 import { selectGitLabContracts } from "./gitlab-contract-catalog.ts";
-import { gitlabKnownDefects } from "../../../../../packages/pangit/src/git-host-adapters/gitlab/known-defects.ts";
+import { gitlabKnownDefects } from "../../../../../packages/pangit/src/fluent-providers/gitlab/known-defects.ts";
 
 const runPath = Deno.env.get("PANGIT_E2E_TEST_RUN");
 if (!runPath) throw new Error("PANGIT_E2E_TEST_RUN is required");

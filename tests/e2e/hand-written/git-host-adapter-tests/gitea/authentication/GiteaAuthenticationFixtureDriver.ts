@@ -1,7 +1,7 @@
 import { createProviderClient } from "../../../../../../packages/pangit/src/generated-rest-clients/create-rest-client.ts";
 import type { RestClientTypeMap } from "../../../../../../packages/pangit/src/generated-rest-clients/rest-client-type-map.ts";
 import { unwrapRestResponse } from "../../../../../../packages/pangit/src/generated-rest-clients/runtime/mod.ts";
-import type { ProviderVersion } from "../../../../../../packages/pangit/src/fluent-api/mod.ts";
+import type { ProviderVersion } from "../../../../../../packages/pangit/src/fluent-client/mod.ts";
 import type { AuthenticationContractFixtures } from "../../../fluent-api-contracts/authentication/authentication-contract-fixtures.ts";
 
 type GiteaVersion = ProviderVersion<"gitea">;

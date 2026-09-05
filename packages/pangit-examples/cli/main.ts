@@ -50,7 +50,7 @@ async function run(): Promise<void> {
     const address = await listening.promise;
     if (address.transport !== "tcp") throw new Error("Expected a TCP callback listener");
     const callbackUrl = new URL(`http://${hostname}:${address.port}${callbackPath}`);
-    const oauth = createExampleOAuth({ clientId, callbackUrl });
+    const oauth = await createExampleOAuth({ clientId, callbackUrl });
     const start = await oauth.start("gitea");
 
     callback = async (request) => {

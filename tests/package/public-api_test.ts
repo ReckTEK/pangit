@@ -1,3 +1,4 @@
+import type { GiteaCommitComparisonOutput } from "@mannsion/pangit/fluent/gitea";
 import * as PanGit from "@mannsion/pangit";
 import * as api from "@mannsion/pangit/api";
 import { GiteaRestClient } from "@mannsion/pangit/providers/gitea/1.27.2";
@@ -94,6 +95,8 @@ Deno.test("package subpaths expose only the API and individual provider clients"
     "./providers/github/latest",
     "./providers/gitlab/18.11.11",
     "./providers/gitlab/19.3.1",
+    "./fluent/gitea",
+    "./fluent/gitlab",
   ];
   assertEquals(Object.keys(configuration.exports), expected, "Unexpected package export path");
   for (const [specifier, target] of Object.entries(configuration.exports)) {
@@ -110,7 +113,7 @@ Deno.test("package subpaths expose only the API and individual provider clients"
 
 Deno.test("the API owns fluent types while provider client types stay inferred", async () => {
   const version = "1.27.2" as const;
-  const client: PanGit.api.FluentClient<"gitea", typeof version> = PanGit.api
+  const client: PanGit.api.FluentClient<"gitea", typeof version> = await PanGit.api
     .createClient("gitea", version, {
       baseUrl: "https://git.example.com/api/v1",
     });
@@ -140,10 +143,10 @@ Deno.test("the API owns fluent types while provider client types stay inferred",
   );
 });
 
-Deno.test("optional fluent capabilities are typed, synchronous handles with local support", () => {
+Deno.test("optional fluent capabilities are typed, synchronous handles with local support", async () => {
   let fetchCalls = 0;
   const version = "1.27.2" as const;
-  const client = PanGit.api.createClient("gitea", version, {
+  const client = await PanGit.api.createClient("gitea", version, {
     baseUrl: "https://git.example.com/api/v1",
     fetch: ((_input: Request | URL | string, _init?: RequestInit) => {
       fetchCalls += 1;
@@ -191,16 +194,16 @@ Deno.test("optional fluent capabilities are typed, synchronous handles with loca
 });
 
 Deno.test("provider extensions are operation-, provider-, and version-scoped in public types", () => {
-  const verifyProviderExtensionTypes = (
+  const verifyProviderExtensionTypes = async (
     repository126: PanGit.api.Repository<"gitea", "1.26.4">,
     repository127: PanGit.api.Repository<"gitea", "1.27.2">,
     pullRequest: PanGit.api.PullRequest<"gitea", "1.27.2">,
-  ): void => {
+  ): Promise<void> => {
     const comparison: PanGit.api.ExecutableOperation<
       PanGit.api.CommitComparisonResult<"gitea", "1.27.2">
     > = repository127.commits.compare("main", "feature");
-    const diff: PanGit.api.ExecutableOperation<PanGit.api.GiteaCommitComparisonOutput> =
-      repository127.commits.compare("main", "feature").gitea(() => ({ output: "diff" }));
+    const diff: PanGit.api.ExecutableOperation<GiteaCommitComparisonOutput> = repository127.commits
+      .compare("main", "feature").gitea(() => ({ output: "diff" }));
     const review: PanGit.api.ExecutableOperation<PanGit.api.PullRequestReview<"gitea", "1.27.2">> =
       repository127.pullRequests.reviews(pullRequest).create().gitea(() => ({
         event: "pending",
@@ -217,7 +220,7 @@ Deno.test("provider extensions are operation-, provider-, and version-scoped in 
     // @ts-expect-error Selecting an extension returns the terminal executable form.
     configuredMerge.gitea(() => ({ method: "squash" }));
     // @ts-expect-error No GitHub high-level provider adapter is registered.
-    PanGit.api.createClient("github", "latest", {
+    await PanGit.api.createClient("github", "latest", {
       baseUrl: "https://api.github.com",
     });
     void [comparison, diff, review];

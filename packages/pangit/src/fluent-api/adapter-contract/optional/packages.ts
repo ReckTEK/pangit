@@ -1,4 +1,4 @@
-import type { Provider, ProviderVersion } from "../../../generated-rest-clients/git-host.ts";
+import type { Provider, ProviderVersion } from "../provider.ts";
 import type { ProviderPackageEntityNative } from "../../native-access/ProviderNativeRegistry.ts";
 import type { OperationOptions } from "../operation-options.ts";
 import type { Page, ResolvedPageRequest } from "../pagination.ts";
@@ -52,7 +52,7 @@ export interface ListPackagesRequest extends ResolvedPageRequest {
   readonly type?: string;
 }
 
-/** Gitea's package-file endpoint is direct but unpaginated, so the caller supplies a hard bound. */
+/** A direct package-file endpoint requires an explicit bound on the returned collection. */
 export interface ListPackageFilesOptions extends OperationOptions {
   readonly maxFiles: number;
 }

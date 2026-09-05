@@ -20,14 +20,14 @@ function failure(action: () => unknown, reason: ContentReadFailure): void {
   throw new Error(`Expected ${reason}`);
 }
 
-function content(bytes?: Uint8Array, kind: ContentData<"gitea", "1.27.2">["kind"] = "file") {
+function content(bytes?: Uint8Array, kind: ContentData<"test-provider", "1.0">["kind"] = "file") {
   return createContent({
     kind,
     path: "file",
     name: "file",
     bytes,
     native: {},
-  } as ContentData<"gitea", "1.27.2">);
+  } as ContentData<"test-provider", "1.0">);
 }
 
 function blob(bytes: Uint8Array) {
@@ -36,7 +36,7 @@ function blob(bytes: Uint8Array) {
     size: bytes.length,
     bytes,
     native: {},
-  } as BlobData<"gitea", "1.27.2">);
+  } as BlobData<"test-provider", "1.0">);
 }
 
 for (const [name, create] of [["content", content], ["blob", blob]] as const) {
@@ -102,7 +102,7 @@ Deno.test("metadata and linked-content bodies fail locally without implicit dere
       native: {},
     },
     native: {},
-  } as ContentData<"gitea", "1.27.2">);
+  } as ContentData<"test-provider", "1.0">);
   childBytes.fill(0);
   assert(linked.dereferenced?.text() === "target", "Dereferenced content lacks a private snapshot");
   failure(() => linked.text(), "not-a-file");

@@ -1,4 +1,4 @@
-import type { ProviderVersion } from "../../generated-rest-clients/git-host.ts";
+import type { FluentProvider, ProviderVersion } from "../adapter-contract/provider.ts";
 import type {
   CommitFileChangesInput,
   CommitFileChangesOptions,
@@ -18,7 +18,7 @@ import type { RepositoryData } from "../adapter-contract/repositories.ts";
 import { type Commit, createCommit } from "../entities/Commit.ts";
 import { type Content, createContent } from "../entities/Content.ts";
 import { validateContentBlobOptions } from "../content-body.ts";
-import type { FluentProvider } from "../provider-registry.ts";
+
 import {
   createOperationExtension,
   type OperationExtension,
@@ -215,6 +215,8 @@ export function createRepositoryContent<
         Commit<TProvider, TVersion>
       >({
         operation: "content.commitChanges",
+        support: adapter.extensions["content.commitChanges"],
+        validationContext: validationContext(adapter, "commitFileChanges"),
         provider: adapter.provider,
         version: adapter.version,
         context: Object.freeze({

@@ -32,7 +32,7 @@ export function createSiteUrls(config: SiteConfig) {
     home: routes.home,
     docs: routes.docs,
     theme: routes.theme,
-    package: config.links.package,
+    repository: config.links.repository,
     main: `#${config.anchors.main}`,
     referenceSection: `#${config.anchors.reference}`,
     logo: joinPath(assets.brand.path, assets.logo),

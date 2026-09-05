@@ -116,10 +116,10 @@ export default function App() {
               <span className="hidden sm:inline">Documentation</span>
             </Link>
             <a
-              href={siteUrls.package}
+              href={siteUrls.repository}
               className="nav-link hidden items-center gap-1 sm:flex"
             >
-              JSR package <ArrowUpRight size={14} />
+              Source code <ArrowUpRight size={14} />
             </a>
             <span className="hidden h-5 w-px bg-line sm:block" />
             <ThemeSelect theme={theme} />

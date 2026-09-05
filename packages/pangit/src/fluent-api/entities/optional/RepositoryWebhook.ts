@@ -1,11 +1,10 @@
-import type { ProviderVersion } from "../../../generated-rest-clients/git-host.ts";
+import type { FluentProvider, ProviderVersion } from "../../adapter-contract/provider.ts";
 import type {
   ProviderRepositoryWebhookNative,
   RepositoryWebhookContentType,
   RepositoryWebhookData,
   RepositoryWebhookEvent,
 } from "../../adapter-contract/optional/repository-webhooks.ts";
-import type { FluentProvider } from "../../provider-registry.ts";
 
 /** Immutable normalized repository-webhook snapshot. */
 export interface RepositoryWebhook<

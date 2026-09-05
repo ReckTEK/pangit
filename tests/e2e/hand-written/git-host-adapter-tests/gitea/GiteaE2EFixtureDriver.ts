@@ -1,6 +1,6 @@
 import { createProviderClient } from "../../../../../packages/pangit/src/generated-rest-clients/create-rest-client.ts";
 import type { RestClientTypeMap } from "../../../../../packages/pangit/src/generated-rest-clients/rest-client-type-map.ts";
-import type { ProviderVersion } from "../../../../../packages/pangit/src/fluent-api/mod.ts";
+import type { ProviderVersion } from "../../../../../packages/pangit/src/fluent-client/mod.ts";
 import { unwrapRestResponse } from "../../../../../packages/pangit/src/generated-rest-clients/runtime/mod.ts";
 import type { CiRunDiscoveryContractFixtures } from "../../fluent-api-contracts/optional/ci-run-discovery/ci-run-discovery-contract-fixtures.ts";
 import type { PackageContractFixtures } from "../../fluent-api-contracts/optional/packages/package-contract-fixtures.ts";

@@ -1,0 +1,43 @@
+import type { GiteaBlobNative } from "./GiteaBlobNative.ts";
+import type { GiteaBranchRuleEntityNative } from "./GiteaBranchRuleNative.ts";
+import type { GiteaCiEntityNative } from "./GiteaCiRunDiscoveryNative.ts";
+import type { GiteaClientNative } from "./GiteaClientNative.ts";
+import type { GiteaCurrentUserProfileNative } from "./GiteaCurrentUserProfileNative.ts";
+import type { GiteaEntityNative, GiteaVersion } from "./GiteaEntityNative.ts";
+import type { GiteaIssueEntityNative } from "./GiteaIssueNative.ts";
+import type { GiteaPackageEntityNative } from "./GiteaPackageNative.ts";
+import type { GiteaPullRequestReviewNative } from "./GiteaPullRequestReviewNative.ts";
+import type { GiteaReleaseEntityNative } from "./GiteaReleaseNative.ts";
+import type { GiteaRepositoryContainerNative } from "./GiteaRepositoryContainerNative.ts";
+import type { GiteaRepositoryNative } from "./GiteaRepositoryNative.ts";
+import type { GiteaRepositoryWebhookNative } from "./GiteaRepositoryWebhookNative.ts";
+
+/** Every native door implemented by the Gitea fluent adapter for one exact version. */
+export type GiteaProviderNativeRegistry<TVersion extends GiteaVersion> = Readonly<{
+  client: GiteaClientNative<TVersion>;
+  repositoryContainer: GiteaRepositoryContainerNative<TVersion>;
+  repository: GiteaRepositoryNative<TVersion>;
+  branch: GiteaEntityNative<TVersion, "branch">;
+  tag: GiteaEntityNative<TVersion, "tag">;
+  commit: GiteaEntityNative<TVersion, "commit">;
+  content: GiteaEntityNative<TVersion, "content">;
+  pullRequest: GiteaEntityNative<TVersion, "pullRequest">;
+  review: GiteaEntityNative<TVersion, "review">;
+  commitStatus: GiteaEntityNative<TVersion, "commitStatus">;
+  blob: GiteaBlobNative<TVersion>;
+  configuredRule: GiteaBranchRuleEntityNative<TVersion, "configuredRule">;
+  effectiveProtection: GiteaBranchRuleEntityNative<TVersion, "effectiveProtection">;
+  currentUserProfile: GiteaCurrentUserProfileNative<TVersion>;
+  issue: GiteaIssueEntityNative<TVersion, "issue">;
+  issueComment: GiteaIssueEntityNative<TVersion, "issueComment">;
+  package: GiteaPackageEntityNative<TVersion, "package">;
+  packageFile: GiteaPackageEntityNative<TVersion, "packageFile">;
+  pullRequestReview: GiteaPullRequestReviewNative<TVersion>;
+  release: GiteaReleaseEntityNative<TVersion, "release">;
+  releaseAsset: GiteaReleaseEntityNative<TVersion, "releaseAsset">;
+  repositoryWebhook: GiteaRepositoryWebhookNative<TVersion>;
+  workflow: GiteaCiEntityNative<TVersion, "workflow">;
+  run: GiteaCiEntityNative<TVersion, "run">;
+  job: GiteaCiEntityNative<TVersion, "job">;
+  artifact: GiteaCiEntityNative<TVersion, "artifact">;
+}>;

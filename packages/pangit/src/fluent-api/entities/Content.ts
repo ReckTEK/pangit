@@ -1,9 +1,8 @@
-import type { ProviderVersion } from "../../generated-rest-clients/git-host.ts";
+import type { FluentProvider, ProviderVersion } from "../adapter-contract/provider.ts";
 import type { ContentData, RepositoryContentKind } from "../adapter-contract/content.ts";
 import type { ReadableContentBody } from "../adapter-contract/content-body.ts";
 import { createContentBody } from "../content-body.ts";
 import type { ProviderEntityNative } from "../native-access/ProviderNativeRegistry.ts";
-import type { FluentProvider } from "../provider-registry.ts";
 
 export interface Content<
   TProvider extends FluentProvider,

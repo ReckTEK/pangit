@@ -9,6 +9,9 @@ new fluent capability, public API change, or large refactor, please
 [open an issue](https://github.com/mannsion/pangit/issues) first so the contract and evidence plan
 can be agreed before implementation.
 
+The [fluent architecture](packages/pangit/docs/Fluent-architecture.md) defines the universal
+contract, standalone provider boundaries, and loading guarantees.
+
 ## Prerequisites
 
 - Git
@@ -21,7 +24,7 @@ can be agreed before implementation.
 ```bash
 gh repo fork mannsion/pangit --clone
 cd pangit
-deno install --frozen-lockfile
+deno install --frozen
 deno task generate --cached
 deno task check
 deno task test
@@ -39,7 +42,8 @@ git switch --create your-change upstream/main
 | Change                           | Authoritative location                             | Expectations                                                                                                      |
 | -------------------------------- | -------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
 | Provider-neutral fluent behavior | `packages/pangit/src/fluent-api/`                  | Define portable semantics without provider branches in common operations. Add focused unit and contract coverage. |
-| Provider fluent implementation   | `packages/pangit/src/git-host-adapters/`           | Implement the shared contract through the adapter and exercise provider behavior.                                 |
+| Fluent provider selection        | `packages/pangit/src/fluent-client/`               | Keep the catalog small and runtime imports lazy. Provider policies belong to their implementations.               |
+| Provider fluent implementation   | `packages/pangit/src/fluent-providers/`            | Implement the shared contract through the adapter and exercise provider behavior.                                 |
 | Generated REST clients           | `codegen/pangit/raw-rest-client-generation/`       | Change source catalogs, normalizers, naming data, or renderers; never patch emitted clients.                      |
 | Live provider coverage           | `tests/e2e/hand-written/`                          | Add hand-written cases, contracts, fixtures, or environment definitions; regenerate emitted suites.               |
 | Examples                         | `packages/pangit-examples/`                        | Demonstrate a real login and repository interaction. Do not commit credentials.                                   |

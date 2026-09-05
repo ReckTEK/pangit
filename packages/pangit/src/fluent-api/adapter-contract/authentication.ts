@@ -1,4 +1,5 @@
-import type { Provider, ProviderVersion } from "../../generated-rest-clients/git-host.ts";
+import type { ProviderExtensionOptions } from "../provider-extensions/ProviderExtensionRegistry.ts";
+import type { Provider, ProviderVersion } from "./provider.ts";
 import type { OperationOptions } from "./operation-options.ts";
 
 export interface TokenAuthorizationInput {
@@ -9,7 +10,10 @@ export interface TokenAuthorizationInput {
 export interface BasicAuthorizationInput {
   readonly username: string;
   readonly password: string;
-  readonly oneTimePassword?: string;
+}
+
+export interface BasicAuthorizationOptions<P extends Provider> extends OperationOptions {
+  readonly extension?: ProviderExtensionOptions<"auth.basic", P>;
 }
 
 export interface OAuthBeginInput {
@@ -54,7 +58,7 @@ export interface AuthenticationAdapter<
   ): Promise<TAuthorizedAdapter>;
   authorizeBasic(
     input: BasicAuthorizationInput,
-    options?: OperationOptions,
+    options?: BasicAuthorizationOptions<TProvider>,
   ): Promise<TAuthorizedAdapter>;
   beginOAuth(input: OAuthBeginInput): OAuthBeginResult;
   exchangeOAuthCode(

@@ -1,67 +1,48 @@
-import type { ProviderVersion } from "../../generated-rest-clients/git-host.ts";
-import type { BasicAuthorizationInput } from "../adapter-contract/authentication.ts";
-import type { OperationOptions } from "../adapter-contract/operation-options.ts";
-import type { FluentProvider } from "../provider-registry.ts";
-import type { FluentClient } from "../FluentClient.ts";
+import type { Provider, ProviderVersion } from "../adapter-contract/provider.ts";
 import type {
-  BasicAuthorization,
-  GiteaBasicAuthorizationBranch,
-} from "./authentication-contracts.ts";
+  BasicAuthorizationInput,
+  BasicAuthorizationOptions,
+} from "../adapter-contract/authentication.ts";
+import type { OperationOptions } from "../adapter-contract/operation-options.ts";
+import type { FluentClient } from "../client/FluentClient.ts";
+import type { BasicAuthorization, MaybePromise } from "./authentication-contracts.ts";
+import type { ProviderExtensionOptions } from "../provider-extensions/ProviderExtensionRegistry.ts";
+import {
+  type ExtensionSupport,
+  supportsExtension,
+} from "../provider-extensions/ExtensionSupport.ts";
 
-export type BasicClientAuthorizer<
-  TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
-> = (
+export type BasicClientAuthorizer<P extends Provider, V extends ProviderVersion<P>> = (
   input: BasicAuthorizationInput,
-  options?: OperationOptions,
-) => Promise<FluentClient<TProvider, TVersion>>;
+  options?: BasicAuthorizationOptions<P>,
+) => Promise<FluentClient<P, V>>;
 
-class BasicAuthorizationImpl<
-  TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
-> {
-  #gitea?: GiteaBasicAuthorizationBranch;
-  readonly #input: Omit<BasicAuthorizationInput, "oneTimePassword">;
-  readonly #authorizeClient: BasicClientAuthorizer<TProvider, TVersion>;
-
-  constructor(
-    input: Omit<BasicAuthorizationInput, "oneTimePassword">,
-    authorizeClient: BasicClientAuthorizer<TProvider, TVersion>,
-  ) {
-    this.#input = Object.freeze({ ...input });
-    this.#authorizeClient = authorizeClient;
-  }
-
-  gitea(branch: GiteaBasicAuthorizationBranch): this {
-    this.#gitea = branch;
-    return this;
-  }
-
-  async authorize(options: OperationOptions = {}): Promise<FluentClient<TProvider, TVersion>> {
-    const extension = this.#gitea === undefined ? undefined : await this.#gitea();
-    return await this.#authorizeClient({
-      ...this.#input,
-      ...(extension?.oneTimePassword === undefined
-        ? {}
-        : { oneTimePassword: extension.oneTimePassword }),
-    }, options);
-  }
-}
-
-/** @internal Build a Basic authorization operation for the selected adapter. */
-export function createBasicAuthorization<
-  TProvider extends FluentProvider,
-  TVersion extends ProviderVersion<TProvider>,
->(
-  provider: TProvider,
-  input: Omit<BasicAuthorizationInput, "oneTimePassword">,
-  authorizeClient: BasicClientAuthorizer<TProvider, TVersion>,
-): BasicAuthorization<TProvider, TVersion> {
-  const operation = new BasicAuthorizationImpl(input, authorizeClient);
-  return (provider === "gitea"
-    ? operation
-    : Object.freeze({ authorize: operation.authorize.bind(operation) })) as BasicAuthorization<
-      TProvider,
-      TVersion
-    >;
+/** Defer credentials and extension evaluation until explicit authorization. */
+export function createBasicAuthorization<P extends Provider, V extends ProviderVersion<P>>(
+  provider: P,
+  version: V,
+  support: ExtensionSupport<ProviderExtensionOptions<"auth.basic", P>> | undefined,
+  input: BasicAuthorizationInput,
+  authorizeClient: BasicClientAuthorizer<P, V>,
+): BasicAuthorization<P, V> {
+  const credentials = Object.freeze({ ...input });
+  let configure: (() => MaybePromise<ProviderExtensionOptions<"auth.basic", P>>) | undefined;
+  const operation = {
+    async authorize(options: OperationOptions = {}) {
+      const extension = configure === undefined ? undefined : await configure();
+      if (extension !== undefined) {
+        support?.validate?.(extension, { provider, version, operation: "authorizeBasic" });
+      }
+      return await authorizeClient(credentials, { ...options, extension });
+    },
+    ...(supportsExtension(support, version)
+      ? {
+        [provider](branch: NonNullable<typeof configure>) {
+          configure = branch;
+          return operation;
+        },
+      }
+      : {}),
+  };
+  return Object.freeze(operation) as BasicAuthorization<P, V>;
 }

@@ -1,15 +1,18 @@
-import type { ProviderVersion } from "../../../generated-rest-clients/git-host.ts";
+import type { FluentProvider, ProviderVersion } from "../../adapter-contract/provider.ts";
 import type {
   BlobReadAdapter,
   BlobReadCapabilitySupport,
   ReadGitBlobOptions,
 } from "../../adapter-contract/optional/blob-reads.ts";
 import { ValidationError, type ValidationErrorContext } from "../../adapter-contract/errors.ts";
-import type { OperationOptions } from "../../adapter-contract/operation-options.ts";
-import { requireIdentity } from "../../adapter-contract/operation-options.ts";
+import {
+  type OperationOptions,
+  requireIdentity,
+} from "../../adapter-contract/operation-options.ts";
+
 import type { RepositoryData } from "../../adapter-contract/repositories.ts";
 import { type Blob, createBlob } from "../../entities/optional/Blob.ts";
-import type { FluentProvider } from "../../provider-registry.ts";
+
 import { validateContentBlobOptions } from "../../content-body.ts";
 
 export interface RepositoryBlobs<

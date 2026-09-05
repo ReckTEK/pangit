@@ -1,12 +1,18 @@
-import type { ProviderVersion } from "../../../generated-rest-clients/git-host.ts";
+import type { FluentProvider, ProviderVersion } from "../../adapter-contract/provider.ts";
 import type { ValidationErrorContext } from "../../adapter-contract/errors.ts";
-import type { OperationOptions } from "../../adapter-contract/operation-options.ts";
 import {
+  type OperationOptions,
   requireIdentity,
   requirePositiveInteger,
 } from "../../adapter-contract/operation-options.ts";
-import type { Page, PageRequest } from "../../adapter-contract/pagination.ts";
-import { createPage, resolvePageRequest } from "../../adapter-contract/pagination.ts";
+
+import {
+  createPage,
+  type Page,
+  type PageRequest,
+  resolvePageRequest,
+} from "../../adapter-contract/pagination.ts";
+
 import type {
   CiExecutionFilterStatus,
   CiRunDiscoveryAdapter,
@@ -23,7 +29,6 @@ import {
   createCiRun,
   createCiWorkflow,
 } from "../../entities/optional/CiRunDiscovery.ts";
-import type { FluentProvider } from "../../provider-registry.ts";
 
 export interface ListCiRunsOptions extends PageRequest {
   readonly workflowPath?: string;

@@ -1,19 +1,16 @@
-import type { ProviderVersion } from "../../generated-rest-clients/git-host.ts";
+import type {
+  ProviderExtensionOptions,
+  ProviderExtensionSupportsVersion,
+} from "../provider-extensions/ProviderExtensionRegistry.ts";
+import type { FluentProvider, ProviderVersion } from "../adapter-contract/provider.ts";
 import type { BasicAuthorizationInput } from "../adapter-contract/authentication.ts";
 import type { OperationOptions } from "../adapter-contract/operation-options.ts";
-import type { FluentProvider } from "../provider-registry.ts";
-import type { FluentClient } from "../FluentClient.ts";
+
+import type { FluentClient } from "../client/FluentClient.ts";
 import type { Login, LoginOptions } from "./oauth-contracts.ts";
 
 /** A value returned immediately or asynchronously. */
 export type MaybePromise<TValue> = TValue | Promise<TValue>;
-
-/** A provider-specific payload declared without running the branch yet. */
-export interface GiteaBasicAuthorizationExtension {
-  readonly oneTimePassword?: string;
-}
-
-export type GiteaBasicAuthorizationBranch = () => MaybePromise<GiteaBasicAuthorizationExtension>;
 
 /** Fluent provider-specific Basic authentication selection. */
 export type BasicAuthorization<
@@ -23,8 +20,10 @@ export type BasicAuthorization<
   & {
     authorize(options?: OperationOptions): Promise<FluentClient<TProvider, TVersion>>;
   }
-  & (TProvider extends "gitea" ? {
-      gitea(branch: GiteaBasicAuthorizationBranch): BasicAuthorization<TProvider, TVersion>;
+  & (ProviderExtensionSupportsVersion<"auth.basic", TProvider, TVersion> extends true ? {
+      readonly [P in TProvider]: (
+        configure: () => MaybePromise<ProviderExtensionOptions<"auth.basic", TProvider>>,
+      ) => BasicAuthorization<TProvider, TVersion>;
     }
     : Record<never, never>);
 
@@ -36,6 +35,6 @@ export interface Auth<
   token(token: string, options?: OperationOptions): Promise<FluentClient<TProvider, TVersion>>;
   login(options: LoginOptions): Login<TProvider, TVersion>;
   basic(
-    input: Omit<BasicAuthorizationInput, "oneTimePassword">,
+    input: BasicAuthorizationInput,
   ): BasicAuthorization<TProvider, TVersion>;
 }

@@ -195,7 +195,7 @@ Deno.test("web Blob conversion retains exact bytes, MIME type, and immutable sna
       bytes: original,
       mediaType: providerType,
       native: {},
-    } as ContentData<"gitea", "1.27.2">,
+    } as ContentData<"test-provider", "1.0">,
   );
   const gitBlob = createBlob(
     {
@@ -204,7 +204,7 @@ Deno.test("web Blob conversion retains exact bytes, MIME type, and immutable sna
       bytes: original,
       mediaType: providerType,
       native: {},
-    } as BlobData<"gitea", "1.27.2">,
+    } as BlobData<"test-provider", "1.0">,
   );
   original.fill(0);
   providerType.value = "text/plain";
@@ -240,8 +240,8 @@ Deno.test("web Blob conversion retains exact bytes, MIME type, and immutable sna
 Deno.test("Git blob bodies resolve filename hints without inventing filenames or MIME metadata", () => {
   const gitBlob = createBlob(
     { sha: "a".repeat(40), size: 1, bytes: new Uint8Array([1]), native: {} } as BlobData<
-      "gitea",
-      "1.27.2"
+      "test-provider",
+      "1.0"
     >,
   );
   assert(

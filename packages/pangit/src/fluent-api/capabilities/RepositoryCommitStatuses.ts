@@ -1,5 +1,4 @@
-import { validateStatusExtension } from "../provider-extensions/ProviderExtensionRegistry.ts";
-import type { ProviderVersion } from "../../generated-rest-clients/git-host.ts";
+import type { FluentProvider, ProviderVersion } from "../adapter-contract/provider.ts";
 import type {
   CombinedCommitStatus,
   CommitStatusReference,
@@ -8,13 +7,18 @@ import type {
 } from "../adapter-contract/commit-statuses.ts";
 import type { GitHostAdapter } from "../adapter-contract/GitHostAdapter.ts";
 import { ValidationError, type ValidationErrorContext } from "../adapter-contract/errors.ts";
-import type { OperationOptions } from "../adapter-contract/operation-options.ts";
-import { requireIdentity } from "../adapter-contract/operation-options.ts";
-import type { Page, PageRequest } from "../adapter-contract/pagination.ts";
-import { createPage, resolvePageRequest } from "../adapter-contract/pagination.ts";
+import { type OperationOptions, requireIdentity } from "../adapter-contract/operation-options.ts";
+
+import {
+  createPage,
+  type Page,
+  type PageRequest,
+  resolvePageRequest,
+} from "../adapter-contract/pagination.ts";
+
 import type { RepositoryData } from "../adapter-contract/repositories.ts";
 import { type CommitStatus, createCommitStatus } from "../entities/CommitStatus.ts";
-import type { FluentProvider } from "../provider-registry.ts";
+
 import {
   createOperationExtension,
   type OperationExtension,
@@ -128,6 +132,8 @@ export function createRepositoryCommitStatuses<
         CommitStatus<TProvider, TVersion>
       >({
         operation: "statuses.set",
+        support: adapter.extensions["statuses.set"],
+        validationContext: context,
         provider: adapter.provider,
         version: adapter.version,
         context: Object.freeze({
@@ -137,13 +143,6 @@ export function createRepositoryCommitStatuses<
           portableState: input.state,
         }),
         execute: async (extension, options) => {
-          if (extension !== undefined) {
-            validateStatusExtension(
-              adapter.provider,
-              adapter.version,
-              extension,
-            );
-          }
           const resolvedReference = await resolveStatusReference(
             adapter,
             repository,

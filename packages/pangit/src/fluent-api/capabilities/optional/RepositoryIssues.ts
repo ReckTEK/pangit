@@ -1,4 +1,5 @@
-import type { ProviderVersion } from "../../../generated-rest-clients/git-host.ts";
+import type { ProviderExtensions } from "../../provider-extensions/ExtensionSupport.ts";
+import type { FluentProvider, ProviderVersion } from "../../adapter-contract/provider.ts";
 import type {
   CreateIssueInput,
   IssueAdapter,
@@ -11,14 +12,21 @@ import type {
   ListIssuesRequest,
   UpdateIssueInput,
 } from "../../adapter-contract/optional/issues.ts";
-import type { OperationOptions } from "../../adapter-contract/operation-options.ts";
 import {
+  type OperationOptions,
   requireIdentity,
   requirePositiveInteger,
 } from "../../adapter-contract/operation-options.ts";
-import { ValidationError, type ValidationErrorContext } from "../../adapter-contract/errors.ts";
-import type { Page, PageRequest, ScanPage } from "../../adapter-contract/pagination.ts";
-import { createPage, resolvePageRequest } from "../../adapter-contract/pagination.ts";
+
+import { ValidationError } from "../../adapter-contract/errors.ts";
+import {
+  createPage,
+  type Page,
+  type PageRequest,
+  resolvePageRequest,
+  type ScanPage,
+} from "../../adapter-contract/pagination.ts";
+
 import type { RepositoryData } from "../../adapter-contract/repositories.ts";
 import {
   createIssueCommentEntity,
@@ -30,7 +38,6 @@ import {
   createOperationExtension,
   type OperationExtension,
 } from "../../provider-extensions/OperationExtension.ts";
-import type { FluentProvider } from "../../provider-registry.ts";
 
 export interface ListIssuesOptions
   extends PageRequest, Omit<ListIssuesRequest, "limit" | "cursor" | "signal"> {}
@@ -91,7 +98,9 @@ export function createRepositoryIssues<
 >(
   provider: TProvider,
   version: TVersion,
-  adapter: IssueAdapter<TProvider, TVersion>,
+  adapter: IssueAdapter<TProvider, TVersion> & {
+    readonly extensions: ProviderExtensions<TProvider>;
+  },
   repository: RepositoryData<TProvider, TVersion>,
 ): RepositoryIssues<TProvider, TVersion> {
   const validationContext = (operation: string) => ({ provider, version, operation });
@@ -197,17 +206,12 @@ export function createRepositoryIssues<
         Issue<TProvider, TVersion>
       >({
         operation: "issues.update",
+        support: adapter.extensions["issues.update"],
+        validationContext: context,
         provider,
         version,
         context: Object.freeze({ issueNumber: issue.number }),
         execute: async (extension, options) => {
-          if (extension !== undefined) {
-            requireNonNegativeInteger(
-              extension.contentVersion,
-              "content version",
-              context,
-            );
-          }
           return createIssueEntity(
             await adapter.updateIssue(
               repository,
@@ -236,14 +240,4 @@ export function createRepositoryIssues<
     },
     comments,
   });
-}
-
-function requireNonNegativeInteger(
-  value: number | bigint,
-  name: string,
-  context: ValidationErrorContext,
-): void {
-  if (typeof value === "bigint" ? value < 0n : !Number.isSafeInteger(value) || value < 0) {
-    throw new ValidationError(`${name} must be a non-negative integer`, context);
-  }
 }

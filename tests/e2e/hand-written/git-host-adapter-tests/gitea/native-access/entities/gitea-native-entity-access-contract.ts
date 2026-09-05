@@ -1,7 +1,7 @@
 import {
   createClient,
   type ProviderVersion,
-} from "../../../../../../../packages/pangit/src/fluent-api/mod.ts";
+} from "../../../../../../../packages/pangit/src/fluent-client/mod.ts";
 import type {
   FluentApiContractResult,
   FluentApiRequestEvidence,
@@ -40,10 +40,10 @@ export async function runGiteaNativeEntityAccessContract(
   };
 
   const passed = await t.step("native-access/gitea/entities", async () => {
-    const git = await createClient("gitea", input.version, {
+    const git = await (await createClient("gitea", input.version, {
       baseUrl: input.apiUrl,
       beforeRequest: recorder.beforeRequest,
-    }).auth.token(input.token);
+    })).auth.token(input.token);
     const container = await git.container(input.fixtures.repository.owner);
     const repository = await container.repository(input.fixtures.repository.name);
     const branch = await repository.branches.get(input.fixtures.repository.branch);
@@ -60,10 +60,10 @@ export async function runGiteaNativeEntityAccessContract(
       { context: "pangit/native-entity", state: "success" },
     ).execute();
 
-    const reviewerGit = await createClient("gitea", input.version, {
+    const reviewerGit = await (await createClient("gitea", input.version, {
       baseUrl: input.apiUrl,
       beforeRequest: recorder.beforeRequest,
-    }).auth.basic(input.fixtures.reviewer).authorize();
+    })).auth.basic(input.fixtures.reviewer).authorize();
     const reviewerRepository = await (await reviewerGit.container(
       input.fixtures.repository.owner,
     )).repository(input.fixtures.repository.name);

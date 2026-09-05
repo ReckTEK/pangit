@@ -1,10 +1,9 @@
-import type { ProviderVersion } from "../../../generated-rest-clients/git-host.ts";
+import type { FluentProvider, ProviderVersion } from "../../adapter-contract/provider.ts";
 import type {
   BranchRuleData,
   EffectiveBranchProtectionData,
   ProviderBranchRuleEntityNative,
 } from "../../adapter-contract/optional/branch-rules.ts";
-import type { FluentProvider } from "../../provider-registry.ts";
 
 export interface BranchRule<
   TProvider extends FluentProvider,

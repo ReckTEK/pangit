@@ -3,7 +3,7 @@ import { createExampleOAuth } from "../oauth.ts";
 import { callbackUrl, giteaClientId, oauthCookieSecret } from "../server/config.server.ts";
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const oauth = createExampleOAuth({
+  const oauth = await createExampleOAuth({
     clientId: giteaClientId(),
     callbackUrl: callbackUrl(request),
     cookieSecret: oauthCookieSecret(),

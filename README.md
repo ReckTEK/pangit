@@ -1,6 +1,6 @@
 # PanGit
 
-![PanGit — @mannsion/pangit](packages/pangit/docs/images/pangit-banner.png)
+![PanGit — baby Git providers cooking together in a pan — @mannsion/pangit](packages/pangit/docs/images/pangit-banner.png)
 
 <p align="center">
   <strong>Deno-native Git-host tooling.</strong><br>
@@ -77,7 +77,7 @@ import * as PanGit from "@mannsion/pangit";
 const token = Deno.env.get("GITEA_TOKEN");
 if (!token) throw new Error("Set GITEA_TOKEN to your personal access token.");
 
-const connection = PanGit.api.createClient("gitea", "1.27.2", {
+const connection = await PanGit.api.createClient("gitea", "1.27.2", {
   baseUrl: "https://git.example.com/api/v1",
 });
 const git = await connection.auth.token(token);
@@ -95,6 +95,9 @@ Deno.serve({ hostname: "127.0.0.1", port: 8000 }, () => new Response(image));
 ```bash
 deno run --allow-env=GITEA_TOKEN --allow-net fluent-example.ts
 ```
+
+Client creation is asynchronous and loads only the selected provider implementation.
+[Architecture and standalone provider entry points](packages/pangit/docs/Fluent-architecture.md).
 
 The Gitea fluent adapter covers token, Basic/TOTP, and OAuth/PKCE authentication; repository
 containers and repository lifecycle; forks; branches and divergence; tags; commits and comparisons;
@@ -219,7 +222,8 @@ import { GiteaRestClient } from "@mannsion/pangit/providers/gitea/1.27.2";
 | Path                                                                                       | Ownership                                                                              |
 | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------- |
 | [`packages/pangit/src/fluent-api`](packages/pangit/src/fluent-api)                         | Hand-written provider-neutral API and adapter contracts                                |
-| [`packages/pangit/src/git-host-adapters`](packages/pangit/src/git-host-adapters)           | Hand-written Gitea and GitLab provider adapters                                        |
+| [`packages/pangit/src/fluent-client`](packages/pangit/src/fluent-client)                   | Async provider selection and public fluent entry point                                 |
+| [`packages/pangit/src/fluent-providers`](packages/pangit/src/fluent-providers)             | Hand-written Gitea and GitLab provider adapters                                        |
 | [`packages/pangit/src/generated-rest-clients`](packages/pangit/src/generated-rest-clients) | Generated clients and shared native-Fetch runtime                                      |
 | [`codegen/pangit`](codegen/pangit)                                                         | OpenAPI normalization, client generation, and E2E asset generation                     |
 | [`tests/e2e`](tests/e2e)                                                                   | Generated raw suites, hand-written fluent contracts, Docker environments, and evidence |

@@ -1,16 +1,22 @@
-import type { ProviderVersion } from "../../../generated-rest-clients/git-host.ts";
-import { ValidationError, type ValidationErrorContext } from "../../adapter-contract/errors.ts";
-import type { OperationOptions } from "../../adapter-contract/operation-options.ts";
+import type { ProviderExtensions } from "../../provider-extensions/ExtensionSupport.ts";
+import type { FluentProvider, ProviderVersion } from "../../adapter-contract/provider.ts";
+import { ValidationError } from "../../adapter-contract/errors.ts";
 import {
+  type OperationOptions,
   requireIdentity,
   requirePositiveInteger,
 } from "../../adapter-contract/operation-options.ts";
-import type { Page, PageRequest } from "../../adapter-contract/pagination.ts";
-import { createPage, resolvePageRequest } from "../../adapter-contract/pagination.ts";
+
+import {
+  createPage,
+  type Page,
+  type PageRequest,
+  resolvePageRequest,
+} from "../../adapter-contract/pagination.ts";
+
 import type {
   CreatePullRequestReviewInput,
   CreatePullRequestReviewOptions,
-  GiteaCreatePullRequestReviewExtension,
   PullRequestReviewAdapter,
   PullRequestReviewCapabilitySupport,
   PullRequestReviewData,
@@ -23,7 +29,7 @@ import {
   createPullRequestReview,
   type PullRequestReview,
 } from "../../entities/optional/PullRequestReview.ts";
-import type { FluentProvider } from "../../provider-registry.ts";
+
 import {
   createOperationExtension,
   type OperationExtension,
@@ -62,7 +68,9 @@ export function createPullRequestReviews<
 >(
   provider: TProvider,
   version: TVersion,
-  adapter: PullRequestReviewAdapter<TProvider, TVersion>,
+  adapter: PullRequestReviewAdapter<TProvider, TVersion> & {
+    readonly extensions: ProviderExtensions<TProvider>;
+  },
   repository: RepositoryData<TProvider, TVersion>,
   pullRequest: PullRequest<TProvider, TVersion>,
 ): PullRequestReviews<TProvider, TVersion> {
@@ -113,6 +121,8 @@ export function createPullRequestReviews<
         PullRequestReview<TProvider, TVersion>
       >({
         operation: "pullRequestReviews.create",
+        support: adapter.extensions["pullRequestReviews.create"],
+        validationContext: context,
         provider,
         version,
         context: Object.freeze({
@@ -121,9 +131,6 @@ export function createPullRequestReviews<
           ...(pullRequest.source.sha === undefined ? {} : { sourceSha: pullRequest.source.sha }),
         }),
         execute: async (extension, options) => {
-          if (extension !== undefined) {
-            validateGiteaCreateReviewExtension(extension, context);
-          }
           return createPullRequestReview(
             await adapter.createPullRequestReview(repository, pullRequestData(), input, {
               ...options,
@@ -153,45 +160,5 @@ export function createPullRequestReviews<
         ),
       );
     },
-  });
-}
-
-const GITEA_REVIEW_EVENTS = [
-  "approve",
-  "comment",
-  "pending",
-  "request-changes",
-  "request-review",
-] as const;
-
-function validateGiteaCreateReviewExtension(
-  extension: Readonly<GiteaCreatePullRequestReviewExtension>,
-  context: ValidationErrorContext,
-): void {
-  if (
-    extension.event !== undefined &&
-    !GITEA_REVIEW_EVENTS.includes(extension.event)
-  ) {
-    throw new ValidationError("invalid pull-request review event", context);
-  }
-  if (extension.comments === undefined) return;
-  if (extension.comments.length === 0) {
-    throw new ValidationError("Gitea review comments cannot be empty", context);
-  }
-  extension.comments.forEach((comment, index) => {
-    requireIdentity(comment.body, `review comment ${index} body`, context);
-    requireIdentity(comment.path, `review comment ${index} path`, context);
-    if (comment.oldPosition !== undefined) {
-      requirePositiveInteger(comment.oldPosition, `review comment ${index} old position`, context);
-    }
-    if (comment.newPosition !== undefined) {
-      requirePositiveInteger(comment.newPosition, `review comment ${index} new position`, context);
-    }
-    if (comment.oldPosition === undefined && comment.newPosition === undefined) {
-      throw new ValidationError(
-        `review comment ${index} requires an old or new position`,
-        context,
-      );
-    }
   });
 }

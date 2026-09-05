@@ -1,16 +1,21 @@
-import type { ProviderVersion } from "../../generated-rest-clients/git-host.ts";
+import type { FluentProvider, ProviderVersion } from "../adapter-contract/provider.ts";
 import type { GitHostAdapter } from "../adapter-contract/GitHostAdapter.ts";
-import type { OperationOptions } from "../adapter-contract/operation-options.ts";
-import type { Page, PageRequest } from "../adapter-contract/pagination.ts";
-import { createPage, resolvePageRequest } from "../adapter-contract/pagination.ts";
+import { type OperationOptions, requireIdentity } from "../adapter-contract/operation-options.ts";
+import {
+  createPage,
+  type Page,
+  type PageRequest,
+  resolvePageRequest,
+} from "../adapter-contract/pagination.ts";
+
 import type {
   CreateRepositoryOptions,
   RepositoryContainerData,
   RepositoryContainerKind,
 } from "../adapter-contract/repositories.ts";
-import { requireIdentity } from "../adapter-contract/operation-options.ts";
+
 import type { ProviderRepositoryContainerNative } from "../native-access/ProviderNativeRegistry.ts";
-import type { FluentProvider } from "../provider-registry.ts";
+
 import { createRepository, type Repository } from "./Repository.ts";
 
 /** A fetched repository-owning user or organization. */

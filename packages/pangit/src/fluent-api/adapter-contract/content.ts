@@ -1,4 +1,5 @@
-import type { Provider, ProviderVersion } from "../../generated-rest-clients/git-host.ts";
+import type { ProviderExtensionOptions } from "../provider-extensions/ProviderExtensionRegistry.ts";
+import type { Provider, ProviderVersion } from "./provider.ts";
 import type { ProviderEntityNative } from "../native-access/ProviderNativeRegistry.ts";
 import type { CommitData, GitActor } from "./commits.ts";
 import type { ContentBlobOptions, ProviderMediaType } from "./content-body.ts";
@@ -107,33 +108,10 @@ export interface CommitFileChangesInput {
   readonly author?: GitActor;
 }
 
-/** Gitea-only authorship and branch-update controls for one atomic file-change commit. */
-export interface GiteaCommitFileChangesExtension {
-  readonly forcePush?: boolean;
-  readonly signoff?: boolean;
-  readonly committer?: GitActor;
-  readonly authorDate?: string;
-  readonly committerDate?: string;
-}
-
-/** Immutable operation context visible to a Gitea file-change extension callback. */
-export interface GiteaCommitFileChangesExtensionContext {
-  readonly repositoryFullName: string;
-  readonly branch: string;
-  readonly changeCount: number;
-}
-
-/** GitLab atomic commit controls. startSha replaces the source branch for a new branch. */
-export interface GitLabCommitFileChangesExtension {
-  readonly force?: boolean;
-  readonly startSha?: string;
-}
-export type GitLabCommitFileChangesExtensionContext = GiteaCommitFileChangesExtensionContext;
-
-export type CommitFileChangesExtension<TProvider extends Provider> = TProvider extends "gitea"
-  ? GiteaCommitFileChangesExtension
-  : TProvider extends "gitlab" ? GitLabCommitFileChangesExtension
-  : never;
+export type CommitFileChangesExtension<TProvider extends Provider> = ProviderExtensionOptions<
+  "content.commitChanges",
+  TProvider
+>;
 
 export interface CommitFileChangesOptions<TProvider extends Provider = Provider>
   extends OperationOptions {

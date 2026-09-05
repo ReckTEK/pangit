@@ -1,10 +1,10 @@
-import type { ProviderVersion } from "../../generated-rest-clients/git-host.ts";
-import type { FluentProvider } from "../provider-registry.ts";
+import type { FluentProvider, ProviderVersion } from "../adapter-contract/provider.ts";
+
 import {
   createOAuthTransactionCookie,
   type OAuthTransactionCookie,
   type OAuthTransactionCookieOptions,
-} from "./oauth-transaction-cookie.ts";
+} from "./oauth-transaction-cookie/mod.ts";
 import type { OAuthAuthorizedClientFor, OAuthHandler, OAuthLoginStart } from "./oauth-contracts.ts";
 import { OAuthCallbackError } from "./OAuthCallbackError.ts";
 

@@ -1,4 +1,5 @@
-import type { Provider, ProviderVersion } from "../../../generated-rest-clients/git-host.ts";
+import type { ProviderExtensionOptions } from "../../provider-extensions/ProviderExtensionRegistry.ts";
+import type { Provider, ProviderVersion } from "../provider.ts";
 import type { ProviderIssueEntityNative } from "../../native-access/ProviderNativeRegistry.ts";
 import type { OperationOptions } from "../operation-options.ts";
 import type { Page, ResolvedPageRequest, ScanPage } from "../pagination.ts";
@@ -61,19 +62,10 @@ export interface IssueCommentInput {
   readonly body: string;
 }
 
-/** Gitea-only optimistic concurrency input for one issue update. */
-export interface GiteaIssueUpdateExtension {
-  readonly contentVersion: number | bigint;
-}
-
-/** Safe, immutable Gitea issue context exposed to the extension callback. */
-export interface GiteaIssueUpdateExtensionContext {
-  readonly issueNumber: number;
-}
-
-export type IssueUpdateExtension<TProvider extends Provider> = TProvider extends "gitea"
-  ? GiteaIssueUpdateExtension
-  : never;
+export type IssueUpdateExtension<TProvider extends Provider> = ProviderExtensionOptions<
+  "issues.update",
+  TProvider
+>;
 
 export interface IssueUpdateOptions<TProvider extends Provider> extends OperationOptions {
   readonly extension?: IssueUpdateExtension<TProvider>;
@@ -97,7 +89,7 @@ export interface IssueCapabilitySupport {
   readonly operations: Readonly<
     Record<IssueCapabilityOperation, "direct" | "one-page" | "one-page-derived">
   >;
-  readonly contentVersionGuard: "gitea-extension" | "unsupported";
+  readonly contentVersionGuard: "provider-extension" | "unsupported";
   readonly timeTracking: "native-only";
   readonly dependencies: "native-only";
   readonly reactions: "native-only";

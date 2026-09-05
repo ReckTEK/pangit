@@ -1,5 +1,7 @@
 # PanGit
 
+![PanGit — baby Git providers cooking together in a pan — @mannsion/pangit](docs/images/pangit-banner.png)
+
 PanGit provides generated, typed TypeScript REST clients for Git hosting providers. Each client
 preserves its provider's request fields, response bodies, status codes, operation names, and API
 version.
@@ -52,6 +54,21 @@ const gitea = await PanGit.createProviderClient(
 );
 ```
 
+## Standalone fluent providers
+
+The async `PanGit.api.createClient(provider, version, options)` factory loads only the selected
+provider implementation. Its generated REST client loads only when an operation needs it. Each
+provider can also be imported directly:
+
+```ts
+import { createClient } from "@mannsion/pangit/fluent/gitea";
+
+const connection = createClient("1.27.2", { baseUrl: "https://git.example.com/api/v1" });
+```
+
+The direct factory is synchronous because that provider is already imported. Provider-specific
+extension and native types are exported from its own `fluent/<provider>` entry point.
+
 ## Fluent file reads
 
 The provider-neutral fluent API supports Gitea and GitLab. This example uses Gitea; see the
@@ -59,7 +76,7 @@ The provider-neutral fluent API supports Gitea and GitLab. This example uses Git
 versions, setup and capability differences:
 
 ```ts
-const connection = PanGit.api.createClient("gitea", "1.27.2", {
+const connection = await PanGit.api.createClient("gitea", "1.27.2", {
   baseUrl: "https://git.example.com/api/v1",
 });
 const git = await connection.auth.token(token);

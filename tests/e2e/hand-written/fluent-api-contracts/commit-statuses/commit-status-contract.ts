@@ -2,7 +2,7 @@ import {
   createClient,
   type FluentProvider,
   type ProviderVersion,
-} from "../../../../../packages/pangit/src/fluent-api/mod.ts";
+} from "../../../../../packages/pangit/src/fluent-client/mod.ts";
 import {
   OperationAbortedError,
   ValidationError,
@@ -48,10 +48,10 @@ export async function runCommitStatusContract<
   };
 
   const passed = await t.step("core/commit-statuses", async () => {
-    const git = await createClient(input.provider, input.version, {
+    const git = await (await createClient(input.provider, input.version, {
       baseUrl: input.apiUrl,
       beforeRequest: recorder.beforeRequest,
-    }).auth.token(input.token);
+    })).auth.token(input.token);
     const repository = await (await git.container(input.fixtures.repository.owner)).repository(
       input.fixtures.repository.name,
     );

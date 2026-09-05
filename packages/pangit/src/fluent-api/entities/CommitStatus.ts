@@ -1,7 +1,6 @@
-import type { ProviderVersion } from "../../generated-rest-clients/git-host.ts";
+import type { FluentProvider, ProviderVersion } from "../adapter-contract/provider.ts";
 import type { CommitStatusData, CommitStatusState } from "../adapter-contract/commit-statuses.ts";
 import type { ProviderEntityNative } from "../native-access/ProviderNativeRegistry.ts";
-import type { FluentProvider } from "../provider-registry.ts";
 
 export interface CommitStatus<
   TProvider extends FluentProvider,

@@ -23,18 +23,20 @@ export default function Home() {
           references and browser request exploration.
         </p>
         <a
-          href={siteUrls.package}
+          href={siteUrls.repository}
           className="mt-4 inline-block font-mono text-sm text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent"
         >
-          {siteConfig.packageName} on JSR
+          {siteConfig.packageName} source
         </a>
       </header>
 
       <div className="grid gap-10 py-9 md:grid-cols-[minmax(0,1fr)_13rem] md:gap-12">
-        <section aria-labelledby="install-heading" className="min-w-0">
-          <h2 id="install-heading" className="text-xl font-semibold">Install</h2>
-          <p className="mt-3 text-sm text-muted">Add the package to a Deno project:</p>
-          <CodeSnippet file={siteConfig.snippets.install} />
+        <section aria-labelledby="source-heading" className="min-w-0">
+          <h2 id="source-heading" className="text-xl font-semibold">Use the alpha from source</h2>
+          <p className="mt-3 text-sm text-muted">
+            The package is not published yet. Clone the repository and use its Deno workspace:
+          </p>
+          <CodeSnippet file={siteConfig.snippets.source} />
         </section>
 
         <aside aria-labelledby="documentation-heading">

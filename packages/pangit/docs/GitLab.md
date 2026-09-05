@@ -6,8 +6,8 @@ Pass the host root or its `/api/v4` URL; nested namespace paths are supported.
 ```ts
 import { createClient } from "@mannsion/pangit/api";
 
-const git = await createClient("gitlab", "19.3.1", "https://gitlab.example.com")
-  .auth.token(Deno.env.get("GITLAB_TOKEN")!);
+const connection = await createClient("gitlab", "19.3.1", "https://gitlab.example.com");
+const git = await connection.auth.token(Deno.env.get("GITLAB_TOKEN")!);
 const repo = await (await git.container("acme/platform")).repository("service");
 const commit = await repo.content.commitChanges({
   branch: "main",

@@ -1,7 +1,7 @@
 import {
   createClient,
   type ProviderVersion,
-} from "../../../../../../../packages/pangit/src/fluent-api/mod.ts";
+} from "../../../../../../../packages/pangit/src/fluent-client/mod.ts";
 import {
   ConflictError,
   OperationTimeoutError,
@@ -35,10 +35,10 @@ export async function runGiteaPullRequestMergeContract(
   const assertions: string[] = [];
   const requestEvidence: FluentApiRequestEvidence[] = [];
   const recorder = new FluentApiRequestRecorder();
-  const git = await createClient("gitea", input.version, {
+  const git = await (await createClient("gitea", input.version, {
     baseUrl: input.apiUrl,
     beforeRequest: recorder.beforeRequest,
-  }).auth.token(input.token);
+  })).auth.token(input.token);
 
   const passed = await t.step("gitea-extension/pull-request-merge", async () => {
     const successRepository = await (await git.container(

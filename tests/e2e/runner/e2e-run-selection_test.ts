@@ -142,3 +142,18 @@ Deno.test("focused results are isolated from complete results", () => {
     "Focused result directory was not isolated",
   );
 });
+
+Deno.test("E2E filters reject inherited object keys as unknown hosts", () => {
+  for (const host of ["__proto__", "constructor", "toString"]) {
+    let error: unknown;
+    try {
+      parseE2ERunSelection(["--git-host", host], catalog);
+    } catch (caught) {
+      error = caught;
+    }
+    assert(
+      error instanceof TypeError && error.message === `Unknown E2E Git host: ${host}`,
+      `Inherited key ${host} was not rejected by host validation`,
+    );
+  }
+});

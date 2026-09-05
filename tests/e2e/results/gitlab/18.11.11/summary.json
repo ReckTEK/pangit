@@ -1,0 +1,662 @@
+{
+  "gitHost": "gitlab",
+  "version": "18.11.11",
+  "containerImage": "gitlab/gitlab-ee:18.11.11-ee.0",
+  "kind": "real-http-e2e",
+  "selection": {
+    "suite": "all"
+  },
+  "passed": true,
+  "suites": {
+    "generatedRawRestClientTest": {
+      "kind": "generated-raw-rest-client-test",
+      "passed": true,
+      "junit": "generated-raw-rest-client-test/junit.xml",
+      "log": "generated-raw-rest-client-test/test.log"
+    },
+    "handWrittenFluentApiTest": {
+      "kind": "hand-written-fluent-api-test",
+      "passed": true,
+      "junit": "hand-written-fluent-api-test/junit.xml",
+      "log": "hand-written-fluent-api-test/test.log",
+      "evidence": "hand-written-fluent-api-test/fluent-api-contracts.json"
+    }
+  },
+  "endpoints": {
+    "operations": 1126,
+    "passed": 1126,
+    "positive": 61,
+    "negativeOnly": 1065,
+    "missing": 0,
+    "failedCases": 0,
+    "cases": 1166,
+    "requests": 1166
+  },
+  "sourceCoverage": {
+    "lines": {
+      "total": 27253,
+      "covered": 27247,
+      "percent": 99.98
+    },
+    "branches": {
+      "total": 2,
+      "covered": 2,
+      "percent": 100
+    },
+    "functions": {
+      "total": 1130,
+      "covered": 1128,
+      "percent": 99.82
+    }
+  },
+  "handWrittenFluentApiContracts": {
+    "schemaVersion": 1,
+    "gitHost": "gitlab",
+    "version": "18.11.11",
+    "kind": "hand-written-fluent-api-contracts",
+    "selectedContractIds": [
+      "core/authentication",
+      "core/oauth",
+      "gitlab-extension/operations",
+      "core/repositories",
+      "core/forks",
+      "core/branches",
+      "core/tags",
+      "core/commits",
+      "core/commit-files-pagination",
+      "core/content-reads",
+      "core/file-changes",
+      "core/links",
+      "core/pull-requests",
+      "core/pull-request-merge",
+      "core/pull-request-comments",
+      "core/pull-request-approval",
+      "core/commit-statuses",
+      "shared-capability/issues",
+      "shared-capability/releases",
+      "shared-capability/packages",
+      "shared-capability/branch-rules",
+      "shared-capability/branch-protection-enforcement",
+      "shared-capability/webhooks",
+      "shared-capability/ci-run-discovery",
+      "shared-capability/blob-reads",
+      "shared-capability/unsupported-modules"
+    ],
+    "passed": true,
+    "knownProviderDefects": [
+      {
+        "id": "GL-001",
+        "versions": [
+          "18.11.11",
+          "19.3.1"
+        ],
+        "operation": "getEffectiveBranchProtection",
+        "reason": "GitLab can enforce stale branch permissions after protection rules change",
+        "status": "upstream-fix-required"
+      }
+    ],
+    "contracts": [
+      {
+        "id": "core/authentication",
+        "passed": true,
+        "assertions": [
+          "Verified identity: expected \"root\", received \"root\"",
+          "Rejects with CapabilityUnavailableError: expected \"CapabilityUnavailableError\", received \"CapabilityUnavailableError\"",
+          "Rejects with AuthenticationError: expected \"AuthenticationError\", received \"AuthenticationError\"",
+          "Exact GitLab native client available"
+        ],
+        "requestEvidence": [
+          {
+            "operation": "token verifies current user once",
+            "expectedOperationIds": [
+              "gitlab-supplement:GET:/user"
+            ],
+            "requests": [
+              {
+                "operationId": "gitlab-supplement:GET:/user",
+                "method": "GET",
+                "path": "/api/v4/user"
+              }
+            ]
+          },
+          {
+            "operation": "Basic is unsupported before HTTP",
+            "expectedOperationIds": [],
+            "requests": []
+          },
+          {
+            "operation": "Construction and native access are lazy",
+            "expectedOperationIds": [],
+            "requests": []
+          }
+        ]
+      },
+      {
+        "id": "core/oauth",
+        "passed": true,
+        "assertions": [
+          "PKCE uses SHA-256: expected \"S256\", received \"S256\"",
+          "Real OAuth code exchange verifies identity: expected \"root\", received \"root\"",
+          "OAuth token metadata retained",
+          "Rejects with OAuthCallbackError: expected \"OAuthCallbackError\", received \"OAuthCallbackError\""
+        ],
+        "requestEvidence": [
+          {
+            "operation": "OAuth begin performs no HTTP",
+            "expectedOperationIds": [],
+            "requests": []
+          },
+          {
+            "operation": "OAuth wrong state fails before transport",
+            "expectedOperationIds": [],
+            "requests": []
+          }
+        ]
+      },
+      {
+        "id": "gitlab-extension/operations",
+        "passed": true,
+        "assertions": [
+          "Extension callback context: expected \"root/pangit-0a367176-e3c-repo\", received \"root/pangit-0a367176-e3c-repo\"",
+          "Extension callback evaluated once: expected 1, received 1",
+          "Native start SHA honored: expected [\"c943664011136ca261bfce2ce3cefe4e1e5facad\"], received [\"c943664011136ca261bfce2ce3cefe4e1e5facad\"]",
+          "Native GitLab status preserved: expected \"running\", received \"running\"",
+          "Native running is not invented as portable pending: expected undefined, received undefined",
+          "Native merge controls complete merge"
+        ],
+        "requestEvidence": []
+      },
+      {
+        "id": "core/repositories",
+        "passed": true,
+        "assertions": [
+          "Root is a user namespace: expected \"user\", received \"user\"",
+          "Initial files create default branch: expected \"main\", received \"main\"",
+          "Initial contents survive encoding: expected \"世界\\n\", received \"世界\\n\"",
+          "Repository exists",
+          "Missing repository is optional: expected undefined, received undefined",
+          "Repository listing respects page size: expected 1, received 1",
+          "Repository listing exposes continuation",
+          "Continuation does not repeat first repository",
+          "Rename returns a new immutable snapshot"
+        ],
+        "requestEvidence": [
+          {
+            "operation": "namespace direct lookup",
+            "expectedOperationIds": [
+              "getApiV4NamespacesId"
+            ],
+            "requests": [
+              {
+                "operationId": "getApiV4NamespacesId",
+                "method": "GET",
+                "path": "/api/v4/namespaces/root"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "core/forks",
+        "passed": true,
+        "assertions": [
+          "Nested namespace retains full path",
+          "Fork parent identity retained: expected \"root/pangit-bfd89bd8-c0c-repo\", received \"root/pangit-bfd89bd8-c0c-repo\"",
+          "Fork is usable when create resolves: expected \"0aa2be2d9a4130c732cd1656936ae5a1ac7636fb\", received \"0aa2be2d9a4130c732cd1656936ae5a1ac7636fb\"",
+          "Fork listing contains created fork"
+        ],
+        "requestEvidence": []
+      },
+      {
+        "id": "core/branches",
+        "passed": true,
+        "assertions": [
+          "Branch created at exact commit: expected \"7b02c49a8d7c71297acd47ea62529393d5487590\", received \"7b02c49a8d7c71297acd47ea62529393d5487590\"",
+          "Divergence compares both directions: expected [1,1], received [1,1]",
+          "Rejects with CapabilityUnavailableError: expected \"CapabilityUnavailableError\", received \"CapabilityUnavailableError\"",
+          "Unsupported rename preserves original branch",
+          "Unsupported rename creates no ref",
+          "Delete removes branch"
+        ],
+        "requestEvidence": [
+          {
+            "operation": "Branch lookup is direct",
+            "expectedOperationIds": [
+              "getApiV4ProjectsIdRepositoryBranchesBranch"
+            ],
+            "requests": [
+              {
+                "operationId": "getApiV4ProjectsIdRepositoryBranchesBranch",
+                "method": "GET",
+                "path": "/api/v4/projects/8/repository/branches/main"
+              }
+            ]
+          },
+          {
+            "operation": "Unsafe branch rename rejects before HTTP",
+            "expectedOperationIds": [],
+            "requests": []
+          }
+        ]
+      },
+      {
+        "id": "core/tags",
+        "passed": true,
+        "assertions": [
+          "Annotated tag points to commit: expected \"d8304bd9767c27c756af395aad47de2102e4306b\", received \"d8304bd9767c27c756af395aad47de2102e4306b\"",
+          "Encoded tag lookup: expected \"v1/encoded\", received \"v1/encoded\"",
+          "Tags one-page listing: expected 1, received 1",
+          "Rejects with NotFoundError: expected \"NotFoundError\", received \"NotFoundError\""
+        ],
+        "requestEvidence": [
+          {
+            "operation": "Tag lookup is direct",
+            "expectedOperationIds": [
+              "getApiV4ProjectsIdRepositoryTagsTagName"
+            ],
+            "requests": [
+              {
+                "operationId": "getApiV4ProjectsIdRepositoryTagsTagName",
+                "method": "GET",
+                "path": "/api/v4/projects/9/repository/tags/v1%2Fencoded"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "core/commits",
+        "passed": true,
+        "assertions": [
+          "Commit parent graph retained: expected [\"a96eb9130e9df9c6531c5b4c14f562dadf9f136c\"], received [\"a96eb9130e9df9c6531c5b4c14f562dadf9f136c\"]",
+          "Optional diff facet: expected \"history.txt\", received \"history.txt\"",
+          "Optional statistics facet: expected 1, received 1",
+          "Unsigned commit verification: expected false, received false",
+          "Batch preserves input order and duplicates: expected [\"2dd68df334b62d6fb9babe2dd64d81b98f1127d8\",\"a96eb9130e9df9c6531c5b4c14f562dadf9f136c\",\"2dd68df334b62d6fb9babe2dd64d81b98f1127d8\"], received [\"2dd68df334b62d6fb9babe2dd64d81b98f1127d8\",\"a96eb9130e9df9c6531c5b4c14f562dadf9f136c\",\"2dd68df334b62d6fb9babe2dd64d81b98f1127d8\"]",
+          "Compare yields exact range: expected [\"2dd68df334b62d6fb9babe2dd64d81b98f1127d8\"], received [\"2dd68df334b62d6fb9babe2dd64d81b98f1127d8\"]",
+          "Reachable difference: expected 1, received 1",
+          "Full reachable count: expected 2, received 2",
+          "Merge bases complete: expected [\"a96eb9130e9df9c6531c5b4c14f562dadf9f136c\"], received [\"a96eb9130e9df9c6531c5b4c14f562dadf9f136c\"]",
+          "Head refs resolve exact SHA",
+          "Bounded contributor slice reports completeness",
+          "Commit page retains continuation",
+          "Commit continuation: expected \"a96eb9130e9df9c6531c5b4c14f562dadf9f136c\", received \"a96eb9130e9df9c6531c5b4c14f562dadf9f136c\""
+        ],
+        "requestEvidence": [
+          {
+            "operation": "commit direct get",
+            "expectedOperationIds": [
+              "getApiV4ProjectsIdRepositoryCommitsSha"
+            ],
+            "requests": [
+              {
+                "operationId": "getApiV4ProjectsIdRepositoryCommitsSha",
+                "method": "GET",
+                "path": "/api/v4/projects/10/repository/commits/2dd68df334b62d6fb9babe2dd64d81b98f1127d8"
+              }
+            ]
+          },
+          {
+            "operation": "Duplicate commit gets are deduplicated",
+            "expectedOperationIds": [
+              "getApiV4ProjectsIdRepositoryCommitsSha",
+              "getApiV4ProjectsIdRepositoryCommitsSha"
+            ],
+            "requests": [
+              {
+                "operationId": "getApiV4ProjectsIdRepositoryCommitsSha",
+                "method": "GET",
+                "path": "/api/v4/projects/10/repository/commits/2dd68df334b62d6fb9babe2dd64d81b98f1127d8"
+              },
+              {
+                "operationId": "getApiV4ProjectsIdRepositoryCommitsSha",
+                "method": "GET",
+                "path": "/api/v4/projects/10/repository/commits/a96eb9130e9df9c6531c5b4c14f562dadf9f136c"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "core/commit-files-pagination",
+        "passed": true,
+        "assertions": [
+          "All 101 files are returned exactly once: expected [\"many/000.txt\",\"many/001.txt\",\"many/002.txt\",\"many/003.txt\",\"many/004.txt\",\"many/005.txt\",\"many/006.txt\",\"many/007.txt\",\"many/008.txt\",\"many/009.txt\",\"many/010.txt\",\"many/011.txt\",\"many/012.txt\",\"many/013.txt\",\"many/014.txt\",\"many/015.txt\",\"many/016.txt\",\"many/017.txt\",\"many/018.txt\",\"many/019.txt\",\"many/020.txt\",\"many/021.txt\",\"many/022.txt\",\"many/023.txt\",\"many/024.txt\",\"many/025.txt\",\"many/026.txt\",\"many/027.txt\",\"many/028.txt\",\"many/029.txt\",\"many/030.txt\",\"many/031.txt\",\"many/032.txt\",\"many/033.txt\",\"many/034.txt\",\"many/035.txt\",\"many/036.txt\",\"many/037.txt\",\"many/038.txt\",\"many/039.txt\",\"many/040.txt\",\"many/041.txt\",\"many/042.txt\",\"many/043.txt\",\"many/044.txt\",\"many/045.txt\",\"many/046.txt\",\"many/047.txt\",\"many/048.txt\",\"many/049.txt\",\"many/050.txt\",\"many/051.txt\",\"many/052.txt\",\"many/053.txt\",\"many/054.txt\",\"many/055.txt\",\"many/056.txt\",\"many/057.txt\",\"many/058.txt\",\"many/059.txt\",\"many/060.txt\",\"many/061.txt\",\"many/062.txt\",\"many/063.txt\",\"many/064.txt\",\"many/065.txt\",\"many/066.txt\",\"many/067.txt\",\"many/068.txt\",\"many/069.txt\",\"many/070.txt\",\"many/071.txt\",\"many/072.txt\",\"many/073.txt\",\"many/074.txt\",\"many/075.txt\",\"many/076.txt\",\"many/077.txt\",\"many/078.txt\",\"many/079.txt\",\"many/080.txt\",\"many/081.txt\",\"many/082.txt\",\"many/083.txt\",\"many/084.txt\",\"many/085.txt\",\"many/086.txt\",\"many/087.txt\",\"many/088.txt\",\"many/089.txt\",\"many/090.txt\",\"many/091.txt\",\"many/092.txt\",\"many/093.txt\",\"many/094.txt\",\"many/095.txt\",\"many/096.txt\",\"many/097.txt\",\"many/098.txt\",\"many/099.txt\",\"many/100.txt\"], received [\"many/000.txt\",\"many/001.txt\",\"many/002.txt\",\"many/003.txt\",\"many/004.txt\",\"many/005.txt\",\"many/006.txt\",\"many/007.txt\",\"many/008.txt\",\"many/009.txt\",\"many/010.txt\",\"many/011.txt\",\"many/012.txt\",\"many/013.txt\",\"many/014.txt\",\"many/015.txt\",\"many/016.txt\",\"many/017.txt\",\"many/018.txt\",\"many/019.txt\",\"many/020.txt\",\"many/021.txt\",\"many/022.txt\",\"many/023.txt\",\"many/024.txt\",\"many/025.txt\",\"many/026.txt\",\"many/027.txt\",\"many/028.txt\",\"many/029.txt\",\"many/030.txt\",\"many/031.txt\",\"many/032.txt\",\"many/033.txt\",\"many/034.txt\",\"many/035.txt\",\"many/036.txt\",\"many/037.txt\",\"many/038.txt\",\"many/039.txt\",\"many/040.txt\",\"many/041.txt\",\"many/042.txt\",\"many/043.txt\",\"many/044.txt\",\"many/045.txt\",\"many/046.txt\",\"many/047.txt\",\"many/048.txt\",\"many/049.txt\",\"many/050.txt\",\"many/051.txt\",\"many/052.txt\",\"many/053.txt\",\"many/054.txt\",\"many/055.txt\",\"many/056.txt\",\"many/057.txt\",\"many/058.txt\",\"many/059.txt\",\"many/060.txt\",\"many/061.txt\",\"many/062.txt\",\"many/063.txt\",\"many/064.txt\",\"many/065.txt\",\"many/066.txt\",\"many/067.txt\",\"many/068.txt\",\"many/069.txt\",\"many/070.txt\",\"many/071.txt\",\"many/072.txt\",\"many/073.txt\",\"many/074.txt\",\"many/075.txt\",\"many/076.txt\",\"many/077.txt\",\"many/078.txt\",\"many/079.txt\",\"many/080.txt\",\"many/081.txt\",\"many/082.txt\",\"many/083.txt\",\"many/084.txt\",\"many/085.txt\",\"many/086.txt\",\"many/087.txt\",\"many/088.txt\",\"many/089.txt\",\"many/090.txt\",\"many/091.txt\",\"many/092.txt\",\"many/093.txt\",\"many/094.txt\",\"many/095.txt\",\"many/096.txt\",\"many/097.txt\",\"many/098.txt\",\"many/099.txt\",\"many/100.txt\"]"
+        ],
+        "requestEvidence": [
+          {
+            "operation": "Commit files traverse both provider pages",
+            "expectedOperationIds": [
+              "getApiV4ProjectsIdRepositoryCommitsShaDiff",
+              "getApiV4ProjectsIdRepositoryCommitsShaDiff"
+            ],
+            "requests": [
+              {
+                "operationId": "getApiV4ProjectsIdRepositoryCommitsShaDiff",
+                "method": "GET",
+                "path": "/api/v4/projects/11/repository/commits/75077ff7bd603e02ca5168437c8a35bb9db18fe9/diff"
+              },
+              {
+                "operationId": "getApiV4ProjectsIdRepositoryCommitsShaDiff",
+                "method": "GET",
+                "path": "/api/v4/projects/11/repository/commits/75077ff7bd603e02ca5168437c8a35bb9db18fe9/diff"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "core/content-reads",
+        "passed": true,
+        "assertions": [
+          "UTF-8 path and body round trip: expected \"世界 🌍\\n\", received \"世界 🌍\\n\"",
+          "Binary bytes remain exact: expected [0,128,255], received [0,128,255]",
+          "Empty file is present: expected \"\", received \"\"",
+          "JSON body decoding: expected {\"ok\":true}, received {\"ok\":true}",
+          "Blob MIME type: expected \"application/json\", received \"application/json\"",
+          "Batch distinguishes missing files and directories: expected [\"file\",\"missing\",\"not-a-file\",\"file\"], received [\"file\",\"missing\",\"not-a-file\",\"file\"]",
+          "Bounded recursive tree traversal",
+          "Root directory alias: expected \"directory\", received \"directory\"",
+          "Path metadata includes latest modifying commit"
+        ],
+        "requestEvidence": []
+      },
+      {
+        "id": "core/file-changes",
+        "passed": true,
+        "assertions": [
+          "New-branch commit preserves source: expected \"one\", received \"one\"",
+          "Update guards file SHA: expected \"changed\", received \"changed\"",
+          "Move retains content: expected \"two\", received \"two\"",
+          "Rejects with ConflictError: expected \"ConflictError\", received \"ConflictError\"",
+          "Atomic changes form one commit: expected \"atomic create\", received \"atomic create\"",
+          "Delete removes content: expected \"missing\", received \"missing\""
+        ],
+        "requestEvidence": []
+      },
+      {
+        "id": "core/links",
+        "passed": true,
+        "assertions": [
+          "Symlink target read as metadata: expected \"target.txt\", received \"target.txt\"",
+          "No implicit symlink dereference: expected undefined, received undefined",
+          "Explicit internal symlink resolves bytes: expected \"symlink-target\\n\", received \"symlink-target\\n\"",
+          "Rejects with CapabilityUnavailableError: expected \"CapabilityUnavailableError\", received \"CapabilityUnavailableError\"",
+          "Internal gitlink resolves pinned target: expected \"directory\", received \"directory\"",
+          "Rejects with CapabilityUnavailableError: expected \"CapabilityUnavailableError\", received \"CapabilityUnavailableError\""
+        ],
+        "requestEvidence": []
+      },
+      {
+        "id": "core/pull-requests",
+        "passed": true,
+        "assertions": [
+          "Opened merge request normalization: expected \"open\", received \"open\"",
+          "Find open merge request: expected 1, received 1",
+          "Text search finds MR: expected 1, received 1",
+          "MR commit page: expected 1, received 1",
+          "MR diff page: expected \"change.txt\", received \"change.txt\"",
+          "MR update returns fresh snapshot: expected \"Updated MR\", received \"Updated MR\"",
+          "MR close transition: expected \"closed\", received \"closed\""
+        ],
+        "requestEvidence": []
+      },
+      {
+        "id": "core/pull-request-merge",
+        "passed": true,
+        "assertions": [
+          "Merge waits for actual completion and commit identity",
+          "Refresh observes completed merge",
+          "Merged content reaches target branch: expected \"merge\\n\", received \"merge\\n\""
+        ],
+        "requestEvidence": []
+      },
+      {
+        "id": "core/pull-request-comments",
+        "passed": true,
+        "assertions": [
+          "General, inline, and renamed-file comments persisted",
+          "Reviewer assignment persisted"
+        ],
+        "requestEvidence": []
+      },
+      {
+        "id": "core/pull-request-approval",
+        "passed": true,
+        "assertions": [
+          "Real separate reviewer approval persisted",
+          "Persistent review objects are explicitly unsupported: expected false, received false"
+        ],
+        "requestEvidence": []
+      },
+      {
+        "id": "core/commit-statuses",
+        "passed": true,
+        "assertions": [
+          "Pending status round trip: expected \"pending\", received \"pending\"",
+          "Combined latest status: expected \"success\", received \"success\"",
+          "Status listing"
+        ],
+        "requestEvidence": []
+      },
+      {
+        "id": "shared-capability/issues",
+        "passed": true,
+        "assertions": [
+          "Issue direct identity: expected \"2\", received \"2\"",
+          "Issue update: expected \"Updated\", received \"Updated\"",
+          "Direct note ID retains issue identity: expected \"Comment\", received \"Comment\"",
+          "Note update: expected \"Edited\", received \"Edited\"",
+          "Notes list",
+          "Issue close: expected \"closed\", received \"closed\"",
+          "Issue state filter: expected 1, received 1"
+        ],
+        "requestEvidence": [
+          {
+            "operation": "Issue lookup is direct",
+            "expectedOperationIds": [
+              "getApiV4ProjectsIdIssuesIssueIid"
+            ],
+            "requests": [
+              {
+                "operationId": "getApiV4ProjectsIdIssuesIssueIid",
+                "method": "GET",
+                "path": "/api/v4/projects/19/issues/1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "shared-capability/releases",
+        "passed": true,
+        "assertions": [
+          "Release tag identity: expected \"v1.0.0\", received \"v1.0.0\"",
+          "Release asset has download URL",
+          "Uploaded release asset is downloadable: expected \"asset body\", received \"asset body\"",
+          "Release assets bounded listing: expected 1, received 1",
+          "Asset rename: expected \"renamed.txt\", received \"renamed.txt\"",
+          "Release update: expected \"Updated notes\", received \"Updated notes\"",
+          "Release deletion: expected 0, received 0"
+        ],
+        "requestEvidence": [
+          {
+            "operation": "Release tag lookup is direct",
+            "expectedOperationIds": [
+              "getApiV4ProjectsIdReleasesTagName"
+            ],
+            "requests": [
+              {
+                "operationId": "getApiV4ProjectsIdReleasesTagName",
+                "method": "GET",
+                "path": "/api/v4/projects/20/releases/v1.0.0"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "shared-capability/packages",
+        "passed": true,
+        "assertions": [
+          "Real generic package upload fixture: expected 201, received 201",
+          "Exact package version lookup: expected \"1.0.0\", received \"1.0.0\"",
+          "Package file metadata: expected \"hello.txt\", received \"hello.txt\"",
+          "Package versions one-page listing: expected 1, received 1",
+          "Package version deleted"
+        ],
+        "requestEvidence": [
+          {
+            "operation": "Package versions fetch one page",
+            "expectedOperationIds": [
+              "getApiV4ProjectsIdPackages"
+            ],
+            "requests": [
+              {
+                "operationId": "getApiV4ProjectsIdPackages",
+                "method": "GET",
+                "path": "/api/v4/projects/root%2Fpangit-7784961e-b7b-repo/packages"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "shared-capability/branch-rules",
+        "passed": true,
+        "assertions": [
+          "Configured rule disallows direct pushes: expected false, received false",
+          "Configured rule persisted with denied direct pushes: expected false, received false",
+          "Configured rule listing includes the exact rule once: expected 1, received 1",
+          "Protection update: expected true, received true",
+          "Rejects with NotFoundError: expected \"NotFoundError\", received \"NotFoundError\"",
+          "Deleted configured rule is absent from the authoritative rule listing: expected 0, received 0"
+        ],
+        "requestEvidence": [
+          {
+            "operation": "Configured rule lookup is direct",
+            "expectedOperationIds": [
+              "getApiV4ProjectsIdProtectedBranchesName"
+            ],
+            "requests": [
+              {
+                "operationId": "getApiV4ProjectsIdProtectedBranchesName",
+                "method": "GET",
+                "path": "/api/v4/projects/22/protected_branches/rule-target"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "shared-capability/branch-protection-enforcement",
+        "passed": true,
+        "assertions": [
+          "GL-001 is reported as unavailable: expected false, received false",
+          "Provider defect produces a typed error",
+          "Provider defect error type: expected \"CapabilityUnavailableError\", received \"CapabilityUnavailableError\"",
+          "Provider defect identifies its upstream follow-up"
+        ],
+        "requestEvidence": [
+          {
+            "operation": "GL-001 rejects before requesting unreliable provider state",
+            "expectedOperationIds": [],
+            "requests": []
+          }
+        ]
+      },
+      {
+        "id": "shared-capability/webhooks",
+        "passed": true,
+        "assertions": [
+          "Webhook event mapping: expected [\"issue\"], received [\"issue\"]",
+          "Actual GitLab webhook received by isolated journal",
+          "Webhook update",
+          "Webhook deleted: expected 0, received 0"
+        ],
+        "requestEvidence": [
+          {
+            "operation": "Webhook lookup is direct",
+            "expectedOperationIds": [
+              "getApiV4ProjectsIdHooksHookId"
+            ],
+            "requests": [
+              {
+                "operationId": "getApiV4ProjectsIdHooksHookId",
+                "method": "GET",
+                "path": "/api/v4/projects/24/hooks/2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "shared-capability/ci-run-discovery",
+        "passed": true,
+        "assertions": [
+          "Real runner executes pipeline successfully: expected \"success\", received \"success\"",
+          "Pipeline head SHA: expected \"ae1471194179bea5552853bc3e488f3afcb489e7\", received \"ae1471194179bea5552853bc3e488f3afcb489e7\"",
+          "CI configuration workflow: expected \".gitlab-ci.yml\", received \".gitlab-ci.yml\"",
+          "CI job conclusion: expected \"success\", received \"success\"",
+          "Direct job lookup: expected \"fixture\", received \"fixture\"",
+          "Actual job artifact discovered",
+          "Stable job archive identity: expected \"job:5\", received \"job:5\"",
+          "Pipeline filtered discovery"
+        ],
+        "requestEvidence": [
+          {
+            "operation": "CI job lookup is direct",
+            "expectedOperationIds": [
+              "getApiV4ProjectsIdJobsJobId"
+            ],
+            "requests": [
+              {
+                "operationId": "getApiV4ProjectsIdJobsJobId",
+                "method": "GET",
+                "path": "/api/v4/projects/25/jobs/5"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "shared-capability/blob-reads",
+        "passed": true,
+        "assertions": [
+          "Git object blob bytes: expected [98,108,111,98,10], received [98,108,111,98,10]",
+          "Blob SHA independently verified: expected \"63499e4ea8e096b831515ceb1d5a7593e4d87ae5\", received \"63499e4ea8e096b831515ceb1d5a7593e4d87ae5\"",
+          "Original content payload preserved",
+          "Original blob payload preserved"
+        ],
+        "requestEvidence": [
+          {
+            "operation": "Native entity access has zero requests",
+            "expectedOperationIds": [],
+            "requests": []
+          }
+        ]
+      },
+      {
+        "id": "shared-capability/unsupported-modules",
+        "passed": true,
+        "assertions": [
+          "Rejects with CapabilityUnavailableError: expected \"CapabilityUnavailableError\", received \"CapabilityUnavailableError\"",
+          "Rejects with CapabilityUnavailableError: expected \"CapabilityUnavailableError\", received \"CapabilityUnavailableError\"",
+          "Only selected native provider is exposed"
+        ],
+        "requestEvidence": [
+          {
+            "operation": "Unsupported draft release fails before requests",
+            "expectedOperationIds": [],
+            "requests": []
+          },
+          {
+            "operation": "Unsupported rule fields fail before requests",
+            "expectedOperationIds": [],
+            "requests": []
+          }
+        ]
+      }
+    ]
+  }
+}

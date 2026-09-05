@@ -1,4 +1,4 @@
-import type { ProviderVersion } from "../../generated-rest-clients/git-host.ts";
+import type { FluentProvider, ProviderVersion } from "../adapter-contract/provider.ts";
 import type {
   OAuthBeginInput,
   OAuthBeginResult,
@@ -7,7 +7,7 @@ import type {
 } from "../adapter-contract/authentication.ts";
 import type { OperationOptions } from "../adapter-contract/operation-options.ts";
 import { ValidationError } from "../adapter-contract/errors.ts";
-import type { FluentProvider } from "../provider-registry.ts";
+
 import type {
   Login,
   LoginOptions,

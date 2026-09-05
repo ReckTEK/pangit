@@ -35,7 +35,7 @@ Deno.test("reference routes accept the catalog and reject unknown providers and 
 Deno.test("configured URL changes keep routes, navigation, and downloads aligned", () => {
   const urls = createSiteUrls({
     ...siteConfig,
-    links: { package: "https://packages.example/pangit" },
+    links: { repository: "https://source.example/pangit" },
     routes: {
       home: "/start",
       docs: "/manual",
@@ -87,7 +87,10 @@ Deno.test("configured URL changes keep routes, navigation, and downloads aligned
     "Method index path ignored configuration",
   );
   assert(urls.logo === `/identity/${siteConfig.assets.logo}`, "Brand path ignored configuration");
-  assert(urls.package === "https://packages.example/pangit", "Package link ignored configuration");
+  assert(
+    urls.repository === "https://source.example/pangit",
+    "Repository link ignored configuration",
+  );
   assert(
     isWithinPath("/manual/rest/gitea/1.27.2?variant=test#tag/test", urls.docs),
     "Docs path not recognized",

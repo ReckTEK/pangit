@@ -1,4 +1,5 @@
-import type { Provider, ProviderVersion } from "../../../generated-rest-clients/git-host.ts";
+import type { ProviderExtensionOptions } from "../../provider-extensions/ProviderExtensionRegistry.ts";
+import type { Provider, ProviderVersion } from "../provider.ts";
 import type { ProviderBranchRuleEntityNative } from "../../native-access/ProviderNativeRegistry.ts";
 import type { OperationOptions } from "../operation-options.ts";
 import type { RepositoryData } from "../repositories.ts";
@@ -59,23 +60,15 @@ export interface CreateBranchRuleInput extends BranchRuleFields {
 
 export interface UpdateBranchRuleInput extends BranchRuleFields {}
 
-/** Gitea's list endpoint is direct but unpaginated, so the caller supplies a hard bound. */
+/** An list endpoint is direct but unpaginated, so the caller supplies a hard bound. */
 export interface ListBranchRulesOptions extends OperationOptions {
   readonly maxRules: number;
 }
 
-/** Gitea-only exact ordering for configured branch rules, highest priority first. */
-export interface GiteaBranchRuleOrderExtension {
-  readonly orderedRuleNames: readonly string[];
-}
-
-export interface GiteaBranchRuleOrderExtensionContext {
-  readonly repositoryFullName: string;
-}
-
-export type BranchRuleOrderExtension<TProvider extends Provider> = TProvider extends "gitea"
-  ? GiteaBranchRuleOrderExtension
-  : never;
+export type BranchRuleOrderExtension<TProvider extends Provider> = ProviderExtensionOptions<
+  "branchRules.setOrder",
+  TProvider
+>;
 
 export interface BranchRuleOrderOptions<TProvider extends Provider> extends OperationOptions {
   readonly extension?: BranchRuleOrderExtension<TProvider>;
@@ -94,7 +87,7 @@ export interface BranchRuleCapabilitySupport {
     readonly supported: boolean;
     readonly get: "direct";
   }>;
-  readonly orderedPriority: "gitea-extension" | "unsupported";
+  readonly orderedPriority: "provider-extension" | "unsupported";
 }
 
 /** Optional configured-rule and effective-enforcement adapter contracts. */

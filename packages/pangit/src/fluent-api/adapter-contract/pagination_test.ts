@@ -34,16 +34,16 @@ Deno.test("page request validation preserves public operation context", () => {
   let caught: unknown;
   try {
     resolvePageRequest({ limit: 0 }, 50, {
-      provider: "gitea",
-      version: "1.27.2",
+      provider: "test-provider",
+      version: "1.0",
       operation: "listBranches",
     });
   } catch (error) {
     caught = error;
   }
   assert(caught instanceof ValidationError, "invalid page did not use ValidationError");
-  assertEquals(caught.provider, "gitea", "page validation lost provider context");
-  assertEquals(caught.version, "1.27.2", "page validation lost version context");
+  assertEquals(caught.provider, "test-provider", "page validation lost provider context");
+  assertEquals(caught.version, "1.0", "page validation lost version context");
   assertEquals(caught.operation, "listBranches", "page validation lost operation context");
 });
 

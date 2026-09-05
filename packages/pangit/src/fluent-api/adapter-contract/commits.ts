@@ -1,4 +1,9 @@
-import type { Provider, ProviderVersion } from "../../generated-rest-clients/git-host.ts";
+import type {
+  ProviderExtensionOptions,
+  ProviderExtensionResult,
+  ProviderExtensionSupportsVersion,
+} from "../provider-extensions/ProviderExtensionRegistry.ts";
+import type { Provider, ProviderVersion } from "./provider.ts";
 import type { ProviderEntityNative } from "../native-access/ProviderNativeRegistry.ts";
 import type { BoundedOperationOptions, OperationOptions } from "./operation-options.ts";
 import type { Page, ResolvedPageRequest, ScanPage } from "./pagination.ts";
@@ -59,31 +64,11 @@ export const DEFAULT_COMMIT_MULTI_GET_MAX_ITEMS = 100;
 /** Provider work for commit multi-reads is never fanned out beyond this common ceiling. */
 export const MAX_COMMIT_READ_CONCURRENCY = 4;
 
-/** Gitea 1.27.2 raw comparison representation selected by the provider extension. */
-export type GiteaCommitComparisonOutputFormat = "diff" | "patch";
-
-/** Provider-only selector for the raw comparison representation. */
-export interface GiteaCompareCommitsExtension {
-  readonly output: GiteaCommitComparisonOutputFormat;
-}
-
-/** Safe operation context passed to the Gitea comparison extension callback. */
-export interface GiteaCompareCommitsExtensionContext {
-  readonly repositoryFullName: string;
-  readonly base: string;
-  readonly head: string;
-}
-
-/** Complete raw comparison returned by Gitea without parsing or truncation. */
-export interface GiteaCommitComparisonOutput {
-  readonly output: GiteaCommitComparisonOutputFormat;
-  readonly content: string;
-}
-
 export type CompareCommitsExtension<
   TProvider extends Provider,
   TVersion extends ProviderVersion<TProvider>,
-> = TProvider extends "gitea" ? TVersion extends "1.27.2" ? GiteaCompareCommitsExtension : never
+> = ProviderExtensionSupportsVersion<"commits.compare", TProvider, TVersion> extends true
+  ? ProviderExtensionOptions<"commits.compare", TProvider>
   : never;
 
 export interface CompareCommitsOptions<
@@ -171,7 +156,10 @@ export interface CommitAdapter<
     base: string,
     head: string,
     options?: CompareCommitsOptions<TProvider, TVersion>,
-  ): Promise<CommitComparison<TProvider, TVersion> | GiteaCommitComparisonOutput>;
+  ): Promise<
+    | CommitComparison<TProvider, TVersion>
+    | ProviderExtensionResult<"commits.compare", TProvider, never>
+  >;
   listCommitFiles(
     repository: RepositoryData<TProvider, TVersion>,
     sha: string,

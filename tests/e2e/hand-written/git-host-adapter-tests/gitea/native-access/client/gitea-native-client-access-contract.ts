@@ -1,7 +1,7 @@
 import {
   createClient,
   type ProviderVersion,
-} from "../../../../../../../packages/pangit/src/fluent-api/mod.ts";
+} from "../../../../../../../packages/pangit/src/fluent-client/mod.ts";
 import type {
   FluentApiContractResult,
   FluentApiRequestEvidence,
@@ -23,7 +23,7 @@ export async function runGiteaNativeClientAccessContract(
   const recorder = new FluentApiRequestRecorder();
   const requestEvidence: FluentApiRequestEvidence[] = [];
   const passed = await t.step("native-access/gitea/client", async () => {
-    const client = createClient("gitea", input.version, {
+    const client = await createClient("gitea", input.version, {
       baseUrl: input.apiUrl,
       beforeRequest: recorder.beforeRequest,
     });

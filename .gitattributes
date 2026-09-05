@@ -1,0 +1,6 @@
+# Generated artifacts remain available in diffs but are collapsed in GitHub reviews.
+packages/pangit/src/generated-rest-clients/** linguist-generated=true
+packages/pangit/src/fluent-api/generated-media-types.ts linguist-generated=true
+packages/pangit-site/app/documentation/generated/** linguist-generated=true
+tests/e2e/generated/** linguist-generated=true
+tests/e2e/results/** linguist-generated=true

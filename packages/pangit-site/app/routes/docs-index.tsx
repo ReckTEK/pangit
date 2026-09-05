@@ -53,16 +53,16 @@ export default function DocsIndex() {
             <Code2 size={20} className="text-accent" />
             <h3 className="mt-4 text-sm font-semibold">Choose the API version explicitly</h3>
             <p className="mt-2 text-sm leading-7 text-muted">
-              The API version is separate from the JSR package version. “latest” is the checked-in
-              spec snapshot; it does not negotiate a server version at runtime.
+              The API version is separate from the PanGit package version. “latest” is the
+              checked-in spec snapshot; it does not negotiate a server version at runtime.
             </p>
           </div>
           <div>
             <Terminal size={20} className="text-accent" />
             <h3 className="mt-4 text-sm font-semibold">Explore here. Run from your project.</h3>
             <p className="mt-2 text-sm leading-7 text-muted">
-              The explorer makes HTTP requests directly in your browser. Use the published package
-              in your own Deno project against an existing instance.
+              The explorer makes HTTP requests directly in your browser. Use the source workspace
+              package in your own Deno application against an existing instance.
             </p>
           </div>
         </div>

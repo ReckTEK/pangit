@@ -1,4 +1,5 @@
-import type { ProviderVersion } from "../../../generated-rest-clients/git-host.ts";
+import type { ProviderExtensions } from "../../provider-extensions/ExtensionSupport.ts";
+import type { FluentProvider, ProviderVersion } from "../../adapter-contract/provider.ts";
 import type {
   BranchRuleAdapter,
   BranchRuleCapabilitySupport,
@@ -8,12 +9,13 @@ import type {
   ListBranchRulesOptions,
   UpdateBranchRuleInput,
 } from "../../adapter-contract/optional/branch-rules.ts";
-import type { OperationOptions } from "../../adapter-contract/operation-options.ts";
-import { ValidationError, type ValidationErrorContext } from "../../adapter-contract/errors.ts";
 import {
+  type OperationOptions,
   requireIdentity,
   requirePositiveInteger,
 } from "../../adapter-contract/operation-options.ts";
+import { ValidationError, type ValidationErrorContext } from "../../adapter-contract/errors.ts";
+
 import type { RepositoryData } from "../../adapter-contract/repositories.ts";
 import {
   type BranchRule,
@@ -25,7 +27,6 @@ import {
   createOperationExtension,
   type OperationExtension,
 } from "../../provider-extensions/OperationExtension.ts";
-import type { FluentProvider } from "../../provider-registry.ts";
 
 export type BranchRuleOrderOperation<
   TProvider extends FluentProvider,
@@ -67,7 +68,9 @@ export function createRepositoryBranchRules<
 >(
   provider: TProvider,
   version: TVersion,
-  adapter: BranchRuleAdapter<TProvider, TVersion>,
+  adapter: BranchRuleAdapter<TProvider, TVersion> & {
+    readonly extensions: ProviderExtensions<TProvider>;
+  },
   repository: RepositoryData<TProvider, TVersion>,
 ): RepositoryBranchRules<TProvider, TVersion> {
   const data = (rule: BranchRule<TProvider, TVersion>): BranchRuleData<TProvider, TVersion> => ({
@@ -136,27 +139,15 @@ export function createRepositoryBranchRules<
       const context = { provider, version, operation: "setBranchRuleOrder" } as const;
       return createOperationExtension<"branchRules.setOrder", TProvider, TVersion, void>({
         operation: "branchRules.setOrder",
+        support: adapter.extensions["branchRules.setOrder"],
+        validationContext: context,
         provider,
         version,
         context: Object.freeze({ repositoryFullName: repository.fullName }),
         execute: async (extension, options) => {
           if (extension === undefined) {
             throw new ValidationError(
-              "branch-rule ordering requires a Gitea extension",
-              context,
-            );
-          }
-          const orderedRuleNames = Object.freeze(
-            extension.orderedRuleNames.map((name) =>
-              requireIdentity(name, "branch rule name", context)
-            ),
-          );
-          if (orderedRuleNames.length === 0) {
-            throw new ValidationError("ordered branch rules cannot be empty", context);
-          }
-          if (new Set(orderedRuleNames).size !== orderedRuleNames.length) {
-            throw new ValidationError(
-              "ordered branch rules cannot contain duplicates",
+              "branch-rule ordering requires a provider extension",
               context,
             );
           }
@@ -164,7 +155,7 @@ export function createRepositoryBranchRules<
             repository,
             {
               ...options,
-              extension: { orderedRuleNames },
+              extension,
             } as BranchRuleOrderOptions<TProvider>,
           );
         },

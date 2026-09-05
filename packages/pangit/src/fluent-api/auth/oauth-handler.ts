@@ -1,5 +1,5 @@
-import type { ProviderVersion } from "../../generated-rest-clients/git-host.ts";
-import type { FluentProvider } from "../provider-registry.ts";
+import type { FluentProvider, ProviderVersion } from "../adapter-contract/provider.ts";
+
 import type {
   OAuthAuthorizedClientFor,
   OAuthHandler,

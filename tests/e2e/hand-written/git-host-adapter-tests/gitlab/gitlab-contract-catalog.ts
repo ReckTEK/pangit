@@ -1,10 +1,10 @@
 import { GitLabOAuthFixture } from "./GitLabOAuthFixture.ts";
-import { createClient } from "../../../../../packages/pangit/src/fluent-api/mod.ts";
+import { createClient } from "../../../../../packages/pangit/src/fluent-client/mod.ts";
 import { GitLabE2EFixtureDriver } from "./GitLabE2EFixtureDriver.ts";
 
 const contracts = {
   "core/authentication": async (f: GitLabE2EFixtureDriver) => {
-    const root = createClient("gitlab", f.version, {
+    const root = await createClient("gitlab", f.version, {
       baseUrl: `${f.apiUrl}/api/v4`,
       beforeRequest: f.recorder.beforeRequest,
     });
@@ -23,7 +23,7 @@ const contracts = {
     );
     await f.rejects(() => root.auth.token("invalid-token"), "AuthenticationError");
     await f.prove("Construction and native access are lazy", [], async () => {
-      const same = createClient("gitlab", f.version, {
+      const same = await createClient("gitlab", f.version, {
         baseUrl: f.apiUrl,
         beforeRequest: f.recorder.beforeRequest,
       });
@@ -44,7 +44,7 @@ const contracts = {
       confidential: true,
     });
     try {
-      const root = createClient("gitlab", f.version, {
+      const root = await createClient("gitlab", f.version, {
         baseUrl: f.apiUrl,
         beforeRequest: f.recorder.beforeRequest,
       });
@@ -569,7 +569,7 @@ const contracts = {
         !["checking", "approvals_syncing"].includes(String(p.detailed_merge_status)),
       "approval readiness",
     );
-    const reviewer = await createClient("gitlab", f.version, f.apiUrl).auth.token(
+    const reviewer = await (await createClient("gitlab", f.version, f.apiUrl)).auth.token(
       String(token.token),
     );
     const reviewed = await (await reviewer.container("root")).repository(repo.name);

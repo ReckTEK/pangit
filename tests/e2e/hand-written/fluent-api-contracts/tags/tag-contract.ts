@@ -1,7 +1,7 @@
 import {
   createClient,
   type ProviderVersion,
-} from "../../../../../packages/pangit/src/fluent-api/mod.ts";
+} from "../../../../../packages/pangit/src/fluent-client/mod.ts";
 import {
   ConflictError,
   NotFoundError,
@@ -48,10 +48,10 @@ export async function runTagContract<
   };
 
   const passed = await t.step("core/tags", async () => {
-    const git = await createClient(input.provider, input.version, {
+    const git = await (await createClient(input.provider, input.version, {
       baseUrl: input.apiUrl,
       beforeRequest: recorder.beforeRequest,
-    }).auth.token(input.token);
+    })).auth.token(input.token);
     const owner = await git.container(input.fixtures.repository.owner);
     const repository = await owner.repository(input.fixtures.repository.name);
 

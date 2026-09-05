@@ -1,6 +1,5 @@
-import type { OperationOptions } from "./operation-options.ts";
+import { type OperationOptions, requirePositiveInteger } from "./operation-options.ts";
 import type { ValidationErrorContext } from "./errors.ts";
-import { requirePositiveInteger } from "./operation-options.ts";
 
 /** One caller-controlled provider page request. */
 export interface PageRequest extends OperationOptions {

@@ -2,7 +2,7 @@ import {
   createClient,
   type FluentProvider,
   type ProviderVersion,
-} from "../../../../../packages/pangit/src/fluent-api/mod.ts";
+} from "../../../../../packages/pangit/src/fluent-client/mod.ts";
 import {
   OperationAbortedError,
   ValidationError,
@@ -48,7 +48,7 @@ export async function runPullRequestReviewsCommentsContract<
   };
 
   const passed = await t.step("core/pull-request-reviews-comments", async () => {
-    const connection = createClient(input.provider, input.version, {
+    const connection = await createClient(input.provider, input.version, {
       baseUrl: input.apiUrl,
       beforeRequest: recorder.beforeRequest,
     });

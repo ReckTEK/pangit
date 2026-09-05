@@ -1,4 +1,5 @@
-import type { Provider, ProviderVersion } from "../../generated-rest-clients/git-host.ts";
+import type { ProviderExtensionOptions } from "../provider-extensions/ProviderExtensionRegistry.ts";
+import type { Provider, ProviderVersion } from "./provider.ts";
 import type { ProviderEntityNative } from "../native-access/ProviderNativeRegistry.ts";
 import type { CommitData, CommitFileData } from "./commits.ts";
 import type { OperationOptions } from "./operation-options.ts";
@@ -74,48 +75,10 @@ export interface MergePullRequestInput {
   readonly deleteSourceBranch?: boolean;
 }
 
-export type GiteaPullRequestMergeMethod =
-  | "fast-forward-only"
-  | "manually-merged"
-  | "merge"
-  | "rebase"
-  | "rebase-merge"
-  | "squash";
-
-/** Exact Gitea merge controls that are deliberately excluded from the portable merge input. */
-export interface GiteaMergePullRequestExtension {
-  readonly method?: GiteaPullRequestMergeMethod;
-  readonly forceMerge?: boolean;
-  readonly headCommitId?: string;
-  readonly mergeCommitId?: string;
-  readonly mergeMessage?: string;
-  readonly mergeTitle?: string;
-  readonly mergeWhenChecksSucceed?: boolean;
-  /** Required polling bound when `mergeWhenChecksSucceed` schedules asynchronous completion. */
-  readonly scheduledCompletion?: {
-    readonly attempts: number;
-    readonly intervalMs?: number;
-  };
-}
-
-export interface GiteaMergePullRequestExtensionContext {
-  readonly repositoryFullName: string;
-  readonly pullRequestNumber: number;
-  readonly sourceSha?: string;
-}
-
-/** GitLab synchronous merge controls, including an explicit optimistic head guard. */
-export interface GitLabMergePullRequestExtension {
-  readonly headCommitId?: string;
-  readonly mergeMessage?: string;
-  readonly squashMessage?: string;
-}
-export type GitLabMergePullRequestExtensionContext = GiteaMergePullRequestExtensionContext;
-
-export type MergePullRequestExtension<TProvider extends Provider> = TProvider extends "gitea"
-  ? GiteaMergePullRequestExtension
-  : TProvider extends "gitlab" ? GitLabMergePullRequestExtension
-  : never;
+export type MergePullRequestExtension<TProvider extends Provider> = ProviderExtensionOptions<
+  "pullRequests.merge",
+  TProvider
+>;
 
 export interface MergePullRequestOptions<TProvider extends Provider = Provider>
   extends OperationOptions, MergePullRequestInput {

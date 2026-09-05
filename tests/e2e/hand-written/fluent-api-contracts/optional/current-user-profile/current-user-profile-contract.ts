@@ -2,7 +2,7 @@ import {
   createClient,
   errors,
   type ProviderVersion,
-} from "../../../../../../packages/pangit/src/fluent-api/mod.ts";
+} from "../../../../../../packages/pangit/src/fluent-client/mod.ts";
 import type { FluentApiContractResult, FluentApiRequestEvidence } from "../../contract-result.ts";
 import { FluentApiRequestRecorder, proveRequestSequence } from "../../request-recorder.ts";
 import type { CurrentUserProfileContractFixtures } from "./current-user-profile-contract-fixtures.ts";
@@ -44,7 +44,7 @@ export async function runCurrentUserProfileContract<
   };
 
   const passed = await t.step("shared-capability/current-user-profile", async () => {
-    const unprivileged = createClient(input.provider, input.version, {
+    const unprivileged = await createClient(input.provider, input.version, {
       baseUrl: input.apiUrl,
       beforeRequest: recorder.beforeRequest,
     });

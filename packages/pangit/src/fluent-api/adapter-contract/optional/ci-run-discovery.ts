@@ -1,4 +1,4 @@
-import type { Provider, ProviderVersion } from "../../../generated-rest-clients/git-host.ts";
+import type { Provider, ProviderVersion } from "../provider.ts";
 import type { ProviderCiEntityNative } from "../../native-access/ProviderNativeRegistry.ts";
 import type { OperationOptions } from "../operation-options.ts";
 import type { Page, ResolvedPageRequest } from "../pagination.ts";

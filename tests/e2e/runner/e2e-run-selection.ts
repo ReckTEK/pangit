@@ -76,7 +76,7 @@ export function parseE2ERunSelection(
   const input = readArguments(args);
   const knownHosts = Object.keys(catalog);
   if (knownHosts.length === 0) throw new Error("The live E2E catalog has no Git hosts");
-  if (input.gitHost !== undefined && catalog[input.gitHost] === undefined) {
+  if (input.gitHost !== undefined && !Object.hasOwn(catalog, input.gitHost)) {
     throw new TypeError(`Unknown E2E Git host: ${input.gitHost}`);
   }
 

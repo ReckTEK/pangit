@@ -1,7 +1,7 @@
 import {
   createClient,
   type ProviderVersion,
-} from "../../../../../packages/pangit/src/fluent-api/mod.ts";
+} from "../../../../../packages/pangit/src/fluent-client/mod.ts";
 import {
   FluentApiRequestRecorder,
   proveRequestSequence,
@@ -23,11 +23,11 @@ export class GitLabE2EFixtureDriver {
     readonly token: string,
     readonly password: string,
   ) {}
-  client() {
-    return createClient("gitlab", this.version, {
+  async client() {
+    return (await createClient("gitlab", this.version, {
       baseUrl: this.apiUrl,
       beforeRequest: this.recorder.beforeRequest,
-    }).auth.token(this.token);
+    })).auth.token(this.token);
   }
   assert(value: unknown, message: string): void {
     if (!value) throw new Error(message);

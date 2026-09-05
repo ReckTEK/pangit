@@ -54,7 +54,9 @@ Deno.test("provider-client export generation replaces legacy paths and omits run
         name: "@mannsion/pangit",
         exports: {
           ".": "./src/mod.ts",
-          "./api": "./src/fluent-api/mod.ts",
+          "./api": "./src/fluent-client/mod.ts",
+          "./fluent/gitea": "./src/fluent-providers/gitea/mod.ts",
+          "./fluent/gitlab": "./src/fluent-providers/gitlab/mod.ts",
           "./raw": "./src/raw/mod.ts",
           "./raw/gitea/1.27.2": "./src/generated-rest-clients/gitea/1.27.2/mod.ts",
           "./providers": "./src/generated-rest-clients/mod.ts",
@@ -69,7 +71,9 @@ Deno.test("provider-client export generation replaces legacy paths and omits run
   const rendered = renderPackageConfigurationWithProviderClientExports(source, manifest, "fixture");
   assertEquals(JSON.parse(rendered).exports, {
     ".": "./src/mod.ts",
-    "./api": "./src/fluent-api/mod.ts",
+    "./api": "./src/fluent-client/mod.ts",
+    "./fluent/gitea": "./src/fluent-providers/gitea/mod.ts",
+    "./fluent/gitlab": "./src/fluent-providers/gitlab/mod.ts",
     "./providers/gitea/1.27.2": "./src/generated-rest-clients/gitea/1.27.2/mod.ts",
   });
   assertEquals(

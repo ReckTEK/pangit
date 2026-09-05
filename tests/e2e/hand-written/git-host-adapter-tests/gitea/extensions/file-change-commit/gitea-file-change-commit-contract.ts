@@ -1,7 +1,7 @@
 import {
   createClient,
   type ProviderVersion,
-} from "../../../../../../../packages/pangit/src/fluent-api/mod.ts";
+} from "../../../../../../../packages/pangit/src/fluent-client/mod.ts";
 import type {
   FluentApiContractResult,
   FluentApiRequestEvidence,
@@ -33,10 +33,10 @@ export async function runGiteaFileChangeCommitContract(
   const recorder = new FluentApiRequestRecorder();
 
   const passed = await t.step("gitea-extension/file-change-commit", async () => {
-    const git = await createClient("gitea", input.version, {
+    const git = await (await createClient("gitea", input.version, {
       baseUrl: input.apiUrl,
       beforeRequest: recorder.beforeRequest,
-    }).auth.token(input.token);
+    })).auth.token(input.token);
     const repository = await (await git.container(input.fixtures.repository.owner)).repository(
       input.fixtures.repository.name,
     );

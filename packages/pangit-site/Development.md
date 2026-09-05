@@ -57,6 +57,9 @@ dependencies before initial hydration. These compatibility settings are exercise
 development startup; removing them can cause module-loader errors or a reload during the first
 visit. See [Vite dependency optimization](https://vite.dev/config/dep-optimization-options).
 
+The home page links to the source repository and uses its workspace setup commands while the package
+is unpublished. REST references remain available independently of package publication.
+
 ## Pages and generated content
 
 | Route                                  | Content                                            |

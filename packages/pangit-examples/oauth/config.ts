@@ -9,12 +9,12 @@ export interface ExampleOAuthOptions {
 }
 
 /** Build the shared example OAuth handler without starting a server or reading environment state. */
-export function createExampleOAuth(options: ExampleOAuthOptions) {
+export async function createExampleOAuth(options: ExampleOAuthOptions) {
   if (options.clientId.length === 0) {
     throw new TypeError("Gitea OAuth client ID cannot be empty");
   }
 
-  const selected = PanGit.api.createClient("gitea", GITEA_VERSION, {
+  const selected = await PanGit.api.createClient("gitea", GITEA_VERSION, {
     baseUrl: GITEA_API_URL,
   });
   return PanGit.api.auth.createOAuthHandler({

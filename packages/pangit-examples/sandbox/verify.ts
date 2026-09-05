@@ -3,7 +3,7 @@ import * as PanGit from "@mannsion/pangit";
 const token = (await Deno.readTextFile("/sandbox-auth/gitea-token")).trim();
 if (token.length === 0) throw new Error("Gitea did not create a personal access token");
 
-const client = PanGit.api.createClient(
+const client = await PanGit.api.createClient(
   "gitea",
   "1.27.2",
   "http://127.0.0.1:3300/api/v1",

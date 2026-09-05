@@ -1,4 +1,6 @@
-import type { Provider, ProviderVersion } from "../../generated-rest-clients/git-host.ts";
+import type { ProviderExtensions } from "../provider-extensions/ExtensionSupport.ts";
+import type { UnsupportedOptionalCapabilityMap } from "./optional/unsupported-capabilities.ts";
+import type { Provider, ProviderVersion } from "./provider.ts";
 import type { AuthenticationAdapter } from "./authentication.ts";
 import type { BranchAdapter } from "./branches.ts";
 import type { CommitStatusAdapter } from "./commit-statuses.ts";
@@ -43,13 +45,9 @@ export interface GitHostAdapter<
   PullRequestReviewAdapter<TProvider, TVersion>,
   BranchRuleAdapter<TProvider, TVersion> {
   readonly provider: TProvider;
+  readonly extensions: ProviderExtensions<TProvider>;
+  readonly unsupportedOptionalCapabilities: UnsupportedOptionalCapabilityMap;
   readonly version: TVersion;
   /** Full exact-version generated client at the explicit native boundary. */
   readonly native: ProviderClientNative<TProvider, TVersion>;
 }
-
-/** Lazily return the adapter selected once for a fluent client. */
-export type SelectedGitHostAdapter<
-  TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
-> = () => Promise<GitHostAdapter<TProvider, TVersion>>;

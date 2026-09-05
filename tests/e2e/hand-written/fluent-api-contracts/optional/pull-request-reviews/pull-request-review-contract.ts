@@ -1,7 +1,7 @@
 import {
   createClient,
   type ProviderVersion,
-} from "../../../../../../packages/pangit/src/fluent-api/mod.ts";
+} from "../../../../../../packages/pangit/src/fluent-client/mod.ts";
 import {
   OperationAbortedError,
   ValidationError,
@@ -46,10 +46,10 @@ export async function runPullRequestReviewContract<
   };
 
   const passed = await t.step("shared-capability/pull-request-reviews", async () => {
-    const git = await createClient(input.provider, input.version, {
+    const git = await (await createClient(input.provider, input.version, {
       baseUrl: input.apiUrl,
       beforeRequest: recorder.beforeRequest,
-    }).auth.basic({
+    })).auth.basic({
       username: input.fixtures.reviewer.username,
       password: input.fixtures.reviewer.password,
     }).authorize();

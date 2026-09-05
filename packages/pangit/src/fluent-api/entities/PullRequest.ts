@@ -1,11 +1,10 @@
-import type { ProviderVersion } from "../../generated-rest-clients/git-host.ts";
+import type { FluentProvider, ProviderVersion } from "../adapter-contract/provider.ts";
 import type {
   PullRequestData,
   PullRequestRef,
   PullRequestState,
 } from "../adapter-contract/pull-requests.ts";
 import type { ProviderEntityNative } from "../native-access/ProviderNativeRegistry.ts";
-import type { FluentProvider } from "../provider-registry.ts";
 
 export interface PullRequest<
   TProvider extends FluentProvider,

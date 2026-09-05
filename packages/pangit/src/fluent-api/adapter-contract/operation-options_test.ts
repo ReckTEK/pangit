@@ -33,15 +33,15 @@ Deno.test("operation option validators preserve supplied provider and operation 
   let rejected: unknown;
   try {
     requireIdentity("", "branch name", {
-      provider: "gitea",
-      version: "1.27.2",
+      provider: "test-provider",
+      version: "1.0",
       operation: "getBranch",
     });
   } catch (error) {
     rejected = error;
   }
   assert(rejected instanceof ValidationError, "invalid identity did not use ValidationError");
-  assertEquals(rejected.provider, "gitea", "provider detail changed");
-  assertEquals(rejected.version, "1.27.2", "version detail changed");
+  assertEquals(rejected.provider, "test-provider", "provider detail changed");
+  assertEquals(rejected.version, "1.0", "version detail changed");
   assertEquals(rejected.operation, "getBranch", "universal operation identity changed");
 });

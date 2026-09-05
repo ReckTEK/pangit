@@ -1,32 +1,40 @@
-import type { ProviderVersion } from "../../generated-rest-clients/git-host.ts";
-import type {
-  CommitComparison,
-  CommitFileData,
-  CommitRefData,
-  CompareCommitsOptions,
-  ContributorData,
-  FindCommitRefsRequest,
-  GetCommitOptions,
-  GetCommitsOptions,
-  GiteaCommitComparisonOutput,
-  ListCommitsRequest,
-  ListContributorsRequest,
-  MergeBaseOptions,
-  MergeBasesResult,
-} from "../adapter-contract/commits.ts";
+import type { FluentProvider, ProviderVersion } from "../adapter-contract/provider.ts";
 import {
+  type CommitComparison,
+  type CommitFileData,
+  type CommitRefData,
+  type CompareCommitsOptions,
+  type ContributorData,
   DEFAULT_COMMIT_MULTI_GET_MAX_ITEMS,
+  type FindCommitRefsRequest,
+  type GetCommitOptions,
+  type GetCommitsOptions,
+  type ListCommitsRequest,
+  type ListContributorsRequest,
   MAX_COMMIT_READ_CONCURRENCY,
+  type MergeBaseOptions,
+  type MergeBasesResult,
 } from "../adapter-contract/commits.ts";
+
 import { ValidationError, type ValidationErrorContext } from "../adapter-contract/errors.ts";
 import type { GitHostAdapter } from "../adapter-contract/GitHostAdapter.ts";
-import type { OperationOptions } from "../adapter-contract/operation-options.ts";
-import { requireIdentity, requirePositiveInteger } from "../adapter-contract/operation-options.ts";
-import type { Page, PageRequest, ScanPage } from "../adapter-contract/pagination.ts";
-import { createPage, resolvePageRequest } from "../adapter-contract/pagination.ts";
+import {
+  type OperationOptions,
+  requireIdentity,
+  requirePositiveInteger,
+} from "../adapter-contract/operation-options.ts";
+
+import {
+  createPage,
+  type Page,
+  type PageRequest,
+  resolvePageRequest,
+  type ScanPage,
+} from "../adapter-contract/pagination.ts";
+
 import type { RepositoryData } from "../adapter-contract/repositories.ts";
 import { type Commit, createCommit } from "../entities/Commit.ts";
-import type { FluentProvider } from "../provider-registry.ts";
+
 import {
   createOperationExtension,
   type OperationExtension,
@@ -143,6 +151,8 @@ export function createRepositoryCommits<
         CommitComparisonResult<TProvider, TVersion>
       >({
         operation: "commits.compare",
+        support: adapter.extensions["commits.compare"],
+        validationContext: context,
         provider: adapter.provider,
         version: adapter.version,
         context: Object.freeze({
@@ -155,8 +165,8 @@ export function createRepositoryCommits<
             ...options,
             ...(extension === undefined ? {} : { extension }),
           } as CompareCommitsOptions<TProvider, TVersion>);
-          if (isGiteaCommitComparisonOutput(comparison)) {
-            return Object.freeze({ ...comparison });
+          if (!("commits" in comparison)) {
+            return comparison;
           }
           return Object.freeze({
             commits: Object.freeze(comparison.commits.map(createCommit)),
@@ -334,10 +344,4 @@ function validateRefKinds(
   if (new Set(values).size !== values.length) {
     throw new ValidationError("ref kinds must not contain duplicates", context);
   }
-}
-
-function isGiteaCommitComparisonOutput(
-  value: object,
-): value is GiteaCommitComparisonOutput {
-  return "output" in value;
 }

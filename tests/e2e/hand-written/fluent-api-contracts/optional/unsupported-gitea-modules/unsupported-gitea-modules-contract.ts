@@ -2,7 +2,7 @@ import {
   createClient,
   type FluentProvider,
   type ProviderVersion,
-} from "../../../../../../packages/pangit/src/fluent-api/mod.ts";
+} from "../../../../../../packages/pangit/src/fluent-client/mod.ts";
 import type { FluentApiContractResult, FluentApiRequestEvidence } from "../../contract-result.ts";
 import { FluentApiRequestRecorder, proveRequestSequence } from "../../request-recorder.ts";
 
@@ -41,7 +41,7 @@ export async function runUnsupportedGiteaModulesContract<
   };
 
   const passed = await t.step("shared-capability/unsupported-gitea-modules", async () => {
-    const git = createClient(input.provider, input.version, {
+    const git = await createClient(input.provider, input.version, {
       baseUrl: input.apiUrl,
       beforeRequest: recorder.beforeRequest,
     });

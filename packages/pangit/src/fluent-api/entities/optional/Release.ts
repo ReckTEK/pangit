@@ -1,10 +1,9 @@
-import type { ProviderVersion } from "../../../generated-rest-clients/git-host.ts";
+import type { FluentProvider, ProviderVersion } from "../../adapter-contract/provider.ts";
 import type {
   ProviderReleaseEntityNative,
   ReleaseAssetData,
   ReleaseData,
 } from "../../adapter-contract/optional/releases.ts";
-import type { FluentProvider } from "../../provider-registry.ts";
 
 export interface Release<
   TProvider extends FluentProvider,

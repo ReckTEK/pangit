@@ -1,4 +1,4 @@
-import type { Provider, ProviderVersion } from "../../generated-rest-clients/git-host.ts";
+import type { Provider, ProviderVersion } from "./provider.ts";
 import type {
   ProviderRepositoryContainerNative,
   ProviderRepositoryNative,

@@ -1,8 +1,7 @@
-import type { ProviderVersion } from "../../../generated-rest-clients/git-host.ts";
+import type { FluentProvider, ProviderVersion } from "../../adapter-contract/provider.ts";
 import type { BlobData, ProviderBlobNative } from "../../adapter-contract/optional/blob-reads.ts";
 import type { ReadableContentBody } from "../../adapter-contract/content-body.ts";
 import { createContentBody } from "../../content-body.ts";
-import type { FluentProvider } from "../../provider-registry.ts";
 
 export interface Blob<
   TProvider extends FluentProvider,

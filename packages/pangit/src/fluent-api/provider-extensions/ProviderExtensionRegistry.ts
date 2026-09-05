@@ -1,235 +1,63 @@
-import type {
-  GitLabMergePullRequestExtension,
-  GitLabMergePullRequestExtensionContext,
-} from "../adapter-contract/pull-requests.ts";
-import type {
-  GitLabSetCommitStatusExtension,
-  GitLabSetCommitStatusExtensionContext,
-} from "../adapter-contract/commit-statuses.ts";
-import type {
-  GitLabCommitFileChangesExtension,
-  GitLabCommitFileChangesExtensionContext,
-} from "../adapter-contract/content.ts";
-import type { Provider } from "../../generated-rest-clients/git-host.ts";
-import { ValidationError } from "../adapter-contract/errors.ts";
-import type {
-  GiteaSetCommitStatusExtension,
-  GiteaSetCommitStatusExtensionContext,
-} from "../adapter-contract/commit-statuses.ts";
-import type {
-  GiteaCommitComparisonOutput,
-  GiteaCompareCommitsExtension,
-  GiteaCompareCommitsExtensionContext,
-} from "../adapter-contract/commits.ts";
-import type {
-  GiteaCommitFileChangesExtension,
-  GiteaCommitFileChangesExtensionContext,
-} from "../adapter-contract/content.ts";
-import type {
-  GiteaMergePullRequestExtension,
-  GiteaMergePullRequestExtensionContext,
-} from "../adapter-contract/pull-requests.ts";
-import type {
-  GiteaBranchRuleOrderExtension,
-  GiteaBranchRuleOrderExtensionContext,
-} from "../adapter-contract/optional/branch-rules.ts";
-import type {
-  GiteaIssueUpdateExtension,
-  GiteaIssueUpdateExtensionContext,
-} from "../adapter-contract/optional/issues.ts";
-import type {
-  GiteaCreatePullRequestReviewExtension,
-  GiteaCreatePullRequestReviewExtensionContext,
-} from "../adapter-contract/optional/pull-request-reviews.ts";
+import type { ProviderTypeRegistry } from "../adapter-contract/provider.ts";
 
-/** One operation-scoped provider extension registered with its callback context and options. */
+/** A provider-owned extension of one universal operation. No provider policy lives here. */
 export interface ProviderExtensionDefinition<
   TContext extends object,
   TOptions extends object,
-  TResult = never,
+  TResult extends object = never,
   TSupportedVersion extends string = never,
 > {
   readonly context: TContext;
   readonly options: TOptions;
-  /** Override the common operation result only when the provider mode returns another shape. */
   readonly result: TResult;
-  /** Restrict the extension to exact provider versions; `never` means every registered version. */
   readonly supportedVersion: TSupportedVersion;
 }
 
-/**
- * Explicit registry for provider enhancements that belong to one fluent operation.
- *
- * Operation-specific context and option types remain owned by their concern contracts. This
- * registry deliberately carries no raw client surface.
- */
-export interface ProviderExtensionRegistry {
-  readonly "commits.compare": {
-    readonly gitea: ProviderExtensionDefinition<
-      GiteaCompareCommitsExtensionContext,
-      GiteaCompareCommitsExtension,
-      GiteaCommitComparisonOutput,
-      "1.27.2"
-    >;
-  };
-  readonly "content.commitChanges": {
-    readonly gitlab: ProviderExtensionDefinition<
-      GitLabCommitFileChangesExtensionContext,
-      GitLabCommitFileChangesExtension
-    >;
-    readonly gitea: ProviderExtensionDefinition<
-      GiteaCommitFileChangesExtensionContext,
-      GiteaCommitFileChangesExtension
-    >;
-  };
-  readonly "pullRequests.merge": {
-    readonly gitlab: ProviderExtensionDefinition<
-      GitLabMergePullRequestExtensionContext,
-      GitLabMergePullRequestExtension
-    >;
-    readonly gitea: ProviderExtensionDefinition<
-      GiteaMergePullRequestExtensionContext,
-      GiteaMergePullRequestExtension
-    >;
-  };
-  readonly "pullRequestReviews.create": {
-    readonly gitea: ProviderExtensionDefinition<
-      GiteaCreatePullRequestReviewExtensionContext,
-      GiteaCreatePullRequestReviewExtension
-    >;
-  };
-  readonly "statuses.set": {
-    readonly gitlab: ProviderExtensionDefinition<
-      GitLabSetCommitStatusExtensionContext,
-      GitLabSetCommitStatusExtension
-    >;
-    readonly gitea: ProviderExtensionDefinition<
-      GiteaSetCommitStatusExtensionContext,
-      GiteaSetCommitStatusExtension
-    >;
-  };
-  readonly "issues.update": {
-    readonly gitea: ProviderExtensionDefinition<
-      GiteaIssueUpdateExtensionContext,
-      GiteaIssueUpdateExtension
-    >;
-  };
-  readonly "branchRules.setOrder": {
-    readonly gitea: ProviderExtensionDefinition<
-      GiteaBranchRuleOrderExtensionContext,
-      GiteaBranchRuleOrderExtension
-    >;
-  };
-}
+export type RegisteredOperation =
+  | "auth.basic"
+  | "commits.compare"
+  | "content.commitChanges"
+  | "pullRequests.merge"
+  | "pullRequestReviews.create"
+  | "statuses.set"
+  | "issues.update"
+  | "branchRules.setOrder";
 
-export type RegisteredOperation = keyof ProviderExtensionRegistry;
-
-export type RegisteredProvider<TOperation extends RegisteredOperation> =
-  & keyof ProviderExtensionRegistry[TOperation]
+export type ProviderExtensionRegistry = {
+  readonly [P in keyof ProviderTypeRegistry]: ProviderTypeRegistry[P] extends
+    { readonly extensions: infer E } ? E : never;
+};
+export type RegisteredProvider<O extends RegisteredOperation> =
+  & {
+    [P in keyof ProviderExtensionRegistry]: O extends keyof ProviderExtensionRegistry[P] ? P
+      : never;
+  }[keyof ProviderExtensionRegistry]
   & string;
-
-type RegisteredDefinition<
-  TOperation extends RegisteredOperation,
-  TProvider extends string,
-> = TProvider extends keyof ProviderExtensionRegistry[TOperation]
-  ? ProviderExtensionRegistry[TOperation][TProvider]
+type Definition<O extends RegisteredOperation, P extends string> = P extends
+  keyof ProviderExtensionRegistry
+  ? O extends keyof ProviderExtensionRegistry[P] ? ProviderExtensionRegistry[P][O] : never
+  : never;
+type ExtensionField<
+  Definition,
+  Key extends keyof ProviderExtensionDefinition<object, object, object, string>,
+> = Definition extends ProviderExtensionDefinition<object, object, object, string> ? Definition[Key]
   : never;
 
-export type ProviderExtensionContext<
-  TOperation extends RegisteredOperation,
-  TProvider extends string,
-> = RegisteredDefinition<TOperation, TProvider> extends
-  ProviderExtensionDefinition<infer TContext, object, unknown, string> ? TContext : never;
-
-export type ProviderExtensionOptions<
-  TOperation extends RegisteredOperation,
-  TProvider extends string,
-> = RegisteredDefinition<TOperation, TProvider> extends
-  ProviderExtensionDefinition<object, infer TOptions, unknown, string> ? TOptions : never;
-
-type RegisteredExtensionResult<
-  TOperation extends RegisteredOperation,
-  TProvider extends string,
-> = RegisteredDefinition<TOperation, TProvider> extends
-  ProviderExtensionDefinition<object, object, infer TResult, string> ? TResult : never;
-
-/** Result returned after selecting the provider extension, or the common result by default. */
-export type ProviderExtensionResult<
-  TOperation extends RegisteredOperation,
-  TProvider extends string,
-  TDefaultResult,
-> = [RegisteredExtensionResult<TOperation, TProvider>] extends [never] ? TDefaultResult
-  : RegisteredExtensionResult<TOperation, TProvider>;
-
-/** Exact versions on which one extension is available; `never` denotes every version. */
-export type ProviderExtensionSupportedVersion<
-  TOperation extends RegisteredOperation,
-  TProvider extends string,
-> = RegisteredDefinition<TOperation, TProvider> extends
-  ProviderExtensionDefinition<object, object, unknown, infer TVersion> ? TVersion : never;
-
-/** Whether one exact selected provider version exposes the registered extension method. */
+export type ProviderExtensionContext<O extends RegisteredOperation, P extends string> =
+  ExtensionField<Definition<O, P>, "context">;
+export type ProviderExtensionOptions<O extends RegisteredOperation, P extends string> =
+  ExtensionField<Definition<O, P>, "options">;
+export type ProviderExtensionResult<O extends RegisteredOperation, P extends string, Default> =
+  [ExtensionField<Definition<O, P>, "result">] extends [never] ? Default
+    : ExtensionField<Definition<O, P>, "result">;
+export type ProviderExtensionSupportedVersion<O extends RegisteredOperation, P extends string> =
+  ExtensionField<Definition<O, P>, "supportedVersion">;
 export type ProviderExtensionSupportsVersion<
-  TOperation extends RegisteredOperation,
-  TProvider extends string,
-  TVersion extends string,
-> = [ProviderExtensionSupportedVersion<TOperation, TProvider>] extends [never] ? true
-  : [TVersion] extends [ProviderExtensionSupportedVersion<TOperation, TProvider>] ? true
+  O extends RegisteredOperation,
+  P extends string,
+  V extends string,
+> = P extends RegisteredProvider<O>
+  ? [ProviderExtensionSupportedVersion<O, P>] extends [never] ? true
+  : [V] extends [ProviderExtensionSupportedVersion<O, P>] ? true
+  : false
   : false;
-
-type RuntimeVersionSupport<
-  TOperation extends RegisteredOperation,
-  TProvider extends string,
-> = [ProviderExtensionSupportedVersion<TOperation, TProvider>] extends [never] ? "all"
-  : readonly ProviderExtensionSupportedVersion<TOperation, TProvider>[];
-
-type RuntimeProviderExtensionRegistry = {
-  readonly [TOperation in RegisteredOperation]: {
-    readonly [TProvider in RegisteredProvider<TOperation>]: RuntimeVersionSupport<
-      TOperation,
-      TProvider
-    >;
-  };
-};
-
-/** Runtime mirror of the type registry; prevents erased TypeScript restrictions from leaking. */
-export const providerExtensionVersionSupport = Object.freeze({
-  "commits.compare": Object.freeze({ gitea: Object.freeze(["1.27.2"] as const) }),
-  "content.commitChanges": Object.freeze({ gitea: "all" as const, gitlab: "all" as const }),
-  "pullRequests.merge": Object.freeze({ gitea: "all" as const, gitlab: "all" as const }),
-  "pullRequestReviews.create": Object.freeze({ gitea: "all" as const }),
-  "statuses.set": Object.freeze({ gitea: "all" as const, gitlab: "all" as const }),
-  "issues.update": Object.freeze({ gitea: "all" as const }),
-  "branchRules.setOrder": Object.freeze({ gitea: "all" as const }),
-}) satisfies RuntimeProviderExtensionRegistry;
-
-/** Check the selected exact version before installing an operation extension method. */
-export function isProviderExtensionVersionSupported<
-  TOperation extends RegisteredOperation,
-  TProvider extends string,
->(operation: TOperation, provider: TProvider, version: string): boolean {
-  const support = (providerExtensionVersionSupport[operation] as Record<
-    string,
-    "all" | readonly string[]
-  >)[provider];
-  return support === "all" || support?.includes(version) === true;
-}
-
-/** Validate provider status choices before resolving a branch or making any HTTP request. */
-export function validateStatusExtension(
-  provider: Provider,
-  version: string,
-  extension: { readonly state: string },
-): void {
-  const allowed: Readonly<Record<string, readonly string[]>> = {
-    gitea: ["error", "warning", "skipped"],
-    gitlab: ["running", "canceled", "skipped"],
-  };
-  if (!allowed[provider]?.includes(extension.state)) {
-    throw new ValidationError(`invalid ${provider} commit-status state`, {
-      provider,
-      version,
-      operation: "setCommitStatus",
-    });
-  }
-}

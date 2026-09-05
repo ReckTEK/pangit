@@ -1,7 +1,7 @@
 import {
   createClient,
   type ProviderVersion,
-} from "../../../../../packages/pangit/src/fluent-api/mod.ts";
+} from "../../../../../packages/pangit/src/fluent-client/mod.ts";
 import {
   AuthenticationError,
   OperationAbortedError,
@@ -12,10 +12,9 @@ import { FluentApiRequestRecorder, proveRequestSequence } from "../request-recor
 import type { AuthenticationContractFixtures } from "./authentication-contract-fixtures.ts";
 
 type AuthenticationContractInput<
-  TProvider extends "gitea",
-  TVersion extends ProviderVersion<TProvider>,
+  TVersion extends ProviderVersion<"gitea">,
 > = {
-  readonly provider: TProvider;
+  readonly provider: "gitea";
   readonly version: TVersion;
   readonly apiUrl: string;
   readonly webBaseUrl: string;
@@ -29,16 +28,15 @@ function assert(condition: unknown, message: string): asserts condition {
 
 /** Exercise PAT, Basic/TOTP, and a complete browser authorization-code OAuth flow. */
 export async function runAuthenticationContract<
-  const TProvider extends "gitea",
-  const TVersion extends ProviderVersion<TProvider>,
+  const TVersion extends ProviderVersion<"gitea">,
 >(
   t: Deno.TestContext,
-  input: AuthenticationContractInput<TProvider, TVersion>,
+  input: AuthenticationContractInput<TVersion>,
 ): Promise<FluentApiContractResult> {
   const assertions: string[] = [];
   const requestEvidence: FluentApiRequestEvidence[] = [];
   const recorder = new FluentApiRequestRecorder();
-  const connection = createClient(input.provider, input.version, {
+  const connection = await createClient(input.provider, input.version, {
     baseUrl: input.apiUrl,
     webBaseUrl: input.webBaseUrl,
     beforeRequest: recorder.beforeRequest,

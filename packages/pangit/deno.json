@@ -4,7 +4,7 @@
   "license": "MIT",
   "exports": {
     ".": "./src/mod.ts",
-    "./api": "./src/fluent-api/mod.ts",
+    "./api": "./src/fluent-client/mod.ts",
     "./providers/azure-devops/latest": "./src/generated-rest-clients/azure-devops/latest/mod.ts",
     "./providers/bitbucket/latest": "./src/generated-rest-clients/bitbucket/latest/mod.ts",
     "./providers/codeberg/latest": "./src/generated-rest-clients/codeberg/latest/mod.ts",
@@ -12,12 +12,15 @@
     "./providers/gitea/1.27.2": "./src/generated-rest-clients/gitea/1.27.2/mod.ts",
     "./providers/github/latest": "./src/generated-rest-clients/github/latest/mod.ts",
     "./providers/gitlab/18.11.11": "./src/generated-rest-clients/gitlab/18.11.11/mod.ts",
-    "./providers/gitlab/19.3.1": "./src/generated-rest-clients/gitlab/19.3.1/mod.ts"
+    "./providers/gitlab/19.3.1": "./src/generated-rest-clients/gitlab/19.3.1/mod.ts",
+    "./fluent/gitea": "./src/fluent-providers/gitea/mod.ts",
+    "./fluent/gitlab": "./src/fluent-providers/gitlab/mod.ts"
   },
   "publish": {
     "include": [
       "LICENSE",
       "README.md",
+      "docs/images/pangit-banner.png",
       "THIRD_PARTY_NOTICES.md",
       "src"
     ]

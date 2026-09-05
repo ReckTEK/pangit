@@ -1,7 +1,7 @@
-import type { ProviderVersion } from "../../generated-rest-clients/git-host.ts";
+import type { FluentProvider, ProviderVersion } from "../adapter-contract/provider.ts";
 import type { OAuthTokenData } from "../adapter-contract/authentication.ts";
-import type { FluentProvider } from "../provider-registry.ts";
-import type { FluentClient } from "../FluentClient.ts";
+
+import type { FluentClient } from "../client/FluentClient.ts";
 
 /** Common inputs needed to begin a provider-hosted OAuth login. */
 export interface LoginOptions {

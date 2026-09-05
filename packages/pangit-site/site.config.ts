@@ -7,7 +7,7 @@ export const siteConfig = {
   wordmark,
   packageName,
   links: {
-    package: `https://jsr.io/${packageName}`,
+    repository: "https://github.com/mannsion/pangit",
   },
   routes: {
     home: "/",
@@ -26,7 +26,7 @@ export const siteConfig = {
     logo: "pangit-logo.png",
   },
   anchors: { main: "main", reference: "rest-api-reference" },
-  snippets: { install: "install.sh" },
+  snippets: { source: "source.sh" },
   theme: { cookie: "pangit-theme", maxAge: 31_536_000 },
 };
 

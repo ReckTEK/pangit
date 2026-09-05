@@ -1,3 +1,4 @@
+import { normalizeCoverageHtml } from "./coverage-report.ts";
 import type { GeneratedLiveTestRun } from "./generated-live-test-run.ts";
 import {
   type E2ESuite,
@@ -155,10 +156,7 @@ if (generatedRawTest !== undefined) {
       const path = `${generatedRawResults}/coverage/${entry.name}`;
       await Deno.writeTextFile(
         path,
-        (await Deno.readTextFile(path)).replace(
-          /^(\s*)at (?:Mon|Tue|Wed|Thu|Fri|Sat|Sun), .*$/m,
-          "$1from the real E2E run",
-        ),
+        normalizeCoverageHtml(await Deno.readTextFile(path)),
       );
     }
   }

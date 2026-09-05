@@ -1,6 +1,8 @@
-import type { ProviderVersion } from "../../generated-rest-clients/git-host.ts";
+import type { ProviderExtensions } from "../provider-extensions/ExtensionSupport.ts";
+import type { FluentProvider, ProviderVersion } from "../adapter-contract/provider.ts";
 import type {
   BasicAuthorizationInput,
+  BasicAuthorizationOptions,
   OAuthBeginInput,
   OAuthBeginResult,
   OAuthExchangeInput,
@@ -9,8 +11,8 @@ import type {
 } from "../adapter-contract/authentication.ts";
 import type { OperationOptions } from "../adapter-contract/operation-options.ts";
 import { ValidationError } from "../adapter-contract/errors.ts";
-import type { FluentProvider } from "../provider-registry.ts";
-import type { FluentClient } from "../FluentClient.ts";
+
+import type { FluentClient } from "../client/FluentClient.ts";
 import type { Auth, BasicAuthorization } from "./authentication-contracts.ts";
 import { createBasicAuthorization } from "./basic-authorization.ts";
 import type {
@@ -34,7 +36,7 @@ export interface ClientAuthenticationAuthorizers<
   /** Attach and verify Basic credentials. */
   basic(
     input: BasicAuthorizationInput,
-    options?: OperationOptions,
+    options?: BasicAuthorizationOptions<TProvider>,
   ): Promise<FluentClient<TProvider, TVersion>>;
   /** Ask the selected adapter for its provider-hosted OAuth URL. */
   beginOAuth(input: OAuthBeginInput): Promise<OAuthBeginResult>;
@@ -62,6 +64,7 @@ class AuthImpl<
   constructor(
     provider: TProvider,
     version: TVersion,
+    readonly extensions: ProviderExtensions<TProvider>,
     authorizers: ClientAuthenticationAuthorizers<TProvider, TVersion>,
   ) {
     this.#provider = provider;
@@ -92,9 +95,15 @@ class AuthImpl<
   }
 
   basic(
-    input: Omit<BasicAuthorizationInput, "oneTimePassword">,
+    input: BasicAuthorizationInput,
   ): BasicAuthorization<TProvider, TVersion> {
-    return createBasicAuthorization(this.#provider, input, this.#authorizers.basic);
+    return createBasicAuthorization(
+      this.#provider,
+      this.#version,
+      this.extensions["auth.basic"],
+      input,
+      this.#authorizers.basic,
+    );
   }
 }
 
@@ -105,7 +114,8 @@ export function createAuth<
 >(
   provider: TProvider,
   version: TVersion,
+  extensions: ProviderExtensions<TProvider>,
   authorizers: ClientAuthenticationAuthorizers<TProvider, TVersion>,
 ): Auth<TProvider, TVersion> {
-  return new AuthImpl(provider, version, authorizers);
+  return new AuthImpl(provider, version, extensions, authorizers);
 }

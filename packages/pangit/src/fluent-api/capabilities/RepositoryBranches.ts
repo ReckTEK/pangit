@@ -1,4 +1,4 @@
-import type { ProviderVersion } from "../../generated-rest-clients/git-host.ts";
+import type { FluentProvider, ProviderVersion } from "../adapter-contract/provider.ts";
 import type {
   BranchDivergence,
   CreateBranchInput,
@@ -6,12 +6,21 @@ import type {
 } from "../adapter-contract/branches.ts";
 import type { ValidationErrorContext } from "../adapter-contract/errors.ts";
 import type { GitHostAdapter } from "../adapter-contract/GitHostAdapter.ts";
-import type { OperationOptions } from "../adapter-contract/operation-options.ts";
-import { requireIdentity, requirePositiveInteger } from "../adapter-contract/operation-options.ts";
-import type { Page, PageRequest } from "../adapter-contract/pagination.ts";
-import { createPage, resolvePageRequest } from "../adapter-contract/pagination.ts";
+import {
+  type OperationOptions,
+  requireIdentity,
+  requirePositiveInteger,
+} from "../adapter-contract/operation-options.ts";
+
+import {
+  createPage,
+  type Page,
+  type PageRequest,
+  resolvePageRequest,
+} from "../adapter-contract/pagination.ts";
+
 import type { RepositoryData } from "../adapter-contract/repositories.ts";
-import type { FluentProvider } from "../provider-registry.ts";
+
 import { type Branch, createBranch } from "../entities/Branch.ts";
 
 export interface ListBranchesOptions extends PageRequest {

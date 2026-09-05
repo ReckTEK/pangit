@@ -2,7 +2,7 @@ import {
   createClient,
   type FluentProvider,
   type ProviderVersion,
-} from "../../../../../packages/pangit/src/fluent-api/mod.ts";
+} from "../../../../../packages/pangit/src/fluent-client/mod.ts";
 import {
   NotFoundError,
   OperationAbortedError,
@@ -58,7 +58,7 @@ export async function runRepositoryContract<
   };
 
   const passed = await t.step("core/repositories", async () => {
-    const connection = createClient(provider, version, {
+    const connection = await createClient(provider, version, {
       baseUrl: apiUrl,
       beforeRequest: recorder.beforeRequest,
     });

@@ -2,7 +2,7 @@ import {
   createClient,
   errors,
   type ProviderVersion,
-} from "../../../../../../packages/pangit/src/fluent-api/mod.ts";
+} from "../../../../../../packages/pangit/src/fluent-client/mod.ts";
 import type { FluentApiContractResult, FluentApiRequestEvidence } from "../../contract-result.ts";
 import { FluentApiRequestRecorder, proveRequestSequence } from "../../request-recorder.ts";
 import type { IssueContractFixtures } from "./issue-contract-fixtures.ts";
@@ -47,10 +47,10 @@ export async function runGiteaIssueContentVersionContract<
   };
 
   const passed = await t.step("gitea-extension/issue-content-version", async () => {
-    const git = await createClient("gitea", input.version, {
+    const git = await (await createClient("gitea", input.version, {
       baseUrl: input.apiUrl,
       beforeRequest: recorder.beforeRequest,
-    }).auth.token(input.token);
+    })).auth.token(input.token);
     const repository = await (await git.container(input.fixtures.repository.owner)).repository(
       input.fixtures.repository.name,
     );
@@ -61,7 +61,7 @@ export async function runGiteaIssueContentVersionContract<
       () => Promise.resolve(issues.support),
     );
     assert(
-      support.contentVersionGuard === "gitea-extension",
+      support.contentVersionGuard === "provider-extension",
       "Gitea content-version guard is not advertised as an operation extension",
     );
     assertions.push("content-version extension support is static and request-free");

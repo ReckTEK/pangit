@@ -5038,7 +5038,7 @@
             200
           ],
           "status": 200,
-          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/git/tags/142c753e8a1520d415d6e13789941dd00b4299b1",
+          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/git/tags/bd03500e3c27630d692826b2473b0b628888d8ed",
           "method": "GET"
         }
       ]
@@ -7196,7 +7196,7 @@
             200
           ],
           "status": 200,
-          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/git/trees/d272a1acacadc90d2a22083e53a19cc8b7534955",
+          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/git/trees/42a6c02c2c3aba3c242e4d511ebfecbe49073a18",
           "method": "GET"
         }
       ]
@@ -22841,7 +22841,7 @@
             201
           ],
           "status": 201,
-          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/statuses/d272a1acacadc90d2a22083e53a19cc8b7534955",
+          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/statuses/42a6c02c2c3aba3c242e4d511ebfecbe49073a18",
           "method": "POST"
         }
       ]
@@ -24119,7 +24119,7 @@
             204
           ],
           "status": 204,
-          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/push_mirrors/remote_mirror_lDoXyVE0gO",
+          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/push_mirrors/remote_mirror_pA1imxBYzJ",
           "method": "DELETE"
         }
       ]
@@ -24927,7 +24927,7 @@
             200
           ],
           "status": 200,
-          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/git/commits/d272a1acacadc90d2a22083e53a19cc8b7534955.diff",
+          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/git/commits/42a6c02c2c3aba3c242e4d511ebfecbe49073a18.diff",
           "method": "GET"
         }
       ]
@@ -25931,6 +25931,10 @@
           "attempts": [
             200,
             200,
+            200,
+            200,
+            200,
+            200,
             200
           ],
           "status": 200,
@@ -26679,7 +26683,7 @@
             200
           ],
           "status": 200,
-          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/commits/f2bf13695a50026863cf603f26254cee2a05880e/pull",
+          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/commits/7c67dfbbe8d27dd84efc26fd51a430ac6cf01cbc/pull",
           "method": "GET"
         }
       ]
@@ -27835,7 +27839,7 @@
             404
           ],
           "status": 404,
-          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/git/notes/d272a1acacadc90d2a22083e53a19cc8b7534955",
+          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/git/notes/42a6c02c2c3aba3c242e4d511ebfecbe49073a18",
           "method": "GET"
         }
       ]
@@ -27921,10 +27925,6 @@
           ],
           "passed": true,
           "attempts": [
-            200,
-            200,
-            200,
-            200,
             200,
             200,
             200,
@@ -28510,7 +28510,7 @@
             200
           ],
           "status": 200,
-          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/push_mirrors/remote_mirror_lDoXyVE0gO",
+          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/push_mirrors/remote_mirror_pA1imxBYzJ",
           "method": "GET"
         }
       ]
@@ -29149,7 +29149,7 @@
             200
           ],
           "status": 200,
-          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/git/commits/d272a1acacadc90d2a22083e53a19cc8b7534955",
+          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/git/commits/42a6c02c2c3aba3c242e4d511ebfecbe49073a18",
           "method": "GET"
         }
       ]
@@ -31157,7 +31157,7 @@
             200
           ],
           "status": 200,
-          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/statuses/d272a1acacadc90d2a22083e53a19cc8b7534955",
+          "url": "http://gitea:3000/api/v1/repos/sandbox/e2e-repository/statuses/42a6c02c2c3aba3c242e4d511ebfecbe49073a18",
           "method": "GET"
         }
       ]

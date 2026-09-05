@@ -2,7 +2,7 @@ import {
   createClient,
   type FluentProvider,
   type ProviderVersion,
-} from "../../../../../packages/pangit/src/fluent-api/mod.ts";
+} from "../../../../../packages/pangit/src/fluent-client/mod.ts";
 import type { FluentApiContractResult, FluentApiRequestEvidence } from "../contract-result.ts";
 import { FluentApiRequestRecorder, proveRequestSequence } from "../request-recorder.ts";
 import type { PullRequestMergeFixtures } from "./pull-request-contract-fixtures.ts";
@@ -44,10 +44,10 @@ export async function runPullRequestMergeContract<
   };
 
   const passed = await t.step("core/pull-request-merge", async () => {
-    const git = await createClient(input.provider, input.version, {
+    const git = await (await createClient(input.provider, input.version, {
       baseUrl: input.apiUrl,
       beforeRequest: recorder.beforeRequest,
-    }).auth.token(input.token);
+    })).auth.token(input.token);
     const defaultRepository = await (await git.container(
       input.fixtures.defaultMerge.repository.owner,
     )).repository(

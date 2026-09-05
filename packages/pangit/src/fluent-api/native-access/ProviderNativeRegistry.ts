@@ -1,25 +1,4 @@
-import type {
-  GitLabProviderNativeRegistry,
-  GitLabVersion,
-} from "../../git-host-adapters/gitlab/native/GitLabNative.ts";
-import type { Provider, ProviderVersion } from "../../generated-rest-clients/git-host.ts";
-import type { GiteaBlobNative } from "../../git-host-adapters/gitea/native/GiteaBlobNative.ts";
-import type { GiteaBranchRuleEntityNative } from "../../git-host-adapters/gitea/native/GiteaBranchRuleNative.ts";
-import type { GiteaCiEntityNative } from "../../git-host-adapters/gitea/native/GiteaCiRunDiscoveryNative.ts";
-import type { GiteaClientNative } from "../../git-host-adapters/gitea/native/GiteaClientNative.ts";
-import type { GiteaCurrentUserProfileNative } from "../../git-host-adapters/gitea/native/GiteaCurrentUserProfileNative.ts";
-import type {
-  GiteaEntityNative,
-  GiteaVersion,
-} from "../../git-host-adapters/gitea/native/GiteaEntityNative.ts";
-import type { GiteaIssueEntityNative } from "../../git-host-adapters/gitea/native/GiteaIssueNative.ts";
-import type { GiteaPackageEntityNative } from "../../git-host-adapters/gitea/native/GiteaPackageNative.ts";
-import type { GiteaPullRequestReviewNative } from "../../git-host-adapters/gitea/native/GiteaPullRequestReviewNative.ts";
-import type { GiteaReleaseEntityNative } from "../../git-host-adapters/gitea/native/GiteaReleaseNative.ts";
-import type { GiteaRepositoryContainerNative } from "../../git-host-adapters/gitea/native/GiteaRepositoryContainerNative.ts";
-import type { GiteaRepositoryNative } from "../../git-host-adapters/gitea/native/GiteaRepositoryNative.ts";
-import type { GiteaRepositoryWebhookNative } from "../../git-host-adapters/gitea/native/GiteaRepositoryWebhookNative.ts";
-
+import type { Provider, ProviderVersion } from "../adapter-contract/provider.ts";
 /** Core normalized entity kinds with provider-native doors. */
 export type ProviderCoreEntityNativeKind =
   | "branch"
@@ -45,55 +24,29 @@ export type ProviderPackageEntityNativeKind = "package" | "packageFile";
 /** Optional release and release-asset native entity kinds. */
 export type ProviderReleaseEntityNativeKind = "release" | "releaseAsset";
 
-/** Every native door implemented by the Gitea fluent adapter for one exact version. */
-export type GiteaProviderNativeRegistry<TVersion extends GiteaVersion> = Readonly<{
-  client: GiteaClientNative<TVersion>;
-  repositoryContainer: GiteaRepositoryContainerNative<TVersion>;
-  repository: GiteaRepositoryNative<TVersion>;
-  branch: GiteaEntityNative<TVersion, "branch">;
-  tag: GiteaEntityNative<TVersion, "tag">;
-  commit: GiteaEntityNative<TVersion, "commit">;
-  content: GiteaEntityNative<TVersion, "content">;
-  pullRequest: GiteaEntityNative<TVersion, "pullRequest">;
-  review: GiteaEntityNative<TVersion, "review">;
-  commitStatus: GiteaEntityNative<TVersion, "commitStatus">;
-  blob: GiteaBlobNative<TVersion>;
-  configuredRule: GiteaBranchRuleEntityNative<TVersion, "configuredRule">;
-  effectiveProtection: GiteaBranchRuleEntityNative<TVersion, "effectiveProtection">;
-  currentUserProfile: GiteaCurrentUserProfileNative<TVersion>;
-  issue: GiteaIssueEntityNative<TVersion, "issue">;
-  issueComment: GiteaIssueEntityNative<TVersion, "issueComment">;
-  package: GiteaPackageEntityNative<TVersion, "package">;
-  packageFile: GiteaPackageEntityNative<TVersion, "packageFile">;
-  pullRequestReview: GiteaPullRequestReviewNative<TVersion>;
-  release: GiteaReleaseEntityNative<TVersion, "release">;
-  releaseAsset: GiteaReleaseEntityNative<TVersion, "releaseAsset">;
-  repositoryWebhook: GiteaRepositoryWebhookNative<TVersion>;
-  workflow: GiteaCiEntityNative<TVersion, "workflow">;
-  run: GiteaCiEntityNative<TVersion, "run">;
-  job: GiteaCiEntityNative<TVersion, "job">;
-  artifact: GiteaCiEntityNative<TVersion, "artifact">;
-}>;
-
-/** Single source of truth for every implemented provider/version native door. */
-export type ProviderNativeRegistry = Readonly<{
-  gitlab: Readonly<{ [V in GitLabVersion]: GitLabProviderNativeRegistry<V> }>;
-  gitea: Readonly<
-    {
-      [TVersion in GiteaVersion]: GiteaProviderNativeRegistry<TVersion>;
-    }
-  >;
-}>;
-
-type EmptyProviderNative = Record<never, never>;
-
+/** Provider-owned native families indexed only through abstract registration. */
+// deno-lint-ignore no-empty-interface
+export interface ProviderNativeRegistry<V extends string, K extends ProviderNativeKind> {}
+export type ProviderNativeKind =
+  | ProviderCoreEntityNativeKind
+  | ProviderBranchRuleEntityNativeKind
+  | ProviderCiEntityNativeKind
+  | ProviderIssueEntityNativeKind
+  | ProviderPackageEntityNativeKind
+  | ProviderReleaseEntityNativeKind
+  | "client"
+  | "repositoryContainer"
+  | "repository"
+  | "blob"
+  | "currentUserProfile"
+  | "pullRequestReview"
+  | "repositoryWebhook";
 type RegisteredProviderNative<
-  TProvider extends Provider,
-  TVersion extends ProviderVersion<TProvider>,
-  TKind extends keyof GiteaProviderNativeRegistry<GiteaVersion>,
-> = TProvider extends "gitea" ? GiteaProviderNativeRegistry<TVersion & GiteaVersion>[TKind]
-  : TProvider extends "gitlab" ? GitLabProviderNativeRegistry<TVersion & GitLabVersion>[TKind]
-  : EmptyProviderNative;
+  P extends Provider,
+  V extends ProviderVersion<P>,
+  K extends ProviderNativeKind,
+> = P extends keyof ProviderNativeRegistry<V, K> ? ProviderNativeRegistry<V, K>[P]
+  : Record<never, never>;
 
 /** Fluent-client native door narrowed to the selected implemented provider. */
 export type ProviderClientNative<

@@ -1,4 +1,5 @@
-import type { Provider, ProviderVersion } from "../../generated-rest-clients/git-host.ts";
+import type { ProviderExtensionOptions } from "../provider-extensions/ProviderExtensionRegistry.ts";
+import type { Provider, ProviderVersion } from "./provider.ts";
 import type { ProviderEntityNative } from "../native-access/ProviderNativeRegistry.ts";
 import type { OperationOptions } from "./operation-options.ts";
 import type { Page, ResolvedPageRequest } from "./pagination.ts";
@@ -55,32 +56,10 @@ export interface SetCommitStatusInput {
   readonly targetUrl?: string;
 }
 
-/** Gitea status states that have no portable meaning across fluent providers. */
-export type GiteaCommitStatusExtensionState = "error" | "warning" | "skipped";
-
-/** Gitea-only state selection for one status publication. */
-export interface GiteaSetCommitStatusExtension {
-  readonly state: GiteaCommitStatusExtensionState;
-}
-
-/** Immutable context exposed to the Gitea status extension callback. */
-export interface GiteaSetCommitStatusExtensionContext {
-  readonly repositoryFullName: string;
-  readonly reference: CommitStatusReference;
-  readonly context: string;
-  readonly portableState: CommitStatusState;
-}
-
-/** Native GitLab states remain visible without inventing a portable equivalent. */
-export interface GitLabSetCommitStatusExtension {
-  readonly state: "running" | "canceled" | "skipped";
-}
-export type GitLabSetCommitStatusExtensionContext = GiteaSetCommitStatusExtensionContext;
-
-export type SetCommitStatusExtension<TProvider extends Provider> = TProvider extends "gitea"
-  ? GiteaSetCommitStatusExtension
-  : TProvider extends "gitlab" ? GitLabSetCommitStatusExtension
-  : never;
+export type SetCommitStatusExtension<TProvider extends Provider> = ProviderExtensionOptions<
+  "statuses.set",
+  TProvider
+>;
 
 export interface SetCommitStatusOptions<TProvider extends Provider = Provider>
   extends OperationOptions {

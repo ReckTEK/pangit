@@ -1,12 +1,13 @@
+import type { ValidationErrorContext } from "../adapter-contract/errors.ts";
+import { type ExtensionSupport, supportsExtension } from "./ExtensionSupport.ts";
 import type { OperationOptions } from "../adapter-contract/operation-options.ts";
-import {
-  isProviderExtensionVersionSupported,
-  type ProviderExtensionContext,
-  type ProviderExtensionOptions,
-  type ProviderExtensionResult,
-  type ProviderExtensionSupportsVersion,
-  type RegisteredOperation,
-  type RegisteredProvider,
+import type {
+  ProviderExtensionContext,
+  ProviderExtensionOptions,
+  ProviderExtensionResult,
+  ProviderExtensionSupportsVersion,
+  RegisteredOperation,
+  RegisteredProvider,
 } from "./ProviderExtensionRegistry.ts";
 
 /** The terminal form of an operation-specific provider extension builder. */
@@ -51,37 +52,44 @@ export function createOperationExtension<
   TDefaultResult,
 >(input: {
   readonly operation: TOperation;
+  readonly support?: ExtensionSupport<ProviderExtensionOptions<TOperation, TProvider>>;
+  readonly validationContext?: ValidationErrorContext;
   readonly provider: TProvider;
   /** Carries the exact selected version into the returned compile-time extension surface. */
   readonly version: TVersion;
   readonly context: Readonly<object>;
   readonly execute: (
     extension:
-      | Readonly<ProviderExtensionOptions<TOperation, RegisteredProvider<TOperation>>>
+      | Readonly<ProviderExtensionOptions<TOperation, TProvider>>
       | undefined,
     options: OperationOptions,
   ) => Promise<
     | TDefaultResult
-    | ProviderExtensionResult<TOperation, RegisteredProvider<TOperation>, TDefaultResult>
+    | ProviderExtensionResult<TOperation, TProvider, TDefaultResult>
   >;
 }): OperationExtension<TOperation, TProvider, TVersion, TDefaultResult> {
   let configured = false;
   let extension:
-    | Readonly<ProviderExtensionOptions<TOperation, RegisteredProvider<TOperation>>>
+    | Readonly<ProviderExtensionOptions<TOperation, TProvider>>
     | undefined;
-  const execute = (options: OperationOptions = {}) => input.execute(extension, options);
+  const execute = async (options: OperationOptions = {}) => {
+    if (extension !== undefined) {
+      input.support?.validate?.(
+        extension,
+        input.validationContext ??
+          { provider: input.provider, version: input.version, operation: input.operation },
+      );
+    }
+    return await input.execute(extension, options);
+  };
   const executable = Object.freeze({ execute });
-  const builder = isProviderExtensionVersionSupported(
-      input.operation,
-      input.provider,
-      input.version,
-    )
+  const builder = supportsExtension(input.support, input.version)
     ? {
       ...executable,
       [input.provider](
         configure: (
           context: Readonly<ProviderExtensionContext<TOperation, TProvider>>,
-        ) => ProviderExtensionOptions<TOperation, RegisteredProvider<TOperation>>,
+        ) => ProviderExtensionOptions<TOperation, TProvider>,
       ) {
         if (configured) {
           throw new TypeError(

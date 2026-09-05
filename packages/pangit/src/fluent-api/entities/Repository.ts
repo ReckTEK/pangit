@@ -1,7 +1,7 @@
-import type { ProviderVersion } from "../../generated-rest-clients/git-host.ts";
+import type { FluentProvider, ProviderVersion } from "../adapter-contract/provider.ts";
 import type { GitHostAdapter } from "../adapter-contract/GitHostAdapter.ts";
-import type { OperationOptions } from "../adapter-contract/operation-options.ts";
-import { requireIdentity } from "../adapter-contract/operation-options.ts";
+import { type OperationOptions, requireIdentity } from "../adapter-contract/operation-options.ts";
+
 import type { RepositoryData, RepositoryParentData } from "../adapter-contract/repositories.ts";
 import {
   createRepositoryBranches,
@@ -50,7 +50,6 @@ import {
   type RepositoryWebhooks,
 } from "../capabilities/optional/RepositoryWebhooks.ts";
 import type { ProviderRepositoryNative } from "../native-access/ProviderNativeRegistry.ts";
-import type { FluentProvider } from "../provider-registry.ts";
 
 /** Immutable repository snapshot with concern-oriented capability handles. */
 export interface Repository<
@@ -131,7 +130,7 @@ class RepositoryImpl<
     this.url = data.url;
     this.parent = data.parent === undefined ? undefined : Object.freeze({ ...data.parent });
     this.native = data.native;
-    this.forks = createRepositoryForks(adapter, data);
+    this.forks = createRepositoryForks(adapter, data, (fork) => createRepository(adapter, fork));
     this.branches = createRepositoryBranches(adapter, data);
     this.tags = createRepositoryTags(adapter, data);
     this.commits = createRepositoryCommits(adapter, data);

@@ -1,4 +1,4 @@
-import type { ProviderVersion } from "../../../../../packages/pangit/src/fluent-api/mod.ts";
+import type { ProviderVersion } from "../../../../../packages/pangit/src/fluent-client/mod.ts";
 import type { FluentApiContractResult } from "../../fluent-api-contracts/contract-result.ts";
 import { runAuthenticationContract } from "../../fluent-api-contracts/authentication/authentication-contract.ts";
 import { runBranchContract } from "../../fluent-api-contracts/branches/branch-contract.ts";
