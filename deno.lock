@@ -3081,7 +3081,7 @@
   "workspace": {
     "dependencies": [
       "jsr:@recktek/pangit-site@0.1",
-      "jsr:@recktek/pangit@0.1.0-alpha.2",
+      "jsr:@recktek/pangit@0.1.0-alpha.3",
       "jsr:@std/fmt@1.0.10",
       "jsr:@std/yaml@1.0.10",
       "npm:openapi-types@12.1.3",

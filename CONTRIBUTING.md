@@ -111,13 +111,13 @@ with provenance; no publish token is needed.
 
 For each release:
 
-1. Set a new version such as `0.1.0-alpha.3` in `packages/pangit/deno.json` and update the root
+1. Set a new version such as `0.1.0-alpha.4` in `packages/pangit/deno.json` and update the root
    `deno.json` import for `@recktek/pangit` to that exact version. Update both READMEs and the
    site's installation snippet to use that JSR version.
 2. Run the non-live checks above, including regeneration. Commit the version change and generated
    package metadata to `main`, then push it.
 3. Tag that commit with `v` followed by the exact package version, for example
-   `git tag v0.1.0-alpha.3`, then `git push origin v0.1.0-alpha.3`.
+   `git tag v0.1.0-alpha.4`, then `git push origin v0.1.0-alpha.4`.
 4. Check the
    [Publish to JSR workflow](https://github.com/ReckTEK/pangit/actions/workflows/publish.yml) and
    confirm the version appears on [JSR](https://jsr.io/@recktek/pangit/versions).
@@ -128,7 +128,7 @@ Failed runs can be rerun from GitHub Actions; a published version cannot be over
 
 [JSR prereleases](https://jsr.io/docs/packages#pre-release-versions) use SemVer suffixes such as
 `-alpha.1`. They are excluded from stable version resolution and must be selected explicitly:
-`deno add jsr:@recktek/pangit@0.1.0-alpha.2`. Public APIs may change between alpha releases. The
+`deno add jsr:@recktek/pangit@0.1.0-alpha.3`. Public APIs may change between alpha releases. The
 workflow deliberately rejects stable versions; change that policy when preparing a stable release.
 
 ## Live E2E tests

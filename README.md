@@ -1,6 +1,6 @@
 # PanGit
 
-![PanGit — baby Git providers cooking together in a pan — @recktek/pangit](packages/pangit/docs/images/pangit-banner.png)
+![PanGit — baby Git providers cooking together in a pan — @recktek/pangit](https://raw.githubusercontent.com/ReckTEK/pangit/main/packages/pangit/docs/images/pangit-banner.png)
 
 <p align="center">
   <strong>Deno-native Git-host tooling by ReckTEK.</strong><br>
@@ -70,7 +70,7 @@ stated explicitly without removing the client.
 Add the [JSR package](https://jsr.io/@recktek/pangit/versions) to your Deno project:
 
 ```bash
-deno add jsr:@recktek/pangit@0.1.0-alpha.2
+deno add jsr:@recktek/pangit@0.1.0-alpha.3
 ```
 
 Select the alpha version explicitly; stable version ranges do not include prereleases. The examples
